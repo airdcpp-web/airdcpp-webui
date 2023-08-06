@@ -97,7 +97,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
               visible: false,
             });
           },
-          ANIMATION_DURATION
+          ANIMATION_DURATION,
         );
       },
       duration: ANIMATION_DURATION,
@@ -136,7 +136,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       { 'icon button': button },
       { labeled: !!button && !!caption },
       { 'left-icon': leftIcon },
-      { 'selection fluid': selection }
+      { 'selection fluid': selection },
     );
 
     const icon = (

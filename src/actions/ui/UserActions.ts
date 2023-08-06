@@ -43,21 +43,30 @@ const checkUnignore = ({ user }: ActionUserData) => {
 const handleMessage: UI.ActionHandler<ActionUserData> = ({
   data: userData,
   location,
+  navigate,
 }) => {
-  return PrivateChatActions.createSession(
+  return PrivateChatActions.createSession(userData.user, {
     location,
-    userData.user,
-    PrivateChatSessionStore
-  );
+    sessionStore: PrivateChatSessionStore,
+    navigate,
+  });
 };
 
-const handleBrowse: UI.ActionHandler<ActionUserData> = ({ data: userData, location }) => {
-  return FilelistSessionActions.createSession(
+const handleBrowse: UI.ActionHandler<ActionUserData> = ({
+  data: userData,
+  location,
+  navigate,
+}) => {
+  const createData = {
+    user: userData.user,
+    path: userData.directory,
+  };
+
+  return FilelistSessionActions.createSession(createData, {
+    sessionStore: FilelistSessionStore,
     location,
-    userData.user,
-    FilelistSessionStore,
-    userData.directory
-  );
+    navigate,
+  });
 };
 
 const handleIgnore: UI.ActionHandler<ActionUserData> = ({ data: userData }) => {

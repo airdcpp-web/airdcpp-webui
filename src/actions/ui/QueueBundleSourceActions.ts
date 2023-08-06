@@ -14,7 +14,7 @@ interface ActionBundleSourceData {
 const handleRemoveBundleSource: UI.ActionHandler<ActionBundleSourceData> = ({ data }) => {
   const { source, bundle } = data;
   return SocketService.delete(
-    `${QueueConstants.BUNDLES_URL}/${bundle.id}/sources/${source.user.cid}`
+    `${QueueConstants.BUNDLES_URL}/${bundle.id}/sources/${source.user.cid}`,
   );
 };
 

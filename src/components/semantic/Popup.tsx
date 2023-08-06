@@ -87,13 +87,7 @@ class Popup extends React.PureComponent<PopupProps, State> {
   createPortalNode = () => {
     // Create portal
     this.node = document.createElement('div');
-
-    let className = 'ui flowing popup ';
-    if (this.props.className) {
-      className += this.props.className;
-    }
-
-    this.node.className = className;
+    this.node.className = classNames('ui flowing popup', this.props.className);
     document.body.appendChild(this.node);
 
     this.setState({

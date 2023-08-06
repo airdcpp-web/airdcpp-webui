@@ -9,11 +9,11 @@ import StatisticsDecorator, {
 import SystemConstants from 'constants/SystemConstants';
 import { formatDateTime, formatRelativeTime } from 'utils/ValueFormat';
 import InstallPrompt from 'components/InstallPrompt';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import LinkConstants from 'constants/LinkConstants';
 import ExternalLink from 'components/ExternalLink';
 
-interface ApplicationPageProps extends SettingSectionChildProps {}
+interface ApplicationPageProps extends SettingPageProps {}
 
 const ApplicationPage: React.FC<
   ApplicationPageProps & StatisticsDecoratorChildProps<any>

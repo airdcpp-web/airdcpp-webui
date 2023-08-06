@@ -4,13 +4,13 @@ import * as UI from 'types/ui';
 
 export const useRestoreScroll = (
   scrollPositionHandler: UI.ScrollPositionHandler,
-  session: UI.SessionItemBase
+  session: UI.SessionItemBase,
 ) => {
   const scrollable = useRef<HTMLDivElement | null>(null);
   const onScroll = (evt: UIEvent) => {
     scrollPositionHandler.setScrollData(
       (evt.target as HTMLElement).scrollTop,
-      session.id
+      session.id,
     );
   };
 

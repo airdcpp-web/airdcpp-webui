@@ -19,7 +19,7 @@ const UserCaption: React.FC<RowWrapperCellChildProps<API.HintedUser, API.Transfe
     <i
       className={classNames(
         rowData!.download ? IconConstants.DOWNLOAD : IconConstants.UPLOAD,
-        'large icon'
+        'large icon',
       )}
     />
     {cellData!.nicks}

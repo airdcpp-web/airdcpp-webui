@@ -1,8 +1,3 @@
-import { Component } from 'react';
-
-import ListBrowser, {
-  FilelistLocationState,
-} from 'routes/Sidebar/routes/Filelists/components/ListBrowser';
 import FilelistFooter from 'routes/Sidebar/routes/Filelists/components/FilelistFooter';
 
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
@@ -13,9 +8,9 @@ import Message from 'components/semantic/Message';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
-import { Location } from 'history';
 import classNames from 'classnames';
+import ListBrowser from './ListBrowser';
+import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 type FilelistSessionProps = SessionChildProps<
   API.FilelistSession,
@@ -23,51 +18,43 @@ type FilelistSessionProps = SessionChildProps<
   UI.EmptyObject
 >;
 
-class FilelistSession extends Component<FilelistSessionProps> {
-  static displayName = 'FilelistSession';
+const FilelistSession: React.FC<FilelistSessionProps> = (props) => {
+  const { session, sessionT, location: routerLocation } = props;
+  const { user, location: listLocation, state } = session;
 
-  render() {
-    const { session, sessionT } = this.props;
-    const { user, location, state } = session;
-
-    const isOwnList = user.flags.includes('self');
-    const className = classNames('filelist session', { self: isOwnList });
-    if (user.flags.includes('offline') && !isOwnList) {
-      return (
-        <div className={className}>
-          <Message
-            title={sessionT.t('userOffline', 'User offline')}
-            description={sessionT.t<string>(
-              'userOfflineDesc',
-              'You will be able to continue browsing when the user comes back online'
-            )}
-          />
-        </div>
-      );
-    }
-
-    if ((state.id !== 'loaded' && state.id !== 'download_failed') || !location) {
-      return (
-        <div className={className}>
-          <Loader text={state.str} />
-        </div>
-      );
-    }
-
+  const isOwnList = user.flags.includes('self');
+  const className = classNames('filelist session', { self: isOwnList });
+  if (user.flags.includes('offline') && !isOwnList) {
     return (
       <div className={className}>
-        <ListBrowser
-          location={this.props.location as Location<FilelistLocationState>}
-          session={session}
-          sessionT={sessionT}
+        <Message
+          title={sessionT.t('userOffline', 'User offline')}
+          description={sessionT.t<string>(
+            'userOfflineDesc',
+            'You will be able to continue browsing when the user comes back online',
+          )}
         />
-
-        <FilelistFooter session={session} sessionT={sessionT} />
       </div>
     );
   }
-}
+
+  if ((state.id !== 'loaded' && state.id !== 'download_failed') || !listLocation) {
+    return (
+      <div className={className}>
+        <Loader text={state.str} />
+      </div>
+    );
+  }
+
+  return (
+    <div className={className}>
+      <ListBrowser location={routerLocation} session={session} sessionT={sessionT} />
+
+      <FilelistFooter session={session} sessionT={sessionT} />
+    </div>
+  );
+};
 
 export default ActiveSessionDecorator<FilelistSessionProps, API.FilelistSession>(
-  FilelistSession
+  FilelistSession,
 );

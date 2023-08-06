@@ -7,9 +7,9 @@ import TransferConstants from 'constants/TransferConstants';
 import StatisticsDecorator, {
   StatisticsDecoratorChildProps,
 } from 'decorators/StatisticsDecorator';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
-interface TransferStatisticsPageProps extends SettingSectionChildProps {}
+interface TransferStatisticsPageProps extends SettingPageProps {}
 
 const TransferStatisticsPage: React.FC<
   TransferStatisticsPageProps & StatisticsDecoratorChildProps<any>
@@ -40,5 +40,5 @@ export default StatisticsDecorator(
   TransferStatisticsPage,
   TransferConstants.TRANSFERRED_BYTES_URL,
   null,
-  5
+  5,
 );

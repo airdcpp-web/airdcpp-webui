@@ -4,62 +4,55 @@ import Dropdown from 'components/semantic/Dropdown';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import Icon from 'components/semantic/Icon';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingSectionLayoutProps } from 'routes/Settings/types';
 import { translateSettingSectionTitle } from './MenuItems';
 
-// eslint-disable-next-line max-len
 type TopSectionSelectionMenuProps = Pick<
-  SettingSectionChildProps,
-  | 'menuItems'
-  | 'currentMenuItem'
-  | 'parent'
-  | 'advancedMenuItems'
-  | 'parentMenuItems'
-  | 'settingsT'
+  SettingSectionLayoutProps,
+  'selectedRootMenuItem' | 'selectedChildMenuItem' | 'menu' | 'settingsT'
 >;
 
 const TopSectionSelectionMenu: React.FC<TopSectionSelectionMenuProps> = ({
-  menuItems,
-  advancedMenuItems,
-  currentMenuItem,
-  parentMenuItems,
-  parent,
+  selectedChildMenuItem,
+  menu,
+  selectedRootMenuItem,
   settingsT,
 }) => (
   <div className="ui top-menu">
     <Dropdown
       selection={true}
-      caption={translateSettingSectionTitle(parent!.title, settingsT)}
-      captionIcon={`green ${parent!.icon}`}
+      caption={translateSettingSectionTitle(selectedRootMenuItem.title, settingsT)}
+      captionIcon={`green ${selectedRootMenuItem.icon}`}
     >
-      {parentMenuItems}
+      {menu.rootMenuItems}
     </Dropdown>
 
     <Icon icon="caret right" size="large" />
 
     <SectionedDropdown
       selection={true}
-      caption={translateSettingSectionTitle(currentMenuItem.title, settingsT)}
+      caption={translateSettingSectionTitle(selectedChildMenuItem.title, settingsT)}
     >
-      <MenuSection>{menuItems}</MenuSection>
+      <MenuSection>{menu.childMenuItems}</MenuSection>
       <MenuSection caption={settingsT.translate('Advanced')}>
-        {advancedMenuItems}
+        {menu.childAdvancedMenuItems}
       </MenuSection>
     </SectionedDropdown>
   </div>
 );
 
-const TopMenuLayout: React.FC<SettingSectionChildProps> = ({
-  saveButton,
+const TopMenuLayout: React.FC<SettingSectionLayoutProps> = ({
+  getSaveButton,
   children,
   contentClassname,
+  settingsT,
   message,
   ...other
 }) => (
   <div className="mobile">
-    <TopSectionSelectionMenu {...other} />
+    <TopSectionSelectionMenu settingsT={settingsT} {...other} />
     <div id="setting-scroll-context" className={contentClassname}>
-      {!!saveButton && React.cloneElement(saveButton, { className: 'fluid' })}
+      {getSaveButton('fluid')}
       <div className="options">
         {message}
         {children}

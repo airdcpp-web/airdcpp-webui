@@ -29,22 +29,22 @@ interface DataProps extends DataProviderDecoratorChildProps {
   parentResult: API.GroupedSearchResult;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   resultId: string;
-}
+}*/
 
-type Props = ResultDialogProps & ModalRouteDecoratorChildProps<RouteProps>;
+type Props = ResultDialogProps & ModalRouteDecoratorChildProps;
 
 class ResultDialog extends Component<Props & DataProps> {
   static displayName = 'ResultDialog';
 
   itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = (
     itemId,
-    socket
+    socket,
   ) => {
     const { instance } = this.props;
     return socket.get(
-      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`
+      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`,
     );
   };
 
@@ -57,7 +57,6 @@ class ResultDialog extends Component<Props & DataProps> {
         closable={true}
         icon={<FileIcon typeInfo={parentResult.type} />}
         fullHeight={true}
-        {...this.props}
       >
         <DownloadDialog
           downloadHandler={searchDownloadHandler}
@@ -77,16 +76,16 @@ class ResultDialog extends Component<Props & DataProps> {
   }
 }
 
-const Decorated = ModalRouteDecorator<ResultDialogProps, RouteProps>(
+const Decorated = ModalRouteDecorator<ResultDialogProps>(
   DataProviderDecorator<Props, DataProps>(ResultDialog, {
     urls: {
-      parentResult: ({ match, instance }, socket) =>
+      parentResult: ({ params, instance }, socket) =>
         socket.get(
-          `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${match.params.resultId}`
+          `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${params.resultId}`,
         ),
     },
   }),
-  'result/:resultId'
+  '/result/:resultId',
 );
 
 export { Decorated as ResultDialog };

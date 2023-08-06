@@ -3,11 +3,10 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import '../style.css';
 import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 
 import * as API from 'types/api';
 
-export interface LogSectionProps extends SettingSectionChildProps {
+export interface LogSectionProps {
   section: string;
   simple?: boolean;
 }
@@ -50,12 +49,11 @@ class LogSection extends Component<LogSectionProps> {
 
     const Content = [this.convertKey('file'), this.convertKey('format')];
 
-    const { simple, ...other } = this.props;
+    const { simple } = this.props;
     return (
       <div className={this.getChildClass('log-section')}>
         <div className={this.getChildClass('title')}>
           <RemoteSettingForm
-            {...other}
             keys={Title}
             onFieldChanged={this.onEnableStateChanged}
             onSettingValuesReceived={this.onSettingsReceived}
@@ -64,11 +62,7 @@ class LogSection extends Component<LogSectionProps> {
 
         {!simple && (
           <div className={this.getChildClass('content')}>
-            <RemoteSettingForm
-              {...this.props}
-              keys={Content}
-              onFieldSetting={this.onContentSetting}
-            />
+            <RemoteSettingForm keys={Content} onFieldSetting={this.onContentSetting} />
           </div>
         )}
       </div>

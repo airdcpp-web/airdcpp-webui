@@ -25,7 +25,7 @@ const ActionDropdownMenu = ({
 
 const ActionMenuDecorated = ActionMenuDecorator<ActionMenuProps, any>(
   ActionDropdownMenu,
-  buildMenu
+  buildMenu,
 );
 
 export { ActionMenuDecorated as ActionMenu };

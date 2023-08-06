@@ -6,28 +6,32 @@ import { useStore } from 'effects/StoreListenerEffect';
 import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { getModuleT, translate } from 'utils/TranslationUtils';
+import { useParams } from 'react-router-dom';
 
-export type SessionProviderDecoratorProps = UI.SessionRouteProps;
+export interface SessionProviderDecoratorProps {}
 
-export interface SessionProviderDecoratorChildProps<SessionT extends UI.SessionType>
-  extends UI.SessionRouteProps {
+export interface SessionProviderDecoratorChildProps<SessionT extends UI.SessionType> {
   items: SessionT[];
-  t: UI.TranslateF;
+  sessionT: UI.ModuleTranslator;
+  params: UI.RouteParams;
 }
 
-const SessionProviderDecorator = <SessionT extends UI.SessionType, PropsT extends object>(
-  Component: React.ComponentType<PropsT & SessionProviderDecoratorChildProps<SessionT>>,
-  store: UI.SessionStore<SessionT>
+const SessionProviderDecorator = <SessionT extends UI.SessionType>(
+  Component: React.ComponentType<SessionProviderDecoratorChildProps<SessionT>>,
+  store: UI.SessionStore<SessionT>,
+  moduleId: UI.Modules,
 ) => {
-  const Decorator = (props: SessionProviderDecoratorProps & PropsT) => {
+  const Decorator = (props: SessionProviderDecoratorProps) => {
     const { t } = useTranslation();
+    const sessionT = getModuleT(t, moduleId);
+    const params = useParams();
     const sessions = useStore<SessionT[]>(store);
     if (!store.isInitialized()) {
       return <Loader text={translate('Loading sessions', t, UI.Modules.COMMON)} />;
     }
 
-    return <Component items={sessions} t={t} {...props} />;
+    return <Component items={sessions} params={params} sessionT={sessionT} />;
   };
 
   return Decorator;

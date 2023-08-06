@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Route, matchPath } from 'react-router-dom';
 
 import { default as lazy } from 'decorators/AsyncComponentDecorator';
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
@@ -13,17 +12,17 @@ import EventStore from 'stores/EventStore';
 import LoginActions from 'actions/reflux/LoginActions';
 import LoginStore from 'stores/LoginStore';
 import IconConstants from 'constants/IconConstants';
-import { Location } from 'history';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { textToI18nKey } from 'utils/TranslationUtils';
+import { Route, matchPath, Location } from 'react-router-dom';
 
 export type RouteItemClickHandler = (
   path: string,
-  event: React.SyntheticEvent<any>
+  event: React.SyntheticEvent<any>,
 ) => void;
 
 export interface RouteItem {
@@ -77,7 +76,7 @@ export const configRoutes = [
     icon: IconConstants.FAVORITE,
     access: API.AccessEnum.FAVORITE_HUBS_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs')
+      () => import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs'),
     ),
   },
   {
@@ -90,6 +89,7 @@ export const configRoutes = [
   {
     title: 'Settings',
     path: '/settings',
+    // matchPath: '/settings/:mainSection?/:childSection?',
     icon: IconConstants.SETTINGS,
     access: API.AccessEnum.SETTINGS_VIEW,
     component: lazy(() => import(/* webpackChunkName: "settings" */ 'routes/Settings')),
@@ -105,7 +105,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStore: HubSessionStore,
     access: API.AccessEnum.HUBS_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs')
+      () => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs'),
     ),
   },
   {
@@ -116,7 +116,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStore: PrivateChatSessionStore,
     access: API.AccessEnum.PRIVATE_CHAT_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages')
+      () => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages'),
     ),
   },
   {
@@ -127,7 +127,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStore: FilelistSessionStore,
     access: API.AccessEnum.FILELISTS_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists')
+      () => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists'),
     ),
   },
   {
@@ -138,7 +138,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStore: ViewFileStore,
     access: API.AccessEnum.VIEW_FILE_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files')
+      () => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files'),
     ),
   },
   {
@@ -148,7 +148,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStore: EventStore,
     access: API.AccessEnum.EVENTS_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events')
+      () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events'),
     ),
   },
 ];
@@ -168,7 +168,7 @@ export const logoutItem: RouteItem = {
 
 const menuItemClickHandler = (
   onClick: RouteItemClickHandler | undefined,
-  route: RouteItem
+  route: RouteItem,
 ) => {
   if (!!onClick || !!route.onClick) {
     return (evt: any) =>
@@ -181,7 +181,7 @@ const menuItemClickHandler = (
 export const parseMenuItem = (
   route: RouteItem,
   onClick: RouteItemClickHandler | undefined = undefined,
-  showIcon: boolean | undefined = true
+  showIcon: boolean | undefined = true,
 ) => {
   const { title, icon, unreadInfoStore, path, className } = route;
   return (
@@ -200,21 +200,24 @@ export const parseMenuItem = (
 
 const filterItem = (item: RouteItem) => !item.access || LoginStore.hasAccess(item.access);
 
-export const parseRoutes = (routes: RouteItem[], location?: Location) => {
-  return routes.map((route, i) => (
-    <Route
-      key={route.path}
-      {...route}
-      path={route.matchPath ? route.matchPath : route.path}
-      location={location}
-    />
-  ));
+export const parseRoutes = (routes: RouteItem[]) => {
+  return routes.map((route, i) => {
+    const { component: Component, ...other } = route;
+    return (
+      <Route
+        key={route.path}
+        {...other}
+        path={`${route.matchPath ? route.matchPath : route.path}/*`}
+        element={!!Component && <Component />}
+      />
+    );
+  });
 };
 
 export const parseMenuItems = (
   routes: RouteItem[],
   onClick?: RouteItemClickHandler | undefined,
-  showIcon?: boolean | undefined
+  showIcon?: boolean | undefined,
 ) => {
   return routes
     .filter(filterItem)
@@ -222,7 +225,5 @@ export const parseMenuItems = (
 };
 
 export const isRouteActive = (route: RouteItem, location: Location): boolean => {
-  return !!matchPath(location.pathname, {
-    path: route.path,
-  });
+  return !!matchPath(`${route.path}/*`, location.pathname);
 };

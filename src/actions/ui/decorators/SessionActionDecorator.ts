@@ -10,7 +10,7 @@ type SessionType = UI.SessionItemBase;
 export default function (
   actions: UI.ActionListType<SessionType>,
   sessionsUrl: string,
-  editAccess: API.AccessEnum
+  editAccess: API.AccessEnum,
 ) {
   const handleRemoveSession: UI.ActionHandler<SessionType> = ({ data: session }) => {
     return SocketService.delete(`${sessionsUrl}/${session.id}`);

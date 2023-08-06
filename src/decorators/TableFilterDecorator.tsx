@@ -26,7 +26,7 @@ export interface TableFilterDecoratorChildProps {
 
 export default function <PropsT>(
   Component: React.ComponentType<PropsT & TableFilterDecoratorChildProps>,
-  propertyName = 'any'
+  propertyName = 'any',
 ) {
   type Props = PropsT &
     TableFilterDecoratorProps &
@@ -36,7 +36,7 @@ export default function <PropsT>(
   const TableFilterDecorator = (props: Props) => {
     const onFilterUpdated = (
       pattern: string,
-      method: API.FilterMethod = API.FilterMethod.PARTIAL
+      method: API.FilterMethod = API.FilterMethod.PARTIAL,
     ) => {
       const data = {
         pattern,
@@ -46,7 +46,7 @@ export default function <PropsT>(
 
       const { store, filter } = props;
       SocketService.put(`${store.viewUrl}/filter/${filter.id}`, data).catch(
-        (error: ErrorResponse) => console.error('Failed to add table filter', error)
+        (error: ErrorResponse) => console.error('Failed to add table filter', error),
       );
     };
 
@@ -56,7 +56,7 @@ export default function <PropsT>(
         if (store.active) {
           SocketService.delete(`${store.viewUrl}/filter/${filter.id}`).catch(
             (error: ErrorResponse) =>
-              console.error('Failed to delete table filter', error)
+              console.error('Failed to delete table filter', error),
           );
         }
       };

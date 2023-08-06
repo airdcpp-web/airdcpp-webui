@@ -11,7 +11,7 @@ type MessageCache = UI.MessageListItem[];
 const MessageStoreDecorator = function (
   store: any,
   actions: UI.RefluxActionListType<ChatSession>,
-  access: string
+  access: string,
 ) {
   // Message arrays mapped by session IDs
   const messages = new Map<API.IdType, UI.MessageListItem[]>();
@@ -21,7 +21,7 @@ const MessageStoreDecorator = function (
 
   const onFetchMessagesCompleted = (
     session: UI.SessionItemBase,
-    cacheMessages: MessageCache
+    cacheMessages: MessageCache,
   ) => {
     messages.set(session.id, mergeCacheMessages(cacheMessages, messages.get(session.id)));
     store.trigger(messages.get(session.id), session.id);
@@ -34,7 +34,7 @@ const MessageStoreDecorator = function (
   const onMessageReceived = (
     sessionId: API.IdType,
     message: API.Message,
-    type: UI.MessageType
+    type: UI.MessageType,
   ) => {
     messages.set(
       sessionId,
@@ -42,8 +42,8 @@ const MessageStoreDecorator = function (
         {
           [type]: message,
         } as UI.MessageListItem,
-        messages.get(sessionId)
-      )
+        messages.get(sessionId),
+      ),
     );
     store.trigger(messages.get(sessionId), sessionId);
   };
@@ -116,7 +116,7 @@ const MessageStoreDecorator = function (
   store.listenTo(actions.fetchMessages, onFetchMessages);
   store.listenTo(
     (actions.fetchMessages as UI.AsyncActionType<ChatSession>).completed,
-    onFetchMessagesCompleted
+    onFetchMessagesCompleted,
   );
 
   return SocketSubscriptionDecorator(Object.assign(store, Decorator), access);

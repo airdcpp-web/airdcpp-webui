@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { CellProps } from 'fixed-data-table-2';
 
 import * as UI from 'types/ui';
+import classNames from 'classnames';
 
 export interface RowWrapperCellChildProps<
   CellDataT,
-  RowDataT extends UI.ActionMenuItemDataValueType
+  RowDataT extends UI.ActionMenuItemDataValueType,
 > extends CellProps {
   cellData?: CellDataT;
   rowDataGetter?: () => RowDataT;
@@ -94,13 +95,14 @@ class RowWrapperCell extends React.Component<RowWrapperCellProps> {
       return null;
     }
 
-    let className = columnKey;
-    if (!!rowClassNameGetter) {
-      className += ' ' + rowClassNameGetter(rowData);
-    }
+    const className = classNames(
+      'cell-wrapper',
+      columnKey,
+      rowClassNameGetter ? rowClassNameGetter(rowData) : undefined,
+    );
 
     return (
-      <div className={'cell-wrapper ' + className}>
+      <div className={className}>
         {React.cloneElement(children, {
           cellData: rowData[columnKey!],
 

@@ -49,7 +49,7 @@ class RemoteSuggestField<SuggestionT extends Record<string, any>> extends Compon
     })
       .then(this.onSuggestionsReceived)
       .catch((error: ErrorResponse) =>
-        console.log(`Failed to fetch suggestions: ${error}`)
+        console.log(`Failed to fetch suggestions: ${error}`),
       );
   };
 
@@ -69,7 +69,7 @@ class RemoteSuggestField<SuggestionT extends Record<string, any>> extends Compon
     return SuggestionRenderer(
       query,
       suggestionObj[this.props.valueField],
-      suggestionObj[this.props.descriptionField]
+      suggestionObj[this.props.descriptionField],
     );
   };
 

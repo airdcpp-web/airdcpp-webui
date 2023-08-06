@@ -8,11 +8,10 @@ import Button from 'components/semantic/Button';
 import * as UI from 'types/ui';
 
 import IconConstants from 'constants/IconConstants';
-import { RouteComponentProps } from 'react-router';
 import { useMobileLayout } from 'utils/BrowserUtils';
 import { SearchOptionsButton, SearchOptions } from './options-panel';
 
-interface SearchInputProps extends Pick<RouteComponentProps, 'location'> {
+interface SearchInputProps {
   running: boolean;
   moduleT: UI.ModuleTranslator;
   defaultValue?: string;
@@ -25,7 +24,6 @@ const SearchInput: React.FC<SearchInputProps> = ({
   defaultValue,
   running,
   handleSubmit,
-  location,
   defaultOptions,
 }) => {
   const [options, setOptions] = useState<SearchOptions | null>(defaultOptions);
@@ -49,12 +47,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
             />
           }
         />
-        <SearchOptionsButton
-          moduleT={moduleT}
-          location={location}
-          onChange={setOptions}
-          value={options}
-        />
+        <SearchOptionsButton moduleT={moduleT} onChange={setOptions} value={options} />
       </div>
     </div>
   );

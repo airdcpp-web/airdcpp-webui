@@ -68,7 +68,7 @@
       "info": "TIETOA",
       "warning": "VAROITUS",
       "error": "VIRHE",
-      "verbose": "VERBOSE",
+      "verbose": "YKSITYISKOHTAINEN",
       "actions": {
         "viewEvents": "Näytä tapahtumat"
       }
@@ -446,7 +446,7 @@
     "notConnectedToTheHub": "Ei yhdistettynä hubiin",
     "connecting": "Yhdistetään",
     "loadingUserlist": "Ladataan käyttäjälistaa",
-    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
+    "favoriteHubsHint": "Vinkki: mene <url>Suosikkihubit</url>-sivulle, jos haluat yhdistää käyttämällä mukautettuja asetuksia",
     "new": "Yhdistä",
     "newDesc": "Yhdistä uuteen hubiin",
     "userList": "Käyttäjälista",
@@ -656,7 +656,7 @@
     "unsavedChangesPrompt": "Sinulla on tallentamattomia muutoksia. Haluatko varmasti lähteä?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
+        "connectivityDetectionNote": "Mikäli tiedostosiirtojen kanssa on ongelmia, tarkista että TCP-ovat varmasti avoinna käyttämällä esimerkiksi <portChecker>verkon porttitarkistussivustoa</portChecker>. Huomio, että UDP-portin (haut) avoimuutta ei voi tarkistaa verkkosivustojen kautta. Saat lisätietoja eri yhteystiloista <faq>DC++:n ohjesivustolta</faq>.",
         "currentAutoDetectionStatus": "Automaattisen tunnistamisen tila",
         "iPv4Connectivity": "IPv4-yhteys",
         "iPv6Connectivity": "IPv6-yhteys",
@@ -685,8 +685,8 @@
           "settingProfileHelp0": "Ohjelmaa käytetään tiedostojen jakamiseen internetin välityksellä normaaleissa yksityisissä tai julkisissa hubeissa. Käytä tätä profiilia, jos olet epävarma.",
           "settingProfileHelp1": "Ohjelmaa käytetään RAR-arkistoihin pilkottujen tiedostojen (tai muiden pienikokoisten tiedostojen) lataamiseen",
           "settingProfileHelp2": "Sovellusta käytetään tiedostojen siirtämiseen paikallisverkossa (esim. lanit) tai muussa suljetussa verkossa (esim. yliopistoverkko)",
-          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
-          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
+          "languageFileHelpRestart": "Sovellus on käynnistettävä uudestaan, jotta uusi kieli tulee käyttöön.",
+          "languageFileHelpTranslate": "Mikäli haluat auttaa nykyisten käännösten parantamisessa tai haluat kääntää ohjelman uudelle kielelle, katso <url>ohjeet kääntäjille</url>."
         }
       },
       "ignoredUsers": {
@@ -707,7 +707,7 @@
         "installedVersion": "Asennettu versio",
         "datePublished": "{{version}} (julkaistu {{date}})",
         "readMore": "Lue lisää",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "defaultExtensionEngineMissing": "Lisäosien oletusmoottori <strong>{{engineName}}</strong> ei ole asennettuna järjestelmään. Katso asennusohjeet <url>moottorin kotisivuilta</url> .",
         "manage": "Hallitse..."
       },
       "manage": {
@@ -716,8 +716,8 @@
         "installedVersion": "Asennettu versio",
         "nonListedExtension": "Listaamaton lisäosa",
         "readMore": "Lue lisää",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "noInstalledExtensions": "Asennettuja lisäosia ei löytynyt. Uusia lisäosia voidaan asentaa <url>Lisäosien katalogi</url> -sivulta.",
+        "defaultExtensionEngineMissing": "Lisäosien oletusmoottori <strong>{{engineName}}</strong> ei ole asennettuna järjestelmään. Katso asennusohjeet <url>moottorin kotisivuilta</url> .",
         "extensionDirectoryFetchError": "Tiedon hakeminen lisäosien katalogista epäonnistui: {{error}}",
         "unmanagedExtension": "Ulkoinen lisäosa",
         "manage": "Hallitse..."
@@ -835,8 +835,8 @@
         "name": "Nimi",
         "totalSize": "Yhteiskoko",
         "totalFiles": "Tiedostojen yhteismäärä",
-        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
+        "shareProfilesPartialNote": "Ladatut tiedostot jaetaan kaikissa hubeissa, joissa jakoja ei ole piilotettu, osittaisen tiedostojakotoiminnon avulla asetetuista jakoprofiileista riippumatta.",
+        "shareProfilesHelp": "Jakoprofiilit voidaan määrittää yksittäisille kansioille <url>Jaot</url>-sivulla."
       },
       "sharingOptions": {
         "skiplist": "Ohituslista"
@@ -853,7 +853,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
+        "connectionSpeedNote": "Ole niin tarkka kuin mahdollista ja määritä yhteytesi TODELLINEN nopeus. Voit käyttää yhteyden nopeuden testaamiseen verkkosivustoa, kuten <speedtest>{{name}}</speedtest>."
       },
       "uploadLimits": {
         "manuallySet": "Manuaalisesti asetettu"

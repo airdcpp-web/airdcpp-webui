@@ -41,7 +41,7 @@ const InstallPrompt: React.FC<InstallPromptProps> = ({ alwaysShow }) => {
           <p>
             {t(
               toI18nKey('pwaInstallDesc', UI.Modules.COMMON),
-              'This web application can be installed locally, providing a better user experience'
+              'This web application can be installed locally, providing a better user experience',
             )}
           </p>
           <Button

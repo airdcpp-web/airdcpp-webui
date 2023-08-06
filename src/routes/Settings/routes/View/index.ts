@@ -1,4 +1,6 @@
-module.exports = {
+import { RootSectionType } from 'routes/Settings/types';
+
+const View: RootSectionType = {
   url: 'view',
   title: 'View',
   icon: 'browser',
@@ -35,3 +37,5 @@ module.exports = {
     },
   ],
 };
+
+export default View;

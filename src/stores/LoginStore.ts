@@ -58,13 +58,13 @@ const LoginStore = {
         // Safari and private mode
         this._lastError = i18n.t<string>(
           'privateBrowsingNotSupported',
-          `This site can't be used with your browser if private browsing mode is enabled`
+          `This site can't be used with your browser if private browsing mode is enabled`,
         );
         this._allowLogin = false;
       } else {
         this._lastError = i18n.t<string>(
           'dataStorageNotSupported',
-          `This site can't be used with your browser because it doesn't support data storage`
+          `This site can't be used with your browser because it doesn't support data storage`,
         );
         this._allowLogin = false;
       }
@@ -187,7 +187,7 @@ const LoginStore = {
         this._lastError = translate(
           'Connection closed',
           i18n.t.bind(i18n),
-          UI.Modules.LOGIN
+          UI.Modules.LOGIN,
         );
       } else {
         this._lastError = error;

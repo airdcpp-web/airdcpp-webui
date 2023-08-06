@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {
+  Location,
   Route,
-  match as RouteMatch,
-  withRouter,
-  RouteComponentProps,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
 } from 'react-router-dom';
-
-import * as UI from 'types/ui';
 
 export type ModalCloseContext = () => void;
 
@@ -15,61 +15,52 @@ export interface ModalCloseContextProps {
 }
 
 export const ModalRouteCloseContext = React.createContext<ModalCloseContext | undefined>(
-  undefined
+  undefined,
 );
 
-export function withModalCloseContext<PropsT>(
-  Component: React.ComponentType<PropsT & ModalCloseContextProps>
-) {
-  return function withModalCloseContext(props: PropsT) {
-    return (
-      <ModalRouteCloseContext.Consumer>
-        {(context) => <Component {...props} closeModal={context!} />}
-      </ModalRouteCloseContext.Consumer>
-    );
-  };
+export interface ModalRouteDecoratorChildProps {
+  location: Location;
+  handleClose: () => void;
 }
 
-const parseRoutePath = (match: RouteMatch, path: string) => {
-  if (path[0] === '/') {
-    return path;
-  }
-
-  return `${match.url}/${path}`;
-};
-
-export interface ModalRouteDecoratorChildProps<
-  RoutePropsT extends object = UI.EmptyObject
-> extends RouteComponentProps<RoutePropsT> {
-  returnTo: string;
-}
-
-export default function <PropsT, RoutePropsT extends object = UI.EmptyObject>(
-  Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps<RoutePropsT>>,
-  path: string
+export default function <PropsT>(
+  Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>,
+  path: string,
 ) {
-  type Props = PropsT & RouteComponentProps<RoutePropsT>;
+  type Props = PropsT;
 
-  class ModalRouteDecorator extends React.Component<Props> {
-    handleClose = () => {
-      const { history, match } = this.props;
-      history.replace(match.url);
+  const ModalRouteDecorator: React.FC<Props> = (props) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const params = useParams()!;
+
+    const handleClose = () => {
+      const modalPath = params['*'];
+      if (modalPath) {
+        const index = location.pathname.lastIndexOf(modalPath);
+        const parentPath = location.pathname.substring(0, index - 1);
+        navigate(parentPath);
+      }
     };
 
-    render() {
-      const { match } = this.props;
-      return (
+    return (
+      <Routes>
         <Route
-          path={parseRoutePath(match, path)}
-          render={(routeProps) => (
-            <ModalRouteCloseContext.Provider value={this.handleClose}>
-              <Component returnTo={match.url} {...this.props} {...routeProps} />
+          path={`${path}/*`}
+          element={
+            <ModalRouteCloseContext.Provider value={handleClose}>
+              <Component
+                handleClose={handleClose}
+                location={location}
+                params={params}
+                {...props}
+              />
             </ModalRouteCloseContext.Provider>
-          )}
+          }
         />
-      );
-    }
-  }
+      </Routes>
+    );
+  };
 
-  return withRouter(ModalRouteDecorator);
+  return ModalRouteDecorator;
 }

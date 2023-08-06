@@ -1,8 +1,8 @@
 import * as API from 'types/api';
-import { RouteComponentProps } from 'react-router';
 import { ModuleTranslator } from './modules';
 import tcomb from 'utils/tcomb-form';
 import { EmptyObject } from './common';
+import { Location } from 'react-router-dom';
 
 export type FormObjectValue = Record<string, any>;
 export type FormValueBase = API.SettingValueBase | FormObjectValue;
@@ -26,27 +26,18 @@ export const enum TranslatableFormDefinitionProperties {
   OPTION = 'Option',
 }
 
-export type FormContext = Pick<RouteComponentProps, 'location'> & {
+export type FormContext = {
+  location: Location;
   formT: ModuleTranslator;
 };
-
-/*export type FormLocals<OptionValueT = any, ValueT = any, ConfigT = undefined> = {
-  onChange: (values: ValueT) => void;
-  options: Array<FormOption<OptionValueT>>;
-  value: ValueT;
-  config: ConfigT;
-  context: FormContext;
-  label?: string;
-  attrs: any;
-};*/
 
 export type FormLocals<
   OptionValueT = any,
   ValueT = any,
-  ConfigT = undefined
+  ConfigT = undefined,
 > = tcomb.form.TemplateLocals<OptionValueT, ValueT, ConfigT>;
 
 export type OptionTitleParser = (
   definition: FormFieldDefinition,
-  formT: ModuleTranslator
+  formT: ModuleTranslator,
 ) => React.ReactNode;

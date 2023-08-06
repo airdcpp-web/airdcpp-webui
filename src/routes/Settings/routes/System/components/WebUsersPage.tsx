@@ -16,7 +16,7 @@ import { formatRelativeTime } from 'utils/ValueFormat';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 interface WebUserRowProps {
   user: API.WebUser;
@@ -43,7 +43,7 @@ const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT }) => (
   </tr>
 );
 
-interface WebUsersPageProps extends SettingSectionChildProps {}
+interface WebUsersPageProps extends SettingPageProps {}
 
 interface WebUsersPageDataProps extends DataProviderDecoratorChildProps {
   users: API.WebUser[];
@@ -85,13 +85,13 @@ export default DataProviderDecorator(WebUsersPage, {
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.ADDED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.UPDATED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.REMOVED, () =>
-      refetchData()
+      refetchData(),
     );
   },
 });

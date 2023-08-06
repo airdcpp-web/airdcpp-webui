@@ -42,7 +42,7 @@ const CountLabel: React.FC<CountLabelProps> = ({
     { circular: circular },
     size,
     className,
-    urgencyToColor(max)
+    urgencyToColor(max),
   );
 
   return (

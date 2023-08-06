@@ -4,12 +4,11 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import SocketService from 'services/SocketService';
 import SettingConstants from 'constants/SettingConstants';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
 import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
 
 import * as API from 'types/api';
 
-interface AutoValuePanelProps extends SettingSectionChildProps {
+interface AutoValuePanelProps {
   type: string;
   keys: string[];
 }
@@ -44,7 +43,7 @@ class AutoValuePanel extends Component<AutoValuePanelProps> {
   onFieldSetting: FormFieldSettingHandler<any> = (
     settingKey,
     fieldOptions,
-    formValue
+    formValue,
   ) => {
     if (formValue[this.getAutoKey()] && settingKey !== this.getAutoKey()) {
       fieldOptions.disabled = true;
@@ -52,10 +51,11 @@ class AutoValuePanel extends Component<AutoValuePanelProps> {
   };
 
   render() {
+    const { keys } = this.props;
     return (
       <div className="ui segment">
         <RemoteSettingForm
-          {...this.props}
+          keys={keys}
           onFieldChanged={this.onFieldChanged}
           onFieldSetting={this.onFieldSetting}
         />

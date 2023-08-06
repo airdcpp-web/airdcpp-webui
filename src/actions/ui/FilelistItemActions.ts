@@ -6,7 +6,6 @@ import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import History from 'utils/History';
 import { refreshVirtual } from 'services/api/ShareApi';
 
 interface ActionFilelistItemData {
@@ -38,9 +37,9 @@ const handleRefreshShare: UI.ActionHandler<ActionFilelistItemData> = ({ data }) 
 
 const handleItemDetails: UI.ActionHandler<ActionFilelistItemData> = ({
   data,
-  location,
+  navigate,
 }) => {
-  History.push(`${location.pathname}/item/${data.item.id}`);
+  navigate(`item/${data.item.id}`);
 };
 
 const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {

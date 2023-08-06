@@ -69,7 +69,7 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellPr
 
 export interface ActionCellProps<
   CellDataT,
-  ItemDataT extends UI.ActionMenuItemDataValueType
+  ItemDataT extends UI.ActionMenuItemDataValueType,
 > extends Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 't' | 'children'>,
     Omit<TableActionMenuProps<ItemDataT>, 'caption' | 'itemData'> {}
 
@@ -79,7 +79,7 @@ interface FileItemBase {
 
 export const FileActionCell = <
   CellDataT extends React.ReactNode,
-  ItemDataT extends UI.ActionMenuItemDataValueType & FileItemBase
+  ItemDataT extends UI.ActionMenuItemDataValueType & FileItemBase,
 >({
   cellData,
   rowDataGetter,
@@ -101,7 +101,7 @@ export const FileActionCell = <
 
 export const ActionMenuCell = <
   CellDataT extends React.ReactNode,
-  ItemDataT extends UI.ActionMenuItemDataValueType
+  ItemDataT extends UI.ActionMenuItemDataValueType,
 >({
   cellData,
   rowDataGetter,
@@ -112,7 +112,7 @@ export const ActionMenuCell = <
 
 export interface ActionLinkCellProps<
   CellDataT,
-  ItemDataT extends UI.ActionMenuItemDataValueType
+  ItemDataT extends UI.ActionMenuItemDataValueType,
 > extends RowWrapperCellChildProps<CellDataT, ItemDataT> {
   /*Pick<ActionButtonProps<ItemDataT>, 'actions' | 'actionId'>*/
 
@@ -124,7 +124,7 @@ export interface ActionLinkCellProps<
 
 export const ActionLinkCell = <
   CellDataT,
-  ItemDataT extends UI.ActionMenuItemDataValueType
+  ItemDataT extends UI.ActionMenuItemDataValueType,
 >(
   {
     cellData,
@@ -134,7 +134,7 @@ export const ActionLinkCell = <
     actions,
     actionId,
     ...props
-  }: ActionLinkCellProps<CellDataT, ItemDataT> /*& ActionHandlerDecoratorChildProps*/
+  }: ActionLinkCellProps<CellDataT, ItemDataT> /*& ActionHandlerDecoratorChildProps*/,
 ) => {
   const action = actions.actions[actionId]!;
   if (!showAction(action, rowDataGetter!())) {
@@ -219,12 +219,12 @@ export const DecimalCell: React.FC<NumberCellProps> = ({ cellData }) => (
 
 export type FileDownloadCellClickHandler = (
   cellData: any,
-  rowDataGetter: () => any
+  rowDataGetter: () => any,
 ) => (() => void) | undefined;
 
 export interface FileDownloadCellProps<
   CellDataT,
-  ItemDataT extends UI.DownloadableItemInfo
+  ItemDataT extends UI.DownloadableItemInfo,
 > extends Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 'children'>,
     Omit<TableDownloadMenuProps<ItemDataT>, 'user' | 'itemInfoGetter' | 'caption'> {
   userGetter: (rowData: ItemDataT) => UI.DownloadSource;
@@ -233,7 +233,7 @@ export interface FileDownloadCellProps<
 
 export const FileDownloadCell = <
   CellDataT extends React.ReactNode,
-  ItemDataT extends UI.DownloadableItemInfo & FileItemBase
+  ItemDataT extends UI.DownloadableItemInfo & FileItemBase,
 >({
   cellData,
   rowDataGetter,

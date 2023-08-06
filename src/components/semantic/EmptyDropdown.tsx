@@ -22,7 +22,7 @@ export const EmptyDropdownCaption: React.FC<EmptyDropdownCaptionProps> = ({
   const titleClassName = classNames(
     //'caption',
     'ui empty dropdown',
-    className
+    className,
   );
 
   return (

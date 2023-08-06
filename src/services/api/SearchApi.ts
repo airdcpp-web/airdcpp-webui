@@ -8,11 +8,11 @@ export const searchDownloadHandler: UI.DownloadHandler<API.GroupedSearchResult> 
   itemInfo,
   user,
   downloadData,
-  instance
+  instance,
 ) => {
   return SocketService.post(
     `${SearchConstants.MODULE_URL}/${instance!.id}/results/${itemInfo.id}/download`,
-    downloadData
+    downloadData,
   );
 };
 
@@ -25,6 +25,6 @@ interface SearchData {
 export const search = (instance: API.SearchInstance, data: SearchData) => {
   return SocketService.post<API.SearchResponse>(
     `${SearchConstants.INSTANCES_URL}/${instance.id}/hub_search`,
-    data
+    data,
   );
 };

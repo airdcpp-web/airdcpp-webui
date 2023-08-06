@@ -28,7 +28,7 @@ const HubSessionStore = Reflux.createStore({
 
   hasConnectedHubs() {
     return this.getSessions().find(
-      (session: API.Hub) => session.connect_state.id === 'connected'
+      (session: API.Hub) => session.connect_state.id === 'connected',
     );
   },
 
@@ -39,23 +39,23 @@ const HubSessionStore = Reflux.createStore({
   onSocketConnected(addSocketListener: AddSocketListener) {
     invariant(
       this.getSessions().length === 0,
-      'No existing hub sessions should exist on socket connect'
+      'No existing hub sessions should exist on socket connect',
     );
 
     addSocketListener(
       HubConstants.MODULE_URL,
       HubConstants.SESSION_CREATED,
-      this._onSessionCreated
+      this._onSessionCreated,
     );
     addSocketListener(
       HubConstants.MODULE_URL,
       HubConstants.SESSION_REMOVED,
-      this._onSessionRemoved
+      this._onSessionRemoved,
     );
     addSocketListener(
       HubConstants.MODULE_URL,
       HubConstants.SESSION_UPDATED,
-      this._onSessionUpdated
+      this._onSessionUpdated,
     );
   },
 });
@@ -66,5 +66,5 @@ export default SessionStoreDecorator<API.Hub>(
   (session) =>
     session.settings.use_main_chat_notify
       ? HubMessageNotifyUrgencies
-      : HubMessageUrgencies
+      : HubMessageUrgencies,
 );

@@ -69,7 +69,7 @@ const HubActions: UI.ActionListType<API.Hub> = {
 const HubActionsDecorated = SessionActionDecorator(
   ChatActionDecorator(HubActions, HubConstants.SESSIONS_URL, API.AccessEnum.HUBS_EDIT),
   HubConstants.SESSIONS_URL,
-  API.AccessEnum.HUBS_EDIT
+  API.AccessEnum.HUBS_EDIT,
 );
 
 export default {

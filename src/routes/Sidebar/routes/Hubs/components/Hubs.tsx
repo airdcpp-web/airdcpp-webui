@@ -20,8 +20,8 @@ import {
   SessionProviderDecorator,
   SessionProviderDecoratorChildProps,
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
-import { toI18nKey } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
+import { Params } from 'react-router-dom';
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   itemNameGetter(session) {
@@ -41,9 +41,9 @@ const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   },
 };
 
-const parseNumericId = (params: UI.SessionRouteParams) => {
+const parseNumericId = (params: Readonly<Params<string>>) => {
   if (!params.id) {
-    return null;
+    return undefined;
   }
 
   return parseInt(params['id']);
@@ -52,13 +52,13 @@ const parseNumericId = (params: UI.SessionRouteParams) => {
 //const hubActions = [ 'reconnect', 'favorite', 'clear' ];
 
 const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
-  const { match, t, ...other } = props;
+  const { params, sessionT, ...other } = props;
   return (
     <SessionLayout
-      activeId={parseNumericId(match.params)}
+      activeId={parseNumericId(params)}
       baseUrl="hubs"
-      newCaption={t(toI18nKey('new', UI.Modules.HUBS), 'Connect')}
-      newDescription={t(toI18nKey('newDesc', UI.Modules.HUBS), 'Connect to a new hub')}
+      newCaption={sessionT.t('new', 'Connect')}
+      newDescription={sessionT.t('newDesc', 'Connect to a new hub')}
       newIcon={IconConstants.HUBS_PLAIN}
       editAccess={API.AccessEnum.HUBS_EDIT}
       uiActions={HubUIActions}
@@ -66,7 +66,7 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
       sessionApi={HubAPIActions as UI.SessionActions<API.Hub>}
       sessionItemLayout={HubSession}
       newLayout={HubNew}
-      t={t}
+      sessionT={sessionT}
       unreadInfoStore={HubSessionStore}
       {...ItemHandler}
       {...other}
@@ -74,4 +74,4 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
   );
 };
 
-export default SessionProviderDecorator(Hubs, HubSessionStore);
+export default SessionProviderDecorator(Hubs, HubSessionStore, UI.Modules.HUBS);

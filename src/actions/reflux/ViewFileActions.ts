@@ -4,15 +4,14 @@ import ViewFileConstants from 'constants/ViewFileConstants';
 
 import SocketService from 'services/SocketService';
 
-import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { Location } from 'history';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { NavigateFunction, Location } from 'react-router-dom';
 
 const ViewFileActionConfig: UI.RefluxActionConfigList<void> = [
   { createSession: { asyncResult: true } },
@@ -27,17 +26,23 @@ interface RemoteViewFileData {
   user: API.HintedUserBase;
 }
 
+interface CreateSessionProps {
+  isText: boolean;
+  location: Location;
+  sessionStore: UI.SessionStore<API.ViewFile>;
+  navigate: NavigateFunction;
+}
+
 // Remote file
 ViewFileActions.createSession.listen(function (
   this: UI.AsyncActionType<API.ViewFile>,
   { itemInfo, user }: RemoteViewFileData,
-  isText: boolean,
-  location: Location,
-  sessionStore: UI.SessionStore<API.ViewFile>
+  props: CreateSessionProps,
 ) {
+  const { sessionStore, isText } = props;
   const session = sessionStore.getSession(itemInfo.tth);
   if (session) {
-    this.completed(location, session);
+    this.completed(session, props);
     return;
   }
 
@@ -51,8 +56,8 @@ ViewFileActions.createSession.listen(function (
   };
 
   const that = this;
-  SocketService.post(ViewFileConstants.SESSIONS_URL, fileData)
-    .then((data: API.ViewFile) => that.completed(location, data))
+  SocketService.post<API.ViewFile>(ViewFileConstants.SESSIONS_URL, fileData)
+    .then((data) => that.completed(data, props))
     .catch(that.failed);
 });
 
@@ -60,10 +65,9 @@ ViewFileActions.createSession.listen(function (
 ViewFileActions.openLocalFile.listen(function (
   this: UI.AsyncActionType<API.ViewFile>,
   tth: string,
-  isText: boolean,
-  location: Location,
-  sessionStore: UI.SessionStore<API.ViewFile>
+  props: CreateSessionProps,
 ) {
+  const { sessionStore, isText } = props;
   const session = sessionStore.getSession(tth);
   if (session) {
     this.completed(location, session);
@@ -74,13 +78,12 @@ ViewFileActions.openLocalFile.listen(function (
   SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${tth}`, {
     text: isText,
   })
-    .then((data: API.ViewFile) => that.completed(location, data))
+    .then((data: API.ViewFile) => that.completed(data, props))
     .catch(that.failed);
 });
 
-const onSessionCreated = (file: API.ViewFile) => {
-  History.push({
-    pathname: `/files/session/${file.id}`,
+const onSessionCreated = (file: API.ViewFile, navigate: NavigateFunction) => {
+  navigate(`/files/session/${file.id}`, {
     state: {
       pending: true,
     },
@@ -88,10 +91,10 @@ const onSessionCreated = (file: API.ViewFile) => {
 };
 
 ViewFileActions.createSession.completed.listen(function (
-  location: Location,
-  file: API.ViewFile
+  file: API.ViewFile,
+  { navigate }: CreateSessionProps,
 ) {
-  onSessionCreated(file);
+  onSessionCreated(file, navigate);
 });
 
 ViewFileActions.createSession.failed.listen(function (error: ErrorResponse) {
@@ -99,10 +102,10 @@ ViewFileActions.createSession.failed.listen(function (error: ErrorResponse) {
 });
 
 ViewFileActions.openLocalFile.completed.listen(function (
-  location: Location,
-  file: API.ViewFile
+  file: API.ViewFile,
+  { navigate }: CreateSessionProps,
 ) {
-  onSessionCreated(file);
+  onSessionCreated(file, navigate);
 });
 
 ViewFileActions.openLocalFile.failed.listen(function (error: ErrorResponse) {
@@ -111,7 +114,7 @@ ViewFileActions.openLocalFile.failed.listen(function (error: ErrorResponse) {
 
 ViewFileActions.setRead.listen(function (
   this: UI.AsyncActionType<API.ViewFile>,
-  session: API.ViewFile
+  session: API.ViewFile,
 ) {
   const that = this;
   SocketService.post(`${ViewFileConstants.SESSIONS_URL}/${session.id}/read`)
@@ -121,7 +124,7 @@ ViewFileActions.setRead.listen(function (
 
 const ViewFileActionsDecorated = SessionActionDecorator(
   ViewFileActions,
-  ViewFileConstants.SESSIONS_URL
+  ViewFileConstants.SESSIONS_URL,
 );
 
 export default ViewFileActionsDecorated as UI.RefluxActionListType<void>;

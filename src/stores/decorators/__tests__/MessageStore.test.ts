@@ -120,7 +120,7 @@ describe('message store', () => {
 
     (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(
       SESSION_BASE,
-      messages
+      messages,
     );
     jest.runAllTimers();
 
@@ -136,7 +136,7 @@ describe('message store', () => {
   test('should remove duplicates arriving after fetching', () => {
     (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(
       SESSION_BASE,
-      messages
+      messages,
     );
     jest.runAllTimers();
 
@@ -148,7 +148,7 @@ describe('message store', () => {
   test('should remove session data', () => {
     (PrivateChatActions.fetchMessages as UI.AsyncActionType<any>).completed(
       SESSION_BASE,
-      messages
+      messages,
     );
     jest.runAllTimers();
 

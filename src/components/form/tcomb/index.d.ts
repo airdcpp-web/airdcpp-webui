@@ -67,13 +67,13 @@ export declare namespace form {
   }
 
   type TemplateFunction<OptionValueT = any, ValueT = any, ConfigT = undefined> = (
-    locals: TemplateLocals<OptionValueT, ValueT, ConfigT>
+    locals: TemplateLocals<OptionValueT, ValueT, ConfigT>,
   ) => React.ReactNode;
 
   type ErrorMessageFunction = (
     value: any,
     path: Path,
-    context: any
+    context: any,
   ) => React.ReactNode | null;
 
   type TcombRenderingOptions = {

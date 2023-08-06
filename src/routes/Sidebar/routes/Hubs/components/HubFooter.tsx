@@ -40,11 +40,11 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
   useEffect(() => {
     // Fetch initial
     SocketService.get<API.HubCounts>(
-      `${HubConstants.SESSIONS_URL}/${props.session.id}/counts`
+      `${HubConstants.SESSIONS_URL}/${props.session.id}/counts`,
     )
       .then(setCounts)
       .catch((error: ErrorResponse) =>
-        console.error('Failed to fetch hub counts', error.message)
+        console.error('Failed to fetch hub counts', error.message),
       );
 
     // Subscription
@@ -53,7 +53,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
       url,
       HubConstants.SESSION_COUNTS_UPDATED,
       (data: API.HubCounts) => setCounts(data),
-      props.session.id
+      props.session.id,
     );
 
     return () => props.removeSocketListeners(props);
@@ -116,5 +116,5 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
 
 export default SocketSubscriptionDecorator(
   HubFooter,
-  ({ session }) => !!HubSessionStore.getSession(session.id)
+  ({ session }) => !!HubSessionStore.getSession(session.id),
 );

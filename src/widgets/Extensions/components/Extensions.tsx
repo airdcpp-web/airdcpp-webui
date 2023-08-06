@@ -28,7 +28,7 @@ interface NpmPackageLayoutDataProps extends DataProviderDecoratorChildProps {
 const getItem = (
   npmPackage: UI.NpmPackage,
   moduleT: UI.ModuleTranslator,
-  installedPackages: API.Extension[]
+  installedPackages: API.Extension[],
 ) => {
   const installedPackage = installedPackages.find((p) => p.name === npmPackage.name);
   return (
@@ -83,5 +83,5 @@ export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutData
     addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, refetchInstalled);
     addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, refetchInstalled);
   },*/
-  }
+  },
 );

@@ -32,7 +32,7 @@ const Loader: React.FC<LoaderProps> = ({
     { inline: inline },
     { text: !inline }, // Should be used even if there is no text because of styling
     className,
-    size
+    size,
   );
 
   const content =

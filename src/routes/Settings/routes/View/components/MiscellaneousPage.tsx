@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { LocalSettings } from 'constants/SettingConstants';
 import LocalSettingForm from 'routes/Settings/components/LocalSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = [
   LocalSettings.UNREAD_LABEL_DELAY,
@@ -10,9 +10,9 @@ const Entry = [
   LocalSettings.NO_INSTALL_PROMPT,
 ];
 
-const MiscellaneousPage: React.FC<SettingSectionChildProps> = (props) => (
+const MiscellaneousPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
-    <LocalSettingForm {...props} keys={Entry} />
+    <LocalSettingForm moduleT={moduleT} keys={Entry} />
   </div>
 );
 

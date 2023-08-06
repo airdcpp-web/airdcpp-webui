@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Location } from 'history';
 
 import LoginStore, { LoginState } from 'stores/LoginStore';
 
@@ -12,16 +11,15 @@ import { useTranslation } from 'react-i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import { useLocation } from 'react-router-dom';
 
-interface AuthenticationGuardDecoratorProps {
-  location: Location;
-}
+interface AuthenticationGuardDecoratorProps {}
 
 const getConnectStatusMessage = (lastError: string | null, t: UI.TranslateF) => {
   if (!!lastError) {
     const msg = t(
       toI18nKey('reestablishConnection', UI.Modules.LOGIN),
-      'Attempting to re-establish connection...'
+      'Attempting to re-establish connection...',
     );
     return `${lastError}. ${msg}`;
   }
@@ -32,7 +30,8 @@ const getConnectStatusMessage = (lastError: string | null, t: UI.TranslateF) => 
 function AuthenticationGuardDecorator<PropsT>(Component: React.ComponentType<PropsT>) {
   const Decorator: React.FC<PropsT & AuthenticationGuardDecoratorProps> = (props) => {
     const login = useStore<LoginState>(LoginStore);
-    useLoginGuard(login, props.location);
+    const location = useLocation();
+    useLoginGuard(login, location);
     useAuthPageTitle(login);
     useStoreDataFetch(login);
     const { t } = useTranslation();

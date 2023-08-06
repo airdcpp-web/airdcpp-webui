@@ -15,7 +15,7 @@ const getMenuItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   menuIndex: number,
   actionId: string,
   itemIndex: number,
-  onClickAction: ActionClickHandler<ItemDataT>
+  onClickAction: ActionClickHandler<ItemDataT>,
 ): UI.ActionMenuItem => {
   const action = menu.actions.actions[actionId];
   if (!action) {
@@ -44,7 +44,7 @@ const getMenuItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
         <Trans
           i18nKey={toActionI18nKey(
             action,
-            parseTranslationModules(menu.actions.moduleId)
+            parseTranslationModules(menu.actions.moduleId),
           )}
           defaults={action.displayName}
         >
@@ -57,11 +57,11 @@ const getMenuItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
 
 // This should be used only for constructed menus, not for id arrays
 const hasLocalItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  id: string | UI.ActionMenuType<ItemDataT>
+  id: string | UI.ActionMenuType<ItemDataT>,
 ) => typeof id !== 'string';
 
 export interface ActionMenuDecoratorProps<
-  ItemDataT extends UI.ActionMenuItemDataValueType
+  ItemDataT extends UI.ActionMenuItemDataValueType,
 > extends UI.ActionMenuData<ItemDataT> {
   remoteMenuId?: string;
   className?: string;
@@ -75,14 +75,14 @@ export interface ActionMenuDecoratorChildProps {
 }
 
 export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  props: ActionMenuDecoratorProps<ItemDataT>
+  props: ActionMenuDecoratorProps<ItemDataT>,
 ) => {
   // Reduce menus to an array of DropdownItems
   const reduceLocalMenuItems = (
     onClickAction: ActionClickHandler,
     items: UI.ActionMenuItem[],
     menu: UI.ActionMenuType<ItemDataT>,
-    menuIndex: number
+    menuIndex: number,
   ) => {
     items.push(
       ...menu.actionIds.map((actionId, actionIndex) => {
@@ -91,9 +91,9 @@ export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueT
           menuIndex,
           actionId,
           actionIndex,
-          onClickAction
+          onClickAction,
         );
-      })
+      }),
     );
 
     return items;
@@ -114,15 +114,18 @@ export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueT
   };
 
   const getMenus = () => {
-    return getPropsArray().reduce((reduced, cur) => {
-      reduced.push(parseActionMenu(cur, !!reduced.length));
-      return reduced;
-    }, [] as ReturnType<typeof parseActionMenu>[]);
+    return getPropsArray().reduce(
+      (reduced, cur) => {
+        reduced.push(parseActionMenu(cur, !!reduced.length));
+        return reduced;
+      },
+      [] as ReturnType<typeof parseActionMenu>[],
+    );
   };
 
   const reduceRemoteMenuItems = (
     reduced: UI.ActionMenuItem[],
-    remoteMenuItems: UI.ActionMenuItem[]
+    remoteMenuItems: UI.ActionMenuItem[],
   ) => {
     if (!!remoteMenuItems.length) {
       if (!!reduced.length) {
@@ -140,7 +143,7 @@ export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueT
   const getItems = (
     onClickAction: ActionClickHandler<ItemDataT>,
     remoteMenus: Array<UI.ActionMenuItem[]> | null,
-    onClickMenuItem: UI.MenuItemClickHandler | undefined
+    onClickMenuItem: UI.MenuItemClickHandler | undefined,
   ): UI.ActionMenuItem[] => {
     const menus = getMenus();
 
@@ -158,7 +161,7 @@ export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueT
         onClickHandler,
         reduced,
         menu as UI.ActionMenuType<ItemDataT>,
-        menuIndex
+        menuIndex,
       );
     }, [] as UI.ActionMenuItem[]);
 

@@ -5,7 +5,7 @@ import { actionFilter, actionAccess } from 'utils/ActionUtils';
 import * as UI from 'types/ui';
 
 const parseItemData = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined
+  itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined,
 ): ItemDataT | undefined => {
   return itemData instanceof Function ? itemData() : itemData;
 };
@@ -14,7 +14,7 @@ const parseItemData = <ItemDataT extends UI.ActionMenuItemDataValueType>(
 const filterItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   props: UI.ActionMenuData<ItemDataT>,
   filter: UI.ActionMenuFilterType<ItemDataT>,
-  actionId: string
+  actionId: string,
 ) => {
   const action = props.actions.actions[actionId];
   if (!action) {
@@ -31,7 +31,7 @@ export const isDivider = (id: string) => id.startsWith('divider');
 const filterItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   props: UI.ActionMenuData<ItemDataT>,
   filter: UI.ActionMenuFilterType<ItemDataT>,
-  actionIds: string[]
+  actionIds: string[],
 ) => {
   const ids = actionIds.filter((id) => filterItem(props, filter, id));
   if (!ids.length || ids.every(isDivider)) {
@@ -62,7 +62,7 @@ const filterExtraDividers = (ids: string[]) => {
 // Get IDs to display from the specified menu
 export const parseActionMenu = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   props: UI.ActionMenuData<ItemDataT>,
-  hasPreviousMenuItems: boolean
+  hasPreviousMenuItems: boolean,
 ): UI.ActionMenuType<ItemDataT> | string => {
   let ids: string[] | null;
   ids =
@@ -106,7 +106,7 @@ export const parseActionMenu = <ItemDataT extends UI.ActionMenuItemDataValueType
 
 // Determine unique ID from item data
 export const parseActionMenuItemIds = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined
+  itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined,
 ): Array<UI.ActionIdType> => {
   const parsedItemData = parseItemData<ItemDataT>(itemData);
   return !!parsedItemData && (parsedItemData as UI.ActionMenuObjectItemData).id

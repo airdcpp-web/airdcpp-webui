@@ -5,13 +5,13 @@ import LocalSettingStore from 'stores/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
 import * as UI from 'types/ui';
-import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
+import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 type SessionType = UI.SessionItemBase;
 
 interface ActiveSessionDecoratorProps<
   SessionT extends SessionType,
-  ActionT extends object
+  ActionT extends object,
 > extends Pick<SessionChildProps<SessionT, ActionT>, 'session'> {
   sessionApi: UI.SessionActions<SessionT> & ActionT;
   //uiActions:
@@ -23,7 +23,7 @@ interface ActiveSessionDecoratorProps<
 export default function <
   PropsT,
   SessionT extends SessionType,
-  ActionT extends object = UI.EmptyObject
+  ActionT extends object = UI.EmptyObject,
 >(Component: React.ComponentType<PropsT>, useReadDelay = false) {
   class ActiveSessionDecorator extends React.Component<
     PropsT & ActiveSessionDecoratorProps<SessionT, ActionT>

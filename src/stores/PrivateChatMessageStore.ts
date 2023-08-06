@@ -17,11 +17,11 @@ const PrivateChatMessageStore = Reflux.createStore({
   onSocketConnected(addSocketListener: AddSocketListener) {
     invariant(
       !this.hasMessages(),
-      'No existing private messages should exist on socket connect'
+      'No existing private messages should exist on socket connect',
     );
     invariant(
       !this.hasInitializedSessions(),
-      'No initialized private message sessions should exist on socket connect'
+      'No initialized private message sessions should exist on socket connect',
     );
 
     const url = PrivateChatConstants.MODULE_URL;
@@ -36,5 +36,5 @@ const PrivateChatMessageStore = Reflux.createStore({
 export default MessageStoreDecorator(
   PrivateChatMessageStore,
   PrivateChatActions,
-  AccessConstants.PRIVATE_CHAT_VIEW
+  AccessConstants.PRIVATE_CHAT_VIEW,
 );

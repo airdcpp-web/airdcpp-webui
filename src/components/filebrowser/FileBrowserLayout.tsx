@@ -190,7 +190,7 @@ class FileBrowserLayout extends Component<Props, State> {
       .catch((error: Error) =>
         this.setState({
           error: error.message,
-        })
+        }),
       );
   };
 
@@ -217,7 +217,7 @@ class FileBrowserLayout extends Component<Props, State> {
     const rootName = translate(
       this.isWindows ? 'Computer' : 'Root',
       t,
-      UI.Modules.COMMON
+      UI.Modules.COMMON,
     );
     return (
       <div className="file-browser">

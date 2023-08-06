@@ -195,7 +195,7 @@ const toFormEntry = (entry?: API.FavoriteHubEntry): Entry | undefined => {
 };
 
 const toFavoriteHub = (
-  entry: RecursivePartial<Entry>
+  entry: RecursivePartial<Entry>,
 ): RecursivePartial<API.FavoriteHubEntry> => {
   return {
     ...entry.generic,
@@ -212,7 +212,7 @@ const isAdcHub = (hubUrl?: string) =>
 // Get selection values for the profiles field
 const getFieldProfiles = (
   profiles: API.SettingEnumOption[],
-  url?: string
+  url?: string,
 ): UI.FormOption[] => {
   return profiles
     .filter((p) => isAdcHub(url) || p.id === ShareProfileConstants.HIDDEN_PROFILE_ID)
@@ -228,14 +228,14 @@ interface DataProps {
   hubEntry?: API.FavoriteHubEntry;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   entryId: string;
-}
+}*/
 
 type Props = FavoriteHubDialogProps &
   DataProps &
   ShareProfileDecoratorChildProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+  ModalRouteDecoratorChildProps;
 
 class FavoriteHubDialog extends Component<Props> {
   static displayName = 'FavoriteHubDialog';
@@ -290,7 +290,7 @@ class FavoriteHubDialog extends Component<Props> {
 
     return SocketService.patch(
       `${FavoriteHubConstants.HUBS_URL}/${this.props.hubEntry!.id}`,
-      hubEntry
+      hubEntry,
     );
   };
 
@@ -332,7 +332,6 @@ class FavoriteHubDialog extends Component<Props> {
         onApprove={this.save}
         closable={false}
         icon={IconConstants.FAVORITE}
-        {...this.props}
       >
         <Form<Entry>
           ref={(c) => (this.form = c!)}
@@ -348,17 +347,17 @@ class FavoriteHubDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<FavoriteHubDialogProps, RouteProps>(
+export default ModalRouteDecorator<FavoriteHubDialogProps>(
   ShareProfileDecorator(FavoriteHubDialog, true, {
     urls: {
-      hubEntry: ({ match }, socket) => {
-        if (!match.params.entryId) {
+      hubEntry: ({ params }, socket) => {
+        if (!params.entryId) {
           return Promise.resolve(undefined);
         }
 
-        return socket.get(`${FavoriteHubConstants.HUBS_URL}/${match.params.entryId}`);
+        return socket.get(`${FavoriteHubConstants.HUBS_URL}/${params.entryId}`);
       },
     },
   }),
-  'entries/:entryId?'
+  'entries/:entryId?',
 );

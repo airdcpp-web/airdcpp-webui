@@ -122,14 +122,14 @@ function getUnionConcreteType(type, value) {
           t.assert.stringify(value) +
           ' supplied to ' +
           t.getTypeName(type) +
-          ' (no constructor returned by dispatch)'
+          ' (no constructor returned by dispatch)',
       );
     }
     return concreteType;
   } else if (kind === 'maybe') {
     const maybeConcrete = t.maybe(
       getUnionConcreteType(type.meta.type, value),
-      type.meta.name
+      type.meta.name,
     );
     maybeConcrete.getValidationErrorMessage = type.getValidationErrorMessage;
     maybeConcrete.getTcombFormFactory = type.getTcombFormFactory;
@@ -138,7 +138,7 @@ function getUnionConcreteType(type, value) {
     const subtypeConcrete = t.subtype(
       getUnionConcreteType(type.meta.type, value),
       type.meta.predicate,
-      type.meta.name
+      type.meta.name,
     );
     subtypeConcrete.getValidationErrorMessage = type.getValidationErrorMessage;
     subtypeConcrete.getTcombFormFactory = type.getTcombFormFactory;

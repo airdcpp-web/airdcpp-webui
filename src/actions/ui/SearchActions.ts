@@ -1,5 +1,3 @@
-import History from 'utils/History';
-
 import IconConstants from 'constants/IconConstants';
 
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
@@ -11,17 +9,22 @@ import * as UI from 'types/ui';
 const handleBrowseContent: UI.ActionHandler<API.GroupedSearchResult> = ({
   data,
   location,
+  navigate,
 }) => {
-  return FilelistSessionActions.createSession(
+  const createData = {
+    user: data.users.user,
+    path: data.path,
+  };
+
+  return FilelistSessionActions.createSession(createData, {
     location,
-    data.users.user,
-    FilelistSessionStore,
-    data.path
-  );
+    sessionStore: FilelistSessionStore,
+    navigate,
+  });
 };
 
-const handleResult: UI.ActionHandler<API.GroupedSearchResult> = ({ data, location }) => {
-  History.push(`${location.pathname}/result/${data.id}`);
+const handleResult: UI.ActionHandler<API.GroupedSearchResult> = ({ data, navigate }) => {
+  navigate(`result/${data.id}`);
 };
 
 const SearchActions: UI.ActionListType<API.GroupedSearchResult> = {

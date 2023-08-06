@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ProtocolPage from 'routes/Settings/routes/Connectivity/components/ProtocolPage';
-
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = [
   'connection_auto_v4',
@@ -12,9 +11,9 @@ const Entry = [
   'connection_ip_override_v4',
 ];
 
-const IPv4: React.FC<SettingSectionChildProps> = (props) => (
+const IPv4: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
-    <ProtocolPage {...props} keys={Entry} protocol="v4" />
+    <ProtocolPage moduleT={moduleT} keys={Entry} protocol="v4" />
   </div>
 );
 

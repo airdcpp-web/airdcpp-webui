@@ -8,22 +8,23 @@ import {
   SubscriptionCallback,
   EntityId,
 } from 'airdcpp-apisocket';
+
 import { AccessEnum } from 'types/api';
-import { SessionBaseType } from 'routes/Sidebar/components/SessionLayout';
+import * as UI from 'types/ui';
 
 export interface SocketSubscriptionDecoratorProps {
-  session?: SessionBaseType;
+  session?: UI.SessionItemBase;
 }
 
 export type AddSocketListener = <
   DataT extends object | void,
-  EntityIdT extends EntityId | undefined = undefined
+  EntityIdT extends EntityId | undefined = undefined,
 >(
   apiModuleUrl: string,
   event: string,
   callback: SubscriptionCallback<DataT, EntityIdT>,
   entityId?: EntityIdT,
-  access?: AccessEnum
+  access?: AccessEnum,
 ) => void;
 
 export interface SocketSubscriptionDecoratorChildProps<PropsT = unknown> {
@@ -36,20 +37,20 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
 
   // An optional function that will skip removal of listeners from the API in case "false" is being returned
   // This will help to avoid API errors that would happen when removing listeners for non-existing sessions
-  entityExistsValidator?: (props: PropsT) => boolean
+  entityExistsValidator?: (props: PropsT) => boolean,
 ) {
   class Decorator extends React.Component<PropsT & SocketSubscriptionDecoratorProps> {
     socketSubscriptions: SubscriptionRemoveHandler[] = [];
 
     addSocketListener = <
       DataT extends object | void,
-      EntityIdT extends EntityId | undefined
+      EntityIdT extends EntityId | undefined,
     >(
       apiModuleUrl: string,
       event: string,
       callback: SubscriptionCallback<DataT, EntityIdT>,
       entityId: EntityId | undefined,
-      access: AccessEnum
+      access: AccessEnum,
     ) => {
       if (access && !LoginStore.hasAccess(access)) {
         return;
@@ -59,7 +60,7 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
         apiModuleUrl,
         event,
         callback,
-        entityId
+        entityId,
       ).then((removeHandler) => this.socketSubscriptions.push(removeHandler));
     };
 

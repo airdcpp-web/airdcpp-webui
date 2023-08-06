@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 import Button from 'components/semantic/Button';
 
 import LoginStore from 'stores/LoginStore';
@@ -7,67 +6,47 @@ import classNames from 'classnames';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { SettingSaveState } from '../effects/useSettingSaveContext';
 
 export interface SaveButtonProps {
-  saveHandler: () => Promise<void>;
-  hasChanges: boolean;
-  local?: boolean;
+  saveState: SettingSaveState;
   className?: string;
   settingsT: UI.ModuleTranslator;
 }
 
-class SaveButton extends Component<SaveButtonProps> {
-  static propTypes = {
-    /**
-     * Message title
-     */
-    hasChanges: PropTypes.bool.isRequired,
+const SaveButton: React.FC<SaveButtonProps> = ({ saveState, settingsT, className }) => {
+  const { local, handleSave, hasChanges } = saveState;
+  const [saving, setSaving] = useState(false);
 
-    /**
-     * Error details
-     */
-    saveHandler: PropTypes.func.isRequired,
+  const onClick = async () => {
+    setSaving(true);
 
-    local: PropTypes.bool,
-  };
-
-  state = {
-    saving: false,
-  };
-
-  toggleSaveState = () => {
-    this.setState({ saving: !this.state.saving });
-  };
-
-  onClick = () => {
-    this.toggleSaveState();
-    this.props.saveHandler().then(this.toggleSaveState).catch(this.toggleSaveState);
-  };
-
-  render() {
-    const { local, hasChanges, className, settingsT } = this.props;
-
-    const hasAccess: boolean =
-      local || LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
-
-    let title;
-    if (!hasAccess) {
-      title = settingsT.translate('No save permission');
-    } else {
-      title = settingsT.translate(hasChanges ? 'Save changes' : 'No unsaved changes');
+    try {
+      await handleSave();
+    } finally {
+      setSaving(false);
     }
+  };
 
-    return (
-      <Button
-        className={classNames('save', className)}
-        caption={title}
-        icon={hasAccess && hasChanges ? 'green checkmark' : null}
-        loading={this.state.saving}
-        disabled={!hasChanges || !hasAccess}
-        onClick={this.onClick}
-      />
-    );
+  const hasAccess: boolean = local || LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
+
+  let title;
+  if (!hasAccess) {
+    title = settingsT.translate('No save permission');
+  } else {
+    title = settingsT.translate(hasChanges ? 'Save changes' : 'No unsaved changes');
   }
-}
+
+  return (
+    <Button
+      className={classNames('save', className)}
+      caption={title}
+      icon={hasAccess && hasChanges ? 'green checkmark' : null}
+      loading={saving}
+      disabled={!hasChanges || !hasAccess}
+      onClick={onClick}
+    />
+  );
+};
 
 export default SaveButton;

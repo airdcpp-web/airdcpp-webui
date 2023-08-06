@@ -11,7 +11,7 @@ interface UserSessionBase {
 }
 
 export default function <SessionT extends UI.SessionItemBase & UserSessionBase>(
-  itemMenuIds: string[]
+  itemMenuIds: string[],
 ) {
   const UserItemHandlerDecorator: UI.SessionInfoGetter<SessionT> = {
     itemNameGetter(session) {

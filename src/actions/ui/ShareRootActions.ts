@@ -1,5 +1,4 @@
 import SocketService from 'services/SocketService';
-import History from 'utils/History';
 
 import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
@@ -7,12 +6,16 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleCreate: UI.ActionHandler<void> = ({ location }) => {
-  History.push(`${location.pathname}/directories`);
+const handleCreate: UI.ActionHandler<void> = ({ navigate }) => {
+  navigate(`directories`);
 };
 
-const handleEdit: UI.ActionHandler<API.ShareRootEntry> = ({ data: root, location }) => {
-  History.push(`${location.pathname}/directories/${root.id}`);
+const handleEdit: UI.ActionHandler<API.ShareRootEntry> = ({
+  data: root,
+  location,
+  navigate,
+}) => {
+  navigate(`directories/${root.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.ShareRootEntry> = ({ data: root }) => {

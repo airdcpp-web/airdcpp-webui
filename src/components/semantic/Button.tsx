@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
     { disabled: !!disabled || !!loading },
     { loading: !!loading },
     color,
-    className
+    className,
   );
 
   return (

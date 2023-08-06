@@ -17,7 +17,7 @@ export type MenuItemClickHandler = () => void;
 
 export type ActionMenuFilterType<ItemDataT extends ActionMenuItemDataValueType> = (
   action: ActionType<ItemDataT>,
-  itemData: ItemDataT
+  itemData: ItemDataT,
 ) => boolean;
 
 export interface ActionMenuType<ItemDataT> {

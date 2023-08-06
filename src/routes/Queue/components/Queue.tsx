@@ -70,7 +70,7 @@ class Queue extends React.Component<WithTranslation> {
         icon={IconConstants.FILE}
         description={t<string>(
           'queueEmptyDesc',
-          'New items can be queued from search or filelists'
+          'New items can be queued from search or filelists',
         )}
       />
     );

@@ -52,7 +52,7 @@ class ActivityTracker extends Component {
       // Require 30 seconds of downtime
       const minutesAgo = (currentTime - this.lastSystemAlive) / 60 / 1000;
       console.log(
-        `Wake up detected (last successful activity check was ${minutesAgo} minutes ago)`
+        `Wake up detected (last successful activity check was ${minutesAgo} minutes ago)`,
       );
 
       // Woke up, disconnect the socket (it will be reconnected automatically)

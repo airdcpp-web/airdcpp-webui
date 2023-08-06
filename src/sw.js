@@ -30,7 +30,7 @@ self.addEventListener('install', (e) => {
       .catch((error) => {
         console.error(error);
         throw error;
-      })
+      }),
   );
 });
 
@@ -49,7 +49,7 @@ const deleteUnusedAssets = (cache) => {
         return cache.delete(request).then((deleted) => {
           console.log(`[SW] Cached asset ${request.url} deleted`, deleted);
         });
-      })
+      }),
     );
   });
 };
@@ -65,9 +65,9 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           return caches.open(cacheName).then((cache) => deleteUnusedAssets(cache));
-        })
+        }),
       );
-    })
+    }),
   );
 });
 
@@ -117,11 +117,11 @@ self.addEventListener('fetch', (e) => {
             console.log(
               '[SW] Navigate action, failed to fetch index',
               e.request.url,
-              err
+              err,
             );
             resolve(respondCache(e, cacheUrl));
           });
-      })
+      }),
     );
   }
 

@@ -75,13 +75,11 @@ export interface DataProps extends ShareProfileDecoratorChildProps {
 
 interface Entry extends ShareRootEntryBase, UI.FormValueMap {}
 
-interface RouteProps {
+/*interface RouteProps {
   directoryId: string;
-}
+}*/
 
-type Props = ShareDirectoryDialogProps &
-  DataProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+type Props = ShareDirectoryDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
 class ShareDirectoryDialog extends Component<Props> {
   static displayName = 'ShareDirectoryDialog';
@@ -96,7 +94,7 @@ class ShareDirectoryDialog extends Component<Props> {
 
     // Share profiles shouldn't be translated...
     const shareProfileDefinitions = this.fieldDefinitions.find(
-      (def) => def.key === 'profiles'
+      (def) => def.key === 'profiles',
     )!;
     Object.assign(shareProfileDefinitions, {
       options: props.profiles.map(profileToEnumValue),
@@ -131,7 +129,7 @@ class ShareDirectoryDialog extends Component<Props> {
 
     return SocketService.patch(
       `${ShareRootConstants.ROOTS_URL}/${this.props.rootEntry!.id}`,
-      changedFields
+      changedFields,
     );
   };
 
@@ -153,7 +151,7 @@ class ShareDirectoryDialog extends Component<Props> {
   render() {
     const { rootEntry, shareT, ...other } = this.props;
     const title = shareT.translate(
-      this.isNew() ? 'Add share directory' : 'Edit share directory'
+      this.isNew() ? 'Add share directory' : 'Edit share directory',
     );
     return (
       <Modal
@@ -191,21 +189,21 @@ class ShareDirectoryDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<ShareDirectoryDialogProps, RouteProps>(
+export default ModalRouteDecorator<ShareDirectoryDialogProps>(
   ShareProfileDecorator<Omit<Props, keyof DataProps>>(ShareDirectoryDialog, false, {
     urls: {
       virtualNames: ShareConstants.GROUPED_ROOTS_GET_URL,
-      rootEntry: ({ match }, socket) => {
-        if (!match.params.directoryId) {
+      rootEntry: ({ params }, socket) => {
+        if (!params.directoryId) {
           return Promise.resolve(undefined);
         }
 
-        return socket.get(`${ShareRootConstants.ROOTS_URL}/${match.params.directoryId}`);
+        return socket.get(`${ShareRootConstants.ROOTS_URL}/${params.directoryId}`);
       },
     },
     dataConverters: {
       virtualNames: (data: API.GroupedPath[]) => data.map((item) => item.name, []),
     },
   }),
-  'directories/:directoryId([0-9A-Z]{39})?'
+  '/directories/:directoryId?',
 );

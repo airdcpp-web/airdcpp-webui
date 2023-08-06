@@ -12,7 +12,7 @@ export interface AddTempShareResponse {
 export const shareTempFile = async (
   file: File,
   hubUrl: string,
-  cid: string | undefined
+  cid: string | undefined,
 ): Promise<AddTempShareResponse> => {
   // eslint-disable-next-line no-useless-catch
   try {
@@ -24,7 +24,7 @@ export const shareTempFile = async (
         file_id: fileId,
         hub_url: hubUrl,
         cid,
-      }
+      },
     );
 
     return res;

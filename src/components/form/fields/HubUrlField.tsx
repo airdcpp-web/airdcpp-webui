@@ -7,7 +7,7 @@ import HubSearchInput from 'components/autosuggest/HubSearchInput';
 
 type TCombTemplate = {
   renderInput: (
-    locals: UI.FormLocals<any, string | null, UI.EmptyObject>
+    locals: UI.FormLocals<any, string | null, UI.EmptyObject>,
   ) => React.ReactNode;
 };
 

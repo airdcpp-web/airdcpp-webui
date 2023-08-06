@@ -1,6 +1,5 @@
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
 import SocketService from 'services/SocketService';
-import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -32,7 +31,7 @@ const handleForceShare: UI.ActionHandler<API.QueueBundle> = ({ data: bundle }) =
 
 const handleRemoveBundle: UI.ActionHandler<API.QueueBundle> = (
   { data: bundle },
-  removeFinished
+  removeFinished,
 ) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/remove`, {
     remove_finished: removeFinished,
@@ -42,8 +41,9 @@ const handleRemoveBundle: UI.ActionHandler<API.QueueBundle> = (
 const handleSearch: UI.ActionHandler<API.QueueBundle> = ({
   data: itemInfo,
   location,
+  navigate,
 }) => {
-  return SearchActions.search(itemInfo, location);
+  return SearchActions.search(itemInfo, location, navigate);
 };
 
 const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = ({
@@ -52,12 +52,12 @@ const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = ({
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`);
 };
 
-const handleSources: UI.ActionHandler<API.QueueBundle> = ({ data, location }) => {
-  History.push(`${location.pathname}/sources/${data.id}`);
+const handleSources: UI.ActionHandler<API.QueueBundle> = ({ data, navigate }) => {
+  navigate(`sources/${data.id}`);
 };
 
-const handleContent: UI.ActionHandler<API.QueueBundle> = ({ data, location }) => {
-  History.push(`${location.pathname}/content/${data.id}`);
+const handleContent: UI.ActionHandler<API.QueueBundle> = ({ data, navigate }) => {
+  navigate(`content/${data.id}`);
 };
 
 const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {

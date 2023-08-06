@@ -1,4 +1,6 @@
-module.exports = {
+import { RootSectionType } from 'routes/Settings/types';
+
+const Sharing: RootSectionType = {
   url: 'sharing',
   title: 'Sharing',
   icon: 'tasks',
@@ -35,3 +37,5 @@ module.exports = {
     },
   ],
 };
+
+export default Sharing;

@@ -141,7 +141,7 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
 const reducePermissionToOption = (
   options: API.SettingEnumOption[],
   key: keyof typeof AccessConstants,
-  moduleT: UI.ModuleTranslator
+  moduleT: UI.ModuleTranslator,
 ) => {
   const captionEntry = AccessCaptions[key];
   if (typeof captionEntry === 'string') {
@@ -153,7 +153,7 @@ const reducePermissionToOption = (
     options.push({
       id: AccessConstants[key],
       name: `${moduleT.translate(captionEntry.title)} (${moduleT.translate(
-        captionEntry.action
+        captionEntry.action,
       )})`,
     });
   }
@@ -162,7 +162,7 @@ const reducePermissionToOption = (
 };
 
 const getEntry = (
-  isNew: boolean /*, moduleT: UI.ModuleTranslator*/
+  isNew: boolean /*, moduleT: UI.ModuleTranslator*/,
 ): UI.FormFieldDefinition[] => {
   return [
     {
@@ -195,11 +195,11 @@ interface DataProps extends DataProviderDecoratorChildProps {
   user: API.WebUserInput;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   userId: string;
-}
+}*/
 
-type Props = WebUserDialogProps & DataProps & ModalRouteDecoratorChildProps<RouteProps>;
+type Props = WebUserDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
 class WebUserDialog extends Component<Props> {
   static displayName = 'WebUserDialog';
@@ -220,9 +220,9 @@ class WebUserDialog extends Component<Props> {
           reducePermissionToOption(
             reduced,
             cur as keyof typeof AccessConstants,
-            permissionT
+            permissionT,
           ),
-        []
+        [],
       ),
     });
   }
@@ -242,7 +242,7 @@ class WebUserDialog extends Component<Props> {
 
     return SocketService.patch(
       `${WebUserConstants.USERS_URL}/${this.props.user.id}`,
-      changedFields
+      changedFields,
     );
   };
 
@@ -285,17 +285,17 @@ class WebUserDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<WebUserDialogProps, RouteProps>(
+export default ModalRouteDecorator<WebUserDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(WebUserDialog, {
     urls: {
-      user: ({ match }, socket) => {
-        if (!match.params.userId) {
+      user: ({ params }, socket) => {
+        if (!params.userId) {
           return Promise.resolve(undefined);
         }
 
-        return socket.get(`${WebUserConstants.USERS_URL}/${match.params.userId}`);
+        return socket.get(`${WebUserConstants.USERS_URL}/${params.userId}`);
       },
     },
   }),
-  'users/:userId?'
+  'users/:userId?',
 );

@@ -4,7 +4,7 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 import ActionButton from 'components/ActionButton';
 import Message from 'components/semantic/Message';
 import SystemActions from 'actions/ui/SystemActions';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import IconConstants from 'constants/IconConstants';
 
 const PlainEntry = ['web_plain_port', 'web_plain_bind_address'];
@@ -16,7 +16,7 @@ const TlsEntry = [
   'web_tls_certificate_key_path',
 ];
 
-const ServerSettingsPage: React.FC<SettingSectionChildProps> = (props) => {
+const ServerSettingsPage: React.FC<SettingPageProps> = (props) => {
   const { t } = props.moduleT;
   return (
     <div>
@@ -48,7 +48,7 @@ const ServerSettingsPage: React.FC<SettingSectionChildProps> = (props) => {
         <Message
           description={t<string>(
             'defaultCertNote',
-            'The default client certificate is used if the certificate paths are empty'
+            'The default client certificate is used if the certificate paths are empty',
           )}
           icon={IconConstants.INFO}
         />

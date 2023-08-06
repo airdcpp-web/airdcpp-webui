@@ -12,24 +12,24 @@ import Sidebar from 'routes/Sidebar/components/Sidebar';
 import { useSidebarEffect } from 'effects';
 import { MainLayoutProps } from './AuthenticatedApp';
 import classNames from 'classnames';
+import { Routes, useLocation } from 'react-router-dom';
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
-  const { className, location } = props;
-  const previousLocation = useSidebarEffect(secondaryRoutes, props);
+  const { className } = props;
+  const location = useLocation();
+  const previousLocation = useSidebarEffect(secondaryRoutes, location);
   const mainLocation = !!previousLocation ? previousLocation : location;
   return (
     <div className={classNames(className, 'pushable sidebar-context')} id="normal-layout">
-      <Sidebar
-        location={location}
-        routes={secondaryRoutes}
-        previousLocation={previousLocation}
-      />
+      <Sidebar routes={secondaryRoutes} previousLocation={previousLocation} />
       <div className="pusher">
         <SiteHeader>
           <MainNavigation />
         </SiteHeader>
         <div className="ui site-content">
-          {parseRoutes([...mainRoutes, ...configRoutes], mainLocation)}
+          <Routes location={mainLocation}>
+            {parseRoutes([...mainRoutes, ...configRoutes])}
+          </Routes>
         </div>
       </div>
       <SideMenu location={location} previousLocation={previousLocation} />
@@ -37,4 +37,4 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
   );
 };
 
-export default memo(MainLayout);
+export default memo(MainLayout, () => true);

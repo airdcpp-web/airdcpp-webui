@@ -1,9 +1,6 @@
 import { memo } from 'react';
 import * as React from 'react';
 
-import { useLocation } from 'react-router-dom';
-import { Location } from 'history';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
@@ -25,9 +22,8 @@ interface HighlightProps {
 
 const getHighlightNode = (
   highlight: API.MessageHighlight,
-  location: Location,
   t: UI.TranslateF,
-  { user, menuProps }: HighlightProps
+  { user, menuProps }: HighlightProps,
 ): React.ReactNode => {
   const { start, end } = highlight.position;
   const key = `${start}-${end}`;
@@ -76,7 +72,7 @@ const getHighlightNode = (
         }
       }
 
-      return <HighlightUrlLink key={key} text={highlight.text} location={location} />;
+      return <HighlightUrlLink key={key} text={highlight.text} />;
     }
     default: {
       return highlight.text;
@@ -99,8 +95,7 @@ const decoder = new TextDecoder();
 
 const formatHighlights = (
   { text: text16, highlights, emojify, ...other }: HighlightedTextProps,
-  location: Location,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ) => {
   if (!highlights.length) {
     return formatPlainText(text16, emojify);
@@ -115,7 +110,7 @@ const formatHighlights = (
   const pushText = (newStart: number) => {
     const textElement: React.ReactNode = formatPlainText(
       decoder.decode(text8.subarray(prevReplace, newStart)),
-      emojify
+      emojify,
     );
 
     elements.push(textElement);
@@ -125,7 +120,7 @@ const formatHighlights = (
     const { start, end } = highlight.position;
 
     pushText(start);
-    elements.push(getHighlightNode(highlight, location, t, other));
+    elements.push(getHighlightNode(highlight, t, other));
 
     prevReplace = end;
   }
@@ -139,8 +134,7 @@ const formatHighlights = (
 
 export const HighlightedText: React.FC<HighlightedTextProps> = memo(
   function HighlightedText(props) {
-    const location = useLocation();
     const { t } = useTranslation();
-    return <>{formatHighlights(props, location, t)}</>;
-  }
+    return <>{formatHighlights(props, t)}</>;
+  },
 );

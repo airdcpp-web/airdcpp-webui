@@ -446,7 +446,7 @@
     "notConnectedToTheHub": "Não conectado ao hub",
     "connecting": "Conectando",
     "loadingUserlist": "Carregando lista de usuários",
-    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
+    "favoriteHubsHint": "Dica: visite a página <url>Hubs Favoritos</url> para conectar usando configurações personalizadas",
     "new": "&amp;Conectar",
     "newDesc": "Conecte-se a um novo hub",
     "userList": "Lista de usuários",
@@ -656,7 +656,7 @@
     "unsavedChangesPrompt": "Você tem alterações não salvas. Você tem certeza de que quer sair?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
+        "connectivityDetectionNote": "Em caso de problemas de conectividade de transferência de arquivos, confirme se suas portas TCP estão realmente abertas usando <portChecker>um verificador de portas online</portChecker>. Observe que a validade da porta UDP (pesquisa) não pode ser verificada online. Para obter mais informações sobre os diferentes modos de conectividade, visite as perguntas frequentes sobre conectividade do DC++</faq>.",
         "currentAutoDetectionStatus": "Status atual da auto detecção",
         "iPv4Connectivity": "Conectividade IPv4",
         "iPv6Connectivity": "Conectividade IPv6",
@@ -685,8 +685,8 @@
           "settingProfileHelp0": "O cliente é usado em hubs públicos/privados normais para transferir arquivos via internet. Use este perfil se não tiver certeza.",
           "settingProfileHelp1": "O cliente é usado para transferir arquivos que são divididos em arquivos RAR (ou em outros formatos pequenos)",
           "settingProfileHelp2": "O cliente é usado para transferir arquivos na rede local (por exemplo, as LAN parties) ou em outra rede fechada (por exemplo, rede universitária)",
-          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
-          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
+          "languageFileHelpRestart": "O aplicativo deve ser reiniciado para que o novo idioma seja aplicado.",
+          "languageFileHelpTranslate": "Se você quiser ajudar a melhorar as traduções existentes ou traduzir o aplicativo para um novo idioma, consulte as <url>instruções para tradutores</url>."
         }
       },
       "ignoredUsers": {
@@ -707,7 +707,7 @@
         "installedVersion": "Versão instalada",
         "datePublished": "{{version}} (publicado {{date}})",
         "readMore": "Ler mais",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <strong>{{engineName}}</strong> não está instalado em seu sistema. Por favor visite <url>página inicial do mecanismo</url> para instruções de instalação.",
         "manage": "Gerenciar..."
       },
       "manage": {
@@ -716,8 +716,8 @@
         "installedVersion": "Versão instalada",
         "nonListedExtension": "Extensão não listada",
         "readMore": "Ler mais",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "noInstalledExtensions": "Nenhuma extensão instalada foi encontrada. Novas extensões podem ser instaladas a partir da página do <url>catálogo de Extensões</url> .",
+        "defaultExtensionEngineMissing": "O mecanismo de extensão padrão <strong>{{engineName}}</strong> não está instalado em seu sistema. Por favor visite <url>página inicial do mecanismo</url> para instruções de instalação.",
         "extensionDirectoryFetchError": "Falha ao buscar informações do diretório de extensões: {{error}}",
         "unmanagedExtension": "Extensão não gerenciada",
         "manage": "Gerenciar..."
@@ -835,8 +835,8 @@
         "name": "Nome",
         "totalSize": "Tamanho total",
         "totalFiles": "Arquivos no total",
-        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
+        "shareProfilesPartialNote": "Os arquivos enfileirados são compartilhados por meio do recurso de compartilhamento parcial de arquivos em todos os hubs onde o compartilhamento não foi oculto, independentemente dos perfis de compartilhamento configurados.",
+        "shareProfilesHelp": "Os perfis de compartilhamento são atribuídos a diretórios individuais da página <url>Share</url> ."
       },
       "sharingOptions": {
         "skiplist": "Lista de arquivos ignorados"
@@ -853,7 +853,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
+        "connectionSpeedNote": "Seja o mais preciso possível e defina a velocidade REAL da sua conexão. Você pode usar um testador online, como <speedtest>{{name}}</speedtest>, para testar sua velocidade."
       },
       "uploadLimits": {
         "manuallySet": "Definir manualmente"

@@ -5,7 +5,7 @@ import * as UI from 'types/ui';
 
 export interface ItemDownloadManager<
   ItemT extends UI.DownloadableItemInfo,
-  PropsT extends object
+  PropsT extends object,
 > {
   addDownloadItem: UI.AddItemDownload<ItemT, PropsT>;
   downloadDialogProps: UI.ItemDownloadHandler<ItemT, PropsT>;
@@ -13,9 +13,9 @@ export interface ItemDownloadManager<
 
 export const useItemDownloadManager = <
   ItemT extends UI.DownloadableItemInfo,
-  PropsT extends object
+  PropsT extends object,
 >(
-  session: UI.SessionItemBase | undefined
+  session: UI.SessionItemBase | undefined,
 ) => {
   const downloadManager = useMemo<ItemDownloadManager<ItemT, PropsT>>(() => {
     const downloads: { [key in string]: UI.ItemDownloadHandler<ItemT, PropsT> } = {};
@@ -36,7 +36,7 @@ export const useItemDownloadManager = <
             itemInfo,
             user,
             downloadData,
-            downloadSession
+            downloadSession,
           );
         },
         userGetter: (itemId, props) => {

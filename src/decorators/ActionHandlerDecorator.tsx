@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import * as React from 'react';
 
-import { RouteComponentProps, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Location, NavigateFunction } from 'react-router-dom';
 
 import * as UI from 'types/ui';
 
@@ -17,7 +17,6 @@ import { translate, toI18nKey, toArray } from 'utils/TranslationUtils';
 import { upperFirst } from 'lodash';
 import { toActionI18nKey } from 'utils/ActionUtils';
 import NotificationActions from 'actions/NotificationActions';
-import { Location } from 'history';
 
 interface ActionHandlerDecoratorProps<ItemDataT> {
   children: (props: ActionHandlerDecoratorChildProps<ItemDataT>) => React.ReactNode;
@@ -32,15 +31,15 @@ export interface ActionData<ItemDataT = any>
 
 export type ActionClickHandler<ItemDataT = any> = (action: ActionData<ItemDataT>) => void;
 
-export interface ActionHandlerDecoratorChildProps<ItemDataT = any>
-  extends Pick<RouteComponentProps, 'location'> {
+export interface ActionHandlerDecoratorChildProps<ItemDataT = any> {
   onClickAction: ActionClickHandler<ItemDataT>;
+  location: Location;
 }
 
 const toFieldI18nKey = (
   fieldName: string,
   actionData: ActionData,
-  subNameSpace: UI.SubNamespaces
+  subNameSpace: UI.SubNamespaces,
 ) => {
   let keyName = actionData.actionId;
   if (actionData.subId) {
@@ -59,14 +58,14 @@ const toFieldI18nKey = (
 const translateInput = (
   input: UI.ActionConfirmation,
   actionData: ActionData,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ): UI.ActionConfirmation => {
   const { approveCaption, rejectCaption, checkboxCaption, content } = input;
 
   const ret = {
     approveCaption: t(
       toFieldI18nKey('Approve', actionData, UI.SubNamespaces.PROMPTS),
-      approveCaption
+      approveCaption,
     ),
     rejectCaption: !rejectCaption
       ? undefined
@@ -75,7 +74,7 @@ const translateInput = (
       ? undefined
       : t(
           toFieldI18nKey('Checkbox', actionData, UI.SubNamespaces.PROMPTS),
-          checkboxCaption
+          checkboxCaption,
         ),
     content: t(toFieldI18nKey('Content', actionData, UI.SubNamespaces.PROMPTS), {
       defaultValue: content,
@@ -95,13 +94,13 @@ const getCommonConfirmDialogProps = <ItemDataT extends UI.ActionItemDataValueTyp
   actionData: ActionData<ItemDataT>,
   confirmation: UI.ActionConfirmation,
   defaultRejectCaption: string,
-  t: UI.TranslateF
+  t: UI.TranslateF,
 ): Omit<ConfirmDialogProps, 'onApproved'> => {
   const { icon, displayName } = actionData.action;
   const { approveCaption, rejectCaption, content, checkboxCaption } = translateInput(
     confirmation!,
     actionData,
-    t
+    t,
   );
   return {
     approveCaption,
@@ -149,7 +148,7 @@ const ConfirmHandler = <ItemDataT extends UI.ActionItemDataValueType>({
     if (options.inputProps.placeholder) {
       options.inputProps.placeholder = t(
         toFieldI18nKey('Placeholder', actionData, UI.SubNamespaces.PROMPTS),
-        options.inputProps.placeholder
+        options.inputProps.placeholder,
       );
     }
 
@@ -166,13 +165,23 @@ const ConfirmHandler = <ItemDataT extends UI.ActionItemDataValueType>({
   return null;
 };
 
-const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>(
-  actionData: ActionData<ItemDataT>,
-  confirmData: boolean | string | undefined,
-  location: Location,
-  t: UI.TranslateF,
-  closeModal: ModalCloseContext | undefined
-) => {
+interface HandleAction<ItemDataT extends UI.ActionItemDataValueType> {
+  actionData: ActionData<ItemDataT>;
+  confirmData: boolean | string | undefined;
+  location: Location;
+  navigate: NavigateFunction;
+  t: UI.TranslateF;
+  closeModal: ModalCloseContext | undefined;
+}
+
+const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
+  actionData,
+  confirmData,
+  location,
+  t,
+  navigate,
+  closeModal,
+}: HandleAction<ItemDataT>) => {
   const { actionId, action, itemData } = actionData;
   if (!!closeModal && isSidebarAction(actionId)) {
     closeModal();
@@ -182,6 +191,7 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>(
     const handlerData: UI.ActionHandlerData<ItemDataT> = {
       data: itemData,
       location,
+      navigate,
       t,
     };
 
@@ -196,7 +206,7 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>(
               item: itemData,
               result,
             },
-          }
+          },
         );
 
         NotificationActions.success({
@@ -216,24 +226,32 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>(
 type Props<ItemDataT> = ActionHandlerDecoratorProps<ItemDataT>;
 
 const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
-  props: Props<ItemDataT>
+  props: Props<ItemDataT>,
 ) => {
   const [confirmActionData, setConfirmActionData] =
     useState<ActionData<ItemDataT> | null>(null);
   const { t } = useTranslation();
   const closeModal = useContext(ModalRouteCloseContext);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const closeConfirmation = () => {
     setTimeout(() => setConfirmActionData(null));
   };
 
-  const handleConfirm = async (data: boolean | string) => {
+  const handleConfirm = async (confirmData: boolean | string) => {
     if (!confirmActionData) {
       return;
     }
 
-    await handleAction(confirmActionData, data, location, t, closeModal);
+    await handleAction({
+      actionData: confirmActionData,
+      confirmData,
+      location,
+      navigate,
+      t,
+      closeModal,
+    });
     closeConfirmation();
   };
 
@@ -243,7 +261,14 @@ const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
     } else if (actionData.action.input) {
       setConfirmActionData(actionData);
     } else {
-      handleAction(actionData, undefined, location, t, closeModal);
+      handleAction({
+        actionData,
+        confirmData: undefined,
+        location,
+        navigate,
+        t,
+        closeModal,
+      });
     }
   };
 

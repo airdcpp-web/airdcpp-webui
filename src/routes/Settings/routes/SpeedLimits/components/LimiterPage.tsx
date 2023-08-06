@@ -1,16 +1,12 @@
 import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
-const Entry = [
-  'upload_limit_main',
-  'download_limit_main',
-  //limit_use_with_auto_values: t.Bool,
-];
+const Entry = ['upload_limit_main', 'download_limit_main'];
 
-const LimiterPage: React.FC<SettingSectionChildProps> = (props) => (
+const LimiterPage: React.FC<SettingPageProps> = () => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} />
+    <RemoteSettingForm keys={Entry} />
   </div>
 );
 

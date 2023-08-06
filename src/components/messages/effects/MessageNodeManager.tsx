@@ -28,7 +28,7 @@ const reduceMessageListItem = (
   reduced: React.ReactNode[],
   message: UI.MessageListItem,
   index: number,
-  messageList: UI.MessageListItem[]
+  messageList: UI.MessageListItem[],
 ) => {
   // Push a divider when the date was changed
   if (showDateDivider(index, messageList)) {
@@ -37,7 +37,7 @@ const reduceMessageListItem = (
       : message.log_message;
     if (!!messageObj) {
       reduced.push(
-        <MessageListDateDivider key={`divider${messageObj.id}`} time={messageObj.time} />
+        <MessageListDateDivider key={`divider${messageObj.id}`} time={messageObj.time} />,
       );
     }
   }
@@ -64,7 +64,7 @@ const reduceMessageListItem = (
         // Only use the boundary for now, could be improved later...
         // position: index < 4 ? 'bottom left' : 'top left',
       }}
-    />
+    />,
   );
 
   return reduced;
@@ -78,7 +78,7 @@ interface Props {
 
 export const useMessagesNode = (
   { highlightRemoteMenuId, messages, session }: Props,
-  downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>
+  downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>,
 ) => {
   const visibleItems = useMemo(() => new Set<number>(), [session]);
 
@@ -106,7 +106,7 @@ export const useMessagesNode = (
         onMessageVisibilityChanged,
         addDownload: downloadManager.addDownloadItem,
       }),
-      []
+      [],
     );
   }, [messages]);
 

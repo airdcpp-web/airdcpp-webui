@@ -32,7 +32,7 @@ type Props = ShareProfileFilterProps &
 const getDropdownItem = (
   profile: ShareProfileItem,
   onClick: (p: ShareProfileItem) => void,
-  selectedProfile: ShareProfileItem
+  selectedProfile: ShareProfileItem,
 ) => {
   return (
     <MenuItemLink
@@ -72,7 +72,7 @@ const ShareProfileFilter = memo<Props>(function ShareProfileFilter(props) {
         icon={IconConstants.FILTER}
       >
         {[defaultItem, ...props.profiles].map((p) =>
-          getDropdownItem(p, onClick, selectedProfile)
+          getDropdownItem(p, onClick, selectedProfile),
         )}
       </MenuSection>
     </SectionedDropdown>
@@ -82,7 +82,7 @@ const ShareProfileFilter = memo<Props>(function ShareProfileFilter(props) {
 export default ShareProfileDecorator<ShareProfileFilterProps & TableFilterDecoratorProps>(
   TableFilterDecorator<ShareProfileFilterProps & ShareProfileDecoratorChildProps>(
     ShareProfileFilter,
-    'profiles'
+    'profiles',
   ),
-  false
+  false,
 );

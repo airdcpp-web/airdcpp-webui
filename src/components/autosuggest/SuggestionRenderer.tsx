@@ -7,7 +7,7 @@ import './style.css';
 const SuggestionRenderer = (
   searchText: string,
   suggestionText: string,
-  description?: string
+  description?: string,
 ) => {
   const matchRegex = new RegExp('\\b' + escapeStringRegexp(searchText), 'i');
 
@@ -18,7 +18,7 @@ const SuggestionRenderer = (
     const beforeMatch = suggestionText.slice(0, firstMatchIndex);
     const match = suggestionText.slice(
       firstMatchIndex,
-      firstMatchIndex + searchText.length
+      firstMatchIndex + searchText.length,
     );
     const afterMatch = suggestionText.slice(firstMatchIndex + searchText.length);
 

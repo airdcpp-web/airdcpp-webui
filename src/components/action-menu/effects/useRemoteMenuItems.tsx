@@ -22,7 +22,7 @@ type SelectHandler = (selection: SelectionData) => void;
 
 const toMenuItem = (
   selection: SelectionData,
-  handleSelect: SelectHandler
+  handleSelect: SelectHandler,
 ): UI.ActionMenuItem => {
   const onClick = () => {
     handleSelect(selection);
@@ -48,7 +48,7 @@ interface MenuItemData {
 
 const toMenu = (
   menu: API.GroupedContextMenuItem,
-  { selectedIds, remoteMenuId, handleSelect, nestingThreshold }: MenuItemData
+  { selectedIds, remoteMenuId, handleSelect, nestingThreshold }: MenuItemData,
 ): UI.ActionMenuItem[] => {
   const items = menu.items.map((menuItem) =>
     toMenuItem(
@@ -57,8 +57,8 @@ const toMenu = (
         remoteMenuId,
         selectedIds,
       },
-      handleSelect
-    )
+      handleSelect,
+    ),
   );
 
   if (items.length <= nestingThreshold) {
@@ -114,8 +114,8 @@ export const useRemoteMenuItems = ({
                 selected_ids: selectedIdsByMenu[menuIndex],
                 entity_id: entityId,
                 supports: SUPPORTS,
-              }
-            )
+              },
+            ),
       );
 
       let fetchedMenus: Array<API.GroupedContextMenuItem[]>;
@@ -145,7 +145,7 @@ export const useRemoteMenuItems = ({
         supports: SUPPORTS,
         form_definitions: menuItem.form_definitions,
         form_value: values,
-      }
+      },
     );
   };
 
@@ -169,7 +169,7 @@ export const useRemoteMenuItems = ({
 
       const onSave: FormSaveHandler<UI.FormValueMap> = (
         changedFields: UI.FormValueMap,
-        allFields: UI.FormValueMap
+        allFields: UI.FormValueMap,
       ) => {
         return onPostSelect(selection, allFields);
       };

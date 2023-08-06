@@ -22,7 +22,7 @@ export type TableActionMenuProps<ItemDataT extends UI.ActionMenuItemDataValueTyp
   TableActionMenuDropdownProps & ActionMenuDecoratorProps<ItemDataT>;
 export const TableActionMenu = ActionMenuDecorator<TableActionMenuDropdownProps, any>(
   TableDropdown,
-  buildMenu
+  buildMenu,
 );
 
 export type UserMenuProps = UserMenuDecoratorProps & ActionMenuProps;
@@ -41,5 +41,5 @@ export type TableDownloadMenuProps<ItemDataT extends UI.DownloadableItemInfo> =
   DownloadMenuDecoratorProps<ItemDataT> & TableActionMenuDropdownProps;
 
 export const TableDownloadMenu = DownloadMenuDecorator<TableActionMenuDropdownProps, any>(
-  TableActionMenu
+  TableActionMenu,
 );

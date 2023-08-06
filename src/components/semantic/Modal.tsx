@@ -1,11 +1,8 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
 import classNames from 'classnames';
 import LayoutHeader from 'components/semantic/LayoutHeader';
-
-import History from 'utils/History';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -16,6 +13,7 @@ import { Translation } from 'react-i18next';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
+import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
 export type ModalProps = React.PropsWithChildren<{
   closable?: boolean;
@@ -27,7 +25,6 @@ export type ModalProps = React.PropsWithChildren<{
   fullHeight?: boolean;
   className?: string;
   dynamicHeight?: boolean;
-  returnTo?: string;
 
   // Header
   icon?: IconType;
@@ -37,124 +34,55 @@ export type ModalProps = React.PropsWithChildren<{
 
 const NODE_ID = 'modals-node';
 
-class Modal extends React.Component<ModalProps> {
-  /*static propTypes = {
-    // Close the modal when clicking outside its boundaries
-    closable: PropTypes.bool,
+const Modal: React.FC<ModalProps> = (props) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [saving, setSaving] = React.useState(false);
 
-    // Function to call when the dialog is approved
-    // If no handler is supplied, there will only be a plain close button
-    onApprove: PropTypes.func,
+  // Needed when navigating from one modal to another (e.g. download dialog -> browse)
+  // We don't want to return to the previous page in those cases
+  const returnOnClose = React.useRef(true);
 
-    // Caption for the approve button
-    approveCaption: PropTypes.node,
+  // Set to true when the modal is being closed cleanly (backdrop click/action buttons)
+  // We need to clean the DOM for non-clean closures
+  const closingCleanly = React.useRef(false);
 
-    // Use disabled style for the approve button
-    approveDisabled: PropTypes.bool,
+  const closeModalRoute = React.useContext(ModalRouteCloseContext);
 
-    // The modal will always use the maximum allowed width when set,
-    // instead of adjusting the height dynamically.
-    // Useful for modals with navigable, varying height content
-    fullHeight: PropTypes.bool,
-
-    dynamicHeight: PropTypes.bool,
-
-    showOverlay: PropTypes.func.isRequired,
-    hide: PropTypes.func.isRequired,
-  };*/
-
-  static defaultProps: Pick<
-    ModalProps,
-    'closable' | 'approveCaption' | 'fullHeight' | 'dynamicHeight'
-  > = {
-    closable: true,
-    //approveCaption: 'Save',
-    fullHeight: false,
-    dynamicHeight: false,
+  const show = () => {
+    setTimeout(() => {
+      $(ref.current!).modal('show');
+    });
   };
 
-  state = {
-    saving: false,
-  };
-
-  c: any;
-
-  closing = false;
-  returnOnClose = true;
-
-  componentDidMount() {
-    this.returnOnClose = true;
-
-    const settings: SemanticUI.ModalSettings = {
-      onHidden: this.onHidden,
-      onHide: this.onHide,
-
-      onApprove: this.onApprove,
-      onDeny: this.props.onReject,
-      closable: this.props.closable,
-      detachable: false,
-      allowMultiple: true,
-      observeChanges: this.props.dynamicHeight,
-      dimmerSettings: {
-        dimmerName: NODE_ID,
-        //namespace: NODE_ID,
-        /*selector: {
-          dimmer: `> .ui.dimmer.${NODE_ID}`
-        }*/
-      },
-      //namespace: `${NODE_ID}`,
-      /*className: {
-        active: NODE_ID,
-      },*/
-      //debug: true,
-      //verbose: true,
-      //name: 'Modal',
-    };
-
-    $(this.c).modal(settings);
-
-    this.show();
-  }
-
-  componentWillUnmount() {
-    if (!this.closing) {
-      this.returnOnClose = false;
-      this.hide();
-    }
-  }
-
-  show = () => {
-    setTimeout(() => $(this.c).modal('show'));
-  };
-
-  hide = () => {
-    $(this.c).modal('hide');
-  };
-
-  onHide = () => {
-    this.closing = true;
-  };
-
-  onHidden = () => {
-    if (this.returnOnClose && this.props.returnTo) {
-      History.replace(this.props.returnTo);
-    }
-
-    this.returnOnClose = true;
-
-    if (this.props.onClose) {
-      this.props.onClose();
+  const hide = () => {
+    if (ref.current) {
+      $(ref.current).modal('hide');
     }
   };
 
-  onApprove = () => {
-    const { onApprove } = this.props;
+  const onHide = () => {
+    closingCleanly.current = true;
+  };
+
+  const onHidden = () => {
+    if (closeModalRoute && returnOnClose.current) {
+      closeModalRoute();
+    }
+
+    const { onClose } = props;
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const onApprove = () => {
+    const { onApprove } = props;
     if (onApprove) {
-      this.setState({ saving: true });
+      setSaving(true);
 
       onApprove()
-        .then(this.hide)
-        .catch(() => this.setState({ saving: false }));
+        .then(hide)
+        .catch(() => setSaving(false));
 
       return false;
     }
@@ -162,58 +90,79 @@ class Modal extends React.Component<ModalProps> {
     return;
   };
 
-  render() {
-    const { saving } = this.state;
-    const {
-      approveDisabled,
-      fullHeight,
-      approveCaption,
-      onApprove,
-      className,
-      children,
-    } = this.props;
-    const { icon, subHeader, title } = this.props;
+  React.useLayoutEffect(() => {
+    const settings: SemanticUI.ModalSettings = {
+      onHidden: onHidden,
+      onHide: onHide,
 
-    const approveStyle = classNames(
-      'ui ok green basic button',
-      { disabled: approveDisabled },
-      { loading: saving }
-    );
+      onApprove: onApprove,
+      onDeny: props.onReject,
+      closable: props.closable,
+      detachable: false,
+      allowMultiple: true,
+      observeChanges: props.dynamicHeight,
+      dimmerSettings: {
+        dimmerName: NODE_ID,
+      },
+      //debug: true,
+      //verbose: true,
+      //name: 'Modal',
+    };
 
-    const mainClass = classNames('ui modal', { full: fullHeight }, className);
+    $(ref.current!).modal(settings);
+    show();
 
-    return ReactDOM.createPortal(
-      <div ref={(c) => (this.c = c)} className={mainClass}>
-        <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
-        <div className="content">{children}</div>
+    return () => {
+      if (!closingCleanly.current) {
+        // History navigation event, we still need to clean up the dimmer
+        returnOnClose.current = false;
+        hide();
+      }
+    };
+  }, []);
 
-        <Translation>
-          {(t) =>
-            onApprove ? (
-              <div className="actions">
-                <div className={approveStyle}>
-                  <Icon icon={IconConstants.SAVE_COLORED} />
-                  {approveCaption || translate('Save', t, UI.Modules.COMMON)}
-                </div>
-                <div className="ui cancel red basic button">
-                  <Icon icon={IconConstants.CANCEL} />
-                  {translate('Cancel', t, UI.Modules.COMMON)}
-                </div>
+  const { approveDisabled, fullHeight, approveCaption, className, children } = props;
+  const { icon, subHeader, title } = props;
+
+  const approveStyle = classNames(
+    'ui ok green basic button',
+    { disabled: approveDisabled },
+    { loading: saving },
+  );
+
+  const mainClass = classNames('ui modal', { full: fullHeight }, className);
+
+  return ReactDOM.createPortal(
+    <div ref={ref} className={mainClass}>
+      <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
+      <div className="content">{children}</div>
+
+      <Translation>
+        {(t) =>
+          props.onApprove ? (
+            <div className="actions">
+              <div className={approveStyle}>
+                <Icon icon={IconConstants.SAVE_COLORED} />
+                {approveCaption || translate('Save', t, UI.Modules.COMMON)}
               </div>
-            ) : (
-              <div className="actions">
-                <div className="ui cancel button">
-                  <Icon icon={IconConstants.CLOSE} />
-                  {translate('Close', t, UI.Modules.COMMON)}
-                </div>
+              <div className="ui cancel red basic button">
+                <Icon icon={IconConstants.CANCEL} />
+                {translate('Cancel', t, UI.Modules.COMMON)}
               </div>
-            )
-          }
-        </Translation>
-      </div>,
-      document.getElementById(NODE_ID)!
-    );
-  }
-}
+            </div>
+          ) : (
+            <div className="actions">
+              <div className="ui cancel button">
+                <Icon icon={IconConstants.CLOSE} />
+                {translate('Close', t, UI.Modules.COMMON)}
+              </div>
+            </div>
+          )
+        }
+      </Translation>
+    </div>,
+    document.getElementById(NODE_ID)!,
+  );
+};
 
 export default Modal;

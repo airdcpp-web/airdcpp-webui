@@ -5,9 +5,8 @@ import LoginActions from 'actions/reflux/LoginActions';
 import LoginStore from 'stores/LoginStore';
 
 import Checkbox from 'components/semantic/Checkbox';
-import { RouteComponentProps } from 'react-router';
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
-import { useLoginState, LoginLocationState } from '../effects/UseLoginStateEffect';
+import { useLoginState } from '../effects/UseLoginStateEffect';
 import { ErrorBox, BottomMessage, SubmitButton } from './LoginLayoutComponents';
 
 import '../style.css';
@@ -18,16 +17,15 @@ import * as UI from 'types/ui';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 
-interface LoginProps
-  extends RouteComponentProps<UI.EmptyObject, any, LoginLocationState> {}
+interface LoginProps {}
 
-const Login: React.FC<LoginProps> = (props) => {
+const Login: React.FC<LoginProps> = () => {
   const { t } = useTranslation();
   const [rememberMe, setRememberMe] = useState(false);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const [loading, setLoading] = useLoginState(props);
+  const [loading, setLoading] = useLoginState();
   if (!!LoginStore.refreshToken) {
     return (
       <SocketConnectStatus

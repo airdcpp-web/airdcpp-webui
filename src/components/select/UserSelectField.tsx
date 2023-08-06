@@ -53,14 +53,14 @@ const HintedUserFormatter = DataProviderDecorator<
     urls: {
       hintedUser: async (
         { option },
-        socket
+        socket,
       ): Promise<HintedUserFormatterDataProps['hintedUser']> => {
         try {
           const hintedUser = await socket.post<API.HintedUser | undefined>(
             UserConstants.SEARCH_HINTED_USER_URL,
             {
               user: option,
-            }
+            },
           );
 
           return hintedUser;
@@ -76,7 +76,7 @@ const HintedUserFormatter = DataProviderDecorator<
         };
       },
     },
-  }
+  },
 );
 
 export interface UserSelectFieldProps
@@ -101,7 +101,7 @@ export const UserSelectField: React.FC<UserSelectFieldProps> = ({
       {
         pattern: value,
         max_results: 7,
-      }
+      },
     );
 
     return options.map((option) => ({

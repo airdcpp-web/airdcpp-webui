@@ -21,7 +21,7 @@ const getStatusClass = (cellData: API.QueueBundleStatus, rowData: API.QueueBundl
     {
       blue:
         (!statusId || statusId === API.QueueBundleStatusEnum.QUEUED) && rowData.speed > 0,
-    }
+    },
   );
 };
 

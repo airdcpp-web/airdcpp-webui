@@ -1,6 +1,6 @@
 import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = [
   'refresh_time',
@@ -9,9 +9,9 @@ const Entry = [
   'refresh_threading',
 ];
 
-const RefreshOptionsPage: React.FC<SettingSectionChildProps> = (props) => (
+const RefreshOptionsPage: React.FC<SettingPageProps> = () => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} />
+    <RemoteSettingForm keys={Entry} />
   </div>
 );
 

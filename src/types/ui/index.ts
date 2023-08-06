@@ -1,4 +1,5 @@
 export * from './actions';
+export * from './chat';
 export * from './common';
 export * from './downloads';
 export * from './extensions';

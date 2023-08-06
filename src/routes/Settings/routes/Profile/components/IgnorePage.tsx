@@ -10,7 +10,7 @@ import Message from 'components/semantic/Message';
 import { UserMenu } from 'components/action-menu';
 
 import * as API from 'types/api';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import MenuConstants from 'constants/MenuConstants';
 
 const Row: React.FC<{ ignoreInfo: API.IgnoredUser }> = ({ ignoreInfo }) => (
@@ -32,7 +32,7 @@ const getRow = (ignoreInfo: API.IgnoredUser) => {
   return <Row key={ignoreInfo.user.cid} ignoreInfo={ignoreInfo} />;
 };
 
-type IgnorePageProps = SettingSectionChildProps;
+type IgnorePageProps = SettingPageProps;
 
 interface IgnorePageDataProps extends DataProviderDecoratorChildProps {
   ignores: API.IgnoredUser[];
@@ -68,10 +68,10 @@ export default DataProviderDecorator<IgnorePageProps, IgnorePageDataProps>(Ignor
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_ADDED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener(UserConstants.MODULE_URL, UserConstants.IGNORE_REMOVED, () =>
-      refetchData()
+      refetchData(),
     );
   },
 });

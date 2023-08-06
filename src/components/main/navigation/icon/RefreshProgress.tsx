@@ -32,7 +32,7 @@ const RefreshProgress = memo<RefreshProgressProps & RefreshProgressDataProps>(
         }}
       />
     );
-  }
+  },
 );
 
 export default DataProviderDecorator<RefreshProgressProps, RefreshProgressDataProps>(
@@ -47,13 +47,13 @@ export default DataProviderDecorator<RefreshProgressProps, RefreshProgressDataPr
       addSocketListener(
         ShareConstants.MODULE_URL,
         ShareConstants.REFRESH_STARTED,
-        refetchInstalled
+        refetchInstalled,
       );
       addSocketListener(
         ShareConstants.MODULE_URL,
         ShareConstants.REFRESH_COMPLETED,
-        refetchInstalled
+        refetchInstalled,
       );
     },
-  }
+  },
 );

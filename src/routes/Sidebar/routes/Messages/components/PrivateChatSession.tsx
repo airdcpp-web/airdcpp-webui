@@ -1,9 +1,6 @@
 import { Component } from 'react';
 
-import ChatLayout, {
-  ChatAPI,
-  ChatActionList,
-} from 'routes/Sidebar/components/chat/ChatLayout';
+import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFooter';
 
 import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
@@ -11,15 +8,15 @@ import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import { shareTempFile } from 'services/api/ShareApi';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import MenuConstants from 'constants/MenuConstants';
+import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 type PrivateChatSessionProps = SessionChildProps<
   API.PrivateChat,
   UI.EmptyObject,
-  ChatActionList
+  UI.ChatActionList
 >;
 
 class PrivateChatSession extends Component<PrivateChatSessionProps> {
@@ -39,7 +36,7 @@ class PrivateChatSession extends Component<PrivateChatSessionProps> {
         <ChatLayout
           chatAccess={API.AccessEnum.PRIVATE_CHAT_SEND}
           chatActions={uiActions}
-          chatApi={PrivateChatActions as ChatAPI}
+          chatApi={PrivateChatActions as UI.ChatAPI}
           sessionApi={sessionApi}
           messageStore={PrivateChatMessageStore}
           session={session}

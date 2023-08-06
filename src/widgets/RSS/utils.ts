@@ -45,7 +45,7 @@ export const fetchRSSFeed = async (feedUrl: string) => {
 
 export const parseRSSFeed = (
   data: RawFeedData,
-  moduleT: UI.ModuleTranslator
+  moduleT: UI.ModuleTranslator,
 ): FeedItem[] | undefined => {
   let entries = [];
 

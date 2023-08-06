@@ -6,7 +6,7 @@ export const makeHashMagnetLink = (data: UI.HashMagnet) => {
   const { size, tth, name } = data;
   const sizeParam = !!size && size > 0 ? `&xl=${size}` : '';
   const link = `magnet:?xt=urn:tree:tiger:${tth}${sizeParam}&dn=${encodeURIComponent(
-    name
+    name,
   )}`;
 
   return link;

@@ -16,7 +16,7 @@ import {
 const getWidgetItem = (
   widgetInfo: UI.Widget,
   t: UI.TranslateF,
-  onClickAction: ActionClickHandler<UI.Widget>
+  onClickAction: ActionClickHandler<UI.Widget>,
 ) => {
   return (
     <MenuItemLink

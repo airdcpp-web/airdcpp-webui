@@ -3,13 +3,11 @@ import SocketService from 'services/SocketService';
 import ShareConstants from 'constants/ShareConstants';
 import IconConstants from 'constants/IconConstants';
 
-import History from 'utils/History';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleAdd: UI.ActionHandler<void> = ({ location }) => {
-  History.push(`${location.pathname}/browse`);
+const handleAdd: UI.ActionHandler<void> = ({ navigate }) => {
+  navigate(`browse`);
 };
 
 const handleRemove: UI.ActionHandler<string> = ({ data: path }) => {

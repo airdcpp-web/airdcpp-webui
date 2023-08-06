@@ -45,7 +45,7 @@ const Icon: React.FC<IconProps> = ({
         icon,
         className,
         { link: !!other.onClick },
-        'icon'
+        'icon',
       )}
       {...other}
     />

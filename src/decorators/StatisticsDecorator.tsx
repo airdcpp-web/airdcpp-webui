@@ -22,7 +22,7 @@ const StatisticsDecorator = function <DataT, PropsT>(
   Component: React.ComponentType<StatisticsDecoratorChildProps<DataT> & PropsT>,
   fetchUrl: string,
   unavailableMessage: ((t: UI.TranslateF, props: PropsT) => string) | null,
-  fetchIntervalSeconds = 0
+  fetchIntervalSeconds = 0,
 ) {
   class Decorator extends React.Component<StatisticsDecoratorProps<DataT> & PropsT> {
     state = {
@@ -43,13 +43,13 @@ const StatisticsDecorator = function <DataT, PropsT>(
       SocketService.get(fetchUrl)
         .then(this.onStatsReceived)
         .catch((error: ErrorResponse) =>
-          console.error('Failed to fetch stats', error.message)
+          console.error('Failed to fetch stats', error.message),
         );
 
       if (fetchIntervalSeconds > 0) {
         this.fetchTimeout = window.setTimeout(
           this.fetchStats,
-          fetchIntervalSeconds * 1000
+          fetchIntervalSeconds * 1000,
         );
       }
     };

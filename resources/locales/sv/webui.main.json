@@ -446,7 +446,7 @@
     "notConnectedToTheHub": "Inte anstuten till hubben",
     "connecting": "Ansluter",
     "loadingUserlist": "Laddar användarlista",
-    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
+    "favoriteHubsHint": "Tips: gå till <url>Favorithubbar</url> för att ansluta med anpassade inställningar",
     "new": "Anslut",
     "newDesc": "Anslut till en ny hubb",
     "userList": "Användarlistan",
@@ -656,7 +656,7 @@
     "unsavedChangesPrompt": "Du har inte sparat dina ändringar. Är det säkert du vill lämna?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
+        "connectivityDetectionNote": "Vid problem med filöverföringen, se till att dina TCP-portar är öppna genom att använda en <portChecker>online-porttestare</portChecker>. Observera att kontroll av UDP-porten (sök) inte kan göras online. För mer information om olika anslutningsmöjligheter, besök <faq>DC++'s anslutningsfrågor</faq>.",
         "currentAutoDetectionStatus": "Nuvarande automatisk identifieringsstatus",
         "iPv4Connectivity": "IPv4-anslutning",
         "iPv6Connectivity": "IPv6-anslutning",
@@ -685,8 +685,8 @@
           "settingProfileHelp0": "Klienten används i normala privata/publika hubbar för överföring av filer via internet. Använd denna profil om du är osäker.",
           "settingProfileHelp1": "Klienten används till att överföra filer som är delade i RAR-arkiv (eller i andra småformat)",
           "settingProfileHelp2": "Klienten används för överföring av filer i ett lokalt nätverk (t.ex. LAN-party) eller annat stängt nätverk (t.ex. universitetsnätverk).",
-          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
-          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
+          "languageFileHelpRestart": "Applikationen måste startas om för att det nya språket ska börja gälla.",
+          "languageFileHelpTranslate": "Om du vill hjälpa till att förbättra de befintliga översättningarna eller översätta applikationen till ett nytt språk, läs då <url>instruktionerna för översättare</url>."
         }
       },
       "ignoredUsers": {
@@ -707,7 +707,7 @@
         "installedVersion": "Installerad version",
         "datePublished": "{{version}} (publicerat {{date}})",
         "readMore": "Läs mer",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "defaultExtensionEngineMissing": "Standardtilläggsmotorn <strong>{{engineName}}</strong> är inte installerad i ditt system. Besök <url>motorns hemsida</url> för installationsinstruktioner.",
         "manage": "Hantera..."
       },
       "manage": {
@@ -716,8 +716,8 @@
         "installedVersion": "Installerad version",
         "nonListedExtension": "Icke-listade tillägg",
         "readMore": "Läs mer",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "noInstalledExtensions": "Inga installerade tillägg funna. Nya tillägg kan installeras från <url>Tilläggskatalogsidan</url>.",
+        "defaultExtensionEngineMissing": "Standardtilläggsmotorn <strong>{{engineName}}</strong> är inte installerad i ditt system. Besök <url>motorns hemsida</url> för installationsinstruktioner.",
         "extensionDirectoryFetchError": "Misslyckades med att hämta information från tilläggskatalogen: {{error}}",
         "unmanagedExtension": "Ohanterat tillägg",
         "manage": "Hantera..."
@@ -835,8 +835,8 @@
         "name": "Namn",
         "totalSize": "Total storlek",
         "totalFiles": "Totalt antal filer",
-        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
+        "shareProfilesPartialNote": "Köade filer delas ut via funktionen filsamlingar/filer som inte är helt nedladdade i alla hubbar där utdelningen inte är dold, oavsett de konfigurerade utdelningsprofilerna.",
+        "shareProfilesHelp": "Utdelningsprofiler tilldelas för individuella kataloger från <url>Utdelningssidan</url> ."
       },
       "sharingOptions": {
         "skiplist": "Uteslutningslista"
@@ -853,7 +853,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
+        "connectionSpeedNote": "Försök att vara så noggrann som möjligt och ställ in FAKTISK hastighet för din anslutning. Du kan använda en testsida så som <speedtest>{{name}}</speedtest> för att mäta din hastighet."
       },
       "uploadLimits": {
         "manuallySet": "Manuellt inställd"

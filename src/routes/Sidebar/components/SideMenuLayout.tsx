@@ -2,15 +2,15 @@
 import * as React from 'react';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
-import { SessionMainLayoutProps } from './SessionLayout';
 import { Grid } from 'components/semantic/Grid';
 
 import * as UI from 'types/ui';
+import { SessionMainLayoutProps } from './types';
 
 const SideMenuLayout = <
   SessionT extends UI.SessionItemBase,
   SessionApiT extends object,
-  UIActionsT extends UI.ActionListType<UI.SessionItemBase>
+  UIActionsT extends UI.ActionListType<UI.SessionItemBase>,
 >({
   sessionMenuItems,
   newButton,

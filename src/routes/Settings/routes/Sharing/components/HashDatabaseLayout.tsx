@@ -84,7 +84,7 @@ class HashDatabaseLayout extends React.Component<
   handleOptimize = (verify: boolean) => {
     runBackgroundSocketAction(
       () => SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify }),
-      this.props.moduleT.plainT
+      this.props.moduleT.plainT,
     );
   };
 
@@ -127,7 +127,7 @@ export default DataProviderDecorator<
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(HashConstants.MODULE_URL, HashConstants.DATABASE_STATUS, () =>
-      refetchData()
+      refetchData(),
     );
   },
 });

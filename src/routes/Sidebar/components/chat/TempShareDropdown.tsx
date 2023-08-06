@@ -40,7 +40,7 @@ type Props = TempShareDropdownProps & DataProps & DataProviderDecoratorChildProp
 
 const getDropdownItem = (
   file: API.TempShareItem,
-  onClick: (p: API.TempShareItem) => void
+  onClick: (p: API.TempShareItem) => void,
 ) => {
   let title = file.name;
   if (file.user) {
@@ -118,12 +118,12 @@ export default DataProviderDecorator<TempShareDropdownProps, DataProps>(
     },
     onSocketConnected: (addSocketListener, { refetchData }) => {
       addSocketListener(ShareConstants.MODULE_URL, ShareConstants.TEMP_ITEM_ADDED, () =>
-        refetchData()
+        refetchData(),
       );
       addSocketListener(ShareConstants.MODULE_URL, ShareConstants.TEMP_ITEM_REMOVED, () =>
-        refetchData()
+        refetchData(),
       );
     },
     loaderText: null,
-  }
+  },
 );

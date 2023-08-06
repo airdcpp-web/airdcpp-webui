@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SettingProfileEnum } from 'constants/SettingConstants';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import { FormFieldSettingHandler } from 'components/form/Form';
 
 import * as UI from 'types/ui';
@@ -45,9 +45,9 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
           toFormI18nKey(
             UI.TranslatableFormDefinitionProperties.HELP,
             id,
-            profileId.toString()
+            profileId.toString(),
           ),
-          message
+          message,
         );
       }
     } else if (id === 'language_file') {
@@ -61,7 +61,11 @@ application into a new language, please see the \
           <p>
             <Trans
               i18nKey={moduleT.toI18nKey(
-                toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, 'Restart')
+                toFormI18nKey(
+                  UI.TranslatableFormDefinitionProperties.HELP,
+                  id,
+                  'Restart',
+                ),
               )}
               defaults="The application must be restarted for the new language to take effect."
             />
@@ -72,8 +76,8 @@ application into a new language, please see the \
                 toFormI18nKey(
                   UI.TranslatableFormDefinitionProperties.HELP,
                   id,
-                  'Translate'
-                )
+                  'Translate',
+                ),
               )}
               defaults={translateHelp}
               components={{
@@ -89,13 +93,9 @@ application into a new language, please see the \
   return onFieldSetting;
 };
 
-const UserPage: React.FC<SettingSectionChildProps> = (props) => (
+const UserPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
-    <RemoteSettingForm
-      {...props}
-      keys={Entry}
-      onFieldSetting={FieldOptionGetter(props.moduleT)}
-    />
+    <RemoteSettingForm keys={Entry} onFieldSetting={FieldOptionGetter(moduleT)} />
   </div>
 );
 

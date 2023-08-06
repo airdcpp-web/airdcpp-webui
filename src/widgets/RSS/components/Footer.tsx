@@ -25,7 +25,7 @@ const Footer = RedrawDecorator(
       )}
     </div>
   ),
-  60
+  60,
 );
 
 export default Footer;

@@ -178,7 +178,7 @@ export class Component extends React.Component {
     const result = t.validate(
       this.getValue(),
       this.props.type,
-      this.getValidationOptions()
+      this.getValidationOptions(),
     );
     this.setState({ hasError: !result.isValid() });
     return result;
@@ -269,7 +269,7 @@ export class Component extends React.Component {
       // getTemplate is the only required implementation when extending Component
       assert(
         t.Function.is(this.getTemplate),
-        `[${SOURCE}] missing getTemplate method of component ${this.constructor.name}`
+        `[${SOURCE}] missing getTemplate method of component ${this.constructor.name}`,
       );
     }
     const template = this.getTemplate();
@@ -574,7 +574,7 @@ export class Struct extends ComponentWithChildRefs {
           fieldsOptions[prop],
           noobj,
           propValue,
-          type
+          type,
         );
         inputs[prop] = React.createElement(getFormComponent(propType, propOptions), {
           key: prop,
@@ -713,7 +713,7 @@ export class List extends ComponentWithChildRefs {
         move(this.state.value.slice(), i, i - 1),
         move(this.state.keys.slice(), i, i - 1),
         this.props.ctx.path.concat(i),
-        'moveUp'
+        'moveUp',
       );
     }
   }
@@ -724,7 +724,7 @@ export class List extends ComponentWithChildRefs {
         move(this.state.value.slice(), i, i + 1),
         move(this.state.keys.slice(), i, i + 1),
         this.props.ctx.path.concat(i),
-        'moveDown'
+        'moveDown',
       );
     }
   }
@@ -860,7 +860,7 @@ export class Form extends React.Component {
           t.Function.is(this.props.options) ||
           t.list(t.maybe(t.Object)).is(this.props.options),
         // eslint-disable-next-line max-len
-        `[${SOURCE}] prop options, if specified, must be an object, a function returning the options or a list of options for unions`
+        `[${SOURCE}] prop options, if specified, must be an object, a function returning the options or a list of options for unions`,
       );
       assert(t.Object.is(templates), `[${SOURCE}] missing templates config`);
       // assert(t.Object.is(i18n), `[${SOURCE}] missing i18n config`)
@@ -872,7 +872,7 @@ export class Form extends React.Component {
       this.props.options,
       noobj,
       value,
-      this.props.type
+      this.props.type,
     );
 
     // this is in the render method because I need this._reactInternalInstance._rootNodeID in React ^0.14.0

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = [
   'extensions_debug_mode',
@@ -8,9 +8,9 @@ const Entry = [
   'extensions_init_timeout',
 ];
 
-const ExtensionOptionsPage: React.FC<SettingSectionChildProps> = (props) => (
+const ExtensionOptionsPage: React.FC<SettingPageProps> = () => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} />
+    <RemoteSettingForm keys={Entry} />
   </div>
 );
 

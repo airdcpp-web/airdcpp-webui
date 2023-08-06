@@ -1,4 +1,4 @@
-import { PureComponent } from 'react';
+import { memo, useContext, useEffect, useRef, useState } from 'react';
 
 import {
   loadLocalProperty,
@@ -7,12 +7,12 @@ import {
 } from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
-import History from 'utils/History';
 
-import '../style.css';
-import { Location } from 'history';
 import { RouteItem, parseRoutes } from 'routes/Routes';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
+import { Location, Routes, useNavigate } from 'react-router-dom';
+
+import '../style.css';
 
 const MIN_WIDTH = 500;
 
@@ -21,7 +21,6 @@ const showSidebar = (props: SidebarProps) => {
 };
 
 export interface SidebarProps {
-  location: Location;
   previousLocation?: Location;
   routes: RouteItem[];
 }
@@ -31,105 +30,88 @@ const enum Visibility {
   LOADING = 'loading',
   VISIBLE = 'visible',
 }
-interface State {
-  visibility: Visibility;
-  width: number;
-}
 
-class Sidebar extends PureComponent<SidebarProps, State> {
-  c: Resizable;
+const Sidebar: React.FC<SidebarProps> = (props) => {
+  const navigate = useNavigate();
 
-  static contextType = LayoutWidthContext; // Update the minimum width when the window is being resized
+  // Update the minimum width when the window is being resized
+  useContext(LayoutWidthContext);
 
-  constructor(props: SidebarProps) {
-    super(props);
-    const width = loadLocalProperty<number>('sidebar_width', 1000);
+  // Don't render the content while sidebar is animating
+  // Avoids issues if there are router transitions while the sidebar is
+  // animating (e.g. the content is placed in the middle of the window)
+  const [visibility, setVisibility] = useState(Visibility.HIDDEN);
 
-    this.state = {
-      // Don't render the content while sidebar is animating
-      // Avoids issues if there are router transitions while the sidebar is
-      // animating (e.g. the content is placed in the middle of the window)
-      visibility: Visibility.HIDDEN,
-      width: Math.max(MIN_WIDTH, width),
+  const [width, setWidth] = useState(
+    Math.max(MIN_WIDTH, loadLocalProperty<number>('sidebar_width', 1000)),
+  );
+  const resizable = useRef<Resizable>(null);
+
+  const previousLocation = useRef<any>();
+  previousLocation.current = props.previousLocation;
+
+  useEffect(() => {
+    const onHide = () => {
+      setVisibility(Visibility.LOADING);
+      if (!previousLocation.current) {
+        return;
+      }
+
+      navigate(previousLocation.current.pathname, {
+        state: previousLocation.current.state,
+      });
     };
-  }
 
-  componentDidUpdate(prevProps: SidebarProps) {
-    const newActive = showSidebar(this.props);
-    const prevActive = showSidebar(prevProps);
-    if (newActive !== prevActive) {
-      if (newActive) {
-        $(this.c.resizable!).sidebar('show');
-      } else {
-        $(this.c.resizable!).sidebar('hide');
+    const onHidden = () => {
+      setVisibility(Visibility.HIDDEN);
+    };
+
+    const onShow = () => {
+      setVisibility(Visibility.LOADING);
+    };
+
+    const onVisible = () => {
+      setVisibility(Visibility.VISIBLE);
+    };
+
+    if (resizable.current && resizable.current.resizable) {
+      $(resizable.current.resizable).sidebar({
+        context: '.sidebar-context',
+        transition: 'overlay',
+        mobileTransition: 'overlay',
+        closable: !useMobileLayout(),
+        onVisible: onVisible,
+        onShow: onShow,
+        onHidden: onHidden,
+        onHide: onHide,
+        // debug: true,
+        // verbose: true,
+      } as SemanticUI.SidebarSettings);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (resizable.current && resizable.current.resizable) {
+      const shouldShow = showSidebar(props);
+      if (shouldShow && visibility === Visibility.HIDDEN) {
+        $(resizable.current.resizable).sidebar('show');
+      } else if (!shouldShow && visibility === Visibility.VISIBLE) {
+        $(resizable.current.resizable).sidebar('hide');
       }
     }
-  }
+  }, [showSidebar(props)]);
 
-  componentDidMount() {
-    $(this.c.resizable!).sidebar({
-      context: '.sidebar-context',
-      transition: 'overlay',
-      mobileTransition: 'overlay',
-      closable: !useMobileLayout(),
-      onVisible: this.onVisible,
-      onShow: this.onShow,
-      onHidden: this.onHidden,
-      onHide: this.onHide,
-    } as SemanticUI.SidebarSettings);
-
-    const active = showSidebar(this.props);
-    if (active) {
-      $(this.c.resizable!).sidebar('show');
-    }
-  }
-
-  onHide = () => {
-    this.setState({
-      visibility: Visibility.LOADING,
-    });
-
-    const { previousLocation } = this.props;
-    if (!previousLocation) {
-      return;
-    }
-
-    History.replace({
-      pathname: previousLocation.pathname,
-      state: previousLocation.state,
-    });
-  };
-
-  onHidden = () => {
-    this.setState({
-      visibility: Visibility.HIDDEN,
-    });
-  };
-
-  onShow = () => {
-    this.setState({
-      visibility: Visibility.LOADING,
-    });
-  };
-
-  onVisible = () => {
-    this.setState({
-      visibility: Visibility.VISIBLE,
-    });
-  };
-
-  onResizeStop: ResizeCallback = (event, direction, element, delta) => {
+  const onResizeStop: ResizeCallback = (event, direction, element, delta) => {
     if (!delta.width) {
       return;
     }
 
     const width = element.clientWidth;
     saveLocalProperty('sidebar_width', width);
-    this.setState({ width });
+    setWidth(width);
   };
 
-  getChildren = () => {
-    const { visibility, width } = this.state;
+  const getChildren = () => {
     if (visibility === Visibility.HIDDEN) {
       return null;
     }
@@ -140,47 +122,43 @@ class Sidebar extends PureComponent<SidebarProps, State> {
           {visibility === Visibility.LOADING ? (
             <Loader text="" />
           ) : (
-            parseRoutes(this.props.routes, this.props.location)
+            <Routes>{parseRoutes(props.routes)}</Routes>
           )}
         </div>
       </LayoutWidthContext.Provider>
     );
   };
 
-  render() {
-    const { width } = this.state;
+  const otherProps = {
+    id: 'sidebar',
+  };
 
-    const otherProps = {
-      id: 'sidebar',
-    };
+  return (
+    <Resizable
+      ref={resizable}
+      size={{
+        width: Math.min(width, window.innerWidth),
+        height: window.innerHeight,
+      }}
+      minWidth={Math.min(MIN_WIDTH, window.innerWidth)}
+      maxWidth={window.innerWidth}
+      className="ui right vertical sidebar"
+      {...otherProps}
+      enable={{
+        top: false,
+        right: false,
+        bottom: false,
+        left: !useMobileLayout(),
+        topRight: false,
+        bottomRight: false,
+        bottomLeft: false,
+        topLeft: false,
+      }}
+      onResizeStop={onResizeStop}
+    >
+      {getChildren()}
+    </Resizable>
+  );
+};
 
-    return (
-      <Resizable
-        ref={(c: any) => (this.c = c)}
-        size={{
-          width: Math.min(width, window.innerWidth),
-          height: window.innerHeight,
-        }}
-        minWidth={Math.min(MIN_WIDTH, window.innerWidth)}
-        maxWidth={window.innerWidth}
-        className="ui right vertical sidebar"
-        {...otherProps}
-        enable={{
-          top: false,
-          right: false,
-          bottom: false,
-          left: !useMobileLayout(),
-          topRight: false,
-          bottomRight: false,
-          bottomLeft: false,
-          topLeft: false,
-        }}
-        onResizeStop={this.onResizeStop}
-      >
-        {this.getChildren()}
-      </Resizable>
-    );
-  }
-}
-
-export default Sidebar;
+export default memo(Sidebar);

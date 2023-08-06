@@ -14,16 +14,15 @@ import {
 } from './SearchOptionsForm';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
-import { RouteComponentProps } from 'react-router';
 import HubConstants from 'constants/HubConstants';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 import { isValueSet } from 'utils/FormUtils';
+import { useLocation } from 'react-router-dom';
 
 interface SearchOptionsButtonProps
-  extends Pick<RouteComponentProps, 'location'>,
-    Pick<SearchOptionsFormProps, 'onChange' | 'value'> {
+  extends Pick<SearchOptionsFormProps, 'onChange' | 'value'> {
   moduleT: UI.ModuleTranslator;
 }
 
@@ -45,13 +44,8 @@ const removeEmptyProperties = (value: SearchOptions) => {
   return ret;
 };
 
-const SearchOptionsButton: React.FC<Props> = ({
-  moduleT,
-  location,
-  onChange,
-  value,
-  hubs,
-}) => {
+const SearchOptionsButton: React.FC<Props> = ({ moduleT, onChange, value, hubs }) => {
+  const location = useLocation();
   const onValueChanged = (newValue: SearchOptions | null) => {
     if (newValue) {
       const ret = removeEmptyProperties(newValue);
@@ -66,7 +60,7 @@ const SearchOptionsButton: React.FC<Props> = ({
     if (!!value && !!value.hub_urls && !!value.hub_urls.length) {
       const selectedUrls = value.hub_urls;
       const selectedUrlsNew = selectedUrls.filter((url) =>
-        hubs.find((hub) => hub.hub_url === url)
+        hubs.find((hub) => hub.hub_url === url),
       );
       if (selectedUrlsNew.length !== selectedUrls.length) {
         onValueChanged({
@@ -114,10 +108,10 @@ const SearchOptionsButton: React.FC<Props> = ({
       {(hide) => (
         <SearchOptionsForm
           moduleT={moduleT}
-          location={location}
           onChange={onValueChanged}
           value={value}
           hubs={hubs}
+          location={location}
         />
       )}
     </Popup>
@@ -133,7 +127,7 @@ const SearchOptionsButtonDecorated = DataProviderDecorator<
   },
   onSocketConnected: (addSocketListener, { refetchData }) => {
     addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_CREATED, () =>
-      refetchData()
+      refetchData(),
     );
     addSocketListener<Partial<API.Hub>>(
       HubConstants.MODULE_URL,
@@ -142,10 +136,10 @@ const SearchOptionsButtonDecorated = DataProviderDecorator<
         if (!!hub.connect_state) {
           refetchData();
         }
-      }
+      },
     );
     addSocketListener(HubConstants.MODULE_URL, HubConstants.SESSION_REMOVED, () =>
-      refetchData()
+      refetchData(),
     );
   },
   dataConverters: {

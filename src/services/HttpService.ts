@@ -31,7 +31,7 @@ const toCorsSafeUrl = (url: string) => {
 export const fetchCorsSafeData = async (
   url: string,
   isJSON: boolean,
-  options?: RequestInit
+  options?: RequestInit,
 ) => {
   try {
     //console.log(`CORS HTTP request started (${url})`);

@@ -7,8 +7,11 @@ export const enum UrgencyEnum {
   LOW = 1,
   HIDDEN = 0, // 0 = hidden
 
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   ERROR = 6,
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   WARNING = 4,
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   INFO = 1,
   // VERBOSE = 0, // 0 = hidden
 }

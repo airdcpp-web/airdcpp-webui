@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = ['use_main_chat_notify', 'show_joins', 'format_release_names'];
 
-const GeneralPage: React.FC<SettingSectionChildProps> = (props) => (
+const GeneralPage: React.FC<SettingPageProps> = () => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} />
+    <RemoteSettingForm keys={Entry} />
   </div>
 );
 

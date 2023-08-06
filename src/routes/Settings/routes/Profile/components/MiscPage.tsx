@@ -7,7 +7,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import '../style.css';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import { FormFieldSettingHandler } from 'components/form/Form';
 import { Trans } from 'react-i18next';
 import { toFormI18nKey } from 'utils/FormUtils';
@@ -19,7 +19,7 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
       fieldOptions.help = (
         <Trans
           i18nKey={moduleT.toI18nKey(
-            toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined)
+            toFormI18nKey(UI.TranslatableFormDefinitionProperties.HELP, id, undefined),
           )}
         >
           <div>
@@ -54,7 +54,7 @@ const Entry = [
   'min_search_interval',
 ];
 
-const MiscPage: React.FC<SettingSectionChildProps> = (props) => {
+const MiscPage: React.FC<SettingPageProps> = ({ moduleT }) => {
   // The locale-specific system encoding is used on Windows by default
   // while other system use UTF-8
   if (LoginStore.systemInfo.platform !== API.PlatformEnum.WINDOWS) {
@@ -63,11 +63,7 @@ const MiscPage: React.FC<SettingSectionChildProps> = (props) => {
 
   return (
     <div>
-      <RemoteSettingForm
-        {...props}
-        keys={Entry}
-        onFieldSetting={FieldOptionGetter(props.moduleT)}
-      />
+      <RemoteSettingForm keys={Entry} onFieldSetting={FieldOptionGetter(moduleT)} />
     </div>
   );
 };

@@ -1,8 +1,8 @@
 //import PropTypes from 'prop-types';
-import { useRef } from 'react';
+// import { useRef } from 'react';
 
 import * as React from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import ShareConstants from 'constants/ShareConstants';
@@ -39,20 +39,20 @@ import { PathDownloadHandler } from './types';
 
 import './style.css';
 
-type DownloadItemIdType = string;
-
 export type DownloadDialogProps<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
 > = UI.ItemDownloadHandler<ItemT, Props<ItemT>>;
+
+/*type DownloadItemIdType = string;
 
 interface RouteProps {
   downloadItemId: DownloadItemIdType;
-}
+}*/
 
-type DownloadDialogRouteProps = ModalRouteDecoratorChildProps<RouteProps>;
+type DownloadDialogRouteProps = ModalRouteDecoratorChildProps;
 
 interface DownloadDialogDataProps<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo
+  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
 > extends DataProviderDecoratorChildProps,
     DownloadDataProps<ItemT> {}
 
@@ -61,17 +61,18 @@ type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
 
 const DownloadDialog: React.FC<Props> = (props) => {
   const { t } = useTranslation();
-  const modalRef = useRef<Modal>(null);
+  const navigate = useNavigate();
 
   const {
     downloadHandler,
     itemInfo,
     userGetter,
-    match,
+    params,
     session,
     historyPaths,
     favoritePaths,
     sharePaths,
+    handleClose,
     ...other
   } = props;
 
@@ -79,13 +80,13 @@ const DownloadDialog: React.FC<Props> = (props) => {
     try {
       await downloadHandler(
         itemInfo,
-        !!userGetter ? userGetter(match.params.downloadItemId, props) : undefined,
+        !!userGetter ? userGetter(params.downloadItemId!, props) : undefined,
         {
           target_name: !!targetFilename ? targetFilename : itemInfo.name,
           target_directory: targetPath,
           priority: API.QueuePriorityEnum.DEFAULT,
         },
-        session
+        session,
       );
     } catch (e) {
       NotificationActions.error({
@@ -101,12 +102,10 @@ const DownloadDialog: React.FC<Props> = (props) => {
 
     runBackgroundSocketAction(
       () => addHistory(HistoryStringEnum.DOWNLOAD_DIR, targetPath),
-      t
+      t,
     );
 
-    if (!!modalRef.current) {
-      modalRef.current.hide();
-    }
+    handleClose();
   };
 
   const getInitialBrowsePath = () => {
@@ -115,8 +114,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
   };
 
   const handleBrowse = () => {
-    const { history } = props;
-    history.replace(`${match.url}/browse`);
+    navigate(`browse`);
   };
 
   const commonDialogProps: ModalProps = {
@@ -124,51 +122,55 @@ const DownloadDialog: React.FC<Props> = (props) => {
     title: translate('Download', t, UI.Modules.COMMON),
     icon: IconConstants.DOWNLOAD,
     closable: false,
-    returnTo: props.returnTo,
   };
 
   const hasFileBrowserAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
   return (
-    <Switch>
-      <Route path={`${match.path}/browse`}>
-        <FileBrowserDialog
-          onConfirm={(path, directoryPath, fileName) =>
-            handleDownload(directoryPath, fileName)
-          }
-          initialPath={getInitialBrowsePath()}
-          selectMode={
-            itemInfo.type.id === 'directory'
-              ? UI.FileSelectModeEnum.DIRECTORY
-              : UI.FileSelectModeEnum.FILE
-          }
-          historyId={FilesystemConstants.LOCATION_DOWNLOAD}
-          approveCaption={translate('Download', t, UI.Modules.COMMON)}
-          {...commonDialogProps}
-        />
-      </Route>
-      <Route path={match.path} exact>
-        <Modal
-          ref={modalRef}
-          className="download-dialog"
-          fullHeight={true}
-          {...commonDialogProps}
-          {...other}
-        >
-          <DownloadLayout
-            downloadHandler={handleDownload}
-            handleBrowse={hasFileBrowserAccess ? handleBrowse : undefined}
-            historyPaths={historyPaths}
-            favoritePaths={favoritePaths}
-            sharePaths={sharePaths}
-            itemInfo={itemInfo}
+    <Routes>
+      <Route
+        path={`browse`}
+        element={
+          <FileBrowserDialog
+            onConfirm={(path, directoryPath, fileName) =>
+              handleDownload(directoryPath, fileName)
+            }
+            initialPath={getInitialBrowsePath()}
+            selectMode={
+              itemInfo.type.id === 'directory'
+                ? UI.FileSelectModeEnum.DIRECTORY
+                : UI.FileSelectModeEnum.FILE
+            }
+            historyId={FilesystemConstants.LOCATION_DOWNLOAD}
+            approveCaption={translate('Download', t, UI.Modules.COMMON)}
+            {...commonDialogProps}
           />
-        </Modal>
-      </Route>
-    </Switch>
+        }
+      />
+      <Route
+        index
+        element={
+          <Modal
+            className="download-dialog"
+            fullHeight={true}
+            {...commonDialogProps}
+            {...other}
+          >
+            <DownloadLayout
+              downloadHandler={handleDownload}
+              handleBrowse={hasFileBrowserAccess ? handleBrowse : undefined}
+              historyPaths={historyPaths}
+              favoritePaths={favoritePaths}
+              sharePaths={sharePaths}
+              itemInfo={itemInfo}
+            />
+          </Modal>
+        }
+      />
+    </Routes>
   );
 };
 
-export default ModalRouteDecorator<DownloadDialogProps, RouteProps>(
+export default ModalRouteDecorator<DownloadDialogProps>(
   DataProviderDecorator<
     DownloadDialogProps & DownloadDialogRouteProps,
     DownloadDialogDataProps
@@ -177,10 +179,10 @@ export default ModalRouteDecorator<DownloadDialogProps, RouteProps>(
       sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
       favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
       historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
-      itemInfo: ({ match, itemDataGetter }, socket) => {
-        return itemDataGetter(match.params.downloadItemId, socket);
+      itemInfo: ({ params, itemDataGetter }, socket) => {
+        return itemDataGetter(params.downloadItemId!, socket);
       },
     },
   }),
-  'download/:downloadItemId'
+  '/download/:downloadItemId',
 );

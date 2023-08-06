@@ -55,13 +55,11 @@ export interface DataProps extends DataProviderDecoratorChildProps {
   directoryEntry?: API.FavoriteDirectoryEntryBase;
 }
 
-interface RouteProps {
+/*interface RouteProps {
   directoryId: string;
-}
+}*/
 
-type Props = FavoriteDirectoryDialogProps &
-  DataProps &
-  ModalRouteDecoratorChildProps<RouteProps>;
+type Props = FavoriteDirectoryDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
 class FavoriteDirectoryDialog extends Component<Props> {
   static displayName = 'FavoriteDirectoryDialog';
@@ -91,13 +89,13 @@ class FavoriteDirectoryDialog extends Component<Props> {
     if (this.isNew()) {
       return SocketService.post(
         FavoriteDirectoryConstants.DIRECTORIES_URL,
-        changedFields
+        changedFields,
       );
     }
 
     return SocketService.patch(
       `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${this.props.directoryEntry!.id}`,
-      changedFields
+      changedFields,
     );
   };
 
@@ -119,7 +117,7 @@ class FavoriteDirectoryDialog extends Component<Props> {
   render() {
     const { moduleT, directoryEntry } = this.props;
     const title = moduleT.translate(
-      this.isNew() ? 'Add favorite directory' : 'Edit favorite directory'
+      this.isNew() ? 'Add favorite directory' : 'Edit favorite directory',
     );
     return (
       <Modal
@@ -128,7 +126,6 @@ class FavoriteDirectoryDialog extends Component<Props> {
         onApprove={this.save}
         closable={false}
         icon={IconConstants.FOLDER}
-        {...this.props}
       >
         <Form<Entry>
           ref={(c) => (this.form = c!)}
@@ -144,26 +141,26 @@ class FavoriteDirectoryDialog extends Component<Props> {
   }
 }
 
-export default ModalRouteDecorator<FavoriteDirectoryDialogProps, RouteProps>(
+export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(
     FavoriteDirectoryDialog,
     {
       urls: {
         virtualNames: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-        directoryEntry: ({ match }, socket) => {
-          if (!match.params.directoryId) {
+        directoryEntry: ({ params }, socket) => {
+          if (!params.directoryId) {
             return Promise.resolve(undefined);
           }
 
           return socket.get(
-            `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${match.params.directoryId}`
+            `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${params.directoryId}`,
           );
         },
       },
       dataConverters: {
         virtualNames: (data: API.GroupedPath[]) => data.map((item) => item.name, []),
       },
-    }
+    },
   ),
-  'directories/:directoryId([0-9A-Z]{39})?'
+  'directories/:directoryId?',
 );

@@ -6,7 +6,7 @@ import ExternalLink from 'components/ExternalLink';
 import LinkConstants from 'constants/LinkConstants';
 
 import Message from 'components/semantic/Message';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import IconConstants from 'constants/IconConstants';
 import LogSectionGroup from './LogSectionGroup';
 import { Trans } from 'react-i18next';
@@ -21,11 +21,11 @@ const TransferSectionKeys = ['downloads', 'uploads', 'list_transfers'];
 
 const SimpleSectionKeys = ['list_transfers'];
 
-const LoggingPage: React.FC<SettingSectionChildProps> = (props) => {
-  const { translate, toI18nKey } = props.moduleT;
+const LoggingPage: React.FC<SettingPageProps> = ({ moduleT }) => {
+  const { translate, toI18nKey } = moduleT;
   return (
     <div>
-      <RemoteSettingForm {...props} keys={Entry} />
+      <RemoteSettingForm keys={Entry} />
       <div className="sections">
         <Message
           icon={IconConstants.INFO}
@@ -37,13 +37,8 @@ const LoggingPage: React.FC<SettingSectionChildProps> = (props) => {
             </ExternalLink>
           }
         />
+        <LogSectionGroup sectionKeys={MessageSectionKeys} title={translate('Messages')} />
         <LogSectionGroup
-          {...props}
-          sectionKeys={MessageSectionKeys}
-          title={translate('Messages')}
-        />
-        <LogSectionGroup
-          {...props}
           sectionKeys={TransferSectionKeys}
           title={translate('Transfers')}
           simpleKeys={SimpleSectionKeys}

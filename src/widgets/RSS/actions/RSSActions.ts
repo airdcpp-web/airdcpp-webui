@@ -18,7 +18,7 @@ const hasTitle = ({ entry }: RSSItemData) => !!entry.title;
 
 const getLocation = (href: string) => {
   const match = href.match(
-    /^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/
+    /^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/,
   );
   return (
     match && {
@@ -54,7 +54,7 @@ const handleOpenLink: UI.ActionHandler<RSSItemData> = ({ data }) => {
   window.open(link);
 };
 
-const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location }) => {
+const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location, navigate }) => {
   if (!data.entry.title) {
     return;
   }
@@ -63,7 +63,7 @@ const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location }) => {
     name: parseNodeContent(data.entry.title),
   };
 
-  return SearchActions.search(itemInfo, location);
+  return SearchActions.search(itemInfo, location, navigate);
 };
 
 export const RSSActions: UI.ActionListType<RSSItemData> = {

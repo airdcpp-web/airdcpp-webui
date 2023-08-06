@@ -1,6 +1,6 @@
 import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = [
   'share_hidden',
@@ -12,14 +12,10 @@ const Entry = [
 
 const Skiplist = ['share_skiplist', 'share_skiplist_regex'];
 
-const SharingOptionsPage: React.FC<SettingSectionChildProps> = (props) => (
+const SharingOptionsPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} />
-    <RemoteSettingForm
-      title={props.moduleT.translate('Skiplist')}
-      {...props}
-      keys={Skiplist}
-    />
+    <RemoteSettingForm keys={Entry} />
+    <RemoteSettingForm title={moduleT.translate('Skiplist')} keys={Skiplist} />
   </div>
 );
 

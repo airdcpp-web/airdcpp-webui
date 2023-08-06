@@ -21,7 +21,7 @@ const FilelistFooter: React.FC<FilelistFooterProps> = ({ session, sessionT }) =>
   if (locationText.length > 0) {
     locationText = `${formatSize(
       session.location!.size,
-      sessionT.plainT
+      sessionT.plainT,
     )} (${locationText})`;
   }
 

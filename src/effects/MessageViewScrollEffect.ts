@@ -21,7 +21,7 @@ interface Props {
 
 export const useMessageViewScrollEffect = (
   { messages, scrollPositionHandler, session }: Props,
-  visibleItems: Set<number>
+  visibleItems: Set<number>,
 ) => {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const scrollable = useRef<HTMLDivElement | null>(null);
@@ -43,7 +43,7 @@ export const useMessageViewScrollEffect = (
           : Math.min.apply(null, Array.from(visibleItems));
         if (DEBUG) {
           console.log(
-            `Save scroll position, visible items ${Array.from(visibleItems).join(', ')}`
+            `Save scroll position, visible items ${Array.from(visibleItems).join(', ')}`,
           );
         }
 

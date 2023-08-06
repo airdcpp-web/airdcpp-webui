@@ -1,4 +1,3 @@
-import History from 'utils/History';
 import SocketService from 'services/SocketService';
 import { sleep } from 'utils/Promise';
 
@@ -86,34 +85,35 @@ const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => 
     {
       target_name: itemInfo.name,
     },
-    session
+    session,
   );
 };
 
 const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({
   data,
-  location,
+  navigate,
 }) => {
-  const { pathname } = location;
-  History.push(`${pathname}/download/${data.itemInfo.id}`);
+  navigate(`download/${data.itemInfo.id}`);
 };
 
 const handleViewFile = (
   { data, location }: UI.ActionHandlerData<UI.DownloadableItemData>,
-  isText: boolean
+  isText: boolean,
 ) => {
+  const props = {
+    isText,
+    location,
+    sessionStore: ViewFileStore,
+    history,
+  };
+
   if (notSelf(data)) {
     // Remote file
-    return ViewFileActions.createSession(data, isText, location, ViewFileStore);
+    return ViewFileActions.createSession(data, props);
   }
 
   // Local file
-  return ViewFileActions.openLocalFile(
-    data.itemInfo.tth,
-    isText,
-    location,
-    ViewFileStore
-  );
+  return ViewFileActions.openLocalFile(data.itemInfo.tth, props);
 };
 
 const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
@@ -141,7 +141,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
     SearchConstants.INSTANCES_URL,
     {
       expiration_minutes: 1,
-    }
+    },
   );
 
   // Post the search
@@ -157,7 +157,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
         path: data.itemInfo.path,
         max_results: 1,
       },
-    }
+    },
   );
 
   // Wait for the results to arrive
@@ -165,7 +165,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
     await sleep(500);
 
     instance = await SocketService.get<API.SearchInstance>(
-      `${SearchConstants.INSTANCES_URL}/${instance.id}`
+      `${SearchConstants.INSTANCES_URL}/${instance.id}`,
     );
     if (instance.result_count > 0) {
       break;
@@ -175,7 +175,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
   if (instance.result_count > 0) {
     // Open the first result for viewing
     const results = await SocketService.get<API.GroupedSearchResult[]>(
-      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`
+      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`,
     );
 
     handleViewText({
@@ -191,7 +191,7 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
   } else {
     throw toErrorResponse(
       404,
-      translate('No NFO results were received', other.t, UI.Modules.COMMON)
+      translate('No NFO results were received', other.t, UI.Modules.COMMON),
     );
   }
 };
@@ -199,8 +199,9 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
 export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({
   data,
   location,
+  navigate,
 }) => {
-  return SearchActions.search(data.itemInfo, location);
+  return SearchActions.search(data.itemInfo, location, navigate);
 };
 
 const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {

@@ -67,7 +67,7 @@ const SpeedChart = withContentRect('bounds')(
         </div>
       );
     }
-  }
+  },
 );
 
 export default SpeedChart;

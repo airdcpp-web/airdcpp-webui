@@ -11,9 +11,9 @@ import FileFooter from 'routes/Sidebar/routes/Files/components/FileFooter';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { SessionChildProps } from 'routes/Sidebar/components/SessionLayout';
 import FileContent from './FileContent';
 import ViewFileStore from 'stores/ViewFileStore';
+import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 export interface FileSessionProps
   extends SessionChildProps<API.ViewFile, UI.EmptyObject, UI.EmptyObject> {

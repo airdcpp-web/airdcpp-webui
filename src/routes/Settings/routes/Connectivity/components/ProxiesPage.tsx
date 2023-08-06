@@ -2,7 +2,7 @@ import * as React from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import { OutgoingConnectionModeEnum } from 'constants/SettingConstants';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 import { FormFieldSettingHandler } from 'components/form/Form';
 
 const Entry = [
@@ -24,9 +24,9 @@ const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) =>
   }
 };
 
-const Encryption: React.FC<SettingSectionChildProps> = (props) => (
+const Encryption: React.FC<SettingPageProps> = () => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} onFieldSetting={onFieldSetting} />
+    <RemoteSettingForm keys={Entry} onFieldSetting={onFieldSetting} />
   </div>
 );
 

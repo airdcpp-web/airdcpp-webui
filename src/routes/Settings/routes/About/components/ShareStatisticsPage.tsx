@@ -16,9 +16,9 @@ import StatisticsDecorator, {
 import { Row, Header, Grid } from 'components/semantic/Grid';
 
 //import * as UI from 'types/ui';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
-type ShareStatisticsPageProps = SettingSectionChildProps;
+type ShareStatisticsPageProps = SettingPageProps;
 
 const ShareStatisticsPage: React.FC<
   ShareStatisticsPageProps & StatisticsDecoratorChildProps<any>
@@ -39,7 +39,7 @@ const ShareStatisticsPage: React.FC<
             totalCount: stats.total_file_count,
             uniqueCount: formatPercentage(
               stats.unique_file_count,
-              stats.total_file_count
+              stats.total_file_count,
             ),
           },
         })}
@@ -88,11 +88,11 @@ const ShareStatisticsPage: React.FC<
           replace: {
             filteredPercentage: formatPercentage(
               stats.filtered_searches,
-              stats.recursive_searches
+              stats.recursive_searches,
             ),
             resultPercentage: formatPercentage(
               stats.recursive_searches_responded,
-              stats.recursive_searches - stats.filtered_searches
+              stats.recursive_searches - stats.filtered_searches,
             ),
           },
         })}
@@ -125,5 +125,5 @@ export default StatisticsDecorator(
   ShareStatisticsPage,
   ShareConstants.STATS_URL,
   (t, props) => props.moduleT.translate('No files shared'),
-  60
+  60,
 );

@@ -22,7 +22,7 @@ export type OfflineHubMessageDecoratorProps = React.PropsWithChildren<{
 const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = memo(
   function OfflineHubMessageDecorator(props) {
     const hasConnectedHubs = useStore<boolean>(HubSessionStore, (store) =>
-      store.hasConnectedHubs()
+      store.hasConnectedHubs(),
     );
     if (!hasConnectedHubs && LoginStore.hasAccess(API.AccessEnum.HUBS_VIEW)) {
       return (
@@ -40,7 +40,7 @@ const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = me
     }
 
     return <>{props.children}</>;
-  }
+  },
 );
 
 export default OfflineHubMessageDecorator;

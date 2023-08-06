@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingSectionChildProps } from 'routes/Settings/components/SettingSection';
+import { SettingPageProps } from 'routes/Settings/types';
 
 const Entry = [
   'report_uploads',
@@ -14,9 +14,9 @@ const Entry = [
   'report_filelist_dupes',
 ];
 
-const EventPage: React.FC<SettingSectionChildProps> = (props) => (
+const EventPage: React.FC<SettingPageProps> = () => (
   <div>
-    <RemoteSettingForm {...props} keys={Entry} />
+    <RemoteSettingForm keys={Entry} />
   </div>
 );
 

@@ -1,4 +1,6 @@
-module.exports = {
+import { RootSectionType } from 'routes/Settings/types';
+
+const Connectivity: RootSectionType = {
   url: 'connectivity',
   title: 'Connectivity',
   icon: 'signal',
@@ -40,3 +42,5 @@ module.exports = {
     },
   ],
 };
+
+export default Connectivity;

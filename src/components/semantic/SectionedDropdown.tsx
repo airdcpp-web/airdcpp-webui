@@ -7,7 +7,8 @@ export interface SectionedDropdownProps extends DropdownProps {}
 const SectionedDropdown: React.FC<SectionedDropdownProps> = ({ children, ...other }) => {
   // Remove empty sections
   const validChildren = React.Children.toArray(children).filter(
-    (child) => React.Children.count((child as React.ReactElement<any>).props.children) > 0
+    (child) =>
+      React.Children.count((child as React.ReactElement<any>).props.children) > 0,
   );
 
   return (

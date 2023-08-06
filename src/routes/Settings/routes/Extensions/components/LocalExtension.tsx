@@ -70,12 +70,12 @@ const LocalExtension = DataProviderDecorator<
 
         return fetchCorsSafeData(
           `${ExtensionConstants.NPM_PACKAGE_URL}${installedPackage.name}/latest`,
-          true
+          true,
         );
       },
     },
     renderOnError: true,
-  }
+  },
 );
 
 export default LocalExtension;

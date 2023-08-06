@@ -73,7 +73,7 @@ export default DataProviderDecorator<
     addSocketListener(
       FavoriteDirectoryConstants.MODULE_URL,
       FavoriteDirectoryConstants.DIRECTORIES_UPDATED,
-      () => refetchData()
+      () => refetchData(),
     );
   },
 });

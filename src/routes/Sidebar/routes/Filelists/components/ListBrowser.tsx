@@ -1,129 +1,73 @@
 import * as React from 'react';
-import { Prompt } from 'react-router-dom';
 
 import FilelistItemActions from 'actions/ui/FilelistItemActions';
 
 import BrowserBar from 'components/browserbar/BrowserBar';
 import { ActionMenu, DownloadMenu } from 'components/action-menu';
 
-import History from 'utils/History';
-import NotificationActions from 'actions/NotificationActions';
-
 import DownloadDialog from 'components/download/DownloadDialog';
-import { Location } from 'history';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
-import {
-  filelistDownloadHandler,
-  changeFilelistDirectory,
-} from 'services/api/FilelistApi';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { filelistDownloadHandler } from 'services/api/FilelistApi';
 import MenuConstants from 'constants/MenuConstants';
-
-export type FilelistLocationState = { directory: string } | undefined;
+import { Location, unstable_useBlocker } from 'react-router-dom';
+import { useSyncFilelistLocation } from '../effects/useSyncFilelistLocation';
+import NotificationActions from 'actions/NotificationActions';
 
 interface ListBrowserProps {
   session: API.FilelistSession;
-  location: Location<FilelistLocationState>;
+  location: Location;
   sessionT: UI.ModuleTranslator;
 }
 
-class ListBrowser extends React.Component<ListBrowserProps> {
-  hasClickedDirectory = false;
+const ListBrowser: React.FC<ListBrowserProps> = (props) => {
+  const { sessionT, session } = props;
+  const [hasClickedDirectory, setHasClickedDirectory] = React.useState(false);
 
-  routerWillLeave = (nextLocation: Location, action: string) => {
+  const updateLocationState = useSyncFilelistLocation(props);
+
+  const handleClickDirectory = (path: string) => {
+    if (!hasClickedDirectory) {
+      setHasClickedDirectory(true);
+    }
+
+    updateLocationState(path, false);
+  };
+
+  unstable_useBlocker(({ currentLocation, nextLocation, historyAction }) => {
     if (
-      action === 'POP' &&
-      this.hasClickedDirectory &&
-      nextLocation.pathname !== this.props.location.pathname
+      historyAction === 'POP' &&
+      hasClickedDirectory &&
+      nextLocation.pathname !== currentLocation.pathname
     ) {
-      const { sessionT } = this.props;
-      this.hasClickedDirectory = false;
+      setHasClickedDirectory(false);
       NotificationActions.info({
         title: sessionT.t('confirmLeave', 'Confirm action'),
         message: sessionT.t(
           'confirmLeaveDesc',
-          'Click the back button again to leave this filelist'
+          'Click the back button again to leave this filelist',
         ),
       });
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
+  });
+
+  const getCurrentDirectory = () => {
+    return session.location;
   };
 
-  handleClickDirectory = (path: string) => {
-    this.hasClickedDirectory = true;
-
-    // Handle it through location state data
-    History.push({
-      state: {
-        directory: path,
-      },
-    });
-  };
-
-  componentDidMount() {
-    const { session, location } = this.props;
-
-    const locationData = location.state;
-    if (!locationData || !locationData.directory) {
-      // We need an initial path for our history
-      History.replace({
-        state: {
-          directory: session.location!.path,
-        } as FilelistLocationState,
-      });
-    }
-  }
-
-  componentDidUpdate(prevProps: ListBrowserProps) {
-    const newLocationData = this.props.location.state;
-    if (!newLocationData || !newLocationData.directory) {
-      return;
-    }
-
-    if (this.props.session.location!.path === newLocationData.directory) {
-      // Nothing has changed
-      return;
-    }
-
-    const oldLocationData = prevProps.location.state;
-    if (!!oldLocationData && oldLocationData.directory !== newLocationData.directory) {
-      // It's our change
-      this.sendChangeDirectory(newLocationData.directory);
-    } else {
-      // Change initiated by another session/GUI, update our location
-      History.replace({
-        state: {
-          directory: this.props.session.location!.path,
-        },
-      });
-    }
-  }
-
-  sendChangeDirectory = (directory: string) => {
-    runBackgroundSocketAction(
-      () => changeFilelistDirectory(this.props.session, directory),
-      this.props.sessionT.plainT
-    );
-  };
-
-  getCurrentDirectory = () => {
-    return this.props.session.location;
-  };
-
-  selectedNameFormatter = (caption: React.ReactNode) => {
-    const { session } = this.props;
+  const selectedNameFormatter = (caption: React.ReactNode) => {
     return (
       <DownloadMenu
         caption={caption}
         user={session.user}
-        itemInfoGetter={this.getCurrentDirectory}
+        itemInfoGetter={getCurrentDirectory}
         downloadHandler={filelistDownloadHandler}
         contextElement=".session-container"
         session={session}
@@ -141,42 +85,39 @@ class ListBrowser extends React.Component<ListBrowserProps> {
     );
   };
 
-  userGetter = () => {
-    return this.props.session.user;
+  const userGetter = () => {
+    return session.user;
   };
 
-  filelistItemFetcher = FilelistItemGetter(this.props.session);
+  const filelistItemFetcher = FilelistItemGetter(session);
 
-  render() {
-    const { session, sessionT } = this.props;
-    return (
-      <div className="browser">
-        <Prompt message={this.routerWillLeave as any} />
+  return (
+    <div className="browser">
+      {/*<Prompt message={routerWillLeave as any} />*/}
 
-        <BrowserBar
-          path={session.location!.path}
-          separator="/"
-          rootPath="/"
-          rootName={sessionT.translate('Root')}
-          itemClickHandler={this.handleClickDirectory}
-          selectedNameFormatter={this.selectedNameFormatter}
-          // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
-          entityId={session.id}
-        />
-        <FilelistItemTable
-          session={session}
-          sessionT={sessionT}
-          onClickDirectory={this.handleClickDirectory}
-        />
-        <DownloadDialog
-          downloadHandler={filelistDownloadHandler}
-          itemDataGetter={this.filelistItemFetcher}
-          userGetter={this.userGetter}
-          session={session}
-        />
-      </div>
-    );
-  }
-}
+      <BrowserBar
+        path={session.location!.path}
+        separator="/"
+        rootPath="/"
+        rootName={sessionT.translate('Root')}
+        itemClickHandler={handleClickDirectory}
+        selectedNameFormatter={selectedNameFormatter}
+        // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
+        entityId={session.id}
+      />
+      <FilelistItemTable
+        session={session}
+        sessionT={sessionT}
+        onClickDirectory={handleClickDirectory}
+      />
+      <DownloadDialog
+        downloadHandler={filelistDownloadHandler}
+        itemDataGetter={filelistItemFetcher}
+        userGetter={userGetter}
+        session={session}
+      />
+    </div>
+  );
+};
 
 export default ListBrowser;

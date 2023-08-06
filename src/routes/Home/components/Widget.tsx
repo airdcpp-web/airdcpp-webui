@@ -14,7 +14,7 @@ import { getWidgetT, translateWidgetName } from 'utils/WidgetUtils';
 const getError = (
   widgetInfo: UI.Widget,
   settings: UI.WidgetSettings,
-  rootWidgetT: UI.ModuleTranslator
+  rootWidgetT: UI.ModuleTranslator,
 ) => {
   if (widgetInfo.formSettings && !settings.widget) {
     return rootWidgetT.t('settingsMissing', 'Widget settings missing');
@@ -37,7 +37,7 @@ export type WidgetProps = React.PropsWithChildren<{
 
 const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
   { widgetInfo, settings, componentId, children, className, rootWidgetT, ...other },
-  ref
+  ref,
 ) {
   const error = getError(widgetInfo, settings, rootWidgetT);
   const Component = widgetInfo.component;

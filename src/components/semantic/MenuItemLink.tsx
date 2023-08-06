@@ -15,7 +15,7 @@ export interface MenuItemLinkProps extends React.HTMLAttributes<HTMLDivElement> 
 }
 
 const MenuItemLink: React.FC<MenuItemLinkProps> = ({
-  className = undefined,
+  className,
   icon,
   children,
   onClick,
@@ -29,7 +29,7 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = ({
     'link',
     className,
     { active: active },
-    { disabled: disabled }
+    { disabled: disabled },
   );
 
   return (

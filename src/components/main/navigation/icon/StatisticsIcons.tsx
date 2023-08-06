@@ -93,7 +93,7 @@ class StatisticsIcons extends React.PureComponent<
       SocketService.get(TransferConstants.STATISTICS_URL)
         .then(this.onStatsReceived)
         .catch((error: ErrorResponse) =>
-          console.error('Failed to fetch transfer statistics', error.message)
+          console.error('Failed to fetch transfer statistics', error.message),
         );
     }
   };
@@ -109,7 +109,7 @@ class StatisticsIcons extends React.PureComponent<
       TransferConstants.STATISTICS,
       this.onStatsReceived,
       undefined,
-      API.AccessEnum.TRANSFERS
+      API.AccessEnum.TRANSFERS,
     );
     // eslint-disable-next-line max-len
     addSocketListener(
@@ -117,7 +117,7 @@ class StatisticsIcons extends React.PureComponent<
       HashConstants.STATISTICS,
       this.onStatsReceived,
       undefined,
-      API.AccessEnum.SETTINGS_VIEW
+      API.AccessEnum.SETTINGS_VIEW,
     );
   }
 
@@ -134,7 +134,7 @@ class StatisticsIcons extends React.PureComponent<
           <div
             className={classNames(
               'ui centered inverted mini list statistics-icons',
-              this.props.className
+              this.props.className,
             )}
           >
             <StatisticsIcon

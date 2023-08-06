@@ -9,13 +9,17 @@ import SearchActions from 'actions/reflux/SearchActions';
 
 const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
 
-const handleSearch: UI.ActionHandler<API.QueueFile> = ({ data: itemInfo, location }) => {
-  return SearchActions.search(itemInfo, location);
+const handleSearch: UI.ActionHandler<API.QueueFile> = ({
+  data: itemInfo,
+  location,
+  navigate,
+}) => {
+  return SearchActions.search(itemInfo, location, navigate);
 };
 
 const handleRemoveFile: UI.ActionHandler<API.QueueFile> = (
   { data: file },
-  removeFinished: boolean
+  removeFinished: boolean,
 ) => {
   return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/remove`, {
     remove_finished: removeFinished,

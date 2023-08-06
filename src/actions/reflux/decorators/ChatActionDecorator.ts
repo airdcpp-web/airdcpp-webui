@@ -12,7 +12,7 @@ type SessionType = UI.SessionItemBase;
 
 export default function (
   actions: UI.RefluxActionConfigList<SessionType>[],
-  sessionUrl: string
+  sessionUrl: string,
 ) {
   const ChatActionConfig: UI.RefluxActionConfigList<SessionType> = [
     { fetchMessages: { asyncResult: true } },
@@ -27,7 +27,7 @@ export default function (
 
   ChatActions.fetchMessages.listen(function (
     this: UI.AsyncActionType<SessionType>,
-    session: SessionType
+    session: SessionType,
   ) {
     const that = this;
     SocketService.get(`${sessionUrl}/${session.id}/messages/0`)
@@ -37,14 +37,14 @@ export default function (
 
   ChatActions.fetchMessages.failed.listen(function (
     session: SessionType,
-    error: ErrorResponse
+    error: ErrorResponse,
   ) {
     NotificationActions.apiError('Failed to fetch chat messages', error, session.id);
   });
 
   ChatActions.setRead.listen(function (
     this: UI.AsyncActionType<API.IdType>,
-    session: SessionType
+    session: SessionType,
   ) {
     const that = this;
     SocketService.post(`${sessionUrl}/${session.id}/messages/read`)
@@ -56,7 +56,7 @@ export default function (
     this: UI.AsyncActionType<SessionType>,
     session: SessionType,
     text: string,
-    thirdPerson = false
+    thirdPerson = false,
   ) {
     const that = this;
     SocketService.post(`${sessionUrl}/${session.id}/chat_message`, {
@@ -69,7 +69,7 @@ export default function (
 
   ChatActions.sendChatMessage.failed.listen(function (
     session: SessionType,
-    error: ErrorResponse
+    error: ErrorResponse,
   ) {
     NotificationActions.apiError('Failed to send chat message', error, session.id);
   });
@@ -77,7 +77,7 @@ export default function (
   ChatActions.sendStatusMessage.listen(function (
     this: UI.AsyncActionType<SessionType>,
     session: SessionType,
-    message: API.OutgoingChatStatusMessage
+    message: API.OutgoingChatStatusMessage,
   ) {
     const that = this;
     SocketService.post(`${sessionUrl}/${session.id}/status_message`, message)
@@ -87,7 +87,7 @@ export default function (
 
   ChatActions.sendStatusMessage.failed.listen(function (
     session: SessionType,
-    error: ErrorResponse
+    error: ErrorResponse,
   ) {
     NotificationActions.apiError('Failed to send status message', error, session.id);
   });

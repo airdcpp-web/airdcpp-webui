@@ -21,7 +21,6 @@ interface RecentLayoutProps {
   entryType: string;
   entryTitleRenderer: (entry: API.HistoryItem) => React.ReactNode;
   hasSession: (entry: API.HistoryItem) => boolean;
-  t: UI.TranslateF;
 }
 
 interface DataProps {
@@ -88,5 +87,5 @@ export default DataProviderDecorator<RecentLayoutProps, DataProps>(
       entries: ({ entryType }, socket) =>
         socket.get(`${HistoryConstants.SESSIONS_URL}/${entryType}/0`),
     },
-  }
+  },
 );

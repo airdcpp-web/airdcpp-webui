@@ -1,7 +1,5 @@
 import { Suspense } from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
-
-import History from 'utils/History';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 //@ts-ignore
 import Reflux from 'reflux';
@@ -55,6 +53,28 @@ const getBackgroundImageStyle = () => {
   return url ? `url(${url})` : undefined;
 };
 
+// TODO: migrate other routes to use the new features
+// after https://github.com/remix-run/react-router/discussions/9864 has been resolved
+const router = createBrowserRouter(
+  [
+    {
+      path: '/login',
+      Component: Login,
+    },
+    {
+      index: true,
+      element: <Navigate to="/home" replace />,
+    },
+    {
+      path: '*',
+      Component: AuthenticatedApp,
+    },
+  ],
+  {
+    basename: getBasePath(),
+  },
+);
+
 const App = () => {
   const prompt = useInstallPrompt();
   return (
@@ -62,30 +82,24 @@ const App = () => {
       <Suspense fallback={<Loader fullPage={true} text="" />}>
         <I18nextProvider i18n={i18n}>
           <InstallPromptContext.Provider value={prompt}>
-            <Router history={History}>
-              <Measure bounds={true}>
-                {({ measureRef, contentRect }) => (
-                  <LayoutWidthContext.Provider
-                    value={!!contentRect.bounds ? contentRect.bounds.width : null}
+            <Measure bounds={true}>
+              {({ measureRef, contentRect }) => (
+                <LayoutWidthContext.Provider
+                  value={!!contentRect.bounds ? contentRect.bounds.width : null}
+                >
+                  <div
+                    ref={measureRef}
+                    id="background-wrapper"
+                    style={{
+                      backgroundImage: getBackgroundImageStyle(),
+                      height: '100%',
+                    }}
                   >
-                    <div
-                      ref={measureRef}
-                      id="background-wrapper"
-                      style={{
-                        backgroundImage: getBackgroundImageStyle(),
-                        height: '100%',
-                      }}
-                    >
-                      <Switch>
-                        <Route path="/login" component={Login} />
-                        <Route exact path="/" component={() => <Redirect to="/home" />} />
-                        <Route path="/" component={AuthenticatedApp} />
-                      </Switch>
-                    </div>
-                  </LayoutWidthContext.Provider>
-                )}
-              </Measure>
-            </Router>
+                    <RouterProvider router={router} />
+                  </div>
+                </LayoutWidthContext.Provider>
+              )}
+            </Measure>
           </InstallPromptContext.Provider>
         </I18nextProvider>
       </Suspense>

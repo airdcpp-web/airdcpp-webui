@@ -6,7 +6,6 @@ import FilelistConstants from 'constants/FilelistConstants';
 import LoginStore from 'stores/LoginStore';
 import SocketService from 'services/SocketService';
 
-import History from 'utils/History';
 import NotificationActions from 'actions/NotificationActions';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
@@ -14,7 +13,7 @@ import { getFilePath } from 'utils/FileUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { Location } from 'history';
+import { Location, NavigateFunction } from 'react-router-dom';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 import {
@@ -32,22 +31,31 @@ const FilelistActionConfig: UI.RefluxActionConfigList<API.FilelistSession> = [
 const FilelistSessionActions = Reflux.createActions(FilelistActionConfig);
 
 // SESSION CREATION
-const openSession = (location: Location, cid: string) => {
-  History.push({
-    pathname: `/filelists/session/${cid}`,
+const openSession = (navigate: NavigateFunction, session: API.FilelistSession) => {
+  navigate(`/filelists/session/${session.id}`, {
     state: {
       pending: true,
     },
   });
 };
 
+interface CreateSessionProps {
+  sessionStore: UI.SessionStore<API.FilelistSession>;
+  location: Location;
+  navigate: NavigateFunction;
+}
+
+interface CreateSessionData {
+  user: API.HintedUser;
+  path?: string;
+}
+
 FilelistSessionActions.createSession.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>,
-  location: Location,
-  user: API.HintedUser,
-  sessionStore: UI.SessionStore<API.FilelistSession>,
-  path = '/'
+  { user, path = '/' }: CreateSessionData,
+  props: CreateSessionProps,
 ) {
+  const { sessionStore } = props;
   const directory = getFilePath(path);
   const session = sessionStore.getSession(user.cid);
   if (session) {
@@ -59,27 +67,27 @@ FilelistSessionActions.createSession.listen(function (
       changeFilelistDirectory(session, directory);
     }
 
-    this.completed(location, user, session);
+    this.completed(session, props);
     return;
   }
 
   const that = this;
-  SocketService.post(FilelistConstants.SESSIONS_URL, {
+  SocketService.post<API.FilelistSession>(FilelistConstants.SESSIONS_URL, {
     user: {
       cid: user.cid,
       hub_url: user.hub_url,
     },
     directory: directory,
   })
-    .then((data) => that.completed(location, user, data))
+    .then((data) => that.completed(data, props))
     .catch(that.failed);
 });
 
 FilelistSessionActions.createSession.completed.listen(function (
-  location: Location,
-  user: API.HintedUser
+  session: API.FilelistSession,
+  { navigate }: CreateSessionProps,
 ) {
-  openSession(location, user.cid);
+  openSession(navigate, session);
 });
 
 FilelistSessionActions.createSession.failed.listen(function (error: ErrorResponse) {
@@ -88,37 +96,40 @@ FilelistSessionActions.createSession.failed.listen(function (error: ErrorRespons
 
 FilelistSessionActions.ownList.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>,
-  location: Location,
   shareProfileId: number,
-  sessionStore: UI.SessionStore<API.FilelistSession>
+  props: CreateSessionProps,
 ) {
+  const { sessionStore } = props;
   const session = sessionStore.getSession(LoginStore.systemInfo.cid);
   if (session) {
     if (session.share_profile!.id !== shareProfileId) {
       changeFilelistShareProfile(session, shareProfileId);
     }
 
-    this.completed(location, shareProfileId, session);
+    this.completed(session, props);
     return;
   }
 
   const that = this;
-  SocketService.post(`${FilelistConstants.SESSIONS_URL}/self`, {
+  SocketService.post<API.FilelistSession>(`${FilelistConstants.SESSIONS_URL}/self`, {
     share_profile: shareProfileId,
   })
-    .then((data) => that.completed(location, shareProfileId, data))
+    .then((data) => that.completed(data, props))
     .catch(that.failed);
 });
 
-FilelistSessionActions.ownList.completed.listen(function (location: Location) {
-  openSession(location, LoginStore.systemInfo.cid);
+FilelistSessionActions.ownList.completed.listen(function (
+  session: API.FilelistSession,
+  { navigate }: CreateSessionProps,
+) {
+  openSession(navigate, session);
 });
 
 // SESSION UPDATES
 
 FilelistSessionActions.setRead.listen(function (
   this: UI.AsyncActionType<API.FilelistSession>,
-  session: API.FilelistSession
+  session: API.FilelistSession,
 ) {
   const that = this;
   SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/read`)
@@ -128,7 +139,7 @@ FilelistSessionActions.setRead.listen(function (
 
 const FilelistSessionActionsDecorated = SessionActionDecorator(
   FilelistSessionActions,
-  FilelistConstants.SESSIONS_URL
+  FilelistConstants.SESSIONS_URL,
 );
 
 export default FilelistSessionActionsDecorated as UI.RefluxActionListType<void>;

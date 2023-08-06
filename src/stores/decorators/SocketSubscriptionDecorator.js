@@ -11,7 +11,7 @@ const SocketSubscriptionDecorator = (store, access) => {
     }
 
     SocketService.addListener(apiModuleUrl, event, callback, entityId).then(
-      (removeHandler) => socketSubscriptions.push(removeHandler)
+      (removeHandler) => socketSubscriptions.push(removeHandler),
     );
   };
 

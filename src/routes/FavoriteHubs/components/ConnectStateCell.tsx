@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import classNames from 'classnames';
 
 import HubActions from 'actions/reflux/HubActions';
@@ -8,7 +7,7 @@ import Icon from 'components/semantic/Icon';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export type ConnectStateCellProps = RowWrapperCellChildProps<
   API.FavoriteHubConnectState,
@@ -29,42 +28,46 @@ const getIcon = (state: API.FavoriteHubConnectState) => {
   return '';
 };
 
-class ConnectStateCell extends Component<ConnectStateCellProps & RouteComponentProps> {
-  handleCreateSession = () => {
-    const { location, rowDataGetter } = this.props;
-    HubActions.createSession(location, rowDataGetter!().hub_url, HubSessionStore);
+const ConnectStateCell: React.FC<ConnectStateCellProps> = ({
+  width,
+  cellData,
+  rowDataGetter,
+}) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleCreateSession = () => {
+    HubActions.createSession(rowDataGetter!().hub_url, {
+      location,
+      navigate,
+      sessionStore: HubSessionStore,
+    });
   };
 
-  handleRemoveSession = () => {
-    const { cellData } = this.props;
+  const handleRemoveSession = () => {
     HubActions.removeSession({ id: cellData!.current_hub_id });
   };
 
-  getClickAction = () => {
-    switch (this.props.cellData!.id) {
+  const getClickAction = () => {
+    switch (cellData!.id) {
       case API.FavoriteHubConnectStateEnum.CONNECTING:
       case API.FavoriteHubConnectStateEnum.CONNECTED:
-        return this.handleRemoveSession;
+        return handleRemoveSession;
       case API.FavoriteHubConnectStateEnum.DISCONNECTED:
       default:
-        return this.handleCreateSession;
+        return handleCreateSession;
     }
   };
 
-  render() {
-    const { cellData, width } = this.props;
-    return (
-      <div className="connect-state">
-        <Icon
-          icon={classNames('icon large link', getIcon(cellData!))}
-          onClick={this.getClickAction()}
-        />
-        {width! > 120 && cellData!.str}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="connect-state">
+      <Icon
+        icon={classNames('icon large link', getIcon(cellData!))}
+        onClick={getClickAction()}
+      />
+      {width! > 120 && cellData!.str}
+    </div>
+  );
+};
 
-const Decorated = withRouter(ConnectStateCell);
-
-export default Decorated;
+export default ConnectStateCell;

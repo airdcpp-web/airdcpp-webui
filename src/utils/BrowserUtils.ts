@@ -1,7 +1,10 @@
+import invariant from 'invariant';
+import { NavigateFunction, NavigateOptions, To, Location } from 'react-router-dom';
+
 const loadProperty = (
   storage: Storage,
   storageKey: string | undefined,
-  defaultData?: any
+  defaultData?: any,
 ) => {
   if (storageKey) {
     const savedItem = storage.getItem(storageKey);
@@ -29,7 +32,7 @@ const saveProperty = (storage: Storage, storageKey: string | undefined, data: an
 
 export const loadLocalProperty = <ValueType>(
   storageKey: string | undefined,
-  defaultData?: ValueType
+  defaultData?: ValueType,
 ): ValueType => {
   return loadProperty(localStorage, storageKey, defaultData);
 };
@@ -44,7 +47,7 @@ export const removeLocalProperty = (storageKey: string) => {
 
 export const loadSessionProperty = <ValueType>(
   storageKey: string | undefined,
-  defaultData?: ValueType
+  defaultData?: ValueType,
 ): ValueType => {
   return loadProperty(sessionStorage, storageKey, defaultData);
 };
@@ -69,4 +72,18 @@ export const hasCopySupport = () => !!(navigator as any).clipboard;
 
 export const useMobileLayout = (width?: number | null) => {
   return (width || window.innerWidth) < 700 || window.innerHeight < 500;
+};
+
+export const pushUnique = (
+  to: To,
+  options: NavigateOptions,
+  currentLocation: Location,
+  navigate: NavigateFunction,
+) => {
+  invariant(currentLocation, 'pushUnique: current location was not supplied');
+  if (to !== currentLocation.pathname) {
+    navigate(to, options);
+  } else {
+    navigate(to, { ...options, replace: true });
+  }
 };

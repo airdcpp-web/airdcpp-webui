@@ -13,29 +13,26 @@ import PrivateChatSession from 'routes/Sidebar/routes/Messages/components/Privat
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import '../style.css';
 import {
   SessionProviderDecoratorChildProps,
   SessionProviderDecorator,
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
-import { toI18nKey } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
+
+import '../style.css';
 
 const sessionActions = ['clear'];
 
 const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = (
-  props
+  props,
 ) => {
-  const { match, t, ...other } = props;
+  const { params, sessionT, ...other } = props;
   return (
     <SessionLayout
-      activeId={match.params.id}
+      activeId={params.id}
       baseUrl="messages"
-      newCaption={t(toI18nKey('new', UI.Modules.MESSAGES), 'New session')}
-      newDescription={t(
-        toI18nKey('newDesc', UI.Modules.MESSAGES),
-        'Open a new private chat session'
-      )}
+      newCaption={sessionT.t('new', 'New session')}
+      newDescription={sessionT.t('newDesc', 'Open a new private chat session')}
       newIcon={IconConstants.MESSAGES_PLAIN}
       unreadInfoStore={PrivateChatSessionStore}
       editAccess={API.AccessEnum.PRIVATE_CHAT_EDIT}
@@ -44,11 +41,15 @@ const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = 
       actionIds={sessionActions}
       sessionItemLayout={PrivateChatSession}
       newLayout={MessageNew}
-      t={t}
+      sessionT={sessionT}
       {...UserItemHandlerDecorator(['browse', 'ignore', 'unignore'])}
       {...other}
     />
   );
 };
 
-export default SessionProviderDecorator(Messages, PrivateChatSessionStore);
+export default SessionProviderDecorator(
+  Messages,
+  PrivateChatSessionStore,
+  UI.Modules.MESSAGES,
+);
