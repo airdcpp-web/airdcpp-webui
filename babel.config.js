@@ -20,7 +20,6 @@ module.exports = {
     '@babel/transform-react-display-name',
     '@babel/plugin-syntax-dynamic-import',
     ['@babel/plugin-proposal-decorators', { legacy: true }],
-    '@babel/plugin-proposal-class-properties',
     [
       'module-resolver',
       {
