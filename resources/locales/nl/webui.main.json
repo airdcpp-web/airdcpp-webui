@@ -68,7 +68,7 @@
       "info": "INFO",
       "warning": "WAARSCHUWING",
       "error": "ERROR",
-      "verbose": "VERBOSE",
+      "verbose": "UITGEBREID",
       "actions": {
         "viewEvents": "Bekijk gebeurtenissen"
       }
@@ -446,7 +446,7 @@
     "notConnectedToTheHub": "Niet verbonden met de hub",
     "connecting": "Verbinding maken",
     "loadingUserlist": "Laadt gebruikerslijst",
-    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
+    "favoriteHubsHint": "Tip: Ga naar de <url>Favoriete hubs</url> sectie om met aangeaste instellingen te verbinden",
     "new": "Verbinden",
     "newDesc": "Verbind met een nieuwe hub",
     "userList": "Gebruikers lijst",
@@ -656,7 +656,7 @@
     "unsavedChangesPrompt": "Je hebt nog niet alle wijzigingen opgeslagen. Weet je zeker dat je wilt stoppen?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
+        "connectivityDetectionNote": "In het geval van bestands overdrachts verbindings problemen, controleer aub of je TCP poorten echt open staan door gebruik ven <portChecker>een online poort checker</portChecker>. Let op dat  de geldigheid van de UDP poort (zoeken) niet online gecontroleerd kan worden. Voor meer info omtrent de verschillende verbindingsmogelijkheden, kijk aub op <faq>DC++'s connectivity FAQ</faq>.",
         "currentAutoDetectionStatus": "Huidige automatische verbindings status",
         "iPv4Connectivity": "IPv4 connectiviteit",
         "iPv6Connectivity": "IPv6 connectiviteit",
@@ -685,8 +685,8 @@
           "settingProfileHelp0": "AirDC++ word in normale privé en publieke hubs gebruikt om bestanden over het internet uit te wisselen. Gebruik dit profiel bij twijfel",
           "settingProfileHelp1": "De client wordt gebruikt voor overdragen van bestanden die opgedeeld zijn in RAR archieven (of in andere kleinere formaten)",
           "settingProfileHelp2": "De client wordt gebruikt voor het overdragen van bestanden in een lokaal netwerk (bijv. LAN feestjes) of in andere besloten netwerken (bijv. universiteits netwerken)",
-          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
-          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
+          "languageFileHelpRestart": "Het programma moet worden herstart om de nieuwe taal te activeren.",
+          "languageFileHelpTranslate": "Als je mee wil helpen vertalen kijk op <url>instructions for translators</url>."
         }
       },
       "ignoredUsers": {
@@ -707,7 +707,7 @@
         "installedVersion": "Geïnstalleerd versie",
         "datePublished": "{{version}} (published {{date}})",
         "readMore": "Lees meer",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "defaultExtensionEngineMissing": "De standaard extensie engine {{engineName}} is niet geïnstalleerd op je systeem. Bezoek a.u.b. de engine's home page voor installatie instructies.",
         "manage": "Beheren..."
       },
       "manage": {
@@ -716,8 +716,8 @@
         "installedVersion": "Geïnstalleerd versie",
         "nonListedExtension": "Niet-genoemde uitbreidingen",
         "readMore": "Lees meer",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "noInstalledExtensions": "Geen geïnstalleerde extensies gevonden. Nieuwe extensies kan je installeren vanuit de <url>Extension catalog</url> pagina.",
+        "defaultExtensionEngineMissing": "De standaard extensie engine {{engineName}} is niet geïnstalleerd op je systeem. Bezoek a.u.b. de engine's home page voor installatie instructies.",
         "extensionDirectoryFetchError": "Informatie ophalen van de uitbreidings map mislukt: {{error}}",
         "unmanagedExtension": "Onbeheerde uitbreidingen",
         "manage": "Beheren..."
@@ -835,8 +835,8 @@
         "name": "Naam",
         "totalSize": "Totale omvang",
         "totalFiles": "Totaal aantal bestanden",
-        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
+        "shareProfilesPartialNote": "Bestanden in je queue worden gedeeld via de gedeeltelijke bestandsdeel functie in alle hubs waar je share niet verborgen is, ongeacht de geconfigureerde share profielen.",
+        "shareProfilesHelp": "Share profielen zijn ttoegewezen aan individuele directories vanuit de <url>Share</url> pagina."
       },
       "sharingOptions": {
         "skiplist": "Oversla lijst"
@@ -853,7 +853,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
+        "connectionSpeedNote": "Wees zo nauwkeurig mogelijk bij het instellen van je internet snelheid. Je kan een online tester gebruiken zoals <speedtest>{{name}}</speedtest>, om je snelheid te testen."
       },
       "uploadLimits": {
         "manuallySet": "Handmatig ingesteld"

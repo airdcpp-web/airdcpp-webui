@@ -42,17 +42,17 @@ export default DataProviderDecorator<RefreshProgressProps, RefreshProgressDataPr
       tasks: ShareConstants.REFRESH_TASKS_URL,
     },
     onSocketConnected: (addSocketListener, { refetchData }) => {
-      const refetchInstalled = () => refetchData(['tasks']);
+      const refetchTasks = () => refetchData(['tasks']);
 
       addSocketListener(
         ShareConstants.MODULE_URL,
         ShareConstants.REFRESH_STARTED,
-        refetchInstalled,
+        refetchTasks,
       );
       addSocketListener(
         ShareConstants.MODULE_URL,
         ShareConstants.REFRESH_COMPLETED,
-        refetchInstalled,
+        refetchTasks,
       );
     },
   },

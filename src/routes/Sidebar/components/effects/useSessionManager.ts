@@ -87,7 +87,8 @@ export const useSessionManager = <
   };
 
   // LIFECYCLE/REACT
-  React.useEffect(() => {
+  // Set the session early so that we wont' flash the "new session" layout
+  React.useLayoutEffect(() => {
     if (location.pathname === newUrl) {
       // Don't redirect to it if the "new session" layout is open
       if (activeItem) {

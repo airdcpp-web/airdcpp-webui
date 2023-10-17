@@ -15,6 +15,7 @@ import HistoryConstants from 'constants/HistoryConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
+import { useTranslation } from 'react-i18next';
 
 interface RecentLayoutProps {
   entryIcon: string;
@@ -34,8 +35,8 @@ const RecentLayout: React.FC<Props> = ({
   entryTitleRenderer,
   hasSession,
   entryIcon,
-  t,
 }) => {
+  const { t } = useTranslation();
   if (entries.length === 0) {
     return null;
   }

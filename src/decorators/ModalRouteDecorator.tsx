@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   Location,
+  Params,
   Route,
   Routes,
   useLocation,
@@ -21,9 +22,28 @@ export const ModalRouteCloseContext = React.createContext<ModalCloseContext | un
 export interface ModalRouteDecoratorChildProps {
   location: Location;
   handleClose: () => void;
+  params: Readonly<Params<string>>;
 }
 
-export default function <PropsT>(
+interface ParamsProviderProps<PropsT extends object>
+  extends Omit<ModalRouteDecoratorChildProps, 'params'> {
+  component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>;
+}
+
+const ParamsProvider = <PropsT extends object>({
+  component: Component,
+  ...other
+}: ParamsProviderProps<PropsT>) => {
+  const params = useParams();
+  return (
+    <Component
+      params={params}
+      {...(other as PropsT & Omit<ModalRouteDecoratorChildProps, 'params'>)}
+    />
+  );
+};
+
+export default function <PropsT extends object>(
   Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>,
   path: string,
 ) {
@@ -49,10 +69,10 @@ export default function <PropsT>(
           path={`${path}/*`}
           element={
             <ModalRouteCloseContext.Provider value={handleClose}>
-              <Component
+              <ParamsProvider
+                component={Component}
                 handleClose={handleClose}
                 location={location}
-                params={params}
                 {...props}
               />
             </ModalRouteCloseContext.Provider>
