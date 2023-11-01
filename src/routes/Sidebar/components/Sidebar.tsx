@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   );
   const resizable = useRef<Resizable>(null);
 
-  const previousLocation = useRef<any>();
+  const previousLocation = useRef<Location<any> | undefined>();
   previousLocation.current = props.previousLocation;
 
   useEffect(() => {
