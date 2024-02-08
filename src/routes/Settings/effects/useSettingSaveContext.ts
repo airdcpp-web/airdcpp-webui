@@ -8,7 +8,7 @@ import Form, { FormFieldChangeHandler } from 'components/form/Form';
 import * as UI from 'types/ui';
 
 import { ChildSectionType } from '../types';
-import { unstable_useBlocker } from 'react-router';
+import { useBlocker } from 'react-router';
 
 type SaveableRef = Pick<Form, 'save'>;
 
@@ -83,7 +83,7 @@ export const useSettingSaveContext = ({
 
   const hasChanges = changedProperties.length > 0;
 
-  unstable_useBlocker(({ currentLocation, nextLocation, historyAction }) => {
+  useBlocker(({ currentLocation, nextLocation, historyAction }) => {
     if (selectedChildMenuItem.noSave) {
       return false;
     }

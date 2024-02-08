@@ -4,7 +4,11 @@ import { OnChangeHandlerFunc } from 'react-mentions';
 import { useLocation } from 'react-router-dom';
 import * as UI from 'types/ui';
 
-import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
+import {
+  loadSessionProperty,
+  removeSessionProperty,
+  saveSessionProperty,
+} from 'utils/BrowserUtils';
 import ChatCommandHandler from '../ChatCommandHandler';
 
 import { Location, useNavigate } from 'react-router-dom';
@@ -18,7 +22,11 @@ const loadState = (location: Location) => {
 };
 
 const saveState = (text: string, location: Location) => {
-  saveSessionProperty(getStorageKey(location), text);
+  if (text) {
+    saveSessionProperty(getStorageKey(location), text);
+  } else {
+    removeSessionProperty(getStorageKey(location));
+  }
 };
 
 interface MessageComposerProps {
@@ -58,9 +66,9 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     setText(newText);
   };
 
-  const handleSend = (text: string) => {
+  const handleSend = (textToSend: string) => {
     const { chatApi, session } = chatController;
-    chatApi.sendChatMessage(session, text);
+    chatApi.sendChatMessage(session, textToSend);
   };
 
   /*React.useEffect(() => {
@@ -71,10 +79,16 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
 
   React.useEffect(() => {
     setText(loadState(location));
+    /*return () => {
+      saveState(text, location);
+    };*/
+  }, [location.pathname]);
+
+  React.useEffect(() => {
     return () => {
       saveState(text, location);
     };
-  }, [location.pathname]);
+  }, [text]);
 
   const onTextChanged: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
     setText(plainValue);

@@ -14,7 +14,7 @@ import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
 import { filelistDownloadHandler } from 'services/api/FilelistApi';
 import MenuConstants from 'constants/MenuConstants';
-import { Location, unstable_useBlocker } from 'react-router-dom';
+import { Location, useBlocker } from 'react-router-dom';
 import { useSyncFilelistLocation } from '../effects/useSyncFilelistLocation';
 import NotificationActions from 'actions/NotificationActions';
 
@@ -38,7 +38,7 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
     updateLocationState(path, false);
   };
 
-  unstable_useBlocker(({ currentLocation, nextLocation, historyAction }) => {
+  useBlocker(({ currentLocation, nextLocation, historyAction }) => {
     if (
       historyAction === 'POP' &&
       hasClickedDirectory &&
