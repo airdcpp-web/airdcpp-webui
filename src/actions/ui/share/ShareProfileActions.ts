@@ -105,10 +105,6 @@ export const ShareProfileRemoveAction = {
   handler: handleRemove,
 };
 
-const ShareProfileCreateActions: UI.ActionListType<undefined> = {
-  create: ShareProfileCreateAction,
-};
-
 const ShareProfileEditActions: UI.ActionListType<API.ShareProfile> = {
   browse: ShareProfileBrowseAction,
   divider: MENU_DIVIDER,
@@ -117,15 +113,12 @@ const ShareProfileEditActions: UI.ActionListType<API.ShareProfile> = {
   remove: ShareProfileRemoveAction,
 };
 
-export default {
-  create: {
-    moduleId: UI.Modules.SETTINGS,
-    subId: 'profile',
-    actions: ShareProfileCreateActions,
-  },
-  edit: {
-    moduleId: UI.Modules.SETTINGS,
-    subId: 'profile',
-    actions: ShareProfileEditActions,
-  },
+export const ShareProfileActionModule = {
+  moduleId: UI.Modules.SETTINGS,
+  subId: 'profile',
+};
+
+export const ShareProfileEditMenu = {
+  moduleData: ShareProfileActionModule,
+  actions: ShareProfileEditActions,
 };

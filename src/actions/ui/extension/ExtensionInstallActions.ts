@@ -51,7 +51,7 @@ export const ExtensionInstallURLAction = {
   handler: handleInstallUrl,
 };
 
-const ExtensionInstallNpmAction = {
+export const ExtensionInstallNpmAction = {
   id: 'installNpm',
   displayName: 'Install',
   icon: IconConstants.CREATE,
@@ -59,7 +59,7 @@ const ExtensionInstallNpmAction = {
   handler: handleNpmAction,
 };
 
-const ExtensionUpdateNpmAction = {
+export const ExtensionUpdateNpmAction = {
   id: 'updateNpm',
   displayName: 'Update',
   icon: IconConstants.REFRESH_COLORED,
@@ -67,16 +67,20 @@ const ExtensionUpdateNpmAction = {
   handler: handleNpmAction,
 };
 
-const ExtensionInstallActions: UI.ActionListType<undefined> = {
+/*const ExtensionInstallActions: UI.ActionListType<undefined> = {
   installUrl: ExtensionInstallURLAction,
 };
 
 const ExtensionNpmActions: UI.ActionListType<UI.NpmPackage> = {
   installNpm: ExtensionInstallNpmAction,
   updateNpm: ExtensionUpdateNpmAction,
+};*/
+
+export const ExtensionInstallActionModule = {
+  moduleId: UI.Modules.EXTENSIONS,
 };
 
-export default {
+/*export default {
   install: {
     moduleId: UI.Modules.EXTENSIONS,
     actions: ExtensionInstallActions,
@@ -85,4 +89,4 @@ export default {
     moduleId: UI.Modules.EXTENSIONS,
     actions: ExtensionNpmActions,
   },
-};
+};*/

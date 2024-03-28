@@ -25,7 +25,11 @@ const QueueSourceActions: UI.ActionListType<API.User> = {
   removeSource: QueueSourceRemoveAction,
 };
 
-export default {
+export const QueueSourceActionModule = {
   moduleId: UI.Modules.QUEUE,
+};
+
+export const QueueSourceActionMenu = {
+  moduleData: QueueSourceActionModule,
   actions: QueueSourceActions,
 };

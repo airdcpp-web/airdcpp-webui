@@ -304,7 +304,7 @@ export const SearchAction = {
 };
 
 export const CopyMagnetAction = {
-  íd: 'copyMagnet',
+  id: 'copyMagnet',
   displayName: 'Copy magnet link',
   icon: IconConstants.COPY,
   filter: canCopyTTH,
@@ -357,6 +357,7 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
   viewAudio: ViewAudioAction,
   search: SearchAction,
   copy: {
+    id: 'copy',
     displayName: 'Copy',
     icon: IconConstants.COPY,
     children: {
@@ -368,7 +369,11 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
   },
 };
 
-export default {
+export const DownloadableItemActionModule = {
   moduleId: UI.Modules.COMMON,
+};
+
+export const DownloadableItemActionMenu = {
+  moduleData: DownloadableItemActionModule,
   actions: DownloadableItemActions,
 };

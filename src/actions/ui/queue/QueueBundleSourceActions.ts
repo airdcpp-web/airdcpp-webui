@@ -30,8 +30,12 @@ const BundleSourceActions: UI.ActionListType<ActionBundleSourceData> = {
   removeBundleSource: QueueBundleSourceRemoveAction,
 };
 
-export default {
+export const QueueBundleSourceActionModule = {
   moduleId: UI.Modules.QUEUE,
   subId: 'bundleSource',
+};
+
+export const QueueBundleSourceActionMenu = {
+  moduleData: QueueBundleSourceActionModule,
   actions: BundleSourceActions,
 };

@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import SystemActions from 'actions/ui/system/SystemActions';
 import ActionButton from 'components/ActionButton';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import { SettingPageProps } from 'routes/Settings/types';
+import { SystemActionModule, SystemRestartWebAction } from 'actions/ui/system';
 
 const Generic = [
   'web_server_threads',
@@ -35,7 +35,7 @@ const ServerSettingsPage: React.FC<SettingPageProps> = (props) => {
   const { translate } = props.moduleT;
   return (
     <div>
-      <ActionButton actions={SystemActions} actionId="restartWeb" />
+      <ActionButton action={SystemRestartWebAction} moduleData={SystemActionModule} />
       <RemoteSettingForm keys={Generic} />
       <div className="ui header">{translate('Hook timeouts')}</div>
       <div className="ui segment">

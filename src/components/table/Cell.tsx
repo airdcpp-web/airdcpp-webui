@@ -118,8 +118,9 @@ export interface ActionLinkCellProps<
 
   //action: (itemData: any, location: Location) => void;
   //action: UI.ActionType<ItemDataT>;
-  actions: UI.ModuleActions<ItemDataT>;
-  actionId: string;
+  action: UI.ActionDefinition<ItemDataT>;
+  moduleData: UI.ActionModuleData;
+  // actionId: string;
 }
 
 export const ActionLinkCell = <
@@ -131,12 +132,11 @@ export const ActionLinkCell = <
     rowDataGetter,
     //location,
     //onClickAction, action,
-    actions,
-    actionId,
+    action,
+    moduleData,
     ...props
   }: ActionLinkCellProps<CellDataT, ItemDataT> /*& ActionHandlerDecoratorChildProps*/,
 ) => {
-  const action = actions.actions[actionId] as UI.ActionDefinition<ItemDataT>;
   if (!showAction(action, rowDataGetter!())) {
     return <TextCell cellData={cellData} {...props} />;
   }
@@ -148,9 +148,8 @@ export const ActionLinkCell = <
           className="plain link cell"
           onClick={() =>
             onClickAction({
-              actionId,
               action,
-              moduleId: actions.moduleId,
+              moduleData,
               itemData: rowDataGetter!(),
             })
           }

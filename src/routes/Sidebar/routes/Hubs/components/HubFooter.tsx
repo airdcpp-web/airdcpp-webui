@@ -22,7 +22,7 @@ import {
 import { useMobileLayout } from 'utils/BrowserUtils';
 import { useLayoutWidth } from 'context/LayoutWidthContext';
 import { ActionMenu } from 'components/action-menu';
-import HubActions from 'actions/ui/hub/HubActions';
+import { HubActionMenu } from 'actions/ui/hub';
 
 interface HubFooterProps {
   session: API.Hub;
@@ -98,7 +98,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
           {userlistToggle}
           <ActionMenu
             className="top left pointing"
-            actions={HubActions}
+            actions={HubActionMenu}
             ids={['toggleChatNotify', 'toggleShowJoins']}
             header={sessionT.translate('Notification settings')}
             itemData={session}

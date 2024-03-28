@@ -5,7 +5,6 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 
-import ConnectivityActions from 'actions/ui/connectivity/ConnectivityActions';
 import ConnectivityConstants from 'constants/ConnectivityConstants';
 
 import { Row, Grid } from 'components/semantic/Grid';
@@ -14,6 +13,10 @@ import '../style.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import {
+  ConnectivityActionModule,
+  ConnectivityDetectAction,
+} from 'actions/ui/connectivity';
 
 const formatStatus = (
   protocolStatus: API.ConnectivityProtocolStatus,
@@ -68,8 +71,8 @@ const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = ({
     </Grid>
     <ActionButton
       className="detect-button"
-      actions={ConnectivityActions}
-      actionId="detect"
+      action={ConnectivityDetectAction}
+      moduleData={ConnectivityActionModule}
       disabled={!status.status_v4.auto_detect && !status.status_v6.auto_detect}
       loading={runningV6 || runningV4}
     />

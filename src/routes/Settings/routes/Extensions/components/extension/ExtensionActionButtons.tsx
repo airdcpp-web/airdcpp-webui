@@ -1,6 +1,9 @@
 import * as React from 'react';
 
-import ExtensionInstallActions from 'actions/ui/extension/ExtensionInstallActions';
+import {
+  ExtensionInstallNpmAction,
+  ExtensionUpdateNpmAction,
+} from 'actions/ui/extension/ExtensionInstallActions';
 import ExtensionConstants from 'constants/ExtensionConstants';
 
 import ActionButton from 'components/ActionButton';
@@ -12,7 +15,11 @@ import { ActionMenu } from 'components/action-menu';
 import MenuConstants from 'constants/MenuConstants';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
-import ExtensionManageActions from 'actions/ui/extension/ExtensionManageActions';
+import ExtensionManageActions, {
+  ExtensionManageActionModule,
+  ExtensionStartAction,
+  ExtensionStopAction,
+} from 'actions/ui/extension/ExtensionManageActions';
 
 export interface ExtensionActionButtonsProps {
   npmPackage?: UI.NpmPackage;
@@ -36,8 +43,8 @@ const InstallButton: React.FC<InstallButtonProps> = ({
 
   return (
     <ActionButton
-      actions={ExtensionInstallActions.npm}
-      actionId={hasUpdate ? 'updateNpm' : 'installNpm'}
+      action={hasUpdate ? ExtensionUpdateNpmAction : ExtensionInstallNpmAction}
+      moduleData={ExtensionManageActionModule}
       className="right floated primary"
       itemData={npmPackage}
       loading={installing}
@@ -86,8 +93,8 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = ({
     )}
     {installedPackage && (
       <ActionButton
-        actions={ExtensionManageActions}
-        actionId={installedPackage.running ? 'stop' : 'start'}
+        action={installedPackage.running ? ExtensionStopAction : ExtensionStartAction}
+        moduleData={ExtensionManageActionModule}
         className="right floated"
         itemData={installedPackage}
       />

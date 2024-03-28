@@ -1,7 +1,6 @@
 import { Component } from 'react';
 
 import ShareActions from 'actions/ui/share/ShareActions';
-import ShareRootActions from 'actions/ui/share/ShareRootActions';
 import ShareRootStore from 'stores/ShareRootStore';
 
 import VirtualTable from 'components/table/VirtualTable';
@@ -22,6 +21,18 @@ import * as UI from 'types/ui';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
 import MenuConstants from 'constants/MenuConstants';
+import {
+  ShareRootActionModule,
+  ShareRootCreateAction,
+  ShareRootEditActionMenu,
+} from 'actions/ui/share';
+
+const ShareActionMenu = {
+  actions: {
+    create: ShareRootCreateAction,
+  },
+  moduleData: ShareRootActionModule,
+};
 
 class Share extends Component<WithTranslation> {
   static displayName = 'Share';
@@ -39,7 +50,7 @@ class Share extends Component<WithTranslation> {
             <ActionMenu
               className="top left pointing"
               caption={translate('Actions...')}
-              actions={ShareRootActions.create}
+              actions={ShareActionMenu}
               header={translate('Share actions')}
               triggerIcon="chevron up"
               ids={['create']}
@@ -48,7 +59,7 @@ class Share extends Component<WithTranslation> {
               <ActionMenu actions={ShareActions} ids={['refresh']} />
             </ActionMenu>
           }
-          moduleId={ShareActions.moduleId}
+          moduleId={UI.Modules.SHARE}
         >
           <Column
             name="Path"
@@ -56,7 +67,7 @@ class Share extends Component<WithTranslation> {
             columnKey="path"
             cell={
               <FileActionCell
-                actions={ShareRootActions.edit}
+                actions={ShareRootEditActionMenu}
                 remoteMenuId={MenuConstants.SHARE_ROOT}
               />
             }

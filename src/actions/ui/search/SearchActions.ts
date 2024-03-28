@@ -46,7 +46,11 @@ const SearchActions: UI.ActionListType<API.GroupedSearchResult> = {
   browseContent: SearchBrowseContentAction,
 };
 
-export default {
+export const SearchActionModule = {
   moduleId: UI.Modules.SEARCH,
+};
+
+export const SearchActionMenu = {
+  moduleData: SearchActionModule,
   actions: SearchActions,
 };

@@ -90,7 +90,7 @@ const toMenuActionDefition = <ItemDataT extends UI.ActionMenuItemDataValueType>(
 
   if ('children' in action) {
     return {
-      id,
+      // id,
       ...action,
       children: Object.keys(action.children).map((childActionId) => {
         const childAction = action.children[childActionId];
@@ -99,7 +99,7 @@ const toMenuActionDefition = <ItemDataT extends UI.ActionMenuItemDataValueType>(
         }
 
         return {
-          id: childActionId,
+          // id: childActionId,
           ...childAction,
         };
       }),
@@ -107,7 +107,7 @@ const toMenuActionDefition = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   }
 
   return {
-    id,
+    // id,
     ...action,
   };
 };
@@ -161,10 +161,8 @@ export const parseActionMenu = <ItemDataT extends UI.ActionMenuItemDataValueType
       props.itemData instanceof Function
         ? props.itemData
         : () => props.itemData as ItemDataT,
-    actions: {
-      ...props.actions,
-      actions,
-    },
+    moduleData: props.actions.moduleData,
+    actions,
   };
 
   return ret;

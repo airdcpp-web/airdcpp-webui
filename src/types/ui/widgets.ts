@@ -30,7 +30,7 @@ export interface Widget {
   };
   actionMenu?: {
     actions: ModuleActions<void>;
-    ids: string[];
+    ids?: string[];
   };
   formSettings?: FormFieldDefinition[];
 }

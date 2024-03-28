@@ -5,7 +5,6 @@ import { TextDecorator } from 'components/text';
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 
 import HubSessionStore from 'stores/HubSessionStore';
-import HubUIActions from 'actions/ui/hub/HubActions';
 import HubAPIActions from 'actions/reflux/HubActions';
 
 import { hubOnlineStatusToColor } from 'utils/TypeConvert';
@@ -22,6 +21,7 @@ import {
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import IconConstants from 'constants/IconConstants';
 import { Params } from 'react-router-dom';
+import { HubActionMenu } from 'actions/ui/hub';
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   itemNameGetter(session) {
@@ -61,7 +61,7 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
       newDescription={sessionT.t('newDesc', 'Connect to a new hub')}
       newIcon={IconConstants.HUBS_PLAIN}
       editAccess={API.AccessEnum.HUBS_EDIT}
-      uiActions={HubUIActions}
+      uiActions={HubActionMenu}
       actionIds={['reconnect', 'clear', 'favorite']}
       sessionApi={HubAPIActions as UI.SessionActions<API.Hub>}
       sessionItemLayout={HubSession}

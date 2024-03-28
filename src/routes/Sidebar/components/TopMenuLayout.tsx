@@ -63,11 +63,18 @@ const CloseButton = <
     return null;
   }
 
+  /*const closeAction = Object.values(actions.actions).find(
+    (action) => !!action && action.id === 'remove',
+  ) as UI.ActionDefinition<UI.SessionItemBase>;*/
+
+  const closeAction = Object.values(actions.actions)[
+    Object.values(actions.actions).length - 1
+  ];
   return (
     <ActionButton
       className="basic small item close-button"
-      actions={actions}
-      actionId="removeSession"
+      action={closeAction as UI.ActionDefinition<UI.SessionItemBase>}
+      moduleData={actions.moduleData}
       itemData={activeItem}
       icon={IconConstants.CLOSE}
     />

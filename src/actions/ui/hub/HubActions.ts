@@ -1,13 +1,14 @@
 import HubConstants from 'constants/HubConstants';
 import SocketService from 'services/SocketService';
 
-import ChatActionDecorator from '../decorators/ChatActionDecorator';
-import SessionActionDecorator from '../decorators/SessionActionDecorator';
+import { BuildClearChatAction } from '../decorators/ChatActionDecorator';
+import { BuildRemoveSessionAction } from '../decorators/SessionActionDecorator';
 
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { MENU_DIVIDER } from 'constants/ActionConstants';
 
 const showFav = (hub: API.Hub) => !hub.favorite_hub;
 
@@ -71,20 +72,31 @@ export const HubToggleShowJoinsAction = {
   },
 };
 
+const HubClearChatAction = BuildClearChatAction(
+  HubConstants.SESSIONS_URL,
+  API.AccessEnum.HUBS_EDIT,
+);
+
+const HubRemoveAction = BuildRemoveSessionAction(
+  HubConstants.SESSIONS_URL,
+  API.AccessEnum.HUBS_EDIT,
+);
+
 const HubActions: UI.ActionListType<API.Hub> = {
   reconnect: HubReconnectAction,
   favorite: HubFavoriteAction,
   toggleChatNotify: HubToggleChatNotifyAction,
   toggleShowJoins: HubToggleShowJoinsAction,
+  clearChat: HubClearChatAction,
+  divider: MENU_DIVIDER,
+  remove: HubRemoveAction,
 };
 
-const HubActionsDecorated = SessionActionDecorator(
-  ChatActionDecorator(HubActions, HubConstants.SESSIONS_URL, API.AccessEnum.HUBS_EDIT),
-  HubConstants.SESSIONS_URL,
-  API.AccessEnum.HUBS_EDIT,
-);
-
-export default {
+export const HubActionModule = {
   moduleId: UI.Modules.HUBS,
-  actions: HubActionsDecorated,
+};
+
+export const HubActionMenu = {
+  moduleData: HubActionModule,
+  actions: HubActions,
 };

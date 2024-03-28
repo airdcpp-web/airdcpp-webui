@@ -56,7 +56,11 @@ const MessageHighlightActions: UI.ActionListType<HighlightItemInfo> = {
   copy: MessageHighlightCopyAction,
 };
 
-export default {
+export const MessageHighlightActionModule = {
   moduleId: UI.Modules.COMMON,
+};
+
+export const MessageHighlightActionMenu = {
+  moduleData: MessageHighlightActionModule,
   actions: MessageHighlightActions,
 } as UI.ModuleActions<HighlightItemInfo>;

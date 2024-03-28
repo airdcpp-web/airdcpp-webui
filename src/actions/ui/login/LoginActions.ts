@@ -23,12 +23,7 @@ export const LoginNewUserIntroSeenAction = {
   handler: handleNewUserIntroSeen,
 };
 
-const LoginActions: UI.ActionListType<undefined> = {
-  newUserIntroSeen: LoginNewUserIntroSeenAction,
-};
-
-export default {
+export const LoginActionModule = {
   moduleId: UI.Modules.COMMON,
   subId: 'login',
-  actions: LoginActions,
 };

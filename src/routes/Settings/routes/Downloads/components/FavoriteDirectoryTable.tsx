@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-import FavoriteDirectoryActions from 'actions/ui/favorite-directory/FavoriteDirectoryActions';
+import {
+  FavoriteDirectoryActionModule,
+  FavoriteDirectoryCreateAction,
+  FavoriteDirectoryEditActionMenu,
+} from 'actions/ui/favorite-directory/FavoriteDirectoryActions';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 
 import ActionButton from 'components/ActionButton';
@@ -20,7 +24,7 @@ const Row: React.FC<{ directory: API.FavoriteDirectoryEntry }> = ({ directory })
     <td className="name dropdown">
       <ActionMenu
         caption={<strong>{directory.name}</strong>}
-        actions={FavoriteDirectoryActions.edit}
+        actions={FavoriteDirectoryEditActionMenu}
         itemData={directory}
         contextElement="#setting-scroll-context"
       />
@@ -45,7 +49,10 @@ const FavoriteDirectoryPage: React.FC<
   FavoriteDirectoryPageProps & FavoriteDirectoryPageDataProps
 > = ({ directories, moduleT }) => (
   <div id="directory-table">
-    <ActionButton actions={FavoriteDirectoryActions.create} actionId="create" />
+    <ActionButton
+      action={FavoriteDirectoryCreateAction}
+      moduleData={FavoriteDirectoryActionModule}
+    />
 
     {directories.length === 0 ? null : (
       <table className="ui striped table">

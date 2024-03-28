@@ -68,12 +68,14 @@ const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location, navigate 
 
 export const RSSActions: UI.ActionListType<RSSItemData> = {
   openLink: {
+    id: 'openLink',
     displayName: 'Open link',
     icon: IconConstants.EXTERNAL,
     filter: hasLink,
     handler: handleOpenLink,
   },
   search: {
+    id: 'search',
     displayName: 'Search',
     access: AccessConstants.SEARCH,
     icon: IconConstants.SEARCH,

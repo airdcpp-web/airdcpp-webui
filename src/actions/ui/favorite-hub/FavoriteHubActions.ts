@@ -18,7 +18,7 @@ const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => 
   return SocketService.delete(FavoriteHubConstants.HUBS_URL + '/' + hub.id);
 };
 
-const FavoriteHubCreateAction = {
+export const FavoriteHubCreateAction = {
   id: 'create',
   displayName: 'Add new',
   access: API.AccessEnum.FAVORITE_HUBS_EDIT,
@@ -26,7 +26,7 @@ const FavoriteHubCreateAction = {
   handler: handleCreate,
 };
 
-const FavoriteHubEditAction = {
+export const FavoriteHubEditAction = {
   id: 'edit',
   displayName: 'Edit',
   access: API.AccessEnum.FAVORITE_HUBS_EDIT,
@@ -34,7 +34,7 @@ const FavoriteHubEditAction = {
   handler: handleEdit,
 };
 
-const FavoriteHubRemoveAction = {
+export const FavoriteHubRemoveAction = {
   id: 'remove',
   displayName: 'Remove',
   access: API.AccessEnum.FAVORITE_HUBS_EDIT,
@@ -47,22 +47,16 @@ const FavoriteHubRemoveAction = {
   handler: handleRemove,
 };
 
-const FavoriteHubCreateActions: UI.ActionListType<undefined> = {
-  create: FavoriteHubCreateAction,
-};
-
 const FavoriteHubEditActions: UI.ActionListType<API.FavoriteHubEntry> = {
   edit: FavoriteHubEditAction,
   remove: FavoriteHubRemoveAction,
 };
 
-export default {
-  create: {
-    moduleId: UI.Modules.FAVORITE_HUBS,
-    actions: FavoriteHubCreateActions,
-  },
-  edit: {
-    moduleId: UI.Modules.FAVORITE_HUBS,
-    actions: FavoriteHubEditActions,
-  },
+export const FavoriteHubActionModule = {
+  moduleId: UI.Modules.FAVORITE_HUBS,
+};
+
+export const FavoriteHubEditActionMenu = {
+  moduleData: FavoriteHubActionModule,
+  actions: FavoriteHubEditActions,
 };

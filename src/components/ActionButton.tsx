@@ -8,26 +8,25 @@ import { useTranslation } from 'react-i18next';
 
 export interface ActionButtonProps<ItemDataT extends UI.ActionItemDataValueType>
   extends Omit<ButtonProps, 'caption' | 'icon'> {
-  actions: UI.ModuleActions<ItemDataT>;
-  actionId: string;
+  action: UI.ActionDefinition<ItemDataT>;
+  moduleData: UI.ActionModuleData;
   itemData?: ItemDataT;
   icon?: IconType | true;
 }
 
 const ActionButton = <ItemDataT extends UI.ActionItemDataValueType>({
-  actionId,
+  action,
   itemData,
   icon = true,
-  actions,
+  moduleData,
   ...other
 }: ActionButtonProps<ItemDataT>) => {
-  const action = actions.actions[actionId] as UI.ActionDefinition<ItemDataT>;
   const { t } = useTranslation();
   if (!showAction(action, itemData)) {
     return null;
   }
 
-  const { moduleId, subId } = actions;
+  const { moduleId } = moduleData;
   return (
     <ActionHandlerDecorator<ItemDataT>>
       {({ onClickAction }) => (
@@ -37,9 +36,7 @@ const ActionButton = <ItemDataT extends UI.ActionItemDataValueType>({
             onClickAction({
               itemData: itemData as ItemDataT,
               action,
-              actionId,
-              moduleId,
-              subId,
+              moduleData,
             })
           }
           caption={t(toActionI18nKey(action, moduleId), action.displayName)}

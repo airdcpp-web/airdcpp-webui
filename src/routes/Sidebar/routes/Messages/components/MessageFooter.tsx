@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import PrivateChatActions from 'actions/ui/private-chat/PrivateChatActions';
-
 import { SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import Loader from 'components/semantic/Loader';
 import { ActionMenu } from 'components/action-menu';
@@ -9,6 +7,7 @@ import EncryptionState from 'components/EncryptionState';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { PrivateChatActionMenu } from 'actions/ui/private-chat';
 
 const getCaption = (state: API.CCPMStateEnum, sessionT: UI.ModuleTranslator) => {
   const { translate } = sessionT;
@@ -56,7 +55,7 @@ const CCPMState: React.FC<CCPMStateProps> = ({ session, sessionT }) => {
         />
         <ActionMenu
           caption={getCaption(state, sessionT)}
-          actions={PrivateChatActions}
+          actions={PrivateChatActionMenu}
           ids={['disconnectCCPM', 'connectCCPM']}
           itemData={session}
         />

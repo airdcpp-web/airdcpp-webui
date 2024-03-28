@@ -74,8 +74,12 @@ const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {
   details: FilelistItemDetailsAction,
 };
 
-export default {
+export const FilelistItemActionModule = {
   moduleId: UI.Modules.FILELISTS,
   subId: 'item',
+};
+
+export const FilelistItemActionMenu = {
+  moduleData: FilelistItemActionModule,
   actions: FilelistItemActions,
 };

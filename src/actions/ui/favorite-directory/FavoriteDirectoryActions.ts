@@ -42,6 +42,7 @@ export const FavoriteDirectoryEditAction = {
 };
 
 export const FavoriteDirectoryRemoveAction = {
+  id: 'remove',
   displayName: 'Remove directory',
   access: API.AccessEnum.SETTINGS_EDIT,
   icon: IconConstants.REMOVE,
@@ -53,24 +54,17 @@ export const FavoriteDirectoryRemoveAction = {
   handler: handleRemove,
 };
 
-const FavoriteDirectoryCreateActions: UI.ActionListType<undefined> = {
-  create: FavoriteDirectoryCreateAction,
-};
-
 const FavoriteDirectoryEditActions: UI.ActionListType<API.FavoriteDirectoryEntry> = {
   edit: FavoriteDirectoryEditAction,
   remove: FavoriteDirectoryRemoveAction,
 };
 
-export default {
-  create: {
-    moduleId: UI.Modules.SETTINGS,
-    subId: 'favoriteDirectory',
-    actions: FavoriteDirectoryCreateActions,
-  },
-  edit: {
-    moduleId: UI.Modules.SETTINGS,
-    subId: 'favoriteDirectory',
-    actions: FavoriteDirectoryEditActions,
-  },
+export const FavoriteDirectoryActionModule = {
+  moduleId: UI.Modules.SETTINGS,
+  subId: 'favoriteDirectory',
+};
+
+export const FavoriteDirectoryEditActionMenu = {
+  moduleData: FavoriteDirectoryActionModule,
+  actions: FavoriteDirectoryEditActions,
 };

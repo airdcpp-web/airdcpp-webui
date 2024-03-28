@@ -1,8 +1,12 @@
 import * as React from 'react';
 import SocketService from 'services/SocketService';
 
-import ShareActions from 'actions/ui/share/ShareActions';
-import ShareExcludeActions from 'actions/ui/share/ShareExcludeActions';
+import { ShareActionModule, ShareRefreshAction } from 'actions/ui/share/ShareActions';
+import {
+  ShareExcludeActionModule,
+  ShareExcludeAddAction,
+  ShareExcludeEditMenu,
+} from 'actions/ui/share/ShareExcludeActions';
 import ShareConstants from 'constants/ShareConstants';
 
 import ActionButton from 'components/ActionButton';
@@ -27,8 +31,7 @@ const Row: React.FC<{ path: string }> = ({ path }) => (
     <td className="path dropdown">
       <ActionMenu
         caption={<strong>{path}</strong>}
-        actions={ShareExcludeActions.edit}
-        //ids={ [ 'remove' ] }
+        actions={ShareExcludeEditMenu}
         itemData={path}
         contextElement="#setting-scroll-context"
       />
@@ -63,15 +66,15 @@ class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProp
                 </Trans>
               </div>
               <br />
-              <ActionButton actions={ShareActions} actionId="refresh" />
+              <ActionButton action={ShareRefreshAction} moduleData={ShareActionModule} />
             </div>
           }
           icon={IconConstants.INFO}
         />
 
         <ActionButton
-          actions={ShareExcludeActions.create}
-          actionId="add"
+          action={ShareExcludeAddAction}
+          moduleData={ShareExcludeActionModule}
           className="add"
         />
 

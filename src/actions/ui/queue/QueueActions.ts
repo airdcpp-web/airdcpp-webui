@@ -52,14 +52,18 @@ export const QueueResumeAction = {
   handler: handleResume,
 };
 
-const QueueActions: UI.ActionListType<null> = {
+const QueueActions: UI.ActionListType<void> = {
   removeCompleted: QueueRemoveCompletedAction,
   divider: MENU_DIVIDER,
   pause: QueuePauseAction,
   resume: QueueResumeAction,
 };
 
-export default {
+export const QueueActionModule = {
   moduleId: UI.Modules.QUEUE,
+};
+
+export const QueueActionMenu = {
+  moduleData: QueueActionModule,
   actions: QueueActions,
 };

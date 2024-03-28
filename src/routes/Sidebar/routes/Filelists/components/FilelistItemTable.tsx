@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 import * as React from 'react';
 
-import FilelistItemActions from 'actions/ui/filelist/FilelistItemActions';
-
 import { dupeToStringType } from 'utils/TypeConvert';
 import { TableActionMenu } from 'components/action-menu';
 
@@ -29,6 +27,7 @@ import { FilelistItemInfoDialog } from './item-info-dialog';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import { filelistDownloadHandler } from 'services/api/FilelistApi';
 import MenuConstants from 'constants/MenuConstants';
+import { FilelistItemActionMenu } from 'actions/ui/filelist';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   session: API.FilelistSession;
@@ -60,7 +59,7 @@ const NameCell: React.FC<NameCellProps> = ({
       {...other}
     >
       <TableActionMenu
-        actions={FilelistItemActions}
+        actions={FilelistItemActionMenu}
         itemData={itemDataGetter}
         ids={['refreshShare', 'details']}
       />
@@ -139,7 +138,7 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
           entityId={session.id}
           viewId={session.location!.path}
           sessionStore={FilelistSessionStore}
-          moduleId={FilelistItemActions.moduleId}
+          moduleId={UI.Modules.FILELISTS}
         >
           <Column
             name="Name"

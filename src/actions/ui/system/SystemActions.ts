@@ -14,37 +14,47 @@ const handleShutdown = () => {
   return SocketService.post(SystemConstants.MODULE_URL + '/shutdown');
 };
 
-const SystemActions: UI.ActionListType<undefined> = {
-  restartWeb: {
-    displayName: 'Restart web server',
-    access: API.AccessEnum.ADMIN,
-    icon: IconConstants.REFRESH_COLORED,
-    confirmation: {
-      content: `When changing the binding options, it's recommended to restart the web server only 
+export const SystemRestartWebAction = {
+  id: 'restartWeb',
+  displayName: 'Restart web server',
+  access: API.AccessEnum.ADMIN,
+  icon: IconConstants.REFRESH_COLORED,
+  confirmation: {
+    content: `When changing the binding options, it's recommended to restart the web server only 
                 when you are able to access the server for troubleshooting. If  \
                 the web server won't come back online, you should start the application 
                 manually to see if there are any error messages. The configuration file is located in your \
                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.`,
-      approveCaption: 'Continue and restart',
-      rejectCaption: `Don't restart`,
-    },
-    handler: handleRestartWeb,
+    approveCaption: 'Continue and restart',
+    rejectCaption: `Don't restart`,
   },
-  shutdown: {
-    displayName: 'Shut down application',
-    access: API.AccessEnum.ADMIN,
-    icon: IconConstants.POWER,
-    confirmation: {
-      content: 'Are you sure that you wish to shut down the application?',
-      approveCaption: 'Continue and shut down',
-      rejectCaption: 'Cancel',
-    },
-    handler: handleShutdown,
-  },
+  handler: handleRestartWeb,
 };
 
-export default {
+export const SystemShutdownAction = {
+  id: 'shutdown',
+  displayName: 'Shut down application',
+  access: API.AccessEnum.ADMIN,
+  icon: IconConstants.POWER,
+  confirmation: {
+    content: 'Are you sure that you wish to shut down the application?',
+    approveCaption: 'Continue and shut down',
+    rejectCaption: 'Cancel',
+  },
+  handler: handleShutdown,
+};
+
+/*const SystemActions: UI.ActionListType<undefined> = {
+  restartWeb: SystemRestartWebAction,
+  shutdown: SystemShutdownAction,
+};*/
+
+export const SystemActionModule = {
   moduleId: UI.Modules.COMMON,
   subId: 'system',
-  actions: SystemActions,
 };
+
+/*export default {
+  moduleData: SystemActionModule,
+  actions: SystemActions,
+};*/

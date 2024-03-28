@@ -7,7 +7,10 @@ import { TextDecorator } from 'components/text';
 import Message from 'components/semantic/Message';
 import { useStore } from 'effects/StoreListenerEffect';
 
-import LoginActions from 'actions/ui/login/LoginActions';
+import {
+  LoginActionModule,
+  LoginNewUserIntroSeenAction,
+} from 'actions/ui/login/LoginActions';
 import LoginStore, { LoginState } from 'stores/LoginStore';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
@@ -60,7 +63,10 @@ const NewUserIntro = () => {
               join the dev/support hub: <TextDecorator text={ LinkConstants.DEV_HUB_URL }/>
             </p>
           </Trans>
-          <ActionButton actions={LoginActions} actionId="newUserIntroSeen" />
+          <ActionButton
+            action={LoginNewUserIntroSeenAction}
+            moduleData={LoginActionModule}
+          />
         </div>
       }
     />

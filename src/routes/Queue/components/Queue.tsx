@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Column } from 'fixed-data-table-2';
 
-import QueueActions from 'actions/ui/queue/QueueActions';
-import QueueBundleActions from 'actions/ui/queue/QueueBundleActions';
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from 'routes/Queue/components/PriorityMenu';
@@ -35,6 +33,13 @@ import { getModuleT } from 'utils/TranslationUtils';
 import { setBundlePriority } from 'services/api/QueueApi';
 import IconConstants from 'constants/IconConstants';
 import MenuConstants from 'constants/MenuConstants';
+import {
+  QueueActionMenu,
+  QueueBundleActionMenu,
+  QueueBundleActionModule,
+  QueueBundleViewContentAction,
+  QueueBundleViewSourcesAction,
+} from 'actions/ui/queue';
 
 const PriorityCell: React.FC<
   RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>
@@ -88,13 +93,13 @@ class Queue extends React.Component<WithTranslation> {
             <ActionMenu
               className="top left pointing"
               caption={translate('Actions...')}
-              actions={QueueActions}
+              actions={QueueActionMenu}
               header={translate('Queue actions')}
               triggerIcon="chevron up"
               button={true}
             />
           }
-          moduleId={QueueActions.moduleId}
+          moduleId={UI.Modules.QUEUE}
         >
           <Column
             name="Name"
@@ -103,7 +108,7 @@ class Queue extends React.Component<WithTranslation> {
             columnKey="name"
             cell={
               <FileActionCell
-                actions={QueueBundleActions}
+                actions={QueueBundleActionMenu}
                 remoteMenuId={MenuConstants.QUEUE_BUNDLE}
                 ids={[
                   'content',
@@ -132,7 +137,12 @@ class Queue extends React.Component<WithTranslation> {
             width={150}
             columnKey="type"
             hideWidth={1000}
-            cell={<ActionLinkCell actions={QueueBundleActions} actionId="content" />}
+            cell={
+              <ActionLinkCell
+                action={QueueBundleViewContentAction}
+                moduleData={QueueBundleActionModule}
+              />
+            }
           />
           <Column
             name="Status"
@@ -147,7 +157,12 @@ class Queue extends React.Component<WithTranslation> {
             columnKey="sources"
             renderCondition={this.isActive}
             flexGrow={1}
-            cell={<ActionLinkCell actions={QueueBundleActions} actionId="sources" />}
+            cell={
+              <ActionLinkCell
+                action={QueueBundleViewSourcesAction}
+                moduleData={QueueBundleActionModule}
+              />
+            }
           />
           <Column
             name="Time left"

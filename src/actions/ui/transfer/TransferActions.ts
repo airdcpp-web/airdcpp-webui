@@ -109,7 +109,11 @@ const TransferActions: UI.ActionListType<API.Transfer> = {
   removeSource: TransferRemoveSourceAction,
 };
 
-export default {
+export const TransferActionModule = {
   moduleId: UI.Modules.TRANSFERS,
+};
+
+export const TransferActionMenu = {
+  moduleData: TransferActionModule,
   actions: TransferActions,
 };

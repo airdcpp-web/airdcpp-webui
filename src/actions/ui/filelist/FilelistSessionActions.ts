@@ -1,19 +1,23 @@
 import FilelistConstants from 'constants/FilelistConstants';
 
-import SessionActionDecorator from '../decorators/SessionActionDecorator';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { BuildRemoveSessionAction } from '../decorators/SessionActionDecorator';
 
-const FilelistSessionActions: UI.ActionListType<API.FilelistSession> = {};
-
-const FilelistSessionActionsDecorated = SessionActionDecorator(
-  FilelistSessionActions,
+const FilelistRemoveAction = BuildRemoveSessionAction(
   FilelistConstants.SESSIONS_URL,
   API.AccessEnum.FILELISTS_EDIT,
 );
 
-export default {
+const FilelistSessionActions: UI.ActionListType<API.FilelistSession> = {
+  remove: FilelistRemoveAction,
+};
+
+export const FilelistSessionActionModule = {
   moduleId: UI.Modules.FILELISTS,
-  actions: FilelistSessionActionsDecorated,
+};
+
+export const FilelistSessionActionMenu = {
+  moduleData: FilelistSessionActionModule,
+  actions: FilelistSessionActions,
 };

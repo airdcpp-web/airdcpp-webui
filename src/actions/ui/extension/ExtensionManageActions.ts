@@ -54,6 +54,7 @@ export const ExtensionStopAction = {
 };
 
 export const ExtensionConfigureAction = {
+  id: 'configure',
   displayName: 'Configure',
   icon: IconConstants.EDIT,
   filter: hasSettings,
@@ -62,6 +63,7 @@ export const ExtensionConfigureAction = {
 };
 
 export const ExtensionRemoveAction = {
+  id: 'remove',
   displayName: 'Uninstall',
   icon: IconConstants.REMOVE,
   filter: isManaged,
@@ -84,7 +86,11 @@ const ExtensionManageActions: UI.ActionListType<API.Extension> = {
   remove: ExtensionRemoveAction,
 };
 
-export default {
+export const ExtensionManageActionModule = {
   moduleId: UI.Modules.EXTENSIONS,
+};
+
+export default {
+  moduleData: ExtensionManageActionModule,
   actions: ExtensionManageActions,
 };

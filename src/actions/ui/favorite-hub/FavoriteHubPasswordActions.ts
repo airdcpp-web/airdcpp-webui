@@ -80,8 +80,12 @@ const FavoriteHubPasswordActions: UI.ActionListType<API.FavoriteHubEntry> = {
   remove: FavoriteHubPasswordRemoveAction,
 };
 
-export default {
+export const FavoriteHubPasswordActionModule = {
   moduleId: UI.Modules.FAVORITE_HUBS,
   subId: 'password',
+};
+
+export default {
+  moduleData: FavoriteHubPasswordActionModule,
   actions: FavoriteHubPasswordActions,
 };

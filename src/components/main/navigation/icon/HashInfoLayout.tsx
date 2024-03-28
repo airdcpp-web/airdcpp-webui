@@ -1,4 +1,9 @@
-import HashActions from 'actions/ui/hash/HashActions';
+import {
+  HashActionModule,
+  HashPauseAction,
+  HashResumeAction,
+  HashStopAction,
+} from 'actions/ui/hash/HashActions';
 import ActionButton from 'components/ActionButton';
 import { AdjustableSpeedLimit } from 'components/speed-limit';
 import { ListItem } from 'components/semantic/List';
@@ -76,16 +81,20 @@ export const HashInfoLayout: React.FC<HashInfoLayoutProps> = ({ stats, moduleT }
         />
       </div>
       <ActionButton
-        actions={HashActions}
-        actionId="pause"
+        action={HashPauseAction}
+        moduleData={HashActionModule}
         itemData={itemData}
         loading={stats.pause_forced && stats.hashers > 0}
       />
-      <ActionButton actions={HashActions} actionId="resume" itemData={itemData} />
       <ActionButton
-        actions={HashActions}
-        actionId="stop"
+        action={HashResumeAction}
+        moduleData={HashActionModule}
         itemData={itemData}
+      />
+      <ActionButton
+        action={HashStopAction}
+        itemData={itemData}
+        moduleData={HashActionModule}
         loading={stats.hash_bytes_left === 0 && stats.hashers > 0}
       />
     </div>

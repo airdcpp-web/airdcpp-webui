@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
-import DownloadableItemActions from 'actions/ui/downloadable-item/DownloadableItemActions';
 
 import * as UI from 'types/ui';
 import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
+import { DownloadableItemActionMenu } from 'actions/ui/downloadable-item';
 
 export interface DownloadMenuDecoratorProps<ItemDataT extends UI.DownloadableItemInfo>
   extends Omit<ActionMenuDecoratorProps<ItemDataT>, 'actions' | 'itemData' | 'caption'>,
@@ -74,7 +74,7 @@ export default function <DropdownPropsT, ItemDataT extends UI.DownloadableItemIn
           {...this.props}
           className={classNames('download', className)}
           caption={caption}
-          actions={DownloadableItemActions}
+          actions={DownloadableItemActionMenu}
           itemData={this.itemDataGetter}
         />
       );

@@ -22,11 +22,10 @@ interface ActionHandlerDecoratorProps<ItemDataT> {
   children: (props: ActionHandlerDecoratorChildProps<ItemDataT>) => React.ReactNode;
 }
 
-export interface ActionData<ItemDataT = any>
-  extends Pick<UI.ModuleActions<ItemDataT>, 'moduleId' | 'subId'> {
-  actionId: string;
+export interface ActionData<ItemDataT = any> {
   action: UI.ActionDefinition<ItemDataT>;
   itemData: ItemDataT;
+  moduleData: UI.ActionModuleData;
 }
 
 export type ActionClickHandler<ItemDataT = any> = (action: ActionData<ItemDataT>) => void;
@@ -41,15 +40,17 @@ const toFieldI18nKey = (
   actionData: ActionData,
   subNameSpace: UI.SubNamespaces,
 ) => {
-  let keyName = actionData.actionId;
-  if (actionData.subId) {
-    keyName += upperFirst(actionData.subId);
+  const { moduleId, subId } = actionData.moduleData;
+
+  let keyName = actionData.action.id;
+  if (subId) {
+    keyName += upperFirst(subId);
   }
 
   keyName += upperFirst(fieldName);
 
   return toI18nKey(keyName, [
-    ...toArray(actionData.moduleId),
+    ...toArray(moduleId),
     UI.SubNamespaces.ACTIONS,
     subNameSpace,
   ]);
@@ -96,7 +97,8 @@ const getCommonConfirmDialogProps = <ItemDataT extends UI.ActionItemDataValueTyp
   defaultRejectCaption: string,
   t: UI.TranslateF,
 ): Omit<ConfirmDialogProps, 'onApproved'> => {
-  const { icon, displayName } = actionData.action;
+  const { action, moduleData } = actionData;
+  const { icon, displayName } = action;
   const { approveCaption, rejectCaption, content, checkboxCaption } = translateInput(
     confirmation!,
     actionData,
@@ -107,7 +109,7 @@ const getCommonConfirmDialogProps = <ItemDataT extends UI.ActionItemDataValueTyp
     rejectCaption: rejectCaption || translate(defaultRejectCaption, t, UI.Modules.COMMON),
     content,
     icon,
-    title: t(toActionI18nKey(actionData.action, actionData.moduleId), displayName),
+    title: t(toActionI18nKey(action, moduleData.moduleId), displayName),
     checkboxCaption,
   };
 };
@@ -182,8 +184,8 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
   navigate,
   closeModal,
 }: HandleAction<ItemDataT>) => {
-  const { actionId, action, itemData } = actionData;
-  if (!!closeModal && isSidebarAction(actionId)) {
+  const { action, itemData } = actionData;
+  if (!!closeModal && isSidebarAction(action.id)) {
     closeModal();
   }
 

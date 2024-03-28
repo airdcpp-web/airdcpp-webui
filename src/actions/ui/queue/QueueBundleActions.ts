@@ -139,8 +139,12 @@ const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {
   forceShare: QueueBundleForceShareAction,
 };
 
-export default {
+export const QueueBundleActionModule = {
   moduleId: UI.Modules.QUEUE,
   //subId: 'bundle',
+};
+
+export const QueueBundleActionMenu = {
+  moduleData: QueueBundleActionModule,
   actions: QueueBundleActions,
 } as UI.ModuleActions<API.QueueBundle>;

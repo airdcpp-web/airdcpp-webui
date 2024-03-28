@@ -1,8 +1,18 @@
 import * as UI from 'types/ui';
 
+import ApplicationComponent from './components/Application';
+import { SystemActionModule, SystemShutdownAction } from 'actions/ui/system';
+
+const SystemActionsMenu = {
+  actions: {
+    shutdown: SystemShutdownAction,
+  },
+  moduleData: SystemActionModule,
+};
+
 export const Application = {
   typeId: 'application',
-  component: require('./components/Application').default,
+  component: ApplicationComponent,
   name: 'Application',
   icon: 'blue info',
   alwaysShow: true,
@@ -13,7 +23,6 @@ export const Application = {
     minH: 4,
   },
   actionMenu: {
-    actions: require('actions/ui/system/SystemActions').default,
-    ids: ['shutdown'],
+    actions: SystemActionsMenu,
   },
 } as UI.Widget;

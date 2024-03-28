@@ -1,12 +1,12 @@
 import * as React from 'react';
 import cx from 'classnames';
 
-import MessageHighlightActions from 'actions/ui/message-highlight/MessageHighlightActions';
 import { TableActionMenu } from 'components/action-menu';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { dupeToStringType } from 'utils/TypeConvert';
+import { MessageHighlightActionMenu } from 'actions/ui/message-highlight';
 
 export interface HighlightTextLinkProps /*extends Pick<TableDropdownProps, 'position'>*/ {
   text: string;
@@ -31,7 +31,7 @@ export const HighlightTextLink: React.FC<HighlightTextLinkProps> = ({
         // Disable partial dupe coloring in messages to make the text more readable
         dupeToStringType(dupe).replace('partial', 'full'),
       )}
-      actions={MessageHighlightActions}
+      actions={MessageHighlightActionMenu}
       itemData={{
         id: highlightId,
         text,

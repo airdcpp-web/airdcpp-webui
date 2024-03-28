@@ -70,8 +70,12 @@ const QueueFileActions: UI.ActionListType<API.QueueFile> = {
   removeFile: QueueFileRemoveAction,
 };
 
-export default {
+export const QueueFileActionModule = {
   moduleId: UI.Modules.QUEUE,
   //subId: 'file',
+};
+
+export const QueueFileActionMenu = {
+  moduleData: QueueFileActionModule,
   actions: QueueFileActions,
-} as UI.ModuleActions<API.QueueFile>;
+};

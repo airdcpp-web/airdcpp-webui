@@ -10,8 +10,10 @@ export interface WidgetItemInfo {
   settings: UI.WidgetSettings;
 }
 
+// Utils
 const notAlwaysShow = ({ widgetInfo }: WidgetItemInfo) => !widgetInfo.alwaysShow;
 
+// Handlers
 const handleCreate: UI.ActionHandler<UI.Widget> = ({ data: widgetInfo, navigate }) => {
   navigate(`/home/widget/${widgetInfo.typeId}`);
 };
@@ -24,6 +26,7 @@ const handleRemove: UI.ActionHandler<WidgetItemInfo> = ({ data: widgetInfo }) =>
   WidgetActions.remove(widgetInfo.id);
 };
 
+// Actions
 export const WidgetCreateAction = {
   id: 'create',
   displayName: 'Add widget',
@@ -51,22 +54,18 @@ export const WidgetRemoveAction = {
   handler: handleRemove,
 };
 
-const WidgetCreateActions: UI.ActionListType<UI.Widget> = {
-  create: WidgetCreateAction,
+// Module
+export const WidgetActionModule = {
+  moduleId: UI.Modules.WIDGETS,
 };
 
+// Menus
 const WidgetEditActions: UI.ActionListType<WidgetItemInfo> = {
   edit: WidgetEditAction,
   remove: WidgetRemoveAction,
 };
 
-export default {
-  create: {
-    moduleId: UI.Modules.WIDGETS,
-    actions: WidgetCreateActions,
-  },
-  edit: {
-    moduleId: UI.Modules.WIDGETS,
-    actions: WidgetEditActions,
-  },
+export const WidgetEditActionMenu = {
+  moduleData: WidgetActionModule,
+  actions: WidgetEditActions,
 };

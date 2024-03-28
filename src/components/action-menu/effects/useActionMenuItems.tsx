@@ -28,11 +28,9 @@ const actionToActionMenuItem = <ItemDataT extends UI.ActionMenuItemDataValueType
     item: {
       onClick: () => {
         onClickAction({
-          actionId: action.id,
           action,
           itemData: menu.itemDataGetter(),
-          moduleId: menu.actions.moduleId,
-          subId: menu.actions.subId,
+          moduleData: menu.moduleData,
         });
       },
       active,
@@ -41,7 +39,7 @@ const actionToActionMenuItem = <ItemDataT extends UI.ActionMenuItemDataValueType
         <Trans
           i18nKey={toActionI18nKey(
             action,
-            parseTranslationModules(menu.actions.moduleId),
+            parseTranslationModules(menu.moduleData.moduleId),
           )}
           defaults={action.displayName}
         >
@@ -143,7 +141,7 @@ export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueT
     menuIndex: number,
   ) => {
     items.push(
-      ...menu.actions.actions.map((actionId, actionIndex) => {
+      ...menu.actions.map((actionId, actionIndex) => {
         return getMenuItem(
           menu as UI.ActionMenuType<ItemDataT>,
           menuIndex,

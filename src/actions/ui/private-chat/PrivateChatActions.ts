@@ -3,11 +3,10 @@ import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
-import ChatActionDecorator from '../decorators/ChatActionDecorator';
-import SessionActionDecorator from '../decorators/SessionActionDecorator';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { BuildRemoveSessionAction } from '../decorators/SessionActionDecorator';
+import { BuildClearChatAction } from '../decorators/ChatActionDecorator';
 
 const handleConnectCCPM: UI.ActionHandler<API.PrivateChat> = ({ data: session }) => {
   return SocketService.post(`${PrivateChatConstants.SESSIONS_URL}/${session.id}/ccpm`);
@@ -40,22 +39,29 @@ export const PrivateChatDisconnectCCPMAction = {
   filter: ccpmConnected,
 };
 
-const PrivateChatActions: UI.ActionListType<API.PrivateChat> = {
-  connectCCPM: PrivateChatConnectCCPMAction,
-  disconnectCCPM: PrivateChatDisconnectCCPMAction,
-};
-
-const PrivateChatActionsDecorated = SessionActionDecorator(
-  ChatActionDecorator(
-    PrivateChatActions,
-    PrivateChatConstants.SESSIONS_URL,
-    API.AccessEnum.PRIVATE_CHAT_EDIT,
-  ),
+const PrivateChatClearChatAction = BuildClearChatAction(
   PrivateChatConstants.SESSIONS_URL,
   API.AccessEnum.PRIVATE_CHAT_EDIT,
 );
 
-export default {
+const PrivateChatRemoveAction = BuildRemoveSessionAction(
+  PrivateChatConstants.SESSIONS_URL,
+  API.AccessEnum.PRIVATE_CHAT_EDIT,
+);
+
+const PrivateChatActions: UI.ActionListType<API.PrivateChat> = {
+  connectCCPM: PrivateChatConnectCCPMAction,
+  disconnectCCPM: PrivateChatDisconnectCCPMAction,
+
+  clearChat: PrivateChatClearChatAction,
+  remove: PrivateChatRemoveAction,
+};
+
+export const PrivateChatActionModule = {
   moduleId: UI.Modules.MESSAGES,
-  actions: PrivateChatActionsDecorated,
+};
+
+export const PrivateChatActionMenu = {
+  moduleData: PrivateChatActionModule,
+  actions: PrivateChatActions,
 };

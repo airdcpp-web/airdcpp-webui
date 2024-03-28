@@ -23,21 +23,21 @@ const handleRemove: UI.ActionHandler<API.WebUser> = ({ data: user }) => {
   return SocketService.delete(`${WebUserConstants.USERS_URL}/${user.id}`);
 };
 
-const WebUserCreateAction = {
+export const WebUserCreateAction = {
   id: 'create',
   displayName: 'Add user',
   icon: IconConstants.CREATE,
   handler: handleCreate,
 };
 
-const WebUserEditAction = {
+export const WebUserEditAction = {
   id: 'edit',
   displayName: 'Edit user',
   icon: IconConstants.EDIT,
   handler: handleEdit,
 };
 
-const WebUserRemoveAction = {
+export const WebUserRemoveAction = {
   id: 'remove',
   displayName: 'Remove user',
   filter: isOther,
@@ -50,24 +50,17 @@ const WebUserRemoveAction = {
   handler: handleRemove,
 };
 
-const WebUserCreateActions: UI.ActionListType<undefined> = {
-  create: WebUserCreateAction,
-};
-
 const WebUserEditActions: UI.ActionListType<API.WebUser> = {
   edit: WebUserEditAction,
   remove: WebUserRemoveAction,
 };
 
-export default {
-  create: {
-    moduleId: UI.Modules.SETTINGS,
-    subId: 'webUser',
-    actions: WebUserCreateActions,
-  },
-  edit: {
-    moduleId: UI.Modules.SETTINGS,
-    subId: 'webUser',
-    actions: WebUserEditActions,
-  },
+export const WebUserActionModule = {
+  moduleId: UI.Modules.SETTINGS,
+  subId: 'webUser',
+};
+
+export const WebUserEditActionMenu = {
+  moduleData: WebUserActionModule,
+  actions: WebUserEditActions,
 };

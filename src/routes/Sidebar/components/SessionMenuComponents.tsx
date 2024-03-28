@@ -70,7 +70,7 @@ export const useComponents = <
 
       const { uiActions, actionIds, itemNameGetter, itemHeaderTitleGetter } = props;
 
-      const ids = actionIds ? [...actionIds, 'divider', 'removeSession'] : undefined;
+      const ids = actionIds ? [...actionIds, 'divider', 'remove'] : undefined;
       const actionMenu = (
         <ActionMenu
           caption={itemNameGetter(activeItem)}

@@ -5,6 +5,7 @@ import {
   ModuleActions,
   ActionDefitionBase,
   MenuDivider,
+  ActionModuleData,
 } from './actions';
 
 export interface ActionMenuData<ItemDataT extends ActionMenuItemDataValueType> {
@@ -43,9 +44,6 @@ export type MenuActionListType<ItemDataT> = Array<MenuActionListItemType<ItemDat
 
 export interface ActionMenuType<ItemDataT> {
   itemDataGetter: () => ItemDataT;
-  actions: {
-    moduleId: string | string[];
-    subId?: string;
-    actions: MenuActionListType<ItemDataT>;
-  };
+  moduleData: ActionModuleData;
+  actions: MenuActionListType<ItemDataT>;
 }

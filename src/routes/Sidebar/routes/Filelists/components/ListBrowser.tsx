@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import FilelistItemActions from 'actions/ui/filelist/FilelistItemActions';
-
 import BrowserBar from 'components/browserbar/BrowserBar';
 import { ActionMenu, DownloadMenu } from 'components/action-menu';
 
@@ -17,6 +15,7 @@ import MenuConstants from 'constants/MenuConstants';
 import { Location, useBlocker } from 'react-router-dom';
 import { useSyncFilelistLocation } from '../effects/useSyncFilelistLocation';
 import NotificationActions from 'actions/NotificationActions';
+import { FilelistItemActionMenu } from 'actions/ui/filelist';
 
 interface ListBrowserProps {
   session: API.FilelistSession;
@@ -79,7 +78,7 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
             item: session.location,
             session,
           }}
-          actions={FilelistItemActions}
+          actions={FilelistItemActionMenu}
         />
       </DownloadMenu>
     );

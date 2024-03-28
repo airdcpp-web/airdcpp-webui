@@ -139,8 +139,12 @@ const UserActions: UI.ActionListType<ActionUserData> = {
   unignore: UserUnignoreAction,
 };
 
-export default {
+export const UserActionModule = {
   moduleId: UI.Modules.COMMON,
   subId: 'user',
+};
+
+export const UserActionMenu = {
+  moduleData: UserActionModule,
   actions: UserActions,
 };

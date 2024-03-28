@@ -2,7 +2,7 @@ import { useEffect, memo } from 'react';
 import * as React from 'react';
 
 import EventAPIActions from 'actions/reflux/EventActions';
-import EventUIActions from 'actions/ui/event/EventActions';
+import { EventActionModule, EventClearAction } from 'actions/ui/event/EventActions';
 
 import EventStore from 'stores/EventStore';
 
@@ -41,7 +41,11 @@ const SystemLog: React.FC = memo(
             icon={IconConstants.EVENTS_COLORED}
             title={translate('Events', t, UI.Modules.EVENTS)}
             rightComponent={
-              <ActionButton actions={EventUIActions} actionId="clear" icon={null} />
+              <ActionButton
+                action={EventClearAction}
+                moduleData={EventActionModule}
+                icon={null}
+              />
             }
           />
           <div className="ui divider top" />

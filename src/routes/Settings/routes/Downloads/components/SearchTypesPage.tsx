@@ -11,7 +11,11 @@ import { ActionMenu } from 'components/action-menu';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import SearchTypeActions from 'actions/ui/search/SearchTypeActions';
+import {
+  SearchTypeActionModule,
+  SearchTypeCreateAction,
+  SearchTypeEditActionMenu,
+} from 'actions/ui/search/SearchTypeActions';
 import SearchConstants from 'constants/SearchConstants';
 import SearchTypeDialog from './SearchTypeDialog';
 import { formatBoolean } from 'utils/ValueFormat';
@@ -26,7 +30,7 @@ const Row: React.FC<{ type: API.SearchType; moduleT: UI.ModuleTranslator }> = ({
     <td className="name dropdown">
       <ActionMenu
         caption={<strong>{type.str}</strong>}
-        actions={SearchTypeActions.edit}
+        actions={SearchTypeEditActionMenu}
         itemData={type}
         contextElement="#setting-scroll-context"
       />
@@ -52,7 +56,7 @@ type Props = SearchTypesPageProps & DataProps;
 
 const SearchTypesPage: React.FC<Props> = ({ searchTypes, moduleT }) => (
   <div id="directory-table">
-    <ActionButton actions={SearchTypeActions.create} actionId="create" />
+    <ActionButton action={SearchTypeCreateAction} moduleData={SearchTypeActionModule} />
 
     {searchTypes.length === 0 ? null : (
       <table className="ui striped table">

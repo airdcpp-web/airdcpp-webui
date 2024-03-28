@@ -3,7 +3,6 @@ import * as React from 'react';
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
-import WidgetActions, { WidgetCreateAction } from 'actions/ui/widget/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 
 import * as UI from 'types/ui';
@@ -12,6 +11,7 @@ import {
   ActionHandlerDecorator,
   ActionClickHandler,
 } from 'decorators/ActionHandlerDecorator';
+import { WidgetActionModule, WidgetCreateAction } from 'actions/ui/widget';
 
 const getWidgetItem = (
   widgetInfo: UI.Widget,
@@ -23,10 +23,9 @@ const getWidgetItem = (
       key={widgetInfo.typeId}
       onClick={() =>
         onClickAction({
-          actionId: 'create',
           action: WidgetCreateAction,
           itemData: widgetInfo,
-          moduleId: WidgetActions.create.moduleId,
+          moduleData: WidgetActionModule,
         })
       }
       icon={widgetInfo.icon}

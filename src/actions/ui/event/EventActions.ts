@@ -5,7 +5,7 @@ import AccessConstants from 'constants/AccessConstants';
 import * as UI from 'types/ui';
 import IconConstants from 'constants/IconConstants';
 
-export const ClearEventsAction = {
+export const EventClearAction = {
   id: 'clear',
   displayName: 'Clear',
   access: AccessConstants.EVENTS_EDIT,
@@ -16,10 +16,14 @@ export const ClearEventsAction = {
 };
 
 export const EventActions: UI.ActionListType<undefined> = {
-  clear: ClearEventsAction,
+  clear: EventClearAction,
 };
 
-export default {
+export const EventActionModule = {
   moduleId: UI.Modules.EVENTS,
-  actions: EventActions,
 };
+
+/*export default {
+  moduleData: EventActionModule,
+  actions: EventActions,
+};*/

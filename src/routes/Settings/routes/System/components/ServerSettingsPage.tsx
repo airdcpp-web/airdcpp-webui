@@ -3,7 +3,10 @@ import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
 import ActionButton from 'components/ActionButton';
 import Message from 'components/semantic/Message';
-import SystemActions from 'actions/ui/system/SystemActions';
+import {
+  SystemActionModule,
+  SystemRestartWebAction,
+} from 'actions/ui/system/SystemActions';
 import { SettingPageProps } from 'routes/Settings/types';
 import IconConstants from 'constants/IconConstants';
 
@@ -34,7 +37,7 @@ const ServerSettingsPage: React.FC<SettingPageProps> = (props) => {
         icon={ IconConstants.INFO }
       />*/}
 
-      <ActionButton actions={SystemActions} actionId="restartWeb" />
+      <ActionButton action={SystemRestartWebAction} moduleData={SystemActionModule} />
 
       <div className="ui header">HTTP</div>
       <div className="ui segment">

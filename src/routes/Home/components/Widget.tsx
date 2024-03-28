@@ -1,15 +1,14 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import classNames from 'classnames';
 
 import LoginStore from 'stores/LoginStore';
 
 import { ActionMenu } from 'components/action-menu';
-import WidgetActions from 'actions/ui/widget/WidgetActions';
 
 import * as UI from 'types/ui';
 
 import { getWidgetT, translateWidgetName } from 'utils/WidgetUtils';
+import { WidgetEditActionMenu } from 'actions/ui/widget';
 
 const getError = (
   widgetInfo: UI.Widget,
@@ -59,7 +58,7 @@ const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
 
         <ActionMenu
           className="widget-menu right top pointing"
-          actions={WidgetActions.edit}
+          actions={WidgetEditActionMenu}
           itemData={{
             id: componentId,
             widgetInfo,

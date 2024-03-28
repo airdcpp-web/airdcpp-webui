@@ -4,7 +4,6 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
-import PrivateChatUIActions from 'actions/ui/private-chat/PrivateChatActions';
 import PrivateChatAPIActions from 'actions/reflux/PrivateChatActions';
 
 import MessageNew from 'routes/Sidebar/routes/Messages/components/MessageNew';
@@ -20,6 +19,7 @@ import {
 import IconConstants from 'constants/IconConstants';
 
 import '../style.css';
+import { PrivateChatActionMenu } from 'actions/ui/private-chat';
 
 const sessionActions = ['clear'];
 
@@ -36,7 +36,7 @@ const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = 
       newIcon={IconConstants.MESSAGES_PLAIN}
       unreadInfoStore={PrivateChatSessionStore}
       editAccess={API.AccessEnum.PRIVATE_CHAT_EDIT}
-      uiActions={PrivateChatUIActions}
+      uiActions={PrivateChatActionMenu}
       sessionApi={PrivateChatAPIActions as UI.SessionActions<API.PrivateChat>}
       actionIds={sessionActions}
       sessionItemLayout={PrivateChatSession}

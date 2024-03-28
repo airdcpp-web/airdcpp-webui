@@ -22,7 +22,11 @@ const ShareActions: UI.ActionListType<undefined> = {
   refresh: ShareRefreshAction,
 };
 
-export default {
+export const ShareActionModule = {
   moduleId: UI.Modules.SHARE,
+};
+
+export default {
+  moduleData: ShareActionModule,
   actions: ShareActions,
 };

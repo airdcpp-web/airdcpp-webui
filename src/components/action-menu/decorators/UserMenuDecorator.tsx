@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import invariant from 'invariant';
 
-import UserActions, { ActionUserType, ActionUserData } from 'actions/ui/user/UserActions';
+import { ActionUserType, ActionUserData } from 'actions/ui/user';
 import { getFilePath } from 'utils/FileUtils';
 
 import UserIcon from 'components/icon/UserIcon';
@@ -10,6 +10,7 @@ import UserIcon from 'components/icon/UserIcon';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
+import { UserActionMenu } from 'actions/ui/user';
 
 export type UserMenuDecoratorProps = Omit<
   ActionMenuDecoratorProps<ActionUserData>,
@@ -110,7 +111,7 @@ export default function <DropdownPropsT extends object>(
           {...this.props}
           className={classNames('user-menu', className)}
           caption={caption}
-          actions={UserActions}
+          actions={UserActionMenu}
           itemData={this.itemDataGetter}
         />
       );

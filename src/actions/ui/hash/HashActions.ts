@@ -34,7 +34,7 @@ export const HashResumeAction = {
 };
 
 export const HashPauseAction = {
-  id_: 'pause',
+  id: 'pause',
   displayName: 'Pause',
   access: AccessConstants.SETTINGS_EDIT,
   icon: IconConstants.PAUSE,
@@ -50,7 +50,6 @@ export const HashActions: UI.ActionListType<HashItemData> = {
   pause: HashPauseAction,
 };
 
-export default {
+export const HashActionModule = {
   moduleId: UI.Modules.HASH,
-  actions: HashActions,
 };

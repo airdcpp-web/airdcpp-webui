@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import SearchActions from 'actions/ui/search/SearchActions';
-
 import { ResultDialog } from './result-dialog';
 
 import SearchViewStore from 'stores/SearchViewStore';
@@ -33,6 +31,7 @@ import { searchDownloadHandler } from 'services/api/SearchApi';
 import IconConstants from 'constants/IconConstants';
 import MenuConstants from 'constants/MenuConstants';
 import SearchConstants from 'constants/SearchConstants';
+import { SearchActionMenu } from 'actions/ui/search';
 
 const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: UI.TranslateF) => {
   if (count > 1) {
@@ -61,7 +60,11 @@ const UserCell: React.FC<
     ids={UserFileActions}
     remoteMenuId={MenuConstants.HINTED_USER}
   >
-    <TableActionMenu actions={SearchActions} itemData={rowDataGetter} ids={['result']} />
+    <TableActionMenu
+      actions={SearchActionMenu}
+      itemData={rowDataGetter}
+      ids={['result']}
+    />
   </TableUserMenu>
 );
 
@@ -87,7 +90,7 @@ const NameCell: React.FC<NameCellProps> = ({ rowDataGetter, instance, ...props }
     {...props}
   >
     <TableActionMenu
-      actions={SearchActions}
+      actions={SearchActionMenu}
       itemData={rowDataGetter}
       remoteMenuId={MenuConstants.GROUPED_SEARCH_RESULT}
       entityId={instance.id}
@@ -179,7 +182,7 @@ class ResultTable extends React.Component<ResultTableProps> {
             autoFocus: false,
           }}
           entityId={instance.id}
-          moduleId={SearchActions.moduleId}
+          moduleId={UI.Modules.SEARCH}
         >
           <Column
             name="Name"

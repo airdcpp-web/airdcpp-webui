@@ -38,7 +38,9 @@ const Entry: React.FC<EntryProps> = ({ entry, feedUrl, widgetT }) => {
           caption={parseTitle(entry)}
           actions={{
             actions: RSSActions,
-            moduleId: widgetT.moduleId,
+            moduleData: {
+              moduleId: widgetT.moduleId,
+            },
           }}
           itemData={{
             entry,

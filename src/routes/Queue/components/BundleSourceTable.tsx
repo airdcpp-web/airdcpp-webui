@@ -4,7 +4,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 
-import QueueBundleSourceActions from 'actions/ui/queue/QueueBundleSourceActions';
+import { QueueBundleSourceActionMenu } from 'actions/ui/queue/QueueBundleSourceActions';
 import QueueConstants from 'constants/QueueConstants';
 
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
@@ -33,7 +33,7 @@ const Source: React.FC<SourceProps> = ({ source, bundle, t }) => (
         remoteMenuId={MenuConstants.HINTED_USER}
       >
         <ActionMenu
-          actions={QueueBundleSourceActions}
+          actions={QueueBundleSourceActionMenu}
           //ids={ [ 'removeBundleSource' ]}
           itemData={{
             source,

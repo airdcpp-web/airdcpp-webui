@@ -53,24 +53,17 @@ export const ShareRootRemoveAction = {
   handler: handleRemove,
 };
 
-const ShareRootCreateActions: UI.ActionListType<undefined> = {
-  create: ShareRootCreateAction,
-};
-
 const ShareRootEditActions: UI.ActionListType<API.ShareRootEntry> = {
   edit: ShareRootEditAction,
   remove: ShareRootRemoveAction,
 };
 
-export default {
-  create: {
-    moduleId: UI.Modules.SHARE,
-    subId: 'root',
-    actions: ShareRootCreateActions,
-  },
-  edit: {
-    moduleId: UI.Modules.SHARE,
-    subId: 'root',
-    actions: ShareRootEditActions,
-  },
+export const ShareRootActionModule = {
+  moduleId: UI.Modules.SHARE,
+  subId: 'root',
+};
+
+export const ShareRootEditActionMenu = {
+  moduleData: ShareRootActionModule,
+  actions: ShareRootEditActions,
 };

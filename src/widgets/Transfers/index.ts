@@ -1,9 +1,14 @@
+import AccessConstants from 'constants/AccessConstants';
+import { QueueActionMenu } from 'actions/ui/queue';
+
 import * as UI from 'types/ui';
+
+import TransfersComponent from './components/Transfers';
 
 export const Transfers = {
   typeId: 'transfers',
-  component: require('./components/Transfers').default,
-  access: require('constants/AccessConstants').default.TRANSFERS,
+  component: TransfersComponent,
+  access: AccessConstants.TRANSFERS,
   name: 'Transfers',
   icon: 'exchange',
   size: {
@@ -13,7 +18,7 @@ export const Transfers = {
     minH: 5,
   },
   actionMenu: {
-    actions: require('actions/ui/queue/QueueActions').default,
+    actions: QueueActionMenu,
     ids: ['resume', 'pause'],
   },
 } as UI.Widget;

@@ -15,7 +15,7 @@ export type ActionMenuItemDataType<ItemDataT extends ActionMenuItemDataValueType
   | (() => ItemDataT)
   | ItemDataT;
 
-export type ActionItemDataValueType = object | string | number | undefined;
+export type ActionItemDataValueType = object | string | number | void;
 
 export interface ActionConfirmation {
   content: string;
@@ -42,6 +42,7 @@ export type ActionHandler<ItemDataT> = (
 ) => Promise<any> | void;
 
 export interface ActionDefitionBase {
+  id: string;
   displayName: string;
   icon?: string;
 }
@@ -86,13 +87,17 @@ export type ActionListType<ItemDataT> = {
   [actionKey: string]: ActionListItemType<ItemDataT>;
 };
 
+export interface ActionModuleData {
+  moduleId: string | string[];
+  subId?: string;
+}
+
 export interface ModuleActions<
   ItemDataT,
   ActionsT extends ActionListType<ItemDataT> = ActionListType<ItemDataT>,
 > {
-  moduleId: string | string[];
-  subId?: string;
   actions: ActionsT;
+  moduleData: ActionModuleData;
 }
 
 interface MenuItemBase {

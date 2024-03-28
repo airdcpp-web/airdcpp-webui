@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-import ShareProfileActions from 'actions/ui/share/ShareProfileActions';
+import {
+  ShareProfileActionModule,
+  ShareProfileCreateAction,
+  ShareProfileEditMenu,
+} from 'actions/ui/share/ShareProfileActions';
 
 import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/action-menu';
@@ -32,7 +36,7 @@ const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (
     <td className="name dropdown">
       <ActionMenu
         caption={<strong>{profile.str}</strong>}
-        actions={ShareProfileActions.edit}
+        actions={ShareProfileEditMenu}
         itemData={profile}
         contextElement="#setting-scroll-context"
       />
@@ -94,7 +98,10 @@ profiles.';
         }
         icon={IconConstants.INFO}
       />
-      <ActionButton actions={ShareProfileActions.create} actionId="create" />
+      <ActionButton
+        action={ShareProfileCreateAction}
+        moduleData={ShareProfileActionModule}
+      />
 
       <table className="ui striped table">
         <thead>

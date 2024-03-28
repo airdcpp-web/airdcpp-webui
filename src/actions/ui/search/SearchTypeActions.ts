@@ -18,21 +18,21 @@ const handleRemove: UI.ActionHandler<API.SearchType> = ({ data: type }) => {
   return SocketService.delete(`${SearchConstants.SEARCH_TYPES_URL}/${type.id}`);
 };
 
-const SearchTypeCreateAction = {
+export const SearchTypeCreateAction = {
   id: 'create',
   displayName: 'Add type',
   icon: IconConstants.CREATE,
   handler: handleCreate,
 };
 
-const SearchTypeEditAction = {
+export const SearchTypeEditAction = {
   id: 'edit',
   displayName: 'Edit type',
   icon: IconConstants.EDIT,
   handler: handleEdit,
 };
 
-const SearchTypeRemoveAction = {
+export const SearchTypeRemoveAction = {
   id: 'remove',
   displayName: 'Remove type',
   icon: IconConstants.REMOVE,
@@ -45,24 +45,16 @@ const SearchTypeRemoveAction = {
   handler: handleRemove,
 };
 
-const SearchTypeCreateActions: UI.ActionListType<API.SearchType> = {
-  create: SearchTypeCreateAction,
-};
-
 const SearchTypeEditActions: UI.ActionListType<API.SearchType> = {
   edit: SearchTypeEditAction,
   remove: SearchTypeRemoveAction,
 };
 
-export default {
-  create: {
-    moduleId: UI.Modules.SETTINGS,
-    subId: 'searchType',
-    actions: SearchTypeCreateActions,
-  },
-  edit: {
-    moduleId: UI.Modules.SETTINGS,
-    subId: 'searchType',
-    actions: SearchTypeEditActions,
-  },
+export const SearchTypeActionModule = {
+  moduleId: UI.Modules.SETTINGS,
+};
+
+export const SearchTypeEditActionMenu = {
+  moduleData: SearchTypeActionModule,
+  actions: SearchTypeEditActions,
 };

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import FavoriteHubActions from 'actions/ui/favorite-hub/FavoriteHubActions';
 import FavoriteHubPasswordActions from 'actions/ui/favorite-hub/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 import FavoriteHubDialog from './FavoriteHubDialog';
@@ -26,6 +25,11 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import { updateFavoriteHub } from 'services/api/FavoriteHubApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import MenuConstants from 'constants/MenuConstants';
+import {
+  FavoriteHubActionModule,
+  FavoriteHubCreateAction,
+  FavoriteHubEditActionMenu,
+} from 'actions/ui/favorite-hub';
 
 const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = ({
   cellData,
@@ -75,7 +79,10 @@ class FavoriteHubs extends React.Component<WithTranslation> {
   favT = getModuleT(this.props.t, UI.Modules.FAVORITE_HUBS);
   render() {
     const footerData = (
-      <ActionButton actions={FavoriteHubActions.create} actionId="create" />
+      <ActionButton
+        action={FavoriteHubCreateAction}
+        moduleData={FavoriteHubActionModule}
+      />
     );
 
     const editAccess = LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT);
@@ -101,7 +108,7 @@ class FavoriteHubs extends React.Component<WithTranslation> {
             flexGrow={6}
             cell={
               <ActionMenuCell
-                actions={FavoriteHubActions.edit}
+                actions={FavoriteHubEditActionMenu}
                 remoteMenuId={MenuConstants.FAVORITE_HUB}
               />
             }
