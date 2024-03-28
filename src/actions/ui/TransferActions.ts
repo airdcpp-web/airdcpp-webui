@@ -33,7 +33,9 @@ const handleRemoveFile: UI.ActionHandler<API.Transfer> = ({
   data: transfer,
   ...other
 }) => {
-  return QueueFileActions.actions.removeFile!.handler({
+  return (
+    QueueFileActions.actions.removeFile as UI.ActionDefinition<API.QueueFile>
+  ).handler({
     data: {
       id: transfer.queue_file_id,
       target: transfer.target,
@@ -47,7 +49,9 @@ const handleRemoveSource: UI.ActionHandler<API.Transfer> = ({
   data: transfer,
   ...other
 }) => {
-  return QueueSourceActions.actions.removeSource!.handler({
+  return (
+    QueueSourceActions.actions.removeSource as UI.ActionDefinition<API.User>
+  ).handler({
     data: {
       ...transfer.user,
       id: transfer.user.cid,

@@ -85,7 +85,7 @@ export default {
   USER: 'user',
 
   COPY: 'copy',
-  MAGNET: 'magnet',
+  MAGNET: 'red magnet',
   IGNORE: 'red ban',
   UNIGNORE: 'ban',
 };

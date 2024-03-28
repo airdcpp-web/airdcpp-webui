@@ -136,7 +136,7 @@ export const ActionLinkCell = <
     ...props
   }: ActionLinkCellProps<CellDataT, ItemDataT> /*& ActionHandlerDecoratorChildProps*/,
 ) => {
-  const action = actions.actions[actionId]!;
+  const action = actions.actions[actionId] as UI.ActionDefinition<ItemDataT>;
   if (!showAction(action, rowDataGetter!())) {
     return <TextCell cellData={cellData} {...props} />;
   }

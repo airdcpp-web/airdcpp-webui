@@ -103,6 +103,12 @@ const UserActions: UI.ActionListType<ActionUserData> = {
     handler: handleIgnore,
     notifications: {
       onSuccess: 'User {{item.nicks}} was added in ignored users',
+      itemConverter: (itemData) => {
+        const nicks = itemData.user.nicks || itemData.user.nick;
+        return {
+          nicks,
+        };
+      },
     },
   },
   unignore: {

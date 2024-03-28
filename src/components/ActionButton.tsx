@@ -21,7 +21,7 @@ const ActionButton = <ItemDataT extends UI.ActionItemDataValueType>({
   actions,
   ...other
 }: ActionButtonProps<ItemDataT>) => {
-  const action = actions.actions[actionId]!;
+  const action = actions.actions[actionId] as UI.ActionDefinition<ItemDataT>;
   const { t } = useTranslation();
   if (!showAction(action, itemData)) {
     return null;

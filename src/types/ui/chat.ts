@@ -1,12 +1,7 @@
 import { AddTempShareResponse } from 'services/api/ShareApi';
-import {
-  ActionListType,
-  ActionType,
-  ModuleActions,
-  RefluxActionListType,
-  RefluxActionType,
-} from './actions';
+import { ActionListType, ActionDefinition, ModuleActions } from './actions';
 import { SessionItemBase } from './sessions';
+import { RefluxActionListType, RefluxActionType } from './reflux';
 
 export interface ChatAPI extends RefluxActionListType<SessionItemBase> {
   sendChatMessage: RefluxActionType<SessionItemBase>;
@@ -15,7 +10,7 @@ export interface ChatAPI extends RefluxActionListType<SessionItemBase> {
 }
 
 export interface ChatActionList extends ActionListType<SessionItemBase> {
-  clear: ActionType<SessionItemBase>;
+  clear: ActionDefinition<SessionItemBase>;
 }
 
 export type ChatActions = ModuleActions<SessionItemBase, ChatActionList>;

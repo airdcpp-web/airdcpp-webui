@@ -11,9 +11,22 @@ import {
   MenuFormDialogProps,
 } from 'components/action-menu/MenuFormDialog';
 import { parseActionMenuItemIds } from 'utils/MenuUtils';
-import { useActionMenuItems } from 'components/action-menu/effects/useActionMenuItems';
+import {
+  ActionMenuDefinition,
+  useActionMenuItems,
+} from 'components/action-menu/effects/useActionMenuItems';
 import { EmptyDropdownContent } from 'components/semantic/EmptyDropdown';
 import { OnShowRemoteMenuForm, useRemoteMenuItems } from '../effects/useRemoteMenuItems';
+
+export interface ActionMenuDecoratorProps<
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+> extends ActionMenuDefinition<ItemDataT> {
+  remoteMenuNestingThreshold?: number;
+  className?: string;
+  caption?: React.ReactNode;
+  button?: boolean;
+  children?: React.ReactElement<UI.ActionMenuData<any>> | false;
+}
 
 interface ActionMenuNestedProps<ItemDataT extends UI.ActionMenuItemDataValueType> {
   props: ActionMenuDecoratorProps<ItemDataT>;
@@ -30,15 +43,15 @@ const ActionMenuNested = <ItemDataT extends UI.ActionMenuItemDataValueType>({
   onClickItem,
   menuBuilder,
 }: ActionMenuNestedProps<ItemDataT>) => {
-  const { getPropsArray, getItems } = useActionMenuItems(props);
+  const { getMenuDefinitionArray, getMenuItems } = useActionMenuItems<ItemDataT>(props);
 
-  const propsArray = getPropsArray();
+  const definitionArray = getMenuDefinitionArray();
   const { getRemoteItems } = useRemoteMenuItems({
-    selectedIds: propsArray
-      .map((props) => props.itemData)
+    selectedIds: definitionArray
+      .map((defition) => defition.itemData)
       .map((data) => parseActionMenuItemIds(data)),
-    remoteMenuIds: propsArray.map((props) => props.remoteMenuId),
-    entityId: propsArray.find((p) => p.entityId)?.entityId,
+    remoteMenuIds: definitionArray.map((remoteMenuProps) => remoteMenuProps.remoteMenuId),
+    entityId: definitionArray.find((arrayProps) => arrayProps.entityId)?.entityId,
     onShowForm,
     nestingThreshold: props.remoteMenuNestingThreshold,
     onClickMenuItem: onClickItem,
@@ -46,7 +59,7 @@ const ActionMenuNested = <ItemDataT extends UI.ActionMenuItemDataValueType>({
 
   const getAllMenuItems = () => {
     const remoteItems = getRemoteItems();
-    const items = getItems(onClickAction, remoteItems, onClickItem);
+    const items = getMenuItems(onClickAction, remoteItems, onClickItem);
     if (!items.length) {
       return <EmptyDropdownContent loading={!remoteItems} />;
     }
@@ -56,17 +69,6 @@ const ActionMenuNested = <ItemDataT extends UI.ActionMenuItemDataValueType>({
 
   return getAllMenuItems();
 };
-
-export interface ActionMenuDecoratorProps<
-  ItemDataT extends UI.ActionMenuItemDataValueType,
-> extends UI.ActionMenuData<ItemDataT> {
-  remoteMenuId?: string;
-  remoteMenuNestingThreshold?: number;
-  className?: string;
-  caption?: React.ReactNode;
-  button?: boolean;
-  children?: React.ReactElement<UI.ActionMenuData<any>> | false;
-}
 
 export interface ActionMenuDecoratorChildProps {
   children: (onClick?: UI.MenuItemClickHandler) => React.ReactNode;

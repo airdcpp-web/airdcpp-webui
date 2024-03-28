@@ -7,14 +7,14 @@ import { textToI18nKey, toArray, translate } from './TranslationUtils';
 import NotificationActions from 'actions/NotificationActions';
 
 export const actionFilter = <ItemDataT>(
-  action: UI.ActionType<ItemDataT>,
+  action: UI.ActionDefinition<ItemDataT>,
   itemData?: ItemDataT,
 ) => {
   return !itemData || !action.filter || action.filter(itemData);
 };
 
 export const actionAccess = <ItemDataT>(
-  action: Pick<UI.ActionType<ItemDataT>, 'access'>,
+  action: Pick<UI.ActionDefinition<ItemDataT>, 'access'>,
 ) => {
   //invariant(
   //  !action.hasOwnProperty('access') || action.access,
@@ -25,14 +25,14 @@ export const actionAccess = <ItemDataT>(
 };
 
 export const showAction = <ItemDataT>(
-  action: UI.ActionType<ItemDataT>,
+  action: UI.ActionDefinition<ItemDataT>,
   itemData?: ItemDataT,
 ) => {
   return actionFilter(action, itemData) && actionAccess(action);
 };
 
 export const toActionI18nKey = <ItemDataT>(
-  action: UI.ActionType<ItemDataT>,
+  action: UI.ActionDefinition<ItemDataT>,
   moduleId: string | string[],
 ) => {
   invariant(!!action.displayName, 'Invalid action');

@@ -25,7 +25,7 @@ interface ActionHandlerDecoratorProps<ItemDataT> {
 export interface ActionData<ItemDataT = any>
   extends Pick<UI.ModuleActions<ItemDataT>, 'moduleId' | 'subId'> {
   actionId: string;
-  action: UI.ActionType<ItemDataT>;
+  action: UI.ActionDefinition<ItemDataT>;
   itemData: ItemDataT;
 }
 
@@ -198,12 +198,16 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
     try {
       const result = await action.handler(handlerData, confirmData);
       if (action.notifications && action.notifications.onSuccess) {
+        const item = action.notifications.itemConverter
+          ? action.notifications.itemConverter(itemData)
+          : itemData;
+
         const message = t(
           toFieldI18nKey('Success', actionData, UI.SubNamespaces.NOTIFICATIONS),
           {
             defaultValue: action.notifications.onSuccess,
             replace: {
-              item: itemData,
+              item,
               result,
             },
           },

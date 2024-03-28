@@ -24,7 +24,7 @@ const getWidgetItem = (
       onClick={() =>
         onClickAction({
           actionId: 'create',
-          action: WidgetActions.create.actions.create!,
+          action: WidgetActions.create.actions.create! as UI.ActionDefinition<UI.Widget>,
           itemData: widgetInfo,
           moduleId: WidgetActions.create.moduleId,
         })

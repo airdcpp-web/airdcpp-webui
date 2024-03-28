@@ -55,27 +55,30 @@ const hasValidViewUser = (data: UI.DownloadableItemData) => {
 };
 
 // 200 MB, the web server isn't suitable for sending large files
-const sizeValid = ({ itemInfo }: UI.DownloadableItemData) =>
+const viewableSizeValid = ({ itemInfo }: UI.DownloadableItemData) =>
   itemInfo.size < 200 * 1024 * 1024;
 
-const viewText = (data: UI.DownloadableItemData) =>
+const canViewText = (data: UI.DownloadableItemData) =>
   hasValidViewUser(data) &&
   !isDirectory(data) &&
   !isPicture(data) &&
   !isVideo(data) &&
   !isAudio(data) &&
   data.itemInfo.size < 256 * 1024;
-const findNfo = (data: UI.DownloadableItemData) =>
+const canFindNfo = (data: UI.DownloadableItemData) =>
   hasValidViewUser(data) && isDirectory(data) && notSelf(data) && isAsch(data);
 
-const viewVideo = (data: UI.DownloadableItemData) =>
-  hasValidViewUser(data) && isVideo(data) && sizeValid(data);
-const viewAudio = (data: UI.DownloadableItemData) =>
-  hasValidViewUser(data) && isAudio(data) && sizeValid(data);
-const viewImage = (data: UI.DownloadableItemData) =>
-  hasValidViewUser(data) && isPicture(data) && sizeValid(data);
+const canViewVideo = (data: UI.DownloadableItemData) =>
+  hasValidViewUser(data) && isVideo(data) && viewableSizeValid(data);
+const canViewAudio = (data: UI.DownloadableItemData) =>
+  hasValidViewUser(data) && isAudio(data) && viewableSizeValid(data);
+const canViewImage = (data: UI.DownloadableItemData) =>
+  hasValidViewUser(data) && isPicture(data) && viewableSizeValid(data);
 
-const copyMagnet = (data: UI.DownloadableItemData) => hasCopySupport();
+const canCopyTTH = (data: UI.DownloadableItemData) =>
+  hasCopySupport() && !isDirectory(data);
+const canCopyPath = (data: UI.DownloadableItemData) =>
+  hasCopySupport() && !!data.itemInfo.path;
 
 const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
   const { handler, itemInfo, user, session } = data;
@@ -212,6 +215,18 @@ const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) =
   return navigator.clipboard.writeText(link);
 };
 
+const handleCopyTTH: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
+  return navigator.clipboard.writeText(data.itemInfo.tth);
+};
+
+const handleCopyPath: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
+  return navigator.clipboard.writeText(data.itemInfo.path!);
+};
+
+const handleCopySize: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
+  return navigator.clipboard.writeText(data.itemInfo.size.toString());
+};
+
 const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
   download: {
     displayName: 'Download',
@@ -232,21 +247,21 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
     displayName: 'View as text',
     access: API.AccessEnum.VIEW_FILE_EDIT,
     icon: IconConstants.VIEW,
-    filter: viewText,
+    filter: canViewText,
     handler: handleViewText,
   },
   viewImage: {
     displayName: 'View image',
     access: API.AccessEnum.VIEW_FILE_EDIT,
     icon: IconConstants.VIEW,
-    filter: viewImage,
+    filter: canViewImage,
     handler: handleViewImage,
   },
   findNfo: {
     displayName: 'Find NFO',
     access: API.AccessEnum.VIEW_FILE_EDIT,
     icon: IconConstants.FIND,
-    filter: findNfo,
+    filter: canFindNfo,
     handler: handleFindNfo,
     notifications: {
       errorTitleGetter: (data) => data.itemInfo.name,
@@ -256,14 +271,14 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
     displayName: 'Play video',
     access: API.AccessEnum.VIEW_FILE_EDIT,
     icon: IconConstants.VIEW,
-    filter: viewVideo,
+    filter: canViewVideo,
     handler: handleViewVideo,
   },
   viewAudio: {
     displayName: 'Play audio',
     access: API.AccessEnum.VIEW_FILE_EDIT,
     icon: IconConstants.VIEW,
-    filter: viewAudio,
+    filter: canViewAudio,
     handler: handleViewAudio,
   },
   search: {
@@ -273,13 +288,45 @@ const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
     filter: isSearchable, // Example: root directory in filelists can't be searched for
     handler: handleSearch,
   },
-  copyMagnet: {
-    displayName: 'Copy magnet link',
-    icon: IconConstants.MAGNET,
-    filter: copyMagnet,
-    handler: handleCopyMagnet,
-    notifications: {
-      onSuccess: 'Magnet link was copied to clipboard',
+  copy: {
+    displayName: 'Copy',
+    icon: IconConstants.COPY,
+    children: {
+      copyMagnet: {
+        displayName: 'Copy magnet link',
+        icon: IconConstants.MAGNET,
+        filter: canCopyTTH,
+        handler: handleCopyMagnet,
+        notifications: {
+          onSuccess: 'Magnet link was copied to clipboard',
+        },
+      },
+      copyPath: {
+        displayName: 'Copy path',
+        icon: IconConstants.COPY,
+        filter: canCopyPath,
+        handler: handleCopyPath,
+        notifications: {
+          onSuccess: 'Path was copied to clipboard',
+        },
+      },
+      copySize: {
+        displayName: 'Copy size',
+        icon: IconConstants.COPY,
+        handler: handleCopySize,
+        notifications: {
+          onSuccess: 'Size was copied to clipboard',
+        },
+      },
+      copyTTH: {
+        displayName: 'Copy TTH',
+        icon: IconConstants.COPY,
+        filter: canCopyTTH,
+        handler: handleCopyTTH,
+        notifications: {
+          onSuccess: 'TTH was copied to clipboard',
+        },
+      },
     },
   },
 };

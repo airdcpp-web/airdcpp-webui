@@ -3,11 +3,12 @@ import { Location } from 'react-router-dom';
 import * as API from 'types/api';
 
 import { IconType } from 'components/semantic/Icon';
-import { ActionListType, ModuleActions, RefluxActionListType } from './actions';
+import { ActionListType, ModuleActions } from './actions';
 import { EmptyObject, RouteComponentProps, ScrollPositionHandler } from './common';
 import { MessageStore } from './messages';
 import { UnreadInfoStore, UrgencyCountMap } from './urgencies';
 import { ModuleTranslator } from './modules';
+import { RefluxActionListType } from './reflux';
 
 export interface SessionInfoGetter<SessionT> {
   itemLabelGetter?: (session: SessionT) => React.ReactNode;
