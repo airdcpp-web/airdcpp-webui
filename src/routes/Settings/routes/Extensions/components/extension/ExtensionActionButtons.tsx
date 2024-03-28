@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import ExtensionActions from 'actions/ui/ExtensionActions';
+import ExtensionInstallActions from 'actions/ui/extension/ExtensionInstallActions';
 import ExtensionConstants from 'constants/ExtensionConstants';
 
 import ActionButton from 'components/ActionButton';
@@ -12,6 +12,7 @@ import { ActionMenu } from 'components/action-menu';
 import MenuConstants from 'constants/MenuConstants';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
+import ExtensionManageActions from 'actions/ui/extension/ExtensionManageActions';
 
 export interface ExtensionActionButtonsProps {
   npmPackage?: UI.NpmPackage;
@@ -35,7 +36,7 @@ const InstallButton: React.FC<InstallButtonProps> = ({
 
   return (
     <ActionButton
-      actions={ExtensionActions.npm}
+      actions={ExtensionInstallActions.npm}
       actionId={hasUpdate ? 'updateNpm' : 'installNpm'}
       className="right floated primary"
       itemData={npmPackage}
@@ -62,7 +63,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = ({
     )}
     {installedPackage && (
       <ActionMenu
-        actions={ExtensionActions.manage}
+        actions={ExtensionManageActions}
         ids={['configure', 'divider', 'remove']}
         remoteMenuId={MenuConstants.EXTENSION}
         remoteMenuNestingThreshold={10}
@@ -85,7 +86,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = ({
     )}
     {installedPackage && (
       <ActionButton
-        actions={ExtensionActions.manage}
+        actions={ExtensionManageActions}
         actionId={installedPackage.running ? 'stop' : 'start'}
         className="right floated"
         itemData={installedPackage}

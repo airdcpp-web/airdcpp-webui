@@ -1,8 +1,8 @@
 import * as React from 'react';
 import SocketService from 'services/SocketService';
 
-import ShareActions from 'actions/ui/ShareActions';
-import ShareExcludeActions from 'actions/ui/ShareExcludeActions';
+import ShareActions from 'actions/ui/share/ShareActions';
+import ShareExcludeActions from 'actions/ui/share/ShareExcludeActions';
 import ShareConstants from 'constants/ShareConstants';
 
 import ActionButton from 'components/ActionButton';

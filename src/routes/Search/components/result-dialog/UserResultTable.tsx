@@ -9,7 +9,7 @@ import { formatConnection } from 'utils/ValueFormat';
 import SearchConstants from 'constants/SearchConstants';
 
 import { UserMenu } from 'components/action-menu';
-import { UserFileActions } from 'actions/ui/UserActions';
+import { UserFileActions } from 'actions/ui/user/UserActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

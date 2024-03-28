@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Column } from 'fixed-data-table-2';
 
-import QueueFileUIActions from 'actions/ui/QueueFileActions';
+import QueueFileUIActions from 'actions/ui/queue/QueueFileActions';
 
 import VirtualTable from 'components/table/VirtualTable';
 

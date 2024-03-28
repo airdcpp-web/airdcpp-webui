@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import SystemActions from 'actions/ui/SystemActions';
+import SystemActions from 'actions/ui/system/SystemActions';
 import ActionButton from 'components/ActionButton';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 

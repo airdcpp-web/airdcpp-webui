@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import WebUserConstants from 'constants/WebUserConstants';
-import WebUserActions from 'actions/ui/WebUserActions';
+import WebUserActions from 'actions/ui/system/WebUserActions';
 
 import ActionButton from 'components/ActionButton';
 import WebUserDialog from 'routes/Settings/routes/System/components/users/WebUserDialog';

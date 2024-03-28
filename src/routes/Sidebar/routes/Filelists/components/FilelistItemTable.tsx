@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import * as React from 'react';
 
-import FilelistItemActions from 'actions/ui/FilelistItemActions';
+import FilelistItemActions from 'actions/ui/filelist/FilelistItemActions';
 
 import { dupeToStringType } from 'utils/TypeConvert';
 import { TableActionMenu } from 'components/action-menu';

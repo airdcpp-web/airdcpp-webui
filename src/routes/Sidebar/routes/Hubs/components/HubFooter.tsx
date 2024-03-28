@@ -22,7 +22,7 @@ import {
 import { useMobileLayout } from 'utils/BrowserUtils';
 import { useLayoutWidth } from 'context/LayoutWidthContext';
 import { ActionMenu } from 'components/action-menu';
-import HubActions from 'actions/ui/HubActions';
+import HubActions from 'actions/ui/hub/HubActions';
 
 interface HubFooterProps {
   session: API.Hub;

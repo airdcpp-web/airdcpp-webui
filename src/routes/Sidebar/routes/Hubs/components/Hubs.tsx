@@ -5,7 +5,7 @@ import { TextDecorator } from 'components/text';
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 
 import HubSessionStore from 'stores/HubSessionStore';
-import HubUIActions from 'actions/ui/HubActions';
+import HubUIActions from 'actions/ui/hub/HubActions';
 import HubAPIActions from 'actions/reflux/HubActions';
 
 import { hubOnlineStatusToColor } from 'utils/TypeConvert';

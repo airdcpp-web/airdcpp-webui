@@ -4,7 +4,7 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
 import FilelistSessionStore from 'stores/FilelistSessionStore';
-import FilelistSessionUIActions from 'actions/ui/FilelistSessionActions';
+import FilelistSessionUIActions from 'actions/ui/filelist/FilelistSessionActions';
 import FilelistSessionAPIActions from 'actions/reflux/FilelistSessionActions';
 
 import FilelistNew from 'routes/Sidebar/routes/Filelists/components/FilelistNew';

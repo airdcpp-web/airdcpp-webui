@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import LoginStore from 'stores/LoginStore';
 
 import { ActionMenu } from 'components/action-menu';
-import WidgetActions from 'actions/ui/WidgetActions';
+import WidgetActions from 'actions/ui/widget/WidgetActions';
 
 import * as UI from 'types/ui';
 

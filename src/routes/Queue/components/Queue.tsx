@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Column } from 'fixed-data-table-2';
 
-import QueueActions from 'actions/ui/QueueActions';
-import QueueBundleActions from 'actions/ui/QueueBundleActions';
+import QueueActions from 'actions/ui/queue/QueueActions';
+import QueueBundleActions from 'actions/ui/queue/QueueBundleActions';
 import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from 'routes/Queue/components/PriorityMenu';

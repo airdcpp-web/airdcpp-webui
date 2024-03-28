@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
-import ShareActions from 'actions/ui/ShareActions';
-import ShareRootActions from 'actions/ui/ShareRootActions';
+import ShareActions from 'actions/ui/share/ShareActions';
+import ShareRootActions from 'actions/ui/share/ShareRootActions';
 import ShareRootStore from 'stores/ShareRootStore';
 
 import VirtualTable from 'components/table/VirtualTable';

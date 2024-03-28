@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import ShareProfileActions from 'actions/ui/ShareProfileActions';
+import ShareProfileActions from 'actions/ui/share/ShareProfileActions';
 
 import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/action-menu';

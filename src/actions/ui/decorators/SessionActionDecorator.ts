@@ -4,6 +4,7 @@ import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { MENU_DIVIDER } from 'constants/ActionConstants';
 
 type SessionType = UI.SessionItemBase;
 
@@ -17,7 +18,7 @@ export default function (
   };
 
   const SessionActions: UI.ActionListType<SessionType> = {
-    divider: null,
+    divider: MENU_DIVIDER,
     removeSession: {
       displayName: 'Close',
       access: editAccess,

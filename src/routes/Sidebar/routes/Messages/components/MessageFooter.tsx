@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import PrivateChatActions from 'actions/ui/PrivateChatActions';
+import PrivateChatActions from 'actions/ui/private-chat/PrivateChatActions';
 
 import { SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import Loader from 'components/semantic/Loader';

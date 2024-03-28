@@ -4,13 +4,13 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 
-import QueueBundleSourceActions from 'actions/ui/QueueBundleSourceActions';
+import QueueBundleSourceActions from 'actions/ui/queue/QueueBundleSourceActions';
 import QueueConstants from 'constants/QueueConstants';
 
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
 
 import { ActionMenu, UserMenu } from 'components/action-menu';
-import { UserFileActions } from 'actions/ui/UserActions';
+import { UserFileActions } from 'actions/ui/user/UserActions';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

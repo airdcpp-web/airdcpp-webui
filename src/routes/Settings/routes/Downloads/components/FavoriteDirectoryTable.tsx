@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import FavoriteDirectoryActions from 'actions/ui/FavoriteDirectoryActions';
+import FavoriteDirectoryActions from 'actions/ui/favorite-directory/FavoriteDirectoryActions';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 
 import ActionButton from 'components/ActionButton';

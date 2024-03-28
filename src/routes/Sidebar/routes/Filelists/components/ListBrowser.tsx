@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import FilelistItemActions from 'actions/ui/FilelistItemActions';
+import FilelistItemActions from 'actions/ui/filelist/FilelistItemActions';
 
 import BrowserBar from 'components/browserbar/BrowserBar';
 import { ActionMenu, DownloadMenu } from 'components/action-menu';

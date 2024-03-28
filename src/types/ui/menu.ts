@@ -4,6 +4,7 @@ import {
   ActionDefinition,
   ModuleActions,
   ActionDefitionBase,
+  MenuDivider,
 } from './actions';
 
 export interface ActionMenuData<ItemDataT extends ActionMenuItemDataValueType> {
@@ -23,8 +24,9 @@ export type IdActionType = { id: string };
 
 export type MenuActionDefition<ItemDataT> = ActionDefinition<ItemDataT> & IdActionType;
 
-export type ChildMenuActionListType<ItemDataT> =
-  Array<MenuActionDefition<ItemDataT> | null>;
+export type ChildMenuActionListType<ItemDataT> = Array<
+  MenuActionDefition<ItemDataT> | MenuDivider
+>;
 
 export interface GroupedMenuActionDefition<ItemDataT>
   extends ActionDefitionBase,
@@ -35,7 +37,7 @@ export interface GroupedMenuActionDefition<ItemDataT>
 export type MenuActionListItemType<ItemDataT> =
   | GroupedMenuActionDefition<ItemDataT>
   | MenuActionDefition<ItemDataT>
-  | null;
+  | MenuDivider;
 
 export type MenuActionListType<ItemDataT> = Array<MenuActionListItemType<ItemDataT>>;
 

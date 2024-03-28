@@ -2,6 +2,7 @@ import * as API from 'types/api';
 import { TranslateF } from './common';
 import { IconType } from 'components/semantic/Icon';
 import { Location, NavigateFunction } from 'react-router-dom';
+import { MENU_DIVIDER } from 'constants/ActionConstants';
 
 export type ActionIdType = API.IdType | object;
 export type ActionMenuObjectItemData = { id: ActionIdType };
@@ -66,8 +67,10 @@ export interface ActionDefinition<ItemDataT> extends ActionDefitionBase {
   };
 }
 
+export type MenuDivider = typeof MENU_DIVIDER;
+
 export type ChildActionListType<ItemDataT> = {
-  [actionKey: string]: ActionDefinition<ItemDataT> | null;
+  [actionKey: string]: ActionDefinition<ItemDataT> | MenuDivider;
 };
 
 export interface GroupedActionDefition<ItemDataT> extends ActionDefitionBase {
@@ -77,7 +80,7 @@ export interface GroupedActionDefition<ItemDataT> extends ActionDefitionBase {
 export type ActionListItemType<ItemDataT> =
   | ActionDefinition<ItemDataT>
   | GroupedActionDefition<ItemDataT>
-  | null;
+  | MenuDivider;
 
 export type ActionListType<ItemDataT> = {
   [actionKey: string]: ActionListItemType<ItemDataT>;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import invariant from 'invariant';
 
-import UserActions, { ActionUserType, ActionUserData } from 'actions/ui/UserActions';
+import UserActions, { ActionUserType, ActionUserData } from 'actions/ui/user/UserActions';
 import { getFilePath } from 'utils/FileUtils';
 
 import UserIcon from 'components/icon/UserIcon';

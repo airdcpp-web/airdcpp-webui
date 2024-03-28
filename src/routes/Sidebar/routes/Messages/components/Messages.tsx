@@ -4,7 +4,7 @@ import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
 import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
-import PrivateChatUIActions from 'actions/ui/PrivateChatActions';
+import PrivateChatUIActions from 'actions/ui/private-chat/PrivateChatActions';
 import PrivateChatAPIActions from 'actions/reflux/PrivateChatActions';
 
 import MessageNew from 'routes/Sidebar/routes/Messages/components/MessageNew';

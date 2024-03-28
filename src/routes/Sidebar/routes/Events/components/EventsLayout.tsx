@@ -2,7 +2,7 @@ import { useEffect, memo } from 'react';
 import * as React from 'react';
 
 import EventAPIActions from 'actions/reflux/EventActions';
-import EventUIActions from 'actions/ui/EventActions';
+import EventUIActions from 'actions/ui/event/EventActions';
 
 import EventStore from 'stores/EventStore';
 

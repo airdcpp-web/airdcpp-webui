@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import FavoriteHubActions from 'actions/ui/FavoriteHubActions';
-import FavoriteHubPasswordActions from 'actions/ui/FavoriteHubPasswordActions';
+import FavoriteHubActions from 'actions/ui/favorite-hub/FavoriteHubActions';
+import FavoriteHubPasswordActions from 'actions/ui/favorite-hub/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 import FavoriteHubDialog from './FavoriteHubDialog';
 

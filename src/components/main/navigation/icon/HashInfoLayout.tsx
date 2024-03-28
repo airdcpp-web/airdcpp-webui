@@ -1,4 +1,4 @@
-import HashActions from 'actions/ui/HashActions';
+import HashActions from 'actions/ui/hash/HashActions';
 import ActionButton from 'components/ActionButton';
 import { AdjustableSpeedLimit } from 'components/speed-limit';
 import { ListItem } from 'components/semantic/List';

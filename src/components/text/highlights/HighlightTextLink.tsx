@@ -1,7 +1,7 @@
 import * as React from 'react';
 import cx from 'classnames';
 
-import MessageHighlightActions from 'actions/ui/MessageHighlightActions';
+import MessageHighlightActions from 'actions/ui/message-highlight/MessageHighlightActions';
 import { TableActionMenu } from 'components/action-menu';
 
 import * as API from 'types/api';

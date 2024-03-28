@@ -3,7 +3,7 @@ import * as React from 'react';
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
-import WidgetActions from 'actions/ui/WidgetActions';
+import WidgetActions, { WidgetCreateAction } from 'actions/ui/widget/WidgetActions';
 import WidgetStore from 'stores/WidgetStore';
 
 import * as UI from 'types/ui';
@@ -24,7 +24,7 @@ const getWidgetItem = (
       onClick={() =>
         onClickAction({
           actionId: 'create',
-          action: WidgetActions.create.actions.create! as UI.ActionDefinition<UI.Widget>,
+          action: WidgetCreateAction,
           itemData: widgetInfo,
           moduleId: WidgetActions.create.moduleId,
         })

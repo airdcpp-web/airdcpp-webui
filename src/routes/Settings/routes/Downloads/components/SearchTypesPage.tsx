@@ -11,7 +11,7 @@ import { ActionMenu } from 'components/action-menu';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import SearchTypeActions from 'actions/ui/SearchTypeActions';
+import SearchTypeActions from 'actions/ui/search/SearchTypeActions';
 import SearchConstants from 'constants/SearchConstants';
 import SearchTypeDialog from './SearchTypeDialog';
 import { formatBoolean } from 'utils/ValueFormat';

@@ -5,7 +5,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 
-import ConnectivityActions from 'actions/ui/ConnectivityActions';
+import ConnectivityActions from 'actions/ui/connectivity/ConnectivityActions';
 import ConnectivityConstants from 'constants/ConnectivityConstants';
 
 import { Row, Grid } from 'components/semantic/Grid';

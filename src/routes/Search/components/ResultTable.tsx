@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import SearchActions from 'actions/ui/SearchActions';
+import SearchActions from 'actions/ui/search/SearchActions';
 
 import { ResultDialog } from './result-dialog';
 
@@ -18,7 +18,7 @@ import {
 import { TableActionMenu, TableUserMenu } from 'components/action-menu';
 
 import { dupeToStringType } from 'utils/TypeConvert';
-import { UserFileActions } from 'actions/ui/UserActions';
+import { UserFileActions } from 'actions/ui/user/UserActions';
 import Message from 'components/semantic/Message';
 
 import DownloadDialog from 'components/download/DownloadDialog';

@@ -7,7 +7,7 @@ import { TextDecorator } from 'components/text';
 import Message from 'components/semantic/Message';
 import { useStore } from 'effects/StoreListenerEffect';
 
-import LoginActions from 'actions/ui/LoginActions';
+import LoginActions from 'actions/ui/login/LoginActions';
 import LoginStore, { LoginState } from 'stores/LoginStore';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';

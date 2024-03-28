@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
-import DownloadableItemActions from 'actions/ui/DownloadableItemActions';
+import DownloadableItemActions from 'actions/ui/downloadable-item/DownloadableItemActions';
 
 import * as UI from 'types/ui';
 import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
