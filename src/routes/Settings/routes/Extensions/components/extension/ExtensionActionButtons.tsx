@@ -15,8 +15,9 @@ import { ActionMenu } from 'components/action-menu';
 import MenuConstants from 'constants/MenuConstants';
 import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
-import ExtensionManageActions, {
+import {
   ExtensionManageActionModule,
+  ExtensionManageActionsMenu,
   ExtensionStartAction,
   ExtensionStopAction,
 } from 'actions/ui/extension/ExtensionManageActions';
@@ -70,7 +71,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = ({
     )}
     {installedPackage && (
       <ActionMenu
-        actions={ExtensionManageActions}
+        actions={ExtensionManageActionsMenu}
         ids={['configure', 'divider', 'remove']}
         remoteMenuId={MenuConstants.EXTENSION}
         remoteMenuNestingThreshold={10}

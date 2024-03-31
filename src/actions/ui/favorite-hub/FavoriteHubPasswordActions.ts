@@ -85,7 +85,7 @@ export const FavoriteHubPasswordActionModule = {
   subId: 'password',
 };
 
-export default {
+export const FavoriteHubPasswordActionMenu = {
   moduleData: FavoriteHubPasswordActionModule,
   actions: FavoriteHubPasswordActions,
 };

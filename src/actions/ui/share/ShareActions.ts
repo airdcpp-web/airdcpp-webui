@@ -26,7 +26,7 @@ export const ShareActionModule = {
   moduleId: UI.Modules.SHARE,
 };
 
-export default {
+export const ShareActionMenu = {
   moduleData: ShareActionModule,
   actions: ShareActions,
 };

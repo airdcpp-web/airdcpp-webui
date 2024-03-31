@@ -16,18 +16,6 @@ const handleFavorite: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
   return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/favorite`);
 };
 
-const handleToggleChatNotify: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
-  return SocketService.patch(`${HubConstants.SESSIONS_URL}/${hub.id}`, {
-    use_main_chat_notify: !hub.settings.use_main_chat_notify,
-  });
-};
-
-const handleToggleJoins: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
-  return SocketService.patch(`${HubConstants.SESSIONS_URL}/${hub.id}`, {
-    show_joins: !hub.settings.show_joins,
-  });
-};
-
 const handleReconnect: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
   return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/reconnect`);
 };
@@ -52,26 +40,6 @@ export const HubFavoriteAction = {
   },
 };
 
-export const HubToggleChatNotifyAction = {
-  id: 'toggleChatNotify',
-  displayName: 'Use chat notification',
-  access: API.AccessEnum.HUBS_EDIT,
-  handler: handleToggleChatNotify,
-  checked: (hub: API.Hub) => {
-    return hub.settings.use_main_chat_notify;
-  },
-};
-
-export const HubToggleShowJoinsAction = {
-  id: 'toggleShowJoins',
-  displayName: 'Show joins/parts',
-  access: API.AccessEnum.HUBS_EDIT,
-  handler: handleToggleJoins,
-  checked: (hub: API.Hub) => {
-    return hub.settings.show_joins;
-  },
-};
-
 const HubClearChatAction = BuildClearChatAction(
   HubConstants.SESSIONS_URL,
   API.AccessEnum.HUBS_EDIT,
@@ -85,8 +53,6 @@ const HubRemoveAction = BuildRemoveSessionAction(
 const HubActions: UI.ActionListType<API.Hub> = {
   reconnect: HubReconnectAction,
   favorite: HubFavoriteAction,
-  toggleChatNotify: HubToggleChatNotifyAction,
-  toggleShowJoins: HubToggleShowJoinsAction,
   clearChat: HubClearChatAction,
   divider: MENU_DIVIDER,
   remove: HubRemoveAction,

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import FavoriteHubPasswordActions from 'actions/ui/favorite-hub/FavoriteHubPasswordActions';
 import FavoriteHubStore from 'stores/FavoriteHubStore';
 import FavoriteHubDialog from './FavoriteHubDialog';
 
@@ -29,6 +28,7 @@ import {
   FavoriteHubActionModule,
   FavoriteHubCreateAction,
   FavoriteHubEditActionMenu,
+  FavoriteHubPasswordActionMenu,
 } from 'actions/ui/favorite-hub';
 
 const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = ({
@@ -44,7 +44,7 @@ const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEnt
         translate('Not set', t!, UI.Modules.FAVORITE_HUBS)
       )
     }
-    actions={FavoriteHubPasswordActions}
+    actions={FavoriteHubPasswordActionMenu}
     itemData={rowDataGetter!}
   />
 );

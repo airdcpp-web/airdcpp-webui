@@ -5,6 +5,8 @@ import ConnectivityConstants from 'constants/ConnectivityConstants';
 
 import IconConstants from 'constants/IconConstants';
 
+import * as UI from 'types/ui';
+
 export const ConnectivityDetectAction = {
   id: 'detect',
   displayName: 'Detect now',
@@ -13,4 +15,8 @@ export const ConnectivityDetectAction = {
   handler: () => {
     return SocketService.post(ConnectivityConstants.DETECT_URL);
   },
+};
+
+export const ConnectivityActionModule = {
+  moduleId: UI.Modules.SETTINGS,
 };

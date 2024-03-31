@@ -67,26 +67,6 @@ export const ExtensionUpdateNpmAction = {
   handler: handleNpmAction,
 };
 
-/*const ExtensionInstallActions: UI.ActionListType<undefined> = {
-  installUrl: ExtensionInstallURLAction,
-};
-
-const ExtensionNpmActions: UI.ActionListType<UI.NpmPackage> = {
-  installNpm: ExtensionInstallNpmAction,
-  updateNpm: ExtensionUpdateNpmAction,
-};*/
-
 export const ExtensionInstallActionModule = {
   moduleId: UI.Modules.EXTENSIONS,
 };
-
-/*export default {
-  install: {
-    moduleId: UI.Modules.EXTENSIONS,
-    actions: ExtensionInstallActions,
-  },
-  npm: {
-    moduleId: UI.Modules.EXTENSIONS,
-    actions: ExtensionNpmActions,
-  },
-};*/

@@ -90,7 +90,7 @@ export const ExtensionManageActionModule = {
   moduleId: UI.Modules.EXTENSIONS,
 };
 
-export default {
+export const ExtensionManageActionsMenu = {
   moduleData: ExtensionManageActionModule,
   actions: ExtensionManageActions,
 };

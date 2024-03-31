@@ -21,10 +21,4 @@ export const BuildClearChatAction = (sessionUrl: string, editAccess: API.AccessE
   };
 
   return ClearChatAction;
-
-  /*const ChatActions: UI.ActionListType<SessionType> = {
-    clear: ClearChatAction,
-  };*/
-
-  // return Object.assign(actions, ChatActions);
 };

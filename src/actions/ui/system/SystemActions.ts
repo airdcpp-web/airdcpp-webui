@@ -44,17 +44,7 @@ export const SystemShutdownAction = {
   handler: handleShutdown,
 };
 
-/*const SystemActions: UI.ActionListType<undefined> = {
-  restartWeb: SystemRestartWebAction,
-  shutdown: SystemShutdownAction,
-};*/
-
 export const SystemActionModule = {
   moduleId: UI.Modules.COMMON,
   subId: 'system',
 };
-
-/*export default {
-  moduleData: SystemActionModule,
-  actions: SystemActions,
-};*/

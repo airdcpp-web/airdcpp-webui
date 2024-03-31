@@ -1,6 +1,5 @@
 import { Component } from 'react';
 
-import ShareActions from 'actions/ui/share/ShareActions';
 import ShareRootStore from 'stores/ShareRootStore';
 
 import VirtualTable from 'components/table/VirtualTable';
@@ -22,12 +21,13 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import { getModuleT } from 'utils/TranslationUtils';
 import MenuConstants from 'constants/MenuConstants';
 import {
+  ShareActionMenu,
   ShareRootActionModule,
   ShareRootCreateAction,
   ShareRootEditActionMenu,
 } from 'actions/ui/share';
 
-const ShareActionMenu = {
+const ShareRootCreateMenu = {
   actions: {
     create: ShareRootCreateAction,
   },
@@ -50,13 +50,13 @@ class Share extends Component<WithTranslation> {
             <ActionMenu
               className="top left pointing"
               caption={translate('Actions...')}
-              actions={ShareActionMenu}
+              actions={ShareRootCreateMenu}
               header={translate('Share actions')}
               triggerIcon="chevron up"
               ids={['create']}
               button={true}
             >
-              <ActionMenu actions={ShareActions} ids={['refresh']} />
+              <ActionMenu actions={ShareActionMenu} ids={['refresh']} />
             </ActionMenu>
           }
           moduleId={UI.Modules.SHARE}
