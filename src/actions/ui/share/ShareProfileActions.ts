@@ -10,35 +10,31 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
 
-const notDefault = (item: API.ShareProfile) => !item.default;
+type Filter = UI.ActionFilter<API.ShareProfile>;
+const notDefault: Filter = ({ itemData: profile }) => !profile.default;
 
 const handleCreate: UI.ActionHandler<void> = (data, name: string) => {
   return SocketService.post(ShareProfileConstants.PROFILES_URL, { name: name });
 };
 
-const handleDefault: UI.ActionHandler<API.ShareProfile> = ({ data: profile }) => {
+type Handler = UI.ActionHandler<API.ShareProfile>;
+const handleDefault: Handler = ({ itemData: profile }) => {
   return SocketService.post(
     `${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`,
   );
 };
 
-const handleEdit: UI.ActionHandler<API.ShareProfile> = (
-  { data: profile },
-  name: string,
-) => {
+const handleEdit: Handler = ({ itemData: profile }, name: string) => {
   return SocketService.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, {
     name: name,
   });
 };
 
-const handleRemove: UI.ActionHandler<API.ShareProfile> = ({ data: profile }) => {
+const handleRemove: Handler = ({ itemData: profile }) => {
   return SocketService.delete(ShareProfileConstants.PROFILES_URL + '/' + profile.id);
 };
 
-const handleBrowse: UI.ActionHandler<API.ShareProfile> = ({
-  data: profile,
-  location,
-}) => {
+const handleBrowse: Handler = ({ itemData: profile, location }) => {
   return FilelistSessionActions.ownList(location, profile.id, FilelistSessionStore);
 };
 

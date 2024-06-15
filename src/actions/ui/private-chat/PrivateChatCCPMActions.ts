@@ -6,18 +6,21 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleConnectCCPM: UI.ActionHandler<API.PrivateChat> = ({ data: session }) => {
+type Filter = UI.ActionFilter<API.PrivateChat>;
+const ccpmConnected: Filter = ({ itemData }) =>
+  itemData.ccpm_state.id === API.CCPMStateEnum.CONNECTED;
+const ccpmDisconnected: Filter = ({ itemData }) =>
+  itemData.ccpm_state.id === API.CCPMStateEnum.DISCONNECTED;
+
+type Handler = UI.ActionHandler<API.PrivateChat>;
+
+const handleConnectCCPM: Handler = ({ itemData: session }) => {
   return SocketService.post(`${PrivateChatConstants.SESSIONS_URL}/${session.id}/ccpm`);
 };
 
-const handleDisconnectCCPM: UI.ActionHandler<API.PrivateChat> = ({ data: session }) => {
+const handleDisconnectCCPM: Handler = ({ itemData: session }) => {
   return SocketService.delete(`${PrivateChatConstants.SESSIONS_URL}/${session.id}/ccpm`);
 };
-
-const ccpmConnected = (data: API.PrivateChat) =>
-  data.ccpm_state.id === API.CCPMStateEnum.CONNECTED;
-const ccpmDisconnected = (data: API.PrivateChat) =>
-  data.ccpm_state.id === API.CCPMStateEnum.DISCONNECTED;
 
 export const PrivateChatConnectCCPMAction = {
   id: 'connectCCPM',

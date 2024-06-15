@@ -24,23 +24,27 @@ const isShareDupe = (dupe: API.Dupe | null) =>
     dupe.id === DupeEnum.SHARE_PARTIAL ||
     dupe.id === DupeEnum.SHARE_QUEUE);
 
-const isAsch = ({ user }: UI.DownloadableItemData) =>
+// Filters
+type Filter = UI.ActionFilter<UI.DownloadableItemData, UI.SessionItemBase>;
+
+const isAsch: Filter = ({ itemData: { user } }) =>
   !user ? false : user.flags.includes('asch');
-const isSearchable = ({ itemInfo }: UI.DownloadableItemData) =>
+const isSearchable: Filter = ({ itemData: { itemInfo } }) =>
   !!itemInfo.name || !!itemInfo.tth;
-const notSelf = ({ user }: UI.DownloadableItemData) =>
+const notSelf: Filter = ({ itemData: { user } }) =>
   !user ? true : !user.flags.includes('self');
-const isDirectory = ({ itemInfo }: UI.DownloadableItemData) =>
+const isDirectory: Filter = ({ itemData: { itemInfo } }) =>
   itemInfo.type.id === 'directory';
-const isPicture = ({ itemInfo }: UI.DownloadableItemData) =>
+const isPicture: Filter = ({ itemData: { itemInfo } }) =>
   (itemInfo.type as API.FileType).content_type === 'picture';
-const isVideo = ({ itemInfo }: UI.DownloadableItemData) =>
+const isVideo: Filter = ({ itemData: { itemInfo } }) =>
   (itemInfo.type as API.FileType).content_type === 'video';
-const isAudio = ({ itemInfo }: UI.DownloadableItemData) =>
+const isAudio: Filter = ({ itemData: { itemInfo } }) =>
   (itemInfo.type as API.FileType).content_type === 'audio';
 
-const hasValidViewUser = (data: UI.DownloadableItemData) => {
-  const { itemInfo, user } = data;
+const hasValidViewUser: Filter = (data) => {
+  const { itemData } = data;
+  const { itemInfo, user } = itemData;
   if (!user) {
     return false;
   }
@@ -56,54 +60,52 @@ const hasValidViewUser = (data: UI.DownloadableItemData) => {
 };
 
 // 200 MB, the web server isn't suitable for sending large files
-const viewableSizeValid = ({ itemInfo }: UI.DownloadableItemData) =>
-  itemInfo.size < 200 * 1024 * 1024;
+const viewableSizeValid: Filter = ({ itemData }) =>
+  itemData.itemInfo.size < 200 * 1024 * 1024;
 
-const canViewText = (data: UI.DownloadableItemData) =>
+const canViewText: Filter = (data) =>
   hasValidViewUser(data) &&
   !isDirectory(data) &&
   !isPicture(data) &&
   !isVideo(data) &&
   !isAudio(data) &&
-  data.itemInfo.size < 256 * 1024;
-const canFindNfo = (data: UI.DownloadableItemData) =>
+  data.itemData.itemInfo.size < 256 * 1024;
+const canFindNfo: Filter = (data) =>
   hasValidViewUser(data) && isDirectory(data) && notSelf(data) && isAsch(data);
 
-const canViewVideo = (data: UI.DownloadableItemData) =>
+const canViewVideo: Filter = (data) =>
   hasValidViewUser(data) && isVideo(data) && viewableSizeValid(data);
-const canViewAudio = (data: UI.DownloadableItemData) =>
+const canViewAudio: Filter = (data) =>
   hasValidViewUser(data) && isAudio(data) && viewableSizeValid(data);
-const canViewImage = (data: UI.DownloadableItemData) =>
+const canViewImage: Filter = (data) =>
   hasValidViewUser(data) && isPicture(data) && viewableSizeValid(data);
 
-const canCopyTTH = (data: UI.DownloadableItemData) =>
-  hasCopySupport() && !isDirectory(data);
-const canCopyPath = (data: UI.DownloadableItemData) =>
-  hasCopySupport() && !!data.itemInfo.path;
+const canCopyTTH: Filter = (data) => hasCopySupport() && !isDirectory(data);
+const canCopyPath: Filter = (data) => hasCopySupport() && !!data.itemData.itemInfo.path;
 
-const handleDownload: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
-  const { handler, itemInfo, user, session } = data;
+// Handlers
+type Handler = UI.ActionHandler<UI.DownloadableItemData, UI.SessionItemBase>;
+const handleDownload: Handler = ({ itemData }) => {
+  const { handler, itemInfo, user, entity } = itemData;
   return handler(
     itemInfo,
     user,
     {
       target_name: itemInfo.name,
     },
-    session,
+    entity,
   );
 };
 
-const handleDownloadTo: UI.ActionHandler<UI.DownloadableItemData> = ({
-  data,
-  navigate,
-}) => {
-  navigate(`download/${data.itemInfo.id}`);
+const handleDownloadTo: Handler = ({ itemData, navigate }) => {
+  navigate(`download/${itemData.itemInfo.id}`);
 };
 
 const handleViewFile = (
-  { data, location, navigate }: UI.ActionHandlerData<UI.DownloadableItemData>,
+  data: UI.ActionHandlerData<UI.DownloadableItemData, UI.SessionItemBase>,
   isText: boolean,
 ) => {
+  const { itemData, location, navigate } = data;
   const props = {
     isText,
     location,
@@ -118,29 +120,26 @@ const handleViewFile = (
   }
 
   // Local file
-  return ViewFileActions.openLocalFile(data.itemInfo.tth, props);
+  return ViewFileActions.openLocalFile(itemData.itemInfo.tth, props);
 };
 
-const handleViewText: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
+const handleViewText: Handler = (data) => {
   return handleViewFile(data, true);
 };
 
-const handleViewVideo: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
+const handleViewVideo: Handler = (data) => {
   return handleViewFile(data, false);
 };
 
-const handleViewAudio: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
+const handleViewAudio: Handler = (data) => {
   return handleViewFile(data, false);
 };
 
-const handleViewImage: UI.ActionHandler<UI.DownloadableItemData> = (data) => {
+const handleViewImage: Handler = (data) => {
   return handleViewFile(data, false);
 };
 
-const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
-  data,
-  ...other
-}) => {
+const handleFindNfo: Handler = async ({ itemData, ...other }) => {
   // Get a new instance
   let instance = await SocketService.post<API.SearchInstance>(
     SearchConstants.INSTANCES_URL,
@@ -153,13 +152,13 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
   await SocketService.post(
     `${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`,
     {
-      user: data.user,
+      user: itemData.user,
       query: {
         extensions: ['nfo'],
         max_size: 256 * 1024,
       },
       options: {
-        path: data.itemInfo.path,
+        path: itemData.itemInfo.path,
         max_results: 1,
       },
     },
@@ -184,12 +183,12 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
     );
 
     handleViewText({
-      data: {
+      itemData: {
         id: results[0].id,
         itemInfo: results[0],
-        user: data.user,
-        handler: data.handler,
-        session: instance,
+        user: itemData.user,
+        handler: itemData.handler,
+        entity: instance,
       },
       ...other,
     });
@@ -201,31 +200,27 @@ const handleFindNfo: UI.ActionHandler<UI.DownloadableItemData> = async ({
   }
 };
 
-export const handleSearch: UI.ActionHandler<UI.DownloadableItemData> = ({
-  data,
-  location,
-  navigate,
-}) => {
-  return SearchActions.search(data.itemInfo, location, navigate);
+export const handleSearch: Handler = ({ itemData, location, navigate }) => {
+  return SearchActions.search(itemData.itemInfo, location, navigate);
 };
 
-const handleCopyMagnet: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
+const handleCopyMagnet: Handler = (data) => {
   const link = isDirectory(data)
-    ? makeTextMagnetLink(data.itemInfo)
-    : makeHashMagnetLink(data.itemInfo);
+    ? makeTextMagnetLink(data.itemData.itemInfo)
+    : makeHashMagnetLink(data.itemData.itemInfo);
   return navigator.clipboard.writeText(link);
 };
 
-const handleCopyTTH: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
-  return navigator.clipboard.writeText(data.itemInfo.tth);
+const handleCopyTTH: Handler = ({ itemData }) => {
+  return navigator.clipboard.writeText(itemData.itemInfo.tth);
 };
 
-const handleCopyPath: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
-  return navigator.clipboard.writeText(data.itemInfo.path!);
+const handleCopyPath: Handler = ({ itemData }) => {
+  return navigator.clipboard.writeText(itemData.itemInfo.path!);
 };
 
-const handleCopySize: UI.ActionHandler<UI.DownloadableItemData> = ({ data }) => {
-  return navigator.clipboard.writeText(data.itemInfo.size.toString());
+const handleCopySize: Handler = ({ itemData }) => {
+  return navigator.clipboard.writeText(itemData.itemInfo.size.toString());
 };
 
 export const DownloadItemAction = {
@@ -306,7 +301,7 @@ export const SearchAction = {
 export const CopyMagnetAction = {
   id: 'copyMagnet',
   displayName: 'Copy magnet link',
-  icon: IconConstants.COPY,
+  icon: IconConstants.MAGNET,
   filter: canCopyTTH,
   handler: handleCopyMagnet,
   notifications: {
@@ -346,7 +341,10 @@ export const CopyTTHAction = {
   },
 };
 
-const DownloadableItemActions: UI.ActionListType<UI.DownloadableItemData> = {
+const DownloadableItemActions: UI.ActionListType<
+  UI.DownloadableItemData,
+  UI.SessionItemBase
+> = {
   download: DownloadItemAction,
   downloadTo: DownloadItemToAction,
   divider: MENU_DIVIDER,

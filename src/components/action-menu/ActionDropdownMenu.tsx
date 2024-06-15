@@ -23,7 +23,7 @@ const ActionDropdownMenu = ({
   </SectionedDropdown>
 );
 
-const ActionMenuDecorated = ActionMenuDecorator<ActionMenuProps, any>(
+const ActionMenuDecorated = ActionMenuDecorator<ActionMenuProps, any, any>(
   ActionDropdownMenu,
   buildMenu,
 );

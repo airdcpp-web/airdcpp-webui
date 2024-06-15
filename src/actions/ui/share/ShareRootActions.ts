@@ -10,15 +10,12 @@ const handleCreate: UI.ActionHandler<void> = ({ navigate }) => {
   navigate(`directories`);
 };
 
-const handleEdit: UI.ActionHandler<API.ShareRootEntry> = ({
-  data: root,
-  location,
-  navigate,
-}) => {
+type Handler = UI.ActionHandler<API.ShareRootEntry>;
+const handleEdit: Handler = ({ itemData: root, navigate }) => {
   navigate(`directories/${root.id}`);
 };
 
-const handleRemove: UI.ActionHandler<API.ShareRootEntry> = ({ data: root }) => {
+const handleRemove: Handler = ({ itemData: root }) => {
   return SocketService.delete(ShareRootConstants.ROOTS_URL + '/' + root.id);
 };
 

@@ -26,6 +26,7 @@ const getWidgetItem = (
           action: WidgetCreateAction,
           itemData: widgetInfo,
           moduleData: WidgetActionModule,
+          entity: undefined,
         })
       }
       icon={widgetInfo.icon}

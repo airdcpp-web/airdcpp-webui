@@ -41,10 +41,12 @@ const NameCell: React.FC<NameCellProps> = ({
   ...other
 }) => {
   const itemDataGetter = useMemo(() => {
-    return () => ({
+    /*return () => ({
       item: rowDataGetter!(),
       session,
-    });
+    });*/
+
+    return rowDataGetter!();
   }, [session]);
 
   return (
@@ -53,8 +55,7 @@ const NameCell: React.FC<NameCellProps> = ({
       userGetter={() => session.user}
       downloadHandler={filelistDownloadHandler}
       rowDataGetter={rowDataGetter}
-      session={session}
-      entityId={session.id}
+      entity={session}
       remoteMenuId={MenuConstants.FILELIST_ITEM}
       {...other}
     >
@@ -62,6 +63,7 @@ const NameCell: React.FC<NameCellProps> = ({
         actions={FilelistItemActionMenu}
         itemData={itemDataGetter}
         ids={['refreshShare', 'details']}
+        entity={session}
       />
     </FileDownloadCell>
   );

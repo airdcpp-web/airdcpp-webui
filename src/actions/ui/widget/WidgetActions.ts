@@ -10,19 +10,24 @@ export interface WidgetItemInfo {
   settings: UI.WidgetSettings;
 }
 
-// Utils
-const notAlwaysShow = ({ widgetInfo }: WidgetItemInfo) => !widgetInfo.alwaysShow;
+// Filters
+type Filter = UI.ActionFilter<WidgetItemInfo>;
+const notAlwaysShow: Filter = ({ itemData }) => !itemData.widgetInfo.alwaysShow;
 
 // Handlers
-const handleCreate: UI.ActionHandler<UI.Widget> = ({ data: widgetInfo, navigate }) => {
+const handleCreate: UI.ActionHandler<UI.Widget> = ({
+  itemData: widgetInfo,
+  navigate,
+}) => {
   navigate(`/home/widget/${widgetInfo.typeId}`);
 };
 
-const handleEdit: UI.ActionHandler<WidgetItemInfo> = ({ data: widgetInfo, navigate }) => {
+type Handler = UI.ActionHandler<WidgetItemInfo>;
+const handleEdit: Handler = ({ itemData: widgetInfo, navigate }) => {
   navigate(`/home/widget/${widgetInfo.widgetInfo.typeId}/${widgetInfo.id}`);
 };
 
-const handleRemove: UI.ActionHandler<WidgetItemInfo> = ({ data: widgetInfo }) => {
+const handleRemove: Handler = ({ itemData: widgetInfo }) => {
   WidgetActions.remove(widgetInfo.id);
 };
 

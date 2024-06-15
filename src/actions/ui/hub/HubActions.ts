@@ -10,13 +10,14 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
 
-const showFav = (hub: API.Hub) => !hub.favorite_hub;
+type Filter = UI.ActionFilter<API.Hub>;
+const notFavorite: Filter = ({ itemData: hub }) => !hub.favorite_hub;
 
-const handleFavorite: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
+const handleFavorite: UI.ActionHandler<API.Hub> = ({ itemData: hub }) => {
   return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/favorite`);
 };
 
-const handleReconnect: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
+const handleReconnect: UI.ActionHandler<API.Hub> = ({ itemData: hub }) => {
   return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/reconnect`);
 };
 
@@ -33,7 +34,7 @@ export const HubFavoriteAction = {
   displayName: 'Add to favorites',
   access: API.AccessEnum.HUBS_EDIT,
   icon: IconConstants.FAVORITE,
-  filter: showFav,
+  filter: notFavorite,
   handler: handleFavorite,
   notifications: {
     onSuccess: 'The hub {{item.identity.name}} was added in favorites',

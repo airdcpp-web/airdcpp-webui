@@ -8,7 +8,7 @@ import * as UI from 'types/ui';
 type SessionType = UI.SessionItemBase;
 
 export const BuildClearChatAction = (sessionUrl: string, editAccess: API.AccessEnum) => {
-  const handleClear: UI.ActionHandler<SessionType> = ({ data: session }) => {
+  const handleClear: UI.ActionHandler<SessionType> = ({ itemData: session }) => {
     return SocketService.delete(`${sessionUrl}/${session.id}/messages`);
   };
 

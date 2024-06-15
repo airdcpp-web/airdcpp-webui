@@ -10,7 +10,6 @@ import {
   MenuFormDialog,
   MenuFormDialogProps,
 } from 'components/action-menu/MenuFormDialog';
-import { parseActionMenuItemIds } from 'utils/MenuUtils';
 import {
   ActionMenuDefinition,
   useActionMenuItems,
@@ -20,38 +19,43 @@ import { OnShowRemoteMenuForm, useRemoteMenuItems } from '../effects/useRemoteMe
 
 export interface ActionMenuDecoratorProps<
   ItemDataT extends UI.ActionMenuItemDataValueType,
-> extends ActionMenuDefinition<ItemDataT> {
+  EntityT extends UI.ActionMenuItemEntityValueType,
+> extends ActionMenuDefinition<ItemDataT, EntityT> {
   remoteMenuNestingThreshold?: number;
   className?: string;
   caption?: React.ReactNode;
   button?: boolean;
-  children?: React.ReactElement<UI.ActionMenuData<any>> | false;
+  children?: React.ReactElement<UI.ActionMenuData<any, any>> | false;
 }
 
-interface ActionMenuNestedProps<ItemDataT extends UI.ActionMenuItemDataValueType> {
-  props: ActionMenuDecoratorProps<ItemDataT>;
+interface ActionMenuNestedProps<
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+> {
+  props: ActionMenuDecoratorProps<ItemDataT, EntityT>;
   onShowForm: OnShowRemoteMenuForm;
-  onClickAction: ActionClickHandler<ItemDataT>;
+  onClickAction: ActionClickHandler<ItemDataT, EntityT>;
   onClickItem: (() => void) | undefined;
   menuBuilder: UI.ActionMenuComponentBuilder;
 }
 
-const ActionMenuNested = <ItemDataT extends UI.ActionMenuItemDataValueType>({
+const ActionMenuNested = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>({
   props,
   onShowForm,
   onClickAction,
   onClickItem,
   menuBuilder,
-}: ActionMenuNestedProps<ItemDataT>) => {
-  const { getMenuDefinitionArray, getMenuItems } = useActionMenuItems<ItemDataT>(props);
+}: ActionMenuNestedProps<ItemDataT, EntityT>) => {
+  const { getMenuDefinitionArray, getMenuItems } = useActionMenuItems<ItemDataT, EntityT>(
+    props,
+  );
 
   const definitionArray = getMenuDefinitionArray();
   const { getRemoteItems } = useRemoteMenuItems({
-    selectedIds: definitionArray
-      .map((defition) => defition.itemData)
-      .map((data) => parseActionMenuItemIds(data)),
-    remoteMenuIds: definitionArray.map((remoteMenuProps) => remoteMenuProps.remoteMenuId),
-    entityId: definitionArray.find((arrayProps) => arrayProps.entityId)?.entityId,
+    definitionArray,
     onShowForm,
     nestingThreshold: props.remoteMenuNestingThreshold,
     onClickMenuItem: onClickItem,
@@ -70,6 +74,25 @@ const ActionMenuNested = <ItemDataT extends UI.ActionMenuItemDataValueType>({
   return getAllMenuItems();
 };
 
+/*const ActionMenuNested2 = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>({
+  props,
+  onClickAction,
+  onClickItem,
+  menuBuilder,
+}: ActionMenuNestedProps<ItemDataT, EntityT>) => {
+  const { getMenuItems } = useActionMenuItems<ItemDataT, EntityT>(props);
+
+  const items = getMenuItems(onClickAction, null, onClickItem);
+  if (!items.length) {
+    return <EmptyDropdownContent />;
+  }
+
+  return <>{menuBuilder(items)}</>;
+};*/
+
 export interface ActionMenuDecoratorChildProps {
   children: (onClick?: UI.MenuItemClickHandler) => React.ReactNode;
 }
@@ -77,11 +100,12 @@ export interface ActionMenuDecoratorChildProps {
 export default function <
   DropdownComponentPropsT extends object,
   ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
 >(
   Component: React.ComponentType<ActionMenuDecoratorChildProps & DropdownComponentPropsT>,
   menuBuilder: UI.ActionMenuComponentBuilder,
 ) {
-  type Props = ActionMenuDecoratorProps<ItemDataT> & DropdownComponentPropsT;
+  type Props = ActionMenuDecoratorProps<ItemDataT, EntityT> & DropdownComponentPropsT;
 
   const ActionMenuDecorator: React.FC<Props> = (props) => {
     const [formHandler, setFormHandler] = React.useState<MenuFormDialogProps | null>(
@@ -90,10 +114,9 @@ export default function <
 
     return (
       <>
-        <ActionHandlerDecorator<ItemDataT>>
+        <ActionHandlerDecorator<ItemDataT, EntityT>>
           {({ onClickAction }) => {
-            const { actions, children, itemData, remoteMenuId, entityId, ...other } =
-              props;
+            const { actions, children, itemData, remoteMenuId, entity, ...other } = props;
 
             return (
               <Component

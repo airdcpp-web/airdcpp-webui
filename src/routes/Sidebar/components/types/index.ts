@@ -30,7 +30,7 @@ export interface SessionLayoutManageProps<
   // Session actions to show in the action menu
   actionIds?: string[];
 
-  uiActions: UI.ModuleActions<SessionT, UIActionT>;
+  uiActions: UI.ModuleActions<SessionT, void, UIActionT>;
   sessionApi: UI.SessionActions<SessionT> & SessionApiT;
 
   // Item ID that is currently active (if any)

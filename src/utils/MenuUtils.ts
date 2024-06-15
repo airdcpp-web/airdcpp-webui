@@ -11,48 +11,59 @@ export const parseItemData = <ItemDataT extends UI.ActionMenuItemDataValueType>(
 };
 
 // Returns true if the provided ID matches the specified filter
-const filterItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  action: UI.MenuActionDefition<ItemDataT>,
+const filterItem = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>(
+  action: UI.MenuActionDefition<ItemDataT, EntityT>,
   itemData: UI.ActionMenuItemDataType<ItemDataT>,
-  filter: UI.ActionMenuFilterType<ItemDataT>,
+  entity: EntityT,
+  filter: UI.ActionMenuFilterType<ItemDataT, EntityT>,
 ) => {
-  return filter(action, parseItemData<ItemDataT>(itemData) as ItemDataT);
+  return filter(action, parseItemData<ItemDataT>(itemData) as ItemDataT, entity);
 };
 
-export const isDivider = <ItemDataT>(action: UI.MenuActionListItemType<ItemDataT>) =>
-  action === null;
+export const isDivider = (action: UI.MenuActionListItemType<any, any>) => action === null;
 
 // Get IDs matching the provided filter
-const filterItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  actions: UI.MenuActionListType<ItemDataT>,
+const filterItems = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>(
+  actions: UI.MenuActionListType<ItemDataT, EntityT>,
   itemData: UI.ActionMenuItemDataType<ItemDataT>,
-  filter: UI.ActionMenuFilterType<ItemDataT>,
-): UI.MenuActionListType<ItemDataT> | null => {
-  const filteredActions = actions.reduce((reduced, action) => {
-    if (!action) {
-      return [...reduced, null];
-    }
+  entity: EntityT,
+  filter: UI.ActionMenuFilterType<ItemDataT, EntityT>,
+): UI.MenuActionListType<ItemDataT, EntityT> | null => {
+  const filteredActions = actions.reduce(
+    (reduced, action) => {
+      if (!action) {
+        return [...reduced, null];
+      }
 
-    if ('children' in action) {
-      const filteredChildActions = filterItems(
-        action.children,
-        itemData,
-        filter,
-      ) as UI.ChildMenuActionListType<ItemDataT>;
-      if (!filteredChildActions) {
+      if ('children' in action) {
+        const filteredChildActions = filterItems(
+          action.children,
+          itemData,
+          entity,
+          filter,
+        ) as UI.ChildMenuActionListType<ItemDataT, EntityT>;
+        if (!filteredChildActions) {
+          return reduced;
+        }
+
+        return [...reduced, { ...action, children: filteredChildActions }];
+      }
+
+      const filtered = filterItem(action, itemData, entity, filter);
+      if (!filtered) {
         return reduced;
       }
 
-      return [...reduced, { ...action, children: filteredChildActions }];
-    }
-
-    const filtered = filterItem(action, itemData, filter);
-    if (!filtered) {
-      return reduced;
-    }
-
-    return [...reduced, action];
-  }, [] as UI.MenuActionListType<ItemDataT>);
+      return [...reduced, action];
+    },
+    [] as UI.MenuActionListType<ItemDataT, EntityT>,
+  );
 
   if (!filteredActions.length || filteredActions.every(isDivider)) {
     return null;
@@ -61,8 +72,11 @@ const filterItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   return filteredActions;
 };
 
-const filterExtraDividers = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  actions: UI.MenuActionListType<ItemDataT>,
+const filterExtraDividers = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>(
+  actions: UI.MenuActionListType<ItemDataT, EntityT>,
 ) => {
   return actions.filter((item, pos) => {
     if (!isDivider(item)) {
@@ -80,17 +94,18 @@ const filterExtraDividers = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   });
 };
 
-const toMenuActionDefition = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  id: string,
-  action: UI.ActionListItemType<ItemDataT>,
-): UI.MenuActionListItemType<ItemDataT> => {
+const toMenuActionDefition = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>(
+  action: UI.ActionListItemType<ItemDataT, EntityT>,
+): UI.MenuActionListItemType<ItemDataT, EntityT> => {
   if (!action) {
     return null;
   }
 
   if ('children' in action) {
     return {
-      // id,
       ...action,
       children: Object.keys(action.children).map((childActionId) => {
         const childAction = action.children[childActionId];
@@ -98,52 +113,55 @@ const toMenuActionDefition = <ItemDataT extends UI.ActionMenuItemDataValueType>(
           return null;
         }
 
-        return {
-          // id: childActionId,
-          ...childAction,
-        };
+        return childAction;
       }),
     };
   }
 
-  return {
-    // id,
-    ...action,
-  };
+  return action;
 };
 
-const getRootActions = <ItemDataT extends UI.ActionMenuItemDataValueType>({
+const getRootActions = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>({
   actions: moduleActions,
   ids,
-}: UI.ActionMenuData<ItemDataT>): UI.MenuActionListType<ItemDataT> => {
-  const menuActions = Object.keys(moduleActions.actions).reduce((reduced, actionId) => {
-    if (ids && !ids.includes(actionId)) {
-      return reduced;
-    }
+}: UI.ActionMenuData<ItemDataT, EntityT>): UI.MenuActionListType<ItemDataT, EntityT> => {
+  const menuActions = Object.keys(moduleActions.actions).reduce(
+    (reduced, actionId) => {
+      if (ids && !ids.includes(actionId)) {
+        return reduced;
+      }
 
-    const moduleAction = moduleActions.actions[actionId];
-    return [...reduced, toMenuActionDefition(actionId, moduleAction)];
-  }, [] as UI.MenuActionListType<ItemDataT>);
+      const moduleAction = moduleActions.actions[actionId];
+      return [...reduced, toMenuActionDefition(moduleAction)];
+    },
+    [] as UI.MenuActionListType<ItemDataT, EntityT>,
+  );
 
   return menuActions;
 };
 
 // PUBLIC
 // Get IDs to display from the specified menu
-export const parseActionMenu = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  props: UI.ActionMenuData<ItemDataT>,
+export const parseActionMenu = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>(
+  props: UI.ActionMenuData<ItemDataT, EntityT>,
   hasPreviousMenuItems: boolean,
-): UI.ActionMenuType<ItemDataT> | string => {
-  let actions: UI.MenuActionListType<ItemDataT> | null = getRootActions(props);
+): UI.ActionMenuType<ItemDataT, EntityT> | string => {
+  let actions: UI.MenuActionListType<ItemDataT, EntityT> | null = getRootActions(props);
 
   // Only return a single error for each menu
   // Note the filtering order (no-access will be preferred over filtered)
-  actions = filterItems(actions, props.itemData, actionAccess);
+  actions = filterItems(actions, props.itemData, props.entity, actionAccess);
   if (!actions) {
     return 'no-access';
   }
 
-  actions = filterItems(actions, props.itemData, actionFilter);
+  actions = filterItems(actions, props.itemData, props.entity, actionFilter);
   if (!actions) {
     return 'filtered';
   }
@@ -156,24 +174,35 @@ export const parseActionMenu = <ItemDataT extends UI.ActionMenuItemDataValueType
     actions = [null, ...actions];
   }
 
-  const ret: UI.ActionMenuType<ItemDataT> = {
+  const ret: UI.ActionMenuType<ItemDataT, EntityT> = {
     itemDataGetter:
       props.itemData instanceof Function
         ? props.itemData
         : () => props.itemData as ItemDataT,
     moduleData: props.actions.moduleData,
     actions,
+    entity: props.entity as EntityT,
   };
 
   return ret;
 };
 
 // Determine unique ID from item data
+export const parseActionMenuItemId = <ItemDataT extends UI.ActionMenuItemDataValueType>(
+  itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined,
+): UI.ActionIdType | undefined => {
+  const parsedItemData = parseItemData<ItemDataT>(itemData);
+  if (!parsedItemData) {
+    return undefined;
+  }
+
+  const objectId = (parsedItemData as UI.ActionMenuObjectItemData).id;
+  return objectId || parsedItemData;
+};
+
 export const parseActionMenuItemIds = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined,
 ): Array<UI.ActionIdType> => {
-  const parsedItemData = parseItemData<ItemDataT>(itemData);
-  return !!parsedItemData && (parsedItemData as UI.ActionMenuObjectItemData).id
-    ? [(parsedItemData as UI.ActionMenuObjectItemData).id]
-    : [];
+  const parsedId = parseActionMenuItemId<ItemDataT>(itemData);
+  return !!parsedId ? [parsedId] : [];
 };

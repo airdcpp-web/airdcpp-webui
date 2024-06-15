@@ -9,12 +9,15 @@ import { parseNodeContent } from '../utils';
 import * as UI from 'types/ui';
 
 interface RSSItemData {
+  id: string;
   entry: FeedItem;
   feedUrl: string;
 }
 
-const hasLink = ({ entry }: RSSItemData) => !!entry.link;
-const hasTitle = ({ entry }: RSSItemData) => !!entry.title;
+type Filter = UI.ActionFilter<RSSItemData>;
+
+const hasLink: Filter = ({ itemData }) => !!itemData.entry.link;
+const hasTitle: Filter = ({ itemData }) => !!itemData.entry.title;
 
 const getLocation = (href: string) => {
   const match = href.match(
@@ -33,8 +36,9 @@ const getLocation = (href: string) => {
   );
 };
 
-const handleOpenLink: UI.ActionHandler<RSSItemData> = ({ data }) => {
-  const { entry, feedUrl } = data;
+type Handler = UI.ActionHandler<RSSItemData>;
+const handleOpenLink: Handler = ({ itemData }) => {
+  const { entry, feedUrl } = itemData;
   let link: string | undefined;
 
   if (typeof entry.link === 'string') {
@@ -54,13 +58,13 @@ const handleOpenLink: UI.ActionHandler<RSSItemData> = ({ data }) => {
   window.open(link);
 };
 
-const handleSearch: UI.ActionHandler<RSSItemData> = ({ data, location, navigate }) => {
-  if (!data.entry.title) {
+const handleSearch: Handler = ({ itemData, location, navigate }) => {
+  if (!itemData.entry.title) {
     return;
   }
 
   const itemInfo = {
-    name: parseNodeContent(data.entry.title),
+    name: parseNodeContent(itemData.entry.title),
   };
 
   return SearchActions.search(itemInfo, location, navigate);

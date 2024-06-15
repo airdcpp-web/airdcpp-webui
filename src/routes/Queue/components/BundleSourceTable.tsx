@@ -35,10 +35,12 @@ const Source: React.FC<SourceProps> = ({ source, bundle, t }) => (
         <ActionMenu
           actions={QueueBundleSourceActionMenu}
           //ids={ [ 'removeBundleSource' ]}
-          itemData={{
+          /*itemData={{
             source,
             bundle,
-          }}
+          }}*/
+          itemData={source}
+          entity={bundle}
         />
       </UserMenu>
     </td>

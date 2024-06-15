@@ -20,3 +20,6 @@ export default {
   HUB_MESSAGE_HIGHLIGHT: 'hub_message_highlight',
   PRIVATE_CHAT_MESSAGE_HIGHLIGHT: 'private_chat_message_highlight',
 };
+
+export const MENU_SUPPORTS = ['urls', 'form'];
+export const MENU_NESTING_THRESHOLD = 1;

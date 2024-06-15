@@ -26,7 +26,7 @@ const Author: React.FC<AuthorProps> = ({ message, dropdownContext }) => (
       triggerIcon={null}
       user={message.from}
       remoteMenuId={MenuConstants.HUB_USER}
-      entityId={message.from.hub_session_id}
+      entity={message.from.hub_session_id}
     />
   </div>
 );

@@ -11,31 +11,32 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
 
-const isFilelist = (transfer: API.Transfer) =>
+// Filters
+type Filter = UI.ActionFilter<API.Transfer>;
+const isFilelist: Filter = ({ itemData: transfer }) =>
   !!transfer.type && (transfer.type as API.FileType).content_type === 'filelist';
-const isDownload = (transfer: API.Transfer) => transfer.download;
-const isFinished = (transfer: API.Transfer) => transfer.status.id === StatusEnum.FINISHED;
-const removeFile = (transfer: API.Transfer) =>
-  isDownload(transfer) && isFilelist(transfer) && !isFinished(transfer);
-const removeSource = (transfer: API.Transfer) =>
-  isDownload(transfer) && !isFinished(transfer);
+const isDownload: Filter = ({ itemData: transfer }) => transfer.download;
+const isFinished: Filter = ({ itemData: transfer }) =>
+  transfer.status.id === StatusEnum.FINISHED;
+const removeFile: Filter = (data) =>
+  isDownload(data) && isFilelist(data) && !isFinished(data);
+const removeSource: Filter = (data) => isDownload(data) && !isFinished(data);
 
-const handleForce: UI.ActionHandler<API.Transfer> = ({ data: transfer }) => {
+// Handlers
+type Handler = UI.ActionHandler<API.Transfer>;
+const handleForce: Handler = ({ itemData: transfer }) => {
   return SocketService.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/force`);
 };
 
-const handleDisconnect: UI.ActionHandler<API.Transfer> = ({ data: transfer }) => {
+const handleDisconnect: Handler = ({ itemData: transfer }) => {
   return SocketService.post(
     `${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`,
   );
 };
 
-const handleRemoveFile: UI.ActionHandler<API.Transfer> = ({
-  data: transfer,
-  ...other
-}) => {
+const handleRemoveFile: Handler = ({ itemData: transfer, ...other }) => {
   return QueueFileRemoveAction.handler({
-    data: {
+    itemData: {
       id: transfer.queue_file_id,
       target: transfer.target,
       name: transfer.name,
@@ -44,12 +45,9 @@ const handleRemoveFile: UI.ActionHandler<API.Transfer> = ({
   });
 };
 
-const handleRemoveSource: UI.ActionHandler<API.Transfer> = ({
-  data: transfer,
-  ...other
-}) => {
+const handleRemoveSource: Handler = ({ itemData: transfer, ...other }) => {
   return QueueSourceRemoveAction.handler({
-    data: {
+    itemData: {
       ...transfer.user,
       id: transfer.user.cid,
       hub_urls: [transfer.user.hub_url],

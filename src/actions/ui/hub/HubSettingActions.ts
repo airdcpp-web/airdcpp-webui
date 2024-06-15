@@ -4,13 +4,13 @@ import SocketService from 'services/SocketService';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleToggleChatNotify: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
+const handleToggleChatNotify: UI.ActionHandler<API.Hub> = ({ itemData: hub }) => {
   return SocketService.patch(`${HubConstants.SESSIONS_URL}/${hub.id}`, {
     use_main_chat_notify: !hub.settings.use_main_chat_notify,
   });
 };
 
-const handleToggleJoins: UI.ActionHandler<API.Hub> = ({ data: hub }) => {
+const handleToggleJoins: UI.ActionHandler<API.Hub> = ({ itemData: hub }) => {
   return SocketService.patch(`${HubConstants.SESSIONS_URL}/${hub.id}`, {
     show_joins: !hub.settings.show_joins,
   });

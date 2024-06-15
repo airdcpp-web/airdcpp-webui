@@ -11,12 +11,18 @@ interface HashItemData extends API.HashStats {
   id: string;
 }
 
+type Filter = UI.ActionFilter<HashItemData>;
+const hasFiles: Filter = ({ itemData }) => itemData.hash_files_left > 0;
+const isPaused: Filter = ({ itemData }) =>
+  itemData.pause_forced && itemData.hashers === 0;
+const hasHashers: Filter = ({ itemData }) => itemData.hashers > 0;
+
 export const HashStopAction = {
   id: 'stop',
   displayName: 'Stop',
   access: AccessConstants.SETTINGS_EDIT,
   icon: IconConstants.STOP,
-  filter: (data: HashItemData) => data.hash_files_left > 0,
+  filter: hasFiles,
   handler: () => {
     return SocketService.post(HashConstants.STOP_URL);
   },
@@ -27,7 +33,7 @@ export const HashResumeAction = {
   displayName: 'Resume',
   access: AccessConstants.SETTINGS_EDIT,
   icon: IconConstants.PLAY,
-  filter: (data: HashItemData) => data.pause_forced && data.hashers === 0,
+  filter: isPaused,
   handler: () => {
     return SocketService.post(HashConstants.RESUME_URL);
   },
@@ -38,7 +44,7 @@ export const HashPauseAction = {
   displayName: 'Pause',
   access: AccessConstants.SETTINGS_EDIT,
   icon: IconConstants.PAUSE,
-  filter: (data: HashItemData) => data.hashers > 0,
+  filter: hasHashers,
   handler: () => {
     return SocketService.post(HashConstants.PAUSE_URL);
   },

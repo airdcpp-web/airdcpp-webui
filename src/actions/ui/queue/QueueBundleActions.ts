@@ -8,12 +8,14 @@ import * as UI from 'types/ui';
 
 import SearchActions from 'actions/reflux/SearchActions';
 
-const bundleValidationFailed = (bundle: API.QueueBundle) =>
+type Filter = UI.ActionFilter<API.QueueBundle>;
+const bundleValidationFailed: Filter = ({ itemData: bundle }) =>
   bundle.status.id === StatusEnum.COMPLETION_VALIDATION_ERROR;
-const itemNotFinished = (bundle: API.QueueBundle) => bundle.time_finished === 0;
-const isDirectoryBundle = (bundle: API.QueueBundle) => bundle.type.id === 'directory';
-const hasSources = (bundle: API.QueueBundle) =>
-  bundle.sources.total > 0 && itemNotFinished(bundle);
+const itemNotFinished: Filter = ({ itemData: bundle }) => bundle.time_finished === 0;
+const isDirectoryBundle: Filter = ({ itemData: bundle }) =>
+  bundle.type.id === 'directory';
+const hasSources: Filter = (data) =>
+  data.itemData.sources.total > 0 && itemNotFinished(data);
 
 const shareBundle = (bundle: API.QueueBundle, skipValidation: boolean) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/share`, {
@@ -21,43 +23,37 @@ const shareBundle = (bundle: API.QueueBundle, skipValidation: boolean) => {
   });
 };
 
-const handleRescan: UI.ActionHandler<API.QueueBundle> = ({ data: bundle }) => {
+// Handlers
+type Handler = UI.ActionHandler<API.QueueBundle>;
+
+const handleRescan: Handler = ({ itemData: bundle }) => {
   return shareBundle(bundle, false);
 };
 
-const handleForceShare: UI.ActionHandler<API.QueueBundle> = ({ data: bundle }) => {
+const handleForceShare: Handler = ({ itemData: bundle }) => {
   return shareBundle(bundle, true);
 };
 
-const handleRemoveBundle: UI.ActionHandler<API.QueueBundle> = (
-  { data: bundle },
-  removeFinished,
-) => {
+const handleRemoveBundle: Handler = ({ itemData: bundle }, removeFinished) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/remove`, {
     remove_finished: removeFinished,
   });
 };
 
-const handleSearch: UI.ActionHandler<API.QueueBundle> = ({
-  data: itemInfo,
-  location,
-  navigate,
-}) => {
-  return SearchActions.search(itemInfo, location, navigate);
+const handleSearch: Handler = ({ itemData: bundle, location, navigate }) => {
+  return SearchActions.search(bundle, location, navigate);
 };
 
-const handleSearchBundleAlternates: UI.ActionHandler<API.QueueBundle> = ({
-  data: bundle,
-}) => {
+const handleSearchBundleAlternates: Handler = ({ itemData: bundle }) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`);
 };
 
-const handleSources: UI.ActionHandler<API.QueueBundle> = ({ data, navigate }) => {
-  navigate(`sources/${data.id}`);
+const handleSources: Handler = ({ itemData, navigate }) => {
+  navigate(`sources/${itemData.id}`);
 };
 
-const handleContent: UI.ActionHandler<API.QueueBundle> = ({ data, navigate }) => {
-  navigate(`content/${data.id}`);
+const handleContent: Handler = ({ itemData, navigate }) => {
+  navigate(`content/${itemData.id}`);
 };
 
 export const QueueBundleViewSourcesAction = {

@@ -7,26 +7,21 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import SearchActions from 'actions/reflux/SearchActions';
 
-const itemNotFinished = (item: API.QueueFile) => item.time_finished === 0;
+type Filter = UI.ActionFilter<API.QueueFile>;
+const itemNotFinished: Filter = ({ itemData: file }) => file.time_finished === 0;
 
-const handleSearch: UI.ActionHandler<API.QueueFile> = ({
-  data: itemInfo,
-  location,
-  navigate,
-}) => {
-  return SearchActions.search(itemInfo, location, navigate);
+type Handler = UI.ActionHandler<API.QueueFile>;
+const handleSearch: Handler = ({ itemData: file, location, navigate }) => {
+  return SearchActions.search(file, location, navigate);
 };
 
-const handleRemoveFile: UI.ActionHandler<API.QueueFile> = (
-  { data: file },
-  removeFinished: boolean,
-) => {
+const handleRemoveFile: Handler = ({ itemData: file }, removeFinished: boolean) => {
   return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/remove`, {
     remove_finished: removeFinished,
   });
 };
 
-const handleSearchFileAlternates: UI.ActionHandler<API.QueueFile> = ({ data: file }) => {
+const handleSearchFileAlternates: Handler = ({ itemData: file }) => {
   return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/search`);
 };
 

@@ -70,8 +70,9 @@ export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellPr
 export interface ActionCellProps<
   CellDataT,
   ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
 > extends Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 't' | 'children'>,
-    Omit<TableActionMenuProps<ItemDataT>, 'caption' | 'itemData'> {}
+    Omit<TableActionMenuProps<ItemDataT, EntityT>, 'caption' | 'itemData'> {}
 
 interface FileItemBase {
   type: API.FileItemType;
@@ -80,12 +81,13 @@ interface FileItemBase {
 export const FileActionCell = <
   CellDataT extends React.ReactNode,
   ItemDataT extends UI.ActionMenuItemDataValueType & FileItemBase,
+  EntityT extends UI.ActionMenuItemEntityValueType,
 >({
   cellData,
   rowDataGetter,
   children,
   ...props
-}: ActionCellProps<CellDataT, ItemDataT>) => (
+}: ActionCellProps<CellDataT, ItemDataT, EntityT>) => (
   <TableActionMenu
     caption={
       <FormattedFile
@@ -102,30 +104,34 @@ export const FileActionCell = <
 export const ActionMenuCell = <
   CellDataT extends React.ReactNode,
   ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
 >({
   cellData,
   rowDataGetter,
   ...props
-}: ActionCellProps<CellDataT, ItemDataT>) => (
+}: ActionCellProps<CellDataT, ItemDataT, EntityT>) => (
   <TableActionMenu caption={cellData} itemData={rowDataGetter!} {...props} />
 );
 
 export interface ActionLinkCellProps<
   CellDataT,
   ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
 > extends RowWrapperCellChildProps<CellDataT, ItemDataT> {
   /*Pick<ActionButtonProps<ItemDataT>, 'actions' | 'actionId'>*/
 
   //action: (itemData: any, location: Location) => void;
   //action: UI.ActionType<ItemDataT>;
-  action: UI.ActionDefinition<ItemDataT>;
+  action: UI.ActionDefinition<ItemDataT, EntityT>;
   moduleData: UI.ActionModuleData;
+  entity?: EntityT;
   // actionId: string;
 }
 
 export const ActionLinkCell = <
   CellDataT,
   ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
 >(
   {
     cellData,
@@ -134,15 +140,20 @@ export const ActionLinkCell = <
     //onClickAction, action,
     action,
     moduleData,
+    entity,
     ...props
-  }: ActionLinkCellProps<CellDataT, ItemDataT> /*& ActionHandlerDecoratorChildProps*/,
+  }: ActionLinkCellProps<
+    CellDataT,
+    ItemDataT,
+    EntityT
+  > /*& ActionHandlerDecoratorChildProps*/,
 ) => {
   if (!showAction(action, rowDataGetter!())) {
     return <TextCell cellData={cellData} {...props} />;
   }
 
   return (
-    <ActionHandlerDecorator<ItemDataT>>
+    <ActionHandlerDecorator<ItemDataT, EntityT>>
       {({ onClickAction }) => (
         <a
           className="plain link cell"
@@ -151,6 +162,7 @@ export const ActionLinkCell = <
               action,
               moduleData,
               itemData: rowDataGetter!(),
+              entity: entity as EntityT,
             })
           }
         >
@@ -224,8 +236,12 @@ export type FileDownloadCellClickHandler = (
 export interface FileDownloadCellProps<
   CellDataT,
   ItemDataT extends UI.DownloadableItemInfo,
+  EntityT extends UI.SessionItemBase,
 > extends Omit<RowWrapperCellChildProps<CellDataT, ItemDataT>, 'children'>,
-    Omit<TableDownloadMenuProps<ItemDataT>, 'user' | 'itemInfoGetter' | 'caption'> {
+    Omit<
+      TableDownloadMenuProps<ItemDataT, EntityT>,
+      'user' | 'itemInfoGetter' | 'caption'
+    > {
   userGetter: (rowData: ItemDataT) => UI.DownloadSource;
   clickHandlerGetter?: FileDownloadCellClickHandler;
 }
@@ -233,6 +249,7 @@ export interface FileDownloadCellProps<
 export const FileDownloadCell = <
   CellDataT extends React.ReactNode,
   ItemDataT extends UI.DownloadableItemInfo & FileItemBase,
+  EntityT extends UI.SessionItemBase,
 >({
   cellData,
   rowDataGetter,
@@ -240,7 +257,7 @@ export const FileDownloadCell = <
   userGetter,
   downloadHandler,
   ...props
-}: FileDownloadCellProps<CellDataT, ItemDataT>) => (
+}: FileDownloadCellProps<CellDataT, ItemDataT, EntityT>) => (
   <TableDownloadMenu
     caption={
       <FormattedFile

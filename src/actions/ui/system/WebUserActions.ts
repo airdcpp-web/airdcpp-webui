@@ -9,17 +9,19 @@ import LoginStore from 'stores/LoginStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const isOther = (user: API.WebUser) => user.id !== LoginStore.user.id;
+type Filter = UI.ActionFilter<API.WebUser>;
+const isOther: Filter = ({ itemData: user }) => user.id !== LoginStore.user.id;
 
 const handleCreate: UI.ActionHandler<void> = ({ location, navigate }) => {
   navigate(`users`);
 };
 
-const handleEdit: UI.ActionHandler<API.WebUser> = ({ data: user, navigate }) => {
+type Handler = UI.ActionHandler<API.WebUser>;
+const handleEdit: Handler = ({ itemData: user, navigate }) => {
   navigate(`users/${user.id}`);
 };
 
-const handleRemove: UI.ActionHandler<API.WebUser> = ({ data: user }) => {
+const handleRemove: Handler = ({ itemData: user }) => {
   return SocketService.delete(`${WebUserConstants.USERS_URL}/${user.id}`);
 };
 

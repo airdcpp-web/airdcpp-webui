@@ -29,7 +29,7 @@ const NickCell: React.FC<NickCellProps> = ({ cellData, rowDataGetter, session })
     user={rowDataGetter!()}
     userIcon={true}
     remoteMenuId={MenuConstants.HUB_USER}
-    entityId={session.id}
+    entity={session}
   />
 );
 

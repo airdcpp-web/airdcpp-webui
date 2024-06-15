@@ -8,38 +8,42 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
 
-const isManaged = (extension: API.Extension) => extension.managed;
-const isRunning = (extension: API.Extension) => extension.running;
-const hasSettings = (extension: API.Extension) => extension.has_settings;
+type Filter = UI.ActionFilter<API.Extension>;
+const isManaged: Filter = ({ itemData: extension }) => extension.managed;
+const isRunning: Filter = ({ itemData: extension }) => extension.running;
+const hasSettings: Filter = ({ itemData: extension }) => extension.has_settings;
+
+const canStart: Filter = (data) => isManaged(data) && !isRunning(data);
+const canStop: Filter = (data) => isManaged(data) && isRunning(data);
 
 const handleConfigure: UI.ActionHandler<API.Extension> = ({
-  data: extension,
+  itemData: extension,
   navigate,
 }) => {
   navigate(`extensions/${extension.id}`);
 };
 
-const handleStart: UI.ActionHandler<API.Extension> = ({ data: extension }) => {
+const handleStart: UI.ActionHandler<API.Extension> = ({ itemData: extension }) => {
   return SocketService.post(
     `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`,
   );
 };
 
-const handleStop: UI.ActionHandler<API.Extension> = ({ data: extension }) => {
+const handleStop: UI.ActionHandler<API.Extension> = ({ itemData: extension }) => {
   return SocketService.post(
     `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`,
   );
 };
 
-const handleRemove: UI.ActionHandler<API.Extension> = ({ data }) => {
-  return SocketService.delete(ExtensionConstants.EXTENSIONS_URL + '/' + data.name);
+const handleRemove: UI.ActionHandler<API.Extension> = ({ itemData }) => {
+  return SocketService.delete(ExtensionConstants.EXTENSIONS_URL + '/' + itemData.name);
 };
 
 export const ExtensionStartAction = {
   id: 'start',
   displayName: 'Start',
   icon: IconConstants.PLAY,
-  filter: (ext: API.Extension) => isManaged(ext) && !isRunning(ext),
+  filter: canStart,
   access: API.AccessEnum.ADMIN,
   handler: handleStart,
 };
@@ -48,7 +52,7 @@ export const ExtensionStopAction = {
   id: 'stop',
   displayName: 'Stop',
   icon: IconConstants.STOP,
-  filter: (ext: API.Extension) => isManaged(ext) && isRunning(ext),
+  filter: canStop,
   access: API.AccessEnum.ADMIN,
   handler: handleStop,
 };

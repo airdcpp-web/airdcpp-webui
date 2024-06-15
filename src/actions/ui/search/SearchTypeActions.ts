@@ -6,15 +6,18 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import SearchConstants from 'constants/SearchConstants';
 
+type Filter = UI.ActionFilter<API.SearchType>;
+const notDefaultType: Filter = ({ itemData: type }) => !type.default_type;
+
 const handleCreate: UI.ActionHandler<API.SearchType> = ({ navigate }) => {
   navigate(`/types`);
 };
 
-const handleEdit: UI.ActionHandler<API.SearchType> = ({ data: type, navigate }) => {
+const handleEdit: UI.ActionHandler<API.SearchType> = ({ itemData: type, navigate }) => {
   navigate(`types/${type.id}`);
 };
 
-const handleRemove: UI.ActionHandler<API.SearchType> = ({ data: type }) => {
+const handleRemove: UI.ActionHandler<API.SearchType> = ({ itemData: type }) => {
   return SocketService.delete(`${SearchConstants.SEARCH_TYPES_URL}/${type.id}`);
 };
 
@@ -41,7 +44,7 @@ export const SearchTypeRemoveAction = {
     approveCaption: 'Remove type',
     rejectCaption: `Don't remove`,
   },
-  filter: (type: API.SearchType) => !type.default_type,
+  filter: notDefaultType,
   handler: handleRemove,
 };
 

@@ -4,18 +4,19 @@ import { IconType } from 'components/semantic/Icon';
 import { Location, NavigateFunction } from 'react-router-dom';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
 
-export type ActionIdType = API.IdType | object;
+// ID is required for menu action item data due to extension hooks
+export type ActionIdType = API.IdType | object; // Hinted user doesn't have a simple ID
 export type ActionMenuObjectItemData = { id: ActionIdType };
-export type ActionMenuItemDataValueType =
-  | ActionMenuObjectItemData
-  | string
-  | number
-  | undefined;
+export type ActionMenuItemDataValueType = ActionMenuObjectItemData | API.IdType | void;
+
+export type ActionMenuItemEntityValueType = { id: API.IdType } | API.IdType | void;
+
 export type ActionMenuItemDataType<ItemDataT extends ActionMenuItemDataValueType> =
   | (() => ItemDataT)
   | ItemDataT;
 
-export type ActionItemDataValueType = object | string | number | void;
+export type ActionDataValueType = object | API.IdType | void;
+export type ActionEntityValueType = { id: API.IdType } | API.IdType | void;
 
 export interface ActionConfirmation {
   content: string;
@@ -29,17 +30,37 @@ interface ActionInput<ItemDataT> extends ActionConfirmation {
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
-export interface ActionHandlerData<ItemDataT> {
-  data: ItemDataT;
+export interface ActionHandlerData<
+  ItemDataT extends ActionDataValueType,
+  EntityType extends ActionDataValueType = void,
+> {
+  itemData: ItemDataT;
+  entity: EntityType;
   location: Location;
   t: TranslateF;
   navigate: NavigateFunction;
 }
 
-export type ActionHandler<ItemDataT> = (
-  handlerData: ActionHandlerData<ItemDataT>,
+export type ActionHandler<
+  ItemDataT extends ActionDataValueType,
+  EntityType extends ActionDataValueType = void,
+> = (
+  handlerData: ActionHandlerData<ItemDataT, EntityType>,
   confirmData?: boolean | string,
 ) => Promise<any> | void;
+
+export interface FilterData<
+  ItemDataT extends ActionDataValueType,
+  EntityType extends ActionDataValueType = void,
+> {
+  itemData: ItemDataT;
+  entity: EntityType;
+}
+
+export type ActionFilter<
+  ItemDataT extends ActionDataValueType,
+  EntityType extends ActionDataValueType = void,
+> = (data: FilterData<ItemDataT, EntityType>) => boolean;
 
 export interface ActionDefitionBase {
   id: string;
@@ -47,9 +68,12 @@ export interface ActionDefitionBase {
   icon?: string;
 }
 
-export interface ActionDefinition<ItemDataT> extends ActionDefitionBase {
-  handler: ActionHandler<ItemDataT>;
-  filter?: (itemData: ItemDataT) => boolean;
+export interface ActionDefinition<
+  ItemDataT extends ActionDataValueType,
+  EntityT extends ActionEntityValueType = void,
+> extends ActionDefitionBase {
+  handler: ActionHandler<ItemDataT, EntityT>;
+  filter?: ActionFilter<ItemDataT, EntityT>;
   checked?: (itemData: ItemDataT) => boolean;
   access?: string;
   displayName: string;
@@ -70,21 +94,33 @@ export interface ActionDefinition<ItemDataT> extends ActionDefitionBase {
 
 export type MenuDivider = typeof MENU_DIVIDER;
 
-export type ChildActionListType<ItemDataT> = {
-  [actionKey: string]: ActionDefinition<ItemDataT> | MenuDivider;
+export type ChildActionListType<
+  ItemDataT extends ActionMenuItemDataValueType,
+  EntityT extends ActionMenuItemEntityValueType,
+> = {
+  [actionKey: string]: ActionDefinition<ItemDataT, EntityT> | MenuDivider;
 };
 
-export interface GroupedActionDefition<ItemDataT> extends ActionDefitionBase {
-  children: ChildActionListType<ItemDataT>;
+export interface GroupedActionDefition<
+  ItemDataT extends ActionMenuItemDataValueType,
+  EntityT extends ActionMenuItemEntityValueType,
+> extends ActionDefitionBase {
+  children: ChildActionListType<ItemDataT, EntityT>;
 }
 
-export type ActionListItemType<ItemDataT> =
-  | ActionDefinition<ItemDataT>
-  | GroupedActionDefition<ItemDataT>
+export type ActionListItemType<
+  ItemDataT extends ActionMenuItemDataValueType,
+  EntityT extends ActionMenuItemEntityValueType,
+> =
+  | ActionDefinition<ItemDataT, EntityT>
+  | GroupedActionDefition<ItemDataT, EntityT>
   | MenuDivider;
 
-export type ActionListType<ItemDataT> = {
-  [actionKey: string]: ActionListItemType<ItemDataT>;
+export type ActionListType<
+  ItemDataT extends ActionMenuItemDataValueType,
+  EntityT extends ActionMenuItemEntityValueType = void,
+> = {
+  [actionKey: string]: ActionListItemType<ItemDataT, EntityT>;
 };
 
 export interface ActionModuleData {
@@ -93,8 +129,12 @@ export interface ActionModuleData {
 }
 
 export interface ModuleActions<
-  ItemDataT,
-  ActionsT extends ActionListType<ItemDataT> = ActionListType<ItemDataT>,
+  ItemDataT extends ActionMenuItemDataValueType,
+  EntityT extends ActionMenuItemEntityValueType = void,
+  ActionsT extends ActionListType<ItemDataT, EntityT> = ActionListType<
+    ItemDataT,
+    EntityT
+  >,
 > {
   actions: ActionsT;
   moduleData: ActionModuleData;

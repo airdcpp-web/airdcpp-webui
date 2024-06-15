@@ -13,7 +13,7 @@ export interface ChatActionList extends ActionListType<SessionItemBase> {
   clear: ActionDefinition<SessionItemBase>;
 }
 
-export type ChatActions = ModuleActions<SessionItemBase, ChatActionList>;
+export type ChatActions = ModuleActions<SessionItemBase, void, ChatActionList>;
 
 export type ChatFileUploadHandler = (file: File) => Promise<AddTempShareResponse>;
 

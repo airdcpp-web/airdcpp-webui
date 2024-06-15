@@ -6,14 +6,15 @@ import FilelistSessionStore from 'stores/FilelistSessionStore';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleBrowseContent: UI.ActionHandler<API.GroupedSearchResult> = ({
-  data,
+type Handler = UI.ActionHandler<API.GroupedSearchResult>;
+const handleBrowseContent: Handler = ({
+  itemData: groupedResult,
   location,
   navigate,
 }) => {
   const createData = {
-    user: data.users.user,
-    path: data.path,
+    user: groupedResult.users.user,
+    path: groupedResult.path,
   };
 
   return FilelistSessionActions.createSession(createData, {
@@ -23,8 +24,8 @@ const handleBrowseContent: UI.ActionHandler<API.GroupedSearchResult> = ({
   });
 };
 
-const handleResult: UI.ActionHandler<API.GroupedSearchResult> = ({ data, navigate }) => {
-  navigate(`result/${data.id}`);
+const handleResult: Handler = ({ itemData: groupedResult, navigate }) => {
+  navigate(`result/${groupedResult.id}`);
 };
 
 export const SearchResultDetailsAction = {

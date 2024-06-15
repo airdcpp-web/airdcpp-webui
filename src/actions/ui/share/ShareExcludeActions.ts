@@ -10,7 +10,7 @@ const handleAdd: UI.ActionHandler<void> = ({ navigate }) => {
   navigate(`browse`);
 };
 
-const handleRemove: UI.ActionHandler<string> = ({ data: path }) => {
+const handleRemove: UI.ActionHandler<string> = ({ itemData: path }) => {
   return SocketService.post(ShareConstants.EXCLUDES_REMOVE_URL, { path });
 };
 

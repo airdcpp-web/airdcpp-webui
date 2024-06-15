@@ -6,28 +6,40 @@ import * as UI from 'types/ui';
 import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
 import { DownloadableItemActionMenu } from 'actions/ui/downloadable-item';
 
-export interface DownloadMenuDecoratorProps<ItemDataT extends UI.DownloadableItemInfo>
-  extends Omit<ActionMenuDecoratorProps<ItemDataT>, 'actions' | 'itemData' | 'caption'>,
-    Pick<UI.DownloadableItemData<ItemDataT>, 'session' | 'user'> {
+export interface DownloadMenuDecoratorProps<
+  ItemDataT extends UI.DownloadableItemInfo,
+  EntityT extends UI.SessionItemBase,
+> extends Omit<
+      ActionMenuDecoratorProps<ItemDataT, EntityT>,
+      'actions' | 'itemData' | 'caption'
+    >,
+    Pick<UI.DownloadableItemData<ItemDataT>, 'entity' | 'user'> {
   itemInfoGetter: () => ItemDataT;
+  entity: EntityT;
   downloadHandler: UI.DownloadHandler<ItemDataT>;
   caption: React.ReactNode;
   className?: string;
 }
 
-type DownloadMenuDecoratorChildProps<ItemDataT extends UI.DownloadableItemInfo> =
-  ActionMenuDecoratorProps<UI.DownloadableItemData<ItemDataT>>;
+type DownloadMenuDecoratorChildProps<
+  ItemDataT extends UI.DownloadableItemInfo,
+  EntityT extends UI.SessionItemBase,
+> = ActionMenuDecoratorProps<UI.DownloadableItemData<ItemDataT>, EntityT>;
 
-export default function <DropdownPropsT, ItemDataT extends UI.DownloadableItemInfo>(
+export default function <
+  DropdownPropsT,
+  ItemDataT extends UI.DownloadableItemInfo,
+  EntityT extends UI.SessionItemBase,
+>(
   Component: React.ComponentType<
-    DownloadMenuDecoratorChildProps<ItemDataT> & DropdownPropsT
+    DownloadMenuDecoratorChildProps<ItemDataT, EntityT> & DropdownPropsT
   >,
 ) {
   class DownloadMenu extends React.PureComponent<
-    DownloadMenuDecoratorProps<ItemDataT> & DropdownPropsT
+    DownloadMenuDecoratorProps<ItemDataT, EntityT> & DropdownPropsT
   > {
     itemData: UI.DownloadableItemData<ItemDataT>;
-    constructor(props: DownloadMenuDecoratorProps<ItemDataT> & DropdownPropsT) {
+    constructor(props: DownloadMenuDecoratorProps<ItemDataT, EntityT> & DropdownPropsT) {
       super(props);
 
       this.itemData = {
@@ -43,9 +55,9 @@ export default function <DropdownPropsT, ItemDataT extends UI.DownloadableItemIn
         },
       });
 
-      Object.defineProperty(this.itemData, 'session', {
+      Object.defineProperty(this.itemData, 'entity', {
         get: () => {
-          return this.props.session;
+          return this.props.entity;
         },
       });
 
@@ -76,6 +88,7 @@ export default function <DropdownPropsT, ItemDataT extends UI.DownloadableItemIn
           caption={caption}
           actions={DownloadableItemActionMenu}
           itemData={this.itemDataGetter}
+          // entity={entity as EntityT}
         />
       );
     }

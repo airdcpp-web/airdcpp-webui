@@ -17,7 +17,7 @@ const downloadExtension = (url: string, installId?: string, shasum?: string) => 
 };
 
 const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async ({
-  data: npmPackage,
+  itemData: npmPackage,
   ...other
 }) => {
   const data = await fetchCorsSafeData(
@@ -30,7 +30,7 @@ const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async ({
   return downloadExtension(tarball, npmPackage.name, shasum);
 };
 
-const handleInstallUrl: UI.ActionHandler<undefined> = ({ data }, url: string) => {
+const handleInstallUrl: UI.ActionHandler<undefined> = ({ itemData }, url: string) => {
   return downloadExtension(url);
 };
 

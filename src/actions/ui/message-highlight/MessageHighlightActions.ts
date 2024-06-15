@@ -14,21 +14,21 @@ export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & {
 };
 
 const handleSearch: UI.ActionHandler<HighlightItemInfo> = ({
-  data,
+  itemData,
   location,
   navigate,
 }) => {
   return SearchActions.search(
     {
-      name: data.magnet ? data.magnet.searchString : data.text,
+      name: itemData.magnet ? itemData.magnet.searchString : itemData.text,
     },
     location,
     navigate,
   );
 };
 
-const handleCopy: UI.ActionHandler<HighlightItemInfo> = ({ data }) => {
-  const text = data.magnet ? makeTextMagnetLink(data.magnet) : data.text;
+const handleCopy: UI.ActionHandler<HighlightItemInfo> = ({ itemData }) => {
+  const text = itemData.magnet ? makeTextMagnetLink(itemData.magnet) : itemData.text;
   return navigator.clipboard.writeText(text);
 };
 

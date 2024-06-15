@@ -2,6 +2,8 @@ import * as React from 'react';
 import classNames from 'classnames';
 import invariant from 'invariant';
 
+import * as UI from 'types/ui';
+
 import { ActionUserType, ActionUserData } from 'actions/ui/user';
 import { getFilePath } from 'utils/FileUtils';
 
@@ -13,7 +15,7 @@ import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
 import { UserActionMenu } from 'actions/ui/user';
 
 export type UserMenuDecoratorProps = Omit<
-  ActionMenuDecoratorProps<ActionUserData>,
+  ActionMenuDecoratorProps<ActionUserData, UI.ActionMenuItemEntityValueType>,
   'actions' | 'caption' | 'itemData'
 > &
   React.PropsWithChildren<{
@@ -24,7 +26,10 @@ export type UserMenuDecoratorProps = Omit<
     className?: string;
   }>;
 
-type UserMenuDecoratorChildProps = ActionMenuDecoratorProps<ActionUserData>;
+type UserMenuDecoratorChildProps = ActionMenuDecoratorProps<
+  ActionUserData,
+  UI.ActionMenuItemEntityValueType
+>;
 
 export default function <DropdownPropsT extends object>(
   Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>,

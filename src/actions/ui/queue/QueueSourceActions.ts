@@ -6,7 +6,7 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleRemoveSource: UI.ActionHandler<API.User> = ({ data: user }) => {
+const handleRemoveSource: UI.ActionHandler<API.User> = ({ itemData: user }) => {
   return SocketService.delete(`${QueueConstants.SOURCES_URL}/${user.cid}`);
 };
 

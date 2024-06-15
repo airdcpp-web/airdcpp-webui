@@ -26,26 +26,25 @@ export interface ActionUserData {
   directory?: string;
 }
 
-const checkFlags = ({ user }: ActionUserData) => {
+type Filter = UI.ActionFilter<ActionUserData>;
+const checkFlags: Filter = ({ itemData: { user } }) => {
   const flags = user.flags as HubUserFlag[];
   return !flags.includes('self') && !flags.includes('hidden');
 };
 
-const checkIgnore = (userData: ActionUserData) => {
-  const flags = userData.user.flags as HubUserFlag[];
-  return !flags.includes('ignored') && checkFlags(userData);
+const checkIgnore: Filter = (data) => {
+  const flags = data.itemData.user.flags as HubUserFlag[];
+  return !flags.includes('ignored') && checkFlags(data);
 };
 
-const checkUnignore = ({ user }: ActionUserData) => {
+const checkUnignore: Filter = ({ itemData: { user } }) => {
   const flags = user.flags as HubUserFlag[];
   return flags.includes('ignored');
 };
 
-const handleMessage: UI.ActionHandler<ActionUserData> = ({
-  data: userData,
-  location,
-  navigate,
-}) => {
+type Handler = UI.ActionHandler<ActionUserData, UI.ActionMenuItemDataValueType>;
+
+const handleMessage: Handler = ({ itemData: userData, location, navigate }) => {
   return PrivateChatActions.createSession(userData.user, {
     location,
     sessionStore: PrivateChatSessionStore,
@@ -53,11 +52,7 @@ const handleMessage: UI.ActionHandler<ActionUserData> = ({
   });
 };
 
-const handleBrowse: UI.ActionHandler<ActionUserData> = ({
-  data: userData,
-  location,
-  navigate,
-}) => {
+const handleBrowse: Handler = ({ itemData: userData, location, navigate }) => {
   const createData = {
     user: userData.user,
     path: userData.directory,
@@ -70,11 +65,11 @@ const handleBrowse: UI.ActionHandler<ActionUserData> = ({
   });
 };
 
-const handleIgnore: UI.ActionHandler<ActionUserData> = ({ data: userData }) => {
-  return SocketService.post(UserConstants.IGNORES_URL + '/' + userData.user.cid);
+const handleIgnore: Handler = ({ itemData: userData }) => {
+  return SocketService.post(`${UserConstants.IGNORES_URL}/${userData.user.cid}`);
 };
 
-const handleUnignore: UI.ActionHandler<ActionUserData> = ({ data: userData }) => {
+const handleUnignore: UI.ActionHandler<ActionUserData> = ({ itemData: userData }) => {
   return SocketService.delete(`${UserConstants.IGNORES_URL}/${userData.user.cid}`);
 };
 

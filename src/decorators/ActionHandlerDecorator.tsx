@@ -18,26 +18,41 @@ import { upperFirst } from 'lodash';
 import { toActionI18nKey } from 'utils/ActionUtils';
 import NotificationActions from 'actions/NotificationActions';
 
-interface ActionHandlerDecoratorProps<ItemDataT> {
-  children: (props: ActionHandlerDecoratorChildProps<ItemDataT>) => React.ReactNode;
+interface ActionHandlerDecoratorProps<
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+> {
+  children: (
+    props: ActionHandlerDecoratorChildProps<ItemDataT, EntityT>,
+  ) => React.ReactNode;
 }
 
-export interface ActionData<ItemDataT = any> {
-  action: UI.ActionDefinition<ItemDataT>;
+export interface ActionData<
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+> {
+  action: UI.ActionDefinition<ItemDataT, EntityT>;
   itemData: ItemDataT;
+  entity: EntityT;
   moduleData: UI.ActionModuleData;
 }
 
-export type ActionClickHandler<ItemDataT = any> = (action: ActionData<ItemDataT>) => void;
+export type ActionClickHandler<
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType = void,
+> = (action: ActionData<ItemDataT, EntityT>) => void;
 
-export interface ActionHandlerDecoratorChildProps<ItemDataT = any> {
-  onClickAction: ActionClickHandler<ItemDataT>;
+export interface ActionHandlerDecoratorChildProps<
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+> {
+  onClickAction: ActionClickHandler<ItemDataT, EntityT>;
   location: Location;
 }
 
 const toFieldI18nKey = (
   fieldName: string,
-  actionData: ActionData,
+  actionData: ActionData<any, any>,
   subNameSpace: UI.SubNamespaces,
 ) => {
   const { moduleId, subId } = actionData.moduleData;
@@ -58,7 +73,7 @@ const toFieldI18nKey = (
 
 const translateInput = (
   input: UI.ActionConfirmation,
-  actionData: ActionData,
+  actionData: ActionData<any, any>,
   t: UI.TranslateF,
 ): UI.ActionConfirmation => {
   const { approveCaption, rejectCaption, checkboxCaption, content } = input;
@@ -91,8 +106,11 @@ const translateInput = (
 const isSidebarAction = (actionId: string) =>
   actionId === 'browse' || actionId === 'message';
 
-const getCommonConfirmDialogProps = <ItemDataT extends UI.ActionItemDataValueType>(
-  actionData: ActionData<ItemDataT>,
+const getCommonConfirmDialogProps = <
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+>(
+  actionData: ActionData<ItemDataT, EntityT>,
   confirmation: UI.ActionConfirmation,
   defaultRejectCaption: string,
   t: UI.TranslateF,
@@ -114,17 +132,23 @@ const getCommonConfirmDialogProps = <ItemDataT extends UI.ActionItemDataValueTyp
   };
 };
 
-interface ConfirmHandlerProps<ItemDataT> {
+interface ConfirmHandlerProps<
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+> {
   onApproved: (data: boolean | string) => void;
   onRejected: () => void;
-  actionData: ActionData<ItemDataT> | null;
+  actionData: ActionData<ItemDataT, EntityT> | null;
 }
 
-const ConfirmHandler = <ItemDataT extends UI.ActionItemDataValueType>({
+const ConfirmHandler = <
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+>({
   actionData,
   onApproved,
   onRejected,
-}: ConfirmHandlerProps<ItemDataT>) => {
+}: ConfirmHandlerProps<ItemDataT, EntityT>) => {
   const { t } = useTranslation();
   if (!actionData) {
     return null;
@@ -167,8 +191,11 @@ const ConfirmHandler = <ItemDataT extends UI.ActionItemDataValueType>({
   return null;
 };
 
-interface HandleAction<ItemDataT extends UI.ActionItemDataValueType> {
-  actionData: ActionData<ItemDataT>;
+interface HandleAction<
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+> {
+  actionData: ActionData<ItemDataT, EntityT>;
   confirmData: boolean | string | undefined;
   location: Location;
   navigate: NavigateFunction;
@@ -176,22 +203,26 @@ interface HandleAction<ItemDataT extends UI.ActionItemDataValueType> {
   closeModal: ModalCloseContext | undefined;
 }
 
-const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
+const handleAction = async <
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+>({
   actionData,
   confirmData,
   location,
   t,
   navigate,
   closeModal,
-}: HandleAction<ItemDataT>) => {
-  const { action, itemData } = actionData;
+}: HandleAction<ItemDataT, EntityT>) => {
+  const { action, itemData, entity } = actionData;
   if (!!closeModal && isSidebarAction(action.id)) {
     closeModal();
   }
 
   setTimeout(async () => {
-    const handlerData: UI.ActionHandlerData<ItemDataT> = {
-      data: itemData,
+    const handlerData: UI.ActionHandlerData<ItemDataT, EntityT> = {
+      itemData: itemData,
+      entity,
       location,
       navigate,
       t,
@@ -229,13 +260,21 @@ const handleAction = async <ItemDataT extends UI.ActionItemDataValueType>({
   });
 };
 
-type Props<ItemDataT> = ActionHandlerDecoratorProps<ItemDataT>;
+type Props<
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+> = ActionHandlerDecoratorProps<ItemDataT, EntityT>;
 
-const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
-  props: Props<ItemDataT>,
+const ActionHandlerDecorator = <
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType = void,
+>(
+  props: Props<ItemDataT, EntityT>,
 ) => {
-  const [confirmActionData, setConfirmActionData] =
-    useState<ActionData<ItemDataT> | null>(null);
+  const [confirmActionData, setConfirmActionData] = useState<ActionData<
+    ItemDataT,
+    EntityT
+  > | null>(null);
   const { t } = useTranslation();
   const closeModal = useContext(ModalRouteCloseContext);
   const location = useLocation();
@@ -261,7 +300,7 @@ const ActionHandlerDecorator = <ItemDataT extends UI.ActionItemDataValueType>(
     closeConfirmation();
   };
 
-  const handleClickAction: ActionClickHandler<ItemDataT> = (actionData) => {
+  const handleClickAction: ActionClickHandler<ItemDataT, EntityT> = (actionData) => {
     if (actionData.action.confirmation) {
       setConfirmActionData(actionData);
     } else if (actionData.action.input) {

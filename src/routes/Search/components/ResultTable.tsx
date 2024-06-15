@@ -86,14 +86,14 @@ const NameCell: React.FC<NameCellProps> = ({ rowDataGetter, instance, ...props }
     userGetter={resultUserGetter}
     rowDataGetter={rowDataGetter}
     downloadHandler={searchDownloadHandler}
-    session={instance}
+    entity={instance}
     {...props}
   >
     <TableActionMenu
       actions={SearchActionMenu}
       itemData={rowDataGetter}
       remoteMenuId={MenuConstants.GROUPED_SEARCH_RESULT}
-      entityId={instance.id}
+      entity={instance}
     />
   </FileDownloadCell>
 );

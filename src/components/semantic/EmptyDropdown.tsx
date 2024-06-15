@@ -33,10 +33,10 @@ export const EmptyDropdownCaption: React.FC<EmptyDropdownCaptionProps> = ({
 };
 
 export interface EmptyDropdownContentProps {
-  loading: boolean;
+  loading?: boolean;
 }
 
-export const EmptyDropdownContent = ({ loading }: EmptyDropdownContentProps) => (
+export const EmptyDropdownContent = ({ loading = false }: EmptyDropdownContentProps) => (
   <div className="item">
     {loading ? (
       <Loader inline={true} text="" />

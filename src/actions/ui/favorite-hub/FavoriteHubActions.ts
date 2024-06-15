@@ -10,11 +10,14 @@ const handleCreate: UI.ActionHandler<undefined> = ({ navigate }) => {
   navigate('/favorite-hubs/entries');
 };
 
-const handleEdit: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub, navigate }) => {
+const handleEdit: UI.ActionHandler<API.FavoriteHubEntry> = ({
+  itemData: hub,
+  navigate,
+}) => {
   navigate(`/favorite-hubs/entries/${hub.id}`);
 };
 
-const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => {
+const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ itemData: hub }) => {
   return SocketService.delete(FavoriteHubConstants.HUBS_URL + '/' + hub.id);
 };
 

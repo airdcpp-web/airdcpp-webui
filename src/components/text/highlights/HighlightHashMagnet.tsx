@@ -81,7 +81,7 @@ export const HighlightHashMagnet: React.FC<HighlightHashMagnetProps> = ({
       itemInfoGetter={() => downloadData}
       downloadHandler={magnetDownloadHandler}
       triggerIcon={null}
-      session={undefined}
+      entity={undefined}
       popupSettings={{
         boundary,
       }}

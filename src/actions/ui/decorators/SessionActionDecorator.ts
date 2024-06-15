@@ -11,7 +11,7 @@ export const BuildRemoveSessionAction = (
   sessionsUrl: string,
   editAccess: API.AccessEnum,
 ) => {
-  const handleRemoveSession: UI.ActionHandler<SessionType> = ({ data: session }) => {
+  const handleRemoveSession: UI.ActionHandler<SessionType> = ({ itemData: session }) => {
     return SocketService.delete(`${sessionsUrl}/${session.id}`);
   };
 

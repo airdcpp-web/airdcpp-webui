@@ -11,7 +11,7 @@ export type DownloadHandler<ItemT extends DownloadableItemInfo> = (
   itemInfo: ItemT,
   user: DownloadSource | undefined,
   downloadData: API.DownloadData,
-  session: SessionItemBase | undefined,
+  entity: SessionItemBase | undefined,
 ) => Promise<any>;
 
 export interface DownloadableItemInfo {
@@ -32,7 +32,7 @@ export interface DownloadableItemData<
   itemInfo: ItemT;
   user: DownloadSource | undefined;
   handler: DownloadHandler<ItemT>;
-  session: SessionItemBase | undefined;
+  entity: SessionItemBase | undefined;
 }
 
 type DownloadItemIdType = string;

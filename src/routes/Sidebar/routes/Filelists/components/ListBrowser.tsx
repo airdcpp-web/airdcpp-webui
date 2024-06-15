@@ -69,16 +69,13 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
         itemInfoGetter={getCurrentDirectory}
         downloadHandler={filelistDownloadHandler}
         contextElement=".session-container"
-        session={session}
+        entity={session}
         remoteMenuId={MenuConstants.FILELIST_ITEM}
-        entityId={session.id}
       >
         <ActionMenu
-          itemData={{
-            item: session.location,
-            session,
-          }}
+          itemData={session.location}
           actions={FilelistItemActionMenu}
+          entity={session}
         />
       </DownloadMenu>
     );

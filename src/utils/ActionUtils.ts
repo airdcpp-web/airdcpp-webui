@@ -6,14 +6,20 @@ import * as UI from 'types/ui';
 import { textToI18nKey, toArray, translate } from './TranslationUtils';
 import NotificationActions from 'actions/NotificationActions';
 
-export const actionFilter = <ItemDataT>(
-  action: UI.ActionDefinition<ItemDataT>,
+export const actionFilter = <
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+>(
+  action: UI.ActionDefinition<ItemDataT, EntityT>,
   itemData?: ItemDataT,
+  entity?: EntityT,
 ) => {
-  return !itemData || !action.filter || action.filter(itemData);
+  return (
+    !itemData || !action.filter || action.filter({ itemData, entity: entity as EntityT })
+  );
 };
 
-export const actionAccess = <ItemDataT>(
+export const actionAccess = <ItemDataT extends UI.ActionDataValueType>(
   action: Pick<UI.ActionDefinition<ItemDataT>, 'access'>,
 ) => {
   //invariant(
@@ -24,15 +30,18 @@ export const actionAccess = <ItemDataT>(
   return !action.access || LoginStore.hasAccess(action.access);
 };
 
-export const showAction = <ItemDataT>(
-  action: UI.ActionDefinition<ItemDataT>,
+export const showAction = <
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+>(
+  action: UI.ActionDefinition<ItemDataT, EntityT>,
   itemData?: ItemDataT,
 ) => {
   return actionFilter(action, itemData) && actionAccess(action);
 };
 
-export const toActionI18nKey = <ItemDataT>(
-  action: UI.ActionDefinition<ItemDataT>,
+export const toActionI18nKey = (
+  action: UI.ActionDefinition<any, any>,
   moduleId: string | string[],
 ) => {
   invariant(!!action.displayName, 'Invalid action');

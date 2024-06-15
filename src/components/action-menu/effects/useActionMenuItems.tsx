@@ -1,164 +1,41 @@
 import * as React from 'react';
 
-import { toActionI18nKey } from 'utils/ActionUtils';
-
-import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { ActionClickHandler, ActionData } from 'decorators/ActionHandlerDecorator';
-import { Trans } from 'react-i18next';
-import { parseTranslationModules } from 'utils/TranslationUtils';
 import { parseActionMenu } from 'utils/MenuUtils';
-
-const getDivider = (menuIndex: number, itemIndex: number) => {
-  return {
-    id: `divider${menuIndex}_${itemIndex}`,
-  };
-};
-
-const actionToActionMenuItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  action: UI.MenuActionDefition<ItemDataT>,
-  menu: UI.ActionMenuType<ItemDataT>,
-  onClickAction: ActionClickHandler<ItemDataT>,
-) => {
-  const active = !action.checked ? false : action.checked(menu.itemDataGetter());
-  const icon = !!action.checked ? (active ? 'checkmark' : '') : action.icon;
-  return {
-    id: action.id,
-    item: {
-      onClick: () => {
-        onClickAction({
-          action,
-          itemData: menu.itemDataGetter(),
-          moduleData: menu.moduleData,
-        });
-      },
-      active,
-      icon,
-      children: (
-        <Trans
-          i18nKey={toActionI18nKey(
-            action,
-            parseTranslationModules(menu.moduleData.moduleId),
-          )}
-          defaults={action.displayName}
-        >
-          {action.displayName}
-        </Trans>
-      ),
-    },
-  };
-};
-
-// Convert ID to menu link element
-const getMenuItem = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  menu: UI.ActionMenuType<ItemDataT>,
-  menuIndex: number,
-  action: UI.MenuActionListItemType<ItemDataT>,
-  itemIndex: number,
-  onClickAction: ActionClickHandler<ItemDataT>,
-): UI.ActionMenuItem => {
-  if (!action) {
-    return getDivider(menuIndex, itemIndex);
-  }
-
-  if ('children' in action) {
-    return {
-      id: action.id,
-      item: {
-        icon: action.icon,
-        onClick: () => {
-          // ..
-        },
-        children: <>{action.displayName}</>,
-      },
-      children: action.children.map((childAction, childActionIndex) => {
-        if (!childAction) {
-          return getDivider(0, childActionIndex);
-        }
-
-        return actionToActionMenuItem(childAction, menu, onClickAction);
-      }),
-    };
-  }
-
-  return actionToActionMenuItem(action, menu, onClickAction);
-  /*const active = !action.checked ? false : action.checked(menu.itemDataGetter());
-  const icon = !!action.checked ? (active ? 'checkmark' : '') : action.icon;
-  return {
-    id: actionId,
-    item: {
-      onClick: () => {
-        onClickAction({
-          actionId,
-          action,
-          itemData: menu.itemDataGetter(),
-          moduleId: menu.actions.moduleId,
-          subId: menu.actions.subId,
-        });
-      },
-      active,
-      icon,
-      children: (
-        <Trans
-          i18nKey={toActionI18nKey(
-            action,
-            parseTranslationModules(menu.actions.moduleId),
-          )}
-          defaults={action.displayName}
-        >
-          {action.displayName}
-        </Trans>
-      ),
-    },
-  };*/
-};
+import { localMenuToActionMenuItems } from './helpers/localMenuBuilder';
 
 // This should be used only for constructed menus, not for id arrays
-const hasLocalItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  id: string | UI.ActionMenuType<ItemDataT>,
+const hasLocalItems = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>(
+  id: string | UI.ActionMenuType<ItemDataT, EntityT>,
 ) => typeof id !== 'string';
 
-export interface ActionMenuDefinition<ItemDataT extends UI.ActionMenuItemDataValueType>
-  extends UI.ActionMenuData<ItemDataT> {
-  entityId?: API.IdType;
+export interface ActionMenuDefinition<
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+> extends UI.ActionMenuData<ItemDataT, EntityT> {
   remoteMenuId?: string;
-  children?: React.ReactElement<ActionMenuDefinition<ItemDataT>> | false;
+  children?: React.ReactElement<ActionMenuDefinition<ItemDataT, EntityT>> | false;
 }
 
 export interface ActionMenuDecoratorChildProps {
   items: (onClick?: UI.MenuItemClickHandler) => UI.ActionMenuItem[];
 }
 
-export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueType>(
-  props: ActionMenuDefinition<ItemDataT>,
+export const useActionMenuItems = <
+  ItemDataT extends UI.ActionMenuItemDataValueType,
+  EntityT extends UI.ActionMenuItemEntityValueType,
+>(
+  props: ActionMenuDefinition<ItemDataT, EntityT>,
 ) => {
-  // Reduce menus to an array of DropdownItems
-  const reduceLocalMenuItems = (
-    onClickAction: ActionClickHandler,
-    items: UI.ActionMenuItem[],
-    menu: UI.ActionMenuType<ItemDataT>,
-    menuIndex: number,
-  ) => {
-    items.push(
-      ...menu.actions.map((actionId, actionIndex) => {
-        return getMenuItem(
-          menu as UI.ActionMenuType<ItemDataT>,
-          menuIndex,
-          actionId,
-          actionIndex,
-          onClickAction,
-        );
-      }),
-    );
-
-    return items;
-  };
-
   // Get nested menus
-  const getMenuDefinitionArray = (): ActionMenuDefinition<ItemDataT>[] => {
+  const getMenuDefinitionArray = (): ActionMenuDefinition<ItemDataT, EntityT>[] => {
     const { children } = props;
-    const ret: Array<ActionMenuDefinition<ItemDataT>> = [props];
+    const ret: Array<ActionMenuDefinition<ItemDataT, EntityT>> = [props];
     if (children) {
       React.Children.map(children, (child) => {
         const id = child.props;
@@ -197,7 +74,7 @@ export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueT
   };
 
   const getMenuItems = (
-    onClickAction: ActionClickHandler<ItemDataT>,
+    onClickAction: ActionClickHandler<ItemDataT, EntityT>,
     remoteMenus: Array<UI.ActionMenuItem[]> | null,
     onClickMenuItem: UI.MenuItemClickHandler | undefined,
   ): UI.ActionMenuItem[] => {
@@ -205,7 +82,7 @@ export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueT
 
     // Local items
     const children = menus.filter(hasLocalItems).reduce((reduced, menu, menuIndex) => {
-      const onClickHandler = (action: ActionData<ItemDataT>) => {
+      const onClickHandler = (action: ActionData<ItemDataT, EntityT>) => {
         if (!!onClickMenuItem) {
           onClickMenuItem();
         }
@@ -213,12 +90,13 @@ export const useActionMenuItems = <ItemDataT extends UI.ActionMenuItemDataValueT
         onClickAction(action);
       };
 
-      return reduceLocalMenuItems(
+      const menuItems = localMenuToActionMenuItems(
         onClickHandler,
-        reduced,
-        menu as UI.ActionMenuType<ItemDataT>,
+        menu as UI.ActionMenuType<ItemDataT, EntityT>,
         menuIndex,
       );
+
+      return [...reduced, ...menuItems];
     }, [] as UI.ActionMenuItem[]);
 
     // Remote items (insert after all local items so that the previous menu item positions won't change)

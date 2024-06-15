@@ -84,7 +84,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({
         itemInfoGetter={() => fileItem}
         downloadHandler={downloadHandler}
         contextElement=".ui.modal > .content"
-        session={session}
+        entity={session}
       />
     </div>
   );

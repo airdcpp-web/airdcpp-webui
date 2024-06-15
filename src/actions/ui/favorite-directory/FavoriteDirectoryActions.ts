@@ -11,14 +11,14 @@ const handleCreate: UI.ActionHandler<undefined> = ({ navigate }) => {
 };
 
 const handleEdit: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({
-  data: directory,
+  itemData: directory,
   navigate,
 }) => {
   navigate(`directories/${directory.id}`);
 };
 
 const handleRemove: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({
-  data: directory,
+  itemData: directory,
 }) => {
   return SocketService.delete(
     `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directory.id}`,

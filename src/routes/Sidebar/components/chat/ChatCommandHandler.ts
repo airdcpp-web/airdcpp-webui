@@ -41,7 +41,8 @@ const handleClear: ChatCommandHandler = (
   runBackgroundSocketAction(
     () =>
       chatActions.actions.clear.handler({
-        data: session,
+        itemData: session,
+        entity: undefined,
         location,
         navigate,
         t,

@@ -8,40 +8,41 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { refreshVirtual } from 'services/api/ShareApi';
 
-interface ActionFilelistItemData {
+/*interface ActionFilelistItemData {
   item: API.FilelistItem;
   session: API.FilelistSession;
-}
+}*/
 
-const isMe = ({ session }: ActionFilelistItemData) => session.user.flags.includes('self');
-const isRoot = ({ item }: ActionFilelistItemData) => item.path === '/';
-const isPartialList = ({ session }: ActionFilelistItemData) => session.partial_list;
-const isDirectory = ({ item }: ActionFilelistItemData) => item.type.id === 'directory';
+type Filter = UI.ActionFilter<API.FilelistItem, API.FilelistSession>;
 
-const filterReload = (data: ActionFilelistItemData) =>
-  isPartialList(data) && isDirectory(data);
-const filterDetails = (data: ActionFilelistItemData) => !isRoot(data);
+// Filters
+const isMe: Filter = ({ entity }) => entity.user.flags.includes('self');
+const isRoot: Filter = ({ itemData }) => itemData.path === '/';
+const isPartialList: Filter = ({ entity }) => entity.partial_list;
+const isDirectory: Filter = ({ itemData }) => itemData.type.id === 'directory';
 
-const handleReloadDirectory: UI.ActionHandler<ActionFilelistItemData> = ({ data }) => {
-  const { session, item } = data;
+const filterReload: Filter = (data) => isPartialList(data) && isDirectory(data);
+const filterDetails: Filter = (data) => !isRoot(data);
 
+// Handlers
+type Handler = UI.ActionHandler<API.FilelistItem, API.FilelistSession>;
+
+const handleReloadDirectory: Handler = ({ itemData: item, entity: session }) => {
   return SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/directory`, {
     list_path: item.path,
     reload: true,
   });
 };
 
-const handleRefreshShare: UI.ActionHandler<ActionFilelistItemData> = ({ data }) => {
-  return refreshVirtual(data.item.path);
+const handleRefreshShare: Handler = ({ itemData }) => {
+  return refreshVirtual(itemData.path);
 };
 
-const handleItemDetails: UI.ActionHandler<ActionFilelistItemData> = ({
-  data,
-  navigate,
-}) => {
-  navigate(`item/${data.item.id}`);
+const handleItemDetails: Handler = ({ itemData, navigate }) => {
+  navigate(`item/${itemData.id}`);
 };
 
+// Actions
 export const FilelistItemReloadDirectoryAction = {
   id: 'reloadDirectory',
   displayName: 'Reload',
@@ -68,7 +69,7 @@ export const FilelistItemDetailsAction = {
   filter: filterDetails,
 };
 
-const FilelistItemActions: UI.ActionListType<ActionFilelistItemData> = {
+const FilelistItemActions: UI.ActionListType<API.FilelistItem, API.FilelistSession> = {
   reloadDirectory: FilelistItemReloadDirectoryAction,
   refreshShare: FilelistItemRefreshShareAction,
   details: FilelistItemDetailsAction,

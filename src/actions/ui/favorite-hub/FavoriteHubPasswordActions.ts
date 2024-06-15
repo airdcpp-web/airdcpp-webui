@@ -13,18 +13,21 @@ const sendPassword = (hub: API.FavoriteHubEntry, password: string | null) => {
 };
 
 const handleSetPassword: UI.ActionHandler<API.FavoriteHubEntry> = (
-  { data: hub },
+  { itemData: hub },
   password: string,
 ) => {
   return sendPassword(hub, password);
 };
 
-const handleRemovePassword: UI.ActionHandler<API.FavoriteHubEntry> = ({ data: hub }) => {
+const handleRemovePassword: UI.ActionHandler<API.FavoriteHubEntry> = ({
+  itemData: hub,
+}) => {
   return sendPassword(hub, null);
 };
 
-const hasPassword = (data: API.FavoriteHubEntry) => data.has_password;
-const noPassword = (data: API.FavoriteHubEntry) => !hasPassword(data);
+type Filter = UI.ActionFilter<API.FavoriteHubEntry>;
+const hasPassword: Filter = ({ itemData: data }) => data.has_password;
+const noPassword: Filter = (data) => !hasPassword(data);
 
 const FavoriteHubPasswordCreateAction = {
   id: 'create',

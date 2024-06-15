@@ -43,6 +43,7 @@ const Entry: React.FC<EntryProps> = ({ entry, feedUrl, widgetT }) => {
             },
           }}
           itemData={{
+            id: feedUrl,
             entry,
             feedUrl,
           }}
