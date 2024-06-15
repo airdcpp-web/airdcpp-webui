@@ -15,7 +15,7 @@ import Form, {
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { useLocation } from 'react-router';
-import { SettingSaveContext } from '../effects/useSettingSaveContext';
+import { SettingSaveContext, getSettingFormId } from '../effects/useSettingSaveContext';
 
 export interface RemoteSettingFormProps
   extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions' | 'location'> {
@@ -67,6 +67,7 @@ const RemoteSettingForm: React.FC<Props> = ({
     <div className="remote setting-form">
       <Form
         {...other}
+        id={getSettingFormId(keys)}
         ref={(f) => saveContext.addFormRef(keys, f)}
         onSave={onSave}
         fieldDefinitions={fieldDefinitions}

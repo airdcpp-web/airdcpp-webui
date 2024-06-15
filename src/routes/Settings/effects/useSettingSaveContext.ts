@@ -33,8 +33,8 @@ export interface SettingSaveContextProps {
   saveContext: SettingSaveContext;
 }
 
-const getFormId = (keys: string[]) => {
-  return keys.join('_');
+export const getSettingFormId = (keys: string[]) => {
+  return keys.join('|');
 };
 
 interface UseSaveContextProps {
@@ -115,7 +115,7 @@ export const useSettingSaveContext = ({
         c.hasOwnProperty('save'),
         'Invalid setting form component supplied for SaveDecorator (save property missing)',
       );
-      forms.set(getFormId(keys), c);
+      forms.set(getSettingFormId(keys), c);
     } else {
       // Switching to another page
       // Single forms shouldn't be unmounted otherwise, but using identifiers would still be safer...
@@ -124,7 +124,7 @@ export const useSettingSaveContext = ({
   };
 
   const getFormRef = (keys: string[]) => {
-    return forms.get(getFormId(keys))!;
+    return forms.get(getSettingFormId(keys))!;
   };
 
   const saveContext: SettingSaveContext = {

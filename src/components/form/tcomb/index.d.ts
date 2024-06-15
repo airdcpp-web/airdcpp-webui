@@ -155,6 +155,8 @@ export declare namespace form {
     onChange?: (raw: any, path: Path, kind?: ChangeKind) => void;
 
     context?: any;
+
+    id?: string;
   }
 
   export class Component extends React.Component {

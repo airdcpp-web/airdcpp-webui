@@ -151,6 +151,7 @@ export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormV
   title?: string;
   className?: string;
   optionTitleFormatter?: UI.OptionTitleParser;
+  id?: string;
 }
 
 interface State<ValueType> {
@@ -347,6 +348,7 @@ class Form<
             onFieldSetting,
             location,
             optionTitleFormatter,
+            id,
           } = this.props;
           const { formValue, error } = this.state;
 
@@ -372,6 +374,7 @@ class Form<
               {!!title && <div className="ui form header">{title}</div>}
               <TcombForm
                 ref={(c) => (this.form = c)}
+                id={id}
                 type={type}
                 options={options}
                 value={formValue}

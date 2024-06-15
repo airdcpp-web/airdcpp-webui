@@ -830,6 +830,10 @@ export class Form extends React.Component {
   }
 
   getSeed() {
+    if (this.props.id) {
+      return this.props.id;
+    }
+
     const rii = this._reactInternalInstance;
     if (rii) {
       if (rii._hostContainerInfo) {
