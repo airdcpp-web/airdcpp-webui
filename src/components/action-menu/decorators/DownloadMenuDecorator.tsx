@@ -88,7 +88,6 @@ export default function <
           caption={caption}
           actions={DownloadableItemActionMenu}
           itemData={this.itemDataGetter}
-          // entity={entity as EntityT}
         />
       );
     }

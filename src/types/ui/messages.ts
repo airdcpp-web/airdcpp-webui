@@ -1,4 +1,5 @@
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import { AddItemDownload } from './downloads';
 
@@ -17,7 +18,7 @@ export type StatusMessageListItem = {
 export interface MessageActionMenuData {
   addDownload: AddItemDownload;
   remoteMenuId: string | undefined;
-  entityId: API.IdType | undefined;
+  entity: UI.SessionItemBase | undefined;
   position?: string;
   boundary: string;
 }

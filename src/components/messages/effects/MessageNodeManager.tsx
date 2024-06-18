@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import * as React from 'react';
 
-import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { getListMessageId, getListMessageIdString } from 'utils/MessageUtils';
@@ -12,7 +11,7 @@ import { MessageListDateDivider, showDateDivider } from '../list/MessageListDate
 import { ItemDownloadManager } from '../../../effects/ItemDownloadManager';
 
 interface MessageItemData {
-  entityId: API.IdType | undefined;
+  entity: UI.SessionItemBase | undefined;
   onMessageVisibilityChanged: (id: number, inView: boolean) => void;
   addDownload: UI.AddItemDownload;
   highlightRemoteMenuId: string | undefined;
@@ -20,7 +19,7 @@ interface MessageItemData {
 
 const reduceMessageListItem = (
   {
-    entityId,
+    entity,
     onMessageVisibilityChanged,
     addDownload,
     highlightRemoteMenuId,
@@ -57,7 +56,7 @@ const reduceMessageListItem = (
       // to allow long words to be cut (author action menu can still use the regular dropdown)
       highlightMenuProps={{
         addDownload,
-        entityId,
+        entity,
         remoteMenuId: highlightRemoteMenuId,
         boundary: '.message-section',
         // Determining the position is somewhat complex since the number of remote menu items isn't known at this point
@@ -102,7 +101,7 @@ export const useMessagesNode = (
     return messages.reduce(
       reduceMessageListItem.bind(null, {
         highlightRemoteMenuId,
-        entityId: session ? session.id : undefined,
+        entity: session,
         onMessageVisibilityChanged,
         addDownload: downloadManager.addDownloadItem,
       }),

@@ -41,11 +41,6 @@ const NameCell: React.FC<NameCellProps> = ({
   ...other
 }) => {
   const itemDataGetter = useMemo(() => {
-    /*return () => ({
-      item: rowDataGetter!(),
-      session,
-    });*/
-
     return rowDataGetter!();
   }, [session]);
 

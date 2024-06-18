@@ -74,25 +74,6 @@ const ActionMenuNested = <
   return getAllMenuItems();
 };
 
-/*const ActionMenuNested2 = <
-  ItemDataT extends UI.ActionMenuItemDataValueType,
-  EntityT extends UI.ActionMenuItemEntityValueType,
->({
-  props,
-  onClickAction,
-  onClickItem,
-  menuBuilder,
-}: ActionMenuNestedProps<ItemDataT, EntityT>) => {
-  const { getMenuItems } = useActionMenuItems<ItemDataT, EntityT>(props);
-
-  const items = getMenuItems(onClickAction, null, onClickItem);
-  if (!items.length) {
-    return <EmptyDropdownContent />;
-  }
-
-  return <>{menuBuilder(items)}</>;
-};*/
-
 export interface ActionMenuDecoratorChildProps {
   children: (onClick?: UI.MenuItemClickHandler) => React.ReactNode;
 }

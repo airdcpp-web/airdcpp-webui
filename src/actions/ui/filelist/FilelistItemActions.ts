@@ -8,11 +8,6 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { refreshVirtual } from 'services/api/ShareApi';
 
-/*interface ActionFilelistItemData {
-  item: API.FilelistItem;
-  session: API.FilelistSession;
-}*/
-
 type Filter = UI.ActionFilter<API.FilelistItem, API.FilelistSession>;
 
 // Filters
