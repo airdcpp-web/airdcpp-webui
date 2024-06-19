@@ -668,7 +668,13 @@
         "iPv6Connectivity": "IPv6 connectivity",
         "manualConfiguration": "{{status}} (manual configuration)",
         "autoDetected": "{{status}} (auto detected)",
-        "detecting": "Detecting..."
+        "detecting": "Detecting...",
+        "transferPort": "Transfer port",
+        "encryptedTransferPort": "Encrypted transfer port",
+        "searchUdpPort": "Search/UDP port",
+        "boundInterfaceIPv4": "Bound interface (IPv4)",
+        "boundInterfaceIPv6": "Bound interface (IPv6)",
+        "viewAll": "View all"
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",

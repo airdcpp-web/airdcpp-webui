@@ -17,8 +17,9 @@ import {
   ConnectivityActionModule,
   ConnectivityDetectAction,
 } from 'actions/ui/connectivity';
+import Button from 'components/semantic/Button';
 
-const formatStatus = (
+const formatProtocolStatus = (
   protocolStatus: API.ConnectivityProtocolStatus,
   running: boolean,
   moduleT: UI.ModuleTranslator,
@@ -56,28 +57,56 @@ const DetectPanel: React.FC<DetectPanelProps & DetectPanelDataProps> = ({
   runningV4,
   runningV6,
   moduleT,
-}) => (
-  <div className="ui segment detect-panel">
-    <h3 className="header">{moduleT.translate('Current auto detection status')}</h3>
-    <Grid columns="two">
-      <Row
-        title={moduleT.translate('IPv4 connectivity')}
-        text={formatStatus(status.status_v4, runningV4, moduleT)}
+}) => {
+  const [showDetails, setShowDetails] = React.useState(false);
+  return (
+    <div className="ui segment detect-panel">
+      <h3 className="header">{moduleT.translate('Current auto detection status')}</h3>
+      <Grid columns="two">
+        <Row
+          title={moduleT.translate('IPv4 connectivity')}
+          text={formatProtocolStatus(status.status_v4, runningV4, moduleT)}
+        />
+        <Row
+          title={moduleT.translate('IPv6 connectivity')}
+          text={formatProtocolStatus(status.status_v6, runningV6, moduleT)}
+        />
+        {showDetails && (
+          <>
+            <Row
+              title={moduleT.translate('Bound interface (IPv4)')}
+              text={status.status_v4.bind_address}
+            />
+            <Row
+              title={moduleT.translate('Bound interface (IPv6)')}
+              text={status.status_v6.bind_address}
+            />
+            <Row title={moduleT.translate('Transfer port')} text={status.tcp_port} />
+            <Row
+              title={moduleT.translate('Encrypted transfer port')}
+              text={status.tls_port}
+            />
+            <Row title={moduleT.translate('Search/UDP port')} text={status.udp_port} />
+          </>
+        )}
+      </Grid>
+      <ActionButton
+        className="detect-button"
+        action={ConnectivityDetectAction}
+        moduleData={ConnectivityActionModule}
+        disabled={!status.status_v4.auto_detect && !status.status_v6.auto_detect}
+        loading={runningV6 || runningV4}
       />
-      <Row
-        title={moduleT.translate('IPv6 connectivity')}
-        text={formatStatus(status.status_v6, runningV6, moduleT)}
-      />
-    </Grid>
-    <ActionButton
-      className="detect-button"
-      action={ConnectivityDetectAction}
-      moduleData={ConnectivityActionModule}
-      disabled={!status.status_v4.auto_detect && !status.status_v6.auto_detect}
-      loading={runningV6 || runningV4}
-    />
-  </div>
-);
+      {!showDetails && (
+        <Button
+          icon="info"
+          caption={moduleT.translate('View all')}
+          onClick={() => setShowDetails(!showDetails)}
+        />
+      )}
+    </div>
+  );
+};
 
 export default DataProviderDecorator<DetectPanelProps, DetectPanelDataProps>(
   DetectPanel,
