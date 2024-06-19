@@ -18,7 +18,8 @@ const getStorageKey = (location: Location) => {
 };
 
 const loadState = (location: Location) => {
-  return loadSessionProperty(getStorageKey(location), '');
+  const text = loadSessionProperty(getStorageKey(location), '');
+  return text;
 };
 
 const saveState = (text: string, location: Location) => {
@@ -56,6 +57,11 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     ChatCommandHandler(chatController).handle(command, params, { location, navigate, t });
   };
 
+  const updateText = (text: string) => {
+    saveState(text, location);
+    setText(text);
+  };
+
   const appendText = (text: string) => {
     let newText = text;
     if (newText) {
@@ -63,7 +69,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     }
     newText += text;
 
-    setText(newText);
+    updateText(newText);
   };
 
   const handleSend = (textToSend: string) => {
@@ -71,27 +77,12 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     chatApi.sendChatMessage(session, textToSend);
   };
 
-  /*React.useEffect(() => {
-    return () => {
-      saveState(text, location);
-    };
-  }, []);*/
-
-  React.useEffect(() => {
+  useEffect(() => {
     setText(loadState(location));
-    /*return () => {
-      saveState(text, location);
-    };*/
   }, [location.pathname]);
 
-  useEffect(() => {
-    return () => {
-      saveState(text, location);
-    };
-  }, [text]);
-
   const onTextChanged: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
-    setText(plainValue);
+    updateText(plainValue);
   };
 
   const sendText = () => {
