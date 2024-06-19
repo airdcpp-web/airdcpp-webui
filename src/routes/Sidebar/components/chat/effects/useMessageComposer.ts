@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 
 import { OnChangeHandlerFunc } from 'react-mentions';
 import { useLocation } from 'react-router-dom';
@@ -84,7 +84,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     };*/
   }, [location.pathname]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       saveState(text, location);
     };

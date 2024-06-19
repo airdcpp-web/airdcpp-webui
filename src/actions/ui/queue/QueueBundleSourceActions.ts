@@ -6,11 +6,6 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-/*interface ActionBundleSourceData {
-  source: API.QueueBundleSource;
-  bundle: API.QueueBundle;
-}*/
-
 type ActionHandlerType = UI.ActionHandler<API.QueueBundleSource, API.QueueBundle>;
 
 const handleRemoveBundleSource: ActionHandlerType = ({

@@ -22,7 +22,6 @@
       ],
     },
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
   "exclude": [

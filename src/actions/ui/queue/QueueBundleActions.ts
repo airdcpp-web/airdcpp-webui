@@ -80,7 +80,7 @@ export const QueueBundleSearchAction = {
 };
 
 export const QueueBundleSearchAlternatesAction = {
-  id: 'searchAlternates',
+  id: 'searchBundleAlternates',
   displayName: 'Search for alternates',
   icon: IconConstants.SEARCH_ALTERNATES,
   filter: itemNotFinished,

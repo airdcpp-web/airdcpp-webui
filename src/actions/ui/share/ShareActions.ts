@@ -11,8 +11,8 @@ const handleRefresh = () => {
 };
 
 export const ShareRefreshAction = {
-  id: 'refresh',
-  displayName: 'Refresh',
+  id: 'refreshAll',
+  displayName: 'Refresh all',
   access: API.AccessEnum.SETTINGS_EDIT,
   icon: IconConstants.REFRESH_COLORED,
   handler: handleRefresh,

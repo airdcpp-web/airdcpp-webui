@@ -18,7 +18,7 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
   className,
   icon,
   rightComponent,
-  size,
+  size = 'large',
   title,
   subHeader,
 }) => {
@@ -43,10 +43,6 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
       {rightComponent}
     </div>
   );
-};
-
-LayoutHeader.defaultProps = {
-  size: 'large',
 };
 
 /*LayoutHeader.propTypes = {

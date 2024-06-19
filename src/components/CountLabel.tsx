@@ -18,14 +18,10 @@ export interface CountLabelProps {
   onClick?: (evt: React.SyntheticEvent<any>) => void;
 }
 
-const CountLabel: React.FC<CountLabelProps> = ({
-  urgencies,
-  empty,
-  size,
-  className,
-  circular,
-  onClick,
-}) => {
+const CountLabel = React.forwardRef<HTMLDivElement, CountLabelProps>(function CountLabel(
+  { urgencies, empty = false, size, className, circular = false, onClick },
+  ref,
+) {
   // We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
   if (!urgencies) {
     return null;
@@ -46,11 +42,11 @@ const CountLabel: React.FC<CountLabelProps> = ({
   );
 
   return (
-    <div className={labelClassName} onClick={onClick}>
+    <div ref={ref} className={labelClassName} onClick={onClick}>
       {empty ? null : urgencies[max]}
     </div>
   );
-};
+});
 
 /*CountLabel.propTypes = {
 	// Urgency mapping [ urgency -> count ]
@@ -63,21 +59,22 @@ const CountLabel: React.FC<CountLabelProps> = ({
   empty: PropTypes.bool,
 };*/
 
-CountLabel.defaultProps = {
-  empty: false,
-  size: '',
-  circular: false,
-};
-
 // Fade out the label when there are no counts
-const AnimatedCountLabel: React.FC<CountLabelProps> = (props) => (
-  <TransitionGroup component={null}>
-    {!!props.urgencies && (
-      <CSSTransition classNames="label-transition" timeout={{ enter: 100, exit: 1500 }}>
-        <CountLabel key="label" {...props} />
-      </CSSTransition>
-    )}
-  </TransitionGroup>
-);
+const AnimatedCountLabel: React.FC<CountLabelProps> = (props) => {
+  const nodeRef = React.useRef(null);
+  return (
+    <TransitionGroup component={null}>
+      {!!props.urgencies && (
+        <CSSTransition
+          nodeRef={nodeRef}
+          classNames="label-transition"
+          timeout={{ enter: 100, exit: 1500 }}
+        >
+          <CountLabel ref={nodeRef} key="label" {...props} />
+        </CSSTransition>
+      )}
+    </TransitionGroup>
+  );
+};
 
 export default AnimatedCountLabel;

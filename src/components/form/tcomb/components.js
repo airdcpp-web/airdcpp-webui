@@ -633,7 +633,7 @@ export class List extends ComponentWithChildRefs {
     this.state.keys = this.state.value.map(() => props.ctx.uidGenerator.next());
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     if (props.type !== this.props.type) {
       this.typeInfo = getTypeInfo(props.type);
     }

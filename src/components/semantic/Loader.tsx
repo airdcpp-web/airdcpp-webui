@@ -66,13 +66,4 @@ const Loader: React.FC<LoaderProps> = ({
   return <div className={style}>{content}</div>;
 };
 
-/*Loader.propTypes = {
-  text: PropTypes.node,
-  inline: PropTypes.bool,
-};*/
-
-//Loader.defaultProps = {
-//  text: 'Loading',
-//};
-
 export default Loader;

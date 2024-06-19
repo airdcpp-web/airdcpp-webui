@@ -83,15 +83,21 @@ const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
     null,
   );
 
+  const nodeRefMain = React.useRef(null);
+  const nodeRefSub = React.useRef(null);
+
+  const ref = activeSubmenu ? nodeRefSub : nodeRefMain;
+  const className = activeSubmenu ? 'submenu-transition' : 'mainmenu-transition';
   return (
     <div style={{ display: 'flex' }}>
       <TransitionGroup component={null}>
         <CSSTransition
-          key={activeSubmenu ? 'submenu' : 'main'}
-          classNames={activeSubmenu ? 'submenu-transition' : 'mainmenu-transition'}
+          nodeRef={ref}
+          key={className}
+          classNames={className}
           timeout={{ enter: 200, exit: 200 }}
         >
-          <div className="ui text menu vertical table-items">
+          <div ref={ref} className="ui text menu vertical table-items">
             {activeSubmenu ? (
               <>
                 <a

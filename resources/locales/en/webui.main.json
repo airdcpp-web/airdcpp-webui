@@ -261,6 +261,9 @@
   "common": {
     "actions": {
       "copy": "Copy",
+      "copyPath": "Copy path",
+      "copySize": "Copy size",
+      "copyTth": "Copy TTH",
       "download": "Download",
       "downloadTo": "Download to...",
       "findNfo": "Find NFO",
@@ -280,6 +283,9 @@
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
         "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
+        "copyPathSuccess": "Path was copied to clipboard",
+        "copySizeSuccess": "Size was copied to clipboard",
+        "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link was copied to clipboard",
         "copySuccess": "Text was copied to clipboard"
       },
