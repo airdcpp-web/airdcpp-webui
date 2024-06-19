@@ -99,7 +99,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
       handleSend(textTrimmed);
     }
 
-    setText('');
+    updateText('');
   };
 
   const onKeyDown = (event: React.KeyboardEvent) => {
