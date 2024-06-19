@@ -106,7 +106,7 @@
       "hubUrlsName": "Hubs",
       "maxSizeName": "Maximale Größe",
       "minSizeName": "Minimale Größe",
-      "sizeLimitsName": "Size limits"
+      "sizeLimitsName": "Größenbeschränkungen"
     },
     "resetAll": "Alles zurücksetzen",
     "user": "Benutzer",
@@ -223,7 +223,7 @@
       "connectionModeV6Option0": "Aktiver Modus",
       "connectionModeV6Option2": "Passiver Modus",
       "connectionIpV6Name": "IP-Adresse",
-      "miscName": "Miscellaneous overrides",
+      "miscName": "Verschiedene Überschreibungen",
       "useMainChatNotifyName": "Benutze Chat Benachrichtigungen",
       "awayMessageName": "Abwesenheitsnachricht",
       "showJoinsName": "Betreten/Verlassen anzeigen"
@@ -243,8 +243,8 @@
     "theDirectoryIsEmpty": "Das Verzeichnis ist leer",
     "updatingView": "Aktualisiere Ansicht",
     "downloadFailed": "Download fehlgeschlagen",
-    "confirmLeave": "Confirm action",
-    "confirmLeaveDesc": "Click the back button again to leave this filelist",
+    "confirmLeave": "Aktion bestätigen",
+    "confirmLeaveDesc": "Klicken Sie erneut auf die Schaltfläche Zurück, um diese Dateiliste zu verlassen.",
     "table": {
       "name": "Name",
       "size": "Größe",
@@ -286,7 +286,7 @@
       "prompts": {
         "restartWebSystemApprove": "Fortfahren und neustarten",
         "restartWebSystemReject": "Nicht neu starten",
-        "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
+        "restartWebSystemContent": "Wenn Sie die Verbindungsoptionen ändern, empfiehlt es sich, den Webserver erst neu zu starten \nwenn Sie zur Fehlerbehebung auf den Server zugreifen können. Wenn der Webserver nicht wieder online geht, sollten Sie die Anwendung manuell starten, \num zu sehen, ob es Fehlermeldungen gibt. Die Konfigurationsdatei befindet sich standardmäßig in Ihrem Benutzerverzeichnis (im Verzeichnis .airdc++), falls Sie sie manuell bearbeiten müssen.",
         "shutdownSystemApprove": "Fortfahren und herunterfahren",
         "shutdownSystemReject": "Abbrechen",
         "shutdownSystemContent": "Sind Sie sicher, dass Sie die Anwendung herunterfahren möchten?"
@@ -446,7 +446,7 @@
     "notConnectedToTheHub": "Nicht verbunden zum Hub",
     "connecting": "Verbinden",
     "loadingUserlist": "Benutzerliste wird geladen",
-    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
+    "favoriteHubsHint": "Tipp: Besuchen Sie die Seite <url>Bevorzugte Hubs</url>, um eine Verbindung mit benutzerdefinierten Einstellungen herzustellen.",
     "new": "Verbinden",
     "newDesc": "Mit neuem Hub verbinden",
     "userList": "Benutzerliste",
@@ -574,12 +574,12 @@
       "editType": "Typ editieren",
       "removeType": "Typ entfernen",
       "prompts": {
-        "createProfilePlaceholder": "Enter name",
+        "createProfilePlaceholder": "Name eingeben",
         "createProfileApprove": "Erstellen",
-        "createProfileContent": "Enter name for the profile",
-        "editProfilePlaceholder": "Enter name",
+        "createProfileContent": "Name für das Profil eingeben",
+        "editProfilePlaceholder": "Name eingeben",
         "editProfileApprove": "Umbennen",
-        "editProfileContent": "Enter new name for the profile {{item.name}}",
+        "editProfileContent": "Geben Sie einen neuen Namen für das Profil ein {{item.name}}",
         "removeShareExcludeApprove": "Pfad entfernen",
         "removeShareExcludeReject": "Nicht entfernen",
         "removeShareExcludeContent": "Sind sie sicher, dass Sie den ausgenommenen Pfad {{item}} entfernen möchten?",
@@ -603,7 +603,7 @@
       "view": "Betrachten",
       "about": "Über",
       "extensions": "Erweiterungen",
-      "extensionEngines": "Extension engines",
+      "extensionEngines": "Erweiterungsmodule",
       "system": "System",
       "autoDetection": "Automatische Erkennung",
       "iPv4ConnectivityManual": "IPv4-Verbindung (manuell)",
@@ -625,7 +625,7 @@
       "users": "Benutzer",
       "logging": "Protokollierung",
       "webServer": "Webserver",
-      "advancedServerSettings": "Advanced server settings",
+      "advancedServerSettings": "Erweiterte Servereinstellungen",
       "refreshOptions": "Aktualisiere Optionen",
       "shareProfiles": "Freigabeprofile",
       "sharingOptions": "Freigabeoptionen",
@@ -656,13 +656,13 @@
     "unsavedChangesPrompt": "Sie haben ungespeicherte Änderungen. Sind Sie sicher, dass Sie fortfahren möchten?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
+        "connectivityDetectionNote": "Bei Problemen mit der Verbindung zur Dateiübertragung überprüfen Sie bitte, ob Ihre TCP-Ports wirklich offen sind, indem Sie einen <portChecker>Online-Port-Checker verwenden</portChecker>. Beachten Sie, dass die Gültigkeit des UDP-Ports (Suche) nicht online überprüft werden kann. Weitere Informationen zu den verschiedenen Konnektivitätsmodi finden Sie in den <faq>DC++ Konnektivitäts-FAQ</faq>.",
         "currentAutoDetectionStatus": "Status der automatischen Erkennung",
         "iPv4Connectivity": "IPv4-Verbindung",
         "iPv6Connectivity": "IPv6-Verbindung",
         "manualConfiguration": "{{status}} (manuelle Konfiguration)",
         "autoDetected": "{{status}} (automatisch erkannt)",
-        "detecting": "Detecting..."
+        "detecting": "Erkennen..."
       },
       "ports": {
         "portsAutoValuesNote": "Auf dieser Seite gelistete Portnummern können durch Portmapper überschrieben werden (falls aktiviert).",
@@ -685,8 +685,8 @@
           "settingProfileHelp0": "Das Programm wird in normalen Privaten/Öffentlichen Hubs benutzt, um Dateien via Internet zu übertragen. Benutze das Profil wenn sie nicht sicher sind.",
           "settingProfileHelp1": "Das Programm wird benutzt, um in RAR Archiven geteilte Dateien zu übertragen (oder andere Formate mit kleiner Größe).",
           "settingProfileHelp2": "Das Programm wird benutzt, um Dateien in lokalen Netzwerken zu übertragen (Bsp. LAN Parties) oder in anderen geschlossenen Netzwerken (Bsp. Universitätsnetzwerke).",
-          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
-          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
+          "languageFileHelpRestart": "Die Anwendung muss neu gestartet werden, damit die neue Sprache wirksam wird.",
+          "languageFileHelpTranslate": "Wenn Sie dabei helfen möchten, die vorhandenen Übersetzungen zu verbessern oder die Anwendung in eine neue Sprache zu übersetzen, lesen Sie bitte die <url>Anleitung für Übersetzer</url>."
         }
       },
       "ignoredUsers": {
@@ -696,7 +696,7 @@
       },
       "miscellaneous": {
         "form": {
-          "nmdcEncodingHelp": "<0>Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.<1></1><2></2><3>Commonly used values:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
+          "nmdcEncodingHelp": "<0>Die Kodierungseinstellung wird nur in NMDC-Hubs verwendet. ADC-Hubs verwenden immer die UTF-8-Kodierung.<1></1><2></2><3>Häufig verwendete Werte:<1> <0>Mitteleuropa: cp1250</0><1>Kyrillisch: cp1251</1><2>Westeuropa: cp1252</2><3>Griechisch: cp1253</3><4>Türkisch: cp1254</4><5>Hebräisch: cp1256</5></1></3></0>"
         }
       }
     },
@@ -707,7 +707,7 @@
         "installedVersion": "Installierte Version",
         "datePublished": "{{version}} (veröffentlicht {{date}})",
         "readMore": "Weiterlesen",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "defaultExtensionEngineMissing": "Die Standard-Erweiterungs-Module <strong>{{engineName}}</strong> ist nicht auf Ihrem System installiert. Bitte besuchen Sie die <url>Homepage der Module</url> für Installationsanweisungen.",
         "manage": "Verwalten..."
       },
       "manage": {
@@ -716,8 +716,8 @@
         "installedVersion": "Installierte Version",
         "nonListedExtension": "Nicht gelistetete Erweiterung",
         "readMore": "Weiterlesen",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "noInstalledExtensions": "Es wurden keine installierten Erweiterungen gefunden. Neue Erweiterungen können über die Seite <url>Erweiterungskatalog</url>installiert werden.",
+        "defaultExtensionEngineMissing": "Die Standard-Erweiterungs-Module <strong>{{engineName}}</strong> ist nicht auf Ihrem System installiert. Bitte besuchen Sie die <url>Homepage der Module</url> für Installationsanweisungen.",
         "extensionDirectoryFetchError": "Informationsabruf vom Erweiterungsverzeichnis fehlgeschlagen: {{error}}",
         "unmanagedExtension": "Unverwaltete Erweiterung",
         "manage": "Verwalten..."
@@ -789,7 +789,7 @@
         "defaultCertNote": "Das Standard-Client-Zertifikat wird verwendet, falls die Zertifikatverzeichnisse leer sind."
       },
       "advancedServerSettings": {
-        "hookTimeouts": "Hook timeouts"
+        "hookTimeouts": "Hook Zeitüberschreitung"
       },
       "users": {
         "username": "Benutzername",
@@ -835,8 +835,8 @@
         "name": "Name",
         "totalSize": "Gesamtgröße",
         "totalFiles": "Alle Dateien",
-        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
+        "shareProfilesPartialNote": "Dateien in der Warteschlange werden über die Funktion zur teilweisen Dateifreigabe in allen Hubs freigegeben, in denen die Freigabe nicht versteckt wurde, unabhängig von den konfigurierten Freigabeprofilen.",
+        "shareProfilesHelp": "Freigabeprofile werden für einzelne Verzeichnisse über die Seite <url>Freigabe</url> zugewiesen."
       },
       "sharingOptions": {
         "skiplist": "Skipliste"
@@ -853,7 +853,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
+        "connectionSpeedNote": "Bitte seien Sie so genau wie möglich und geben Sie die IST-Geschwindigkeit Ihrer Verbindung an. Sie können einen Online-Tester, wie z.B. <speedtest>{{name}}</speedtest>, verwenden, um Ihre Geschwindigkeit zu testen."
       },
       "uploadLimits": {
         "manuallySet": "Manuell festgelegt"
@@ -896,8 +896,8 @@
       },
       "downloadOptions": {
         "segments": "Segmente",
-        "compression": "Compression",
-        "buffers": "Buffers"
+        "compression": "Komprimierung",
+        "buffers": "Puffer"
       }
     },
     "browserSpecificNote": "Einstellungen auf dieser Seite sind Browser spezifisch",
@@ -923,7 +923,7 @@
         "form": {
           "unreadLabelDelayName": "Wartezeit um Chat Sitzungen als gelesen zu markieren (Sekunden)",
           "backgroundImageUrlName": "Benutzerdefiniertes Hintergrundbild URL",
-          "noInstallPromptName": "Never show the application install prompt in Home view"
+          "noInstallPromptName": "Niemals die Aufforderung zur Anwendungsinstallation in der Startansicht anzeigen"
         }
       }
     }
@@ -1028,10 +1028,10 @@
     "paused": "Pause",
     "filesLeft": "Dateien übrig",
     "maximumSpeedPerHasher": "Max. Geschwindigkeit pro Hasher",
-    "runningThreads": "Running ({{threadCount}} threads)",
+    "runningThreads": "Laufende ({{threadCount}} Threads)",
     "speed": "Geschwindigkeit",
     "timeLeft": "Verbleibende Zeit",
-    "idle": "Idle",
+    "idle": "Leerlauf",
     "hashProgress": "Hash Fortschritt"
   }
 }
