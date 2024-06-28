@@ -120,7 +120,7 @@ class ResultTable extends React.Component<ResultTableProps> {
 
     if (!searchString) {
       return (
-        process.env.DEMO_MODE === '1' && (
+        isDemoInstance() && (
           <Message
             title="Demo content available"
             icon={IconConstants.TIP}

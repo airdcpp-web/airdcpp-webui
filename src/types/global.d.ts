@@ -1,4 +1,5 @@
 declare const getBasePath: () => string;
+declare const isDemoInstance: () => boolean;
 
 declare type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;

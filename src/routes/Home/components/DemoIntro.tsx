@@ -3,7 +3,7 @@ import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';
 
 const DemoIntro = () => {
-  if (process.env.DEMO_MODE !== '1') {
+  if (!isDemoInstance()) {
     return null;
   }
 

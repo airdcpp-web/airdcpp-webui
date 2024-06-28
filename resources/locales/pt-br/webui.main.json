@@ -68,7 +68,7 @@
       "info": "INFO",
       "warning": "ALERTA",
       "error": "ERRO",
-      "verbose": "VERBOSE",
+      "verbose": "VERBOSO",
       "actions": {
         "viewEvents": "Exibir eventos"
       }
@@ -261,6 +261,9 @@
   "common": {
     "actions": {
       "copy": "Copiar",
+      "copyPath": "Copiar caminho",
+      "copySize": "Copiar tamanho",
+      "copyTth": "Copiar TTH",
       "download": "Download",
       "downloadTo": "Baixar para...",
       "findNfo": "Procurar NFO",
@@ -280,6 +283,9 @@
       "notifications": {
         "ignoreUserSuccess": "Usuário {{item.nicks}} foi adicionado aos usuários ignorados",
         "unignoreUserSuccess": "Usuário {{item.nicks}} foi removido de usuários ignorados",
+        "copyPathSuccess": "O caminho foi copiado para a área de transferência",
+        "copySizeSuccess": "O tamanho foi copiado para a área de transferência",
+        "copyTTHSuccess": "O TTH foi copiado para a área de transferência",
         "copyMagnetSuccess": "Link magnet foi copiado para área de transferência",
         "copySuccess": "Texto foi copiado para área de transferência"
       },
@@ -662,7 +668,13 @@
         "iPv6Connectivity": "Conectividade IPv6",
         "manualConfiguration": "{{status}} (configuração manual)",
         "autoDetected": "{{status}} (auto detectado)",
-        "detecting": "Detectando..."
+        "detecting": "Detectando...",
+        "transferPort": "Porta de transferência",
+        "encryptedTransferPort": "Porta de transferência criptografada",
+        "searchUdpPort": "Porta de pesquisa/UDP",
+        "boundInterfaceIPv4": "Interface vinculada (IPv4)",
+        "boundInterfaceIPv6": "Interface vinculada (IPv6)",
+        "viewAll": "Mostrar tudo"
       },
       "ports": {
         "portsAutoValuesNote": "Número das portas listadas nesta página pode ser sobrescrita por mapeadores (se habilitado)",

@@ -25,7 +25,6 @@
     "esModuleInterop": true
   },
   "exclude": [
-    "demo",
     "devtools",
     "dist",
     "node_modules",

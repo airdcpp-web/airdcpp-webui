@@ -25,7 +25,7 @@
 	<div id="notifications-node"></div>
 	
 	<script type="text/javascript">
-		function getBasePath(data) {
+		function getBasePath() {
 			const pathTokens = window.location.pathname.split('/');		
 			
 			// All basenames must used a fixed prefix because of URL routing
@@ -35,6 +35,10 @@
 			
 			return '/';		
 		}
+		
+		function isDemoInstance() {
+			return window.location.host === 'webdemo.airdcpp.net';
+		};
 
 		{
 			// We must inject the main chunk dynamically as well because the final path is not known on compile time
@@ -90,10 +94,8 @@
 			var manifestURL = URL.createObjectURL(blob);
 			document.querySelector('#manifest-placeholder').setAttribute('href', manifestURL);
 		}
-	</script>
-	
-	<% if (htmlWebpackPlugin.options.googleAnalytics) { %>
-		<script>
+
+		if (isDemoInstance()) {
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -101,9 +103,8 @@
 
 			ga('create', 'UA-77192807-2', 'auto');
 			ga('send', 'pageview');
-
-		</script>
-	<% } %>
+		}
+	</script>
 
 </body>
 </html>

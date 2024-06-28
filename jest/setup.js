@@ -1,4 +1,5 @@
 global.getBasePath = () => '/';
+global.isDemoInstance = () => false;
 
 window.$ = require('jquery');
 window.jQuery = require('jquery');

@@ -24,7 +24,6 @@ if (process.argv.indexOf('-p') !== -1 && !process.env.NODE_ENV) {
 process.env.SERVICEWORKER = 'sw.js';
 
 const release = process.env.NODE_ENV === 'production';
-const demo = process.env.DEMO_MODE === '1';
 const chalk = require('chalk');
 
 const parseLocaleRegex = () => {
@@ -49,7 +48,6 @@ let plugins = [
 
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    'process.env.DEMO_MODE': JSON.stringify(process.env.DEMO_MODE),
     'process.env.SERVICEWORKER': JSON.stringify(process.env.SERVICEWORKER),
     UI_VERSION: JSON.stringify(require('./package.json').version),
     UI_BUILD_DATE: JSON.stringify(new Date().getTime()),
@@ -58,7 +56,6 @@ let plugins = [
   new HtmlWebpackPlugin({
     template: 'resources/index.ejs',
     inject: false,
-    googleAnalytics: demo,
     chunksSortMode: 'none',
   }),
   new ForkTsCheckerWebpackPlugin(),
@@ -103,7 +100,6 @@ plugins = plugins.concat(release ? releasePlugins : debugPlugins);
 const mainEntries = ['./src/index.tsx'];
 
 console.log(chalk.bold('[webpack] Release: ' + release));
-console.log(chalk.bold('[webpack] Demo mode: ' + demo));
 
 const chunkFilename = release ? 'js/[name].[chunkhash].chunk.js' : 'js/[name].chunk.js';
 

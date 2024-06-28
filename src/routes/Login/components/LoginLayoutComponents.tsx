@@ -58,7 +58,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
 };
 
 export const BottomMessage = () => {
-  if (process.env.DEMO_MODE !== '1') {
+  if (!isDemoInstance()) {
     return null;
   }
 
