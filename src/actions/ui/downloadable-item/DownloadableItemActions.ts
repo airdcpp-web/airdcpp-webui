@@ -116,7 +116,7 @@ const handleViewFile = (
 
   if (notSelf(data)) {
     // Remote file
-    return ViewFileActions.createSession(data, props);
+    return ViewFileActions.createSession(itemData, props);
   }
 
   // Local file
