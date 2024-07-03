@@ -14,5 +14,5 @@ module.exports = {
   setupFiles: ['./jest/setup.js'],
   cacheDirectory: './jest/cache/',
   testEnvironment: 'jsdom',
-  transformIgnorePatterns: ['node_modules/(?!escape-string-regexp).+\\.(js|jsx)$'],
+  transformIgnorePatterns: ['node_modules/(?!(escape-string-regexp|airdcpp-apisocket))$'],
 };
