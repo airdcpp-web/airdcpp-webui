@@ -64,15 +64,10 @@ interface WidgetDialogProps {
   rootWidgetT: UI.ModuleTranslator;
 }
 
-/*interface RouteProps {
-  widgetId?: string;
-  typeId: string;
-}*/
-
 type Props = WidgetDialogProps & ModalRouteDecoratorChildProps;
 
 const WidgetDialog: React.FC<Props> = (props) => {
-  const form = useRef<Form<FormValue> | null>(null);
+  const formRef = useRef<Form<FormValue> | null>(null);
   const params = useParams();
 
   const formData = useMemo(() => {
@@ -122,11 +117,11 @@ const WidgetDialog: React.FC<Props> = (props) => {
     <Modal
       className="home-widget"
       title={translateWidgetName(widgetInfo, rootWidgetT.plainT)}
-      onApprove={form.current?.save}
+      onApprove={() => formRef.current!.save()}
       icon={icon}
     >
       <Form<FormValue>
-        ref={form}
+        ref={formRef}
         sourceValue={value}
         fieldDefinitions={definitions}
         onSave={onSave}
