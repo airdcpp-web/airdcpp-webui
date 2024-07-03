@@ -38,36 +38,36 @@ interface MessageComposerProps {
 export const useMessageComposer = ({ chatController, t }: MessageComposerProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [text, setText] = React.useState('');
+  const [inputText, setInputText] = React.useState('');
 
-  const handleCommand = (text: string) => {
+  const handleCommand = (commandText: string) => {
     let command, params;
 
     {
       // Parse the command
-      const whitespace = text.indexOf(' ');
+      const whitespace = commandText.indexOf(' ');
       if (whitespace === -1) {
-        command = text.substring(1);
+        command = commandText.substring(1);
       } else {
-        command = text.substring(1, whitespace - 1);
-        params = text.substring(whitespace + 1);
+        command = commandText.substring(1, whitespace - 1);
+        params = commandText.substring(whitespace + 1);
       }
     }
 
     ChatCommandHandler(chatController).handle(command, params, { location, navigate, t });
   };
 
-  const updateText = (text: string) => {
-    saveState(text, location);
-    setText(text);
+  const updateText = (newText: string) => {
+    saveState(newText, location);
+    setInputText(newText);
   };
 
-  const appendText = (text: string) => {
-    let newText = text;
+  const appendText = (toAppend: string) => {
+    let newText = inputText;
     if (newText) {
       newText += ' ';
     }
-    newText += text;
+    newText += toAppend;
 
     updateText(newText);
   };
@@ -78,7 +78,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
   };
 
   useEffect(() => {
-    setText(loadState(location));
+    setInputText(loadState(location));
   }, [location.pathname]);
 
   const onTextChanged: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
@@ -89,7 +89,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     // Trim only from end to allow chat messages such as " +help" to be
     // sent to other users
     // This will also prevent sending empty messages
-    const textTrimmed = text.replace(/\s+$/, '');
+    const textTrimmed = inputText.replace(/\s+$/, '');
 
     if (textTrimmed) {
       if (textTrimmed[0] === '/') {
@@ -111,7 +111,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
 
   return {
     sendText,
-    text,
+    text: inputText,
     onKeyDown,
     onTextChanged,
     appendText,
