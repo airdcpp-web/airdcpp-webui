@@ -68,7 +68,7 @@ const rootToRoute = (rootSection: RootSectionType, settingsT: UI.ModuleTranslato
       {rootSection.advancedMenuItems?.map((child) =>
         childToRoute(child, rootSection, settingsT),
       )}
-      <Route index element={<Navigate to={rootSection.menuItems[0].url} />} />
+      <Route index element={<Navigate to={rootSection.menuItems[0].url} replace />} />
     </Route>
   );
 };
@@ -81,7 +81,7 @@ const Settings: React.FC<SettingsProps> = (props) => {
   return (
     <div className="ui segment settings-layout">
       <Routes>
-        <Route index element={<Navigate to={SettingsMenu[0].url} />} />
+        <Route index element={<Navigate to={SettingsMenu[0].url} replace />} />
         {SettingsMenu.map((rootMenuItem) => rootToRoute(rootMenuItem, settingsT))}
       </Routes>
     </div>
