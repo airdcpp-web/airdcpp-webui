@@ -10,7 +10,7 @@ export interface ChatAPI extends RefluxActionListType<SessionItemBase> {
 }
 
 export interface ChatActionList extends ActionListType<SessionItemBase> {
-  clear: ActionDefinition<SessionItemBase>;
+  clearChat: ActionDefinition<SessionItemBase>;
 }
 
 export type ChatActions = ModuleActions<SessionItemBase, void, ChatActionList>;

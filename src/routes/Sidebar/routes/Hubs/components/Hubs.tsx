@@ -48,8 +48,7 @@ const parseNumericId = (params: Readonly<Params<string>>) => {
 
   return parseInt(params['id']);
 };
-
-//const hubActions = [ 'reconnect', 'favorite', 'clear' ];
+const sessionActions = ['reconnect', 'clearChat', 'favorite'];
 
 const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
   const { params, sessionT, ...other } = props;
@@ -62,7 +61,7 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
       newIcon={IconConstants.HUBS_PLAIN}
       editAccess={API.AccessEnum.HUBS_EDIT}
       uiActions={HubActionMenu}
-      actionIds={['reconnect', 'clear', 'favorite']}
+      actionIds={sessionActions}
       sessionApi={HubAPIActions as UI.SessionActions<API.Hub>}
       sessionItemLayout={HubSession}
       newLayout={HubNew}

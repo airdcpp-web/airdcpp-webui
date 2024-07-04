@@ -21,7 +21,7 @@ import IconConstants from 'constants/IconConstants';
 import '../style.css';
 import { PrivateChatActionMenu } from 'actions/ui/private-chat';
 
-const sessionActions = ['clear'];
+const sessionActions = ['clearChat'];
 
 const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = (
   props,

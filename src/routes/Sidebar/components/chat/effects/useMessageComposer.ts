@@ -49,7 +49,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
       if (whitespace === -1) {
         command = commandText.substring(1);
       } else {
-        command = commandText.substring(1, whitespace - 1);
+        command = commandText.substring(1, whitespace);
         params = commandText.substring(whitespace + 1);
       }
     }

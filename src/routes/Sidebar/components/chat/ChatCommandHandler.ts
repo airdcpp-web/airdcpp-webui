@@ -40,7 +40,7 @@ const handleClear: ChatCommandHandler = (
 ) => {
   runBackgroundSocketAction(
     () =>
-      chatActions.actions.clear.handler({
+      chatActions.actions.clearChat.handler({
         itemData: session,
         entity: undefined,
         location,
@@ -69,7 +69,7 @@ const CommandHandler = (chatController: UI.ChatController) => {
     clear: {
       help: 'Clear message cache',
       handler: handleClear,
-      access: chatController.chatActions.actions.clear.access,
+      access: chatController.chatActions.actions.clearChat.access,
     },
     me: {
       help: 'Send message in third person',
