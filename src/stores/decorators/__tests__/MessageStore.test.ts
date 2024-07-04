@@ -85,7 +85,7 @@ describe('message store', () => {
 
     const data = checkUnreadSessionInfo(chatSessionUnread, setRead);
 
-    expect(setRead).toBeCalled();
+    expect(setRead).toHaveBeenCalled();
     expect(data).toEqual({
       message_counts: {
         total: 5,
