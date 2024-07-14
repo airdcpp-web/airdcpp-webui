@@ -71,7 +71,6 @@ export const TransferDisconnectAction = {
   displayName: 'Disconnect',
   access: API.AccessEnum.TRANSFERS,
   icon: IconConstants.DISCONNECT,
-  filter: isDownload,
   handler: handleDisconnect,
 };
 
