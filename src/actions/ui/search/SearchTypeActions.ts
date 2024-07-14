@@ -10,7 +10,7 @@ type Filter = UI.ActionFilter<API.SearchType>;
 const notDefaultType: Filter = ({ itemData: type }) => !type.default_type;
 
 const handleCreate: UI.ActionHandler<API.SearchType> = ({ navigate }) => {
-  navigate(`/types`);
+  navigate(`types`);
 };
 
 const handleEdit: UI.ActionHandler<API.SearchType> = ({ itemData: type, navigate }) => {
