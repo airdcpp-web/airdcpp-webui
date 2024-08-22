@@ -8,7 +8,7 @@ export default {
   PORTCHECK_URL: 'http://www.yougetsignal.com/tools/open-ports/',
   CONNECTIVITY_HELP_URL: 'http://dcplusplus.sourceforge.net/webhelp/faq_connection.html',
 
-  VARIABLE_HELP_URL: 'https://www.airdcpp.net/component/k2/25-setting-parameters',
+  VARIABLE_HELP_URL: 'https://airdcpp.net/docs/usage/setting-variables.html',
 
   DEFAULT_ENGINE_URL: 'https://www.nodejs.org',
   DEV_HUB_URL: 'adcs://web-dev.airdcpp.net:1511',
