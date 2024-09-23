@@ -136,9 +136,10 @@ class ShareDirectoryDialog extends Component<Props> {
   onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
     if (id === 'path') {
       fieldOptions.disabled = !this.isNew();
-      fieldOptions.config = Object.assign({} || fieldOptions.config, {
+      fieldOptions.config = {
+        ...(fieldOptions.config || {}),
         historyId: FilesystemConstants.LOCATION_DOWNLOAD,
-      });
+      };
     } else if (id === 'virtual_name') {
       fieldOptions.factory = t.form.Textbox;
       fieldOptions.template = AutoSuggestField;

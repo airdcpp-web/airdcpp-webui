@@ -47,6 +47,9 @@ export const enum DupeEnum {
   FINISHED_PARTIAL = 'finished_partial',
   FINISHED_FULL = 'finished_full',
   SHARE_QUEUE = 'share_queue',
+  QUEUE_FINISHED = 'queue_finished',
+  SHARE_FINISHED = 'share_finished',
+  SHARE_QUEUE_FINISHED = 'share_queue_finished',
 }
 
 export interface Dupe {

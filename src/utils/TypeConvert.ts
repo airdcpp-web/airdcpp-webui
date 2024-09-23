@@ -8,7 +8,7 @@ export const dupeToStringType = (dupeInfo: API.Dupe | null) => {
     return '';
   }
 
-  return `dupe ${dupeInfo.id.replace('_', ' ')}`;
+  return `dupe ${dupeInfo.id.replaceAll('_', ' ')}`;
 };
 
 export const userOnlineStatusToColor = (flags: Array<API.UserFlag | API.HubUserFlag>) => {

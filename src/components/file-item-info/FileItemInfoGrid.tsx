@@ -22,6 +22,9 @@ const DupeStrings = {
   [API.DupeEnum.FINISHED_PARTIAL]: 'Finished (partial)',
   [API.DupeEnum.FINISHED_FULL]: 'Finished (full)',
   [API.DupeEnum.SHARE_QUEUE]: 'Share and queue',
+  [API.DupeEnum.SHARE_FINISHED]: 'Share and finished',
+  [API.DupeEnum.QUEUE_FINISHED]: 'Queue and finished',
+  [API.DupeEnum.SHARE_QUEUE_FINISHED]: 'Share, queue and finished',
 };
 
 const DupePaths: React.FC<{ paths: string[] }> = ({ paths }) => (

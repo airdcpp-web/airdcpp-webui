@@ -22,7 +22,9 @@ const isShareDupe = (dupe: API.Dupe | null) =>
   !!dupe &&
   (dupe.id === DupeEnum.SHARE_FULL ||
     dupe.id === DupeEnum.SHARE_PARTIAL ||
-    dupe.id === DupeEnum.SHARE_QUEUE);
+    dupe.id === DupeEnum.SHARE_QUEUE ||
+    dupe.id === DupeEnum.SHARE_FINISHED ||
+    dupe.id === DupeEnum.SHARE_QUEUE_FINISHED);
 
 // Filters
 type Filter = UI.ActionFilter<UI.DownloadableItemData, UI.SessionItemBase>;

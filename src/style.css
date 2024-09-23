@@ -315,3 +315,24 @@ i.icons .icon:first-child {
 .dupe.finished.partial a {
   color: #79ff79 !important;
 }
+
+.dupe.finished.share,
+.dupe.finished.share span,
+.dupe.finished.share a {
+  color: color-mix(in lab, green, fuchsia) !important;
+}
+
+.dupe.finished.queue,
+.dupe.finished.queue span,
+.dupe.finished.queue a {
+  color: color-mix(in lab, green, #ffa500) !important;
+}
+
+.dupe.share.queue.finished,
+.dupe.share.queue.finished span,
+.dupe.share.queue.finished a,
+.dupe.share.queue,
+.dupe.share.queue span,
+.dupe.share.queue a {
+  color: color-mix(in lab, fuchsia, #ffa500) !important;
+}
