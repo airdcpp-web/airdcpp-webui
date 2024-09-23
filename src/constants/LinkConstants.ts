@@ -4,9 +4,9 @@ export default {
   ISSUE_TRACKER_URL: 'https://github.com/airdcpp-web/airdcpp-webclient/issues',
   DBIP_URL: 'https://db-ip.com',
 
-  SPEEDTEST_URL: 'http://www.speedtest.net',
-  PORTCHECK_URL: 'http://www.yougetsignal.com/tools/open-ports/',
-  CONNECTIVITY_HELP_URL: 'http://dcplusplus.sourceforge.net/webhelp/faq_connection.html',
+  SPEEDTEST_URL: 'https://www.speedtest.net',
+  PORTCHECK_URL: 'https://www.yougetsignal.com/tools/open-ports/',
+  CONNECTIVITY_HELP_URL: 'https://dcplusplus.sourceforge.net/webhelp/faq_connection.html',
 
   VARIABLE_HELP_URL: 'https://airdcpp.net/docs/usage/setting-variables.html',
 
