@@ -99,4 +99,4 @@ const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
   componentId: PropTypes.string.isRequired,
 };*/
 
-export default Widget;
+export default React.memo(Widget);

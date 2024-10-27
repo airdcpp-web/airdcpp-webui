@@ -46,6 +46,7 @@ const mapWidget = (
 
 const WidgetLayout = React.memo(function WidgetLayout() {
   const [breakpoint, setBreakpoint] = useState('lg');
+  const [initialLayoutUpdateFired, setInitialLayoutUpdateFired] = useState(false);
 
   const { t } = useTranslation();
   const rootWidgetT = getModuleT(
@@ -53,32 +54,53 @@ const WidgetLayout = React.memo(function WidgetLayout() {
     UI.Modules.WIDGETS,
     WidgetStore.widgets.map((w) => w.typeId),
   );
-  const layouts = useStore<Layouts>(
-    WidgetStore /*, () => {
-      WidgetStore.ensureDefaultWidgets(t);
-    }*/,
-  );
+  const layouts = useStore<Layouts>(WidgetStore);
 
+  const widgets = React.useMemo(() => {
+    console.debug('WidgetLayout: layouts loaded', breakpoint);
+    return layouts[breakpoint]
+      .map((w) => mapWidget(w, rootWidgetT))
+      .filter((widget) => widget);
+  }, [layouts, breakpoint]);
+
+  React.useEffect(() => console.log('RERENDER', breakpoint));
   return (
     <>
       <ResponsiveReactGridLayout
         className="ui cards layout"
         rowHeight={50}
-        // width={ 1200 }
-        onLayoutChange={WidgetStore.onLayoutChange}
-        onBreakpointChange={(bp) => setBreakpoint(bp)}
+        onLayoutChange={(layout, layouts) => {
+          // The initial render without correct breakpoint usually contains unwanted data
+          if (!initialLayoutUpdateFired) {
+            // console.debug('WidgetLayout: initial layout update fired');
+            setInitialLayoutUpdateFired(true);
+            return;
+          }
+
+          //console.debug(
+          //  'WidgetLayout: layout changed',
+          //  JSON.stringify(layout, null, 2),
+          //  breakpoint,
+          //);
+
+          WidgetStore.onLayoutChange(layout, layouts);
+        }}
+        onBreakpointChange={(bp) => {
+          // console.debug('WidgetLayout: breakpoint changed', bp);
+          setBreakpoint(bp);
+        }}
         breakpoints={WidgetStore.breakpoints}
         cols={WidgetStore.cols}
         draggableHandle=".react-grid-item .header-row .header"
         layouts={layouts}
+        useCSSTransforms={false} // Causes weird bouncing issues (especially on Safari)
+        measureBeforeMount={false}
       >
-        {layouts[breakpoint]
-          .map((w) => mapWidget(w, rootWidgetT))
-          .filter((widget) => widget)}
+        {widgets}
       </ResponsiveReactGridLayout>
       <WidgetDialog rootWidgetT={rootWidgetT} />
     </>
   );
 });
 
-export default WidgetLayout;
+export default React.memo(WidgetLayout);

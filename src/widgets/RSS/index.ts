@@ -13,6 +13,7 @@ export const RSS = {
       title: 'Feed URL',
       type: API.SettingTypeEnum.STRING,
       help: 'RSS and Atom feeds are supported',
+      default_value: '',
     },
     {
       key: 'feed_cache_minutes',
