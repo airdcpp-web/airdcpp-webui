@@ -18,8 +18,7 @@ module.exports = {
   ],
   plugins: [
     '@babel/transform-react-display-name',
-    '@babel/plugin-syntax-dynamic-import',
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
+    ['@babel/plugin-proposal-decorators', { version: '2023-11' }],
     [
       'module-resolver',
       {
