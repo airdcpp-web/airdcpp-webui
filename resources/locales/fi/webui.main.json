@@ -261,6 +261,9 @@
   "common": {
     "actions": {
       "copy": "Kopioi",
+      "copyPath": "Kopioi polku",
+      "copySize": "Kopioi koko",
+      "copyTth": "Kopioi TTH",
       "download": "Lataa",
       "downloadTo": "Lataa kohteeseen...",
       "findNfo": "Hae NFO",
@@ -280,6 +283,9 @@
       "notifications": {
         "ignoreUserSuccess": "Käyttäjä {{item.nicks}} lisättiin hylättyihin käyttäjiin",
         "unignoreUserSuccess": "Käyttäjä {{item.nicks}} poistettiin hylätyistä käyttäjistä",
+        "copyPathSuccess": "Polku kopioitiin leikepöydälle",
+        "copySizeSuccess": "Koko kopioitiin leikepöydälle",
+        "copyTTHSuccess": "TTH kopioitiin leikepöydälle",
         "copyMagnetSuccess": "Magnet-linkki kopioitiin leikepöydälle",
         "copySuccess": "Teksti kopioitiin leikepöydälle"
       },
@@ -389,6 +395,9 @@
     "finishedFull": "Valmistunut (täysi)",
     "finishedPartial": "Valmistunut (osittainen)",
     "shareAndQueue": "Jako ja latausjono",
+    "shareQueueAndFinished": "Jako, jono ja valmistunut",
+    "queueAndFinished": "Jono ja valmistunut",
+    "shareAndFinished": "Jako ja valmistunut",
     "dupePaths": "Kaksoiskappaleiden polut",
     "actionsCaption": "Toiminnot...",
     "tth": "TTH",
@@ -662,7 +671,13 @@
         "iPv6Connectivity": "IPv6-yhteys",
         "manualConfiguration": "{{status}} (manuaaliset määritykset)",
         "autoDetected": "{{status}} (tunnistettu automaattisesti)",
-        "detecting": "Tunnistetaan..."
+        "detecting": "Tunnistetaan...",
+        "transferPort": "Siirtojen portti",
+        "encryptedTransferPort": "Salattujen siirtojen portti",
+        "searchUdpPort": "Haku-/UDP-portti",
+        "boundInterfaceIPv4": "Sidottu osoite (IPv4)",
+        "boundInterfaceIPv6": "Sidottu osoite (IPv6)",
+        "viewAll": "Näytä kaikki"
       },
       "ports": {
         "portsAutoValuesNote": "Porttikarjoitukset (mikäli käytössä) voivat ohittaa tällä sivulla listatut porttinumerot",

@@ -68,7 +68,7 @@
       "info": "INFO",
       "warning": "AVERTISSEMENT",
       "error": "ERREUR",
-      "verbose": "VERBOSE",
+      "verbose": "VERBEUX",
       "actions": {
         "viewEvents": "Voir les événements"
       }
@@ -261,6 +261,9 @@
   "common": {
     "actions": {
       "copy": "Copier",
+      "copyPath": "Copier le chemin",
+      "copySize": "Copier la taille",
+      "copyTth": "Copier TTH",
       "download": "Réception",
       "downloadTo": "Télécharger vers...",
       "findNfo": "Trouver le NFO",
@@ -280,6 +283,9 @@
       "notifications": {
         "ignoreUserSuccess": "L'utilisateur {{item.nicks}} est maintenant ignoré",
         "unignoreUserSuccess": "L'utilisateur {{item.nicks}} n'est maintenant plus ignoré",
+        "copyPathSuccess": "Le chemin a été copié dans le presse-papiers",
+        "copySizeSuccess": "La taille a été copiée dans le presse-papiers",
+        "copyTTHSuccess": "TTH a été copié dans le presse-papiers",
         "copyMagnetSuccess": "Le lien Magnet a été copié dans le presse-papiers",
         "copySuccess": "Le texte a été copié dans le presse-papier"
       },
@@ -389,6 +395,9 @@
     "finishedFull": "Achevé (complet)",
     "finishedPartial": "Achevé (partiel)",
     "shareAndQueue": "Partager et mettre en file d'attente",
+    "shareQueueAndFinished": "Partager, mettre en file d'attente et finir",
+    "queueAndFinished": "File d'attente et fini",
+    "shareAndFinished": "Partager et fini",
     "dupePaths": "Chemins des doublons",
     "actionsCaption": "Actions…",
     "tth": "TTH",
@@ -446,7 +455,7 @@
     "notConnectedToTheHub": "Pas connecter au hub",
     "connecting": "En cours de connexion",
     "loadingUserlist": "Chargement liste des utilisateurs",
-    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
+    "favoriteHubsHint": "Astuce : visitez la <url> page des hubs favoris </url> pour vous connecter à l'aide de paramètres personnalisés",
     "new": "Se connecter",
     "newDesc": "Connectez-vous à un nouveau hub",
     "userList": "Liste d'utilisateurs",
@@ -656,13 +665,19 @@
     "unsavedChangesPrompt": "Vous avez des changements non enregistrés. Êtes-vous sûr de vouloir quitter?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
+        "connectivityDetectionNote": "En cas de problèmes de connectivité de transfert de fichiers, veuillez confirmer que vos ports TCP sont bien ouverts en utilisant <portChecker> un vérificateur de port en ligne </portChecker>. Notez que la validité du port UDP (recherche) ne peut être vérifiée en ligne. Pour plus d'informations sur les différents modes de connectivité, veuillez visiter <faq> FAQ sur la connectivité de DC++ </faq> .",
         "currentAutoDetectionStatus": "État actuel de la détection auto",
         "iPv4Connectivity": "Connectivité IPv4",
         "iPv6Connectivity": "Connectivité IPv6",
         "manualConfiguration": "{{status}} (configuration manuelle)",
         "autoDetected": "{{status}} (détection auto)",
-        "detecting": "En cours de détection…"
+        "detecting": "En cours de détection…",
+        "transferPort": "Port de transfert",
+        "encryptedTransferPort": "Port de transfert crypté",
+        "searchUdpPort": "Recherche/port UDP",
+        "boundInterfaceIPv4": "Interface liée (IPv4)",
+        "boundInterfaceIPv6": "Interface liée (IPv6)",
+        "viewAll": "Voir tout"
       },
       "ports": {
         "portsAutoValuesNote": "Numéros de port énumérés sur cette page peuvent être remplacés par les mappeurs de port (s'ils sont activés)",
@@ -685,8 +700,8 @@
           "settingProfileHelp0": "Le client est utilisé dans des hubs privés / publics normaux pour transférer des fichiers via Internet. Utilisez ce profil en cas de doute.",
           "settingProfileHelp1": "Client est utilisé pour transférer des fichiers divisés dans des archives RAR (ou dans d'autres formats de petite taille)",
           "settingProfileHelp2": "Client est utilisé pour transférer des fichiers dans un réseau local (ex: des parties de réseau local) ou dans un autre réseau fermé (ex: un réseau universitaire)",
-          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
-          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
+          "languageFileHelpRestart": "Il faut redémarrer l'application pour que la nouvelle langue prenne effet.",
+          "languageFileHelpTranslate": "Si vous souhaitez aider à améliorer les traductions existantes ou traduire l'application dans une nouvelle langue, veuillez consulter le <url>instructions pour traducteurs</url> ."
         }
       },
       "ignoredUsers": {
@@ -707,7 +722,7 @@
         "installedVersion": "Version installée",
         "datePublished": "{{version}} (publié le {{date}})",
         "readMore": "En savoir plus",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "defaultExtensionEngineMissing": "Le moteur d'extension par défaut <strong>{{nom du moteur}}</strong> n'est pas installé sur votre système. Veuillez visiter <url>page d'accueil du moteur</url> pour les instructions d'installation.",
         "manage": "Gérer..."
       },
       "manage": {
@@ -716,8 +731,8 @@
         "installedVersion": "Version installée",
         "nonListedExtension": "Extension non listée",
         "readMore": "En savoir plus",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
+        "noInstalledExtensions": "Aucune extension installée n'a été trouvée. De nouvelles extensions peuvent être installées depuis <url>Catalogue d'extensions</url> page.",
+        "defaultExtensionEngineMissing": "Le moteur d'extension par défaut <strong>{{nom du moteur}}</strong> n'est pas installé sur votre système. Veuillez visiter <url>page d'accueil du moteur</url> pour les instructions d'installation.",
         "extensionDirectoryFetchError": "Échec de la récupération des infos du dossier d'extension: {{error}}",
         "unmanagedExtension": "Extension non gérée",
         "manage": "Gérer..."
@@ -835,8 +850,8 @@
         "name": "Nom",
         "totalSize": "Taille totale",
         "totalFiles": "Total des fichiers",
-        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
+        "shareProfilesPartialNote": "Les fichiers en file d'attente sont partagés via la fonctionnalité de partage de fichiers partiel dans tous les hubs où le partage n'a pas été masqué, quels que soient les profils de partage configurés.",
+        "shareProfilesHelp": "Les profils de partage sont affectés à des répertoires individuels à partir du <url>Partager</url> page."
       },
       "sharingOptions": {
         "skiplist": "Liste de sauts"
@@ -853,7 +868,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
+        "connectionSpeedNote": "Soyez aussi précis que possible et définissez la vitesse RÉELLE de votre connexion. Vous pouvez utiliser un testeur en ligne, tel que <speedtest>{{nom}}</speedtest>, pour tester votre vitesse."
       },
       "uploadLimits": {
         "manuallySet": "Définir manuellement"
