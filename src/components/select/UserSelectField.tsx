@@ -123,7 +123,11 @@ export const UserSelectField: React.FC<UserSelectFieldProps> = ({
         openMenuOnFocus={false}
         {...other}
         styles={{
-          indicatorsContainer: () => ({
+          // Don't show the dropdown arrow as options are fetched based on the text
+          indicatorSeparator: () => ({
+            display: 'none',
+          }),
+          dropdownIndicator: () => ({
             display: 'none',
           }),
           ...styles,

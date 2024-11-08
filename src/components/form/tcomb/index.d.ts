@@ -48,7 +48,10 @@ export declare namespace form {
     label?: React.ReactNode;
     onChange: (value: ValueT) => void;
     path: Path;
-    typeInfo: any;
+    typeInfo: {
+      isMaybe: boolean;
+      isSubtype: boolean;
+    };
     value: ValueT;
     options: Array<OptionValueT>;
 
