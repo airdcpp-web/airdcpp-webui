@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+//import { useMemo } from 'react';
 import * as React from 'react';
 
 import { dupeToStringType } from 'utils/TypeConvert';
@@ -40,10 +40,6 @@ const NameCell: React.FC<NameCellProps> = ({
   session,
   ...other
 }) => {
-  const itemDataGetter = useMemo(() => {
-    return rowDataGetter!();
-  }, [session]);
-
   return (
     <FileDownloadCell
       clickHandlerGetter={onClickDirectory}
@@ -56,7 +52,7 @@ const NameCell: React.FC<NameCellProps> = ({
     >
       <TableActionMenu
         actions={FilelistItemActionMenu}
-        itemData={itemDataGetter}
+        itemData={rowDataGetter}
         ids={['refreshShare', 'details']}
         entity={session}
       />
