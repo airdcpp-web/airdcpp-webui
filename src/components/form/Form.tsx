@@ -324,7 +324,11 @@ class Form<
       // Get the changed fields
       const settingKeys = Object.keys(validatedFormValue);
       const changedFields = settingKeys.reduce(
-        reduceChangedFieldValues.bind(this, this.sourceValue, validatedFormValue),
+        reduceChangedFieldValues.bind(this, {
+          definitions: this.props.fieldDefinitions,
+          sourceValue: this.sourceValue,
+          currentFormValue: validatedFormValue,
+        }),
         {},
       );
 

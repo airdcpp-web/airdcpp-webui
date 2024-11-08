@@ -377,25 +377,32 @@ const setFieldValueByPath = (
   }
 };
 
+interface ChangedValueProps {
+  definitions: UI.FormFieldDefinition[];
+  sourceValue: UI.FormValueMap | null;
+  currentFormValue: Partial<UI.FormValueMap>;
+}
+
 const reduceChangedFieldValues = (
-  sourceValue: UI.FormValueMap | null,
-  currentFormValue: Partial<UI.FormValueMap>,
+  { definitions, sourceValue, currentFormValue }: ChangedValueProps,
   changedValues: Partial<UI.FormValueMap>,
   valueKey: string,
 ) => {
-  if (
-    !!sourceValue &&
-    currentFormValue[valueKey] instanceof Object &&
-    !Array.isArray(currentFormValue[valueKey])
-  ) {
-    // Object values (structs, hinted users...)
+  const definition = definitions.find((def) => valueKey === def.key);
+  if (!definition) {
+    console.assert('DEF missing');
+    return changedValues;
+  }
+
+  if (!!sourceValue && definition.type === API.SettingTypeEnum.STRUCT) {
+    // Structs
     const settingKeys = Object.keys(currentFormValue[valueKey]!);
     const changedObjectValue = settingKeys.reduce(
-      reduceChangedFieldValues.bind(
-        null,
-        sourceValue[valueKey],
-        currentFormValue[valueKey],
-      ),
+      reduceChangedFieldValues.bind(null, {
+        definitions: definition.definitions,
+        sourceValue: sourceValue[valueKey],
+        currentFormValue: currentFormValue[valueKey],
+      }),
       {},
     );
 
