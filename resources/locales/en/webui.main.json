@@ -952,6 +952,8 @@
       "update": "Update",
       "stop": "Stop",
       "configure": "Configure",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
         "installUrlApprove": "Install",
