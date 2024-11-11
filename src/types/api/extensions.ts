@@ -7,6 +7,7 @@ export interface Extension {
   version: string;
   homepage: string;
   author: string;
+  disabled: boolean;
   running: boolean;
   private: boolean;
   logs: FilesystemItemType[];

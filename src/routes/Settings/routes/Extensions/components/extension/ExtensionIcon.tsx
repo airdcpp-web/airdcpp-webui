@@ -21,6 +21,14 @@ const getCornerIcon = (
     return 'blue external square';
   }
 
+  if (installedPackage.running) {
+    return 'green play';
+  }
+
+  if (installedPackage.disabled) {
+    return 'grey check circle';
+  }
+
   return 'green check circle';
 };
 
@@ -38,6 +46,7 @@ const ExtensionIcon: React.FC<ExtensionIconProps> = ({
   <div className="ui image">
     <Icon
       icon={IconConstants.EXTENSION}
+      color={installedPackage?.disabled ? 'grey' : undefined}
       size={size}
       cornerIcon={getCornerIcon(installedPackage, hasUpdate)}
     />

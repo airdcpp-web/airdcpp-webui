@@ -14,12 +14,15 @@ export default {
   OFFLINE: 'plug',
   FILTER: 'filter',
   SEND: 'send',
-  CONFIGURE: 'gray configure',
+  CONFIGURE: 'grey configure',
   CLOSE: 'grey remove',
   CANCEL: 'remove',
   DATE: 'calendar',
   MENU: 'content',
   NOTIFICATION: 'yellow bell',
+
+  DISABLE: 'grey remove',
+  ENABLE: 'green checkmark',
 
   RELOAD: 'blue refresh',
   REFRESH_PLAIN: 'refresh',

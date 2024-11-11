@@ -72,7 +72,7 @@ const ExtensionActionButtons: React.FC<ExtensionActionButtonsProps> = ({
     {installedPackage && (
       <ActionMenu
         actions={ExtensionManageActionsMenu}
-        ids={['configure', 'divider', 'remove']}
+        ids={['configure', 'enable', 'disable', 'divider', 'remove']}
         remoteMenuId={MenuConstants.EXTENSION}
         remoteMenuNestingThreshold={10}
         itemData={installedPackage}
