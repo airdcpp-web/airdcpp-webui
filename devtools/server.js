@@ -44,6 +44,7 @@ const app = express();
 // Set proxy
 const apiProxy = new httpProxy.createProxyServer({
   target: (argv.apiSecure ? 'https://' : 'http://') + argv.apiHost,
+  secure: false, // Disable certificate hostname verification (it would always fail)
 });
 
 apiProxy.on('error', (err, req, res) => {
@@ -83,7 +84,7 @@ const compiler = webpack(Object.assign(config, { mode: 'development' }));
 app.use(
   require('webpack-dev-middleware')(compiler, {
     publicPath: config.output.publicPath,
-  })
+  }),
 );
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -103,7 +104,7 @@ app.use('*', (req, res, next) => {
     const filename = path.join(
       compiler.context,
       'resources',
-      req.baseUrl.replace('/js', '')
+      req.baseUrl.replace('/js', ''),
     );
     fs.readFile(filename, (err, result) => {
       if (err) {
@@ -147,7 +148,7 @@ const listener = app.listen(argv.port, argv.bindAddress, (err) => {
 listener.on('upgrade', (req, socket, head) => {
   console.log(
     'Upgrade to websocket',
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+    req.headers['x-forwarded-for'] || req.socket.remoteAddress,
   );
   apiProxy.ws(req, socket, head);
 });
