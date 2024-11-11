@@ -63,7 +63,7 @@ export const useComponents = <
       return <Icon icon={activeItem ? itemHeaderIconGetter(activeItem) : newIcon} />;
     },
     getItemHeaderTitle: () => {
-      const { activeItem, newCaption } = props;
+      const { activeItem, newCaption, remoteMenuId } = props;
       if (!activeItem) {
         return <div>{newCaption}</div>;
       }
@@ -77,6 +77,7 @@ export const useComponents = <
           actions={uiActions}
           itemData={activeItem}
           ids={ids}
+          remoteMenuId={remoteMenuId}
         />
       );
 

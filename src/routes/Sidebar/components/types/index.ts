@@ -40,6 +40,8 @@ export interface SessionLayoutManageProps<
   editAccess: API.AccessEnum;
 
   unreadInfoStore: UI.UnreadInfoStore;
+
+  remoteMenuId: string;
 }
 
 interface SessionMainLayoutComponents {

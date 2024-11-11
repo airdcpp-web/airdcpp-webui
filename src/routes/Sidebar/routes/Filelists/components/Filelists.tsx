@@ -74,6 +74,7 @@ const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession
       sessionItemLayout={FilelistSession}
       newLayout={FilelistNew}
       sessionT={sessionT}
+      remoteMenuId="filelist"
       {...ItemHandler}
       {...other}
     />

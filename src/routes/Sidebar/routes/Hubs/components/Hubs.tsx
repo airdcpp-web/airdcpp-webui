@@ -67,6 +67,7 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
       newLayout={HubNew}
       sessionT={sessionT}
       unreadInfoStore={HubSessionStore}
+      remoteMenuId="hub"
       {...ItemHandler}
       {...other}
     />

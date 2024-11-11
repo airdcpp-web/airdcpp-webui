@@ -63,6 +63,7 @@ const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = (props
       unreadInfoStore={ViewFileStore}
       sessionItemLayout={FileSession}
       sessionT={sessionT}
+      remoteMenuId="view_file"
       {...ItemHandler}
       {...other}
     />
