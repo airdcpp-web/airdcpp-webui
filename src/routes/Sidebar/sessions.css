@@ -55,7 +55,7 @@
 }
 
 .session-container.vertical .menu-bar .content-left > .ui.dropdown .menu {
-  max-height: calc(100vh - 140px);
+  max-height: calc(100dvh - 140px);
   overflow-y: auto;
   overflow-x: hidden;
   max-width: calc(100vw - 30px);
