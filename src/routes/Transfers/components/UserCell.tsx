@@ -9,7 +9,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 import MenuConstants from 'constants/MenuConstants';
 import classNames from 'classnames';
-import { TransferActionMenu } from 'actions/ui/transfer';
+import { TransferItemActionMenu } from 'actions/ui/transfer';
 
 const UserCaption: React.FC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({
   cellData,
@@ -45,7 +45,7 @@ class UserCell extends React.Component<UserCellProps> {
       >
         <TableActionMenu
           itemData={rowDataGetter}
-          actions={TransferActionMenu}
+          actions={TransferItemActionMenu}
           remoteMenuId={MenuConstants.TRANSFER}
         />
       </TableUserMenu>

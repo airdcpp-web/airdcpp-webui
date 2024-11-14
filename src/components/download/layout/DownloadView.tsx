@@ -46,9 +46,7 @@ const getMenuItem = (
   >
     <>
       {t(toI18nKey(section.key, UI.Modules.COMMON), section.name)}
-      {!!section.list && (
-        <div className="ui small right label">{section.list.length}</div>
-      )}
+      {!!section.list && <div className="ui small label">{section.list.length}</div>}
     </>
   </MenuItemLink>
 );

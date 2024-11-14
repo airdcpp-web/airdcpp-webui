@@ -98,7 +98,7 @@ export const TransferRemoveSourceAction = {
   },
 };
 
-const TransferActions: UI.ActionListType<API.Transfer> = {
+const TransferItemActions: UI.ActionListType<API.Transfer> = {
   force: TransferForceAction,
   disconnect: TransferDisconnectAction,
   divider: MENU_DIVIDER,
@@ -109,6 +109,13 @@ const TransferActions: UI.ActionListType<API.Transfer> = {
 export const TransferActionModule = {
   moduleId: UI.Modules.TRANSFERS,
 };
+
+export const TransferItemActionMenu = {
+  moduleData: TransferActionModule,
+  actions: TransferItemActions,
+};
+
+const TransferActions: UI.ActionListType<undefined> = {};
 
 export const TransferActionMenu = {
   moduleData: TransferActionModule,

@@ -8,8 +8,7 @@ import { Column } from 'fixed-data-table-2';
 import { CheckboxCell, ActionMenuCell } from 'components/table/Cell';
 import ConnectStateCell from './ConnectStateCell';
 
-import { TableActionMenu } from 'components/action-menu';
-import ActionButton from 'components/ActionButton';
+import { ActionMenu, TableActionMenu } from 'components/action-menu';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import LoginStore from 'stores/LoginStore';
@@ -25,8 +24,7 @@ import { updateFavoriteHub } from 'services/api/FavoriteHubApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import MenuConstants from 'constants/MenuConstants';
 import {
-  FavoriteHubActionModule,
-  FavoriteHubCreateAction,
+  FavoriteHubActionMenu,
   FavoriteHubEditActionMenu,
   FavoriteHubPasswordActionMenu,
 } from 'actions/ui/favorite-hub';
@@ -78,19 +76,24 @@ class FavoriteHubs extends React.Component<WithTranslation> {
 
   favT = getModuleT(this.props.t, UI.Modules.FAVORITE_HUBS);
   render() {
-    const footerData = (
-      <ActionButton
-        action={FavoriteHubCreateAction}
-        moduleData={FavoriteHubActionModule}
-      />
-    );
-
+    const { translate } = this.favT;
     const editAccess = LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT);
     return (
       <>
         <VirtualTable
           rowClassNameGetter={this.rowClassNameGetter}
-          footerData={footerData}
+          footerData={
+            <ActionMenu
+              className="top left pointing"
+              caption={translate('Actions...')}
+              actions={FavoriteHubActionMenu}
+              header={translate('Favorite hub actions')}
+              triggerIcon="chevron up"
+              button={true}
+              remoteMenuId="favorite_hubs"
+              direction="upward"
+            />
+          }
           store={FavoriteHubStore}
           moduleId={UI.Modules.FAVORITE_HUBS}
         >

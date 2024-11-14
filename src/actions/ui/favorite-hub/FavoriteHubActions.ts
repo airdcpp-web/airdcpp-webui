@@ -50,6 +50,10 @@ export const FavoriteHubRemoveAction = {
   handler: handleRemove,
 };
 
+const FavoriteHubCreateActions: UI.ActionListType<undefined> = {
+  create: FavoriteHubCreateAction,
+};
+
 const FavoriteHubEditActions: UI.ActionListType<API.FavoriteHubEntry> = {
   edit: FavoriteHubEditAction,
   remove: FavoriteHubRemoveAction,
@@ -62,4 +66,9 @@ export const FavoriteHubActionModule = {
 export const FavoriteHubEditActionMenu = {
   moduleData: FavoriteHubActionModule,
   actions: FavoriteHubEditActions,
+};
+
+export const FavoriteHubActionMenu = {
+  moduleData: FavoriteHubActionModule,
+  actions: FavoriteHubCreateActions,
 };

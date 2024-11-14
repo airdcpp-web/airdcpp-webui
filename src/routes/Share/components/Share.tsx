@@ -55,6 +55,7 @@ class Share extends Component<WithTranslation> {
               triggerIcon="chevron up"
               ids={['create']}
               button={true}
+              remoteMenuId="share_roots"
             >
               <ActionMenu actions={ShareActionMenu} ids={['refresh']} />
             </ActionMenu>

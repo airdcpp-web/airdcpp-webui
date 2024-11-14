@@ -2,12 +2,11 @@ import { useEffect, memo } from 'react';
 import * as React from 'react';
 
 import EventAPIActions from 'actions/reflux/EventActions';
-import { EventActionModule, EventClearAction } from 'actions/ui/event/EventActions';
+import { EventActionMenu } from 'actions/ui/event/EventActions';
 
 import EventStore from 'stores/EventStore';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
-import ActionButton from 'components/ActionButton';
 
 import '../style.css';
 import EventMessageView from 'routes/Sidebar/routes/Events/components/EventMessageView';
@@ -18,6 +17,7 @@ import { useStore } from 'effects/StoreListenerEffect';
 import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
+import { ActionMenu } from 'components/action-menu';
 
 const SystemLog: React.FC = memo(
   function SystemLog() {
@@ -39,12 +39,11 @@ const SystemLog: React.FC = memo(
         <div className="wrapper">
           <LayoutHeader
             icon={IconConstants.EVENTS_COLORED}
-            title={translate('Events', t, UI.Modules.EVENTS)}
-            rightComponent={
-              <ActionButton
-                action={EventClearAction}
-                moduleData={EventActionModule}
-                icon={null}
+            title={
+              <ActionMenu
+                caption={translate('Events', t, UI.Modules.EVENTS)}
+                actions={EventActionMenu}
+                remoteMenuId="events"
               />
             }
           />

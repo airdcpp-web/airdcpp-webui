@@ -13,7 +13,7 @@ import {
   FileDownloadCell,
   DecimalCell,
 } from 'components/table/Cell';
-import { TableActionMenu, TableUserMenu } from 'components/action-menu';
+import { ActionMenu, TableActionMenu, TableUserMenu } from 'components/action-menu';
 
 import { dupeToStringType } from 'utils/TypeConvert';
 import { UserFileActions } from 'actions/ui/user/UserActions';
@@ -31,7 +31,7 @@ import { searchDownloadHandler } from 'services/api/SearchApi';
 import IconConstants from 'constants/IconConstants';
 import MenuConstants from 'constants/MenuConstants';
 import SearchConstants from 'constants/SearchConstants';
-import { SearchActionMenu } from 'actions/ui/search';
+import { GroupedSearchResultActionMenu, SearchActionMenu } from 'actions/ui/search';
 
 const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: UI.TranslateF) => {
   if (count > 1) {
@@ -61,7 +61,7 @@ const UserCell: React.FC<
     remoteMenuId={MenuConstants.HINTED_USER}
   >
     <TableActionMenu
-      actions={SearchActionMenu}
+      actions={GroupedSearchResultActionMenu}
       itemData={rowDataGetter}
       ids={['result']}
     />
@@ -172,6 +172,7 @@ class ResultTable extends React.Component<ResultTableProps> {
 
   render() {
     const { searchT, instance } = this.props;
+    const { translate } = searchT;
     return (
       <>
         <VirtualTable
@@ -183,6 +184,18 @@ class ResultTable extends React.Component<ResultTableProps> {
           }}
           entityId={instance.id}
           moduleId={UI.Modules.SEARCH}
+          footerData={
+            <ActionMenu
+              className="top left pointing"
+              caption={translate('Actions...')}
+              actions={SearchActionMenu}
+              header={translate('Search actions')}
+              triggerIcon="chevron up"
+              button={true}
+              itemData={instance}
+              remoteMenuId="search_instance"
+            />
+          }
         >
           <Column
             name="Name"

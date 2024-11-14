@@ -2,12 +2,15 @@ import classNames from 'classnames';
 
 import * as UI from 'types/ui';
 import MenuItemLink from 'components/semantic/MenuItemLink';
-import Icon from 'components/semantic/Icon';
 
 // Convert action menu items to React components for regular Dropdown component
 
 const buildChildMenu = (items: UI.ActionMenuItem[], className?: string) => {
-  return <div className={classNames('menu', className)}>{items.map(buildMenuItem)}</div>;
+  return (
+    <div className={classNames('menu', 'upward', className)}>
+      {items.map(buildMenuItem)}
+    </div>
+  );
 };
 
 const buildMenuItem = (menuItem: UI.ActionMenuItem, index: number) => {
@@ -19,9 +22,8 @@ const buildMenuItem = (menuItem: UI.ActionMenuItem, index: number) => {
   if (childMenu) {
     const { children, ...other } = item;
     return (
-      <MenuItemLink key={id} className="submenu" {...other}>
-        {children}
-        <Icon icon="dropdown" />
+      <MenuItemLink key={id} submenuIcon="dropdown" {...other}>
+        <span className="text">{children}</span>
         {buildChildMenu(childMenu)}
       </MenuItemLink>
     );

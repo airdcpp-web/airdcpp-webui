@@ -108,6 +108,8 @@
       "minSizeName": "Minimum size",
       "sizeLimitsName": "Size limits"
     },
+    "actionsCaption": "Actions...",
+    "searchActions": "Search actions",
     "resetAll": "Reset all",
     "user": "User",
     "hubs": "Hubs",
@@ -200,6 +202,8 @@
     "globalDefault": "Global default",
     "addFavoriteHub": "Add favorite hub",
     "editFavoriteHub": "Edit favorite hub",
+    "actionsCaption": "Actions...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Hub properties",
       "nameName": "Name",
@@ -561,6 +565,8 @@
         "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
       }
     },
+    "actionsCaption": "Actions...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "No active transfers"
   },
   "settings": {

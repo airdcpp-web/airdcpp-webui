@@ -145,8 +145,8 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
           triggerIcon !== undefined
             ? triggerIcon
             : selection
-            ? 'dropdown'
-            : IconConstants.EXPAND
+              ? 'dropdown'
+              : IconConstants.EXPAND
         }
         className="trigger"
       />

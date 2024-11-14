@@ -22,3 +22,8 @@ export const EventActions: UI.ActionListType<undefined> = {
 export const EventActionModule = {
   moduleId: UI.Modules.EVENTS,
 };
+
+export const EventActionMenu = {
+  moduleData: EventActionModule,
+  actions: EventActions,
+};

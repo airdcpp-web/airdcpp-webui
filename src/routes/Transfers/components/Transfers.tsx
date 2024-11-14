@@ -23,8 +23,10 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { getModuleT } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
+import { ActionMenu } from 'components/action-menu';
+import { TransferActionMenu } from 'actions/ui/transfer';
 
 const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({
   cellData,
@@ -44,21 +46,34 @@ class Transfers extends React.Component<TransfersProps> {
   };
 
   emptyRowsNodeGetter = () => {
-    const { t } = this.props;
+    const { translate } = this.transferT;
     return (
       <Message
-        title={translate('No active transfers', t, UI.Modules.TRANSFERS)}
+        title={translate('No active transfers')}
         icon={IconConstants.TRANSFERS_PLAIN}
       />
     );
   };
 
+  transferT = getModuleT(this.props.t, UI.Modules.TRANSFERS);
   render() {
+    const { translate } = this.transferT;
     return (
       <VirtualTable
         emptyRowsNodeGetter={this.emptyRowsNodeGetter}
         store={TransferStore}
         moduleId={UI.Modules.TRANSFERS}
+        footerData={
+          <ActionMenu
+            className="top left pointing"
+            caption={translate('Actions...')}
+            actions={TransferActionMenu}
+            header={translate('Transfer actions')}
+            triggerIcon="chevron up"
+            button={true}
+            remoteMenuId="transfers"
+          />
+        }
       >
         <Column
           name="User"

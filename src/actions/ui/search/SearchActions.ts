@@ -42,7 +42,7 @@ export const SearchBrowseContentAction = {
   handler: handleBrowseContent,
 };
 
-const SearchActions: UI.ActionListType<API.GroupedSearchResult> = {
+const GroupedSearchResultActions: UI.ActionListType<API.GroupedSearchResult> = {
   result: SearchResultDetailsAction,
   browseContent: SearchBrowseContentAction,
 };
@@ -50,6 +50,13 @@ const SearchActions: UI.ActionListType<API.GroupedSearchResult> = {
 export const SearchActionModule = {
   moduleId: UI.Modules.SEARCH,
 };
+
+export const GroupedSearchResultActionMenu = {
+  moduleData: SearchActionModule,
+  actions: GroupedSearchResultActions,
+};
+
+const SearchActions: UI.ActionListType<API.SearchInstance> = {};
 
 export const SearchActionMenu = {
   moduleData: SearchActionModule,
