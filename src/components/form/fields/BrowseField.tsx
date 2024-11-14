@@ -27,7 +27,6 @@ export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
 
   const onConfirm = (path: string) => {
     locals.onChange(path);
-    setDialogOpen(false);
   };
 
   const parseHistoryId = () => {

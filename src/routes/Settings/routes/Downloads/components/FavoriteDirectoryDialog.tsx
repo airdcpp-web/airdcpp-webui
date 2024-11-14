@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
@@ -120,7 +120,7 @@ class FavoriteDirectoryDialog extends Component<Props> {
       this.isNew() ? 'Add favorite directory' : 'Edit favorite directory',
     );
     return (
-      <Modal
+      <RouteModal
         className="favorite-directory"
         title={title}
         onApprove={this.save}
@@ -136,7 +136,7 @@ class FavoriteDirectoryDialog extends Component<Props> {
           sourceValue={directoryEntry as Entry}
           location={this.props.location}
         />
-      </Modal>
+      </RouteModal>
     );
   }
 }

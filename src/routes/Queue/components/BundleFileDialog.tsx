@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
@@ -32,7 +32,7 @@ class BundleFileDialog extends Component<Props> {
   render() {
     const { bundle } = this.props;
     return (
-      <Modal
+      <RouteModal
         className="source"
         title={bundle.name}
         subHeader={bundle.target}
@@ -41,7 +41,7 @@ class BundleFileDialog extends Component<Props> {
         fullHeight={true}
       >
         <BundleFileTable bundle={bundle} />
-      </Modal>
+      </RouteModal>
     );
   }
 }

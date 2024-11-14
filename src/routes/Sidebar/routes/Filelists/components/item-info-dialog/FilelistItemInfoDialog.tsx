@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import FileIcon from 'components/icon/FileIcon';
 
@@ -47,7 +47,7 @@ class FilelistItemInfoDialog extends Component<Props & DataProps> {
   render() {
     const { fileItem, session } = this.props;
     return (
-      <Modal
+      <RouteModal
         className="filelist-item"
         title={fileItem.name}
         closable={true}
@@ -67,7 +67,7 @@ class FilelistItemInfoDialog extends Component<Props & DataProps> {
           user={session.user}
           session={session}
         />
-      </Modal>
+      </RouteModal>
     );
   }
 }

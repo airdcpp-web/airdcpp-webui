@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
@@ -326,7 +326,7 @@ class FavoriteHubDialog extends Component<Props> {
     const { translate } = this.props.favT;
     const title = translate(this.isNew() ? 'Add favorite hub' : 'Edit favorite hub');
     return (
-      <Modal
+      <RouteModal
         className="fav-hub"
         title={title}
         onApprove={this.save}
@@ -342,7 +342,7 @@ class FavoriteHubDialog extends Component<Props> {
           sourceValue={this.formValue}
           location={this.props.location}
         />
-      </Modal>
+      </RouteModal>
     );
   }
 }

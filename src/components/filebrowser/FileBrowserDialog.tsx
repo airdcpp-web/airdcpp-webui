@@ -10,12 +10,14 @@ import { translate } from 'utils/TranslationUtils';
 import * as UI from 'types/ui';
 import IconConstants from 'constants/IconConstants';
 import { getFileName, getFilePath } from 'utils/FileUtils';
+import RouteModal from 'components/semantic/RouteModal';
 
 interface FileBrowserDialogProps
   extends Omit<ModalProps, 'title' | 'location'>,
     Pick<FileBrowserLayoutProps, 'historyId' | 'initialPath' | 'selectMode'> {
   onConfirm: (path: string, directoryPath: string, fileName: string) => void;
   title?: React.ReactNode;
+  modalComponent: React.ComponentType<ModalProps>;
 }
 
 interface State {
@@ -26,8 +28,12 @@ interface State {
 export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, State> {
   static displayName = 'FileBrowserDialog';
 
-  static defaultProps: Pick<FileBrowserDialogProps, 'title' | 'initialPath'> = {
+  static defaultProps: Pick<
+    FileBrowserDialogProps,
+    'title' | 'initialPath' | 'modalComponent'
+  > = {
     initialPath: '',
+    modalComponent: Modal,
   };
 
   state: State = {
@@ -81,15 +87,23 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
 
   render() {
     const { currentFileName } = this.state;
-    const { title, initialPath, historyId, selectMode, icon, approveCaption, ...other } =
-      this.props;
+    const {
+      title,
+      initialPath,
+      historyId,
+      selectMode,
+      icon,
+      approveCaption,
+      modalComponent: ModalComponent,
+      ...other
+    } = this.props;
 
     const selectDirectory = selectMode === UI.FileSelectModeEnum.DIRECTORY;
     const showApprove = selectMode !== UI.FileSelectModeEnum.EXISTING_FILE ? true : false;
     return (
       <Translation>
         {(t) => (
-          <Modal
+          <ModalComponent
             {...other}
             className="file-browser-dialog"
             title={title || translate('Browse...', t, UI.Modules.COMMON)}
@@ -108,14 +122,13 @@ export class FileBrowserDialog extends React.Component<FileBrowserDialogProps, S
               selectMode={selectMode}
               currentFileName={currentFileName}
             />
-          </Modal>
+          </ModalComponent>
         )}
       </Translation>
     );
   }
 }
 
-export const FileBrowserRouteDialog = ModalRouteDecorator<FileBrowserDialogProps>(
-  (props) => <FileBrowserDialog {...props} />,
-  'browse',
-);
+export const FileBrowserRouteDialog = ModalRouteDecorator<
+  Omit<FileBrowserDialogProps, 'modalComponent'>
+>((props) => <FileBrowserDialog modalComponent={RouteModal} {...props} />, 'browse');

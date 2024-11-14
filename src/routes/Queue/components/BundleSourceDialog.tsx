@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
@@ -36,7 +36,7 @@ class SourceDialog extends Component<Props & DataProps> {
   render() {
     const { bundle, queueT } = this.props;
     return (
-      <Modal
+      <RouteModal
         className="source"
         title={bundle.name}
         subHeader={bundle.target}
@@ -46,7 +46,7 @@ class SourceDialog extends Component<Props & DataProps> {
         {...this.props}
       >
         <SourceTable bundle={bundle} queueT={queueT} />
-      </Modal>
+      </RouteModal>
     );
   }
 }

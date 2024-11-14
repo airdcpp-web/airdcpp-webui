@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 
 import Message from 'components/semantic/Message';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -114,7 +114,7 @@ const WidgetDialog: React.FC<Props> = (props) => {
   const { icon } = widgetInfo;
   const { t } = rootWidgetT;
   return (
-    <Modal
+    <RouteModal
       className="home-widget"
       title={translateWidgetName(widgetInfo, rootWidgetT.plainT)}
       onApprove={() => formRef.current!.save()}
@@ -135,7 +135,7 @@ const WidgetDialog: React.FC<Props> = (props) => {
         )}
         icon={IconConstants.INFO}
       />
-    </Modal>
+    </RouteModal>
   );
 };
 

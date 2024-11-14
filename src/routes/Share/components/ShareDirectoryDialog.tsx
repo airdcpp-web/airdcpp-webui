@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import ShareConstants from 'constants/ShareConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
@@ -155,7 +155,7 @@ class ShareDirectoryDialog extends Component<Props> {
       this.isNew() ? 'Add share directory' : 'Edit share directory',
     );
     return (
-      <Modal
+      <RouteModal
         className="share-directory"
         title={title}
         onApprove={this.save}
@@ -185,7 +185,7 @@ class ShareDirectoryDialog extends Component<Props> {
           sourceValue={rootEntry as Entry}
           location={this.props.location}
         />
-      </Modal>
+      </RouteModal>
     );
   }
 }

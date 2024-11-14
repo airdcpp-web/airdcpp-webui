@@ -21,7 +21,7 @@ import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
 } from 'decorators/ModalRouteDecorator';
 
-import Modal, { ModalProps } from 'components/semantic/Modal';
+import RouteModal, { RouteModalProps } from 'components/semantic/RouteModal';
 import { FileBrowserDialog } from 'components/filebrowser';
 
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
@@ -108,7 +108,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
     navigate(`browse`);
   };
 
-  const commonDialogProps: ModalProps = {
+  const commonDialogProps: RouteModalProps = {
     subHeader: itemInfo.name,
     title: translate('Download', t, UI.Modules.COMMON),
     icon: IconConstants.DOWNLOAD,
@@ -140,7 +140,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
       <Route
         index
         element={
-          <Modal
+          <RouteModal
             className="download-dialog"
             fullHeight={true}
             {...commonDialogProps}
@@ -154,7 +154,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
               sharePaths={sharePaths}
               itemInfo={itemInfo}
             />
-          </Modal>
+          </RouteModal>
         }
       />
     </Routes>

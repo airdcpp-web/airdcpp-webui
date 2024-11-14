@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
@@ -87,7 +87,7 @@ class SearchTypeDialog extends Component<Props> {
       this.isNew() ? 'Add search type' : 'Edit search type',
     );
     return (
-      <Modal
+      <RouteModal
         className="search-type"
         title={title}
         onApprove={this.save}
@@ -103,7 +103,7 @@ class SearchTypeDialog extends Component<Props> {
           sourceValue={searchTypeEntry as Entry}
           location={this.props.location}
         />
-      </Modal>
+      </RouteModal>
     );
   }
 }

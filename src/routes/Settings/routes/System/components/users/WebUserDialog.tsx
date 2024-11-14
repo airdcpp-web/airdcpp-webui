@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
@@ -264,7 +264,7 @@ class WebUserDialog extends Component<Props> {
     const title = moduleT.translate(this.isNew() ? 'Add web user' : 'Edit user');
 
     return (
-      <Modal
+      <RouteModal
         className="web-user"
         title={title}
         onApprove={this.save}
@@ -280,7 +280,7 @@ class WebUserDialog extends Component<Props> {
           sourceValue={user as Entry}
           location={this.props.location}
         />
-      </Modal>
+      </RouteModal>
     );
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 
 import FileIcon from 'components/icon/FileIcon';
 
@@ -51,7 +51,7 @@ class ResultDialog extends Component<Props & DataProps> {
   render() {
     const { parentResult, instance } = this.props;
     return (
-      <Modal
+      <RouteModal
         className="result"
         title={parentResult.name}
         closable={true}
@@ -71,7 +71,7 @@ class ResultDialog extends Component<Props & DataProps> {
           session={instance}
         />
         <UserResultTable parentResult={parentResult} instanceId={instance.id} />
-      </Modal>
+      </RouteModal>
     );
   }
 }

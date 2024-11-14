@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import Modal from 'components/semantic/Modal';
+import RouteModal from 'components/semantic/RouteModal';
 import Form, { FormSaveHandler } from 'components/form/Form';
 
 import ModalRouteDecorator, {
@@ -51,7 +51,7 @@ class ExtensionsConfigureDialog extends Component<Props> {
   render() {
     const { extension, settings, fieldDefinitions, ...other } = this.props;
     return (
-      <Modal
+      <RouteModal
         {...other}
         className="extensions configure"
         title={extension.name}
@@ -67,7 +67,7 @@ class ExtensionsConfigureDialog extends Component<Props> {
           sourceValue={settings}
           location={this.props.location}
         />
-      </Modal>
+      </RouteModal>
     );
   }
 }

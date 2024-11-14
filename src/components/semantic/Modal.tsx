@@ -13,13 +13,14 @@ import { Translation } from 'react-i18next';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
-import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 
 export type ModalProps = React.PropsWithChildren<{
   closable?: boolean;
   onApprove?: () => Promise<void>;
   onReject?: () => void;
-  onClose?: () => void;
+
+  // wasClean is false when using browser navigation
+  onClose?: (wasClean: boolean) => void;
   approveCaption?: React.ReactNode;
   approveDisabled?: boolean;
   fullHeight?: boolean;
@@ -34,19 +35,18 @@ export type ModalProps = React.PropsWithChildren<{
 
 const NODE_ID = 'modals-node';
 
-const Modal: React.FC<ModalProps> = (props) => {
+export interface ModalHandle {
+  hide: () => void;
+  show: () => void;
+}
+
+const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, handle) {
   const ref = React.useRef<HTMLDivElement>(null);
   const [saving, setSaving] = React.useState(false);
-
-  // Needed when navigating from one modal to another (e.g. download dialog -> browse)
-  // We don't want to return to the previous page in those cases
-  const returnOnClose = React.useRef(true);
 
   // Set to true when the modal is being closed cleanly (backdrop click/action buttons)
   // We need to clean the DOM for non-clean closures
   const closingCleanly = React.useRef(false);
-
-  const closeModalRoute = React.useContext(ModalRouteCloseContext);
 
   const show = () => {
     setTimeout(() => {
@@ -55,23 +55,29 @@ const Modal: React.FC<ModalProps> = (props) => {
   };
 
   const hide = () => {
+    closingCleanly.current = true;
     if (ref.current) {
       $(ref.current).modal('hide');
     }
   };
+
+  React.useImperativeHandle(
+    handle,
+    () => ({
+      hide,
+      show,
+    }),
+    [ref.current],
+  );
 
   const onHide = () => {
     closingCleanly.current = true;
   };
 
   const onHidden = () => {
-    if (closeModalRoute && returnOnClose.current) {
-      closeModalRoute();
-    }
-
     const { onClose } = props;
     if (onClose) {
-      onClose();
+      onClose(closingCleanly.current);
     }
   };
 
@@ -115,8 +121,10 @@ const Modal: React.FC<ModalProps> = (props) => {
     return () => {
       if (!closingCleanly.current) {
         // History navigation event, we still need to clean up the dimmer
-        returnOnClose.current = false;
-        hide();
+        if (ref.current) {
+          hide();
+          closingCleanly.current = false;
+        }
       }
     };
   }, []);
@@ -163,6 +171,6 @@ const Modal: React.FC<ModalProps> = (props) => {
     </div>,
     document.getElementById(NODE_ID)!,
   );
-};
+});
 
 export default Modal;
