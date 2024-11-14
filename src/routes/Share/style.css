@@ -1,3 +1,10 @@
 .share-directory .Select {
   margin-bottom: 0px;
 }
+
+
+.virtual-table .cell-wrapper.incoming,
+.virtual-table .cell-wrapper.incoming span,
+.virtual-table .cell-wrapper.incoming strong {
+  font-weight: bold;
+}

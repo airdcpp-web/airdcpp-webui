@@ -36,6 +36,13 @@ const ShareRootCreateMenu = {
 
 class Share extends Component<WithTranslation> {
   static displayName = 'Share';
+  rowClassNameGetter = (rowData: API.ShareRootEntry) => {
+    if (rowData.incoming) {
+      return 'incoming';
+    }
+
+    return '';
+  };
 
   shareT = getModuleT(this.props.t, UI.Modules.SHARE);
   render() {
@@ -46,6 +53,7 @@ class Share extends Component<WithTranslation> {
         <VirtualTable
           store={ShareRootStore}
           customFilter={ShareProfileFilter}
+          rowClassNameGetter={this.rowClassNameGetter}
           footerData={
             <ActionMenu
               className="top left pointing"
