@@ -108,6 +108,8 @@
       "minSizeName": "Minimikoko",
       "sizeLimitsName": "Kokorajat"
     },
+    "actionsCaption": "Toiminnot...",
+    "searchActions": "Search actions",
     "resetAll": "Nollaa kaikki",
     "user": "Käyttäjä",
     "hubs": "Hubit",
@@ -200,6 +202,8 @@
     "globalDefault": "Yleinen oletus",
     "addFavoriteHub": "Lisää suosikkihubi",
     "editFavoriteHub": "Muokkaa suosikkihubia",
+    "actionsCaption": "Toiminnot...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Hubin tiedot",
       "nameName": "Nimi",
@@ -561,6 +565,8 @@
         "removeSourceSuccess": "Käyttäjä {{item.user.nicks}} poistettiin {{result.count}} tiedostolta"
       }
     },
+    "actionsCaption": "Toiminnot...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "Ei aktiivisia tiedostosiirtoja"
   },
   "settings": {
@@ -952,6 +958,8 @@
       "update": "Päivitä",
       "stop": "Lopeta",
       "configure": "Määritä",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Syötä URL-osoite",
         "installUrlApprove": "Asenna",

@@ -108,6 +108,8 @@
       "minSizeName": "Minsta storlek",
       "sizeLimitsName": "Storleksbegränsning"
     },
+    "actionsCaption": "Åtgärder...",
+    "searchActions": "Search actions",
     "resetAll": "Återställ alla",
     "user": "Användare",
     "hubs": "Hubbar",
@@ -200,6 +202,8 @@
     "globalDefault": "Global standard",
     "addFavoriteHub": "Lägg till favorithubb",
     "editFavoriteHub": "Redigera favorithubb",
+    "actionsCaption": "Åtgärder...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Hubbegenskaper",
       "nameName": "Namn",
@@ -261,6 +265,9 @@
   "common": {
     "actions": {
       "copy": "Kopiera",
+      "copyPath": "Copy path",
+      "copySize": "Copy size",
+      "copyTth": "Copy TTH",
       "download": "Ladda ned",
       "downloadTo": "Ladda ned till...",
       "findNfo": "Sök efter NFO-fil",
@@ -280,6 +287,9 @@
       "notifications": {
         "ignoreUserSuccess": "Användaren {{item.nicks}} har lagts till i ignorerade användare",
         "unignoreUserSuccess": "Användaren {{item.nicks}} har tagits bort från ignorerade användare",
+        "copyPathSuccess": "Path was copied to clipboard",
+        "copySizeSuccess": "Size was copied to clipboard",
+        "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet-länken har kopierats till urklipp",
         "copySuccess": "Texten har kopierats till urklippet"
       },
@@ -389,6 +399,9 @@
     "finishedFull": "Färdiga (full)",
     "finishedPartial": "Färdiga (delvis)",
     "shareAndQueue": "Utdelning och kö",
+    "shareQueueAndFinished": "Share, queue and finished",
+    "queueAndFinished": "Queue and finished",
+    "shareAndFinished": "Share and finished",
     "dupePaths": "Dubblettsökvägar",
     "actionsCaption": "Åtgärder...",
     "tth": "TTH",
@@ -552,6 +565,8 @@
         "removeSourceSuccess": "Användaren {{item.user.nicks}} har tagits bort från {{result.count}} filer"
       }
     },
+    "actionsCaption": "Åtgärder...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "Inga aktiva överföringar"
   },
   "settings": {
@@ -662,7 +677,13 @@
         "iPv6Connectivity": "IPv6-anslutning",
         "manualConfiguration": "{{status}} (manuell konfiguration)",
         "autoDetected": "{{status}} (detekterad automatisk)",
-        "detecting": "Detekterar..."
+        "detecting": "Detekterar...",
+        "transferPort": "Transfer port",
+        "encryptedTransferPort": "Encrypted transfer port",
+        "searchUdpPort": "Search/UDP port",
+        "boundInterfaceIPv4": "Bound interface (IPv4)",
+        "boundInterfaceIPv6": "Bound interface (IPv6)",
+        "viewAll": "View all"
       },
       "ports": {
         "portsAutoValuesNote": "Portnummer listade på den här sidan kan åsidosättas av portmappare (om aktiverad)",
@@ -937,6 +958,8 @@
       "update": "Uppdatera",
       "stop": "Stopp",
       "configure": "Konfigurera",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Ange webbadress",
         "installUrlApprove": "Installera",

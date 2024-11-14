@@ -108,6 +108,8 @@
       "minSizeName": "Minimale grootte",
       "sizeLimitsName": "Grootte limiet"
     },
+    "actionsCaption": "Acties...",
+    "searchActions": "Search actions",
     "resetAll": "Reset alles",
     "user": "Gebruiker",
     "hubs": "Hubs",
@@ -200,6 +202,8 @@
     "globalDefault": "Algemene standaard",
     "addFavoriteHub": "Voeg favoriete hub toe",
     "editFavoriteHub": "Edit favoriete hub",
+    "actionsCaption": "Acties...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Hub eigenschappen",
       "nameName": "Naam",
@@ -261,6 +265,9 @@
   "common": {
     "actions": {
       "copy": "Kopiëren",
+      "copyPath": "Copy path",
+      "copySize": "Copy size",
+      "copyTth": "Copy TTH",
       "download": "Download",
       "downloadTo": "Download naar...",
       "findNfo": "Zoek NFO",
@@ -280,6 +287,9 @@
       "notifications": {
         "ignoreUserSuccess": "Gebruiker {{item.nicks}} was toegevoegd aan genegeerde gebruikers",
         "unignoreUserSuccess": "Gebruiker {{item.nicks}} was verwijderd uit genegeerde gebruikers",
+        "copyPathSuccess": "Path was copied to clipboard",
+        "copySizeSuccess": "Size was copied to clipboard",
+        "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link werd gekopieerd naar klembord",
         "copySuccess": "Tekst werd gecopieërd naar clipboard"
       },
@@ -389,6 +399,9 @@
     "finishedFull": "Voltooid (volledig)",
     "finishedPartial": "Voltooid (gedeeltelijk)",
     "shareAndQueue": "Delen en queue",
+    "shareQueueAndFinished": "Share, queue and finished",
+    "queueAndFinished": "Queue and finished",
+    "shareAndFinished": "Share and finished",
     "dupePaths": "Dupe mappen",
     "actionsCaption": "Acties...",
     "tth": "TTH",
@@ -552,6 +565,8 @@
         "removeSourceSuccess": "De gebruiker {{item.user.nicks}} werd verwijderd van {{result.count}} bestanden"
       }
     },
+    "actionsCaption": "Acties...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "Geen actieve overdrachten"
   },
   "settings": {
@@ -662,7 +677,13 @@
         "iPv6Connectivity": "IPv6 connectiviteit",
         "manualConfiguration": "{{status}} (handmatige configuratie)",
         "autoDetected": "{{status}} (automatisch gedetecteerd)",
-        "detecting": "Aan het detecteren..."
+        "detecting": "Aan het detecteren...",
+        "transferPort": "Transfer port",
+        "encryptedTransferPort": "Encrypted transfer port",
+        "searchUdpPort": "Search/UDP port",
+        "boundInterfaceIPv4": "Bound interface (IPv4)",
+        "boundInterfaceIPv6": "Bound interface (IPv6)",
+        "viewAll": "View all"
       },
       "ports": {
         "portsAutoValuesNote": "Poortenk in deze lijst kunnen worden overruled door poort mappers (indien geactiveerd)",
@@ -937,6 +958,8 @@
       "update": "Update",
       "stop": "Stop",
       "configure": "Configureren",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Geef URL op",
         "installUrlApprove": "Installeer",

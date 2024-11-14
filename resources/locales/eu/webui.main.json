@@ -108,6 +108,8 @@
       "minSizeName": "Minimum size",
       "sizeLimitsName": "Size limits"
     },
+    "actionsCaption": "Ekintzak...",
+    "searchActions": "Search actions",
     "resetAll": "Reset all",
     "user": "Erabiltzailea",
     "hubs": "Hub-ak",
@@ -200,6 +202,8 @@
     "globalDefault": "Lehenetsi orokorrak",
     "addFavoriteHub": "Gehitu gogoko hub",
     "editFavoriteHub": "Editatu hub gogokoa",
+    "actionsCaption": "Ekintzak...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Hub propietateak",
       "nameName": "Izena",
@@ -261,6 +265,9 @@
   "common": {
     "actions": {
       "copy": "Kopiatu",
+      "copyPath": "Copy path",
+      "copySize": "Copy size",
+      "copyTth": "Copy TTH",
       "download": "Jaitsi",
       "downloadTo": "-ra jaitsi",
       "findNfo": "Aurkitu NFO",
@@ -280,6 +287,9 @@
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
         "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
+        "copyPathSuccess": "Path was copied to clipboard",
+        "copySizeSuccess": "Size was copied to clipboard",
+        "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link was copied to clipboard",
         "copySuccess": "Text was copied to clipboard"
       },
@@ -389,6 +399,9 @@
     "finishedFull": "Finished (full)",
     "finishedPartial": "Finished (partial)",
     "shareAndQueue": "Share and queue",
+    "shareQueueAndFinished": "Share, queue and finished",
+    "queueAndFinished": "Queue and finished",
+    "shareAndFinished": "Share and finished",
     "dupePaths": "Bikoiztutakoen bidea",
     "actionsCaption": "Ekintzak...",
     "tth": "TTH",
@@ -552,6 +565,8 @@
         "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
       }
     },
+    "actionsCaption": "Ekintzak...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "Ez dago transferentzia aktiborik"
   },
   "settings": {
@@ -662,7 +677,13 @@
         "iPv6Connectivity": "IPv6 konektibitatea",
         "manualConfiguration": "{{status}} (manual configuration)",
         "autoDetected": "{{status}} (auto detected)",
-        "detecting": "Detecting..."
+        "detecting": "Detecting...",
+        "transferPort": "Transfer port",
+        "encryptedTransferPort": "Encrypted transfer port",
+        "searchUdpPort": "Search/UDP port",
+        "boundInterfaceIPv4": "Bound interface (IPv4)",
+        "boundInterfaceIPv6": "Bound interface (IPv6)",
+        "viewAll": "View all"
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -937,6 +958,8 @@
       "update": "Eguneratu",
       "stop": "Gelditu",
       "configure": "Konfiguratu",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "URLa idatzi",
         "installUrlApprove": "Instalatu",

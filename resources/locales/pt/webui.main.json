@@ -108,6 +108,8 @@
       "minSizeName": "Minimum size",
       "sizeLimitsName": "Size limits"
     },
+    "actionsCaption": "Ações...",
+    "searchActions": "Search actions",
     "resetAll": "Reset all",
     "user": "Utilizador",
     "hubs": "Concentradores",
@@ -200,6 +202,8 @@
     "globalDefault": "Padrão global",
     "addFavoriteHub": "Adicionar concentrador favorito",
     "editFavoriteHub": "Editar concentrador favorito",
+    "actionsCaption": "Ações...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Propriedades do concentrador",
       "nameName": "Nome",
@@ -261,6 +265,9 @@
   "common": {
     "actions": {
       "copy": "Copiar",
+      "copyPath": "Copy path",
+      "copySize": "Copy size",
+      "copyTth": "Copy TTH",
       "download": "Descarregar",
       "downloadTo": "Descarregar para...",
       "findNfo": "Procurar NFO",
@@ -280,6 +287,9 @@
       "notifications": {
         "ignoreUserSuccess": "O utilizador {{item.nicks}} foi adicionado aos utilizadores ignorados",
         "unignoreUserSuccess": "O utilizador {{item.nicks}} foi removido dos utilizadores ignorados",
+        "copyPathSuccess": "Path was copied to clipboard",
+        "copySizeSuccess": "Size was copied to clipboard",
+        "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Hiperligação magnética copiada para a área de transferência",
         "copySuccess": "Text was copied to clipboard"
       },
@@ -389,6 +399,9 @@
     "finishedFull": "Concluídos (completo)",
     "finishedPartial": "Concluídos (parcial)",
     "shareAndQueue": "Partilha e fila",
+    "shareQueueAndFinished": "Share, queue and finished",
+    "queueAndFinished": "Queue and finished",
+    "shareAndFinished": "Share and finished",
     "dupePaths": "Caminhos do duplicado",
     "actionsCaption": "Ações...",
     "tth": "TTH",
@@ -552,6 +565,8 @@
         "removeSourceSuccess": "O utilizador {{item.user.nicks}} foi removido de {{result.count}} ficheiros"
       }
     },
+    "actionsCaption": "Ações...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "Sem transferências ativas"
   },
   "settings": {
@@ -662,7 +677,13 @@
         "iPv6Connectivity": "Conectividade IPv6",
         "manualConfiguration": "{{status}} (configuração manual)",
         "autoDetected": "{{status}} (detetado automaticamente)",
-        "detecting": "Detecting..."
+        "detecting": "Detecting...",
+        "transferPort": "Transfer port",
+        "encryptedTransferPort": "Encrypted transfer port",
+        "searchUdpPort": "Search/UDP port",
+        "boundInterfaceIPv4": "Bound interface (IPv4)",
+        "boundInterfaceIPv6": "Bound interface (IPv6)",
+        "viewAll": "View all"
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -937,6 +958,8 @@
       "update": "Atualizar",
       "stop": "Parar",
       "configure": "Configurar",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Introduzir URL",
         "installUrlApprove": "Instalar",

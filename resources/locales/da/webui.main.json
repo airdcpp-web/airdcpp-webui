@@ -68,6 +68,7 @@
       "info": "INFO",
       "warning": "ADVARSEL",
       "error": "FEJL",
+      "verbose": "VERBOSE",
       "actions": {
         "viewEvents": "View events"
       }
@@ -107,6 +108,8 @@
       "minSizeName": "Minimum size",
       "sizeLimitsName": "Størrelsesgrænser"
     },
+    "actionsCaption": "Handlinger...",
+    "searchActions": "Search actions",
     "resetAll": "Nulstil alle",
     "user": "Bruger",
     "hubs": "Hubs",
@@ -199,6 +202,8 @@
     "globalDefault": "Global standard",
     "addFavoriteHub": "Add favorite hub",
     "editFavoriteHub": "Edit favorite hub",
+    "actionsCaption": "Handlinger...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Hub properties",
       "nameName": "Navn",
@@ -257,9 +262,12 @@
       "details": "Detaljer"
     }
   },
-  "common": {    
+  "common": {
     "actions": {
       "copy": "Kopier",
+      "copyPath": "Copy path",
+      "copySize": "Copy size",
+      "copyTth": "Copy TTH",
       "download": "Download",
       "downloadTo": "Download til...",
       "findNfo": "Find NFO",
@@ -279,6 +287,9 @@
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
         "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
+        "copyPathSuccess": "Path was copied to clipboard",
+        "copySizeSuccess": "Size was copied to clipboard",
+        "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link was copied to clipboard",
         "copySuccess": "Text was copied to clipboard"
       },
@@ -388,6 +399,9 @@
     "finishedFull": "Finished (full)",
     "finishedPartial": "Finished (partial)",
     "shareAndQueue": "Share and queue",
+    "shareQueueAndFinished": "Share, queue and finished",
+    "queueAndFinished": "Queue and finished",
+    "shareAndFinished": "Share and finished",
     "dupePaths": "Dupe paths",
     "actionsCaption": "Handlinger...",
     "tth": "TTH",
@@ -445,7 +459,7 @@
     "notConnectedToTheHub": "Not connected to the hub",
     "connecting": "Connecting",
     "loadingUserlist": "Loading userlist",
-    "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
+    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
     "new": "Tilslut",
     "newDesc": "Connect to a new hub",
     "userList": "Brugerliste",
@@ -457,7 +471,7 @@
     "passwordRequired": "Password required",
     "password": "Password",
     "submit": "Submit",
-    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
+    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."
   },
   "queue": {
     "table": {
@@ -551,6 +565,8 @@
         "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
       }
     },
+    "actionsCaption": "Handlinger...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "No active transfers"
   },
   "settings": {
@@ -655,13 +671,19 @@
     "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
+        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
         "currentAutoDetectionStatus": "Current auto detection status",
         "iPv4Connectivity": "IPv4 connectivity",
         "iPv6Connectivity": "IPv6 connectivity",
         "manualConfiguration": "{{status}} (manual configuration)",
         "autoDetected": "{{status}} (auto detected)",
-        "detecting": "Detecting..."
+        "detecting": "Detecting...",
+        "transferPort": "Transfer port",
+        "encryptedTransferPort": "Encrypted transfer port",
+        "searchUdpPort": "Search/UDP port",
+        "boundInterfaceIPv4": "Bound interface (IPv4)",
+        "boundInterfaceIPv6": "Bound interface (IPv6)",
+        "viewAll": "View all"
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -684,7 +706,8 @@
           "settingProfileHelp0": "Klienten bliver brugt i normale private/offentlige hubs til at overføre filer via internettet. Brug denne profil, hvis usikker.",
           "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
           "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
+          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
+          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
         }
       },
       "ignoredUsers": {
@@ -705,7 +728,7 @@
         "installedVersion": "Installed version",
         "datePublished": "{{version}} (published {{date}})",
         "readMore": "Read more",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "manage": "Manage..."
       },
       "manage": {
@@ -714,8 +737,8 @@
         "installedVersion": "Installed version",
         "nonListedExtension": "Non-listed extension",
         "readMore": "Read more",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
+        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}",
         "unmanagedExtension": "Unmanaged extension",
         "manage": "Manage..."
@@ -833,7 +856,8 @@
         "name": "Navn",
         "totalSize": "Total size",
         "totalFiles": "Total files",
-        "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
+        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
+        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
       },
       "sharingOptions": {
         "skiplist": "Skiplist"
@@ -850,7 +874,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <1>Speedtest.net</1>, to test your speed."
+        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
       },
       "uploadLimits": {
         "manuallySet": "Manually set"
@@ -934,6 +958,8 @@
       "update": "Opdater",
       "stop": "Stop",
       "configure": "&amp;Konfigurer",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
         "installUrlApprove": "Installer",

@@ -108,6 +108,8 @@
       "minSizeName": "Tamanho mínimo",
       "sizeLimitsName": "Limites de tamanho"
     },
+    "actionsCaption": "Ações...",
+    "searchActions": "Search actions",
     "resetAll": "Restaurar tudo",
     "user": "Usuário",
     "hubs": "Hubs",
@@ -200,6 +202,8 @@
     "globalDefault": "Padrão global",
     "addFavoriteHub": "Adicionar hub aos favoritos",
     "editFavoriteHub": "Editar hub nos favoritos",
+    "actionsCaption": "Ações...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Propriedades do hub",
       "nameName": "Nome",
@@ -561,6 +565,8 @@
         "removeSourceSuccess": "O usuário {{item.user.nicks}} foi removido de {{result.count}} arquivos"
       }
     },
+    "actionsCaption": "Ações...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "Nenhuma transferência ativa"
   },
   "settings": {
@@ -952,6 +958,8 @@
       "update": "Atualizar",
       "stop": "Parar",
       "configure": "&amp;Configurar",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Digitar URL",
         "installUrlApprove": "Instalar",

@@ -108,6 +108,8 @@
       "minSizeName": "Minimum size",
       "sizeLimitsName": "Size limits"
     },
+    "actionsCaption": "Actiuni...",
+    "searchActions": "Search actions",
     "resetAll": "Reset all",
     "user": "Utilizator",
     "hubs": "Huburi",
@@ -200,6 +202,8 @@
     "globalDefault": "Global default",
     "addFavoriteHub": "Aduce hub-ul favorit",
     "editFavoriteHub": "Editeaza hub-ul favorit",
+    "actionsCaption": "Actiuni...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Propietatiile hubu-lui",
       "nameName": "Nume",
@@ -261,6 +265,9 @@
   "common": {
     "actions": {
       "copy": "Copiaza",
+      "copyPath": "Copy path",
+      "copySize": "Copy size",
+      "copyTth": "Copy TTH",
       "download": "Descarca",
       "downloadTo": "Descarca in...",
       "findNfo": "Gaseste NFO",
@@ -280,6 +287,9 @@
       "notifications": {
         "ignoreUserSuccess": "Utilizatorul {{item.nicks}} a fost adaugat in utilizatori ignorati ",
         "unignoreUserSuccess": "Utilizatorul {{item.nicks}} a fost eliminat din utilizatori ignorati",
+        "copyPathSuccess": "Path was copied to clipboard",
+        "copySizeSuccess": "Size was copied to clipboard",
+        "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Legatura magnet a fost copiata in memorie-clipboard",
         "copySuccess": "Text was copied to clipboard"
       },
@@ -389,6 +399,9 @@
     "finishedFull": "Terminat (full)",
     "finishedPartial": "Terminat (partial)",
     "shareAndQueue": "Distribuie si memoreaza",
+    "shareQueueAndFinished": "Share, queue and finished",
+    "queueAndFinished": "Queue and finished",
+    "shareAndFinished": "Share and finished",
     "dupePaths": "Legaturi duplicate",
     "actionsCaption": "Actiuni...",
     "tth": "TTH",
@@ -552,6 +565,8 @@
         "removeSourceSuccess": "Utilizatorul {{item.user.nicks}} a fost eliminat din {{result.count}} fisiere"
       }
     },
+    "actionsCaption": "Actiuni...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "Transfere inactive"
   },
   "settings": {
@@ -662,7 +677,13 @@
         "iPv6Connectivity": "IPv6 conexiune",
         "manualConfiguration": "{{status}} (configurare manuala)",
         "autoDetected": "{{status}} (auto detectata)",
-        "detecting": "Detecting..."
+        "detecting": "Detecting...",
+        "transferPort": "Transfer port",
+        "encryptedTransferPort": "Encrypted transfer port",
+        "searchUdpPort": "Search/UDP port",
+        "boundInterfaceIPv4": "Bound interface (IPv4)",
+        "boundInterfaceIPv6": "Bound interface (IPv6)",
+        "viewAll": "View all"
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -937,6 +958,8 @@
       "update": "Reinoieste",
       "stop": "Stop",
       "configure": "Configurare",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Introduce URL",
         "installUrlApprove": "Instaleaza",

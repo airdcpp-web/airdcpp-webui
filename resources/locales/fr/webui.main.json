@@ -108,6 +108,8 @@
       "minSizeName": "Taille minimum",
       "sizeLimitsName": "Tailles limites"
     },
+    "actionsCaption": "Actions…",
+    "searchActions": "Search actions",
     "resetAll": "Réinitialiser tout",
     "user": "Utilisateur",
     "hubs": "Hubs",
@@ -200,6 +202,8 @@
     "globalDefault": "Valeur globale par défaut",
     "addFavoriteHub": "Ajouter un hub favori",
     "editFavoriteHub": "Éditer hub favori",
+    "actionsCaption": "Actions…",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Propriétés de hub",
       "nameName": "Nom",
@@ -561,6 +565,8 @@
         "removeSourceSuccess": "L'utilisateur {{item.user.nicks}} a été retiré des fichiers {{result.count}}."
       }
     },
+    "actionsCaption": "Actions…",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "Pas de transfert actif"
   },
   "settings": {
@@ -952,6 +958,8 @@
       "update": "MàJ",
       "stop": "Stop",
       "configure": "Configurer",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Entrez l'URL",
         "installUrlApprove": "Installer",
