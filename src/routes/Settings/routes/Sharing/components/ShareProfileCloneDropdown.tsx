@@ -18,6 +18,7 @@ import MenuSection from 'components/semantic/MenuSection';
 import IconConstants from 'constants/IconConstants';
 import { translateActionName } from 'utils/ActionUtils';
 import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
+import LoginStore from 'stores/LoginStore';
 
 const getProfileItem = (
   profile: API.ShareProfile,
@@ -50,41 +51,47 @@ export interface ShareProfileCloneDropdownProps {
 const ShareProfileCloneDropdown: React.FC<ShareProfileCloneDropdownProps> = ({
   profiles,
   moduleT,
-}) => (
-  <ActionHandlerDecorator<API.ShareProfile | void>>
-    {({ onClickAction }) => {
-      return (
-        <SectionedDropdown
-          caption={moduleT.translate('Add profile')}
-          className="clone-profile"
-          button={true}
-        >
-          <MenuItemLink
-            onClick={() => {
-              onClickAction({
-                itemData: undefined,
-                action: ShareProfileCreateAction,
-                entity: undefined,
-                moduleData: ShareProfileActionModule,
-              });
-            }}
-            icon={IconConstants.CREATE}
+}) => {
+  if (!LoginStore.hasAccess(ShareProfileCreateAction.access)) {
+    return null;
+  }
+
+  return (
+    <ActionHandlerDecorator<API.ShareProfile | void>>
+      {({ onClickAction }) => {
+        return (
+          <SectionedDropdown
+            caption={moduleT.translate('Add profile')}
+            className="clone-profile"
+            button={true}
           >
-            {translateActionName(
-              ShareProfileCreateAction,
-              ShareProfileActionModule,
-              moduleT.plainT,
-            )}
-          </MenuItemLink>
-          <MenuSection caption={moduleT.translate('Clone from an existing profile')}>
-            {profiles.map((profile) =>
-              getProfileItem(profile, moduleT.plainT, onClickAction),
-            )}
-          </MenuSection>
-        </SectionedDropdown>
-      );
-    }}
-  </ActionHandlerDecorator>
-);
+            <MenuItemLink
+              onClick={() => {
+                onClickAction({
+                  itemData: undefined,
+                  action: ShareProfileCreateAction,
+                  entity: undefined,
+                  moduleData: ShareProfileActionModule,
+                });
+              }}
+              icon={IconConstants.CREATE}
+            >
+              {translateActionName(
+                ShareProfileCreateAction,
+                ShareProfileActionModule,
+                moduleT.plainT,
+              )}
+            </MenuItemLink>
+            <MenuSection caption={moduleT.translate('Clone from an existing profile')}>
+              {profiles.map((profile) =>
+                getProfileItem(profile, moduleT.plainT, onClickAction),
+              )}
+            </MenuSection>
+          </SectionedDropdown>
+        );
+      }}
+    </ActionHandlerDecorator>
+  );
+};
 
 export default ShareProfileCloneDropdown;
