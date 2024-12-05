@@ -1,12 +1,7 @@
 import * as React from 'react';
 
-import {
-  ShareProfileActionModule,
-  ShareProfileCreateAction,
-  ShareProfileEditMenu,
-} from 'actions/ui/share/ShareProfileActions';
+import { ShareProfileEditMenu } from 'actions/ui/share/ShareProfileActions';
 
-import ActionButton from 'components/ActionButton';
 import { ActionMenu } from 'components/action-menu';
 
 import { Link } from 'react-router-dom';
@@ -25,6 +20,7 @@ import * as UI from 'types/ui';
 import { SettingPageProps } from 'routes/Settings/types';
 import { Trans } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
+import ShareProfileCloneDropdown from './ShareProfileCloneDropdown';
 
 interface ShareProfileRowProps {
   profile: API.ShareProfile;
@@ -52,16 +48,6 @@ const ShareProfilesPage: React.FC<
   ShareProfilesPageProps & ShareProfileDecoratorChildProps
 > = ({ moduleT, profiles }) => {
   const { translate, toI18nKey } = moduleT;
-  /*const defaults =
-    '<p>\
-Queued files are shared via the partial file sharing feature in all hubs \
-where the share has not been hidden, regardless of the configured share \
-profiles.\
-</p>\
-<p>\
-Share profiles are assigned for individual directories from the \
-<url>Share</url> page.\
-</p>';*/
   const shareProfilesPartialNote =
     'Queued files are shared via the partial file sharing feature in all hubs \
 where the share has not been hidden, regardless of the configured share \
@@ -98,10 +84,7 @@ profiles.';
         }
         icon={IconConstants.INFO}
       />
-      <ActionButton
-        action={ShareProfileCreateAction}
-        moduleData={ShareProfileActionModule}
-      />
+      <ShareProfileCloneDropdown profiles={profiles} moduleT={moduleT} />
 
       <table className="ui striped table">
         <thead>
@@ -121,4 +104,4 @@ profiles.';
   );
 };
 
-export default ShareProfileDecorator(ShareProfilesPage, false, undefined, false);
+export default ShareProfileDecorator(ShareProfilesPage, false, undefined);

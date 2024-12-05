@@ -577,7 +577,8 @@
       "editUser": "Edit user",
       "editDirectory": "Edit directory",
       "removeDirectory": "Remove directory",
-      "addProfile": "Add profile",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Browse files",
       "renameProfile": "Rename profile",
       "addPath": "Add path",
@@ -589,6 +590,9 @@
       "editType": "Edit type",
       "removeType": "Remove type",
       "prompts": {
+        "cloneProfilePlaceholder": "Enter name",
+        "cloneProfileApprove": "Create",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Enter name",
         "createProfileApprove": "Create",
         "createProfileContent": "Enter name for the profile",
@@ -857,7 +861,9 @@
         "totalSize": "Total size",
         "totalFiles": "Total files",
         "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
+        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page.",
+        "addProfile": "Add profile",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Skiplist"

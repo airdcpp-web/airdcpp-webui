@@ -9,21 +9,11 @@ import DataProviderDecorator, {
   DataConverter,
 } from 'decorators/DataProviderDecorator';
 
-import { formatSize } from 'utils/ValueFormat';
-
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 interface ShareProfileDecoratorDataProps {
   profiles: API.ShareProfile[];
 }
-
-export const profileToEnumValue = (profile: API.ShareProfile) => {
-  return {
-    id: profile.id,
-    name: profile.str,
-  };
-};
 
 export type ShareProfileDecoratorChildProps = DataProviderDecoratorChildProps &
   ShareProfileDecoratorDataProps;
@@ -35,27 +25,11 @@ const ShareProfileDecorator = function <PropsT extends object>(
     PropsT,
     ShareProfileDecoratorDataProps
   >,
-  addSize = true,
 ) {
-  const convertProfile = (
-    profile: API.ShareProfile,
-    t: UI.TranslateF,
-  ): API.ShareProfile => {
-    let str = profile.str;
-    if (addSize && profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
-      str += ` (${formatSize(profile.size, t)})`;
-    }
-
-    return {
-      ...profile,
-      str,
-    };
-  };
-
   const convertProfiles: DataConverter<PropsT> = (data: API.ShareProfile[], { t }) => {
-    const profiles = data
-      .filter((p) => listHidden || p.id !== ShareProfileConstants.HIDDEN_PROFILE_ID)
-      .map((p) => convertProfile(p, t));
+    const profiles = data.filter(
+      (p) => listHidden || p.id !== ShareProfileConstants.HIDDEN_PROFILE_ID,
+    );
 
     return profiles;
   };

@@ -9,15 +9,45 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
+import ShareRootConstants from 'constants/ShareRootConstants';
 
 type Filter = UI.ActionFilter<API.ShareProfile>;
 const notDefault: Filter = ({ itemData: profile }) => !profile.default;
 
 const handleCreate: UI.ActionHandler<void> = (data, name: string) => {
-  return SocketService.post(ShareProfileConstants.PROFILES_URL, { name: name });
+  return SocketService.post<API.ShareProfile>(ShareProfileConstants.PROFILES_URL, {
+    name: name,
+  });
 };
 
 type Handler = UI.ActionHandler<API.ShareProfile>;
+const handleClone: Handler = async (data, name: string) => {
+  // Create new profile
+  const newProfile: API.ShareProfile = await handleCreate(
+    data as unknown as UI.ActionHandlerData<void, void>,
+    name,
+  );
+
+  const { itemData: sourceProfile } = data;
+
+  // Fetch roots
+  const roots = await SocketService.get<API.ShareRootEntry[]>(
+    `${ShareRootConstants.MODULE_URL}`,
+  );
+
+  // Add new profile in all roots that include the source profile
+  for (const root of roots) {
+    const rootProfileIds = root.profiles.map((rootProfile) => rootProfile.id);
+    if (!rootProfileIds.includes(sourceProfile.id)) {
+      continue;
+    }
+
+    await SocketService.patch(`${ShareRootConstants.MODULE_URL}/${root.id}`, {
+      profiles: [...rootProfileIds, newProfile.id],
+    });
+  }
+};
+
 const handleDefault: Handler = ({ itemData: profile }) => {
   return SocketService.post(
     `${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`,
@@ -52,6 +82,22 @@ export const ShareProfileCreateAction = {
     },
   },
   handler: handleCreate,
+};
+
+export const ShareProfileCloneAction = {
+  id: 'clone',
+  displayName: 'Clone profile',
+  access: API.AccessEnum.SETTINGS_EDIT,
+  icon: IconConstants.COPY,
+  input: {
+    approveCaption: 'Create',
+    content: 'Enter name for the profile (cloned from {{item.name}})',
+    inputProps: {
+      placeholder: 'Enter name',
+      required: true,
+    },
+  },
+  handler: handleClone,
 };
 
 export const ShareProfileBrowseAction = {

@@ -10,7 +10,6 @@ import ModalRouteDecorator, {
 } from 'decorators/ModalRouteDecorator';
 
 import ShareProfileDecorator, {
-  profileToEnumValue,
   ShareProfileDecoratorChildProps,
 } from 'decorators/ShareProfileDecorator';
 import SocketService from 'services/SocketService';
@@ -37,6 +36,7 @@ import * as UI from 'types/ui';
 import { ShareRootEntryBase } from 'types/api';
 import { translateForm } from 'utils/FormUtils';
 import { Trans } from 'react-i18next';
+import { profileToEnumValue } from 'utils/ShareProfileUtils';
 
 const Fields: UI.FormFieldDefinition[] = [
   {
@@ -97,7 +97,7 @@ class ShareDirectoryDialog extends Component<Props> {
       (def) => def.key === 'profiles',
     )!;
     Object.assign(shareProfileDefinitions, {
-      options: props.profiles.map(profileToEnumValue),
+      options: props.profiles.map((p) => profileToEnumValue(p, this.props.shareT.plainT)),
       default_value: [props.profiles.find((profile) => profile.default)!.id],
     });
   }

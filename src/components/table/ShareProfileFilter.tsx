@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import { memo, useState } from 'react';
 
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
@@ -14,14 +13,12 @@ import TableFilterDecorator, {
 } from 'decorators/TableFilterDecorator';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { translate } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
-
-interface ShareProfileItem {
-  id: null | number;
-  str: string;
-}
+import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
 
 export interface ShareProfileFilterProps {}
 
@@ -29,41 +26,41 @@ type Props = ShareProfileFilterProps &
   TableFilterDecoratorChildProps &
   ShareProfileDecoratorChildProps;
 
+const formatItemName = (profile: API.ShareProfile | null, t: UI.TranslateF) =>
+  profile
+    ? formatProfileNameWithSize(profile, t)
+    : translate('All profiles', t, 'table.filter');
+
 const getDropdownItem = (
-  profile: ShareProfileItem,
-  onClick: (p: ShareProfileItem) => void,
-  selectedProfile: ShareProfileItem,
+  profile: API.ShareProfile | null,
+  onClick: (p: API.ShareProfile | null) => void,
+  selectedProfile: API.ShareProfile | null,
+  t: UI.TranslateF,
 ) => {
   return (
     <MenuItemLink
-      key={profile.id as number}
-      active={selectedProfile.id === profile.id}
+      key={profile ? profile.id : 'all'}
+      active={selectedProfile === profile}
       onClick={() => onClick(profile)}
     >
-      {profile.str}
+      {formatItemName(profile, t)}
     </MenuItemLink>
   );
 };
 
 const ShareProfileFilter = memo<Props>(function ShareProfileFilter(props) {
   const { t } = useTranslation();
+  const [selectedProfile, setSelectedProfile] = useState<API.ShareProfile | null>(null);
 
-  const defaultItem: ShareProfileItem = {
-    str: translate('All profiles', t, 'table.filter'),
-    id: null,
-  };
-
-  const [selectedProfile, setSelectedProfile] = useState<ShareProfileItem>(defaultItem);
-
-  const onClick = (profile: API.ShareProfile) => {
-    props.onFilterUpdated(profile.id);
+  const handleSelectItem = (profile: API.ShareProfile | null) => {
+    props.onFilterUpdated(profile ? profile.id : null);
     setSelectedProfile(profile);
   };
 
   return (
     <SectionedDropdown
       className="top right pointing"
-      caption={selectedProfile.str}
+      caption={formatItemName(selectedProfile, t)}
       triggerIcon="filter"
       button={true}
     >
@@ -71,8 +68,8 @@ const ShareProfileFilter = memo<Props>(function ShareProfileFilter(props) {
         caption={translate('Filter by profile', t, 'table.filter')}
         icon={IconConstants.FILTER}
       >
-        {[defaultItem, ...props.profiles].map((p) =>
-          getDropdownItem(p, onClick, selectedProfile),
+        {[null, ...props.profiles].map((p) =>
+          getDropdownItem(p, handleSelectItem, selectedProfile, t),
         )}
       </MenuSection>
     </SectionedDropdown>

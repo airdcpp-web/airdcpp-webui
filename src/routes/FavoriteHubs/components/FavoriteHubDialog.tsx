@@ -11,7 +11,6 @@ import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import SocketService from 'services/SocketService';
 
 import ShareProfileDecorator, {
-  profileToEnumValue,
   ShareProfileDecoratorChildProps,
 } from 'decorators/ShareProfileDecorator';
 import IconConstants from 'constants/IconConstants';
@@ -30,6 +29,7 @@ import * as UI from 'types/ui';
 
 import { FavoriteHubEntry } from 'types/api';
 import { IndeterminateCheckboxField } from 'components/form/fields/IndeterminateCheckboxField';
+import { profileToEnumValue } from 'utils/ShareProfileUtils';
 
 const ConnectivityModeOptions: API.SettingEnumOption[] = [
   {
@@ -211,12 +211,13 @@ const isAdcHub = (hubUrl?: string) =>
 
 // Get selection values for the profiles field
 const getFieldProfiles = (
-  profiles: API.SettingEnumOption[],
-  url?: string,
+  profiles: API.ShareProfile[],
+  url: string | undefined,
+  t: UI.TranslateF,
 ): UI.FormOption[] => {
   return profiles
     .filter((p) => isAdcHub(url) || p.id === ShareProfileConstants.HIDDEN_PROFILE_ID)
-    .map(profileToEnumValue)
+    .map((p) => profileToEnumValue(p, t))
     .map(normalizeEnumValue);
 };
 
@@ -303,7 +304,7 @@ class FavoriteHubDialog extends Component<Props> {
       Object.assign(fieldOptions, {
         nullOption: this.nullOption,
         factory: t.form.Select,
-        options: getFieldProfiles(this.props.profiles, hubUrl),
+        options: getFieldProfiles(this.props.profiles, hubUrl, this.props.favT.plainT),
         transformer: intTransformer,
       });
     } else if (id === 'connection_mode_v4' || id === 'connection_mode_v6') {
