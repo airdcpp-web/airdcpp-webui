@@ -36,7 +36,7 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
         backgroundColor: 'white',
         border: '1px solid rgba(0,0,0,0.15)',
         fontSize: 10,
-      },
+      } as React.CSSProperties,
 
       item: {
         padding: '5px 15px',

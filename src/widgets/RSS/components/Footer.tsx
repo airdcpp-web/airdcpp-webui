@@ -20,7 +20,7 @@ const Footer = RedrawDecorator(
       <Icon icon={IconConstants.REFRESH_PLAIN} onClick={handleUpdate} />
       {!!lastUpdated && (
         <Trans i18nKey={widgetT.toI18nKey('lastUpdated')}>
-          <>Last updated: {{ time: formatRelativeTime(lastUpdated / 1000) }}</>
+          Last updated: {{ time: formatRelativeTime(lastUpdated / 1000) }}
         </Trans>
       )}
     </div>
