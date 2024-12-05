@@ -137,7 +137,7 @@ const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {
 
 export const QueueBundleActionModule = {
   moduleId: UI.Modules.QUEUE,
-  //subId: 'bundle',
+  subId: 'bundle',
 };
 
 export const QueueBundleActionMenu = {

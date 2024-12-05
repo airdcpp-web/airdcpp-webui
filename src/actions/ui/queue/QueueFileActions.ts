@@ -67,7 +67,7 @@ const QueueFileActions: UI.ActionListType<API.QueueFile> = {
 
 export const QueueFileActionModule = {
   moduleId: UI.Modules.QUEUE,
-  //subId: 'file',
+  subId: 'file',
 };
 
 export const QueueFileActionMenu = {
