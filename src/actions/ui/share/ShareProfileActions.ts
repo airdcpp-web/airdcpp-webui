@@ -139,6 +139,7 @@ export const ShareProfileRemoveAction = {
   displayName: 'Remove profile',
   access: API.AccessEnum.SETTINGS_EDIT,
   icon: IconConstants.REMOVE,
+  filter: notDefault,
   confirmation: {
     content: 'Are you sure that you want to remove the profile {{item.name}}?',
     approveCaption: 'Remove profile',
