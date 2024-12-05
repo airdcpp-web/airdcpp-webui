@@ -2,9 +2,10 @@ import * as React from 'react';
 
 import * as UI from 'types/ui';
 
-import { ActionClickHandler, ActionData } from 'decorators/ActionHandlerDecorator';
+import { ActionClickHandler } from 'decorators/ActionHandlerDecorator';
 import { parseActionMenu } from 'utils/MenuUtils';
 import { localMenuToActionMenuItems } from './helpers/localMenuBuilder';
+import { ActionData } from 'decorators/components/ActionDialog';
 
 // This should be used only for constructed menus, not for id arrays
 const hasLocalItems = <

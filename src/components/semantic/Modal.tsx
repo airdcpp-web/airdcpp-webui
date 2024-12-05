@@ -13,25 +13,26 @@ import { Translation } from 'react-i18next';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
+import { CommonModalProps, useModal } from './effects/useModal';
 
-export type ModalProps = React.PropsWithChildren<{
-  closable?: boolean;
-  onApprove?: () => Promise<void>;
-  onReject?: () => void;
+export type ModalProps = React.PropsWithChildren<
+  {
+    onReject?: () => void;
 
-  // wasClean is false when using browser navigation
-  onClose?: (wasClean: boolean) => void;
-  approveCaption?: React.ReactNode;
-  approveDisabled?: boolean;
-  fullHeight?: boolean;
-  className?: string;
-  dynamicHeight?: boolean;
+    approveCaption?: React.ReactNode;
+    approveDisabled?: boolean;
+    closable?: boolean;
 
-  // Header
-  icon?: IconType;
-  title: React.ReactNode;
-  subHeader?: React.ReactNode;
-}>;
+    fullHeight?: boolean;
+    className?: string;
+    dynamicHeight?: boolean;
+
+    // Header
+    icon?: IconType;
+    title: React.ReactNode;
+    subHeader?: React.ReactNode;
+  } & CommonModalProps
+>;
 
 const NODE_ID = 'modals-node';
 
@@ -41,25 +42,18 @@ export interface ModalHandle {
 }
 
 const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, handle) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [saving, setSaving] = React.useState(false);
-
-  // Set to true when the modal is being closed cleanly (backdrop click/action buttons)
-  // We need to clean the DOM for non-clean closures
-  const closingCleanly = React.useRef(false);
-
   const show = () => {
     setTimeout(() => {
       $(ref.current!).modal('show');
     });
   };
 
-  const hide = () => {
-    closingCleanly.current = true;
-    if (ref.current) {
-      $(ref.current).modal('hide');
-    }
-  };
+  const { ref, hide, saving } = useModal(props, {
+    onDeny: props.onReject,
+
+    closable: props.closable,
+    observeChanges: props.dynamicHeight,
+  });
 
   React.useImperativeHandle(
     handle,
@@ -69,65 +63,6 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
     }),
     [ref.current],
   );
-
-  const onHide = () => {
-    closingCleanly.current = true;
-  };
-
-  const onHidden = () => {
-    const { onClose } = props;
-    if (onClose) {
-      onClose(closingCleanly.current);
-    }
-  };
-
-  const onApprove = () => {
-    const { onApprove } = props;
-    if (onApprove) {
-      setSaving(true);
-
-      onApprove()
-        .then(hide)
-        .catch(() => setSaving(false));
-
-      return false;
-    }
-
-    return;
-  };
-
-  React.useLayoutEffect(() => {
-    const settings: SemanticUI.ModalSettings = {
-      onHidden: onHidden,
-      onHide: onHide,
-
-      onApprove: onApprove,
-      onDeny: props.onReject,
-      closable: props.closable,
-      detachable: false,
-      allowMultiple: true,
-      observeChanges: props.dynamicHeight,
-      dimmerSettings: {
-        dimmerName: NODE_ID,
-      },
-      //debug: true,
-      //verbose: true,
-      //name: 'Modal',
-    };
-
-    $(ref.current!).modal(settings);
-    show();
-
-    return () => {
-      if (!closingCleanly.current) {
-        // History navigation event, we still need to clean up the dimmer
-        if (ref.current) {
-          hide();
-          closingCleanly.current = false;
-        }
-      }
-    };
-  }, []);
 
   const { approveDisabled, fullHeight, approveCaption, className, children } = props;
   const { icon, subHeader, title } = props;

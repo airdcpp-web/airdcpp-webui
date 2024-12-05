@@ -1,5 +1,5 @@
 import Button, { ButtonProps } from 'components/semantic/Button';
-import { showAction, toActionI18nKey } from 'utils/ActionUtils';
+import { showAction, translateActionName } from 'utils/ActionUtils';
 import { IconType } from 'components/semantic/Icon';
 
 import * as UI from 'types/ui';
@@ -33,7 +33,6 @@ const ActionButton = <
     return null;
   }
 
-  const { moduleId } = moduleData;
   return (
     <ActionHandlerDecorator<ItemDataT, EntityT>>
       {({ onClickAction }) => (
@@ -47,7 +46,7 @@ const ActionButton = <
               moduleData,
             })
           }
-          caption={t(toActionI18nKey(action, moduleId), action.displayName)}
+          caption={translateActionName(action, moduleData, t)}
           {...other}
         />
       )}

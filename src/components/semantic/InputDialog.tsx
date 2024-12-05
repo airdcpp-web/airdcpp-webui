@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
 
 export interface InputFieldProps extends Omit<ConfirmDialogProps, 'onApproved'> {
-  onApproved: (inputValue: string) => void | false;
+  onApproved: (inputValue: string) => Promise<void>;
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
@@ -40,11 +40,10 @@ export class InputDialog extends React.Component<InputFieldProps, State> {
 
   onApproved = () => {
     if (!this.c.reportValidity()) {
-      return false;
+      return Promise.reject();
     }
 
-    const success = this.props.onApproved(this.state.value);
-    return success;
+    return this.props.onApproved(this.state.value);
   };
 
   render() {

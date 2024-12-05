@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -8,14 +7,13 @@ import Checkbox from 'components/semantic/Checkbox';
 
 import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
-import Icon, { IconType } from 'components/semantic/Icon';
-import {
-  ModalRouteCloseContext,
-  ModalCloseContextProps,
-} from 'decorators/ModalRouteDecorator';
-import IconConstants from 'constants/IconConstants';
 
-type ApproveHandler = (checked: boolean) => void | false;
+import Icon, { IconType } from 'components/semantic/Icon';
+import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
+import IconConstants from 'constants/IconConstants';
+import { MODAL_NODE_ID, useModal } from './effects/useModal';
+
+type ApproveHandler = (checked: boolean) => Promise<void>;
 type RejectHandler = (error: Error) => void;
 
 interface ConfirmDialogOptions {
@@ -36,145 +34,76 @@ export type ConfirmDialogProps = ConfirmDialogOptions &
     onRejected?: RejectHandler;
   }>;
 
-const NODE_ID = 'modals-node';
-//const NODE_ID = 'confirms-node';
+const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
+  const closeContext = React.useContext(ModalRouteCloseContext);
 
-class ConfirmDialog extends React.Component<ConfirmDialogProps> {
-  static contextType = ModalRouteCloseContext;
-  context: ModalCloseContextProps;
+  const [checked, setChecked] = React.useState(false);
 
-  static propTypes = {
-    // Title of the modal
-    title: PropTypes.node.isRequired,
-
-    // Content of the modal
-    content: PropTypes.node.isRequired,
-
-    // Icon to display
-    icon: PropTypes.string,
-
-    approveCaption: PropTypes.string,
-    rejectCaption: PropTypes.string,
-
-    onApproved: PropTypes.func.isRequired,
-    onRejected: PropTypes.func,
-
-    // Display a textbox if the caption is supplied
-    // The checkbox value will be provided as an argument when the promise is resolved
-    checkboxCaption: PropTypes.node,
-  };
-
-  /*static defaultProps: Pick<ConfirmDialogProps, 'approveCaption' | 'rejectCaption'> = {
-    approveCaption: 'Yes',
-    rejectCaption: 'No',
-  };*/
-
-  state = {
-    checked: false,
-  };
-
-  c: HTMLDivElement;
-
-  componentDidMount() {
-    // We can't use the same context as for modals
-    // because the dimmer wouldn't work correctly then
-    // (the new dimmer would never be set active because the dimmable object is set to dimmed already)
-    // Track https://github.com/Semantic-Org/Semantic-UI/issues/4055
-    const settings: SemanticUI.ModalSettings = {
-      //context: '#container-main',
-      onApprove: this.onApprove,
-      onDeny: this.onDeny,
-      closable: false,
-      detachable: false,
-      allowMultiple: true,
-      dimmerSettings: {
-        dimmerName: NODE_ID,
-        //selector: {
-        //  dimmer: `> .ui.dimmer.${NODE_ID}`
-        //},
-        //namespace: NODE_ID,
-      },
-      //namespace: NODE_ID,
-      //debug: true,
-      //verbose: true,
-      //selector: {
-      //  dimmer:
-      //},
-      //name: 'Confirm',
-    };
-
-    Object.assign(settings, {
-      useFlex: false,
-    });
-
-    $(this.c).modal(settings).modal('show');
-  }
-
-  onDeny = () => {
-    if (this.props.onRejected) {
-      this.props.onRejected(new Error('Denied'));
+  const onDeny = () => {
+    if (props.onRejected) {
+      props.onRejected(new Error('Denied'));
     }
   };
 
-  onApprove = () => {
-    return this.props.onApproved(this.state.checked);
+  const onApprove = () => {
+    return props.onApproved(checked);
   };
 
-  onCheckboxValueChanged = (value: boolean) => {
-    this.setState({ checked: value });
-  };
+  const { ref, saving } = useModal(
+    { onApprove },
+    {
+      onDeny,
+      closable: false,
+    },
+  );
 
-  render() {
-    const {
-      title,
-      icon,
-      checkboxCaption,
-      rejectCaption,
-      approveCaption,
-      content,
-      children,
-    } = this.props;
+  const {
+    title,
+    icon,
+    checkboxCaption,
+    rejectCaption,
+    approveCaption,
+    content,
+    children,
+  } = props;
 
-    // We can't use the basic (fully dimmed) style inside other modals
-    const basic = !this.context;
-    return ReactDOM.createPortal(
-      <div
-        ref={(c) => (this.c = c!)}
-        className={cx('ui modal confirm-dialog', { basic: basic })}
-      >
-        <div className="header">{title}</div>
-        <div className="image content">
-          <div className="image">
-            <Icon icon={icon} />
+  // We can't use the basic (fully dimmed) style inside other modals
+  const basic = !closeContext;
+  return ReactDOM.createPortal(
+    <div ref={ref} className={cx('ui modal confirm-dialog', { basic: basic })}>
+      <div className="header">{title}</div>
+      <div className="image content">
+        <div className="image">
+          <Icon icon={icon} />
+        </div>
+        <div className="description">
+          {content}
+          {children}
+          {!!checkboxCaption && (
+            <Checkbox checked={false} onChange={setChecked} caption={checkboxCaption} />
+          )}
+        </div>
+      </div>
+      <div className="actions">
+        <div className={cx('two fluid ui buttons', { inverted: basic })}>
+          <div className={cx('ui cancel red basic button', { inverted: basic })}>
+            <Icon icon={IconConstants.CANCEL} />
+            {rejectCaption}
           </div>
-          <div className="description">
-            {content}
-            {children}
-            {!!checkboxCaption && (
-              <Checkbox
-                checked={false}
-                onChange={this.onCheckboxValueChanged}
-                caption={checkboxCaption}
-              />
-            )}
+          <div
+            className={cx('ui ok green basic submit button', {
+              inverted: basic,
+              loading: saving,
+            })}
+          >
+            <Icon icon={IconConstants.SAVE_PLAIN} />
+            {approveCaption}
           </div>
         </div>
-        <div className="actions">
-          <div className={cx('two fluid ui buttons', { inverted: basic })}>
-            <div className={cx('ui cancel red basic button', { inverted: basic })}>
-              <Icon icon={IconConstants.CANCEL} />
-              {rejectCaption}
-            </div>
-            <div className={cx('ui ok green basic submit button', { inverted: basic })}>
-              <Icon icon={IconConstants.SAVE_PLAIN} />
-              {approveCaption}
-            </div>
-          </div>
-        </div>
-      </div>,
-      document.getElementById(NODE_ID)!,
-    );
-  }
-}
+      </div>
+    </div>,
+    document.getElementById(MODAL_NODE_ID)!,
+  );
+};
 
 export { ConfirmDialog };

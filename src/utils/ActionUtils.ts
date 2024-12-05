@@ -51,6 +51,14 @@ export const toActionI18nKey = (
   ]);
 };
 
+export const translateActionName = (
+  action: UI.ActionDefinition<any, any>,
+  moduleData: UI.ActionModuleData,
+  t: UI.TranslateF,
+) => {
+  return t(toActionI18nKey(action, moduleData.moduleId), action.displayName);
+};
+
 type SocketActionHandler = () => Promise<any>;
 
 export const runBackgroundSocketAction = (

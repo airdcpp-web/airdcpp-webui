@@ -21,7 +21,7 @@ export interface TableFilterDecoratorDataProps {
 }
 
 export interface TableFilterDecoratorChildProps {
-  onFilterUpdated: (value: string | number, method?: API.FilterMethod) => void;
+  onFilterUpdated: (value: string | number | null, method?: API.FilterMethod) => void;
 }
 
 export default function <PropsT>(
