@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 
 import cx from 'classnames';
 
-import Checkbox from 'components/semantic/Checkbox';
-
 import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
 
@@ -13,7 +11,7 @@ import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 import IconConstants from 'constants/IconConstants';
 import { MODAL_NODE_ID, useModal } from './effects/useModal';
 
-type ApproveHandler = (checked: boolean) => Promise<void>;
+type ApproveHandler = () => Promise<void>;
 type RejectHandler = (error: Error) => void;
 
 interface ConfirmDialogOptions {
@@ -24,8 +22,6 @@ interface ConfirmDialogOptions {
 
   approveCaption: string;
   rejectCaption: string;
-
-  checkboxCaption?: React.ReactNode;
 }
 
 export type ConfirmDialogProps = ConfirmDialogOptions &
@@ -37,35 +33,21 @@ export type ConfirmDialogProps = ConfirmDialogOptions &
 const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
   const closeContext = React.useContext(ModalRouteCloseContext);
 
-  const [checked, setChecked] = React.useState(false);
-
   const onDeny = () => {
     if (props.onRejected) {
       props.onRejected(new Error('Denied'));
     }
   };
 
-  const onApprove = () => {
-    return props.onApproved(checked);
-  };
-
   const { ref, saving } = useModal(
-    { onApprove },
+    { onApprove: props.onApproved },
     {
       onDeny,
       closable: false,
     },
   );
 
-  const {
-    title,
-    icon,
-    checkboxCaption,
-    rejectCaption,
-    approveCaption,
-    content,
-    children,
-  } = props;
+  const { title, icon, rejectCaption, approveCaption, content, children } = props;
 
   // We can't use the basic (fully dimmed) style inside other modals
   const basic = !closeContext;
@@ -79,9 +61,6 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
         <div className="description">
           {content}
           {children}
-          {!!checkboxCaption && (
-            <Checkbox checked={false} onChange={setChecked} caption={checkboxCaption} />
-          )}
         </div>
       </div>
       <div className="actions">

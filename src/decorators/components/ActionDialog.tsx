@@ -4,13 +4,13 @@
 
 import * as UI from 'types/ui';
 
-import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
 import { InputDialog } from 'components/semantic/InputDialog';
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey, toArray } from 'utils/TranslationUtils';
 
 import { upperFirst } from 'lodash';
 import { translateActionName } from 'utils/ActionUtils';
+import { CheckboxDialog, CheckboxDialogProps } from 'components/semantic/CheckboxDialog';
 
 export interface ActionData<
   ItemDataT extends UI.ActionDataValueType,
@@ -92,7 +92,7 @@ const getCommonConfirmDialogProps = <
   confirmation: UI.ActionConfirmation,
   defaultRejectCaption: string,
   t: UI.TranslateF,
-): Omit<ConfirmDialogProps, 'onApproved'> => {
+): Omit<CheckboxDialogProps, 'onApproved'> => {
   const { action, moduleData } = actionData;
   const { icon } = action;
   const { approveCaption, rejectCaption, content, checkboxCaption } = translateInput(
@@ -139,7 +139,7 @@ export const ActionDialog = <
         ? confirmation
         : confirmation(actionData.itemData!);
     return (
-      <ConfirmDialog
+      <CheckboxDialog
         onApproved={onApproved}
         onRejected={onRejected}
         {...getCommonConfirmDialogProps(actionData, options, 'No', t)}
