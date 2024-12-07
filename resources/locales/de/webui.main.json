@@ -577,7 +577,8 @@
       "editUser": "Benutzer bearbeiten",
       "editDirectory": "Verzeichnis bearbeiten",
       "removeDirectory": "Verzeichnis entfernen",
-      "addProfile": "Profil hinzufügen",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Dateien durchsuchen",
       "renameProfile": "Profil umbenennen",
       "addPath": "Pfad hinzufügen",
@@ -589,6 +590,9 @@
       "editType": "Typ editieren",
       "removeType": "Typ entfernen",
       "prompts": {
+        "cloneProfilePlaceholder": "Name eingeben",
+        "cloneProfileApprove": "Erstellen",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Name eingeben",
         "createProfileApprove": "Erstellen",
         "createProfileContent": "Name für das Profil eingeben",
@@ -857,7 +861,9 @@
         "totalSize": "Gesamtgröße",
         "totalFiles": "Alle Dateien",
         "shareProfilesPartialNote": "Dateien in der Warteschlange werden über die Funktion zur teilweisen Dateifreigabe in allen Hubs freigegeben, in denen die Freigabe nicht versteckt wurde, unabhängig von den konfigurierten Freigabeprofilen.",
-        "shareProfilesHelp": "Freigabeprofile werden für einzelne Verzeichnisse über die Seite <url>Freigabe</url> zugewiesen."
+        "shareProfilesHelp": "Freigabeprofile werden für einzelne Verzeichnisse über die Seite <url>Freigabe</url> zugewiesen.",
+        "addProfile": "Profil hinzufügen",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Skipliste"

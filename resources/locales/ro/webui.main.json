@@ -577,7 +577,8 @@
       "editUser": "Editeaza utilizator",
       "editDirectory": "Editeaza directorul",
       "removeDirectory": "Sterge directorul",
-      "addProfile": "Introduce profil",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Cauta fisiere",
       "renameProfile": "Redenumeste profilul",
       "addPath": "Introduce calea",
@@ -589,6 +590,9 @@
       "editType": "Edit type",
       "removeType": "Remove type",
       "prompts": {
+        "cloneProfilePlaceholder": "Enter name",
+        "cloneProfileApprove": "Creaza",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Enter name",
         "createProfileApprove": "Creaza",
         "createProfileContent": "Enter name for the profile",
@@ -857,7 +861,9 @@
         "totalSize": "Marime totala",
         "totalFiles": "Fisiere totale",
         "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page."
+        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page.",
+        "addProfile": "Introduce profil",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Lista evitata"

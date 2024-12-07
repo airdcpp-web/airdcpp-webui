@@ -577,7 +577,8 @@
       "editUser": "Éditer un utilisateur",
       "editDirectory": "Éditer un dossier",
       "removeDirectory": "Supprimer le dossier",
-      "addProfile": "Ajouter un profil",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Parcourir les fichiers",
       "renameProfile": "Renommer le profil",
       "addPath": "Ajouter chemin",
@@ -589,6 +590,9 @@
       "editType": "Éditer type",
       "removeType": "Retirer type",
       "prompts": {
+        "cloneProfilePlaceholder": "Entrez le nom",
+        "cloneProfileApprove": "Créer",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Entrez le nom",
         "createProfileApprove": "Créer",
         "createProfileContent": "Entrez le nom du profil",
@@ -857,7 +861,9 @@
         "totalSize": "Taille totale",
         "totalFiles": "Total des fichiers",
         "shareProfilesPartialNote": "Les fichiers en file d'attente sont partagés via la fonctionnalité de partage de fichiers partiel dans tous les hubs où le partage n'a pas été masqué, quels que soient les profils de partage configurés.",
-        "shareProfilesHelp": "Les profils de partage sont affectés à des répertoires individuels à partir du <url>Partager</url> page."
+        "shareProfilesHelp": "Les profils de partage sont affectés à des répertoires individuels à partir du <url>Partager</url> page.",
+        "addProfile": "Ajouter un profil",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Liste de sauts"

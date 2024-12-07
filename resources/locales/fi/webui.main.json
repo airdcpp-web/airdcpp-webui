@@ -109,7 +109,7 @@
       "sizeLimitsName": "Kokorajat"
     },
     "actionsCaption": "Toiminnot...",
-    "searchActions": "Search actions",
+    "searchActions": "Hakutoiminnot",
     "resetAll": "Nollaa kaikki",
     "user": "Käyttäjä",
     "hubs": "Hubit",
@@ -203,7 +203,7 @@
     "addFavoriteHub": "Lisää suosikkihubi",
     "editFavoriteHub": "Muokkaa suosikkihubia",
     "actionsCaption": "Toiminnot...",
-    "favoriteHubActions": "Favorite hub actions",
+    "favoriteHubActions": "Suosikkihubien toiminnot",
     "form": {
       "genericName": "Hubin tiedot",
       "nameName": "Nimi",
@@ -566,7 +566,7 @@
       }
     },
     "actionsCaption": "Toiminnot...",
-    "transferActions": "Transfer actions",
+    "transferActions": "Siirtojen toiminnot",
     "noActiveTransfers": "Ei aktiivisia tiedostosiirtoja"
   },
   "settings": {
@@ -577,7 +577,8 @@
       "editUser": "Muokkaa käyttäjää",
       "editDirectory": "Muokkaa kansiota",
       "removeDirectory": "Poista kansio",
-      "addProfile": "Lisää profiili",
+      "addProfile": "Luo uusi",
+      "cloneProfile": "Monista profiili",
       "browseFiles": "Selaa tiedostoja",
       "renameProfile": "Uudelleennimeä profiili",
       "addPath": "Lisää polku",
@@ -589,6 +590,9 @@
       "editType": "Muokkaa tyyppiä",
       "removeType": "Poista tyyppi",
       "prompts": {
+        "cloneProfilePlaceholder": "Syötä nimi",
+        "cloneProfileApprove": "Luo",
+        "cloneProfileContent": "Syötä nimi profiilille (monistetaan profiilista {{item.name}})",
         "createProfilePlaceholder": "Syötä nimi",
         "createProfileApprove": "Luo",
         "createProfileContent": "Syötä profiilin nimi",
@@ -857,7 +861,9 @@
         "totalSize": "Yhteiskoko",
         "totalFiles": "Tiedostojen yhteismäärä",
         "shareProfilesPartialNote": "Ladatut tiedostot jaetaan kaikissa hubeissa, joissa jakoja ei ole piilotettu, osittaisen tiedostojakotoiminnon avulla asetetuista jakoprofiileista riippumatta.",
-        "shareProfilesHelp": "Jakoprofiilit voidaan määrittää yksittäisille kansioille <url>Jaot</url>-sivulla."
+        "shareProfilesHelp": "Jakoprofiilit voidaan määrittää yksittäisille kansioille <url>Jaot</url>-sivulla.",
+        "addProfile": "Lisää profiili",
+        "cloneFromAnExistingProfile": "Luo olemassaolevasta profilista"
       },
       "sharingOptions": {
         "skiplist": "Ohituslista"
@@ -958,8 +964,8 @@
       "update": "Päivitä",
       "stop": "Lopeta",
       "configure": "Määritä",
-      "enable": "Enable",
-      "disable": "Disable",
+      "enable": "Ota käyttöön",
+      "disable": "Poista käytöstä",
       "prompts": {
         "installUrlPlaceholder": "Syötä URL-osoite",
         "installUrlApprove": "Asenna",

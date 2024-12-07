@@ -577,7 +577,8 @@
       "editUser": "Editar usuario",
       "editDirectory": "Editar directorio",
       "removeDirectory": "Eliminar carpeta",
-      "addProfile": "Añadir perfil",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Navegar por archivos",
       "renameProfile": "Renombrar perfil",
       "addPath": "Añadir ruta",
@@ -589,6 +590,9 @@
       "editType": "Editar tipo",
       "removeType": "Eliminar tipo",
       "prompts": {
+        "cloneProfilePlaceholder": "Introducir nombre",
+        "cloneProfileApprove": "Crear",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Introducir nombre",
         "createProfileApprove": "Crear",
         "createProfileContent": "Introducir nombre para el perfil",
@@ -857,7 +861,9 @@
         "totalSize": "Tamaño total",
         "totalFiles": "Archivos totales",
         "shareProfilesPartialNote": "Los archivos en cola se comparten mediante la función de compartir archivos parciales en todos los hubs en los que el compartido no está oculto con independencia del perfil de compartido configurado.",
-        "shareProfilesHelp": "Los perfiles de compartido se asignan a directorios individuales desde la página <url>Compartir</url>."
+        "shareProfilesHelp": "Los perfiles de compartido se asignan a directorios individuales desde la página <url>Compartir</url>.",
+        "addProfile": "Añadir perfil",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Archivos a no compartir"

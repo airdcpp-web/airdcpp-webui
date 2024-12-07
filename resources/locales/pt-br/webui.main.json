@@ -577,7 +577,8 @@
       "editUser": "Editar usuário",
       "editDirectory": "Editar diretório",
       "removeDirectory": "Remover diretório",
-      "addProfile": "Adicionar perfil",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Navegar nos arquivos",
       "renameProfile": "Renomear perfil",
       "addPath": "Adicionar caminho",
@@ -589,6 +590,9 @@
       "editType": "Editar tipo",
       "removeType": "Remover tipo",
       "prompts": {
+        "cloneProfilePlaceholder": "Digite nome",
+        "cloneProfileApprove": "Criar",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Digite nome",
         "createProfileApprove": "Criar",
         "createProfileContent": "Digite nome para o perfil",
@@ -857,7 +861,9 @@
         "totalSize": "Tamanho total",
         "totalFiles": "Arquivos no total",
         "shareProfilesPartialNote": "Os arquivos enfileirados são compartilhados por meio do recurso de compartilhamento parcial de arquivos em todos os hubs onde o compartilhamento não foi oculto, independentemente dos perfis de compartilhamento configurados.",
-        "shareProfilesHelp": "Os perfis de compartilhamento são atribuídos a diretórios individuais da página <url>Share</url> ."
+        "shareProfilesHelp": "Os perfis de compartilhamento são atribuídos a diretórios individuais da página <url>Share</url> .",
+        "addProfile": "Adicionar perfil",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Lista de arquivos ignorados"

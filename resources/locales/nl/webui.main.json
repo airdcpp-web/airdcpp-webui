@@ -577,7 +577,8 @@
       "editUser": "Edit gebruiker",
       "editDirectory": "Edit map",
       "removeDirectory": "Verwijder map",
-      "addProfile": "Maak profiel",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Blader door bestanden",
       "renameProfile": "Hernoem profiel",
       "addPath": "Voeg path toe",
@@ -589,6 +590,9 @@
       "editType": "Pas type aan",
       "removeType": "Verwijder type",
       "prompts": {
+        "cloneProfilePlaceholder": "Geef naam in",
+        "cloneProfileApprove": "Maak",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Geef naam in",
         "createProfileApprove": "Maak",
         "createProfileContent": "Geef naam in voor het profiel",
@@ -857,7 +861,9 @@
         "totalSize": "Totale omvang",
         "totalFiles": "Totaal aantal bestanden",
         "shareProfilesPartialNote": "Bestanden in je queue worden gedeeld via de gedeeltelijke bestandsdeel functie in alle hubs waar je share niet verborgen is, ongeacht de geconfigureerde share profielen.",
-        "shareProfilesHelp": "Share profielen zijn ttoegewezen aan individuele directories vanuit de <url>Share</url> pagina."
+        "shareProfilesHelp": "Share profielen zijn ttoegewezen aan individuele directories vanuit de <url>Share</url> pagina.",
+        "addProfile": "Maak profiel",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Oversla lijst"

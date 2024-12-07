@@ -577,7 +577,8 @@
       "editUser": "Redigera användare",
       "editDirectory": "Redigera katalog",
       "removeDirectory": "Ta bort katalog",
-      "addProfile": "Lägg till profil",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Bläddra filer",
       "renameProfile": "Döp om profil",
       "addPath": "Lägg till sökväg",
@@ -589,6 +590,9 @@
       "editType": "Redigera typ",
       "removeType": "Ta bort typ",
       "prompts": {
+        "cloneProfilePlaceholder": "Ange namn",
+        "cloneProfileApprove": "Skapa",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Ange namn",
         "createProfileApprove": "Skapa",
         "createProfileContent": "Ange profilens namn",
@@ -857,7 +861,9 @@
         "totalSize": "Total storlek",
         "totalFiles": "Totalt antal filer",
         "shareProfilesPartialNote": "Köade filer delas ut via funktionen filsamlingar/filer som inte är helt nedladdade i alla hubbar där utdelningen inte är dold, oavsett de konfigurerade utdelningsprofilerna.",
-        "shareProfilesHelp": "Utdelningsprofiler tilldelas för individuella kataloger från <url>Utdelningssidan</url> ."
+        "shareProfilesHelp": "Utdelningsprofiler tilldelas för individuella kataloger från <url>Utdelningssidan</url> .",
+        "addProfile": "Lägg till profil",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Uteslutningslista"
