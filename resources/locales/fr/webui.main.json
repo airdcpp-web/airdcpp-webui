@@ -109,7 +109,7 @@
       "sizeLimitsName": "Tailles limites"
     },
     "actionsCaption": "Actions…",
-    "searchActions": "Search actions",
+    "searchActions": "Actions de recherche",
     "resetAll": "Réinitialiser tout",
     "user": "Utilisateur",
     "hubs": "Hubs",
@@ -203,7 +203,7 @@
     "addFavoriteHub": "Ajouter un hub favori",
     "editFavoriteHub": "Éditer hub favori",
     "actionsCaption": "Actions…",
-    "favoriteHubActions": "Favorite hub actions",
+    "favoriteHubActions": "Actions du hub favori",
     "form": {
       "genericName": "Propriétés de hub",
       "nameName": "Nom",
@@ -566,7 +566,7 @@
       }
     },
     "actionsCaption": "Actions…",
-    "transferActions": "Transfer actions",
+    "transferActions": "Actions de transfert",
     "noActiveTransfers": "Pas de transfert actif"
   },
   "settings": {
@@ -577,8 +577,8 @@
       "editUser": "Éditer un utilisateur",
       "editDirectory": "Éditer un dossier",
       "removeDirectory": "Supprimer le dossier",
-      "addProfile": "Create new",
-      "cloneProfile": "Clone profile",
+      "addProfile": "Créer un nouveau profil",
+      "cloneProfile": "Cloner le profil",
       "browseFiles": "Parcourir les fichiers",
       "renameProfile": "Renommer le profil",
       "addPath": "Ajouter chemin",
@@ -592,7 +592,7 @@
       "prompts": {
         "cloneProfilePlaceholder": "Entrez le nom",
         "cloneProfileApprove": "Créer",
-        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
+        "cloneProfileContent": "Entrer un nom pour le profil (cloné depuis {{item.name}})",
         "createProfilePlaceholder": "Entrez le nom",
         "createProfileApprove": "Créer",
         "createProfileContent": "Entrez le nom du profil",
@@ -863,7 +863,7 @@
         "shareProfilesPartialNote": "Les fichiers en file d'attente sont partagés via la fonctionnalité de partage de fichiers partiel dans tous les hubs où le partage n'a pas été masqué, quels que soient les profils de partage configurés.",
         "shareProfilesHelp": "Les profils de partage sont affectés à des répertoires individuels à partir du <url>Partager</url> page.",
         "addProfile": "Ajouter un profil",
-        "cloneFromAnExistingProfile": "Clone from an existing profile"
+        "cloneFromAnExistingProfile": "Cloner depuis un profil existant"
       },
       "sharingOptions": {
         "skiplist": "Liste de sauts"
@@ -964,8 +964,8 @@
       "update": "MàJ",
       "stop": "Stop",
       "configure": "Configurer",
-      "enable": "Enable",
-      "disable": "Disable",
+      "enable": "Activer",
+      "disable": "Désactiver",
       "prompts": {
         "installUrlPlaceholder": "Entrez l'URL",
         "installUrlApprove": "Installer",

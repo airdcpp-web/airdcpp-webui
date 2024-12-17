@@ -1,10 +1,10 @@
 import 'utils/webpack';
 
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 
-// eslint-disable-next-line react/no-deprecated
-ReactDOM.render(<App />, document.getElementById('container-main'));
+const root = createRoot(document.getElementById('container-main')!);
+root.render(<App />);
 
 // https://github.com/GoogleChrome/workbox/issues/1790
 if (process.env.NODE_ENV !== 'development' && 'serviceWorker' in navigator) {
