@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 
 import Loader from 'components/semantic/Loader';
@@ -30,13 +29,6 @@ interface State extends Partial<StorageFeed> {
 }
 
 class RSS extends PureComponent<RSSProps, State> {
-  static propTypes = {
-    // Current widget settings
-    settings: PropTypes.object.isRequired,
-
-    componentId: PropTypes.string.isRequired,
-  };
-
   constructor(props: RSSProps) {
     super(props);
     const feedInfo = this.getCachedFeedInfo();

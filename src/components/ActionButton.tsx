@@ -54,16 +54,4 @@ const ActionButton = <
   );
 };
 
-/*ActionButton.propTypes = {
-  action: PropTypes.func,
-
-  itemData: PropTypes.object,
-
-  icon: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string,
-  ]),
-};*/
-
-//export default ActionHandlerDecorator<ActionButtonProps<ItemDataT>, ItemDataT>(ActionButton);
 export default ActionButton;

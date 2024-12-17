@@ -27,8 +27,12 @@ const CountInfo: React.FC<{ store: any }> = ({ store }) => {
 export type CustomTableFilter = React.ComponentType<TableFilterDecoratorProps>;
 
 export interface TableFooterProps {
+  // Elements to append to the table footer
   footerData?: React.ReactNode;
+
+  // Custom filter that will be displayed in addition to regular text filter
   customFilter?: CustomTableFilter;
+
   store: any;
   textFilterProps?: TextFilterProps;
 }

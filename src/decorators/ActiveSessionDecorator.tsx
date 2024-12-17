@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import LocalSettingStore from 'stores/LocalSettingStore';
@@ -28,11 +27,6 @@ export default function <
   class ActiveSessionDecorator extends React.Component<
     PropsT & ActiveSessionDecoratorProps<SessionT, ActionT>
   > {
-    /*static propTypes = {
-      session: PropTypes.any, // Required (cloned)
-      actions: PropTypes.object, // Required (cloned)
-    };*/
-
     readTimeout: number | undefined;
 
     setRead = (session: SessionT) => {

@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { ActionMenu } from 'components/action-menu';
@@ -57,21 +56,5 @@ const Entry: React.FC<EntryProps> = ({ entry, feedUrl, widgetT }) => {
     </div>
   );
 };
-
-/*Entry.propTypes = {
-	// Feed entry
-  entry: PropTypes.shape({
-    title: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.string,
-    ]),
-    updated: PropTypes.string, // Atom feeds
-    pubDate: PropTypes.string, // RSS feeds
-  }),
-
-  feedUrl: PropTypes.string.isRequired,
-
-  componentId: PropTypes.string.isRequired,
-};*/
 
 export default Entry;

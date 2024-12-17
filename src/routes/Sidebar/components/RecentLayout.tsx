@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import DataProviderDecorator, {
@@ -18,9 +17,16 @@ import { translate, toI18nKey } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 
 interface RecentLayoutProps {
+  // Title of the button
   entryIcon: string;
+
+  // URL for fetching the recent entries
   entryType: string;
+
+  // Renders the recent entry title
   entryTitleRenderer: (entry: API.HistoryItem) => React.ReactNode;
+
+  // Returns whether the recent entry is currently active
   hasSession: (entry: API.HistoryItem) => boolean;
 }
 
@@ -65,20 +71,6 @@ const RecentLayout: React.FC<Props> = ({
     </div>
   );
 };
-
-/*RecentLayout.propTypes = {
-  // Title of the button
-  entryIcon: PropTypes.string.isRequired,
-
-  // URL for fetching the recent entries
-  entryType: PropTypes.string.isRequired,
-
-  // Renders the recent entry title
-  entryTitleRenderer: PropTypes.func.isRequired,
-
-  // Returns whether the recent entry is currently active
-  hasSession: PropTypes.func.isRequired,
-};*/
 
 export default DataProviderDecorator<RecentLayoutProps, DataProps>(
   //RedrawDecorator<Props>(RecentLayout),

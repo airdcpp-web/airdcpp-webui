@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
@@ -13,11 +12,6 @@ interface State {
 }
 
 export class InputDialog extends React.Component<InputFieldProps, State> {
-  /*static propTypes = {
-    // Action description
-    content: PropTypes.node.isRequired,
-  };*/
-
   constructor(props: InputFieldProps) {
     super(props);
 

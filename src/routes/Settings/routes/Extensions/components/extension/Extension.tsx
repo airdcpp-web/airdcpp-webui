@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import Moment from 'moment';
 
@@ -116,24 +115,6 @@ class Extension extends React.PureComponent<
   State
 > {
   //displayName: 'Extension',
-
-  /*propTypes: {
-    npmPackage: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      version: PropTypes.string.isRequired,
-      date: PropTypes.string,
-      publisher: PropTypes.shape({
-        username: PropTypes.string,
-      }),
-    }),
-    installedPackage: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      version: PropTypes.string.isRequired,
-      author: PropTypes.string,
-    }),
-  },*/
 
   state: State = {
     installing: false,

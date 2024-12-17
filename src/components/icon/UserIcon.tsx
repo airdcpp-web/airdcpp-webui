@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import Icon, { IconProps } from 'components/semantic/Icon';
@@ -74,10 +73,5 @@ const UserIcon: React.FC<UserIconProps> = ({ flags, ...other }) => (
     title={getTitle(flags)}
   />
 );
-
-/*UserIcon.propTypes = {
-  // User flag array
-  flags: PropTypes.array.isRequired,
-};*/
 
 export default UserIcon;

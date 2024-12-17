@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import classNames from 'classnames';
@@ -8,8 +7,13 @@ import 'fomantic-ui-css/components/button.min.css';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconType;
+
+  // Show spinner
   loading?: boolean;
+
+  // Disable button (the button will be disabled automatically when 'loading' is true)
   disabled?: boolean;
+
   caption: React.ReactNode;
 }
 
@@ -37,19 +41,5 @@ const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
-
-/*Button.propTypes = {
-  // Icon class
-  icon: PropTypes.string,
-
-  // Button caption
-  caption: PropTypes.node.isRequired,
-
-  // Disable button (the button will be disabled automatically when 'loading' is true)
-  disabled: PropTypes.bool,
-
-  // Show spinner
-  loading: PropTypes.bool,
-};*/
 
 export default Button;

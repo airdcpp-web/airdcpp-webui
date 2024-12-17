@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import classNames from 'classnames';
 import { Component } from 'react';
 import { InView } from 'react-intersection-observer';
@@ -33,10 +31,6 @@ interface StatusMessageProps extends CommonMessageProps {
 }
 
 class StatusMessage extends Component<StatusMessageProps> {
-  static propTypes = {
-    message: PropTypes.object.isRequired,
-  };
-
   shouldComponentUpdate() {
     return false;
   }

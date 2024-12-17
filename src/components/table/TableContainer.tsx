@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { Table, ColumnProps } from 'fixed-data-table-2';
@@ -25,12 +24,20 @@ function convertEndToRows(pixels: number) {
 }
 
 export type TableContainerProps = React.PropsWithChildren<{
+  // ID of the current entity for non-singleton sources
   entityId?: API.IdType;
+
+  // Append class names to row (takes row data as param)
   rowClassNameGetter?: (rowData: any) => string;
+
+  // Store implementing ViewStoreMixin that contains the items
   store: any;
+
   dataLoader: any;
   t: UI.TranslateF;
   moduleId: string | string[];
+
+  // Possible ID of the current view (items will be cleared when the ID changes)
   viewId?: number | string;
 }>;
 
@@ -62,25 +69,6 @@ const formatColumnName = (
 };
 
 class TableContainer extends React.Component<TableContainerProps, State> {
-  static propTypes = {
-    /**
-     * Store implementing ViewStoreMixin that contains the items
-     */
-    store: PropTypes.object.isRequired,
-
-    /**
-     * Append class names to row (takes row data as param)
-     */
-    rowClassNameGetter: PropTypes.func,
-
-    /**
-     * ID of the current entity for non-singleton sources
-     */
-    entityId: PropTypes.any,
-
-    dataLoader: PropTypes.any.isRequired,
-  };
-
   state: State = {
     width: 0,
     height: 0,

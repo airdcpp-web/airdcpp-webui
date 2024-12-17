@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import classNames from 'classnames';
@@ -51,16 +50,5 @@ const Icon: React.FC<IconProps> = ({
     />
   );
 };
-
-/*Icon.propTypes = {
-  // Icon class
-  icon: PropTypes.node,
-
-  cornerIcon: PropTypes.string,
-
-  className: PropTypes.string,
-
-  size: PropTypes.string,
-};*/
 
 export default Icon;

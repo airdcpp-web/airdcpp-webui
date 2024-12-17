@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { maxUrgency } from 'utils/UrgencyUtils';
@@ -10,6 +9,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import * as UI from 'types/ui';
 
 export interface CountLabelProps {
+  // Urgency mapping [ urgency -> count ]
   urgencies: UI.UrgencyCountMap | null;
   empty?: boolean; // Don't show the number of urgency items
   size?: string;
@@ -47,17 +47,6 @@ const CountLabel = React.forwardRef<HTMLDivElement, CountLabelProps>(function Co
     </div>
   );
 });
-
-/*CountLabel.propTypes = {
-	// Urgency mapping [ urgency -> count ]
-  urgencies: PropTypes.object,
-
-  size: PropTypes.string,
-
-  circular: PropTypes.bool,
-
-  empty: PropTypes.bool,
-};*/
 
 // Fade out the label when there are no counts
 const AnimatedCountLabel: React.FC<CountLabelProps> = (props) => {

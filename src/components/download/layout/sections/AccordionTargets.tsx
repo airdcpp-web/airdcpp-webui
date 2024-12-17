@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import IconConstants from 'constants/IconConstants';
@@ -16,20 +15,16 @@ import { PathDownloadHandler } from '../../types';
 import PathList from './PathList';
 
 interface AccordionTargetsProps {
+  // Grouped paths to list
   groupedPaths: API.GroupedPath[];
+
+  // Function handling the path selection. Receives the selected path as argument.
   downloadHandler: PathDownloadHandler;
+
   t: UI.TranslateF;
 }
 
 class AccordionTargets extends Component<AccordionTargetsProps> {
-  static propTypes = {
-    // Function handling the path selection. Receives the selected path as argument.
-    downloadHandler: PropTypes.func.isRequired,
-
-    // Grouped paths to list
-    groupedPaths: PropTypes.array.isRequired,
-  };
-
   formatParent = (parent: API.GroupedPath) => {
     const { downloadHandler, t } = this.props;
     return (

@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import { Component } from 'react';
 
 import Dropdown from 'components/semantic/Dropdown';
@@ -12,18 +11,15 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 interface ShareProfileSelectorProps {
+  // Callback after selecting a profile
   onProfileChanged: (profileId: number) => void;
+
   sessionT: UI.ModuleTranslator;
 }
 
 class ShareProfileSelector extends Component<
   ShareProfileSelectorProps & ShareProfileDecoratorChildProps
 > {
-  /*static propTypes = {
-    // Callback after selecting a profile
-    onProfileChanged: PropTypes.func.isRequired,
-  };*/
-
   onClick = (profile: API.ShareProfile) => {
     this.props.onProfileChanged(profile.id);
   };

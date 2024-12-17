@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import cx from 'classnames';
 
@@ -32,13 +31,5 @@ const FormattedFile: React.FC<FormattedFileProps> = ({
     </div>
   );
 };
-
-/*FormattedFile.propTypes = {
-  onClick: PropTypes.func,
-
-  typeInfo: PropTypes.object.isRequired,
-
-  caption: PropTypes.node.isRequired,
-};*/
 
 export default FormattedFile;

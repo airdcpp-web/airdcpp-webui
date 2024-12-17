@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import classNames from 'classnames';
 
@@ -24,53 +23,33 @@ export type SuggestFieldProps<SuggestionT> = Omit<
   'inputProps'
 > &
   React.PropsWithChildren<{
+    // Default input value to show
+    // The input will also be updated accordingly when a different stored value is received
     defaultValue?: string;
+
+    // Disables the field action button
     disabled?: boolean;
+
+    // Providing a button element makes the input accept custom inputs when pressing enter
+    // The same submitHandler is called but without suggestion object
     button?: React.ReactElement<ButtonProps>;
+
     autoFocus?: boolean;
     placeholder?: string;
     className?: string;
     onSuggestionsClearRequested: () => void;
+
+    // Function to call when the input text was changed
     onChange?: (text: string) => void;
 
+    // Function to call when selecting suggestions
+    // Receives the suggestion value and the suggestion object (only if selecting a suggestion)
     submitHandler?: SubmitHandlerType<SuggestionT>;
   }>;
 
 class SuggestField<SuggestionT = any> extends React.Component<
   SuggestFieldProps<SuggestionT>
 > {
-  static propTypes = {
-    /**
-     * Function to call when selecting suggestions
-     * Receives the suggestion value and the suggestion object (only if selecting a suggestion)
-     */
-    submitHandler: PropTypes.func,
-
-    /**
-     * Function to call when the input text was changed
-     */
-    onChange: PropTypes.func,
-
-    /**
-     * Providing a button element makes the input accept custom inputs when pressing enter
-     * The same submitHandler is called but without suggestion object
-     */
-    button: PropTypes.element,
-
-    placeholder: PropTypes.string,
-
-    /**
-     * Default input value to show
-     * The input will also be updated accordingly when a different stored value is received
-     */
-    defaultValue: PropTypes.string,
-
-    /**
-     * Disables the field action button
-     */
-    disabled: PropTypes.bool,
-  };
-
   static defaultProps = {
     autoFocus: true,
     defaultValue: '',

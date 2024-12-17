@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import { InView } from 'react-intersection-observer';
 
@@ -31,11 +30,6 @@ const Author: React.FC<AuthorProps> = ({ message, dropdownContext }) => (
   </div>
 );
 
-/*Author.propTypes = {
-  message: PropTypes.object.isRequired,
-  dropdownContext: PropTypes.string.isRequired,
-};*/
-
 interface ChatMessageProps extends CommonMessageProps {
   message: API.ChatMessage;
   dropdownContext: string;
@@ -43,11 +37,6 @@ interface ChatMessageProps extends CommonMessageProps {
 
 // Main message types
 class ChatMessage extends React.Component<ChatMessageProps> {
-  static propTypes = {
-    message: PropTypes.object.isRequired,
-    dropdownContext: PropTypes.string.isRequired,
-  };
-
   shouldComponentUpdate() {
     return false;
   }

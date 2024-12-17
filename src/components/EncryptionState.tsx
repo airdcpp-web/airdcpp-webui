@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import Popup from 'components/semantic/Popup';
@@ -69,18 +68,12 @@ const InfoMessage: React.FC<InfoMessageProps> = ({ info, encryption }) => (
 interface EncryptionStateProps
   extends Partial<Pick<SemanticUI.PopupSettings, 'boundary'>> {
   encryption?: API.EncryptionInfo;
+
+  // Show the lock icon even when there is no encryption
   alwaysVisible?: boolean;
 }
 
 class EncryptionState extends React.PureComponent<EncryptionStateProps> {
-  static propTypes = {
-    encryption: PropTypes.object,
-    boundary: PropTypes.string,
-
-    // Show the lock icon even when there is no encryption
-    alwaysVisible: PropTypes.bool,
-  };
-
   getChildren = () => {
     const { encryption } = this.props;
 

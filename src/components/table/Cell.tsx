@@ -275,14 +275,6 @@ export const FileDownloadCell = <
   />
 );
 
-/*FileDownloadCell.propTypes = {
-  rowDataGetter: PropTypes.func, // REQUIRED
-  cellData: PropTypes.any, // REQUIRED
-  userGetter: PropTypes.func.isRequired,
-  clickHandlerGetter: PropTypes.func,
-  downloadHandler: PropTypes.func.isRequired,
-};*/
-
 // eslint-disable-next-line max-len
 export interface CheckboxCellProps
   extends Omit<RowWrapperCellChildProps<boolean, any>, 'onChange'>,
@@ -302,9 +294,3 @@ export const CheckboxCell: React.FC<CheckboxCellProps> = ({
     {...props}
   />
 );
-
-/*CheckboxCell.propTypes = {
-  rowDataGetter: PropTypes.func, // REQUIRED
-  cellData: PropTypes.bool, // REQUIRED
-  onChange: PropTypes.func.isRequired,
-};*/

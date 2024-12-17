@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import Icon, { IconType } from 'components/semantic/Icon';
@@ -7,10 +6,20 @@ import classNames from 'classnames';
 
 interface LayoutHeaderProps {
   className?: string;
+
+  // Size of the header
   size?: string;
+
+  // Icon to display
   icon?: IconType;
+
+  // Component to display on the right side of the header
   rightComponent?: React.ReactNode;
+
+  // Header title
   title: React.ReactNode;
+
+  // Subheader
   subHeader?: React.ReactNode;
 }
 
@@ -44,22 +53,5 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
     </div>
   );
 };
-
-/*LayoutHeader.propTypes = {
-	// Header title
-  title: PropTypes.node.isRequired,
-
-	// Subheader
-  subHeader: PropTypes.node,
-
-	// Icon to display
-  icon: PropTypes.node,
-
-	// Component to display on the right side of the header
-  rightComponent: PropTypes.node,
-
-	// Size of the header
-  size: PropTypes.string,
-};*/
 
 export default LayoutHeader;

@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
@@ -30,20 +29,5 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
     <span className="session-name">{name}</span>
   </RouterMenuItemLink>
 );
-
-/*SessionMenuItem.propTypes = {
-  // Item URL
-  url: PropTypes.string.isRequired,
-
-  name: PropTypes.node.isRequired,
-
-  unreadInfoStore: PropTypes.object.isRequired,
-
-  status: PropTypes.node.isRequired,
-
-  sessionItem: PropTypes.object.isRequired,
-
-  pushSession: PropTypes.func.isRequired,
-};*/
 
 export default SessionMenuItem;

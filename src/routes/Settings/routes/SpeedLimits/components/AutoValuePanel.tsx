@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Component } from 'react';
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
@@ -9,19 +8,14 @@ import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form
 import * as API from 'types/api';
 
 interface AutoValuePanelProps {
+  // Type of the value section (from the setting key)
   type: string;
+
+  // Form items to list
   keys: string[];
 }
 
 class AutoValuePanel extends Component<AutoValuePanelProps> {
-  static propTypes = {
-    // Form items to list
-    keys: PropTypes.array.isRequired,
-
-    // Type of the value section (from the setting key)
-    type: PropTypes.string.isRequired,
-  };
-
   getAutoKey = () => {
     return `${this.props.type}_auto_limits`;
   };

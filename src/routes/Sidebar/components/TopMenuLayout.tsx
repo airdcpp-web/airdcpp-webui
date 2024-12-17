@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
@@ -117,15 +116,5 @@ const TopMenuLayout = <
     <div className="session-layout">{children}</div>
   </div>
 );
-
-/*TopMenuLayout.propTypes = {
-  itemHeaderTitle: PropTypes.node.isRequired,
-  itemHeaderIcon: PropTypes.node.isRequired,
-  activeItem: PropTypes.object,
-  newButton: PropTypes.node,
-  sessionMenuItems: PropTypes.array.isRequired,
-  closeAction: PropTypes.func.isRequired,
-  listActionMenuGetter: PropTypes.func.isRequired,
-};*/
 
 export default TopMenuLayout;

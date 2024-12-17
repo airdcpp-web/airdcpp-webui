@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import 'fomantic-ui-css/components/flag.min.css';
@@ -16,9 +15,5 @@ const FormattedIp: React.FC<FormattedIpProps> = ({ item }) => (
     {item.str}
   </div>
 );
-
-/*FormattedIp.propTypes = {
-  item: PropTypes.object.isRequired,
-};*/
 
 export default FormattedIp;

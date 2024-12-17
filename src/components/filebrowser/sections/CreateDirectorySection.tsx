@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import Accordion from 'components/semantic/Accordion';
@@ -35,8 +34,3 @@ export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({
     </div>
   </Accordion>
 );
-
-CreateDirectorySection.propTypes = {
-  // Function to call with the value
-  handleAction: PropTypes.func.isRequired,
-};

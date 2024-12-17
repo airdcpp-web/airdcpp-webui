@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import { Component } from 'react';
 import classNames from 'classnames';
 
@@ -143,12 +142,32 @@ export type FormFieldChangeHandler<ValueType = UI.FormValueMap> = (
 
 export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap>
   extends Pick<FormContext, 'location'> {
+  // Form items to list
   fieldDefinitions: UI.FormFieldDefinition[];
+
+  // Source value to use for initial data
+  // If no value is provided, the initial value is initialized
+  // with the default one from definitions
   sourceValue?: ValueType | null;
+
+  // Called when the form is saved
+  // Receives the changed fields as parameter
+  // Must return promise
   onSave: FormSaveHandler<ValueType>;
+
+  // Optional callback for appending field settings
+  // Receives the field key, field definitions and the current form value as parameters
   onFieldSetting?: FormFieldSettingHandler<ValueType>;
+
+  // Optional callback that is called when a field value was changed
+  // Receives the field key, current form value value and boolean whether
+  // the field value is different from the source value
+  // The function may return a promise containing new setting objects to be set as user selections
   onFieldChanged?: FormFieldChangeHandler<ValueType>;
+
+  // Header for the form
   title?: string;
+
   className?: string;
   optionTitleFormatter?: UI.OptionTitleParser;
   id?: string;
@@ -163,38 +182,6 @@ type Props<ValueType extends Partial<UI.FormValueMap>> = FormProps<ValueType>;
 class Form<
   ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap,
 > extends Component<Props<ValueType>> {
-  /*static propTypes = {
-    // Form items to list
-    fieldDefinitions: PropTypes.array.isRequired,
-
-    // Optional callback for appending field settings
-    // Receives the field key, field definitions and the current form value as parameters
-    onFieldSetting: PropTypes.func,
-
-    // Called when the form is saved
-    // Receives the changed fields as parameter
-    // Must return promise
-    onSave: PropTypes.func.isRequired,
-
-    // Optional callback that is called when a field value was changed
-    // Receives the field key, current form value value and boolean whether 
-    // the field value is different from the source value
-    // The function may return a promise containing new setting objects to be set as user selections
-    onFieldChanged: PropTypes.func,
-
-    // Optional callback that is called when the settings are received from the server
-    // Receives the new source value object as parameter
-    onSourceValueUpdated: PropTypes.func,
-
-    // Source value to use for initial data
-    // If no value is provided, the initial value is initialized
-    // with the default one from definitions
-    value: PropTypes.object,
-
-    // Header for the form
-    title: PropTypes.node,
-  };*/
-
   state: State<ValueType>;
 
   sourceValue: Partial<ValueType>;

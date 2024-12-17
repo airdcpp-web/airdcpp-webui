@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import TableActions from 'actions/TableActions';
@@ -25,32 +24,18 @@ export type VirtualTableProps = Omit<TableFooterProps, 't'> &
   Omit<TableContainerProps, 'store' | 'dataLoader' | 't'> &
   React.PropsWithChildren<{
     store: any;
+
+    // Store containing sessions (must be provided together with entityId)
     sessionStore?: any;
+
+    // Filter that is always applied for source items (those will never be displayed or included in the total count)
     sourceFilter?: API.TableFilter;
+
+    // Returns a node to render if there are no rows to display
     emptyRowsNodeGetter?: () => React.ReactNode;
   }>;
 
 class VirtualTable extends React.PureComponent<VirtualTableProps> {
-  static propTypes = {
-    // Elements to append to the table footer
-    footerData: PropTypes.node,
-
-    // Returns a node to render if there are no rows to display
-    emptyRowsNodeGetter: PropTypes.func,
-
-    // Possible ID of the current view (items will be cleared when the ID changes)
-    viewId: PropTypes.any,
-
-    // Store containing sessions (must be provided together with entityId)
-    sessionStore: PropTypes.object,
-
-    // Custom filter that will be displayed in addition to regular text filter
-    customFilter: PropTypes.elementType,
-
-    // Filter that is always applied for source items (those will never be displayed or included in the total count)
-    sourceFilter: PropTypes.object,
-  };
-
   dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate());
   unsubscribe = this.props.store.listen(
     this.dataLoader.onItemsUpdated.bind(this.dataLoader),

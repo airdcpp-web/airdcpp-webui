@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import Button from 'components/semantic/Button';
@@ -18,7 +17,10 @@ import { Trans } from 'react-i18next';
 
 interface LimiterConfigProps {
   limit: number;
+
+  // Limiter API setting key to use for saving
   settingKey: string;
+
   hide: () => void;
   unit: string;
   t: UI.TranslateF;
@@ -31,15 +33,6 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({
   unit,
   t,
 }) => {
-  /*static propTypes = {
-    limit: PropTypes.number.isRequired,
-
-    // Limiter API setting key to use for saving
-    settingKey: PropTypes.string.isRequired,
-
-    hide: PropTypes.func.isRequired,
-  };*/
-
   const save = (newLimit = 0) => {
     runBackgroundSocketAction(
       () =>

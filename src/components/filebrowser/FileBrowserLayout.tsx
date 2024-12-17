@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
@@ -24,10 +23,18 @@ import './style.css';
 
 export interface FileBrowserLayoutProps
   extends Pick<FileItemListProps, 'itemIconGetter'> {
+  // Local storage ID used for saving/loading the last path
+  // This will have priority over initialPath
   historyId?: string;
+
+  // Initial directory to show
   initialPath: string;
+
   currentFileName?: string;
+
+  // Function to call when changing the directory. Receives the path as param.
   onDirectoryChanged: (path: string) => void;
+
   onFileSelected?: (fileName: string) => void;
   selectedNameFormatter?: SelectedNameFormatter;
   selectMode: UI.FileSelectModeEnum;
@@ -46,23 +53,6 @@ const joinDirectory = (path: string, directoryName: string, separator: string) =
 
 type Props = FileBrowserLayoutProps & WithTranslation;
 class FileBrowserLayout extends Component<Props, State> {
-  static propTypes = {
-    // Local storage ID used for saving/loading the last path
-    // This will have priority over initialPath
-    historyId: PropTypes.string,
-
-    // Initial directory to show
-    initialPath: PropTypes.string.isRequired,
-
-    // Function to call when changing the directory. Receives the path as param.
-    onDirectoryChanged: PropTypes.func.isRequired,
-
-    // Getter for additional content displayed next to file/directory items
-    itemIconGetter: PropTypes.func,
-
-    selectedNameFormatter: PropTypes.func,
-  };
-
   static defaultProps: Pick<Props, 'initialPath'> = {
     initialPath: '',
   };

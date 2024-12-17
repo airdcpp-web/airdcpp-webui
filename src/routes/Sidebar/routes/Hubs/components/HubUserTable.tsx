@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import HubSessionStore from 'stores/HubSessionStore';
@@ -39,10 +38,6 @@ interface HubUserTableProps {
 }
 
 class HubUserTable extends React.Component<HubUserTableProps> {
-  static propTypes = {
-    session: PropTypes.object, // required
-  };
-
   rowClassNameGetter = (user: API.HubUser) => {
     return user.flags.join(' ');
   };

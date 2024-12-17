@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Component } from 'react';
 import isEqual from 'lodash/isEqual';
 
@@ -17,27 +16,17 @@ import { EmptyDropdownCaption } from 'components/semantic/EmptyDropdown';
 import { buildMenu } from 'components/action-menu/builder/slidingMenuBuilder';
 
 interface PriorityMenuProps {
+  // Priority object
   itemPrio: API.QueuePriority;
+
+  // Item with priority properties
   item: API.QueueItemBase;
+
   prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityEnum) => Promise<any>;
   t: UI.TranslateF;
 }
 
 class PriorityMenu extends Component<PriorityMenuProps> {
-  static propTypes = {
-    /**
-     * Priority object
-     */
-    itemPrio: PropTypes.object.isRequired,
-
-    /**
-     * Item with priority properties
-     */
-    item: PropTypes.object.isRequired,
-
-    prioAction: PropTypes.func.isRequired,
-  };
-
   setPriority = (priorityId: API.QueuePriorityEnum) => {
     const { item, prioAction, t } = this.props;
     return runBackgroundSocketAction(() => prioAction(item, priorityId), t);

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import invariant from 'invariant';
 
@@ -13,13 +12,25 @@ import 'fomantic-ui-css/components/dropdown.min.css';
 import IconConstants from 'constants/IconConstants';
 
 export type DropdownProps = React.PropsWithChildren<{
+  // If caption isn't specified, the icon will be used as main trigger
   triggerIcon?: IconType;
+
+  // Direction to render
   direction?: 'auto' | 'upward' | 'downward';
   settings?: SemanticUI.DropdownSettings;
+
+  // Returns DOM node used for checking whether the dropdown can fit on screen
   contextElement?: string;
+
+  // Render as button
   button?: boolean;
+
+  // Show trigger icon on the left side of the caption instead of after it
   leftIcon?: boolean;
+
+  // Node to render as caption
   caption?: React.ReactNode;
+
   className?: string;
   captionIcon?: IconType;
   selection?: boolean;
@@ -35,28 +46,6 @@ interface State {
 const ANIMATION_DURATION = 200;
 
 class Dropdown extends React.PureComponent<DropdownProps, State> {
-  static propTypes = {
-    // Node to render as caption
-    caption: PropTypes.node,
-
-    // If caption isn't specified, the icon will be used as main trigger
-    triggerIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-
-    // Show trigger icon on the left side of the caption instead of after it
-    leftIcon: PropTypes.bool,
-
-    // Direction to render
-    direction: PropTypes.string,
-
-    // Returns DOM node used for checking whether the dropdown can fit on screen
-    contextElement: PropTypes.string,
-
-    // Render as button
-    button: PropTypes.bool,
-
-    settings: PropTypes.object,
-  };
-
   static defaultProps: Pick<DropdownProps, 'direction' | 'leftIcon'> = {
     direction: 'auto',
     leftIcon: false,

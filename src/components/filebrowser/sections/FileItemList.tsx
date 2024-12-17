@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import FormattedFile from 'components/format/FormattedFile';
@@ -14,8 +13,13 @@ export type FileItemClickHandler = (item: API.FilesystemItem) => void;
 
 export interface FileItemProps {
   item: API.FilesystemItem;
+
+  // Function handling the path selection. Receives the selected path as argument.
   itemClickHandler: FileItemClickHandler;
+
+  // Getter for additional content displayed next to file/directory items
   itemIconGetter?: FileItemIconGetter;
+
   t: UI.TranslateF;
   selectMode: UI.FileSelectModeEnum;
   selected?: boolean;
@@ -59,17 +63,6 @@ export interface FileItemListProps
 }
 
 class FileItemList extends React.Component<FileItemListProps> {
-  static propTypes = {
-    // Function handling the path selection. Receives the selected path as argument.
-    itemClickHandler: PropTypes.func.isRequired,
-
-    // Function handling the path selection. Receives the selected path as argument.
-    itemIconGetter: PropTypes.func,
-
-    // Array of path objects to list
-    items: PropTypes.array.isRequired,
-  };
-
   sort = (a: API.FilesystemItem, b: API.FilesystemItem) => {
     if (
       a.type.id !== b.type.id &&

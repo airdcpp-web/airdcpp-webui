@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import classNames from 'classnames';
@@ -43,15 +42,5 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = ({
     </div>
   );
 };
-
-/*MenuItemLink.propTypes = {
-  //children: PropTypes.any.isRequired,
-
-  icon: PropTypes.string,
-
-  onClick: PropTypes.func.isRequired,
-
-  active: PropTypes.bool,
-};*/
 
 export default MenuItemLink;

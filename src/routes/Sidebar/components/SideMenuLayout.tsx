@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
@@ -49,14 +48,5 @@ const SideMenuLayout = <
     </Grid>
   );
 };
-
-/*SideMenuLayout.propTypes = {
-  newButton: PropTypes.node,
-  sessionMenuItems: PropTypes.array.isRequired,
-
-  itemHeaderTitle: PropTypes.node,
-  itemHeaderIcon: PropTypes.node,
-  itemHeaderDescription: PropTypes.node.isRequired,
-};*/
 
 export default SideMenuLayout;

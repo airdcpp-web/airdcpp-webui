@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useMemo, useEffect } from 'react';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
@@ -11,8 +10,13 @@ import 'fomantic-ui-css/components/popup.min.css';
 type ChildType = React.ReactElement<any>;
 
 export interface PopupProps {
+  // Additional settings for the Semantic UI popup
   settings?: SemanticUI.PopupSettings;
+
+  // Element that will trigger the popup when clicking on it
   trigger: React.ReactNode;
+
+  // Show the popup on hover instead of when clicking the element
   onHover?: boolean;
   position?: string;
   triggerClassName?: string;
@@ -52,21 +56,6 @@ interface State {
   visible: boolean;
 }
 class Popup extends React.PureComponent<PopupProps, State> {
-  static propTypes = {
-    // Additional settings for the Semantic UI popup
-    settings: PropTypes.object,
-
-    // Element that will trigger the popup when clicking on it
-    trigger: PropTypes.node.isRequired,
-
-    // Show the popup on hover instead of when clicking the element
-    onHover: PropTypes.bool,
-
-    position: PropTypes.string,
-
-    triggerClassName: PropTypes.string,
-  };
-
   static defaultProps: Pick<PopupProps, 'position' | 'triggerClassName'> = {
     position: 'bottom left',
     triggerClassName: '',

@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import Icon, { IconProps } from 'components/semantic/Icon';
@@ -13,10 +12,5 @@ interface HubIconProps extends IconProps {
 const HubIcon: React.FC<HubIconProps> = ({ hub, ...other }) => (
   <Icon {...other} icon={hubOnlineStatusToColor(hub.connect_state.id) + ' sitemap'} />
 );
-
-/*HubIcon.propTypes = {
-  // Hub object
-  hub: PropTypes.object.isRequired,
-};*/
 
 export default HubIcon;

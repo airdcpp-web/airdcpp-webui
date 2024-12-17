@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Component } from 'react';
 
 import 'fomantic-ui-css/components/accordion';
@@ -13,10 +12,6 @@ type AccordionProps = React.PropsWithChildren<{
 }>;
 
 class Accordion extends Component<AccordionProps> {
-  static propTypes = {
-    controlled: PropTypes.bool,
-  };
-
   static defaultProps: Pick<AccordionProps, 'className'> = {
     className: '',
   };

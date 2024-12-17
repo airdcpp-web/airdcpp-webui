@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import classNames from 'classnames';
 
@@ -60,11 +59,5 @@ const FileIcon: React.FC<FileIconProps> = ({ typeInfo, onClick, size = 'large' }
 
   return <i className={iconClass} />;
 };
-
-/*FileIcon.propTypes = {
-  onClick: PropTypes.func,
-
-  typeInfo: PropTypes.object.isRequired,
-};*/
 
 export default FileIcon;

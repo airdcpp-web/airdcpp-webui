@@ -1,12 +1,9 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import Icon, { IconType } from 'components/semantic/Icon';
 
 import classNames from 'classnames';
 
-//export type MessageDescriptionType = React.ReactElement<React.HTMLAttributes<HTMLDivElement>> |
-//  string | null | undefined;
 export type MessageDescriptionType =
   | React.ReactElement<React.HTMLAttributes<HTMLDivElement>>
   | string
@@ -53,17 +50,5 @@ const Message: React.FC<MessageProps> = ({
     </div>
   );
 };
-
-/*Message.propTypes = {
-	// Message title
-  title: PropTypes.node,
-
-	// Message content
-  description: PropTypes.node,
-
-  isError: PropTypes.bool,
-
-  icon: PropTypes.string,
-};*/
 
 export default Message;

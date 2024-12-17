@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Component } from 'react';
 
 import SocketService from 'services/SocketService';
@@ -26,14 +25,6 @@ export interface RemoteSuggestFieldProps<SuggestionT extends Record<string, any>
 class RemoteSuggestField<SuggestionT extends Record<string, any>> extends Component<
   RemoteSuggestFieldProps<SuggestionT>
 > {
-  static propTypes = {
-    valueField: PropTypes.string.isRequired,
-
-    descriptionField: PropTypes.string.isRequired,
-
-    url: PropTypes.string.isRequired,
-  };
-
   state = {
     suggestions: [] as SuggestionT[],
   };

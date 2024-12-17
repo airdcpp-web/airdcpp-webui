@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { CellProps } from 'fixed-data-table-2';
 
 import * as UI from 'types/ui';
@@ -32,12 +31,6 @@ interface State {
 
 // Generic wrapper for all cells that will handle data loading
 class RowWrapperCell extends React.Component<RowWrapperCellProps> {
-  static propTypes = {
-    rowIndex: PropTypes.number, // required
-    dataLoader: PropTypes.object.isRequired,
-    width: PropTypes.number, // required
-  };
-
   state: State = {
     rowData: null,
   };

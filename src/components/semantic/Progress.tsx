@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import classNames from 'classnames';
 
@@ -28,11 +27,5 @@ const Progress: React.FC<ProgressProps> = ({ className, percent, caption }) => (
     {!!caption && <div className="label">{caption}</div>}
   </div>
 );
-
-Progress.propTypes = {
-  percent: PropTypes.number.isRequired,
-  caption: PropTypes.element,
-  className: PropTypes.string,
-};
 
 export default Progress;

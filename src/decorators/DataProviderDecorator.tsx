@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import invariant from 'invariant';
 import { merge } from 'lodash';
@@ -46,19 +45,27 @@ export interface DataProviderDecoratorSettings<
   PropsT extends object,
   DataT extends object,
 > {
+  // Key-value map of prop names and API urls
+  // Value may also be a function which receives the props and SocketService as argument and performs the data fetch
   urls: {
     [key: string]:
       | ((props: PropsT, socket: APISocket) => Promise<object | undefined>)
       | string;
   };
 
+  // Called when the socket is connected
   onSocketConnected?: SocketConnectHandler<DataT, PropsT>;
 
+  // Key-value map of prop names and functions
+  // Converter functions receives the fetched data as parameter
   dataConverters?: {
     [key: string]: DataConverter<PropsT>;
   };
 
+  // Text to show while loading data (use null to disable spinner)
   loaderText?: React.ReactNode;
+
+  // Should the decorated components handle data fetching failures?
   renderOnError?: boolean;
 }
 
@@ -87,35 +94,6 @@ export default function <PropsT extends object, DataT extends object>(
     State<DataT>
   > {
     //displayName: 'DataProviderDecorator',
-
-    /*propTypes: {
-      // Key-value map of prop names and API urls
-      // Value may also be a function which receives the props and SocketService as argument and performs the data fetch
-      urls: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.func,
-      ]), // REQUIRED
-
-      // Called when the socket is connected
-      // 
-      // onSocketConnected(addSocketListener, {
-      //   refetchData(),
-      //   mergeData(newData),
-      //   props,
-      // })
-      onSocketConnected: PropTypes.func,
-
-      // Key-value map of prop names and functions 
-      // Converter functions receives the fetched data as parameter
-      dataConverters: PropTypes.object,
-
-      // Text to show while loading data (use null to disable spinner)
-      loaderText: PropTypes.node,
-
-      // Should the decorated components handle data fetching failures?
-      renderOnError: PropTypes.bool,
-    },*/
-
     mounted = false;
 
     state: State<DataT> = {

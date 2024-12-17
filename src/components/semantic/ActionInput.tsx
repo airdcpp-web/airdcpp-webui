@@ -1,29 +1,17 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import Button, { ButtonProps } from 'components/semantic/Button';
 
 export interface ActionInputProps extends Omit<ButtonProps, 'type'> {
+  // Function to call with the value
   handleAction: (value: string) => void;
+
+  // Input placeholder
   placeholder: string;
   type?: string;
 }
 
 class ActionInput extends React.PureComponent<ActionInputProps> {
-  static propTypes = {
-    // Button caption
-    caption: PropTypes.string.isRequired,
-
-    // Button icon
-    icon: PropTypes.string.isRequired,
-
-    // Input placeholder
-    placeholder: PropTypes.string.isRequired,
-
-    // Function to call with the value
-    handleAction: PropTypes.func.isRequired,
-  };
-
   static defaultProps: Pick<ActionInputProps, 'type'> = {
     type: 'text',
   };

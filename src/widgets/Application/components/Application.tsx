@@ -41,8 +41,6 @@ const Statistics = StatisticsDecorator<any, StatisticsProps>(
 export type ApplicationProps = UI.WidgetProps;
 
 class Application extends PureComponent<ApplicationProps> {
-  static propTypes = {};
-
   render() {
     const { widgetT } = this.props;
     return (

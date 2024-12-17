@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import classNames from 'classnames';
@@ -7,11 +6,19 @@ import 'fomantic-ui-css/components/checkbox';
 import 'fomantic-ui-css/components/checkbox.min.css';
 
 export interface CheckboxProps {
+  // Handler for state changes (receives bool as argument)
   onChange: (checked: boolean) => void;
+
+  // Display type (slider or toggle), leave undefined for default
   type?: string;
+
+  // Checkbox caption
   caption?: React.ReactNode;
+
   disabled?: boolean;
   floating?: boolean;
+
+  // Selection state
   checked: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -20,23 +27,6 @@ export interface CheckboxProps {
 }
 
 class Checkbox extends React.PureComponent<CheckboxProps> {
-  static propTypes = {
-    // Selection state
-    checked: PropTypes.bool.isRequired,
-
-    // Handler for state changes (receives bool as argument)
-    onChange: PropTypes.func.isRequired,
-
-    // Checkbox caption
-    caption: PropTypes.node,
-
-    // Display type (slider or toggle), leave undefined for default
-    type: PropTypes.string,
-
-    disabled: PropTypes.bool,
-    floating: PropTypes.bool,
-  };
-
   c: HTMLDivElement;
   componentDidMount() {
     const settings: SemanticUI.CheckboxSettings = {

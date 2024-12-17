@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 
 import ActionInput from 'components/semantic/ActionInput';
@@ -36,14 +35,6 @@ const HubActionPrompt: React.FC<HubActionPromptProps> = ({ icon, title, content 
     </div>
   );
 };
-
-/*HubActionPrompt.propTypes = {
-  // Message title
-  title: PropTypes.node.isRequired,
-
-  // Children
-  content: PropTypes.node.isRequired,
-};*/
 
 interface PasswordPromptProps {
   hub: API.Hub;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 import classNames from 'classnames';
 
@@ -9,49 +8,26 @@ import 'fomantic-ui-css/components/breadcrumb.min.css';
 import { Section, SelectedSection, SelectedNameFormatter } from './Section';
 
 interface BrowserBarProps {
+  // Function handling the path selection. Receives the selected path as argument.
   itemClickHandler: (name: string) => void;
+
   rootName: string;
+
+  // Root path that will be appended to the beginning of the returned path
   rootPath: string;
+
   separator: string;
+
+  // Current path to display
   path: string;
+
+  // Function returning the formated element for the current directory name
+  // Receives the caption element and path token as parameters
   selectedNameFormatter?: SelectedNameFormatter;
   entityId?: string; // Used just for re-rendering
 }
 
 class BrowserBar extends PureComponent<BrowserBarProps> {
-  static propTypes = {
-    /**
-     * Function handling the path selection. Receives the selected path as argument.
-     */
-    itemClickHandler: PropTypes.func.isRequired,
-
-    /**
-     * Function handling the path selection. Receives the selected path as argument.
-     */
-    rootName: PropTypes.string,
-
-    /**
-     * Root path that will be appended to the beginning of the returned path
-     */
-    rootPath: PropTypes.string.isRequired,
-
-    /**
-     * Root path that will be appended to the beginning of the returned path
-     */
-    separator: PropTypes.string.isRequired,
-
-    /**
-     * Current path to display
-     */
-    path: PropTypes.string.isRequired,
-
-    /**
-     * Function returning the formated element for the current directory name
-     * Receives the caption element and path token as parameters
-     */
-    selectedNameFormatter: PropTypes.func,
-  };
-
   breadcrumb: HTMLDivElement;
   wrapper: HTMLDivElement;
 

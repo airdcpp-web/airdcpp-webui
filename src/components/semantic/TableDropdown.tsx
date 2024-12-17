@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import * as React from 'react';
 import classNames from 'classnames';
 
@@ -14,8 +13,12 @@ import IconConstants from 'constants/IconConstants';
 export type DropdownCloseHandler = () => void;
 
 export interface TableDropdownProps {
+  // Cell content to render
   caption: React.ReactNode;
+
+  // Trigger the dropdown when clicking on the caption
   linkCaption?: boolean;
+
   className?: string;
   triggerIcon?: IconType;
   children: (onClose: DropdownCloseHandler) => React.ReactNode;
@@ -24,16 +27,6 @@ export interface TableDropdownProps {
 }
 
 class TableDropdown extends React.Component<TableDropdownProps> {
-  /*static propTypes = {
-    // Cell content to render
-    caption: PropTypes.node.isRequired,
-
-    // Trigger the dropdown when clicking on the caption
-    linkCaption: PropTypes.bool,
-
-    children: PropTypes.func.isRequired,
-  };*/
-
   static defaultProps: Pick<
     TableDropdownProps,
     'linkCaption' | 'triggerIcon' | 'position'
