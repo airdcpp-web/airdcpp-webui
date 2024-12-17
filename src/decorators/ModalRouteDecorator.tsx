@@ -30,7 +30,7 @@ interface ParamsProviderProps<PropsT extends object>
   component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>;
 }
 
-const ParamsProvider = <PropsT extends object>({
+const RouteParamsProvider = <PropsT extends object>({
   component: Component,
   ...other
 }: ParamsProviderProps<PropsT>) => {
@@ -43,6 +43,22 @@ const ParamsProvider = <PropsT extends object>({
   );
 };
 
+const useRouteModalReturn = () => {
+  const navigate = useNavigate();
+  const params = useParams()!;
+
+  const handleClose = () => {
+    const modalPath = params['*'];
+    if (modalPath) {
+      const index = location.pathname.lastIndexOf(modalPath);
+      const parentPath = location.pathname.substring(0, index - 1);
+      navigate(parentPath);
+    }
+  };
+
+  return handleClose;
+};
+
 export default function <PropsT extends object>(
   Component: React.ComponentType<PropsT & ModalRouteDecoratorChildProps>,
   path: string,
@@ -50,26 +66,15 @@ export default function <PropsT extends object>(
   type Props = PropsT;
 
   const ModalRouteDecorator: React.FC<Props> = (props) => {
-    const navigate = useNavigate();
     const location = useLocation();
-    const params = useParams()!;
-
-    const handleClose = () => {
-      const modalPath = params['*'];
-      if (modalPath) {
-        const index = location.pathname.lastIndexOf(modalPath);
-        const parentPath = location.pathname.substring(0, index - 1);
-        navigate(parentPath);
-      }
-    };
-
+    const handleClose = useRouteModalReturn();
     return (
       <Routes>
         <Route
           path={`${path}/*`}
           element={
             <ModalRouteCloseContext.Provider value={handleClose}>
-              <ParamsProvider
+              <RouteParamsProvider
                 component={Component}
                 handleClose={handleClose}
                 location={location}

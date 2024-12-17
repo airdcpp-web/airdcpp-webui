@@ -31,7 +31,7 @@ const Progress: React.FC<ProgressProps> = ({ className, percent, caption }) => (
 
 Progress.propTypes = {
   percent: PropTypes.number.isRequired,
-  caption: PropTypes.node.isRequired,
+  caption: PropTypes.element,
   className: PropTypes.string,
 };
 

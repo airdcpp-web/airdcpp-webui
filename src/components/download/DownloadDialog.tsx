@@ -95,8 +95,6 @@ const DownloadDialog: React.FC<Props> = (props) => {
       () => addHistory(HistoryStringEnum.DOWNLOAD_DIR, targetPath),
       t,
     );
-
-    handleClose();
   };
 
   const getInitialBrowsePath = () => {
@@ -119,7 +117,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
   return (
     <Routes>
       <Route
-        path={`browse`}
+        path="browse/*"
         element={
           <FileBrowserDialog
             onConfirm={(path, directoryPath, fileName) =>
@@ -133,6 +131,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
             }
             historyId={FilesystemConstants.LOCATION_DOWNLOAD}
             approveCaption={translate('Download', t, UI.Modules.COMMON)}
+            modalComponent={RouteModal}
             {...commonDialogProps}
           />
         }

@@ -88,7 +88,6 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
 
     $(ref.current!).modal(settings).modal('show');
 
-    console.log('Mount modal');
     return () => {
       if (!closingCleanly.current) {
         // History navigation event, we still need to clean up the dimmer
