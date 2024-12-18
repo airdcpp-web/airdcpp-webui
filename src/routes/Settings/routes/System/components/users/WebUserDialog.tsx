@@ -172,7 +172,7 @@ const getEntry = (
     },
     {
       key: 'password',
-      type: API.SettingTypeEnum.STRING,
+      type: API.SettingTypeEnum.PASSWORD,
       title: isNew ? 'Password' : 'New password',
       optional: !isNew,
     },
@@ -252,8 +252,6 @@ class WebUserDialog extends Component<Props> {
       fieldOptions.factory = t.form.Select;
       fieldOptions.template = PermissionSelector(moduleT);
       fieldOptions.disabled = !this.isNew() && user.username === LoginStore.user.username;
-    } else if (id === 'password') {
-      fieldOptions.type = 'password';
     } else if (id === 'username') {
       fieldOptions.disabled = !this.isNew();
     }

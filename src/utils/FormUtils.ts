@@ -51,6 +51,9 @@ const typeToComponent = (
       return tcomb.Boolean;
     case API.SettingTypeEnum.STRING:
     case API.SettingTypeEnum.TEXT:
+    case API.SettingTypeEnum.EMAIL:
+    case API.SettingTypeEnum.URL:
+    case API.SettingTypeEnum.PASSWORD:
     case API.SettingTypeEnum.EXISTING_FILE_PATH:
     case API.SettingTypeEnum.FILE_PATH:
     case API.SettingTypeEnum.HUB_URL:
@@ -216,6 +219,18 @@ const parseTypeOptions = (type: API.SettingTypeEnum): tcomb.form.TcombOptions =>
       options.attrs = {
         rows: 3,
       };
+      break;
+    }
+    case API.SettingTypeEnum.EMAIL: {
+      options.type = 'email';
+      break;
+    }
+    case API.SettingTypeEnum.PASSWORD: {
+      options.type = 'password';
+      break;
+    }
+    case API.SettingTypeEnum.URL: {
+      options.type = 'url';
       break;
     }
     case API.SettingTypeEnum.FILE_PATH:

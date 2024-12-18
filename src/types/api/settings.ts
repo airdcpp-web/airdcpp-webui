@@ -1,11 +1,18 @@
 export const enum SettingTypeEnum {
   NUMBER = 'number',
   BOOLEAN = 'boolean',
+
   STRING = 'string',
   TEXT = 'text',
+
+  PASSWORD = 'password',
+  URL = 'url',
+  EMAIL = 'email',
+
   EXISTING_FILE_PATH = 'existing_file_path',
   FILE_PATH = 'file_path',
   DIRECTORY_PATH = 'directory_path',
+
   STRUCT = 'struct',
   LIST = 'list',
   HINTED_USER = 'hinted_user',

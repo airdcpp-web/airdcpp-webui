@@ -56,6 +56,7 @@ const NotificationMessage = ({ notification, level }: NotificationMessageProps) 
           className="primary"
           style={{
             marginTop: '10px',
+            marginLeft: '5px',
           }}
           color={color}
         />

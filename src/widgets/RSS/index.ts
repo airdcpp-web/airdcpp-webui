@@ -11,7 +11,7 @@ export const RSS = {
     {
       key: 'feed_url',
       title: 'Feed URL',
-      type: API.SettingTypeEnum.STRING,
+      type: API.SettingTypeEnum.URL,
       help: 'RSS and Atom feeds are supported',
       default_value: '',
     },
