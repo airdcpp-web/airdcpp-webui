@@ -9,6 +9,7 @@ import ShareProfileDecorator, {
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
 
 interface ShareProfileSelectorProps {
   // Callback after selecting a profile
@@ -30,7 +31,7 @@ class ShareProfileSelector extends Component<
         key={profile.id}
         onClick={() => this.props.onProfileChanged(profile.id)}
       >
-        {profile.str}
+        {formatProfileNameWithSize(profile, this.props.sessionT.plainT)}
       </MenuItemLink>
     );
   };
