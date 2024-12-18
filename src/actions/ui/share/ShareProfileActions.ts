@@ -64,8 +64,12 @@ const handleRemove: Handler = ({ itemData: profile }) => {
   return SocketService.delete(ShareProfileConstants.PROFILES_URL + '/' + profile.id);
 };
 
-const handleBrowse: Handler = ({ itemData: profile, location }) => {
-  return FilelistSessionActions.ownList(location, profile.id, FilelistSessionStore);
+const handleBrowse: Handler = ({ itemData: profile, location, navigate }) => {
+  return FilelistSessionActions.ownList(profile.id, {
+    location,
+    navigate,
+    sessionStore: FilelistSessionStore,
+  });
 };
 
 export const ShareProfileCreateAction = {
