@@ -9,8 +9,6 @@ import WebUserConstants from 'constants/WebUserConstants';
 import AccessConstants from 'constants/AccessConstants';
 import PermissionSelector from 'routes/Settings/routes/System/components/users/PermissionSelector';
 
-import SocketService from 'services/SocketService';
-
 import t from 'utils/tcomb-form';
 
 import Form, { FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
@@ -215,7 +213,13 @@ const buildDefinitions = (isNew: boolean, moduleT: UI.ModuleTranslator) => {
   return definitions;
 };
 
-const WebUserDialog: React.FC<Props> = ({ user, moduleT, location, ...other }) => {
+const WebUserDialog: React.FC<Props> = ({
+  user,
+  moduleT,
+  location,
+  socket,
+  ...other
+}) => {
   const isNew = !user;
 
   const definitions = useMemo(() => buildDefinitions(isNew, moduleT), []);
@@ -227,10 +231,10 @@ const WebUserDialog: React.FC<Props> = ({ user, moduleT, location, ...other }) =
 
   const onSave: FormSaveHandler<Entry> = (changedFields) => {
     if (isNew) {
-      return SocketService.post(WebUserConstants.USERS_URL, changedFields);
+      return socket.post(WebUserConstants.USERS_URL, changedFields);
     }
 
-    return SocketService.patch(`${WebUserConstants.USERS_URL}/${user.id}`, changedFields);
+    return socket.patch(`${WebUserConstants.USERS_URL}/${user.id}`, changedFields);
   };
 
   const onFieldSetting: FormFieldSettingHandler<Entry> = (

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import SocketService from 'services/SocketService';
 import LoginStore from 'stores/LoginStore';
 
 import {
@@ -11,6 +10,8 @@ import {
 
 import { AccessEnum } from 'types/api';
 import * as UI from 'types/ui';
+import { useSocket } from 'context/SocketContext';
+import { APISocket } from 'services/SocketService';
 
 export interface SocketSubscriptionDecoratorProps {
   session?: UI.SessionItemBase;
@@ -30,6 +31,7 @@ export type AddSocketListener = <
 export interface SocketSubscriptionDecoratorChildProps<PropsT = unknown> {
   addSocketListener: AddSocketListener;
   removeSocketListeners: (props?: PropsT) => void;
+  socket: APISocket;
 }
 
 const SocketSubscriptionDecorator = function <PropsT extends object>(
@@ -39,10 +41,11 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
   // This will help to avoid API errors that would happen when removing listeners for non-existing sessions
   entityExistsValidator?: (props: PropsT) => boolean,
 ) {
-  class Decorator extends React.Component<PropsT & SocketSubscriptionDecoratorProps> {
-    socketSubscriptions: SubscriptionRemoveHandler[] = [];
+  const Decorator: React.FC<PropsT & SocketSubscriptionDecoratorProps> = (props) => {
+    const socketSubscriptions = React.useRef<SubscriptionRemoveHandler[]>([]);
+    const socket = useSocket();
 
-    addSocketListener = <
+    const addSocketListener = async <
       DataT extends object | void,
       EntityIdT extends EntityId | undefined,
     >(
@@ -56,35 +59,38 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
         return;
       }
 
-      SocketService.addListener<DataT, EntityIdT>(
+      const removeHandler = await socket.addListener<DataT, EntityIdT>(
         apiModuleUrl,
         event,
         callback,
         entityId,
-      ).then((removeHandler) => this.socketSubscriptions.push(removeHandler));
-    };
-
-    removeSocketListeners = (props: PropsT = this.props) => {
-      const entityExists = !entityExistsValidator || entityExistsValidator(props);
-
-      this.socketSubscriptions.forEach((f) => f(entityExists));
-      this.socketSubscriptions = [];
-    };
-
-    componentWillUnmount() {
-      this.removeSocketListeners();
-    }
-
-    render() {
-      return (
-        <Component
-          {...this.props}
-          addSocketListener={this.addSocketListener}
-          removeSocketListeners={this.removeSocketListeners}
-        />
       );
-    }
-  }
+
+      socketSubscriptions.current.push(removeHandler);
+    };
+
+    const removeSocketListeners = (removeProps: PropsT = props) => {
+      const entityExists = !entityExistsValidator || entityExistsValidator(removeProps);
+
+      socketSubscriptions.current.forEach((f) => f(entityExists));
+      socketSubscriptions.current = [];
+    };
+
+    React.useEffect(() => {
+      return () => {
+        removeSocketListeners();
+      };
+    }, []);
+
+    return (
+      <Component
+        {...props}
+        addSocketListener={addSocketListener}
+        removeSocketListeners={removeSocketListeners}
+        socket={socket}
+      />
+    );
+  };
 
   return Decorator;
 };

@@ -12,8 +12,6 @@ import ModalRouteDecorator, {
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 
-import SocketService from 'services/SocketService';
-
 import t from 'utils/tcomb-form';
 
 import { getLastDirectory } from 'utils/FileUtils';
@@ -61,6 +59,7 @@ const FavoriteDirectoryDialog: React.FC<Props> = ({
   directoryEntry,
   moduleT,
   virtualNames,
+  socket,
   location,
 }) => {
   const formRef = useRef<Form<Entry>>(null);
@@ -84,13 +83,10 @@ const FavoriteDirectoryDialog: React.FC<Props> = ({
 
   const onSave: FormSaveHandler<Entry> = (changedFields) => {
     if (isNew) {
-      return SocketService.post(
-        FavoriteDirectoryConstants.DIRECTORIES_URL,
-        changedFields,
-      );
+      return socket.post(FavoriteDirectoryConstants.DIRECTORIES_URL, changedFields);
     }
 
-    return SocketService.patch(
+    return socket.patch(
       `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directoryEntry!.id}`,
       changedFields,
     );

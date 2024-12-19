@@ -7,7 +7,6 @@ import Dropzone, { DropzoneRef } from 'react-dropzone';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 import UserConstants from 'constants/UserConstants';
-import SocketService from 'services/SocketService';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -23,6 +22,7 @@ import Button from 'components/semantic/Button';
 import IconConstants from 'constants/IconConstants';
 import { useFileUploader } from './effects/useChatFileUploader';
 import { useMessageComposer } from './effects/useMessageComposer';
+import { useSocket } from 'context/SocketContext';
 
 const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {
@@ -80,6 +80,7 @@ const userToMention = (user: API.HubUser) => {
 
 export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
   const dropzoneRef = React.useRef<DropzoneRef>(null);
+  const socket = useSocket();
 
   const { t, handleFileUpload } = props;
 
@@ -93,11 +94,12 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
 
   const findUsers: DataFunc = (value, callback) => {
     const { hubUrl } = props;
-    SocketService.post(UserConstants.SEARCH_NICKS_URL, {
-      pattern: value,
-      max_results: 5,
-      hub_urls: hubUrl ? [hubUrl] : undefined,
-    })
+    socket
+      .post(UserConstants.SEARCH_NICKS_URL, {
+        pattern: value,
+        max_results: 5,
+        hub_urls: hubUrl ? [hubUrl] : undefined,
+      })
       .then((users: API.HubUser[]) => callback(users.map(userToMention)))
       .catch((error: ErrorResponse) =>
         console.log(`Failed to fetch suggestions: ${error}`),

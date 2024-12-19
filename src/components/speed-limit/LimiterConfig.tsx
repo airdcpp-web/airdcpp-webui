@@ -4,7 +4,6 @@ import Button from 'components/semantic/Button';
 import ActionInput from 'components/semantic/ActionInput';
 
 import SettingConstants from 'constants/SettingConstants';
-import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
@@ -14,6 +13,7 @@ import * as UI from 'types/ui';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { formatUnit } from 'utils/ValueFormat';
 import { Trans } from 'react-i18next';
+import { useSocket } from 'context/SocketContext';
 
 interface LimiterConfigProps {
   limit: number;
@@ -33,10 +33,11 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({
   unit,
   t,
 }) => {
+  const socket = useSocket();
   const save = (newLimit = 0) => {
     runBackgroundSocketAction(
       () =>
-        SocketService.post(SettingConstants.ITEMS_SET_URL, {
+        socket.post(SettingConstants.ITEMS_SET_URL, {
           [settingKey]: newLimit,
         }),
       t,

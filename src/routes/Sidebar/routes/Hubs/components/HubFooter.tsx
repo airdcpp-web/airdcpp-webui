@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import * as React from 'react';
 
 import HubConstants from 'constants/HubConstants';
-import SocketService from 'services/SocketService';
 import HubSessionStore from 'stores/HubSessionStore';
 
 import { formatSize } from 'utils/ValueFormat';
@@ -22,6 +21,7 @@ import { useMobileLayout } from 'utils/BrowserUtils';
 import { useLayoutWidth } from 'context/LayoutWidthContext';
 import { ActionMenu } from 'components/action-menu';
 import { HubSettingActionMenu } from 'actions/ui/hub/HubSettingActions';
+import { useSocket } from 'context/SocketContext';
 
 interface HubFooterProps {
   session: API.Hub;
@@ -31,6 +31,7 @@ interface HubFooterProps {
 
 type DataProps = SocketSubscriptionDecoratorChildProps<HubFooterProps>;
 const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
+  const socket = useSocket();
   const [counts, setCounts] = useState<API.HubCounts>({
     share_size: 0,
     user_count: 0,
@@ -38,9 +39,8 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
 
   useEffect(() => {
     // Fetch initial
-    SocketService.get<API.HubCounts>(
-      `${HubConstants.SESSIONS_URL}/${props.session.id}/counts`,
-    )
+    socket
+      .get<API.HubCounts>(`${HubConstants.SESSIONS_URL}/${props.session.id}/counts`)
       .then(setCounts)
       .catch((error: ErrorResponse) =>
         console.error('Failed to fetch hub counts', error.message),

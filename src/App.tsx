@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import SocketService from 'services/SocketService';
 
 //@ts-ignore
 import Reflux from 'reflux';
@@ -21,6 +22,7 @@ import { MeasuredBackground } from 'components/main/MeasuredBackground';
 import 'utils/semantic';
 
 import 'style.css';
+import { SocketContext } from 'context/SocketContext';
 
 global.Promise = Promise as any;
 
@@ -53,13 +55,15 @@ const App = () => {
   return (
     <ErrorBoundary>
       <Suspense fallback={<Loader fullPage={true} text="" />}>
-        <I18nextProvider i18n={i18n}>
-          <InstallPromptContext.Provider value={prompt}>
-            <MeasuredBackground>
-              <RouterProvider router={router} />
-            </MeasuredBackground>
-          </InstallPromptContext.Provider>
-        </I18nextProvider>
+        <SocketContext.Provider value={SocketService}>
+          <I18nextProvider i18n={i18n}>
+            <InstallPromptContext.Provider value={prompt}>
+              <MeasuredBackground>
+                <RouterProvider router={router} />
+              </MeasuredBackground>
+            </InstallPromptContext.Provider>
+          </I18nextProvider>
+        </SocketContext.Provider>
       </Suspense>
     </ErrorBoundary>
   );

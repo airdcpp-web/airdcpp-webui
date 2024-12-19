@@ -1,10 +1,10 @@
 import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
 
-import SocketService from 'services/SocketService';
 import SettingConstants from 'constants/SettingConstants';
 import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
 
 import * as API from 'types/api';
+import { useSocket } from 'context/SocketContext';
 
 interface AutoValuePanelProps {
   // Type of the value section (from the setting key)
@@ -15,6 +15,7 @@ interface AutoValuePanelProps {
 }
 
 const AutoValuePanel: React.FC<AutoValuePanelProps> = ({ type, keys }) => {
+  const socket = useSocket();
   const getAutoKey = () => {
     return `${type}_auto_limits`;
   };
@@ -26,7 +27,7 @@ const AutoValuePanel: React.FC<AutoValuePanelProps> = ({ type, keys }) => {
       return null;
     }
 
-    return SocketService.post(SettingConstants.ITEMS_GET_URL, {
+    return socket.post(SettingConstants.ITEMS_GET_URL, {
       keys: keys.filter((key) => key !== autoSettingKey),
       value_mode: API.SettingValueMode.FORCE_AUTO,
     });

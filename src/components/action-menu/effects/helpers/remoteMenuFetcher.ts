@@ -4,10 +4,10 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import MenuConstants, { MENU_SUPPORTS } from 'constants/MenuConstants';
-import SocketService from 'services/SocketService';
 import NotificationActions from 'actions/NotificationActions';
 import { parseActionMenuItemId, parseActionMenuItemIds } from 'utils/MenuUtils';
 import { ActionMenuDefinition } from '../useActionMenuItems';
+import { useSocket } from 'context/SocketContext';
 
 export interface RemoteMenuData {
   selectedIds: UI.ActionIdType[];
@@ -52,6 +52,8 @@ export const useRemoteMenuFetcher = (
     Array<RemoteMenu | undefined> | undefined
   >(undefined);
 
+  const socket = useSocket();
+
   useEffect(() => {
     const fetchMenus = async () => {
       const menuPromises = remoteMenuIds.map(async (remoteMenuId, menuIndex) => {
@@ -62,7 +64,7 @@ export const useRemoteMenuFetcher = (
         const selectedIds = selectedIdsByMenu[menuIndex];
         const entityId = entityIds[menuIndex];
 
-        const menu = await SocketService.post<API.GroupedContextMenuItem[]>(
+        const menu = await socket.post<API.GroupedContextMenuItem[]>(
           `${MenuConstants.MODULE_URL}/${remoteMenuId}/list_grouped`,
           {
             selected_ids: selectedIds,

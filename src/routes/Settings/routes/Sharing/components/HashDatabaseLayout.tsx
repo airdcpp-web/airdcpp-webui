@@ -1,5 +1,4 @@
 import * as React from 'react';
-import SocketService from 'services/SocketService';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
@@ -22,6 +21,7 @@ import { Trans } from 'react-i18next';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { Row, Grid } from 'components/semantic/Grid';
 import IconConstants from 'constants/IconConstants';
+import { useSocket } from 'context/SocketContext';
 
 interface OptimizeLayoutProps {
   running: boolean;
@@ -81,9 +81,10 @@ interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
 const HashDatabaseLayout: React.FC<
   HashDatabaseLayoutProps & HashDatabaseLayoutDataProps
 > = ({ status, moduleT }) => {
+  const socket = useSocket();
   const handleOptimize = (verify: boolean) => {
     runBackgroundSocketAction(
-      () => SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify }),
+      () => socket.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify }),
       moduleT.plainT,
     );
   };

@@ -4,7 +4,6 @@ import SettingConstants from 'constants/SettingConstants';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
-import SocketService from 'services/SocketService';
 
 import Form, {
   FormProps,
@@ -16,6 +15,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { useLocation } from 'react-router';
 import { SettingSaveContext, getSettingFormId } from '../effects/useSettingSaveContext';
+import { useSocket } from 'context/SocketContext';
 
 export interface RemoteSettingFormProps
   extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions' | 'location'> {
@@ -41,6 +41,7 @@ const RemoteSettingForm: React.FC<Props> = ({
 }) => {
   const saveContext = useContext(SettingSaveContext)!;
   const location = useLocation();
+  const socket = useSocket();
 
   const refetchValues = () => {
     refetchData(['settings']);
@@ -51,9 +52,7 @@ const RemoteSettingForm: React.FC<Props> = ({
       return Promise.resolve();
     }
 
-    return SocketService.post(SettingConstants.ITEMS_SET_URL, changedValues).then(
-      refetchValues,
-    );
+    return socket.post(SettingConstants.ITEMS_SET_URL, changedValues).then(refetchValues);
   };
 
   const handleFieldChanged: FormFieldChangeHandler = (id, value, hasChanges) => {
@@ -83,14 +82,13 @@ export default DataProviderDecorator<RemoteSettingFormProps, RemoteSettingFormDa
   RemoteSettingForm,
   {
     urls: {
-      fieldDefinitions: ({ keys }) =>
-        SocketService.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
-      settings: async ({
-        keys,
-        onSettingValuesReceived,
-        valueMode = API.SettingValueMode.CURRENT,
-      }) => {
-        const settings: API.SettingValueMap = await SocketService.post(
+      fieldDefinitions: ({ keys }, socket) =>
+        socket.post(SettingConstants.ITEMS_DEFINITIONS_URL, { keys }),
+      settings: async (
+        { keys, onSettingValuesReceived, valueMode = API.SettingValueMode.CURRENT },
+        socket,
+      ) => {
+        const settings: API.SettingValueMap = await socket.post(
           SettingConstants.ITEMS_GET_URL,
           {
             keys,

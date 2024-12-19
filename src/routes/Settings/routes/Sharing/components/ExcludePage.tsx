@@ -1,5 +1,4 @@
 import * as React from 'react';
-import SocketService from 'services/SocketService';
 
 import { ShareActionModule, ShareRefreshAction } from 'actions/ui/share/ShareActions';
 import {
@@ -25,6 +24,7 @@ import { runBackgroundSocketAction } from 'utils/ActionUtils';
 
 import * as UI from 'types/ui';
 import { Trans } from 'react-i18next';
+import { useSocket } from 'context/SocketContext';
 
 const Row: React.FC<{ path: string }> = ({ path }) => (
   <tr>
@@ -53,6 +53,7 @@ const ExcludePage: React.FC<ExcludePageProps & ExcludePageDataProps> = ({
   excludes,
   moduleT,
 }) => {
+  const socket = useSocket();
   const { translate, toI18nKey } = moduleT;
   return (
     <div>
@@ -91,7 +92,7 @@ const ExcludePage: React.FC<ExcludePageProps & ExcludePageDataProps> = ({
       <FileBrowserRouteDialog
         onConfirm={(path) =>
           runBackgroundSocketAction(
-            () => SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path }),
+            () => socket.post(ShareConstants.EXCLUDES_ADD_URL, { path }),
             moduleT.plainT,
           )
         }

@@ -7,8 +7,6 @@ import Loader from 'components/semantic/Loader';
 import StatColumn from './StatColumn';
 import SpeedChart from './SpeedChart';
 
-import SocketService from 'services/SocketService';
-
 import TransferConstants from 'constants/TransferConstants';
 
 import { withContentRect, MeasuredComponentProps } from 'react-measure';
@@ -82,7 +80,7 @@ class Transfers extends PureComponent<
 
   initStats = async () => {
     try {
-      const stats = await SocketService.get<API.TransferStats>(
+      const stats = await this.props.socket.get<API.TransferStats>(
         TransferConstants.STATISTICS_URL,
       );
       this.onStatsReceived(stats);

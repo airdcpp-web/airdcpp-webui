@@ -12,7 +12,6 @@ import ModalRouteDecorator, {
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
 } from 'decorators/ShareProfileDecorator';
-import SocketService from 'services/SocketService';
 
 import Message from 'components/semantic/Message';
 
@@ -123,11 +122,12 @@ class ShareDirectoryDialog extends Component<Props> {
   };
 
   onSave: FormSaveHandler<Entry> = (changedFields) => {
+    const { socket } = this.props;
     if (this.isNew()) {
-      return SocketService.post(ShareRootConstants.ROOTS_URL, changedFields);
+      return socket.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
 
-    return SocketService.patch(
+    return socket.patch(
       `${ShareRootConstants.ROOTS_URL}/${this.props.rootEntry!.id}`,
       changedFields,
     );

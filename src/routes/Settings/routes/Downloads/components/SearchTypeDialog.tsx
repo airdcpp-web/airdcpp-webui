@@ -9,7 +9,6 @@ import ModalRouteDecorator, {
 } from 'decorators/ModalRouteDecorator';
 
 import IconConstants from 'constants/IconConstants';
-import SocketService from 'services/SocketService';
 
 import Form, { FormFieldSettingHandler, FormSaveHandler } from 'components/form/Form';
 
@@ -49,6 +48,7 @@ const SearchTypeDialog: React.FC<Props> = ({
   moduleT,
   searchTypeEntry,
   location,
+  socket,
   ...other
 }) => {
   const isNew = !searchTypeEntry;
@@ -62,10 +62,10 @@ const SearchTypeDialog: React.FC<Props> = ({
 
   const onSave: FormSaveHandler<Entry> = (changedFields) => {
     if (isNew) {
-      return SocketService.post(SearchConstants.SEARCH_TYPES_URL, changedFields);
+      return socket.post(SearchConstants.SEARCH_TYPES_URL, changedFields);
     }
 
-    return SocketService.patch(
+    return socket.patch(
       `${SearchConstants.SEARCH_TYPES_URL}/${searchTypeEntry!.id}`,
       changedFields,
     );

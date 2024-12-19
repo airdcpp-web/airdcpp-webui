@@ -17,7 +17,7 @@ import {
   RemoteSelectFieldProps,
 } from 'components/select/RemoteSelectField';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
-import SocketService from 'services/SocketService';
+import { useSocket } from 'context/SocketContext';
 
 interface HintedUserFormatterProps {
   option: API.OfflineHintedUser;
@@ -94,15 +94,13 @@ export const UserSelectField: React.FC<UserSelectFieldProps> = ({
 }) => {
   const { t } = useTranslation();
   const formT = getModuleT(t, [UI.Modules.COMMON, UI.SubNamespaces.FORM]);
+  const socket = useSocket();
 
   const loadOptions = async (value: string): Promise<API.OfflineHintedUser[]> => {
-    const options = await SocketService.post<API.HubUser[]>(
-      UserConstants.SEARCH_NICKS_URL,
-      {
-        pattern: value,
-        max_results: 7,
-      },
-    );
+    const options = await socket.post<API.HubUser[]>(UserConstants.SEARCH_NICKS_URL, {
+      pattern: value,
+      max_results: 7,
+    });
 
     return options.map((option) => ({
       nicks: option.nick,

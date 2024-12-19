@@ -10,7 +10,6 @@ import ModalRouteDecorator, {
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
-import SocketService from 'services/SocketService';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
 import IconConstants from 'constants/IconConstants';
@@ -37,6 +36,7 @@ const ExtensionsConfigureDialog: React.FC<Props> = ({
   settings,
   fieldDefinitions,
   location,
+  socket,
   ...other
 }) => {
   const formRef = useRef<Form>(null);
@@ -45,7 +45,7 @@ const ExtensionsConfigureDialog: React.FC<Props> = ({
   };
 
   const onSave: FormSaveHandler<UI.FormValueMap> = (changedFields) => {
-    return SocketService.patch(getSettingsUrl(extension.id), changedFields);
+    return socket.patch(getSettingsUrl(extension.id), changedFields);
   };
 
   return (
@@ -74,10 +74,10 @@ export default ModalRouteDecorator<ExtensionsConfigureDialogProps>(
     ExtensionsConfigureDialog,
     {
       urls: {
-        fieldDefinitions: ({ params }) => {
-          return SocketService.get(`${getSettingsUrl(params.extensionId!)}/definitions`);
+        fieldDefinitions: ({ params }, socket) => {
+          return socket.get(`${getSettingsUrl(params.extensionId!)}/definitions`);
         },
-        settings: ({ params }) => SocketService.get(getSettingsUrl(params.extensionId!)),
+        settings: ({ params }, socket) => socket.get(getSettingsUrl(params.extensionId!)),
         extension: ({ params }, socket) => {
           return socket.get(`${ExtensionConstants.EXTENSIONS_URL}/${params.extensionId}`);
         },

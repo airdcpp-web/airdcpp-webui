@@ -1,8 +1,6 @@
 import * as React from 'react';
 import cx from 'classnames';
 
-import SocketService from 'services/SocketService';
-
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
 import MenuSection from 'components/semantic/MenuSection';
 import MenuItemLink from 'components/semantic/MenuItemLink';
@@ -63,6 +61,7 @@ const TempShareDropdown = React.memo<Props>(function TempShareDropdown({
   style,
   className,
   overrideContent,
+  socket,
 }) {
   const { t } = useTranslation();
 
@@ -71,7 +70,8 @@ const TempShareDropdown = React.memo<Props>(function TempShareDropdown({
   }
 
   const onClickFile = (file: API.TempShareItem) => {
-    SocketService.delete(`${ShareConstants.TEMP_SHARES_URL}/${file.id}`)
+    socket
+      .delete(`${ShareConstants.TEMP_SHARES_URL}/${file.id}`)
       .then((res) => {
         NotificationActions.success({
           title: t(toI18nKey('fileNoLongerShared', UI.Modules.COMMON), {

@@ -1,11 +1,10 @@
-import { Component } from 'react';
-
-import SocketService from 'services/SocketService';
+import { useState } from 'react';
 
 import SuggestField, { SuggestFieldProps } from './base/SuggestField';
 import SuggestionRenderer from './base/SuggestionRenderer';
 import { RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
 import { ErrorResponse } from 'airdcpp-apisocket';
+import { useSocket } from 'context/SocketContext';
 
 type ForwardedSuggestFieldProps<SuggestionT> = Omit<
   SuggestFieldProps<SuggestionT>,
@@ -22,60 +21,57 @@ export interface RemoteSuggestFieldProps<SuggestionT extends Record<string, any>
   url: string;
 }
 
-class RemoteSuggestField<SuggestionT extends Record<string, any>> extends Component<
-  RemoteSuggestFieldProps<SuggestionT>
-> {
-  state = {
-    suggestions: [] as SuggestionT[],
+const RemoteSuggestField = <SuggestionT extends Record<string, any>>({
+  url,
+  valueField,
+  descriptionField,
+  ...other
+}: RemoteSuggestFieldProps<SuggestionT>) => {
+  const socket = useSocket();
+  const [suggestions, setSuggestions] = useState<SuggestionT[]>([]);
+
+  const getSuggestionValue = (suggestionObj: SuggestionT) => {
+    return suggestionObj[valueField];
   };
 
-  getSuggestionValue = (suggestionObj: SuggestionT) => {
-    return suggestionObj[this.props.valueField];
+  const onSuggestionsReceived = (data: SuggestionT[]) => {
+    setSuggestions(data);
   };
 
-  onSuggestionsFetchRequested: SuggestionsFetchRequested = ({ value }) => {
-    SocketService.post(this.props.url, {
-      pattern: value,
-      max_results: 7,
-    })
-      .then(this.onSuggestionsReceived)
+  const onSuggestionsFetchRequested: SuggestionsFetchRequested = ({ value }) => {
+    socket
+      .post(url, {
+        pattern: value,
+        max_results: 7,
+      })
+      .then(onSuggestionsReceived)
       .catch((error: ErrorResponse) =>
         console.log(`Failed to fetch suggestions: ${error}`),
       );
   };
 
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: [],
-    });
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
   };
 
-  onSuggestionsReceived = (data: SuggestionT[]) => {
-    this.setState({
-      suggestions: data,
-    });
-  };
-
-  renderSuggestion: RenderSuggestion<SuggestionT> = (suggestionObj, { query }) => {
+  const renderSuggestion: RenderSuggestion<SuggestionT> = (suggestionObj, { query }) => {
     return SuggestionRenderer(
       query,
-      suggestionObj[this.props.valueField],
-      suggestionObj[this.props.descriptionField],
+      suggestionObj[valueField],
+      suggestionObj[descriptionField],
     );
   };
 
-  render() {
-    return (
-      <SuggestField
-        {...this.props}
-        suggestions={this.state.suggestions}
-        renderSuggestion={this.renderSuggestion}
-        getSuggestionValue={this.getSuggestionValue}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-      />
-    );
-  }
-}
+  return (
+    <SuggestField
+      {...other}
+      suggestions={suggestions}
+      renderSuggestion={renderSuggestion}
+      getSuggestionValue={getSuggestionValue}
+      onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+      onSuggestionsClearRequested={onSuggestionsClearRequested}
+    />
+  );
+};
 
 export default RemoteSuggestField;

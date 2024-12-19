@@ -14,7 +14,8 @@ import { translate } from 'utils/TranslationUtils';
 
 import NotificationActions from 'actions/NotificationActions';
 import { ActionData, ActionDialog, suffixActionI18nKey } from './components/ActionDialog';
-import SocketService, { APISocket } from 'services/SocketService';
+import { APISocket } from 'services/SocketService';
+import { useSocket } from 'context/SocketContext';
 
 interface ActionHandlerDecoratorProps<
   ItemDataT extends UI.ActionDataValueType,
@@ -60,10 +61,9 @@ const handleAction = async <
 >({
   actionData,
   confirmData,
-  location,
   t,
-  navigate,
   closeModal,
+  ...actionHandlerProps
 }: HandleAction<ItemDataT, EntityT>) => {
   const { action, itemData, entity } = actionData;
   if (!!closeModal && isSidebarAction(action.id)) {
@@ -75,10 +75,8 @@ const handleAction = async <
       const handlerData: UI.ActionHandlerData<ItemDataT, EntityT> = {
         itemData: itemData,
         entity,
-        location,
-        navigate,
         t,
-        socket: SocketService,
+        ...actionHandlerProps,
       };
 
       try {
@@ -130,6 +128,7 @@ const ActionHandlerDecorator = <
 >(
   props: Props<ItemDataT, EntityT>,
 ) => {
+  const socket = useSocket();
   const [confirmActionData, setConfirmActionData] = useState<ActionData<
     ItemDataT,
     EntityT
@@ -155,7 +154,7 @@ const ActionHandlerDecorator = <
       navigate,
       t,
       closeModal,
-      socket: SocketService,
+      socket,
     });
     closeConfirmation();
   };
@@ -173,7 +172,7 @@ const ActionHandlerDecorator = <
         navigate,
         t,
         closeModal,
-        socket: SocketService,
+        socket,
       });
     }
   };

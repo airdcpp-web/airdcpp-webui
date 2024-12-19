@@ -8,8 +8,6 @@ import ModalRouteDecorator, {
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 
-import SocketService from 'services/SocketService';
-
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
 } from 'decorators/ShareProfileDecorator';
@@ -284,12 +282,13 @@ class FavoriteHubDialog extends Component<Props> {
   };
 
   onSave: FormSaveHandler<Entry> = (changedFields) => {
+    const { socket } = this.props;
     const hubEntry = toFavoriteHub(changedFields);
     if (this.isNew()) {
-      return SocketService.post(FavoriteHubConstants.HUBS_URL, hubEntry);
+      return socket.post(FavoriteHubConstants.HUBS_URL, hubEntry);
     }
 
-    return SocketService.patch(
+    return socket.patch(
       `${FavoriteHubConstants.HUBS_URL}/${this.props.hubEntry!.id}`,
       hubEntry,
     );

@@ -3,7 +3,6 @@ import * as React from 'react';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
-import SocketService from 'services/SocketService';
 
 import * as API from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
@@ -44,20 +43,23 @@ export default function <PropsT>(
         property: propertyName,
       } as API.TableFilter;
 
-      const { store, filter } = props;
-      SocketService.put(`${store.viewUrl}/filter/${filter.id}`, data).catch(
-        (error: ErrorResponse) => console.error('Failed to add table filter', error),
-      );
+      const { store, filter, socket } = props;
+      socket
+        .put(`${store.viewUrl}/filter/${filter.id}`, data)
+        .catch((error: ErrorResponse) =>
+          console.error('Failed to add table filter', error),
+        );
     };
 
     React.useLayoutEffect(() => {
       return () => {
-        const { store, filter } = props;
+        const { store, filter, socket } = props;
         if (store.active) {
-          SocketService.delete(`${store.viewUrl}/filter/${filter.id}`).catch(
-            (error: ErrorResponse) =>
+          socket
+            .delete(`${store.viewUrl}/filter/${filter.id}`)
+            .catch((error: ErrorResponse) =>
               console.error('Failed to delete table filter', error),
-          );
+            );
         }
       };
     }, []);

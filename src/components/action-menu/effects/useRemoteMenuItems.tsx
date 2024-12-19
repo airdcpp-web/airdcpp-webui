@@ -2,12 +2,12 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import MenuConstants, { MENU_SUPPORTS } from 'constants/MenuConstants';
-import SocketService from 'services/SocketService';
 import { FormSaveHandler } from 'components/form';
 import { MenuFormDialogProps } from 'components/action-menu/MenuFormDialog';
 import { ActionMenuDefinition } from './useActionMenuItems';
 import { RemoteMenuData, useRemoteMenuFetcher } from './helpers/remoteMenuFetcher';
 import { remoteMenuToActionMenuItems } from './helpers/remoteMenuBuilder';
+import { useSocket } from 'context/SocketContext';
 
 export type OnShowRemoteMenuForm = (data: MenuFormDialogProps) => void;
 
@@ -24,6 +24,7 @@ export const useRemoteMenuItems = ({
   nestingThreshold = 1,
   onClickMenuItem,
 }: RemoteMenuDecoratorProps) => {
+  const socket = useSocket();
   const menusByType = useRemoteMenuFetcher(definitionArray);
 
   const onPostSelect = (
@@ -33,18 +34,15 @@ export const useRemoteMenuItems = ({
   ) => {
     const { remoteMenuId, selectedIds, entityId } = selection;
     const { id, hook_id } = menuItem;
-    return SocketService.post<void>(
-      `${MenuConstants.MODULE_URL}/${remoteMenuId}/select`,
-      {
-        selected_ids: selectedIds,
-        hook_id: hook_id,
-        menuitem_id: id,
-        entity_id: entityId,
-        supports: MENU_SUPPORTS,
-        form_definitions: menuItem.form_definitions,
-        form_value: values,
-      },
-    );
+    return socket.post<void>(`${MenuConstants.MODULE_URL}/${remoteMenuId}/select`, {
+      selected_ids: selectedIds,
+      hook_id: hook_id,
+      menuitem_id: id,
+      entity_id: entityId,
+      supports: MENU_SUPPORTS,
+      form_definitions: menuItem.form_definitions,
+      form_value: values,
+    });
   };
 
   const onItemSelected = (menuItem: API.ContextMenuItem, selection: RemoteMenuData) => {

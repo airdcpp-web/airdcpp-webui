@@ -1,7 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import SocketService from 'services/SocketService';
 import { formatSize, formatSpeed } from 'utils/ValueFormat';
 import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
 
@@ -90,7 +89,8 @@ class StatisticsIcons extends React.PureComponent<
 
   fetchStats = () => {
     if (LoginStore.hasAccess(API.AccessEnum.TRANSFERS)) {
-      SocketService.get(TransferConstants.STATISTICS_URL)
+      this.props.socket
+        .get(TransferConstants.STATISTICS_URL)
         .then(this.onStatsReceived)
         .catch((error: ErrorResponse) =>
           console.error('Failed to fetch transfer statistics', error.message),

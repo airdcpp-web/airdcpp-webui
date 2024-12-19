@@ -12,6 +12,7 @@ import {
 import ChatCommandHandler from '../ChatCommandHandler';
 
 import { Location, useNavigate } from 'react-router-dom';
+import { useSocket } from 'context/SocketContext';
 
 const getStorageKey = (location: Location) => {
   return `last_message_${location.pathname}`;
@@ -39,6 +40,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
   const location = useLocation();
   const navigate = useNavigate();
   const [inputText, setInputText] = React.useState('');
+  const socket = useSocket();
 
   const handleCommand = (commandText: string) => {
     let command, params;
@@ -54,7 +56,12 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
       }
     }
 
-    ChatCommandHandler(chatController).handle(command, params, { location, navigate, t });
+    ChatCommandHandler(chatController).handle(command, params, {
+      location,
+      navigate,
+      t,
+      socket,
+    });
   };
 
   const updateText = (newText: string) => {

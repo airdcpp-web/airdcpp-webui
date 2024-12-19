@@ -4,7 +4,6 @@ import { merge } from 'lodash';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 import { APISocket, ErrorResponse } from 'airdcpp-apisocket';
-import SocketService from 'services/SocketService';
 
 import Loader from 'components/semantic/Loader';
 import NotificationActions from 'actions/NotificationActions';
@@ -30,6 +29,9 @@ export type SocketConnectHandler<DataT extends object, PropsT extends object> = 
 
 export interface DataProviderDecoratorProps {}
 
+type DataProps<PropsT = UI.EmptyObject> = WithTranslation &
+  SocketSubscriptionDecoratorChildProps<PropsT>;
+
 export interface DataFetchError /*extends Omit<ErrorResponse, 'code'>*/ {
   code?: number;
   message: string;
@@ -43,7 +45,10 @@ export type DataConverter<PropsT extends object> = (
 
 export type DataProviderUrls<PropsT extends object> = {
   [key: string]:
-    | ((props: PropsT, socket: APISocket) => Promise<object | undefined>)
+    | ((
+        props: PropsT /*& DataProps<PropsT>*/,
+        socket: APISocket,
+      ) => Promise<object | undefined>)
     | string;
 };
 
@@ -83,9 +88,6 @@ interface State<DataT extends object> {
   error: DataFetchError | null;
 }
 
-type DataProps<PropsT = UI.EmptyObject> = WithTranslation &
-  SocketSubscriptionDecoratorChildProps<PropsT>;
-
 // A decorator that will provide a set of data fetched from the API as props
 export default function <PropsT extends object, DataT extends object>(
   Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>,
@@ -107,7 +109,7 @@ export default function <PropsT extends object, DataT extends object>(
       this.mounted = true;
       this.fetchData();
 
-      if (settings.onSocketConnected && SocketService.isConnected()) {
+      if (settings.onSocketConnected && this.props.socket.isConnected()) {
         settings.onSocketConnected(this.props.addSocketListener, {
           refetchData: this.refetchData,
           mergeData: this.mergeData,
@@ -156,7 +158,7 @@ export default function <PropsT extends object, DataT extends object>(
         const url = urls[key];
         if (typeof url === 'function') {
           try {
-            const ret = url(this.props, SocketService);
+            const ret = url(this.props, this.props.socket);
             return ret;
           } catch (e) {
             // Handle non-async errors
@@ -164,7 +166,7 @@ export default function <PropsT extends object, DataT extends object>(
           }
         }
 
-        return SocketService.get(url);
+        return this.props.socket.get(url);
       });
 
       Promise.all(promises)
@@ -247,7 +249,7 @@ export default function <PropsT extends object, DataT extends object>(
         <Component
           refetchData={this.refetchData}
           dataError={error}
-          socket={SocketService}
+          socket={this.props.socket}
           {...(this.props as any)}
           {...data}
         />

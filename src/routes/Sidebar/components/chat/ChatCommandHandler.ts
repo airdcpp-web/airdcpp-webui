@@ -1,16 +1,17 @@
 import { actionAccess, runBackgroundSocketAction } from 'utils/ActionUtils';
-import SocketService from 'services/SocketService';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import LoginStore from 'stores/LoginStore';
 import { NavigateFunction, Location } from 'react-router-dom';
+import { APISocket } from 'services/SocketService';
 
 interface CommandProps {
   location: Location;
   navigate: NavigateFunction;
   t: UI.TranslateF;
+  socket: APISocket;
 }
 
 type ParamsType = string | undefined;
@@ -37,7 +38,7 @@ const handleMe: ChatCommandHandler = (params, { chatApi, session }) => {
 const handleClear: ChatCommandHandler = (
   params,
   { chatActions, session },
-  { t, location, navigate },
+  { t, location, navigate, socket },
 ) => {
   runBackgroundSocketAction(
     () =>
@@ -47,7 +48,7 @@ const handleClear: ChatCommandHandler = (
         location,
         navigate,
         t,
-        socket: SocketService,
+        socket,
       }) as Promise<any>,
     t,
   );
