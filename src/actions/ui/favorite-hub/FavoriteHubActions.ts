@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import IconConstants from 'constants/IconConstants';
 
@@ -17,8 +15,11 @@ const handleEdit: UI.ActionHandler<API.FavoriteHubEntry> = ({
   navigate(`/favorite-hubs/entries/${hub.id}`);
 };
 
-const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({ itemData: hub }) => {
-  return SocketService.delete(FavoriteHubConstants.HUBS_URL + '/' + hub.id);
+const handleRemove: UI.ActionHandler<API.FavoriteHubEntry> = ({
+  itemData: hub,
+  socket,
+}) => {
+  return socket.delete(FavoriteHubConstants.HUBS_URL + '/' + hub.id);
 };
 
 export const FavoriteHubCreateAction = {

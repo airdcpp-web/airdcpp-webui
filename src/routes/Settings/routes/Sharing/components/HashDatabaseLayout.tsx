@@ -78,45 +78,42 @@ interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
   status: API.HashDatabaseStatus;
 }
 
-class HashDatabaseLayout extends React.Component<
+const HashDatabaseLayout: React.FC<
   HashDatabaseLayoutProps & HashDatabaseLayoutDataProps
-> {
-  handleOptimize = (verify: boolean) => {
+> = ({ status, moduleT }) => {
+  const handleOptimize = (verify: boolean) => {
     runBackgroundSocketAction(
       () => SocketService.post(HashConstants.OPTIMIZE_DATABASE_URL, { verify }),
-      this.props.moduleT.plainT,
+      moduleT.plainT,
     );
   };
 
-  render() {
-    const { status, moduleT } = this.props;
-    const { translate, plainT } = moduleT;
-    return (
-      <div className="ui segment hash-database">
-        <h3 className="header">{translate('Hash database')}</h3>
-        <Grid columns="two">
-          <Row
-            title={translate('File index size')}
-            text={formatSize(status.file_index_size, plainT)}
-            titleWidth="five"
-          />
-          <Row
-            title={translate('Hash store size')}
-            text={formatSize(status.hash_store_size, plainT)}
-            titleWidth="five"
-          />
-        </Grid>
-        {LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT) && (
-          <OptimizeLayout
-            running={status.maintenance_running}
-            startHandler={this.handleOptimize}
-            moduleT={moduleT}
-          />
-        )}
-      </div>
-    );
-  }
-}
+  const { translate, plainT } = moduleT;
+  return (
+    <div className="ui segment hash-database">
+      <h3 className="header">{translate('Hash database')}</h3>
+      <Grid columns="two">
+        <Row
+          title={translate('File index size')}
+          text={formatSize(status.file_index_size, plainT)}
+          titleWidth="five"
+        />
+        <Row
+          title={translate('Hash store size')}
+          text={formatSize(status.hash_store_size, plainT)}
+          titleWidth="five"
+        />
+      </Grid>
+      {LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT) && (
+        <OptimizeLayout
+          running={status.maintenance_running}
+          startHandler={handleOptimize}
+          moduleT={moduleT}
+        />
+      )}
+    </div>
+  );
+};
 
 export default DataProviderDecorator<
   HashDatabaseLayoutProps,

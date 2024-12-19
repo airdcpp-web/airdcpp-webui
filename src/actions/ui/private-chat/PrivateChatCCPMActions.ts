@@ -1,5 +1,4 @@
 import PrivateChatConstants from 'constants/PrivateChatConstants';
-import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -14,12 +13,12 @@ const ccpmDisconnected: Filter = ({ itemData }) =>
 
 type Handler = UI.ActionHandler<API.PrivateChat>;
 
-const handleConnectCCPM: Handler = ({ itemData: session }) => {
-  return SocketService.post(`${PrivateChatConstants.SESSIONS_URL}/${session.id}/ccpm`);
+const handleConnectCCPM: Handler = ({ itemData: session, socket }) => {
+  return socket.post(`${PrivateChatConstants.SESSIONS_URL}/${session.id}/ccpm`);
 };
 
-const handleDisconnectCCPM: Handler = ({ itemData: session }) => {
-  return SocketService.delete(`${PrivateChatConstants.SESSIONS_URL}/${session.id}/ccpm`);
+const handleDisconnectCCPM: Handler = ({ itemData: session, socket }) => {
+  return socket.delete(`${PrivateChatConstants.SESSIONS_URL}/${session.id}/ccpm`);
 };
 
 export const PrivateChatConnectCCPMAction = {

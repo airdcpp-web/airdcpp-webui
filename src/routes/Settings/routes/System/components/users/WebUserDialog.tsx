@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useMemo, useRef } from 'react';
 import RouteModal from 'components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
@@ -161,9 +161,7 @@ const reducePermissionToOption = (
   return options;
 };
 
-const getEntry = (
-  isNew: boolean /*, moduleT: UI.ModuleTranslator*/,
-): UI.FormFieldDefinition[] => {
+const getEntry = (isNew: boolean): UI.FormFieldDefinition[] => {
   return [
     {
       key: 'username',
@@ -195,93 +193,82 @@ interface DataProps extends DataProviderDecoratorChildProps {
   user: API.WebUserInput;
 }
 
-/*interface RouteProps {
-  userId: string;
-}*/
-
 type Props = WebUserDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
-class WebUserDialog extends Component<Props> {
-  static displayName = 'WebUserDialog';
+const buildDefinitions = (isNew: boolean, moduleT: UI.ModuleTranslator) => {
+  const definitions = translateForm(getEntry(isNew), moduleT);
 
-  entry: UI.FormFieldDefinition[];
-  form: Form<Entry>;
+  const permissionT = getSubModuleT(moduleT, 'permissionSelector');
+  const permissions = definitions.find((def) => def.key === 'permissions')!;
+  Object.assign(permissions, {
+    options: Object.keys(AccessConstants).reduce(
+      (reduced, cur) =>
+        reducePermissionToOption(
+          reduced,
+          cur as keyof typeof AccessConstants,
+          permissionT,
+        ),
+      [],
+    ),
+  });
 
-  constructor(props: Props) {
-    super(props);
+  return definitions;
+};
 
-    this.entry = translateForm(getEntry(this.isNew()), props.moduleT);
+const WebUserDialog: React.FC<Props> = ({ user, moduleT, location, ...other }) => {
+  const isNew = !user;
 
-    const permissionT = getSubModuleT(props.moduleT, 'permissionSelector');
-    const permissions = this.entry.find((def) => def.key === 'permissions')!;
-    Object.assign(permissions, {
-      options: Object.keys(AccessConstants).reduce(
-        (reduced, cur) =>
-          reducePermissionToOption(
-            reduced,
-            cur as keyof typeof AccessConstants,
-            permissionT,
-          ),
-        [],
-      ),
-    });
-  }
+  const definitions = useMemo(() => buildDefinitions(isNew, moduleT), []);
+  const formRef = useRef<Form<Entry>>(null);
 
-  isNew = () => {
-    return !this.props.user;
+  const handleSave = () => {
+    return formRef.current!.save();
   };
 
-  save = () => {
-    return this.form.save();
-  };
-
-  onSave: FormSaveHandler<Entry> = (changedFields) => {
-    if (this.isNew()) {
+  const onSave: FormSaveHandler<Entry> = (changedFields) => {
+    if (isNew) {
       return SocketService.post(WebUserConstants.USERS_URL, changedFields);
     }
 
-    return SocketService.patch(
-      `${WebUserConstants.USERS_URL}/${this.props.user.id}`,
-      changedFields,
-    );
+    return SocketService.patch(`${WebUserConstants.USERS_URL}/${user.id}`, changedFields);
   };
 
-  onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
+  const onFieldSetting: FormFieldSettingHandler<Entry> = (
+    id,
+    fieldOptions,
+    formValue,
+  ) => {
     if (id === 'permissions') {
-      const { user, moduleT } = this.props;
       fieldOptions.factory = t.form.Select;
       fieldOptions.template = PermissionSelector(moduleT);
-      fieldOptions.disabled = !this.isNew() && user.username === LoginStore.user.username;
+      fieldOptions.disabled = !isNew && user.username === LoginStore.user.username;
     } else if (id === 'username') {
-      fieldOptions.disabled = !this.isNew();
+      fieldOptions.disabled = !isNew;
     }
   };
 
-  render() {
-    const { user, moduleT, ...other } = this.props;
-    const title = moduleT.translate(this.isNew() ? 'Add web user' : 'Edit user');
+  const title = moduleT.translate(isNew ? 'Add web user' : 'Edit user');
 
-    return (
-      <RouteModal
-        className="web-user"
-        title={title}
-        onApprove={this.save}
-        closable={false}
-        icon={IconConstants.USER}
-        {...other}
-      >
-        <Form<Entry>
-          ref={(c: any) => (this.form = c!)}
-          fieldDefinitions={this.entry}
-          onFieldSetting={this.onFieldSetting}
-          onSave={this.onSave}
-          sourceValue={user as Entry}
-          location={this.props.location}
-        />
-      </RouteModal>
-    );
-  }
-}
+  return (
+    <RouteModal
+      className="web-user"
+      title={title}
+      onApprove={handleSave}
+      closable={false}
+      icon={IconConstants.USER}
+      {...other}
+    >
+      <Form<Entry>
+        ref={formRef}
+        fieldDefinitions={definitions}
+        onFieldSetting={onFieldSetting}
+        onSave={onSave}
+        sourceValue={user as Entry}
+        location={location}
+      />
+    </RouteModal>
+  );
+};
 
 export default ModalRouteDecorator<WebUserDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(WebUserDialog, {

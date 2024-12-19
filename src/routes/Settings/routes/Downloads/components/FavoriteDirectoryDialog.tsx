@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useMemo, useRef } from 'react';
 import RouteModal from 'components/semantic/RouteModal';
 
 import DataProviderDecorator, {
@@ -55,23 +55,20 @@ export interface DataProps extends DataProviderDecoratorChildProps {
   directoryEntry?: API.FavoriteDirectoryEntryBase;
 }
 
-/*interface RouteProps {
-  directoryId: string;
-}*/
-
 type Props = FavoriteDirectoryDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
-class FavoriteDirectoryDialog extends Component<Props> {
-  static displayName = 'FavoriteDirectoryDialog';
+const FavoriteDirectoryDialog: React.FC<Props> = ({
+  directoryEntry,
+  moduleT,
+  virtualNames,
+  location,
+}) => {
+  const formRef = useRef<Form<Entry>>(null);
+  const fieldDefinitions = useMemo(() => translateForm(Entry, moduleT), []);
 
-  form: Form<Entry>;
-  fieldDefinitions = translateForm(Entry, this.props.moduleT);
+  const isNew = !directoryEntry;
 
-  isNew = () => {
-    return !this.props.directoryEntry;
-  };
-
-  onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
+  const onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
     if (id.includes('path')) {
       return Promise.resolve({
         name: !!value.path ? getLastDirectory(value.path) : undefined,
@@ -81,12 +78,12 @@ class FavoriteDirectoryDialog extends Component<Props> {
     return null;
   };
 
-  save = () => {
-    return this.form.save();
+  const handleSave = () => {
+    return formRef.current!.save();
   };
 
-  onSave: FormSaveHandler<Entry> = (changedFields) => {
-    if (this.isNew()) {
+  const onSave: FormSaveHandler<Entry> = (changedFields) => {
+    if (isNew) {
       return SocketService.post(
         FavoriteDirectoryConstants.DIRECTORIES_URL,
         changedFields,
@@ -94,14 +91,18 @@ class FavoriteDirectoryDialog extends Component<Props> {
     }
 
     return SocketService.patch(
-      `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${this.props.directoryEntry!.id}`,
+      `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directoryEntry!.id}`,
       changedFields,
     );
   };
 
-  onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
+  const onFieldSetting: FormFieldSettingHandler<Entry> = (
+    id,
+    fieldOptions,
+    formValue,
+  ) => {
     if (id === 'path') {
-      fieldOptions.disabled = !this.isNew();
+      fieldOptions.disabled = !isNew;
       fieldOptions.config = Object.assign(fieldOptions.config || {}, {
         historyId: FilesystemConstants.LOCATION_DOWNLOAD,
       });
@@ -109,37 +110,35 @@ class FavoriteDirectoryDialog extends Component<Props> {
       fieldOptions.factory = t.form.Textbox;
       fieldOptions.template = AutoSuggestField;
       fieldOptions.config = {
-        suggestionGetter: () => this.props.virtualNames,
+        suggestionGetter: () => virtualNames,
       };
     }
   };
 
-  render() {
-    const { moduleT, directoryEntry } = this.props;
-    const title = moduleT.translate(
-      this.isNew() ? 'Add favorite directory' : 'Edit favorite directory',
-    );
-    return (
-      <RouteModal
-        className="favorite-directory"
-        title={title}
-        onApprove={this.save}
-        closable={false}
-        icon={IconConstants.FOLDER}
-      >
-        <Form<Entry>
-          ref={(c) => (this.form = c!)}
-          fieldDefinitions={this.fieldDefinitions}
-          onFieldChanged={this.onFieldChanged}
-          onFieldSetting={this.onFieldSetting}
-          onSave={this.onSave}
-          sourceValue={directoryEntry as Entry}
-          location={this.props.location}
-        />
-      </RouteModal>
-    );
-  }
-}
+  const title = moduleT.translate(
+    isNew ? 'Add favorite directory' : 'Edit favorite directory',
+  );
+
+  return (
+    <RouteModal
+      className="favorite-directory"
+      title={title}
+      onApprove={handleSave}
+      closable={false}
+      icon={IconConstants.FOLDER}
+    >
+      <Form<Entry>
+        ref={formRef}
+        fieldDefinitions={fieldDefinitions}
+        onFieldChanged={onFieldChanged}
+        onFieldSetting={onFieldSetting}
+        onSave={onSave}
+        sourceValue={directoryEntry as Entry}
+        location={location}
+      />
+    </RouteModal>
+  );
+};
 
 export default ModalRouteDecorator<FavoriteDirectoryDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(

@@ -1,5 +1,4 @@
 import { default as QueueConstants } from 'constants/QueueConstants';
-import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -11,8 +10,9 @@ type ActionHandlerType = UI.ActionHandler<API.QueueBundleSource, API.QueueBundle
 const handleRemoveBundleSource: ActionHandlerType = ({
   itemData: source,
   entity: bundle,
+  socket,
 }) => {
-  return SocketService.delete(
+  return socket.delete(
     `${QueueConstants.BUNDLES_URL}/${bundle.id}/sources/${source.user.cid}`,
   );
 };

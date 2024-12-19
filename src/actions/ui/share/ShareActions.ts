@@ -1,13 +1,11 @@
-import SocketService from 'services/SocketService';
-
 import ShareConstants from 'constants/ShareConstants';
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleRefresh = () => {
-  return SocketService.post(ShareConstants.REFRESH_URL);
+const handleRefresh: UI.ActionHandler<void> = ({ socket }) => {
+  return socket.post(ShareConstants.REFRESH_URL);
 };
 
 export const ShareRefreshAction = {

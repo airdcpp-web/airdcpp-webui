@@ -1,13 +1,12 @@
 import QueueConstants from 'constants/QueueConstants';
-import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleRemoveSource: UI.ActionHandler<API.User> = ({ itemData: user }) => {
-  return SocketService.delete(`${QueueConstants.SOURCES_URL}/${user.cid}`);
+const handleRemoveSource: UI.ActionHandler<API.User> = ({ itemData: user, socket }) => {
+  return socket.delete(`${QueueConstants.SOURCES_URL}/${user.cid}`);
 };
 
 export const QueueSourceRemoveAction = {

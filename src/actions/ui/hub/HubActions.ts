@@ -1,5 +1,4 @@
 import HubConstants from 'constants/HubConstants';
-import SocketService from 'services/SocketService';
 
 import { BuildClearChatAction } from '../decorators/ChatActionDecorator';
 import { BuildRemoveSessionAction } from '../decorators/SessionActionDecorator';
@@ -13,12 +12,12 @@ import { MENU_DIVIDER } from 'constants/ActionConstants';
 type Filter = UI.ActionFilter<API.Hub>;
 const notFavorite: Filter = ({ itemData: hub }) => !hub.favorite_hub;
 
-const handleFavorite: UI.ActionHandler<API.Hub> = ({ itemData: hub }) => {
-  return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/favorite`);
+const handleFavorite: UI.ActionHandler<API.Hub> = ({ itemData: hub, socket }) => {
+  return socket.post(`${HubConstants.SESSIONS_URL}/${hub.id}/favorite`);
 };
 
-const handleReconnect: UI.ActionHandler<API.Hub> = ({ itemData: hub }) => {
-  return SocketService.post(`${HubConstants.SESSIONS_URL}/${hub.id}/reconnect`);
+const handleReconnect: UI.ActionHandler<API.Hub> = ({ itemData: hub, socket }) => {
+  return socket.post(`${HubConstants.SESSIONS_URL}/${hub.id}/reconnect`);
 };
 
 export const HubReconnectAction = {

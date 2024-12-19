@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import ShareConstants from 'constants/ShareConstants';
 import IconConstants from 'constants/IconConstants';
 
@@ -10,8 +8,8 @@ const handleAdd: UI.ActionHandler<void> = ({ navigate }) => {
   navigate(`browse`);
 };
 
-const handleRemove: UI.ActionHandler<string> = ({ itemData: path }) => {
-  return SocketService.post(ShareConstants.EXCLUDES_REMOVE_URL, { path });
+const handleRemove: UI.ActionHandler<string> = ({ itemData: path, socket }) => {
+  return socket.post(ShareConstants.EXCLUDES_REMOVE_URL, { path });
 };
 
 export const ShareExcludeAddAction = {

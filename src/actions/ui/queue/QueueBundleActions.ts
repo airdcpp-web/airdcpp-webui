@@ -1,5 +1,4 @@
 import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
-import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -7,6 +6,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import SearchActions from 'actions/reflux/SearchActions';
+import { APISocket } from 'services/SocketService';
 
 type Filter = UI.ActionFilter<API.QueueBundle>;
 const bundleValidationFailed: Filter = ({ itemData: bundle }) =>
@@ -17,8 +17,12 @@ const isDirectoryBundle: Filter = ({ itemData: bundle }) =>
 const hasSources: Filter = (data) =>
   data.itemData.sources.total > 0 && itemNotFinished(data);
 
-const shareBundle = (bundle: API.QueueBundle, skipValidation: boolean) => {
-  return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/share`, {
+const shareBundle = (
+  socket: APISocket,
+  bundle: API.QueueBundle,
+  skipValidation: boolean,
+) => {
+  return socket.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/share`, {
     skip_validation: skipValidation,
   });
 };
@@ -26,16 +30,16 @@ const shareBundle = (bundle: API.QueueBundle, skipValidation: boolean) => {
 // Handlers
 type Handler = UI.ActionHandler<API.QueueBundle>;
 
-const handleRescan: Handler = ({ itemData: bundle }) => {
-  return shareBundle(bundle, false);
+const handleRescan: Handler = ({ itemData: bundle, socket }) => {
+  return shareBundle(socket, bundle, false);
 };
 
-const handleForceShare: Handler = ({ itemData: bundle }) => {
-  return shareBundle(bundle, true);
+const handleForceShare: Handler = ({ itemData: bundle, socket }) => {
+  return shareBundle(socket, bundle, true);
 };
 
-const handleRemoveBundle: Handler = ({ itemData: bundle }, removeFinished) => {
-  return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/remove`, {
+const handleRemoveBundle: Handler = ({ itemData: bundle, socket }, removeFinished) => {
+  return socket.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/remove`, {
     remove_finished: removeFinished,
   });
 };
@@ -44,8 +48,8 @@ const handleSearch: Handler = ({ itemData: bundle, location, navigate }) => {
   return SearchActions.search(bundle, location, navigate);
 };
 
-const handleSearchBundleAlternates: Handler = ({ itemData: bundle }) => {
-  return SocketService.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`);
+const handleSearchBundleAlternates: Handler = ({ itemData: bundle, socket }) => {
+  return socket.post(`${QueueConstants.BUNDLES_URL}/${bundle.id}/search`);
 };
 
 const handleSources: Handler = ({ itemData, navigate }) => {

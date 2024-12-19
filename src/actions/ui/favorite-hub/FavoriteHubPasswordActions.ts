@@ -1,28 +1,32 @@
-import SocketService from 'services/SocketService';
-
 import FavoriteHubConstants from 'constants/FavoriteHubConstants';
 import IconConstants from 'constants/IconConstants';
+import { APISocket } from 'services/SocketService';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const sendPassword = (hub: API.FavoriteHubEntry, password: string | null) => {
-  return SocketService.patch(FavoriteHubConstants.HUBS_URL + '/' + hub.id, {
+const sendPassword = (
+  socket: APISocket,
+  hub: API.FavoriteHubEntry,
+  password: string | null,
+) => {
+  return socket.patch(FavoriteHubConstants.HUBS_URL + '/' + hub.id, {
     password,
   });
 };
 
 const handleSetPassword: UI.ActionHandler<API.FavoriteHubEntry> = (
-  { itemData: hub },
+  { itemData: hub, socket },
   password: string,
 ) => {
-  return sendPassword(hub, password);
+  return sendPassword(socket, hub, password);
 };
 
 const handleRemovePassword: UI.ActionHandler<API.FavoriteHubEntry> = ({
   itemData: hub,
+  socket,
 }) => {
-  return sendPassword(hub, null);
+  return sendPassword(socket, hub, null);
 };
 
 type Filter = UI.ActionFilter<API.FavoriteHubEntry>;

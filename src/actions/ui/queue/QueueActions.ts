@@ -1,28 +1,28 @@
 import QueueConstants from 'constants/QueueConstants';
-import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
+import { APISocket } from 'services/SocketService';
 
-const setBundlePriorities = (prio: API.QueuePriorityEnum) => {
-  return SocketService.post(QueueConstants.BUNDLES_URL + '/priority', {
+const setBundlePriorities = (socket: APISocket, prio: API.QueuePriorityEnum) => {
+  return socket.post(QueueConstants.BUNDLES_URL + '/priority', {
     priority: prio,
   });
 };
 
-const handlePause = () => {
-  return setBundlePriorities(API.QueuePriorityEnum.PAUSED_FORCED);
+const handlePause: UI.ActionHandler<void> = ({ socket }) => {
+  return setBundlePriorities(socket, API.QueuePriorityEnum.PAUSED_FORCED);
 };
 
-const handleResume = () => {
-  return setBundlePriorities(API.QueuePriorityEnum.DEFAULT);
+const handleResume: UI.ActionHandler<void> = ({ socket }) => {
+  return setBundlePriorities(socket, API.QueuePriorityEnum.DEFAULT);
 };
 
-const handleRemoveCompleted = () => {
-  return SocketService.post(QueueConstants.BUNDLES_URL + '/remove_completed');
+const handleRemoveCompleted: UI.ActionHandler<void> = ({ socket }) => {
+  return socket.post(QueueConstants.BUNDLES_URL + '/remove_completed');
 };
 
 export const QueueRemoveCompletedAction = {

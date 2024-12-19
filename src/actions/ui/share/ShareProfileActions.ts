@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 import FilelistSessionStore from 'stores/FilelistSessionStore';
 
@@ -8,14 +6,15 @@ import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { MENU_DIVIDER } from 'constants/ActionConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
 
 type Filter = UI.ActionFilter<API.ShareProfile>;
 const notDefault: Filter = ({ itemData: profile }) => !profile.default;
 
-const handleCreate: UI.ActionHandler<void> = (data, name: string) => {
-  return SocketService.post<API.ShareProfile>(ShareProfileConstants.PROFILES_URL, {
+const handleCreate: UI.ActionHandler<void> = ({ socket }, name: string) => {
+  return socket.post<API.ShareProfile>(ShareProfileConstants.PROFILES_URL, {
     name: name,
   });
 };
@@ -28,10 +27,10 @@ const handleClone: Handler = async (data, name: string) => {
     name,
   );
 
-  const { itemData: sourceProfile } = data;
+  const { itemData: sourceProfile, socket } = data;
 
   // Fetch roots
-  const roots = await SocketService.get<API.ShareRootEntry[]>(
+  const roots = await socket.get<API.ShareRootEntry[]>(
     `${ShareRootConstants.MODULE_URL}`,
   );
 
@@ -42,26 +41,24 @@ const handleClone: Handler = async (data, name: string) => {
       continue;
     }
 
-    await SocketService.patch(`${ShareRootConstants.MODULE_URL}/${root.id}`, {
+    await socket.patch(`${ShareRootConstants.MODULE_URL}/${root.id}`, {
       profiles: [...rootProfileIds, newProfile.id],
     });
   }
 };
 
-const handleDefault: Handler = ({ itemData: profile }) => {
-  return SocketService.post(
-    `${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`,
-  );
+const handleDefault: Handler = ({ itemData: profile, socket }) => {
+  return socket.post(`${ShareProfileConstants.PROFILES_URL}/${profile.id}/default`);
 };
 
-const handleEdit: Handler = ({ itemData: profile }, name: string) => {
-  return SocketService.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, {
+const handleEdit: Handler = ({ itemData: profile, socket }, name: string) => {
+  return socket.patch(`${ShareProfileConstants.PROFILES_URL}/${profile.id}`, {
     name: name,
   });
 };
 
-const handleRemove: Handler = ({ itemData: profile }) => {
-  return SocketService.delete(ShareProfileConstants.PROFILES_URL + '/' + profile.id);
+const handleRemove: Handler = ({ itemData: profile, socket }) => {
+  return socket.delete(ShareProfileConstants.PROFILES_URL + '/' + profile.id);
 };
 
 const handleBrowse: Handler = ({ itemData: profile, location, navigate }) => {

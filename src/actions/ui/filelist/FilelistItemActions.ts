@@ -1,7 +1,5 @@
 import FilelistConstants from 'constants/FilelistConstants';
 
-import SocketService from 'services/SocketService';
-
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
@@ -22,8 +20,8 @@ const filterDetails: Filter = (data) => !isRoot(data);
 // Handlers
 type Handler = UI.ActionHandler<API.FilelistItem, API.FilelistSession>;
 
-const handleReloadDirectory: Handler = ({ itemData: item, entity: session }) => {
-  return SocketService.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/directory`, {
+const handleReloadDirectory: Handler = ({ itemData: item, entity: session, socket }) => {
+  return socket.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/directory`, {
     list_path: item.path,
     reload: true,
   });

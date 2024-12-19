@@ -49,62 +49,60 @@ interface ExcludePageDataProps extends DataProviderDecoratorChildProps {
   excludes: string[];
 }
 
-class ExcludePage extends React.Component<ExcludePageProps & ExcludePageDataProps> {
-  static displayName = 'ExcludePage';
-
-  render() {
-    const { excludes, moduleT } = this.props;
-    const { translate, toI18nKey } = moduleT;
-    return (
-      <div>
-        <Message
-          title={
+const ExcludePage: React.FC<ExcludePageProps & ExcludePageDataProps> = ({
+  excludes,
+  moduleT,
+}) => {
+  const { translate, toI18nKey } = moduleT;
+  return (
+    <div>
+      <Message
+        title={
+          <div>
             <div>
-              <div>
-                <Trans i18nKey={toI18nKey('shareRefreshNote')}>
-                  Share must be refreshed for the changes to take effect
-                </Trans>
-              </div>
-              <br />
-              <ActionButton action={ShareRefreshAction} moduleData={ShareActionModule} />
+              <Trans i18nKey={toI18nKey('shareRefreshNote')}>
+                Share must be refreshed for the changes to take effect
+              </Trans>
             </div>
-          }
-          icon={IconConstants.INFO}
-        />
+            <br />
+            <ActionButton action={ShareRefreshAction} moduleData={ShareActionModule} />
+          </div>
+        }
+        icon={IconConstants.INFO}
+      />
 
-        <ActionButton
-          action={ShareExcludeAddAction}
-          moduleData={ShareExcludeActionModule}
-          className="add"
-        />
+      <ActionButton
+        action={ShareExcludeAddAction}
+        moduleData={ShareExcludeActionModule}
+        className="add"
+      />
 
-        {excludes.length > 0 && (
-          <table className="ui striped table">
-            <thead>
-              <tr>
-                <th>{translate('Path')}</th>
-              </tr>
-            </thead>
-            <tbody>{excludes.map(getRow)}</tbody>
-          </table>
-        )}
+      {excludes.length > 0 && (
+        <table className="ui striped table">
+          <thead>
+            <tr>
+              <th>{translate('Path')}</th>
+            </tr>
+          </thead>
+          <tbody>{excludes.map(getRow)}</tbody>
+        </table>
+      )}
 
-        <FileBrowserRouteDialog
-          onConfirm={(path) =>
-            runBackgroundSocketAction(
-              () => SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path }),
-              moduleT.plainT,
-            )
-          }
-          initialPath=""
-          historyId={FilesystemConstants.LOCATION_GENERIC}
-          subHeader={translate('Add excluded path')}
-          selectMode={UI.FileSelectModeEnum.DIRECTORY}
-        />
-      </div>
-    );
-  }
-}
+      <FileBrowserRouteDialog
+        onConfirm={(path) =>
+          runBackgroundSocketAction(
+            () => SocketService.post(ShareConstants.EXCLUDES_ADD_URL, { path }),
+            moduleT.plainT,
+          )
+        }
+        initialPath=""
+        historyId={FilesystemConstants.LOCATION_GENERIC}
+        subHeader={translate('Add excluded path')}
+        selectMode={UI.FileSelectModeEnum.DIRECTORY}
+      />
+    </div>
+  );
+};
 
 export default DataProviderDecorator(ExcludePage, {
   urls: {

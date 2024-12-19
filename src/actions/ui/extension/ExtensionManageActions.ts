@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import ExtensionConstants from 'constants/ExtensionConstants';
 
 import IconConstants from 'constants/IconConstants';
@@ -27,32 +25,37 @@ const handleConfigure: UI.ActionHandler<API.Extension> = ({
   navigate(`extensions/${extension.id}`);
 };
 
-const handleStart: UI.ActionHandler<API.Extension> = ({ itemData: extension }) => {
-  return SocketService.post(
-    `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`,
-  );
+const handleStart: UI.ActionHandler<API.Extension> = ({
+  itemData: extension,
+  socket,
+}) => {
+  return socket.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/start`);
 };
 
-const handleStop: UI.ActionHandler<API.Extension> = ({ itemData: extension }) => {
-  return SocketService.post(
-    `${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`,
-  );
+const handleStop: UI.ActionHandler<API.Extension> = ({ itemData: extension, socket }) => {
+  return socket.post(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}/stop`);
 };
 
-const handleDisable: UI.ActionHandler<API.Extension> = ({ itemData: extension }) => {
-  return SocketService.patch(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}`, {
+const handleDisable: UI.ActionHandler<API.Extension> = ({
+  itemData: extension,
+  socket,
+}) => {
+  return socket.patch(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}`, {
     disabled: true,
   });
 };
 
-const handleEnable: UI.ActionHandler<API.Extension> = ({ itemData: extension }) => {
-  return SocketService.patch(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}`, {
+const handleEnable: UI.ActionHandler<API.Extension> = ({
+  itemData: extension,
+  socket,
+}) => {
+  return socket.patch(`${ExtensionConstants.EXTENSIONS_URL}/${extension.name}`, {
     disabled: false,
   });
 };
 
-const handleRemove: UI.ActionHandler<API.Extension> = ({ itemData }) => {
-  return SocketService.delete(ExtensionConstants.EXTENSIONS_URL + '/' + itemData.name);
+const handleRemove: UI.ActionHandler<API.Extension> = ({ itemData, socket }) => {
+  return socket.delete(ExtensionConstants.EXTENSIONS_URL + '/' + itemData.name);
 };
 
 export const ExtensionStartAction = {

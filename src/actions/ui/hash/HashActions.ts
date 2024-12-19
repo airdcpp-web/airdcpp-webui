@@ -1,5 +1,4 @@
 import HashConstants from 'constants/HashConstants';
-import SocketService from 'services/SocketService';
 import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
@@ -17,15 +16,25 @@ const isPaused: Filter = ({ itemData }) =>
   itemData.pause_forced && itemData.hashers === 0;
 const hasHashers: Filter = ({ itemData }) => itemData.hashers > 0;
 
+const handleResumeHashing: UI.ActionHandler<HashItemData> = ({ socket }) => {
+  return socket.post(HashConstants.RESUME_URL);
+};
+
+const handlePauseHashing: UI.ActionHandler<HashItemData> = ({ socket }) => {
+  return socket.post(HashConstants.PAUSE_URL);
+};
+
+const handleStopHashing: UI.ActionHandler<HashItemData> = ({ socket }) => {
+  return socket.post(HashConstants.STOP_URL);
+};
+
 export const HashStopAction = {
   id: 'stop',
   displayName: 'Stop',
   access: AccessConstants.SETTINGS_EDIT,
   icon: IconConstants.STOP,
   filter: hasFiles,
-  handler: () => {
-    return SocketService.post(HashConstants.STOP_URL);
-  },
+  handler: handleStopHashing,
 };
 
 export const HashResumeAction = {
@@ -34,9 +43,7 @@ export const HashResumeAction = {
   access: AccessConstants.SETTINGS_EDIT,
   icon: IconConstants.PLAY,
   filter: isPaused,
-  handler: () => {
-    return SocketService.post(HashConstants.RESUME_URL);
-  },
+  handler: handleResumeHashing,
 };
 
 export const HashPauseAction = {
@@ -45,9 +52,7 @@ export const HashPauseAction = {
   access: AccessConstants.SETTINGS_EDIT,
   icon: IconConstants.PAUSE,
   filter: hasHashers,
-  handler: () => {
-    return SocketService.post(HashConstants.PAUSE_URL);
-  },
+  handler: handlePauseHashing,
 };
 
 export const HashActions: UI.ActionListType<HashItemData> = {

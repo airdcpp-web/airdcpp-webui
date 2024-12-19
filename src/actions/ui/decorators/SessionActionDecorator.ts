@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
@@ -11,8 +9,11 @@ export const BuildRemoveSessionAction = (
   sessionsUrl: string,
   editAccess: API.AccessEnum,
 ) => {
-  const handleRemoveSession: UI.ActionHandler<SessionType> = ({ itemData: session }) => {
-    return SocketService.delete(`${sessionsUrl}/${session.id}`);
+  const handleRemoveSession: UI.ActionHandler<SessionType> = ({
+    itemData: session,
+    socket,
+  }) => {
+    return socket.delete(`${sessionsUrl}/${session.id}`);
   };
 
   const SessionRemoveAction = {

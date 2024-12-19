@@ -1,4 +1,3 @@
-import SocketService from 'services/SocketService';
 import { sleep } from 'utils/Promise';
 
 import IconConstants from 'constants/IconConstants';
@@ -141,36 +140,30 @@ const handleViewImage: Handler = (data) => {
   return handleViewFile(data, false);
 };
 
-const handleFindNfo: Handler = async ({ itemData, ...other }) => {
+const handleFindNfo: Handler = async ({ itemData, socket, ...other }) => {
   // Get a new instance
-  let instance = await SocketService.post<API.SearchInstance>(
-    SearchConstants.INSTANCES_URL,
-    {
-      expiration_minutes: 1,
-    },
-  );
+  let instance = await socket.post<API.SearchInstance>(SearchConstants.INSTANCES_URL, {
+    expiration_minutes: 1,
+  });
 
   // Post the search
-  await SocketService.post(
-    `${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`,
-    {
-      user: itemData.user,
-      query: {
-        extensions: ['nfo'],
-        max_size: 256 * 1024,
-      },
-      options: {
-        path: itemData.itemInfo.path,
-        max_results: 1,
-      },
+  await socket.post(`${SearchConstants.INSTANCES_URL}/${instance.id}/user_search`, {
+    user: itemData.user,
+    query: {
+      extensions: ['nfo'],
+      max_size: 256 * 1024,
     },
-  );
+    options: {
+      path: itemData.itemInfo.path,
+      max_results: 1,
+    },
+  });
 
   // Wait for the results to arrive
   for (let i = 0; i < 5; i++) {
     await sleep(500);
 
-    instance = await SocketService.get<API.SearchInstance>(
+    instance = await socket.get<API.SearchInstance>(
       `${SearchConstants.INSTANCES_URL}/${instance.id}`,
     );
     if (instance.result_count > 0) {
@@ -180,7 +173,7 @@ const handleFindNfo: Handler = async ({ itemData, ...other }) => {
 
   if (instance.result_count > 0) {
     // Open the first result for viewing
-    const results = await SocketService.get<API.GroupedSearchResult[]>(
+    const results = await socket.get<API.GroupedSearchResult[]>(
       `${SearchConstants.INSTANCES_URL}/${instance.id}/results/0/1`,
     );
 
@@ -192,6 +185,7 @@ const handleFindNfo: Handler = async ({ itemData, ...other }) => {
         handler: itemData.handler,
         entity: instance,
       },
+      socket,
       ...other,
     });
   } else {

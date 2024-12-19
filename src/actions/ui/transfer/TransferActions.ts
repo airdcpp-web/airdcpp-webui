@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import { QueueSourceRemoveAction } from 'actions/ui/queue/QueueSourceActions';
 
 import { QueueFileRemoveAction } from 'actions/ui/queue/QueueFileActions';
@@ -24,14 +22,12 @@ const removeSource: Filter = (data) => isDownload(data) && !isFinished(data);
 
 // Handlers
 type Handler = UI.ActionHandler<API.Transfer>;
-const handleForce: Handler = ({ itemData: transfer }) => {
-  return SocketService.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/force`);
+const handleForce: Handler = ({ itemData: transfer, socket }) => {
+  return socket.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/force`);
 };
 
-const handleDisconnect: Handler = ({ itemData: transfer }) => {
-  return SocketService.post(
-    `${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`,
-  );
+const handleDisconnect: Handler = ({ itemData: transfer, socket }) => {
+  return socket.post(`${TransferConstants.TRANSFERS_URL}/${transfer.id}/disconnect`);
 };
 
 const handleRemoveFile: Handler = ({ itemData: transfer, ...other }) => {

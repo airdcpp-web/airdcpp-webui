@@ -1,4 +1,5 @@
 import { actionAccess, runBackgroundSocketAction } from 'utils/ActionUtils';
+import SocketService from 'services/SocketService';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -46,6 +47,7 @@ const handleClear: ChatCommandHandler = (
         location,
         navigate,
         t,
+        socket: SocketService,
       }) as Promise<any>,
     t,
   );

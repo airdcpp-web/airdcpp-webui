@@ -1,17 +1,16 @@
 import SystemConstants from 'constants/SystemConstants';
-import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const handleRestartWeb = () => {
-  return SocketService.post(SystemConstants.MODULE_URL + '/restart_web');
+const handleRestartWeb: UI.ActionHandler<void> = ({ socket }) => {
+  return socket.post(SystemConstants.MODULE_URL + '/restart_web');
 };
 
-const handleShutdown = () => {
-  return SocketService.post(SystemConstants.MODULE_URL + '/shutdown');
+const handleShutdown: UI.ActionHandler<void> = ({ socket }) => {
+  return socket.post(SystemConstants.MODULE_URL + '/shutdown');
 };
 
 export const SystemRestartWebAction = {

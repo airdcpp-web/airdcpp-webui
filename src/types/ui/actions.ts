@@ -3,6 +3,7 @@ import { TranslateF } from './common';
 import { IconType } from 'components/semantic/Icon';
 import { Location, NavigateFunction } from 'react-router-dom';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
+import { APISocket } from 'services/SocketService';
 
 // ID is required for menu action item data due to extension hooks
 export type ActionIdType = API.IdType | object; // Hinted user doesn't have a simple ID
@@ -39,6 +40,7 @@ export interface ActionHandlerData<
   location: Location;
   t: TranslateF;
   navigate: NavigateFunction;
+  socket: APISocket;
 }
 
 export type ActionHandler<

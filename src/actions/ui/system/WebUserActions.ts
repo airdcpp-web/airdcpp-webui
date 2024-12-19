@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import WebUserConstants from 'constants/WebUserConstants';
 
 import IconConstants from 'constants/IconConstants';
@@ -21,8 +19,8 @@ const handleEdit: Handler = ({ itemData: user, navigate }) => {
   navigate(`users/${user.id}`);
 };
 
-const handleRemove: Handler = ({ itemData: user }) => {
-  return SocketService.delete(`${WebUserConstants.USERS_URL}/${user.id}`);
+const handleRemove: Handler = ({ itemData: user, socket }) => {
+  return socket.delete(`${WebUserConstants.USERS_URL}/${user.id}`);
 };
 
 export const WebUserCreateAction = {

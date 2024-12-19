@@ -1,5 +1,4 @@
 import QueueConstants from 'constants/QueueConstants';
-import SocketService from 'services/SocketService';
 
 import IconConstants from 'constants/IconConstants';
 
@@ -15,14 +14,17 @@ const handleSearch: Handler = ({ itemData: file, location, navigate }) => {
   return SearchActions.search(file, location, navigate);
 };
 
-const handleRemoveFile: Handler = ({ itemData: file }, removeFinished: boolean) => {
-  return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/remove`, {
+const handleRemoveFile: Handler = (
+  { itemData: file, socket },
+  removeFinished: boolean,
+) => {
+  return socket.post(`${QueueConstants.FILES_URL}/${file.id}/remove`, {
     remove_finished: removeFinished,
   });
 };
 
-const handleSearchFileAlternates: Handler = ({ itemData: file }) => {
-  return SocketService.post(`${QueueConstants.FILES_URL}/${file.id}/search`);
+const handleSearchFileAlternates: Handler = ({ itemData: file, socket }) => {
+  return socket.post(`${QueueConstants.FILES_URL}/${file.id}/search`);
 };
 
 export const QueueFileSearchAction = {

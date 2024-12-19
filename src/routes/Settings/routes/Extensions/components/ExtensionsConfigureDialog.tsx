@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useRef } from 'react';
 
 import RouteModal from 'components/semantic/RouteModal';
 import Form, { FormSaveHandler } from 'components/form/Form';
@@ -30,47 +30,44 @@ interface DataProps extends DataProviderDecoratorChildProps {
   extension: API.Extension;
 }
 
-/*interface RouteProps {
-  extensionId: string;
-}*/
-
 type Props = ExtensionsConfigureDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
-class ExtensionsConfigureDialog extends Component<Props> {
-  static displayName = 'ExtensionsConfigureDialog';
-
-  form: Form;
-  save = () => {
-    return this.form.save();
+const ExtensionsConfigureDialog: React.FC<Props> = ({
+  extension,
+  settings,
+  fieldDefinitions,
+  location,
+  ...other
+}) => {
+  const formRef = useRef<Form>(null);
+  const handleSave = () => {
+    return formRef.current!.save();
   };
 
-  onSave: FormSaveHandler<UI.FormValueMap> = (changedFields) => {
-    return SocketService.patch(getSettingsUrl(this.props.extension.id), changedFields);
+  const onSave: FormSaveHandler<UI.FormValueMap> = (changedFields) => {
+    return SocketService.patch(getSettingsUrl(extension.id), changedFields);
   };
 
-  render() {
-    const { extension, settings, fieldDefinitions, ...other } = this.props;
-    return (
-      <RouteModal
-        {...other}
-        className="extensions configure"
-        title={extension.name}
-        onApprove={this.save}
-        closable={false}
-        icon={IconConstants.EDIT}
-        dynamicHeight={true}
-      >
-        <Form
-          ref={(c: any) => (this.form = c!)}
-          onSave={this.onSave}
-          fieldDefinitions={fieldDefinitions}
-          sourceValue={settings}
-          location={this.props.location}
-        />
-      </RouteModal>
-    );
-  }
-}
+  return (
+    <RouteModal
+      {...other}
+      className="extensions configure"
+      title={extension.name}
+      onApprove={handleSave}
+      closable={false}
+      icon={IconConstants.EDIT}
+      dynamicHeight={true}
+    >
+      <Form
+        ref={formRef}
+        onSave={onSave}
+        fieldDefinitions={fieldDefinitions}
+        sourceValue={settings}
+        location={location}
+      />
+    </RouteModal>
+  );
+};
 
 export default ModalRouteDecorator<ExtensionsConfigureDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(

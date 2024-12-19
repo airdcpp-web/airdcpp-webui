@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import IconConstants from 'constants/IconConstants';
 
@@ -19,10 +17,9 @@ const handleEdit: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({
 
 const handleRemove: UI.ActionHandler<API.FavoriteDirectoryEntry> = ({
   itemData: directory,
+  socket,
 }) => {
-  return SocketService.delete(
-    `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directory.id}`,
-  );
+  return socket.delete(`${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directory.id}`);
 };
 
 export const FavoriteDirectoryCreateAction = {

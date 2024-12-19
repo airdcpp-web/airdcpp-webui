@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import ShareRootConstants from 'constants/ShareRootConstants';
 import IconConstants from 'constants/IconConstants';
 
@@ -15,8 +13,8 @@ const handleEdit: Handler = ({ itemData: root, navigate }) => {
   navigate(`directories/${root.id}`);
 };
 
-const handleRemove: Handler = ({ itemData: root }) => {
-  return SocketService.delete(ShareRootConstants.ROOTS_URL + '/' + root.id);
+const handleRemove: Handler = ({ itemData: root, socket }) => {
+  return socket.delete(ShareRootConstants.ROOTS_URL + '/' + root.id);
 };
 
 export const ShareRootCreateAction = {

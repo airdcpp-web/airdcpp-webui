@@ -1,4 +1,4 @@
-import SocketService from 'services/SocketService';
+import { APISocket } from 'services/SocketService';
 import { fetchCorsSafeData } from 'services/HttpService';
 
 import ExtensionConstants from 'constants/ExtensionConstants';
@@ -8,8 +8,13 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-const downloadExtension = (url: string, installId?: string, shasum?: string) => {
-  return SocketService.post(ExtensionConstants.DOWNLOAD_URL, {
+const downloadExtension = (
+  socket: APISocket,
+  url: string,
+  installId?: string,
+  shasum?: string,
+) => {
+  return socket.post(ExtensionConstants.DOWNLOAD_URL, {
     install_id: installId ? installId : url,
     url,
     shasum,
@@ -18,7 +23,7 @@ const downloadExtension = (url: string, installId?: string, shasum?: string) => 
 
 const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async ({
   itemData: npmPackage,
-  ...other
+  socket,
 }) => {
   const data = await fetchCorsSafeData(
     ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest',
@@ -27,11 +32,11 @@ const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async ({
 
   const { tarball, shasum } = data.dist;
 
-  return downloadExtension(tarball, npmPackage.name, shasum);
+  return downloadExtension(socket, tarball, npmPackage.name, shasum);
 };
 
-const handleInstallUrl: UI.ActionHandler<undefined> = ({ itemData }, url: string) => {
-  return downloadExtension(url);
+const handleInstallUrl: UI.ActionHandler<undefined> = ({ socket }, url: string) => {
+  return downloadExtension(socket, url);
 };
 
 export const ExtensionInstallURLAction = {

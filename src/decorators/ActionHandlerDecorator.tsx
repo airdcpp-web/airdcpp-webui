@@ -14,6 +14,7 @@ import { translate } from 'utils/TranslationUtils';
 
 import NotificationActions from 'actions/NotificationActions';
 import { ActionData, ActionDialog, suffixActionI18nKey } from './components/ActionDialog';
+import SocketService, { APISocket } from 'services/SocketService';
 
 interface ActionHandlerDecoratorProps<
   ItemDataT extends UI.ActionDataValueType,
@@ -50,6 +51,7 @@ interface HandleAction<
   navigate: NavigateFunction;
   t: UI.TranslateF;
   closeModal: ModalCloseContext | undefined;
+  socket: APISocket;
 }
 
 const handleAction = async <
@@ -76,6 +78,7 @@ const handleAction = async <
         location,
         navigate,
         t,
+        socket: SocketService,
       };
 
       try {
@@ -152,6 +155,7 @@ const ActionHandlerDecorator = <
       navigate,
       t,
       closeModal,
+      socket: SocketService,
     });
     closeConfirmation();
   };
@@ -169,6 +173,7 @@ const ActionHandlerDecorator = <
         navigate,
         t,
         closeModal,
+        socket: SocketService,
       });
     }
   };

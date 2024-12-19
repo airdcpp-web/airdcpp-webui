@@ -41,17 +41,19 @@ export type DataConverter<PropsT extends object> = (
   props: PropsT & WithTranslation,
 ) => any;
 
+export type DataProviderUrls<PropsT extends object> = {
+  [key: string]:
+    | ((props: PropsT, socket: APISocket) => Promise<object | undefined>)
+    | string;
+};
+
 export interface DataProviderDecoratorSettings<
   PropsT extends object,
   DataT extends object,
 > {
   // Key-value map of prop names and API urls
   // Value may also be a function which receives the props and SocketService as argument and performs the data fetch
-  urls: {
-    [key: string]:
-      | ((props: PropsT, socket: APISocket) => Promise<object | undefined>)
-      | string;
-  };
+  urls: DataProviderUrls<PropsT>;
 
   // Called when the socket is connected
   onSocketConnected?: SocketConnectHandler<DataT, PropsT>;

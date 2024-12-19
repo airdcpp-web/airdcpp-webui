@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 import SessionConstants from 'constants/SessionConstants';
@@ -8,9 +6,9 @@ import SettingConstants from 'constants/SettingConstants';
 import * as UI from 'types/ui';
 import LoginStore from 'stores/LoginStore';
 
-const handleNewUserIntroSeen = () => {
+const handleNewUserIntroSeen: UI.ActionHandler<void> = ({ socket }) => {
   LoginStore.onNewUserIntroSeen();
-  return SocketService.post(SettingConstants.ITEMS_SET_URL, {
+  return socket.post(SettingConstants.ITEMS_SET_URL, {
     [SessionConstants.WIZARD_PENDING]: false,
   });
 };

@@ -7,7 +7,6 @@ import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
 import IconConstants from 'constants/IconConstants';
 
 import UserConstants from 'constants/UserConstants';
-import SocketService from 'services/SocketService';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -65,12 +64,15 @@ const handleBrowse: Handler = ({ itemData: userData, location, navigate }) => {
   });
 };
 
-const handleIgnore: Handler = ({ itemData: userData }) => {
-  return SocketService.post(`${UserConstants.IGNORES_URL}/${userData.user.cid}`);
+const handleIgnore: Handler = ({ itemData: userData, socket }) => {
+  return socket.post(`${UserConstants.IGNORES_URL}/${userData.user.cid}`);
 };
 
-const handleUnignore: UI.ActionHandler<ActionUserData> = ({ itemData: userData }) => {
-  return SocketService.delete(`${UserConstants.IGNORES_URL}/${userData.user.cid}`);
+const handleUnignore: UI.ActionHandler<ActionUserData> = ({
+  itemData: userData,
+  socket,
+}) => {
+  return socket.delete(`${UserConstants.IGNORES_URL}/${userData.user.cid}`);
 };
 
 const NicksUnifier = (itemData: ActionUserData) => {

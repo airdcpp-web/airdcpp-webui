@@ -1,5 +1,3 @@
-import SocketService from 'services/SocketService';
-
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
@@ -17,8 +15,8 @@ const handleEdit: UI.ActionHandler<API.SearchType> = ({ itemData: type, navigate
   navigate(`types/${type.id}`);
 };
 
-const handleRemove: UI.ActionHandler<API.SearchType> = ({ itemData: type }) => {
-  return SocketService.delete(`${SearchConstants.SEARCH_TYPES_URL}/${type.id}`);
+const handleRemove: UI.ActionHandler<API.SearchType> = ({ itemData: type, socket }) => {
+  return socket.delete(`${SearchConstants.SEARCH_TYPES_URL}/${type.id}`);
 };
 
 export const SearchTypeCreateAction = {

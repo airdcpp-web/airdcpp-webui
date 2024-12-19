@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useMemo, useRef } from 'react';
 import RouteModal from 'components/semantic/RouteModal';
 
 import DataProviderDecorator, {
@@ -43,70 +43,65 @@ export interface DataProps extends DataProviderDecoratorChildProps {
   searchTypeEntry?: API.SearchType;
 }
 
-/*interface RouteProps {
-  searchTypeId: string;
-}*/
-
 type Props = SearchTypeDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
-class SearchTypeDialog extends Component<Props> {
-  static displayName = 'SearchTypeDialog';
+const SearchTypeDialog: React.FC<Props> = ({
+  moduleT,
+  searchTypeEntry,
+  location,
+  ...other
+}) => {
+  const isNew = !searchTypeEntry;
 
-  form: Form<Entry>;
-  fieldDefinitions = translateForm(Entry, this.props.moduleT);
+  const formRef = useRef<Form<Entry>>(null);
+  const definitions = useMemo(() => translateForm(Entry, moduleT), []);
 
-  isNew = () => {
-    return !this.props.searchTypeEntry;
+  const handleSave = () => {
+    return formRef.current!.save();
   };
 
-  save = () => {
-    return this.form.save();
-  };
-
-  onSave: FormSaveHandler<Entry> = (changedFields) => {
-    if (this.isNew()) {
+  const onSave: FormSaveHandler<Entry> = (changedFields) => {
+    if (isNew) {
       return SocketService.post(SearchConstants.SEARCH_TYPES_URL, changedFields);
     }
 
     return SocketService.patch(
-      `${SearchConstants.SEARCH_TYPES_URL}/${this.props.searchTypeEntry!.id}`,
+      `${SearchConstants.SEARCH_TYPES_URL}/${searchTypeEntry!.id}`,
       changedFields,
     );
   };
 
-  onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
+  const onFieldSetting: FormFieldSettingHandler<Entry> = (
+    id,
+    fieldOptions,
+    formValue,
+  ) => {
     if (id === 'name') {
-      const { searchTypeEntry } = this.props;
       fieldOptions.disabled = !!searchTypeEntry && searchTypeEntry.default_type;
     }
   };
 
-  render() {
-    const { moduleT, searchTypeEntry } = this.props;
-    const title = moduleT.translate(
-      this.isNew() ? 'Add search type' : 'Edit search type',
-    );
-    return (
-      <RouteModal
-        className="search-type"
-        title={title}
-        onApprove={this.save}
-        closable={false}
-        icon={IconConstants.FOLDER}
-        {...this.props}
-      >
-        <Form<Entry>
-          ref={(c) => (this.form = c!)}
-          fieldDefinitions={this.fieldDefinitions}
-          onFieldSetting={this.onFieldSetting}
-          onSave={this.onSave}
-          sourceValue={searchTypeEntry as Entry}
-          location={this.props.location}
-        />
-      </RouteModal>
-    );
-  }
-}
+  const title = moduleT.translate(isNew ? 'Add search type' : 'Edit search type');
+  return (
+    <RouteModal
+      className="search-type"
+      title={title}
+      onApprove={handleSave}
+      closable={false}
+      icon={IconConstants.FOLDER}
+      {...other}
+    >
+      <Form<Entry>
+        ref={formRef}
+        fieldDefinitions={definitions}
+        onFieldSetting={onFieldSetting}
+        onSave={onSave}
+        sourceValue={searchTypeEntry as Entry}
+        location={location}
+      />
+    </RouteModal>
+  );
+};
 
 export default ModalRouteDecorator<SearchTypeDialogProps>(
   DataProviderDecorator<Omit<Props, keyof DataProps>, DataProps>(SearchTypeDialog, {
