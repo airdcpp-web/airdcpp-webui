@@ -146,7 +146,10 @@ const DownloadDialog: React.FC<Props> = (props) => {
             {...other}
           >
             <DownloadView
-              downloadHandler={handleDownload}
+              downloadHandler={async (targetPath, targetFilename) => {
+                await handleDownload(targetPath, targetFilename);
+                handleClose();
+              }}
               handleBrowse={hasFileBrowserAccess ? handleBrowse : undefined}
               historyPaths={historyPaths}
               favoritePaths={favoritePaths}
