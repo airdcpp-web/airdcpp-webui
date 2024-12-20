@@ -3,6 +3,7 @@
 import { actionFilter, actionAccess } from 'utils/ActionUtils';
 
 import * as UI from 'types/ui';
+import { AuthenticatedSession } from 'context/SessionContext';
 
 export const parseItemData = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined,
@@ -151,12 +152,15 @@ export const parseActionMenu = <
 >(
   props: UI.ActionMenuData<ItemDataT, EntityT>,
   hasPreviousMenuItems: boolean,
+  session: AuthenticatedSession,
 ): UI.ActionMenuType<ItemDataT, EntityT> | string => {
   let actions: UI.MenuActionListType<ItemDataT, EntityT> | null = getRootActions(props);
 
   // Only return a single error for each menu
   // Note the filtering order (no-access will be preferred over filtered)
-  actions = filterItems(actions, props.itemData, props.entity, actionAccess);
+  actions = filterItems(actions, props.itemData, props.entity, (action) =>
+    actionAccess(action, session),
+  );
   if (!actions) {
     return 'no-access';
   }

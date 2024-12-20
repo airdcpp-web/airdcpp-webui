@@ -9,7 +9,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { DataFetchError } from 'decorators/DataProviderDecorator';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 interface VersionProps {
   packageInfo: {

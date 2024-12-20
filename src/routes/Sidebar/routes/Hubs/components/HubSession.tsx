@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 
 import HubMessageStore from 'stores/HubMessageStore';
 
@@ -25,39 +25,36 @@ import HubActions from 'actions/reflux/HubActions';
 import IconConstants from 'constants/IconConstants';
 import MenuConstants from 'constants/MenuConstants';
 import { SessionChildProps } from 'routes/Sidebar/components/types';
+import { useSession } from 'context/SessionContext';
 
-const getStorageKey = (props: HubSessionProps) => {
-  return `view_userlist_${props.session.id}`;
+const getStorageKey = (sessionId: number) => {
+  return `view_userlist_${sessionId}`;
 };
 
-const checkList = (props: HubSessionProps) => {
-  return loadSessionProperty(getStorageKey(props), false);
+const checkList = (sessionId: number) => {
+  return loadSessionProperty(getStorageKey(sessionId), false);
 };
 
 type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject, UI.ChatActionList>;
 
-class HubSession extends Component<HubSessionProps> {
-  static displayName = 'HubSession';
+const HubSession: React.FC<HubSessionProps> = ({
+  session,
+  sessionApi,
+  sessionT,
+  uiActions,
+}) => {
+  const [showList, setShowList] = useState(checkList(session.id));
+  const login = useSession();
 
-  state = {
-    showList: checkList(this.props),
+  const toggleListState = () => {
+    setShowList(!showList);
   };
 
-  componentDidUpdate(prevProps: HubSessionProps) {
-    if (
-      prevProps.session.id !== this.props.session.id &&
-      this.state.showList !== checkList(this.props)
-    ) {
-      this.toggleListState();
-    }
-  }
+  useEffect(() => {
+    setShowList(checkList(session.id));
+  }, [session.id]);
 
-  toggleListState = () => {
-    this.setState({ showList: !this.state.showList });
-  };
-
-  getMessage = () => {
-    const { session, sessionT } = this.props;
+  const getMessage = () => {
     const connectState = session.connect_state.id;
 
     if (connectState === API.HubConnectStateEnum.PASSWORD) {
@@ -83,53 +80,48 @@ class HubSession extends Component<HubSessionProps> {
     return null;
   };
 
-  onClickUsers = () => {
-    this.toggleListState();
+  const onClickUsers = () => {
+    toggleListState();
 
-    saveSessionProperty(getStorageKey(this.props), this.state.showList);
+    saveSessionProperty(getStorageKey(session.id), showList);
   };
 
-  handleFileUpload = (file: File) => {
-    const { hub_url } = this.props.session;
-    return shareTempFile(file, hub_url, undefined);
+  const handleFileUpload = (file: File) => {
+    const { hub_url } = session;
+    return shareTempFile(file, hub_url, undefined, login);
   };
 
-  render() {
-    const { session, sessionApi, sessionT, uiActions } = this.props;
-    const { showList } = this.state;
+  const checkbox = (
+    <Checkbox
+      className="userlist-button"
+      type="toggle"
+      caption={sessionT.translate('User list')}
+      onChange={onClickUsers}
+      checked={showList}
+    />
+  );
 
-    const checkbox = (
-      <Checkbox
-        className="userlist-button"
-        type="toggle"
-        caption={sessionT.translate('User list')}
-        onChange={this.onClickUsers}
-        checked={showList}
-      />
-    );
-
-    return (
-      <div className="hub chat session">
-        {this.getMessage()}
-        {showList ? (
-          <HubUserTable session={session} sessionT={sessionT} />
-        ) : (
-          <ChatLayout
-            messageStore={HubMessageStore}
-            chatApi={HubActions as UI.ChatAPI}
-            sessionApi={sessionApi}
-            chatActions={uiActions}
-            chatAccess={API.AccessEnum.HUBS_SEND}
-            session={session}
-            handleFileUpload={this.handleFileUpload}
-            highlightRemoteMenuId={MenuConstants.HUB_MESSAGE_HIGHLIGHT}
-            hubUrl={session.hub_url}
-          />
-        )}
-        <HubFooter userlistToggle={checkbox} session={session} sessionT={sessionT} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="hub chat session">
+      {getMessage()}
+      {showList ? (
+        <HubUserTable session={session} sessionT={sessionT} />
+      ) : (
+        <ChatLayout
+          messageStore={HubMessageStore}
+          chatApi={HubActions as UI.ChatAPI}
+          sessionApi={sessionApi}
+          chatActions={uiActions}
+          chatAccess={API.AccessEnum.HUBS_SEND}
+          session={session}
+          handleFileUpload={handleFileUpload}
+          highlightRemoteMenuId={MenuConstants.HUB_MESSAGE_HIGHLIGHT}
+          hubUrl={session.hub_url}
+        />
+      )}
+      <HubFooter userlistToggle={checkbox} session={session} sessionT={sessionT} />
+    </div>
+  );
+};
 
 export default HubSession;

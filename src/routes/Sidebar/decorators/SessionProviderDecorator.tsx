@@ -7,7 +7,7 @@ import * as UI from 'types/ui';
 
 import { useTranslation } from 'react-i18next';
 import { getModuleT, translate } from 'utils/TranslationUtils';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 export interface SessionProviderDecoratorProps {}
 

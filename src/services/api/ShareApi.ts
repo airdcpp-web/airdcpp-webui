@@ -4,6 +4,7 @@ import SocketService from 'services/SocketService';
 import { uploadTempFile } from '../HttpService';
 
 import * as API from 'types/api';
+import { AuthenticatedSession } from 'context/SessionContext';
 
 export interface AddTempShareResponse {
   magnet: string;
@@ -13,10 +14,11 @@ export const shareTempFile = async (
   file: File,
   hubUrl: string,
   cid: string | undefined,
+  { authToken }: AuthenticatedSession,
 ): Promise<AddTempShareResponse> => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const fileId = await uploadTempFile(file);
+    const fileId = await uploadTempFile(file, authToken);
     const res = await SocketService.post<AddTempShareResponse>(
       ShareConstants.TEMP_SHARES_URL,
       {

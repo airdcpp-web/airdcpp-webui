@@ -12,9 +12,8 @@ import {
   formatConnection,
   formatDateTime,
   formatShortDate,
-  formatSize,
-  formatSpeed,
   formatRelativeTime,
+  useFormatter,
 } from 'utils/ValueFormat';
 
 import FormattedFile from 'components/format/FormattedFile';
@@ -23,15 +22,12 @@ import FormattedIp from 'components/format/FormattedIp';
 import Checkbox, { CheckboxProps } from 'components/semantic/Checkbox';
 import { showAction } from 'utils/ActionUtils';
 import { Cell, CellProps } from 'fixed-data-table-2';
-//import { withRouter, RouteComponentProps } from 'react-router-dom';
-//import { DownloadHandlerType } from 'decorators/menu/DownloadMenuDecorator';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as UI from 'types/ui';
 import * as API from 'types/api';
-//import { ActionHandlerDecorator, ActionHandlerDecoratorChildProps } from 'decorators/ActionHandlerDecorator';
-//import ActionButton, { ActionButtonProps } from 'components/ActionButton';
 import { ActionHandlerDecorator } from 'decorators/ActionHandlerDecorator';
+import { useSession } from 'context/SessionContext';
 
 const getCellContent = (cellData: any) => {
   if (typeof cellData === 'object') {
@@ -148,7 +144,8 @@ export const ActionLinkCell = <
     EntityT
   > /*& ActionHandlerDecoratorChildProps*/,
 ) => {
-  if (!showAction(action, rowDataGetter!())) {
+  const login = useSession();
+  if (!showAction(action, rowDataGetter!(), login)) {
     return <TextCell cellData={cellData} {...props} />;
   }
 
@@ -190,13 +187,15 @@ export interface NumberCellProps extends RowWrapperCellChildProps<number, any> {
   cellData?: number;
 }
 
-export const SizeCell: React.FC<NumberCellProps> = ({ cellData, t }) => (
-  <span className="plain size cell">{formatSize(cellData!, t!)}</span>
-);
+export const SizeCell: React.FC<NumberCellProps> = ({ cellData }) => {
+  const { formatSize } = useFormatter();
+  return <span className="plain size cell">{formatSize(cellData!)}</span>;
+};
 
-export const SpeedCell: React.FC<NumberCellProps> = ({ cellData, t }) => (
-  <span className="plain speed cell">{formatSpeed(cellData!, t!)}</span>
-);
+export const SpeedCell: React.FC<NumberCellProps> = ({ cellData }) => {
+  const { formatSpeed } = useFormatter();
+  return <span className="plain speed cell">{formatSpeed(cellData!)}</span>;
+};
 
 export const DateCell: React.FC<NumberCellProps> = ({ cellData, width }) => (
   <span className="plain date cell">

@@ -25,6 +25,7 @@ export type ModalProps = React.PropsWithChildren<
 
     fullHeight?: boolean;
     className?: string;
+    id?: string;
     dynamicHeight?: boolean;
 
     // Header
@@ -64,7 +65,7 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
     [ref.current],
   );
 
-  const { approveDisabled, fullHeight, approveCaption, className, children } = props;
+  const { approveDisabled, fullHeight, approveCaption, className, children, id } = props;
   const { icon, subHeader, title } = props;
 
   const approveStyle = classNames(
@@ -76,7 +77,7 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
   const mainClass = classNames('ui modal', { full: fullHeight }, className);
 
   return ReactDOM.createPortal(
-    <div ref={ref} className={mainClass}>
+    <div ref={ref} className={mainClass} id={id} role="dialog">
       <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
       <div className="content">{children}</div>
 

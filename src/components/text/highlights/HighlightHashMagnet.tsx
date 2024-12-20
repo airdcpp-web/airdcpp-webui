@@ -10,6 +10,7 @@ import { dupeToStringType } from 'utils/TypeConvert';
 import { formatMagnetCaption } from 'utils/MagnetUtils';
 import { TableDownloadMenu } from 'components/action-menu';
 import { TableDropdownProps } from 'components/semantic/TableDropdown';
+import { useFormatter } from 'utils/ValueFormat';
 
 const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (
   itemInfo,
@@ -28,7 +29,6 @@ export interface HighlightHashMagnetProps extends Pick<TableDropdownProps, 'posi
   contentType: API.FileContentType | null;
   dupe: API.Dupe | null;
   user: UI.DownloadSource | undefined;
-  t: UI.TranslateF;
   menuProps: UI.MessageActionMenuData;
   magnet: UI.HashMagnet;
 }
@@ -38,10 +38,10 @@ export const HighlightHashMagnet: React.FC<HighlightHashMagnetProps> = ({
   user,
   contentType,
   menuProps,
-  t,
   highlightId,
   magnet,
 }) => {
+  const formatter = useFormatter();
   const { addDownload, boundary, ...other } = menuProps;
   const downloadUser =
     !!user && !user.flags.includes('bot') && !user.flags.includes('hidden')
@@ -76,7 +76,7 @@ export const HighlightHashMagnet: React.FC<HighlightHashMagnetProps> = ({
   return (
     <TableDownloadMenu
       className={cx('highlight magnet url link', dupeToStringType(dupe))}
-      caption={formatMagnetCaption(magnet, t)}
+      caption={formatMagnetCaption(magnet, formatter)}
       user={downloadUser}
       itemInfoGetter={() => downloadData}
       downloadHandler={magnetDownloadHandler}

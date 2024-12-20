@@ -122,7 +122,7 @@ module.exports = {
     assetModuleFilename: 'assets/[name].[hash][ext]',
   },
   watchOptions: {
-    ignored: /resources\/locales\/[a-z]{2}\/.*\.missing\.json/,
+    ignored: ['**/*.missing.json', '**/*.test.tsx', '**/*.test.ts'],
   },
 
   // cheap-module-source-map doesn't seem to work with Uglify

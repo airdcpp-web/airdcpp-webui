@@ -129,7 +129,7 @@ const WidgetDialog: React.FC<Props> = (props) => {
       />
 
       <Message
-        description={t<string>(
+        description={t(
           'widgetPositionHint',
           'Widgets and their positions are browser-specific',
         )}

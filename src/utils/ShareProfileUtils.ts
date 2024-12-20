@@ -1,25 +1,24 @@
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 
-import { formatSize } from 'utils/ValueFormat';
+import { Formatter } from 'utils/ValueFormat';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 export const formatProfileNameWithSize = (
   profile: API.ShareProfile,
-  t: UI.TranslateF,
+  { formatSize }: Formatter,
 ) => {
   let str = profile.str;
   if (profile.id !== ShareProfileConstants.HIDDEN_PROFILE_ID) {
-    str += ` (${formatSize(profile.size, t)})`;
+    str += ` (${formatSize(profile.size)})`;
   }
 
   return str;
 };
 
-export const profileToEnumValue = (profile: API.ShareProfile, t: UI.TranslateF) => {
+export const profileToEnumValue = (profile: API.ShareProfile, formatter: Formatter) => {
   return {
     id: profile.id,
-    name: formatProfileNameWithSize(profile, t),
+    name: formatProfileNameWithSize(profile, formatter),
   };
 };

@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { Row, Header, Grid } from 'components/semantic/Grid';
 
-import LoginStore from 'stores/LoginStore';
 import StatisticsDecorator, {
   StatisticsDecoratorChildProps,
 } from 'decorators/StatisticsDecorator';
@@ -12,6 +11,7 @@ import InstallPrompt from 'components/InstallPrompt';
 import { SettingPageProps } from 'routes/Settings/types';
 import LinkConstants from 'constants/LinkConstants';
 import ExternalLink from 'components/ExternalLink';
+import { useSession } from 'context/SessionContext';
 
 interface ApplicationPageProps extends SettingPageProps {}
 
@@ -19,7 +19,7 @@ const ApplicationPage: React.FC<
   ApplicationPageProps & StatisticsDecoratorChildProps<any>
 > = ({ stats, moduleT }) => {
   const { translate } = moduleT;
-  const systemInfo = LoginStore.systemInfo;
+  const { systemInfo } = useSession();
 
   const buildDate = formatDateTime(UI_BUILD_DATE / 1000);
   return (

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Routes, useLocation } from 'react-router-dom';
+import { Routes, useLocation } from 'react-router';
 import classNames from 'classnames';
 
 import MainNavigation from 'components/main/navigation/MainNavigationNormal';

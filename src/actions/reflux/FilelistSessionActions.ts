@@ -13,7 +13,7 @@ import { getFilePath } from 'utils/FileUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { Location, NavigateFunction } from 'react-router-dom';
+import { Location, NavigateFunction } from 'react-router';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 import {

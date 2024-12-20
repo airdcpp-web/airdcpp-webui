@@ -4,13 +4,13 @@ import LoginActions from 'actions/reflux/LoginActions';
 
 import * as API from 'types/api';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 export interface LoginLocationState {
   nextPath?: string;
 }
 
-const useLoginState = () => {
+const useSessionState = () => {
   const loadingState = useState(false);
   const setLoading = loadingState[1];
   const { i18n } = useTranslation();
@@ -56,4 +56,4 @@ const useLoginState = () => {
   return loadingState;
 };
 
-export { useLoginState };
+export { useSessionState };

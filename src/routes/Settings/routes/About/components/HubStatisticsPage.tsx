@@ -4,7 +4,7 @@ import {
   formatAverage,
   formatConnection,
   formatPercentage,
-  formatSize,
+  useFormatter,
 } from 'utils/ValueFormat';
 
 import HubConstants from 'constants/HubConstants';
@@ -38,6 +38,7 @@ const formatClientRow = (uniqueUsers: number, client: ClientInfo) => {
 const HubStatisticsPage: React.FC<
   HubStatisticsPageProps & StatisticsDecoratorChildProps<any>
 > = ({ stats, moduleT }) => {
+  const { formatSize } = useFormatter();
   const { translate } = moduleT;
   return (
     <Grid columns="two" stackable={true}>
@@ -56,15 +57,11 @@ const HubStatisticsPage: React.FC<
           stats.unique_users,
         )})`}
       />
-      <Row
-        title={translate('Total share')}
-        text={formatSize(stats.total_share, moduleT.plainT)}
-      />
+      <Row title={translate('Total share')} text={formatSize(stats.total_share)} />
       <Row
         title={translate('Average share per user')}
         text={formatSize(
           formatAverage(stats.total_share, stats.unique_users) as any as number,
-          moduleT.plainT,
         )}
       />
       <Row

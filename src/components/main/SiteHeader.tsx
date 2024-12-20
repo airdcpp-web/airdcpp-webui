@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import * as UI from 'types/ui';
 
 import Logo from 'images/AirDCPlusPlus.png';

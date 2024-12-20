@@ -1,5 +1,3 @@
-import { Component } from 'react';
-
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
@@ -9,7 +7,9 @@ import ShareProfileDecorator, {
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
+import { useFormatter } from 'utils/ValueFormat';
 
 interface ShareProfileSelectorProps {
   // Callback after selecting a profile
@@ -18,36 +18,28 @@ interface ShareProfileSelectorProps {
   sessionT: UI.ModuleTranslator;
 }
 
-class ShareProfileSelector extends Component<
+const ShareProfileSelector: React.FC<
   ShareProfileSelectorProps & ShareProfileDecoratorChildProps
-> {
-  onClick = (profile: API.ShareProfile) => {
-    this.props.onProfileChanged(profile.id);
-  };
+> = ({ sessionT, profiles, onProfileChanged }) => {
+  const formatter = useFormatter();
 
-  getDropdownItem = (profile: API.ShareProfile) => {
+  const getDropdownItem = (profile: API.ShareProfile) => {
     return (
-      <MenuItemLink
-        key={profile.id}
-        onClick={() => this.props.onProfileChanged(profile.id)}
-      >
-        {formatProfileNameWithSize(profile, this.props.sessionT.plainT)}
+      <MenuItemLink key={profile.id} onClick={() => onProfileChanged(profile.id)}>
+        {formatProfileNameWithSize(profile, formatter)}
       </MenuItemLink>
     );
   };
 
-  render() {
-    const { sessionT, profiles } = this.props;
-    return (
-      <Dropdown
-        className="profile top right pointing"
-        caption={sessionT.translate('Browse own share...')}
-        triggerIcon=""
-      >
-        {profiles.map(this.getDropdownItem)}
-      </Dropdown>
-    );
-  }
-}
+  return (
+    <Dropdown
+      className="profile top right pointing"
+      caption={sessionT.translate('Browse own share...')}
+      triggerIcon=""
+    >
+      {profiles.map(getDropdownItem)}
+    </Dropdown>
+  );
+};
 
 export default ShareProfileDecorator(ShareProfileSelector, false);

@@ -6,6 +6,7 @@ import { ActionClickHandler } from 'decorators/ActionHandlerDecorator';
 import { parseActionMenu } from 'utils/MenuUtils';
 import { localMenuToActionMenuItems } from './helpers/localMenuBuilder';
 import { ActionData } from 'decorators/components/ActionDialog';
+import { useSession } from 'context/SessionContext';
 
 // This should be used only for constructed menus, not for id arrays
 const hasLocalItems = <
@@ -33,6 +34,8 @@ export const useActionMenuItems = <
 >(
   props: ActionMenuDefinition<ItemDataT, EntityT>,
 ) => {
+  const login = useSession();
+
   // Get nested menus
   const getMenuDefinitionArray = (): ActionMenuDefinition<ItemDataT, EntityT>[] => {
     const { children } = props;
@@ -50,7 +53,7 @@ export const useActionMenuItems = <
   const getMenus = () => {
     return getMenuDefinitionArray().reduce(
       (reduced, cur) => {
-        reduced.push(parseActionMenu(cur, !!reduced.length));
+        reduced.push(parseActionMenu(cur, !!reduced.length, login));
         return reduced;
       },
       [] as ReturnType<typeof parseActionMenu>[],

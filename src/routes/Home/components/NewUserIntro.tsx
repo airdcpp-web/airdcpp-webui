@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import LinkConstants from 'constants/LinkConstants';
 
 import ActionButton from 'components/ActionButton';

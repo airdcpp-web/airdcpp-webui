@@ -2,7 +2,8 @@ import Moment from 'moment';
 
 import { toI18nKey, translate } from './TranslationUtils';
 import * as UI from 'types/ui';
-import { i18n } from 'services/LocalizationService';
+import { useTranslation } from 'react-i18next';
+import { i18n } from 'i18next';
 
 const abbreviatedRelativeUnits = {
   relativeTime: {
@@ -76,7 +77,12 @@ const formatUnits = (
 
 export const ByteUnits = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
 
-export const formatSize = (bytes: number, t: UI.TranslateF, addExact = false) => {
+export const formatSize = (
+  bytes: number,
+  t: UI.TranslateF,
+  i18n: i18n,
+  addExact = false,
+) => {
   let ret = formatUnits(bytes, ByteUnits, 1024, t);
   if (addExact && bytes > 1024) {
     ret += ` (${t(toI18nKey('xBytes', UI.Modules.COMMON), {
@@ -177,8 +183,8 @@ export const formatDecimal = (value: number) => {
   return parseFloat((Math.round(value * 100) / 100) as any).toFixed(2);
 };
 
-export const formatSpeed = (bytesPerSecond: number, t: UI.TranslateF) => {
-  return formatUnitsPerSecond(formatSize(bytesPerSecond, t), t);
+export const formatSpeed = (bytesPerSecond: number, t: UI.TranslateF, i18n: i18n) => {
+  return formatUnitsPerSecond(formatSize(bytesPerSecond, t, i18n), t);
 };
 
 export const formatAverage = (countFrom: number, total: number) => {
@@ -194,3 +200,41 @@ export const formatBoolean = (value: boolean, t: UI.TranslateF) => {
     ? translate('Yes', t, UI.Modules.COMMON)
     : translate('No', t, UI.Modules.COMMON);
 };
+
+export const useFormatter = () => {
+  const { t, i18n } = useTranslation();
+  return {
+    formatBoolean: (value: boolean) => {
+      return formatBoolean(value, t);
+    },
+
+    formatSize: (bytes: number, addExact = false) => {
+      return formatSize(bytes, t, i18n, addExact);
+    },
+
+    formatSpeed: (bytesPerSecond: number) => {
+      return formatSpeed(bytesPerSecond, t, i18n);
+    },
+
+    formatConnection: (bytes: number) => {
+      return formatConnection(bytes, t);
+    },
+    formatCalendarTime: (time: number) => {
+      return formatCalendarTime(time, t);
+    },
+    formatUnits: (initialValue: number, units: string[], threshold: number) => {
+      return formatUnits(initialValue, units, threshold, t);
+    },
+    formatUnit: (unit: string) => {
+      return formatUnit(unit, t);
+    },
+    formatUnitsPerSecond: (units: string) => {
+      return formatUnitsPerSecond(units, t);
+    },
+    t,
+    // formatPercentage,
+    // formatAverage,
+  };
+};
+
+export type Formatter = ReturnType<typeof useFormatter>;

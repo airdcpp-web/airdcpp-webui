@@ -1,10 +1,10 @@
-import LoginStore from 'stores/LoginStore';
 import invariant from 'invariant';
 
 import * as UI from 'types/ui';
 
 import { textToI18nKey, toArray, translate } from './TranslationUtils';
 import NotificationActions from 'actions/NotificationActions';
+import { AuthenticatedSession } from 'context/SessionContext';
 
 export const actionFilter = <
   ItemDataT extends UI.ActionDataValueType,
@@ -21,13 +21,14 @@ export const actionFilter = <
 
 export const actionAccess = <ItemDataT extends UI.ActionDataValueType>(
   action: Pick<UI.ActionDefinition<ItemDataT>, 'access'>,
+  { hasAccess }: AuthenticatedSession,
 ) => {
   //invariant(
   //  !action.hasOwnProperty('access') || action.access,
   //  `Invalid access supplied for an action ${action.displayName}`
   //);
 
-  return !action.access || LoginStore.hasAccess(action.access);
+  return !action.access || hasAccess(action.access);
 };
 
 export const showAction = <
@@ -35,9 +36,10 @@ export const showAction = <
   EntityT extends UI.ActionEntityValueType,
 >(
   action: UI.ActionDefinition<ItemDataT, EntityT>,
-  itemData?: ItemDataT,
+  itemData: ItemDataT | undefined,
+  login: AuthenticatedSession,
 ) => {
-  return actionFilter(action, itemData) && actionAccess(action);
+  return actionFilter(action, itemData) && actionAccess(action, login);
 };
 
 export const toActionI18nKey = (

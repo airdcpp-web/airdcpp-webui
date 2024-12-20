@@ -12,23 +12,24 @@ import SystemActions from 'actions/reflux/SystemActions';
 import { AccessEnum } from 'types/api';
 
 const fetchStoreData = () => {
-  if (LoginStore.hasAccess(AccessEnum.PRIVATE_CHAT_VIEW)) {
+  const { hasAccess } = LoginStore;
+  if (hasAccess(AccessEnum.PRIVATE_CHAT_VIEW)) {
     PrivateChatActions.fetchSessions();
   }
 
-  if (LoginStore.hasAccess(AccessEnum.HUBS_VIEW)) {
+  if (hasAccess(AccessEnum.HUBS_VIEW)) {
     HubActions.fetchSessions();
   }
 
-  if (LoginStore.hasAccess(AccessEnum.FILELISTS_VIEW)) {
+  if (hasAccess(AccessEnum.FILELISTS_VIEW)) {
     FilelistSessionActions.fetchSessions();
   }
 
-  if (LoginStore.hasAccess(AccessEnum.VIEW_FILE_VIEW)) {
+  if (hasAccess(AccessEnum.VIEW_FILE_VIEW)) {
     ViewFileActions.fetchSessions();
   }
 
-  if (LoginStore.hasAccess(AccessEnum.EVENTS_VIEW)) {
+  if (hasAccess(AccessEnum.EVENTS_VIEW)) {
     EventActions.fetchInfo();
   }
 

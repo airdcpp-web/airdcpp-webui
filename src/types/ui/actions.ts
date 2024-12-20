@@ -1,7 +1,7 @@
 import * as API from 'types/api';
 import { TranslateF } from './common';
 import { IconType } from 'components/semantic/Icon';
-import { Location, NavigateFunction } from 'react-router-dom';
+import { Location, NavigateFunction } from 'react-router';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
 import { APISocket } from 'services/SocketService';
 
@@ -77,7 +77,7 @@ export interface ActionDefinition<
   handler: ActionHandler<ItemDataT, EntityT>;
   filter?: ActionFilter<ItemDataT, EntityT>;
   checked?: (itemData: ItemDataT) => boolean;
-  access?: string;
+  access?: API.AccessEnum;
   displayName: string;
   icon?: string;
 

@@ -1,16 +1,16 @@
 import LoginStore from 'stores/LoginStore';
 import { fetchData } from 'utils/HttpUtils';
 
-export const uploadTempFile = async (file: File): Promise<string> => {
+export const uploadTempFile = async (file: File, authToken: string): Promise<string> => {
   // eslint-disable-next-line no-useless-catch
   try {
     const res = await fetchData(`${getBasePath()}temp`, {
       method: 'POST',
       headers: {
         // https://github.com/airdcpp-web/airdcpp-webclient/issues/330
-        'X-Authorization': LoginStore.authToken,
+        'X-Authorization': authToken,
 
-        Authorization: LoginStore.authToken,
+        Authorization: authToken,
       },
       body: file,
     });

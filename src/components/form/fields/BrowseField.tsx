@@ -7,10 +7,9 @@ import tcomb from 'utils/tcomb-form';
 import Button from 'components/semantic/Button';
 import { FileBrowserDialog } from 'components/filebrowser';
 
-import LoginStore from 'stores/LoginStore';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { useSession } from 'context/SessionContext';
 
 interface BrowseFieldConfig {
   historyId: string;
@@ -24,6 +23,7 @@ interface BrowserFieldProps {
 export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { hasAccess } = useSession();
 
   const onConfirm = (path: string) => {
     locals.onChange(path);
@@ -46,14 +46,14 @@ export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
     });
   };
 
-  const hasAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
-  const fieldStyle = classNames('ui fluid input field', { action: hasAccess });
+  const hasFilesystemAccess = hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
+  const fieldStyle = classNames('ui fluid input field', { action: hasFilesystemAccess });
 
   const { formT } = locals.context;
   return (
     <div className={fieldStyle}>
       <input ref={inputRef} value={locals.value} onChange={onChange} />
-      {hasAccess && (
+      {hasFilesystemAccess && (
         <Button caption={formT.translate('Browse')} onClick={showBrowseDialog} />
       )}
       {dialogOpen && (

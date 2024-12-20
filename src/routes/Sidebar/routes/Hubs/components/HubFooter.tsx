@@ -5,7 +5,7 @@ import * as React from 'react';
 import HubConstants from 'constants/HubConstants';
 import HubSessionStore from 'stores/HubSessionStore';
 
-import { formatSize } from 'utils/ValueFormat';
+import { useFormatter } from 'utils/ValueFormat';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 import EncryptionState from 'components/EncryptionState';
 
@@ -31,6 +31,7 @@ interface HubFooterProps {
 
 type DataProps = SocketSubscriptionDecoratorChildProps<HubFooterProps>;
 const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
+  const { formatSize } = useFormatter();
   const socket = useSocket();
   const [counts, setCounts] = useState<API.HubCounts>({
     share_size: 0,
@@ -63,7 +64,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
   const { userlistToggle, session, sessionT } = props;
   const { user_count: users, share_size: shared } = counts;
 
-  const averageShare = formatSize(users > 0 ? shared / users : 0, sessionT.plainT);
+  const averageShare = formatSize(users > 0 ? shared / users : 0);
   return (
     <SessionFooter>
       <FooterItem
@@ -86,7 +87,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
           text={sessionT.t('sharePerUser', {
             defaultValue: '{{total}} ({{average}}/user)',
             replace: {
-              total: formatSize(shared, sessionT.plainT),
+              total: formatSize(shared),
               average: averageShare,
             },
           })}

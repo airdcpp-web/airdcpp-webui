@@ -10,7 +10,7 @@ import * as UI from 'types/ui';
 type Filter = UI.ActionFilter<API.WebUser>;
 const isOther: Filter = ({ itemData: user }) => user.id !== LoginStore.user.id;
 
-const handleCreate: UI.ActionHandler<void> = ({ location, navigate }) => {
+const handleCreate: UI.ActionHandler<void> = ({ navigate }) => {
   navigate(`users`);
 };
 

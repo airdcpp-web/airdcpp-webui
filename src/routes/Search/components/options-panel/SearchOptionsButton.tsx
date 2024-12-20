@@ -19,7 +19,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 import { isValueSet } from 'utils/FormUtils';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 interface SearchOptionsButtonProps
   extends Pick<SearchOptionsFormProps, 'onChange' | 'value'> {

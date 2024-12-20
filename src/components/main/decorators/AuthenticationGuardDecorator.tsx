@@ -1,27 +1,40 @@
 import * as React from 'react';
 
-import LoginStore, { LoginState } from 'stores/LoginStore';
+import LoginStore, {
+  LoginError,
+  LoginState,
+  TranslatableLoginError,
+} from 'stores/LoginStore';
 
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
 import { useStore } from 'effects/StoreListenerEffect';
-import { useLoginGuard } from '../effects/LoginGuardEffect';
+import { useSessionGuard } from '../effects/LoginGuardEffect';
 import { useAuthPageTitle } from '../effects/PageTitleEffect';
 import { useStoreDataFetch } from '../effects/StoreDataFetchEffect';
 import { useTranslation } from 'react-i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 interface AuthenticationGuardDecoratorProps {}
 
-const getConnectStatusMessage = (lastError: string | null, t: UI.TranslateF) => {
+const parseError = (error: TranslatableLoginError | string, t: UI.TranslateF) => {
+  if (typeof error === 'string') {
+    return error;
+  }
+
+  return t(toI18nKey(error.id, UI.Modules.LOGIN), error.message);
+};
+
+const getConnectStatusMessage = (lastError: LoginError, t: UI.TranslateF) => {
   if (!!lastError) {
     const msg = t(
       toI18nKey('reestablishConnection', UI.Modules.LOGIN),
       'Attempting to re-establish connection...',
     );
-    return `${lastError}. ${msg}`;
+
+    return `${parseError(lastError, t)}. ${msg}`;
   }
 
   return translate('Connecting to the server...', t, UI.Modules.LOGIN);
@@ -31,7 +44,7 @@ function AuthenticationGuardDecorator<PropsT>(Component: React.ComponentType<Pro
   const Decorator: React.FC<PropsT & AuthenticationGuardDecoratorProps> = (props) => {
     const login = useStore<LoginState>(LoginStore);
     const location = useLocation();
-    useLoginGuard(login, location);
+    useSessionGuard(login, location);
     useAuthPageTitle(login);
     useStoreDataFetch(login);
     const { t } = useTranslation();

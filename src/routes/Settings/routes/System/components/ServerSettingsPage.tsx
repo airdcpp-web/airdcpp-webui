@@ -49,7 +49,7 @@ const ServerSettingsPage: React.FC<SettingPageProps> = (props) => {
         <RemoteSettingForm {...props} keys={TlsEntry} />
 
         <Message
-          description={t<string>(
+          description={t(
             'defaultCertNote',
             'The default client certificate is used if the certificate paths are empty',
           )}

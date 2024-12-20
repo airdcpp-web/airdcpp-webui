@@ -1,9 +1,9 @@
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
-import LoginStore from 'stores/LoginStore';
 
 import * as UI from 'types/ui';
 import { ChildSectionType, RootSectionType, SectionBase } from '../types';
 import { Location } from 'react-router';
+import { AuthenticatedSession } from 'context/SessionContext';
 
 export const sectionToUrl = (section: SectionBase, parent?: RootSectionType) => {
   if (typeof parent === 'object') {
@@ -24,12 +24,13 @@ const menuItemToLinkComponent = (
   url: string,
   menuItemInfo: SectionBase,
   settingsT: UI.ModuleTranslator,
+  { hasAccess }: AuthenticatedSession,
 ) => {
   /*if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
     return null;
   }*/
 
-  if (menuItemInfo.access && !LoginStore.hasAccess(menuItemInfo.access)) {
+  if (menuItemInfo.access && !hasAccess(menuItemInfo.access)) {
     return null;
   }
 
@@ -48,6 +49,7 @@ export const rootMenuItemToLinkComponent = (
   rootMenuItem: RootSectionType,
   settingsT: UI.ModuleTranslator,
   location: Location,
+  session: AuthenticatedSession,
 ) => {
   // Browsing is smoother when the child page is loaded directly
   // Don't use the child URL for currently active parent so that the route is detected as active correctly
@@ -56,16 +58,17 @@ export const rootMenuItemToLinkComponent = (
     url = sectionToUrl(rootMenuItem.menuItems[0], rootMenuItem);
   }
 
-  return menuItemToLinkComponent(url, rootMenuItem, settingsT);
+  return menuItemToLinkComponent(url, rootMenuItem, settingsT, session);
 };
 
 export const childMenuItemToLinkComponent = (
   childMenuItem: ChildSectionType,
   parent: RootSectionType | undefined,
   settingsT: UI.ModuleTranslator,
+  session: AuthenticatedSession,
 ) => {
   const url = sectionToUrl(childMenuItem, parent);
-  return menuItemToLinkComponent(url, childMenuItem, settingsT);
+  return menuItemToLinkComponent(url, childMenuItem, settingsT, session);
 };
 
 /*export const menuItemsToRouteComponentArray = (

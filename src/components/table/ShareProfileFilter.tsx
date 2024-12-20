@@ -13,12 +13,12 @@ import TableFilterDecorator, {
 } from 'decorators/TableFilterDecorator';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 import { translate } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
 import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
+import { Formatter, useFormatter } from 'utils/ValueFormat';
 
 export interface ShareProfileFilterProps {}
 
@@ -26,16 +26,16 @@ type Props = ShareProfileFilterProps &
   TableFilterDecoratorChildProps &
   ShareProfileDecoratorChildProps;
 
-const formatItemName = (profile: API.ShareProfile | null, t: UI.TranslateF) =>
+const formatItemName = (profile: API.ShareProfile | null, formatter: Formatter) =>
   profile
-    ? formatProfileNameWithSize(profile, t)
-    : translate('All profiles', t, 'table.filter');
+    ? formatProfileNameWithSize(profile, formatter)
+    : translate('All profiles', formatter.t, 'table.filter');
 
 const getDropdownItem = (
   profile: API.ShareProfile | null,
   onClick: (p: API.ShareProfile | null) => void,
   selectedProfile: API.ShareProfile | null,
-  t: UI.TranslateF,
+  formatter: Formatter,
 ) => {
   return (
     <MenuItemLink
@@ -43,12 +43,13 @@ const getDropdownItem = (
       active={selectedProfile === profile}
       onClick={() => onClick(profile)}
     >
-      {formatItemName(profile, t)}
+      {formatItemName(profile, formatter)}
     </MenuItemLink>
   );
 };
 
 const ShareProfileFilter = memo<Props>(function ShareProfileFilter(props) {
+  const formatter = useFormatter();
   const { t } = useTranslation();
   const [selectedProfile, setSelectedProfile] = useState<API.ShareProfile | null>(null);
 
@@ -60,7 +61,7 @@ const ShareProfileFilter = memo<Props>(function ShareProfileFilter(props) {
   return (
     <SectionedDropdown
       className="top right pointing"
-      caption={formatItemName(selectedProfile, t)}
+      caption={formatItemName(selectedProfile, formatter)}
       triggerIcon="filter"
       button={true}
     >
@@ -69,7 +70,7 @@ const ShareProfileFilter = memo<Props>(function ShareProfileFilter(props) {
         icon={IconConstants.FILTER}
       >
         {[null, ...props.profiles].map((p) =>
-          getDropdownItem(p, handleSelectItem, selectedProfile, t),
+          getDropdownItem(p, handleSelectItem, selectedProfile, formatter),
         )}
       </MenuSection>
     </SectionedDropdown>

@@ -1,13 +1,14 @@
 import { useCallback } from 'react';
 
 import IconPanel from 'components/main/navigation/IconPanel';
-import { matchPath, Location, useNavigate } from 'react-router-dom';
+import { matchPath, Location, useNavigate } from 'react-router';
 import {
   secondaryRoutes,
   parseMenuItems,
   RouteItemClickHandler,
   HOME_URL,
 } from 'routes/Routes';
+import { useSession } from 'context/SessionContext';
 
 interface SideMenuProps {
   location: Location;
@@ -16,6 +17,7 @@ interface SideMenuProps {
 
 const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
   const navigate = useNavigate();
+  const login = useSession();
 
   const onClick: RouteItemClickHandler = useCallback(
     (url, evt) => {
@@ -39,7 +41,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
     [location],
   );
 
-  const menuItems = parseMenuItems(secondaryRoutes, onClick);
+  const menuItems = parseMenuItems(secondaryRoutes, login, onClick);
   return (
     <div id="side-menu">
       {menuItems.length > 0 && (

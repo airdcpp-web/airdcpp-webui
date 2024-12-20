@@ -1,11 +1,9 @@
-import { Component } from 'react';
+import { memo } from 'react';
 import isEqual from 'lodash/isEqual';
 
 import { PriorityEnum } from 'constants/PriorityConstants';
 
 import TableDropdown, { DropdownCloseHandler } from 'components/semantic/TableDropdown';
-
-import LoginStore from 'stores/LoginStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -14,6 +12,7 @@ import { translate } from 'utils/TranslationUtils';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { EmptyDropdownCaption } from 'components/semantic/EmptyDropdown';
 import { buildMenu } from 'components/action-menu/builder/slidingMenuBuilder';
+import { useSession } from 'context/SessionContext';
 
 interface PriorityMenuProps {
   // Priority object
@@ -26,53 +25,44 @@ interface PriorityMenuProps {
   t: UI.TranslateF;
 }
 
-class PriorityMenu extends Component<PriorityMenuProps> {
-  setPriority = (priorityId: API.QueuePriorityEnum) => {
-    const { item, prioAction, t } = this.props;
+const PriorityMenu: React.FC<PriorityMenuProps> = ({ item, itemPrio, prioAction, t }) => {
+  const { hasAccess } = useSession();
+
+  const setPriority = (priorityId: API.QueuePriorityEnum) => {
     return runBackgroundSocketAction(() => prioAction(item, priorityId), t);
   };
 
-  setAutoPriority = () => {
-    this.setPriority(API.QueuePriorityEnum.DEFAULT);
-  };
-
-  shouldComponentUpdate(nextProps: PriorityMenuProps) {
-    return !isEqual(nextProps.item.priority, this.props.item.priority);
-  }
-
-  getPriorityListItem = (
+  const getPriorityListItem = (
     priority: Omit<API.QueuePriority, 'auto'>,
     t: UI.TranslateF,
   ): UI.ActionMenuItem => {
-    const currentPrio = this.props.item.priority.id;
+    const currentPrio = item.priority.id;
     return {
       id: priority.id.toString(),
       item: {
         active: currentPrio === priority.id,
         onClick: () => {
-          this.setPriority(priority.id);
+          setPriority(priority.id);
         },
         children: translate(priority.str, t, UI.Modules.QUEUE),
       },
     };
   };
 
-  getChildren = (onClose: DropdownCloseHandler) => {
-    const { t } = this.props;
-
+  const getChildren = (onClose: DropdownCloseHandler) => {
     const children = Object.keys(PriorityEnum)
       .map(Number)
       .map((prioKey) =>
-        this.getPriorityListItem(PriorityEnum[prioKey as keyof typeof PriorityEnum], t),
+        getPriorityListItem(PriorityEnum[prioKey as keyof typeof PriorityEnum], t),
       );
 
     children.push({ id: 'divider' });
     children.push({
       id: 'auto',
       item: {
-        active: this.props.itemPrio.auto,
+        active: itemPrio.auto,
         onClick: () => {
-          this.setPriority(API.QueuePriorityEnum.DEFAULT);
+          setPriority(API.QueuePriorityEnum.DEFAULT);
         },
         children: translate('Auto', t, UI.Modules.QUEUE),
       },
@@ -81,27 +71,26 @@ class PriorityMenu extends Component<PriorityMenuProps> {
     return buildMenu(children, onClose);
   };
 
-  render() {
-    const { itemPrio, t } = this.props;
-    let caption = translate(
-      PriorityEnum[itemPrio.id as keyof typeof PriorityEnum].str,
-      t,
-      UI.Modules.QUEUE,
-    );
-    if (itemPrio.auto) {
-      caption += ` (${translate('Auto', t, UI.Modules.QUEUE).toLocaleLowerCase()})`;
-    }
-
-    if (!LoginStore.hasAccess(API.AccessEnum.QUEUE_EDIT)) {
-      return <EmptyDropdownCaption caption={caption} />;
-    }
-
-    return (
-      <TableDropdown caption={caption} className="priority-menu">
-        {this.getChildren}
-      </TableDropdown>
-    );
+  let caption = translate(
+    PriorityEnum[itemPrio.id as keyof typeof PriorityEnum].str,
+    t,
+    UI.Modules.QUEUE,
+  );
+  if (itemPrio.auto) {
+    caption += ` (${translate('Auto', t, UI.Modules.QUEUE).toLocaleLowerCase()})`;
   }
-}
 
-export default PriorityMenu;
+  if (!hasAccess(API.AccessEnum.QUEUE_EDIT)) {
+    return <EmptyDropdownCaption caption={caption} />;
+  }
+
+  return (
+    <TableDropdown caption={caption} className="priority-menu">
+      {getChildren}
+    </TableDropdown>
+  );
+};
+
+export default memo(PriorityMenu, (prevProps, nextProps) => {
+  return isEqual(nextProps.item.priority, prevProps.item.priority);
+});

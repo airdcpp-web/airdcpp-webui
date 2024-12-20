@@ -61,7 +61,7 @@ class ProtocolPage extends Component<ProtocolPageProps> {
       <div>
         {this.state.autoDetectEnabled && (
           <Message
-            description={this.props.moduleT.t<string>(
+            description={this.props.moduleT.t(
               'protocolAutoValuesNote',
               'Connectivity auto detection is currently enabled; setting values listed on this page are not being used',
             )}

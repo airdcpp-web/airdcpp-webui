@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 import CountLabel from 'components/CountLabel';
 import Icon, { IconType } from 'components/semantic/Icon';
 

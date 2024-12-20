@@ -1,4 +1,4 @@
-import { Location } from 'react-router-dom';
+import { Location } from 'react-router';
 
 import * as API from 'types/api';
 

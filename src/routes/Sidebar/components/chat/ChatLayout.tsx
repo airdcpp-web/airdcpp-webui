@@ -4,23 +4,23 @@ import Message from 'components/semantic/Message';
 import { MessageComposer } from './MessageComposer';
 import MessageView from 'components/messages/MessageView';
 
-import LoginStore from 'stores/LoginStore';
-
 import './chat.css';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
 import { useTranslation } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 import { useChatMessages } from './effects/useChatMessages';
+import { useSession } from 'context/SessionContext';
 
 export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;
 }
 
 export interface ChatLayoutProps extends UI.ChatController {
-  chatAccess: string;
+  chatAccess: API.AccessEnum;
   messageStore: UI.SessionMessageStore;
   highlightRemoteMenuId: string;
 }
@@ -33,14 +33,15 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
   highlightRemoteMenuId,
   ...other
 }) => {
+  const { hasAccess } = useSession();
   const { t } = useTranslation();
   const messages = useChatMessages(session, messageStore, chatApi);
-  const hasChatAccess = LoginStore.hasAccess(chatAccess);
+  const hasChatAccess = hasAccess(chatAccess);
   return (
     <div className="message-view">
       {!hasChatAccess && (
         <Message
-          description={t<string>(
+          description={t(
             toI18nKey('noChatAccess', UI.Modules.COMMON),
             `You aren't allowed to send new messages`,
           )}

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Button from 'components/semantic/Button';
 
-import LoginStore from 'stores/LoginStore';
 import classNames from 'classnames';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { SettingSaveState } from '../effects/useSettingSaveContext';
+import { useSession } from 'context/SessionContext';
 
 export interface SaveButtonProps {
   saveState: SettingSaveState;
@@ -17,6 +17,7 @@ export interface SaveButtonProps {
 const SaveButton: React.FC<SaveButtonProps> = ({ saveState, settingsT, className }) => {
   const { local, handleSave, hasChanges } = saveState;
   const [saving, setSaving] = useState(false);
+  const { hasAccess } = useSession();
 
   const onClick = async () => {
     setSaving(true);
@@ -28,10 +29,10 @@ const SaveButton: React.FC<SaveButtonProps> = ({ saveState, settingsT, className
     }
   };
 
-  const hasAccess: boolean = local || LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
+  const hasEditAccess: boolean = local || hasAccess(API.AccessEnum.SETTINGS_EDIT);
 
   let title;
-  if (!hasAccess) {
+  if (!hasEditAccess) {
     title = settingsT.translate('No save permission');
   } else {
     title = settingsT.translate(hasChanges ? 'Save changes' : 'No unsaved changes');
@@ -41,9 +42,9 @@ const SaveButton: React.FC<SaveButtonProps> = ({ saveState, settingsT, className
     <Button
       className={classNames('save', className)}
       caption={title}
-      icon={hasAccess && hasChanges ? 'green checkmark' : null}
+      icon={hasEditAccess && hasChanges ? 'green checkmark' : null}
       loading={saving}
-      disabled={!hasChanges || !hasAccess}
+      disabled={!hasChanges || !hasEditAccess}
       onClick={onClick}
     />
   );

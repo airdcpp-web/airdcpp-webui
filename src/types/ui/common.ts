@@ -1,4 +1,4 @@
-import { NavigateFunction, Location, Params } from 'react-router-dom';
+import { NavigateFunction, Location, Params } from 'react-router';
 import * as API from 'types/api';
 
 export type { TFunction as TranslateF } from 'i18next';

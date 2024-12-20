@@ -217,7 +217,7 @@ export default function <PropsT extends object, DataT extends object>(
     };
 
     render() {
-      const { loaderText, renderOnError } = settings;
+      const { loaderText, renderOnError, urls } = settings;
       const { data, error } = this.state;
       const { t } = this.props;
 
@@ -225,6 +225,7 @@ export default function <PropsT extends object, DataT extends object>(
         return (
           loaderText !== null && (
             <Loader
+              className={Object.keys(urls).join('_')}
               text={loaderText || translate('Loading data...', t, UI.Modules.COMMON)}
             />
           )

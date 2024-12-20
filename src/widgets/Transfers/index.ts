@@ -1,6 +1,6 @@
-import AccessConstants from 'constants/AccessConstants';
 import { QueueActionMenu } from 'actions/ui/queue';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import TransfersComponent from './components/Transfers';
@@ -8,7 +8,7 @@ import TransfersComponent from './components/Transfers';
 export const Transfers = {
   typeId: 'transfers',
   component: TransfersComponent,
-  access: AccessConstants.TRANSFERS,
+  access: API.AccessEnum.TRANSFERS,
   name: 'Transfers',
   icon: 'exchange',
   size: {

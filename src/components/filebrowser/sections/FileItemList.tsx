@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import FormattedFile from 'components/format/FormattedFile';
-import { formatSize } from 'utils/ValueFormat';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { translate } from 'utils/TranslationUtils';
+import { useFormatter } from 'utils/ValueFormat';
 
 export type FileItemIconGetter = (item: API.FilesystemItem) => React.ReactNode | null;
 export type FileItemClickHandler = (item: API.FilesystemItem) => void;
@@ -34,6 +34,7 @@ const FileItem: React.FC<FileItemProps> = ({
   selected,
 }) => {
   const isFile = item.type.id === 'file';
+  const { formatSize } = useFormatter();
   return (
     <tr>
       <td>
@@ -49,7 +50,7 @@ const FileItem: React.FC<FileItemProps> = ({
         />
         {!!itemIconGetter && itemIconGetter(item)}
       </td>
-      <td>{!!isFile && formatSize(item.size, t)}</td>
+      <td>{!!isFile && formatSize(item.size)}</td>
     </tr>
   );
 };

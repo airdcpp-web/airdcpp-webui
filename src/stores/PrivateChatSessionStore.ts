@@ -9,7 +9,6 @@ import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorato
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
 import { ChatroomUrgencies, PrivateMessageUrgencies } from 'constants/UrgencyConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 import * as API from 'types/api';
@@ -33,7 +32,7 @@ const PrivateChatSessionStore = Reflux.createStore({
 });
 
 export default SessionStoreDecorator<API.PrivateChat>(
-  SocketSubscriptionDecorator(PrivateChatSessionStore, AccessConstants.PRIVATE_CHAT_VIEW),
+  SocketSubscriptionDecorator(PrivateChatSessionStore, API.AccessEnum.PRIVATE_CHAT_VIEW),
   PrivateChatActions,
   (session) =>
     session.user.flags.includes('bot') ? ChatroomUrgencies : PrivateMessageUrgencies,

@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import LoginStore from 'stores/LoginStore';
-
 import {
   SubscriptionRemoveHandler,
   SubscriptionCallback,
   EntityId,
 } from 'airdcpp-apisocket';
 
-import { AccessEnum } from 'types/api';
+import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import { useSocket } from 'context/SocketContext';
 import { APISocket } from 'services/SocketService';
+import { useSession } from 'context/SessionContext';
 
 export interface SocketSubscriptionDecoratorProps {
   session?: UI.SessionItemBase;
@@ -25,7 +25,7 @@ export type AddSocketListener = <
   event: string,
   callback: SubscriptionCallback<DataT, EntityIdT>,
   entityId?: EntityIdT,
-  access?: AccessEnum,
+  access?: API.AccessEnum,
 ) => void;
 
 export interface SocketSubscriptionDecoratorChildProps<PropsT = unknown> {
@@ -44,6 +44,7 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
   const Decorator: React.FC<PropsT & SocketSubscriptionDecoratorProps> = (props) => {
     const socketSubscriptions = React.useRef<SubscriptionRemoveHandler[]>([]);
     const socket = useSocket();
+    const { hasAccess } = useSession();
 
     const addSocketListener = async <
       DataT extends object | void,
@@ -53,9 +54,9 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
       event: string,
       callback: SubscriptionCallback<DataT, EntityIdT>,
       entityId: EntityId | undefined,
-      access: AccessEnum,
+      access: API.AccessEnum,
     ) => {
-      if (access && !LoginStore.hasAccess(access)) {
+      if (access && !hasAccess(access)) {
         return;
       }
 

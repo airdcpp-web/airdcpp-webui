@@ -5,6 +5,7 @@ import { IconType } from 'components/semantic/Icon';
 import * as UI from 'types/ui';
 import { ActionHandlerDecorator } from 'decorators/ActionHandlerDecorator';
 import { useTranslation } from 'react-i18next';
+import { useSession } from 'context/SessionContext';
 
 export interface ActionButtonProps<
   ItemDataT extends UI.ActionDataValueType,
@@ -29,7 +30,8 @@ const ActionButton = <
   ...other
 }: ActionButtonProps<ItemDataT, EntityT>) => {
   const { t } = useTranslation();
-  if (!showAction(action, itemData)) {
+  const session = useSession();
+  if (!showAction(action, itemData, session)) {
     return null;
   }
 

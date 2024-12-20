@@ -4,7 +4,7 @@ import HubSearchInput from 'components/autosuggest/HubSearchInput';
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import Message from 'components/semantic/Message';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import HubActions from 'actions/reflux/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';

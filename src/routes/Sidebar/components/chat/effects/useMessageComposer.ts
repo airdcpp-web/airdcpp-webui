@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { OnChangeHandlerFunc } from 'react-mentions';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import * as UI from 'types/ui';
 
 import {
@@ -11,8 +11,9 @@ import {
 } from 'utils/BrowserUtils';
 import ChatCommandHandler from '../ChatCommandHandler';
 
-import { Location, useNavigate } from 'react-router-dom';
+import { Location, useNavigate } from 'react-router';
 import { useSocket } from 'context/SocketContext';
+import { useSession } from 'context/SessionContext';
 
 const getStorageKey = (location: Location) => {
   return `last_message_${location.pathname}`;
@@ -37,6 +38,7 @@ interface MessageComposerProps {
 }
 
 export const useMessageComposer = ({ chatController, t }: MessageComposerProps) => {
+  const session = useSession();
   const location = useLocation();
   const navigate = useNavigate();
   const [inputText, setInputText] = React.useState('');
@@ -61,6 +63,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
       navigate,
       t,
       socket,
+      session,
     });
   };
 

@@ -73,7 +73,7 @@ class Queue extends React.Component<WithTranslation> {
       <Message
         title={t('queueEmpty', 'The queue is empty')}
         icon={IconConstants.FILE}
-        description={t<string>(
+        description={t(
           'queueEmptyDesc',
           'New items can be queued from search or filelists',
         )}

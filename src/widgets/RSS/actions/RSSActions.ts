@@ -1,11 +1,11 @@
 import { SearchActions } from 'actions/reflux/SearchActions';
 
 import IconConstants from 'constants/IconConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import { FeedItem } from '../types';
 import { parseNodeContent } from '../utils';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 interface RSSItemData {
@@ -81,7 +81,7 @@ export const RSSActions: UI.ActionListType<RSSItemData> = {
   search: {
     id: 'search',
     displayName: 'Search',
-    access: AccessConstants.SEARCH,
+    access: API.AccessEnum.SEARCH,
     icon: IconConstants.SEARCH,
     handler: handleSearch,
     filter: hasTitle,

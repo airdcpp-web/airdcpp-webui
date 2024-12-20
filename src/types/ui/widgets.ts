@@ -2,6 +2,8 @@ import { FormFieldDefinition } from './form';
 import { ModuleActions } from './actions';
 import { ModuleTranslator } from './modules';
 
+import * as API from 'types/api';
+
 export interface WidgetSettings<SettingsT = Record<string, any>> {
   widget: SettingsT;
   name?: string;
@@ -18,7 +20,7 @@ export interface WidgetProps<SettingsT = object> {
 export interface Widget {
   typeId: string;
   component: React.ComponentType<WidgetProps>;
-  access?: string;
+  access?: API.AccessEnum;
   alwaysShow?: boolean;
   name: string;
   icon: string;

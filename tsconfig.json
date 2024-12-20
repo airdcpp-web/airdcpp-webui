@@ -21,7 +21,9 @@
       ],
     },
     "experimentalDecorators": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": false
   },
   "exclude": [
     "devtools",

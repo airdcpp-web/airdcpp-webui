@@ -5,7 +5,7 @@ import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
 
 import { toI18nKey } from 'utils/TranslationUtils';
-import { formatSize } from 'utils/ValueFormat';
+import { Formatter, useFormatter } from 'utils/ValueFormat';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -17,7 +17,11 @@ interface PathItemProps {
   t: UI.TranslateF;
 }
 
-const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: UI.TranslateF) => {
+const formatFreeSpace = (
+  pathInfo: API.DiskSpaceInfo,
+  t: UI.TranslateF,
+  { formatSize }: Formatter,
+) => {
   if (pathInfo.free_space <= 0) {
     return pathInfo.path;
   }
@@ -25,7 +29,7 @@ const formatFreeSpace = (pathInfo: API.DiskSpaceInfo, t: UI.TranslateF) => {
   return ` (${t(toI18nKey('spaceFree', UI.Modules.COMMON), {
     defaultValue: '{{freeSpace}} free',
     replace: {
-      freeSpace: formatSize(pathInfo.free_space, t),
+      freeSpace: formatSize(pathInfo.free_space),
     },
   })})`;
 };
@@ -34,14 +38,17 @@ export const PathListItem: React.FC<PathItemProps> = ({
   pathInfo,
   downloadHandler,
   t,
-}) => (
-  <div className="item">
-    <Icon icon={IconConstants.FOLDER} />
-    <div className="content">
-      <a onClick={() => downloadHandler(pathInfo.path)}>
-        {pathInfo.path}
-        <span className="disk-info">{formatFreeSpace(pathInfo, t)}</span>
-      </a>
+}) => {
+  const formatter = useFormatter();
+  return (
+    <div className="item">
+      <Icon icon={IconConstants.FOLDER} />
+      <div className="content">
+        <a onClick={() => downloadHandler(pathInfo.path)}>
+          {pathInfo.path}
+          <span className="disk-info">{formatFreeSpace(pathInfo, t, formatter)}</span>
+        </a>
+      </div>
     </div>
-  </div>
-);
+  );
+};

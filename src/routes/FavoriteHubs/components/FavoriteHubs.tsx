@@ -11,15 +11,13 @@ import ConnectStateCell from './ConnectStateCell';
 import { ActionMenu, TableActionMenu } from 'components/action-menu';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
-import LoginStore from 'stores/LoginStore';
-
 import '../style.css';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { translate, getModuleT } from 'utils/TranslationUtils';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { updateFavoriteHub } from 'services/api/FavoriteHubApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import MenuConstants from 'constants/MenuConstants';
@@ -28,6 +26,7 @@ import {
   FavoriteHubEditActionMenu,
   FavoriteHubPasswordActionMenu,
 } from 'actions/ui/favorite-hub';
+import { useSession } from 'context/SessionContext';
 
 const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = ({
   cellData,
@@ -47,10 +46,10 @@ const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEnt
   />
 );
 
-class FavoriteHubs extends React.Component<WithTranslation> {
-  static displayName = 'FavoriteHubs';
+const FavoriteHubs: React.FC = () => {
+  const { t } = useTranslation();
 
-  rowClassNameGetter = (rowData: API.FavoriteHubEntry) => {
+  const rowClassNameGetter = (rowData: API.FavoriteHubEntry) => {
     switch (rowData.connect_state.id) {
       case API.FavoriteHubConnectStateEnum.CONNECTING:
         return 'connecting';
@@ -64,93 +63,88 @@ class FavoriteHubs extends React.Component<WithTranslation> {
     return '';
   };
 
-  onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {
+  const onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {
     return runBackgroundSocketAction(
       () =>
         updateFavoriteHub(rowData, {
           auto_connect: checked,
         }),
-      this.props.t,
+      t,
     );
   };
 
-  favT = getModuleT(this.props.t, UI.Modules.FAVORITE_HUBS);
-  render() {
-    const { translate } = this.favT;
-    const editAccess = LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT);
-    return (
-      <>
-        <VirtualTable
-          rowClassNameGetter={this.rowClassNameGetter}
-          footerData={
-            <ActionMenu
-              className="top left pointing"
-              caption={translate('Actions...')}
-              actions={FavoriteHubActionMenu}
-              header={translate('Favorite hub actions')}
-              triggerIcon="chevron up"
-              button={true}
-              remoteMenuId="favorite_hubs"
-              direction="upward"
+  const favT = getModuleT(t, UI.Modules.FAVORITE_HUBS);
+
+  const { hasAccess } = useSession();
+  const { translate } = favT;
+  const editAccess = hasAccess(API.AccessEnum.HUBS_EDIT);
+  return (
+    <>
+      <VirtualTable
+        rowClassNameGetter={rowClassNameGetter}
+        footerData={
+          <ActionMenu
+            className="top left pointing"
+            caption={translate('Actions...')}
+            actions={FavoriteHubActionMenu}
+            header={translate('Favorite hub actions')}
+            triggerIcon="chevron up"
+            button={true}
+            remoteMenuId="favorite_hubs"
+            direction="upward"
+          />
+        }
+        store={FavoriteHubStore}
+        moduleId={UI.Modules.FAVORITE_HUBS}
+      >
+        <Column
+          name="State"
+          width={45}
+          columnKey="connect_state"
+          cell={editAccess ? <ConnectStateCell /> : undefined}
+          flexGrow={3}
+        />
+        <Column
+          name="Name"
+          width={150}
+          columnKey="name"
+          flexGrow={6}
+          cell={
+            <ActionMenuCell
+              actions={FavoriteHubEditActionMenu}
+              remoteMenuId={MenuConstants.FAVORITE_HUB}
             />
           }
-          store={FavoriteHubStore}
-          moduleId={UI.Modules.FAVORITE_HUBS}
-        >
-          <Column
-            name="State"
-            width={45}
-            columnKey="connect_state"
-            cell={editAccess && <ConnectStateCell />}
-            flexGrow={3}
-          />
-          <Column
-            name="Name"
-            width={150}
-            columnKey="name"
-            flexGrow={6}
-            cell={
-              <ActionMenuCell
-                actions={FavoriteHubEditActionMenu}
-                remoteMenuId={MenuConstants.FAVORITE_HUB}
-              />
-            }
-          />
-          <Column
-            name="Address"
-            width={270}
-            columnKey="hub_url"
-            flexGrow={3}
-            hideWidth={700}
-          />
-          <Column
-            name="Auto connect"
-            width={65}
-            columnKey="auto_connect"
-            cell={
-              editAccess && (
-                <CheckboxCell onChange={this.onChangeAutoConnect} type="toggle" />
-              )
-            }
-          />
-          <Column
-            name="Share profile"
-            width={100}
-            columnKey="share_profile"
-            flexGrow={1}
-          />
-          <Column name="Nick" width={100} columnKey="nick" flexGrow={1} />
-          <Column
-            name="Password"
-            width={100}
-            columnKey="has_password"
-            cell={<PasswordCell />}
-          />
-        </VirtualTable>
-        <FavoriteHubDialog favT={this.favT} />
-      </>
-    );
-  }
-}
+        />
+        <Column
+          name="Address"
+          width={270}
+          columnKey="hub_url"
+          flexGrow={3}
+          hideWidth={700}
+        />
+        <Column
+          name="Auto connect"
+          width={65}
+          columnKey="auto_connect"
+          cell={
+            editAccess ? (
+              <CheckboxCell onChange={onChangeAutoConnect} type="toggle" />
+            ) : undefined
+          }
+        />
+        <Column name="Share profile" width={100} columnKey="share_profile" flexGrow={1} />
+        <Column name="Nick" width={100} columnKey="nick" flexGrow={1} />
+        <Column
+          name="Password"
+          width={100}
+          columnKey="has_password"
+          cell={<PasswordCell />}
+        />
+      </VirtualTable>
+      <FavoriteHubDialog favT={favT} />
+    </>
+  );
+};
 
-export default withTranslation()(FavoriteHubs);
+export default FavoriteHubs;

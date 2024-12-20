@@ -1,3 +1,4 @@
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 export const Extensions = {
@@ -6,7 +7,7 @@ export const Extensions = {
   name: 'Extension releases',
   nameKey: 'extensions',
   icon: 'green puzzle',
-  access: require('constants/AccessConstants').default.SETTINGS_VIEW,
+  access: API.AccessEnum.SETTINGS_VIEW,
   size: {
     w: 4,
     h: 5,

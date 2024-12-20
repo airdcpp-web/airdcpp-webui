@@ -13,7 +13,7 @@ import * as React from 'react';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { formatSeconds, formatSize, formatSpeed } from 'utils/ValueFormat';
+import { formatSeconds, useFormatter } from 'utils/ValueFormat';
 
 interface HashInfoLayoutProps {
   stats: API.HashStats;
@@ -41,6 +41,7 @@ export const HashInfoLayout: React.FC<HashInfoLayoutProps> = ({ stats, moduleT }
     ...stats,
   };
 
+  const { formatSize, formatSpeed } = useFormatter();
   return (
     <div className="hash-layout">
       <div className="ui list">
@@ -53,7 +54,6 @@ export const HashInfoLayout: React.FC<HashInfoLayoutProps> = ({ stats, moduleT }
             header={moduleT.translate('Files left')}
             description={`${stats.hash_files_left} (${formatSize(
               stats.hash_bytes_left,
-              moduleT.plainT,
             )})`}
           />
         )}
@@ -61,7 +61,7 @@ export const HashInfoLayout: React.FC<HashInfoLayoutProps> = ({ stats, moduleT }
           <>
             <ListItem
               header={moduleT.translate('Speed')}
-              description={formatSpeed(stats.hash_speed, moduleT.plainT)}
+              description={formatSpeed(stats.hash_speed)}
             />
             <ListItem
               header={moduleT.translate('Time left')}

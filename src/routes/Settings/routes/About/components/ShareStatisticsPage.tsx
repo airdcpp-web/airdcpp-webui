@@ -4,7 +4,7 @@ import {
   formatAverage,
   formatPercentage,
   formatSeconds,
-  formatSize,
+  useFormatter,
 } from 'utils/ValueFormat';
 
 import ShareConstants from 'constants/ShareConstants';
@@ -23,13 +23,11 @@ type ShareStatisticsPageProps = SettingPageProps;
 const ShareStatisticsPage: React.FC<
   ShareStatisticsPageProps & StatisticsDecoratorChildProps<any>
 > = ({ stats, moduleT }) => {
+  const { formatSize } = useFormatter();
   const { translate, t } = moduleT;
   return (
     <Grid columns="two" stackable={true}>
-      <Row
-        title={translate('Total share size')}
-        text={formatSize(stats.total_size, moduleT.plainT)}
-      />
+      <Row title={translate('Total share size')} text={formatSize(stats.total_size)} />
       <Row
         title={translate('Total files')}
         // eslint-disable-next-line max-len

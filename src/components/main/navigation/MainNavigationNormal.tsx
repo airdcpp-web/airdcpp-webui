@@ -8,16 +8,20 @@ import {
   parseMenuItems,
   parseMenuItem,
 } from 'routes/Routes';
+import { useSession } from 'context/SessionContext';
 
-const MainNavigationNormal = () => (
-  <div className="item right">
-    {parseMenuItems(mainRoutes, undefined, false)}
+const MainNavigationNormal = () => {
+  const login = useSession();
+  return (
+    <div className="item right">
+      {parseMenuItems(mainRoutes, login, undefined, false)}
 
-    <SectionedDropdown className="top right">
-      <MenuSection>{parseMenuItems(configRoutes)}</MenuSection>
-      <MenuSection>{parseMenuItem(logoutItem)}</MenuSection>
-    </SectionedDropdown>
-  </div>
-);
+      <SectionedDropdown className="top right">
+        <MenuSection>{parseMenuItems(configRoutes, login)}</MenuSection>
+        <MenuSection>{parseMenuItem(logoutItem)}</MenuSection>
+      </SectionedDropdown>
+    </div>
+  );
+};
 
 export default MainNavigationNormal;

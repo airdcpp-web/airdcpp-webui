@@ -9,7 +9,7 @@ import SettingsTopMenuLayout from './SettingsTopMenuLayout';
 import * as UI from 'types/ui';
 
 import { childMenuItemToLinkComponent, rootMenuItemToLinkComponent } from './MenuItems';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { ChildSectionType, RootSectionType } from '../types';
 import {
   SettingSaveContext,
@@ -18,6 +18,7 @@ import {
 import Message from 'components/semantic/Message';
 import IconConstants from 'constants/IconConstants';
 import SaveButton from './SaveButton';
+import { useSession } from 'context/SessionContext';
 
 export interface SettingRootSectionProps {
   settingsT: UI.ModuleTranslator;
@@ -33,7 +34,7 @@ const getMessage = (childMenuItem: ChildSectionType, settingsT: UI.ModuleTransla
   return (
     childMenuItem.local && (
       <Message
-        description={settingsT.t<string>(
+        description={settingsT.t(
           'browserSpecificNote',
           'Settings listed on this page are browser-specific',
         )}
@@ -44,6 +45,7 @@ const getMessage = (childMenuItem: ChildSectionType, settingsT: UI.ModuleTransla
 };
 
 const SettingSection: React.FC<SettingSectionProps> = (props) => {
+  const login = useSession();
   const {
     rootMenuItems,
     selectedRootMenuItem,
@@ -73,13 +75,13 @@ const SettingSection: React.FC<SettingSectionProps> = (props) => {
 
   const menu = {
     rootMenuItems: rootMenuItems.map((item) =>
-      rootMenuItemToLinkComponent(item, settingsT, location),
+      rootMenuItemToLinkComponent(item, settingsT, location, login),
     ),
     childMenuItems: menuItems.map((item) =>
-      childMenuItemToLinkComponent(item, selectedRootMenuItem, settingsT),
+      childMenuItemToLinkComponent(item, selectedRootMenuItem, settingsT, login),
     ),
     childAdvancedMenuItems: advancedMenuItems?.map((item) =>
-      childMenuItemToLinkComponent(item, selectedRootMenuItem, settingsT),
+      childMenuItemToLinkComponent(item, selectedRootMenuItem, settingsT, login),
     ),
   };
 

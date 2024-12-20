@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import HubConstants from 'constants/HubConstants';
 import HubSessionStore from 'stores/HubSessionStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {

@@ -1,11 +1,12 @@
-import AccessConstants from 'constants/AccessConstants';
 import { RootSectionType } from 'routes/Settings/types';
+
+import * as API from 'types/api';
 
 const System: RootSectionType = {
   url: 'system',
   title: 'System',
   icon: 'settings',
-  access: AccessConstants.ADMIN,
+  access: API.AccessEnum.ADMIN,
   component: require('../../components/SettingSection').default,
   menuItems: [
     {

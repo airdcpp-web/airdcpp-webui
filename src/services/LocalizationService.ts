@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import i18n, { ReactOptions } from 'i18next';
 import XHR, { RequestCallback } from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
@@ -89,41 +89,49 @@ const loadLocales: XHR['options']['request'] = async (options, url, data, callba
   }
 };
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next) // if not using I18nextProvider
-  .use(XHR)
-  .init(
-    {
-      backend: {
-        loadPath: '{{lng}}/webui.{{ns}}.json',
-        parse: (data: any) => data,
-        request: loadLocales,
-      },
-      ns: ['main'],
-      fallbackLng: 'en',
-      debug: true,
-      load: 'languageOnly',
-      defaultNS: 'main',
-      interpolation: {
-        escapeValue: false, // not needed for react!!
-      },
-      saveMissing: process.env.NODE_ENV !== 'production',
+export const i18nOptions = {
+  ns: ['main'],
+  fallbackLng: 'en',
+  defaultNS: 'main',
+  react: {
+    useSuspense: true,
+    nsMode: 'default',
+  } as ReactOptions,
+  interpolation: {
+    escapeValue: false, // not needed for react!!
+  },
+};
 
-      // react i18next special options (optional)
-      react: {
-        useSuspense: true,
-        nsMode: 'default',
+const initI18n = () => {
+  i18n
+    .use(LanguageDetector)
+    .use(initReactI18next) // if not using I18nextProvider
+    .use(XHR)
+    .init(
+      {
+        backend: {
+          loadPath: '{{lng}}/webui.{{ns}}.json',
+          parse: (data: any) => data,
+          request: loadLocales,
+        },
+        debug: true,
+        load: 'languageOnly',
+        saveMissing: process.env.NODE_ENV !== 'production',
+
+        // react i18next special options (optional)
+        ...i18nOptions,
       },
-    },
-    undefined,
-  )
-  .then(() => {
-    Moment.locale(i18n.language);
+      undefined,
+    )
+    .then(() => {
+      Moment.locale(i18n.language);
+    });
+
+  i18n.on('languageChanged', (lng) => {
+    Moment.locale(lng);
   });
 
-i18n.on('languageChanged', (lng) => {
-  Moment.locale(lng);
-});
+  return i18n;
+};
 
-export { i18n };
+export { initI18n };

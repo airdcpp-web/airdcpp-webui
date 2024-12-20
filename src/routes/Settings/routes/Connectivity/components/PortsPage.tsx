@@ -36,7 +36,7 @@ const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
 const PortsPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
     <Message
-      description={moduleT.t<string>(
+      description={moduleT.t(
         'portsAutoValuesNote',
         'Port numbers listed on this page can be overridden by port mappers (if enabled)',
       )}

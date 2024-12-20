@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useMemo, useRef } from 'react';
 import RouteModal from 'components/semantic/RouteModal';
 
 import ShareConstants from 'constants/ShareConstants';
@@ -36,6 +36,7 @@ import { ShareRootEntryBase } from 'types/api';
 import { translateForm } from 'utils/FormUtils';
 import { Trans } from 'react-i18next';
 import { profileToEnumValue } from 'utils/ShareProfileUtils';
+import { useFormatter } from 'utils/ValueFormat';
 
 const Fields: UI.FormFieldDefinition[] = [
   {
@@ -74,38 +75,35 @@ export interface DataProps extends ShareProfileDecoratorChildProps {
 
 interface Entry extends ShareRootEntryBase, UI.FormValueMap {}
 
-/*interface RouteProps {
-  directoryId: string;
-}*/
-
 type Props = ShareDirectoryDialogProps & DataProps & ModalRouteDecoratorChildProps;
 
-class ShareDirectoryDialog extends Component<Props> {
-  static displayName = 'ShareDirectoryDialog';
+const ShareDirectoryDialog: React.FC<Props> = ({
+  shareT,
+  profiles,
+  rootEntry,
+  socket,
+  virtualNames,
+  location,
+  ...other
+}) => {
+  const formatter = useFormatter();
 
-  fieldDefinitions: UI.FormFieldDefinition[];
-  form: Form<Entry>;
+  const fieldDefinitions = useMemo<UI.FormFieldDefinition[]>(() => {
+    const defs = translateForm(Fields, shareT);
 
-  constructor(props: Props) {
-    super(props);
-
-    this.fieldDefinitions = translateForm(Fields, props.shareT);
-
-    // Share profiles shouldn't be translated...
-    const shareProfileDefinitions = this.fieldDefinitions.find(
-      (def) => def.key === 'profiles',
-    )!;
+    const shareProfileDefinitions = defs.find((def) => def.key === 'profiles')!;
     Object.assign(shareProfileDefinitions, {
-      options: props.profiles.map((p) => profileToEnumValue(p, this.props.shareT.plainT)),
-      default_value: [props.profiles.find((profile) => profile.default)!.id],
+      options: profiles.map((p) => profileToEnumValue(p, formatter)),
+      default_value: [profiles.find((profile) => profile.default)!.id],
     });
-  }
 
-  isNew = () => {
-    return !this.props.rootEntry;
-  };
+    return defs;
+  }, []);
+  const formRef = useRef<Form<Entry>>(null);
 
-  onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
+  const isNew = !rootEntry;
+
+  const onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
     if (id.includes('path')) {
       const mergeFields = {
         virtual_name: !!value.path ? getLastDirectory(value.path) : undefined,
@@ -117,25 +115,28 @@ class ShareDirectoryDialog extends Component<Props> {
     return null;
   };
 
-  save = () => {
-    return this.form.save();
+  const handleSave = () => {
+    return formRef.current!.save();
   };
 
-  onSave: FormSaveHandler<Entry> = (changedFields) => {
-    const { socket } = this.props;
-    if (this.isNew()) {
+  const onSave: FormSaveHandler<Entry> = (changedFields) => {
+    if (isNew) {
       return socket.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
 
     return socket.patch(
-      `${ShareRootConstants.ROOTS_URL}/${this.props.rootEntry!.id}`,
+      `${ShareRootConstants.ROOTS_URL}/${rootEntry!.id}`,
       changedFields,
     );
   };
 
-  onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
+  const onFieldSetting: FormFieldSettingHandler<Entry> = (
+    id,
+    fieldOptions,
+    formValue,
+  ) => {
     if (id === 'path') {
-      fieldOptions.disabled = !this.isNew();
+      fieldOptions.disabled = !isNew;
       fieldOptions.config = {
         ...(fieldOptions.config || {}),
         historyId: FilesystemConstants.LOCATION_DOWNLOAD,
@@ -144,51 +145,46 @@ class ShareDirectoryDialog extends Component<Props> {
       fieldOptions.factory = t.form.Textbox;
       fieldOptions.template = AutoSuggestField;
       fieldOptions.config = {
-        suggestionGetter: () => this.props.virtualNames,
+        suggestionGetter: () => virtualNames,
       };
     }
   };
 
-  render() {
-    const { rootEntry, shareT, ...other } = this.props;
-    const title = shareT.translate(
-      this.isNew() ? 'Add share directory' : 'Edit share directory',
-    );
-    return (
-      <RouteModal
-        className="share-directory"
-        title={title}
-        onApprove={this.save}
-        closable={false}
-        icon={IconConstants.FOLDER}
-        {...other}
-      >
-        <Message
-          title={shareT.translate('Hashing information')}
-          icon={IconConstants.INFO}
-          description={
-            <Trans i18nKey={shareT.toI18nKey('hashingInformationDesc')}>
-              <p>
-                New files will appear in share only after they have finished hashing (the
-                client has calculated checksums for them). Information about hashing
-                progress will be posted to the event log.
-              </p>
-            </Trans>
-          }
-        />
-        <Form<Entry>
-          ref={(c) => (this.form = c!)}
-          fieldDefinitions={this.fieldDefinitions}
-          onFieldChanged={this.onFieldChanged}
-          onFieldSetting={this.onFieldSetting}
-          onSave={this.onSave}
-          sourceValue={rootEntry as Entry}
-          location={this.props.location}
-        />
-      </RouteModal>
-    );
-  }
-}
+  const title = shareT.translate(isNew ? 'Add share directory' : 'Edit share directory');
+  return (
+    <RouteModal
+      className="share-directory"
+      title={title}
+      onApprove={handleSave}
+      closable={false}
+      icon={IconConstants.FOLDER}
+      {...other}
+    >
+      <Message
+        title={shareT.translate('Hashing information')}
+        icon={IconConstants.INFO}
+        description={
+          <Trans i18nKey={shareT.toI18nKey('hashingInformationDesc')}>
+            <p>
+              New files will appear in share only after they have finished hashing (the
+              client has calculated checksums for them). Information about hashing
+              progress will be posted to the event log.
+            </p>
+          </Trans>
+        }
+      />
+      <Form<Entry>
+        ref={formRef}
+        fieldDefinitions={fieldDefinitions}
+        onFieldChanged={onFieldChanged}
+        onFieldSetting={onFieldSetting}
+        onSave={onSave}
+        sourceValue={rootEntry as Entry}
+        location={location}
+      />
+    </RouteModal>
+  );
+};
 
 export default ModalRouteDecorator<ShareDirectoryDialogProps>(
   ShareProfileDecorator<Omit<Props, keyof DataProps>>(ShareDirectoryDialog, false, {

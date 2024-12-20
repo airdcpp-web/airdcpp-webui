@@ -29,7 +29,7 @@ const FilelistSession: React.FC<FilelistSessionProps> = (props) => {
       <div className={className}>
         <Message
           title={sessionT.t('userOffline', 'User offline')}
-          description={sessionT.t<string>(
+          description={sessionT.t(
             'userOfflineDesc',
             'You will be able to continue browsing when the user comes back online',
           )}

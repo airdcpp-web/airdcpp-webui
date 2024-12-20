@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import * as React from 'react';
 
-import { useNavigate, useLocation, Location, NavigateFunction } from 'react-router-dom';
+import { useNavigate, useLocation, Location, NavigateFunction } from 'react-router';
 
 import * as UI from 'types/ui';
 

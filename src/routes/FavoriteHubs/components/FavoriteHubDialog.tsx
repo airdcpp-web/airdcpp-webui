@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useMemo, useRef } from 'react';
 import RouteModal from 'components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
@@ -28,6 +28,7 @@ import * as UI from 'types/ui';
 import { FavoriteHubEntry } from 'types/api';
 import { IndeterminateCheckboxField } from 'components/form/fields/IndeterminateCheckboxField';
 import { profileToEnumValue } from 'utils/ShareProfileUtils';
+import { Formatter, useFormatter } from 'utils/ValueFormat';
 
 const ConnectivityModeOptions: API.SettingEnumOption[] = [
   {
@@ -211,11 +212,11 @@ const isAdcHub = (hubUrl?: string) =>
 const getFieldProfiles = (
   profiles: API.ShareProfile[],
   url: string | undefined,
-  t: UI.TranslateF,
+  formatter: Formatter,
 ): UI.FormOption[] => {
   return profiles
     .filter((p) => isAdcHub(url) || p.id === ShareProfileConstants.HIDDEN_PROFILE_ID)
-    .map((p) => profileToEnumValue(p, t))
+    .map((p) => profileToEnumValue(p, formatter))
     .map(normalizeEnumValue);
 };
 
@@ -227,41 +228,38 @@ interface DataProps {
   hubEntry?: API.FavoriteHubEntry;
 }
 
-/*interface RouteProps {
-  entryId: string;
-}*/
-
 type Props = FavoriteHubDialogProps &
   DataProps &
   ShareProfileDecoratorChildProps &
   ModalRouteDecoratorChildProps;
 
-class FavoriteHubDialog extends Component<Props> {
-  static displayName = 'FavoriteHubDialog';
+const FavoriteHubDialog: React.FC<Props> = ({
+  hubEntry,
+  location,
+  favT,
+  profiles,
+  socket,
+}) => {
+  const formatter = useFormatter();
 
-  formValue: Entry | undefined;
-
-  constructor(props: Props) {
-    super(props);
-
-    this.formValue = toFormEntry(props.hubEntry);
-    this.definitions = translateForm(Fields, props.favT);
-    this.nullOption = {
+  const formValue = useMemo<Entry | undefined>(() => toFormEntry(hubEntry), []);
+  const formDefinitions = useMemo<UI.FormFieldDefinition[]>(
+    () => translateForm(Fields, favT),
+    [],
+  );
+  const nullOption = useMemo<UI.FormOption<string>>(
+    () => ({
       value: 'null',
-      text: props.favT.translate('Global default'),
-    };
-  }
+      text: favT.translate('Global default'),
+    }),
+    [],
+  );
 
-  isNew = () => {
-    return !this.props.hubEntry;
-  };
+  const isNew = !hubEntry;
 
-  nullOption: UI.FormOption<string>;
-  definitions: UI.FormFieldDefinition[];
+  const formRef = useRef<Form<Entry>>(null);
 
-  form: Form<Entry>;
-
-  onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
+  const onFieldChanged: FormFieldChangeHandler<Entry> = (id, value, hasChanges) => {
     if (id.includes('hub_url')) {
       if (
         !isAdcHub(value.generic!.hub_url) &&
@@ -277,38 +275,38 @@ class FavoriteHubDialog extends Component<Props> {
     return null;
   };
 
-  save = () => {
-    return this.form.save();
+  const handleSave = () => {
+    return formRef.current!.save();
   };
 
-  onSave: FormSaveHandler<Entry> = (changedFields) => {
-    const { socket } = this.props;
+  const onSave: FormSaveHandler<Entry> = (changedFields) => {
     const hubEntry = toFavoriteHub(changedFields);
-    if (this.isNew()) {
+    if (isNew) {
       return socket.post(FavoriteHubConstants.HUBS_URL, hubEntry);
     }
 
-    return socket.patch(
-      `${FavoriteHubConstants.HUBS_URL}/${this.props.hubEntry!.id}`,
-      hubEntry,
-    );
+    return socket.patch(`${FavoriteHubConstants.HUBS_URL}/${hubEntry!.id}`, hubEntry);
   };
 
-  onFieldSetting: FormFieldSettingHandler<Entry> = (id, fieldOptions, formValue) => {
+  const onFieldSetting: FormFieldSettingHandler<Entry> = (
+    id,
+    fieldOptions,
+    formValue,
+  ) => {
     if (id === 'share_profile') {
       const hubUrl = formValue.generic ? formValue.generic.hub_url : undefined;
 
       // Since the options are added dynamically based on the URL protocol, they must be
       // normalized to use the tcomb format
       Object.assign(fieldOptions, {
-        nullOption: this.nullOption,
+        nullOption,
         factory: t.form.Select,
-        options: getFieldProfiles(this.props.profiles, hubUrl, this.props.favT.plainT),
+        options: getFieldProfiles(profiles, hubUrl, formatter),
         transformer: intTransformer,
       });
     } else if (id === 'connection_mode_v4' || id === 'connection_mode_v6') {
       Object.assign(fieldOptions, {
-        nullOption: this.nullOption,
+        nullOption,
         transformer: intTransformer,
       });
     } else if (id === 'use_main_chat_notify' || id === 'show_joins') {
@@ -322,30 +320,28 @@ class FavoriteHubDialog extends Component<Props> {
     }
   };
 
-  render() {
-    const { translate } = this.props.favT;
-    const title = translate(this.isNew() ? 'Add favorite hub' : 'Edit favorite hub');
-    return (
-      <RouteModal
-        className="fav-hub"
-        title={title}
-        onApprove={this.save}
-        closable={false}
-        icon={IconConstants.FAVORITE}
-      >
-        <Form<Entry>
-          ref={(c) => (this.form = c!)}
-          onFieldChanged={this.onFieldChanged}
-          onFieldSetting={this.onFieldSetting}
-          onSave={this.onSave}
-          fieldDefinitions={this.definitions}
-          sourceValue={this.formValue}
-          location={this.props.location}
-        />
-      </RouteModal>
-    );
-  }
-}
+  const { translate } = favT;
+  const title = translate(isNew ? 'Add favorite hub' : 'Edit favorite hub');
+  return (
+    <RouteModal
+      className="fav-hub"
+      title={title}
+      onApprove={handleSave}
+      closable={false}
+      icon={IconConstants.FAVORITE}
+    >
+      <Form<Entry>
+        ref={formRef}
+        onFieldChanged={onFieldChanged}
+        onFieldSetting={onFieldSetting}
+        onSave={onSave}
+        fieldDefinitions={formDefinitions}
+        sourceValue={formValue}
+        location={location}
+      />
+    </RouteModal>
+  );
+};
 
 export default ModalRouteDecorator<FavoriteHubDialogProps>(
   ShareProfileDecorator(FavoriteHubDialog, true, {

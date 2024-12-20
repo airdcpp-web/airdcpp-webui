@@ -1,9 +1,10 @@
-import AccessConstants from 'constants/AccessConstants';
 import IconConstants from 'constants/IconConstants';
 import SessionConstants from 'constants/SessionConstants';
 import SettingConstants from 'constants/SettingConstants';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import LoginStore from 'stores/LoginStore';
 
 const handleNewUserIntroSeen: UI.ActionHandler<void> = ({ socket }) => {
@@ -16,7 +17,7 @@ const handleNewUserIntroSeen: UI.ActionHandler<void> = ({ socket }) => {
 export const LoginNewUserIntroSeenAction = {
   id: 'newUserIntroSeen',
   displayName: `Close and don't show again`,
-  access: AccessConstants.SETTINGS_EDIT,
+  access: API.AccessEnum.SETTINGS_EDIT,
   icon: IconConstants.SAVE_COLORED,
   handler: handleNewUserIntroSeen,
 };

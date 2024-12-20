@@ -9,7 +9,7 @@ import Loader from 'components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
 
 import { RouteItem, parseRoutes } from 'routes/Routes';
-import { Location, Routes, useNavigate } from 'react-router-dom';
+import { Location, Routes, useNavigate } from 'react-router';
 
 import '../style.css';
 import { LayoutWidthContext, useLayoutWidth } from 'context/LayoutWidthContext';

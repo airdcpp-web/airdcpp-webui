@@ -11,7 +11,7 @@ import * as UI from 'types/ui';
 
 import { translate } from 'utils/TranslationUtils';
 import { SessionLayoutLabels, SessionLayoutManageProps } from './types';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { useSessionRouteHelpers } from './effects/useSessionHelpers';
 import { useTranslation } from 'react-i18next';
 

@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import { NavigateFunction, NavigateOptions, To, Location } from 'react-router-dom';
+import { NavigateFunction, NavigateOptions, To, Location } from 'react-router';
 
 const loadProperty = (
   storage: Storage,

@@ -1,7 +1,8 @@
 import EventConstants from 'constants/EventConstants';
-import AccessConstants from 'constants/AccessConstants';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import IconConstants from 'constants/IconConstants';
 
 const handleClear: UI.ActionHandler<void> = ({ socket }) => {
@@ -11,7 +12,7 @@ const handleClear: UI.ActionHandler<void> = ({ socket }) => {
 export const EventClearAction = {
   id: 'clear',
   displayName: 'Clear',
-  access: AccessConstants.EVENTS_EDIT,
+  access: API.AccessEnum.EVENTS_EDIT,
   icon: IconConstants.CLEAR,
   handler: handleClear,
 };

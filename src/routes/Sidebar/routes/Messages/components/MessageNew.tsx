@@ -34,7 +34,7 @@ const MessageNew: React.FC<NewSessionLayoutProps> = (props) => {
     <div className="private chat session new">
       <UserSelectField
         onChange={handleSubmit}
-        offlineMessage={sessionT.t<string>(
+        offlineMessage={sessionT.t(
           'offlineMessage',
           'You must to be connected to at least one hub in order to send private messages',
         )}

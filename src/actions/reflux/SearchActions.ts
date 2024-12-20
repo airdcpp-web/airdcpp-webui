@@ -5,7 +5,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { doSearch } from 'utils/SearchUtils';
-import { NavigateFunction, Location } from 'react-router-dom';
+import { NavigateFunction, Location } from 'react-router';
 
 const SearchActionConfig: UI.RefluxActionConfigList<API.GroupedSearchResult> = ['search'];
 

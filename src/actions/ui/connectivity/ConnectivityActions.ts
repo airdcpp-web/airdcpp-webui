@@ -1,8 +1,8 @@
-import AccessConstants from 'constants/AccessConstants';
 import ConnectivityConstants from 'constants/ConnectivityConstants';
 
 import IconConstants from 'constants/IconConstants';
 
+import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 const handleDetectConnection: UI.ActionHandler<void> = ({ socket }) => {
@@ -12,7 +12,7 @@ const handleDetectConnection: UI.ActionHandler<void> = ({ socket }) => {
 export const ConnectivityDetectAction = {
   id: 'detect',
   displayName: 'Detect now',
-  access: AccessConstants.SETTINGS_EDIT,
+  access: API.AccessEnum.SETTINGS_EDIT,
   icon: IconConstants.CONFIGURE,
   handler: handleDetectConnection,
 };

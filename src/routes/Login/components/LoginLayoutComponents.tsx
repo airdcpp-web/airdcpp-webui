@@ -19,7 +19,7 @@ export const ErrorBox: React.FC<ErrorBoxProps> = ({ lastError, t }) => {
   return (
     <Message
       isError={true}
-      description={t<string>(toI18nKey('authenticationFailed', UI.Modules.LOGIN), {
+      description={t(toI18nKey('authenticationFailed', UI.Modules.LOGIN), {
         defaultValue: 'Authentication failed: {{lastError}}',
         replace: {
           lastError,

@@ -1,6 +1,7 @@
+import { useSession } from 'context/SessionContext';
 import { useEffect } from 'react';
 
-import LoginStore, { LoginState } from 'stores/LoginStore';
+import { LoginState } from 'stores/LoginStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -19,8 +20,9 @@ const updateTitle = (systemInfo: API.SystemInfo | null, prefix = '') => {
 
 // Add hostname in the title if we are authentication
 export const useAuthPageTitle = (login: LoginState) => {
+  const { systemInfo } = useSession();
   useEffect(() => {
-    updateTitle(LoginStore.systemInfo);
+    updateTitle(systemInfo);
     return () => updateTitle(null);
   }, [login.socketAuthenticated]);
 };
@@ -38,8 +40,9 @@ const getUrgencyPrefix = (urgencies: UI.UrgencyCountMap | null) => {
 
 // Add urgency notification symbol in the page title
 export const useUrgencyPageTitle = (urgencies: UI.UrgencyCountMap | null) => {
+  const { systemInfo } = useSession();
   const prefix = getUrgencyPrefix(urgencies);
   useEffect(() => {
-    updateTitle(LoginStore.systemInfo, prefix);
+    updateTitle(systemInfo, prefix);
   }, [prefix]);
 };

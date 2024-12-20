@@ -9,7 +9,7 @@ import ExtensionConstants from 'constants/ExtensionConstants';
 import EngineStatusMessage from 'routes/Settings/routes/Extensions/components/EngineStatusMessage';
 import ExtensionsConfigureDialog from 'routes/Settings/routes/Extensions/components/ExtensionsConfigureDialog';
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Message from 'components/semantic/Message';
 import LocalExtension from 'routes/Settings/routes/Extensions/components/LocalExtension';
 

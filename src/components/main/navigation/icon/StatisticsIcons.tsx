@@ -1,10 +1,8 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { formatSize, formatSpeed } from 'utils/ValueFormat';
+import { useFormatter } from 'utils/ValueFormat';
 import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
-
-import LoginStore from 'stores/LoginStore';
 
 import HashConstants from 'constants/HashConstants';
 import IconConstants from 'constants/IconConstants';
@@ -19,12 +17,13 @@ import {
   SocketSubscriptionDecorator,
 } from 'decorators/SocketSubscriptionDecorator';
 import { Translation } from 'react-i18next';
+import { useSession } from 'context/SessionContext';
 
 interface StatisticsIconProps {
   icon: IconType;
   cornerIcon?: CornerIconType;
   bytes: number;
-  formatter: (bytes: number, t: UI.TranslateF) => React.ReactNode;
+  formatter: (bytes: number) => React.ReactNode;
   t: UI.TranslateF;
 }
 
@@ -59,7 +58,7 @@ const StatisticsIcon: React.FC<StatisticsIconProps> = ({
           paddingLeft: '.2em',
         }}
       >
-        <div className="header">{formatter(bytes, t)}</div>
+        <div className="header">{formatter(bytes)}</div>
       </div>
     </div>
   );
@@ -73,41 +72,45 @@ interface State
   extends Pick<API.TransferStats, 'speed_down' | 'speed_up' | 'queued_bytes'>,
     Pick<API.HashStats, 'hash_speed' | 'hash_bytes_left'> {}
 
-class StatisticsIcons extends React.PureComponent<
-  StatisticsIconsProps & SocketSubscriptionDecoratorChildProps,
-  State
-> {
-  //displayName: 'StatisticsIcons',
-
-  state: State = {
+const StatisticsIcons: React.FC<
+  StatisticsIconsProps & SocketSubscriptionDecoratorChildProps
+> = ({ socket, addSocketListener, className }) => {
+  const { hasAccess } = useSession();
+  const { formatSize, formatSpeed } = useFormatter();
+  const [stats, setStats] = React.useState<State>({
     speed_down: 0,
     speed_up: 0,
     hash_speed: 0,
     hash_bytes_left: 0,
     queued_bytes: 0,
+  });
+
+  const onStatsReceived = (data: State) => {
+    setStats({
+      ...stats,
+      ...data,
+    });
   };
 
-  fetchStats = () => {
-    if (LoginStore.hasAccess(API.AccessEnum.TRANSFERS)) {
-      this.props.socket
+  const fetchStats = () => {
+    if (hasAccess(API.AccessEnum.TRANSFERS)) {
+      socket
         .get(TransferConstants.STATISTICS_URL)
-        .then(this.onStatsReceived)
+        .then(onStatsReceived)
         .catch((error: ErrorResponse) =>
           console.error('Failed to fetch transfer statistics', error.message),
         );
     }
   };
 
-  componentDidMount() {
-    this.fetchStats();
-
-    const { addSocketListener } = this.props;
+  React.useEffect(() => {
+    fetchStats();
 
     // eslint-disable-next-line max-len
     addSocketListener(
       TransferConstants.MODULE_URL,
       TransferConstants.STATISTICS,
-      this.onStatsReceived,
+      onStatsReceived,
       undefined,
       API.AccessEnum.TRANSFERS,
     );
@@ -115,57 +118,49 @@ class StatisticsIcons extends React.PureComponent<
     addSocketListener(
       HashConstants.MODULE_URL,
       HashConstants.STATISTICS,
-      this.onStatsReceived,
+      onStatsReceived,
       undefined,
       API.AccessEnum.SETTINGS_VIEW,
     );
-  }
+  }, []);
 
-  onStatsReceived = (data: State) => {
-    this.setState({
-      ...data,
-    });
-  };
-
-  render() {
-    return (
-      <Translation>
-        {(t) => (
-          <div
-            className={classNames(
-              'ui centered inverted mini list statistics-icons',
-              this.props.className,
-            )}
-          >
-            <StatisticsIcon
-              icon={IconConstants.DOWNLOAD}
-              bytes={this.state.speed_down}
-              formatter={formatSpeed}
-              t={t}
-            />
-            <StatisticsIcon
-              icon={IconConstants.UPLOAD}
-              bytes={this.state.speed_up}
-              formatter={formatSpeed}
-              t={t}
-            />
-            <StatisticsIcon
-              icon={IconConstants.HASH}
-              bytes={this.state.hash_speed}
-              formatter={formatSpeed}
-              t={t}
-            />
-            <StatisticsIcon
-              icon={IconConstants.QUEUE_COLORED}
-              bytes={this.state.queued_bytes}
-              formatter={formatSize}
-              t={t}
-            />
-          </div>
-        )}
-      </Translation>
-    );
-  }
-}
+  return (
+    <Translation>
+      {(t) => (
+        <div
+          className={classNames(
+            'ui centered inverted mini list statistics-icons',
+            className,
+          )}
+        >
+          <StatisticsIcon
+            icon={IconConstants.DOWNLOAD}
+            bytes={stats.speed_down}
+            formatter={formatSpeed}
+            t={t}
+          />
+          <StatisticsIcon
+            icon={IconConstants.UPLOAD}
+            bytes={stats.speed_up}
+            formatter={formatSpeed}
+            t={t}
+          />
+          <StatisticsIcon
+            icon={IconConstants.HASH}
+            bytes={stats.hash_speed}
+            formatter={formatSpeed}
+            t={t}
+          />
+          <StatisticsIcon
+            icon={IconConstants.QUEUE_COLORED}
+            bytes={stats.queued_bytes}
+            formatter={formatSize}
+            t={t}
+          />
+        </div>
+      )}
+    </Translation>
+  );
+};
 
 export default SocketSubscriptionDecorator<StatisticsIconsProps>(StatisticsIcons);

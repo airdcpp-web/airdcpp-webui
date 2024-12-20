@@ -7,7 +7,6 @@ import SideMenuLayout from './SideMenuLayout';
 
 import Message from 'components/semantic/Message';
 
-import LoginStore from 'stores/LoginStore';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
 import * as API from 'types/api';
@@ -27,6 +26,7 @@ import {
   SessionLocationState,
 } from './types';
 import { useComponents } from './SessionMenuComponents';
+import { useSession } from 'context/SessionContext';
 
 export interface SessionLayoutProps<
   SessionT extends UI.SessionItemBase,
@@ -57,13 +57,14 @@ const SessionLayout = <
 >(
   props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
 ) => {
+  const { hasAccess } = useSession();
   const layoutWidth = useLayoutWidth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const { activeItem, onKeyDown } = useSessionManager(props);
 
-  const hasEditAccess = LoginStore.hasAccess(props.editAccess);
+  const hasEditAccess = hasAccess(props.editAccess);
 
   const getSessionChildren = () => {
     const {
@@ -130,7 +131,7 @@ const SessionLayout = <
     return (
       <Message
         title={translate('No items to show', sessionT.plainT, UI.Modules.COMMON)}
-        description={sessionT.plainT<string>(
+        description={sessionT.plainT(
           toI18nKey('noSessionEditAccess', UI.Modules.COMMON),
           `You aren't allowed to open new sessions`,
         )}

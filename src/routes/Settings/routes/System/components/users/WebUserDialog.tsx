@@ -13,8 +13,6 @@ import t from 'utils/tcomb-form';
 
 import Form, { FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
 
-import LoginStore from 'stores/LoginStore';
-
 import '../../style.css';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
@@ -25,6 +23,7 @@ import * as UI from 'types/ui';
 import { translateForm } from 'utils/FormUtils';
 import { getSubModuleT } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
+import { useSession } from 'context/SessionContext';
 
 const enum PermissionAction {
   EDIT = 'Edit',
@@ -220,6 +219,7 @@ const WebUserDialog: React.FC<Props> = ({
   socket,
   ...other
 }) => {
+  const { user: loginUser } = useSession();
   const isNew = !user;
 
   const definitions = useMemo(() => buildDefinitions(isNew, moduleT), []);
@@ -245,7 +245,7 @@ const WebUserDialog: React.FC<Props> = ({
     if (id === 'permissions') {
       fieldOptions.factory = t.form.Select;
       fieldOptions.template = PermissionSelector(moduleT);
-      fieldOptions.disabled = !isNew && user.username === LoginStore.user.username;
+      fieldOptions.disabled = !isNew && user.username === loginUser.username;
     } else if (id === 'username') {
       fieldOptions.disabled = !isNew;
     }

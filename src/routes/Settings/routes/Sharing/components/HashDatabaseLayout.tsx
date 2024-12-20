@@ -8,9 +8,8 @@ import Button from 'components/semantic/Button';
 import Message from 'components/semantic/Message';
 
 import HashConstants from 'constants/HashConstants';
-import LoginStore from 'stores/LoginStore';
 
-import { formatSize } from 'utils/ValueFormat';
+import { useFormatter } from 'utils/ValueFormat';
 
 import '../style.css';
 
@@ -22,6 +21,7 @@ import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { Row, Grid } from 'components/semantic/Grid';
 import IconConstants from 'constants/IconConstants';
 import { useSocket } from 'context/SocketContext';
+import { useSession } from 'context/SessionContext';
 
 interface OptimizeLayoutProps {
   running: boolean;
@@ -81,6 +81,8 @@ interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
 const HashDatabaseLayout: React.FC<
   HashDatabaseLayoutProps & HashDatabaseLayoutDataProps
 > = ({ status, moduleT }) => {
+  const { hasAccess } = useSession();
+  const { formatSize } = useFormatter();
   const socket = useSocket();
   const handleOptimize = (verify: boolean) => {
     runBackgroundSocketAction(
@@ -89,23 +91,23 @@ const HashDatabaseLayout: React.FC<
     );
   };
 
-  const { translate, plainT } = moduleT;
+  const { translate } = moduleT;
   return (
     <div className="ui segment hash-database">
       <h3 className="header">{translate('Hash database')}</h3>
       <Grid columns="two">
         <Row
           title={translate('File index size')}
-          text={formatSize(status.file_index_size, plainT)}
+          text={formatSize(status.file_index_size)}
           titleWidth="five"
         />
         <Row
           title={translate('Hash store size')}
-          text={formatSize(status.hash_store_size, plainT)}
+          text={formatSize(status.hash_store_size)}
           titleWidth="five"
         />
       </Grid>
-      {LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT) && (
+      {hasAccess(API.AccessEnum.SETTINGS_EDIT) && (
         <OptimizeLayout
           running={status.maintenance_running}
           startHandler={handleOptimize}

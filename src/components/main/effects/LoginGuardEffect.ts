@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import LoginActions from 'actions/reflux/LoginActions';
 import LoginStore, { LoginState } from 'stores/LoginStore';
 
-import { useNavigate, Location } from 'react-router-dom';
+import { useNavigate, Location } from 'react-router';
 
-export const useLoginGuard = (login: LoginState, location: Location) => {
+export const useSessionGuard = (login: LoginState, location: Location) => {
   const [prevSocketAuthenticated, setPrevSocketAuthenticated] = useState(
     LoginStore.getState().socketAuthenticated,
   );

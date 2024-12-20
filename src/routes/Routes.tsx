@@ -10,7 +10,6 @@ import ViewFileStore from 'stores/ViewFileStore';
 import EventStore from 'stores/EventStore';
 
 import LoginActions from 'actions/reflux/LoginActions';
-import LoginStore from 'stores/LoginStore';
 import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
@@ -18,7 +17,8 @@ import * as UI from 'types/ui';
 
 import { Trans } from 'react-i18next';
 import { textToI18nKey } from 'utils/TranslationUtils';
-import { Route, matchPath, Location } from 'react-router-dom';
+import { Route, matchPath, Location } from 'react-router';
+import { AuthenticatedSession } from 'context/SessionContext';
 
 export type RouteItemClickHandler = (
   path: string,
@@ -31,7 +31,7 @@ export interface RouteItem {
   matchPath?: string;
   icon: string;
   unreadInfoStore?: UI.UnreadInfoStore;
-  access?: string;
+  access?: API.AccessEnum;
   component?: React.ComponentType;
   className?: string;
   onClick?: RouteItemClickHandler;
@@ -198,7 +198,8 @@ export const parseMenuItem = (
   );
 };
 
-const filterItem = (item: RouteItem) => !item.access || LoginStore.hasAccess(item.access);
+const filterItem = (item: RouteItem, { hasAccess }: AuthenticatedSession) =>
+  !item.access || hasAccess(item.access);
 
 export const parseRoutes = (routes: RouteItem[]) => {
   return routes.map((route, i) => {
@@ -216,11 +217,12 @@ export const parseRoutes = (routes: RouteItem[]) => {
 
 export const parseMenuItems = (
   routes: RouteItem[],
+  session: AuthenticatedSession,
   onClick?: RouteItemClickHandler | undefined,
   showIcon?: boolean | undefined,
 ) => {
   return routes
-    .filter(filterItem)
+    .filter((route) => filterItem(route, session))
     .map((route) => parseMenuItem(route, onClick, showIcon));
 };
 

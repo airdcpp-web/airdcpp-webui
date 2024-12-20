@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router';
 import SocketService from 'services/SocketService';
 
 //@ts-ignore
@@ -12,7 +12,7 @@ import AuthenticatedApp from 'components/main/AuthenticatedApp';
 import Login from 'routes/Login/components/Login';
 
 import { I18nextProvider } from 'react-i18next';
-import { i18n } from 'services/LocalizationService';
+import { initI18n } from 'services/LocalizationService';
 import Loader from 'components/semantic/Loader';
 import { useInstallPrompt } from 'components/main/effects/InstallPromptEffect';
 import { InstallPromptContext } from 'context/InstallPromptContext';
@@ -50,6 +50,7 @@ const router = createBrowserRouter(
   },
 );
 
+const i18n = initI18n();
 const App = () => {
   const prompt = useInstallPrompt();
   return (

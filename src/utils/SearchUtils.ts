@@ -1,5 +1,5 @@
 import { pushUnique } from './BrowserUtils';
-import { NavigateFunction, Location } from 'react-router-dom';
+import { NavigateFunction, Location } from 'react-router';
 
 export const doSearch = (
   searchString: string,

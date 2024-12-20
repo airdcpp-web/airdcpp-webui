@@ -2,7 +2,7 @@ import invariant from 'invariant';
 
 import * as API from 'types/api';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { SessionLocationState } from '../types';
 
 interface SessionRouteHelperProps {

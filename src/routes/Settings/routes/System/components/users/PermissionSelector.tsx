@@ -45,7 +45,7 @@ const PermissionSelector = (moduleT: UI.ModuleTranslator) => {
       return (
         <div className="permission-select">
           <Message
-            description={moduleT.t<string>(
+            description={moduleT.t(
               'adminPermissionNote',
               'Administrator permission is required in order to access the System section in settings',
             )}

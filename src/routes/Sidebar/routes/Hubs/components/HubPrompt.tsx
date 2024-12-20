@@ -3,7 +3,6 @@ import * as React from 'react';
 import ActionInput from 'components/semantic/ActionInput';
 import Button from 'components/semantic/Button';
 
-import LoginStore from 'stores/LoginStore';
 import Icon, { IconType } from 'components/semantic/Icon';
 
 import * as API from 'types/api';
@@ -12,6 +11,7 @@ import { Trans } from 'react-i18next';
 import { sendHubPassword, acceptHubRedirect } from 'services/api/HubApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import IconConstants from 'constants/IconConstants';
+import { useSession } from 'context/SessionContext';
 
 interface HubActionPromptProps {
   icon: IconType;
@@ -21,7 +21,8 @@ interface HubActionPromptProps {
 
 // Main prompt (HUBS_EDIT permission is required for the content to be rendered)
 const HubActionPrompt: React.FC<HubActionPromptProps> = ({ icon, title, content }) => {
-  if (!LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT)) {
+  const { hasAccess } = useSession();
+  if (!hasAccess(API.AccessEnum.HUBS_EDIT)) {
     return null;
   }
 

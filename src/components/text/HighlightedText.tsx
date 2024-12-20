@@ -4,7 +4,6 @@ import * as React from 'react';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { useTranslation } from 'react-i18next';
 import { formatEmojis } from 'utils/emojify/EmojiFormat';
 
 import {
@@ -14,6 +13,7 @@ import {
   HighlightTextLink,
 } from './highlights';
 import { formatMagnetCaption, parseMagnetLink } from 'utils/MagnetUtils';
+import { Formatter, useFormatter } from 'utils/ValueFormat';
 
 interface HighlightProps {
   user: UI.DownloadSource | undefined;
@@ -22,7 +22,7 @@ interface HighlightProps {
 
 const getHighlightNode = (
   highlight: API.MessageHighlight,
-  t: UI.TranslateF,
+  formatter: Formatter,
   { user, menuProps }: HighlightProps,
 ): React.ReactNode => {
   const { start, end } = highlight.position;
@@ -52,7 +52,6 @@ const getHighlightNode = (
               contentType={highlight.content_type}
               user={user}
               highlightId={highlight.id}
-              t={t}
               menuProps={menuProps}
               magnet={magnet}
             />
@@ -63,7 +62,7 @@ const getHighlightNode = (
             <HighlightTextLink
               key={key}
               highlightId={highlight.id}
-              text={formatMagnetCaption(magnet, t)}
+              text={formatMagnetCaption(magnet, formatter)}
               menuProps={menuProps}
               magnet={magnet}
               dupe={highlight.dupe}
@@ -95,7 +94,8 @@ const decoder = new TextDecoder();
 
 const formatHighlights = (
   { text: text16, highlights, emojify, ...other }: HighlightedTextProps,
-  t: UI.TranslateF,
+  // t: UI.TranslateF,
+  formatter: Formatter,
 ) => {
   if (!highlights.length) {
     return formatPlainText(text16, emojify);
@@ -120,7 +120,7 @@ const formatHighlights = (
     const { start, end } = highlight.position;
 
     pushText(start);
-    elements.push(getHighlightNode(highlight, t, other));
+    elements.push(getHighlightNode(highlight, formatter, other));
 
     prevReplace = end;
   }
@@ -134,7 +134,8 @@ const formatHighlights = (
 
 export const HighlightedText: React.FC<HighlightedTextProps> = memo(
   function HighlightedText(props) {
-    const { t } = useTranslation();
-    return <>{formatHighlights(props, t)}</>;
+    // const { t } = useTranslation();
+    const formatter = useFormatter();
+    return <>{formatHighlights(props, formatter)}</>;
   },
 );

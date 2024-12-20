@@ -7,9 +7,10 @@ import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 
 import MessageStoreDecorator from './decorators/MessageStoreDecorator';
 
-import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
+
+import * as API from 'types/api';
 
 const PrivateChatMessageStore = Reflux.createStore({
   scroll: SessionScrollPositionKeeper(),
@@ -36,5 +37,5 @@ const PrivateChatMessageStore = Reflux.createStore({
 export default MessageStoreDecorator(
   PrivateChatMessageStore,
   PrivateChatActions,
-  AccessConstants.PRIVATE_CHAT_VIEW,
+  API.AccessEnum.PRIVATE_CHAT_VIEW,
 );

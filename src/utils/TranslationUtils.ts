@@ -73,10 +73,12 @@ export const getModuleT = (
   reservedSubNamespaces?: string[],
 ): UI.ModuleTranslator => {
   const moduleT: UI.ModuleTranslator = {
-    //@ts-ignore
-    t: (key: string, options?: TOptions | string) => {
-      return plainT(toI18nKey(key, moduleId, reservedSubNamespaces), options);
-    },
+    t: ((key: string, options?: TOptions | string) => {
+      return plainT(
+        toI18nKey(key, moduleId, reservedSubNamespaces),
+        typeof options === 'string' ? { defaultValue: options } : options,
+      );
+    }) as UI.TranslateF,
     toI18nKey: (key, subModuleIds) =>
       toI18nKey(key, concatModules(subModuleIds, moduleId), reservedSubNamespaces),
     translate: (text, subModuleIds) =>

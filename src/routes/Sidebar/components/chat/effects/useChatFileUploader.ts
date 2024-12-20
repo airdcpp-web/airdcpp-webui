@@ -5,7 +5,7 @@ import NotificationActions from 'actions/NotificationActions';
 import * as UI from 'types/ui';
 
 import { toI18nKey } from 'utils/TranslationUtils';
-import { formatSize } from 'utils/ValueFormat';
+import { useFormatter } from 'utils/ValueFormat';
 
 interface UseFileUploaderProps {
   appendText: (text: string) => void;
@@ -18,6 +18,7 @@ export const useFileUploader = ({
   handleFileUpload,
   t,
 }: UseFileUploaderProps) => {
+  const { formatSize } = useFormatter();
   const [files, setFiles] = React.useState<File[] | null>(null);
   const [uploading, setUploading] = React.useState(false);
 
@@ -35,7 +36,7 @@ export const useFileUploader = ({
           message: t(toI18nKey('fileTooLarge', UI.Modules.COMMON), {
             defaultValue: 'File is too large (maximum size is {{maxSize}})',
             replace: {
-              maxSize: formatSize(maxSize, t),
+              maxSize: formatSize(maxSize),
             },
           }),
         });

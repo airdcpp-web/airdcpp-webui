@@ -1,8 +1,6 @@
 import { memo } from 'react';
 import * as React from 'react';
 
-import LoginStore from 'stores/LoginStore';
-
 import { AudioFile, ImageFile, VideoFile, TextFile } from 'components/file-preview';
 
 import Moment from 'moment';
@@ -12,6 +10,8 @@ import * as UI from 'types/ui';
 
 import { fetchData } from 'utils/HttpUtils';
 import { useRestoreScroll } from 'effects';
+import { useHref } from 'react-router';
+import { useSession } from 'context/SessionContext';
 
 export interface FileContentProps {
   session: API.ViewFile;
@@ -74,8 +74,8 @@ const getViewerElement = (
   return null;
 };
 
-const getUrl = (tth: string) => {
-  return `${getBasePath()}view/${tth}?auth_token=${LoginStore.authToken}`;
+const getUrl = (basePath: string, tth: string, authToken: string) => {
+  return `${basePath}view/${tth}?auth_token=${authToken}`;
 };
 
 const FileContent: React.FC<FileContentProps> = memo(function FileContent({
@@ -83,6 +83,8 @@ const FileContent: React.FC<FileContentProps> = memo(function FileContent({
   sessionT,
   scrollPositionHandler,
 }) {
+  const { authToken } = useSession();
+  const basePath = useHref('/');
   const { scrollable, restoreScrollPosition } = useRestoreScroll(
     scrollPositionHandler,
     session,
@@ -97,7 +99,7 @@ const FileContent: React.FC<FileContentProps> = memo(function FileContent({
     child = (
       <ViewerElement
         item={session}
-        url={getUrl(session.tth)}
+        url={getUrl(basePath, session.tth, authToken)}
         type={session.mime_type}
         extension={session.type.str}
         sessionT={sessionT}

@@ -1,6 +1,6 @@
 // import * as React from 'react';
 
-// import { Location } from 'react-router-dom';
+// import { Location } from 'react-router';
 
 import * as UI from 'types/ui';
 

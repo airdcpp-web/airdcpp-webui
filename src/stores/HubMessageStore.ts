@@ -7,9 +7,10 @@ import HubActions from 'actions/reflux/HubActions';
 
 import MessageStoreDecorator from './decorators/MessageStoreDecorator';
 
-import AccessConstants from 'constants/AccessConstants';
 import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
+
+import * as API from 'types/api';
 
 const HubMessageStore = Reflux.createStore({
   scroll: SessionScrollPositionKeeper(),
@@ -51,5 +52,5 @@ const HubMessageStore = Reflux.createStore({
 export default MessageStoreDecorator(
   HubMessageStore,
   HubActions,
-  AccessConstants.HUBS_VIEW,
+  API.AccessEnum.HUBS_VIEW,
 );

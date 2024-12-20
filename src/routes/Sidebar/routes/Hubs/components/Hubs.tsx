@@ -20,7 +20,7 @@ import {
   SessionProviderDecoratorChildProps,
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import IconConstants from 'constants/IconConstants';
-import { Params } from 'react-router-dom';
+import { Params } from 'react-router';
 import { HubActionMenu } from 'actions/ui/hub';
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {

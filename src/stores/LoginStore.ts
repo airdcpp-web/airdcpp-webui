@@ -13,19 +13,20 @@ import {
 import LoginActions from 'actions/reflux/LoginActions';
 import SocketService from 'services/SocketService';
 
-import AccessConstants from 'constants/AccessConstants';
-
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
-import { AccessEnum } from 'types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
-import { i18n } from 'services/LocalizationService';
-import { translate } from 'utils/TranslationUtils';
+
+export interface TranslatableLoginError {
+  id: string;
+  message: string;
+}
+
+export type LoginError = TranslatableLoginError | string | null;
 
 export interface LoginState {
   socketAuthenticated: boolean;
-  lastError: string | null;
+  lastError: LoginError;
   hasSession: boolean;
   allowLogin: boolean;
   showNewUserIntro: boolean;
@@ -45,7 +46,7 @@ const LoginStore = {
   loginProperties: loadSessionProperty(LOGIN_PROPS_KEY, null) as API.LoginInfo | null,
 
   _allowLogin: true,
-  _lastError: null as string | null,
+  _lastError: null as LoginError,
   _socketAuthenticated: false,
 
   init: function () {
@@ -56,16 +57,16 @@ const LoginStore = {
     } catch (e) {
       if (e.code === DOMException.QUOTA_EXCEEDED_ERR && sessionStorage.length === 0) {
         // Safari and private mode
-        this._lastError = i18n.t<string>(
-          'privateBrowsingNotSupported',
-          `This site can't be used with your browser if private browsing mode is enabled`,
-        );
+        this._lastError = {
+          id: 'privateBrowsingNotSupported',
+          message: `This site can't be used with your browser if private browsing mode is enabled`,
+        };
         this._allowLogin = false;
       } else {
-        this._lastError = i18n.t<string>(
-          'dataStorageNotSupported',
-          `This site can't be used with your browser because it doesn't support data storage`,
-        );
+        this._lastError = {
+          id: 'dataStorageNotSupported',
+          message: `This site can't be used with your browser because it doesn't support data storage`,
+        };
         this._allowLogin = false;
       }
     }
@@ -120,7 +121,10 @@ const LoginStore = {
 
   setLoginError(error: ErrorResponse | string) {
     if ((error as ErrorResponse).code === 400) {
-      this._lastError = translate('Session lost', i18n.t.bind(i18n), UI.Modules.LOGIN);
+      this._lastError = {
+        id: 'sessionLost',
+        message: 'Session lost',
+      }; // translate('Session lost', i18n.t.bind(i18n), UI.Modules.LOGIN);
     } else {
       this._lastError = errorToString(error);
     }
@@ -159,9 +163,9 @@ const LoginStore = {
     (this as any).trigger(this.getState());
   },
 
-  hasAccess(access: AccessEnum) {
+  hasAccess(access: API.AccessEnum) {
     const { permissions } = this.loginProperties!.user;
-    return permissions.includes(access) || permissions.includes(AccessConstants.ADMIN);
+    return permissions.includes(access) || permissions.includes(API.AccessEnum.ADMIN);
   },
 
   onDisconnect(reason: string) {
@@ -184,11 +188,10 @@ const LoginStore = {
     this._socketAuthenticated = false;
     if (this.user) {
       if (error === '') {
-        this._lastError = translate(
-          'Connection closed',
-          i18n.t.bind(i18n),
-          UI.Modules.LOGIN,
-        );
+        this._lastError = {
+          id: 'connectionClosed',
+          message: 'Connection closed',
+        };
       } else {
         this._lastError = error;
       }

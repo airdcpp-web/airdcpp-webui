@@ -1,4 +1,4 @@
-import { matchPath, useLocation, useNavigate } from 'react-router-dom';
+import { matchPath, useLocation, useNavigate } from 'react-router';
 import {
   configRoutes,
   mainRoutes,
@@ -18,6 +18,7 @@ import { translate } from 'utils/TranslationUtils';
 import * as UI from 'types/ui';
 import Popup from 'components/semantic/Popup';
 import { useEffect, useRef } from 'react';
+import { useSession } from 'context/SessionContext';
 
 interface MainNavigationMobileProps {
   onClose: () => void;
@@ -28,6 +29,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
   onClose,
   visible,
 }) => {
+  const login = useSession();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
           id="mobile-menu"
           className="ui right vertical inverted sidebar menu"
         >
-          {parseMenuItems(mainRoutes, onClick)}
+          {parseMenuItems(mainRoutes, login, onClick)}
           <Popup
             // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
             // https://github.com/Semantic-Org/Semantic-UI/issues/1410
@@ -96,7 +98,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
             {(hide) => (
               <div className="ui dropdown item right fluid active visible">
                 <div className="ui menu transition visible">
-                  {parseMenuItems(configRoutes, (path, event) => {
+                  {parseMenuItems(configRoutes, login, (path, event) => {
                     hide();
                     onClick(path, event);
                   })}
@@ -108,7 +110,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
           </Popup>
           <div className="separator" />
 
-          {parseMenuItems(secondaryRoutes, onClickSecondary)}
+          {parseMenuItems(secondaryRoutes, login, onClickSecondary)}
           <IconPanel />
         </div>
       )}

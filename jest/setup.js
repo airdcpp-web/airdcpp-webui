@@ -1,3 +1,6 @@
+// Fetch polyfill
+import 'whatwg-fetch';
+
 global.getBasePath = () => '/';
 global.isDemoInstance = () => false;
 

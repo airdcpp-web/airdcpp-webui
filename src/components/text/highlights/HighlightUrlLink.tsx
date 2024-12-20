@@ -5,13 +5,14 @@ import * as API from 'types/api';
 import HubActions from 'actions/reflux/HubActions';
 import HubSessionStore from 'stores/HubSessionStore';
 
-import LoginStore from 'stores/LoginStore';
-import { useNavigate, useLocation, NavigateFunction, Location } from 'react-router-dom';
+import { useNavigate, useLocation, NavigateFunction, Location } from 'react-router';
+import { AuthenticatedSession, useSession } from 'context/SessionContext';
 
 const onClickLink = (
   evt: React.MouseEvent,
   location: Location,
   navigate: NavigateFunction,
+  { hasAccess }: AuthenticatedSession,
 ) => {
   const uri: string = (evt.target as any).href;
   if (
@@ -21,7 +22,7 @@ const onClickLink = (
   ) {
     evt.preventDefault();
 
-    if (!LoginStore.hasAccess(API.AccessEnum.HUBS_EDIT)) {
+    if (!hasAccess(API.AccessEnum.HUBS_EDIT)) {
       return;
     }
 
@@ -39,6 +40,7 @@ export interface HighlightUrlLinkProps
 }
 
 export const HighlightUrlLink: React.FC<HighlightUrlLinkProps> = ({ text, ...other }) => {
+  const session = useSession();
   const location = useLocation();
   const navigate = useNavigate();
   return (
@@ -47,7 +49,7 @@ export const HighlightUrlLink: React.FC<HighlightUrlLinkProps> = ({ text, ...oth
       href={text}
       target="_blank"
       rel="noreferrer"
-      onClick={(evt) => onClickLink(evt, location, navigate)}
+      onClick={(evt) => onClickLink(evt, location, navigate, session)}
       {...other}
     >
       {text}

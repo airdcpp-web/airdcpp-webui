@@ -1,25 +1,25 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import LoginStore from 'stores/LoginStore';
-
 import { ActionMenu } from 'components/action-menu';
 
 import * as UI from 'types/ui';
 
 import { getWidgetT, translateWidgetName } from 'utils/WidgetUtils';
 import { WidgetEditActionMenu } from 'actions/ui/widget';
+import { AuthenticatedSession, useSession } from 'context/SessionContext';
 
 const getError = (
   widgetInfo: UI.Widget,
   settings: UI.WidgetSettings,
   rootWidgetT: UI.ModuleTranslator,
+  { hasAccess }: AuthenticatedSession,
 ) => {
   if (widgetInfo.formSettings && !settings.widget) {
     return rootWidgetT.t('settingsMissing', 'Widget settings missing');
   }
 
-  if (widgetInfo.access && !LoginStore.hasAccess(widgetInfo.access)) {
+  if (widgetInfo.access && !hasAccess(widgetInfo.access)) {
     return rootWidgetT.t('accessDenied', `You aren't allowed to access this widget`);
   }
 
@@ -38,7 +38,8 @@ const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
   { widgetInfo, settings, componentId, children, className, rootWidgetT, ...other },
   ref,
 ) {
-  const error = getError(widgetInfo, settings, rootWidgetT);
+  const session = useSession();
+  const error = getError(widgetInfo, settings, rootWidgetT, session);
   const Component = widgetInfo.component;
 
   const widgetT = getWidgetT(widgetInfo, rootWidgetT.plainT);

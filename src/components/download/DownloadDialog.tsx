@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import ShareConstants from 'constants/ShareConstants';
@@ -12,7 +12,6 @@ import FilesystemConstants from 'constants/FilesystemConstants';
 import IconConstants from 'constants/IconConstants';
 
 import NotificationActions from 'actions/NotificationActions';
-import LoginStore from 'stores/LoginStore';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
@@ -35,6 +34,7 @@ import * as UI from 'types/ui';
 import { PathDownloadHandler } from './types';
 
 import './style.css';
+import { useSession } from 'context/SessionContext';
 
 export type DownloadDialogProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
@@ -53,6 +53,7 @@ type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
 const DownloadDialog: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { hasAccess } = useSession();
 
   const {
     downloadHandler,
@@ -113,7 +114,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
     closable: false,
   };
 
-  const hasFileBrowserAccess = LoginStore.hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
+  const hasFileBrowserAccess = hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
   return (
     <Routes>
       <Route
@@ -140,7 +141,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
         index
         element={
           <RouteModal
-            className="download-dialog"
+            id="download-dialog"
             fullHeight={true}
             {...commonDialogProps}
             {...other}
@@ -171,7 +172,7 @@ export default ModalRouteDecorator<DownloadDialogProps>(
     urls: {
       sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
       favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
-      historyPaths: HistoryConstants.STRINGS_URL + '/' + HistoryStringEnum.DOWNLOAD_DIR,
+      historyPaths: `${HistoryConstants.STRINGS_URL}/${HistoryStringEnum.DOWNLOAD_DIR}`,
       itemInfo: ({ params, itemDataGetter }, socket) => {
         return itemDataGetter(params.downloadItemId!, socket);
       },

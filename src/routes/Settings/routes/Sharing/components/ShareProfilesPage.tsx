@@ -4,18 +4,17 @@ import { ShareProfileEditMenu } from 'actions/ui/share/ShareProfileActions';
 
 import { ActionMenu } from 'components/action-menu';
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Message from 'components/semantic/Message';
 
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
 } from 'decorators/ShareProfileDecorator';
-import { formatSize } from 'utils/ValueFormat';
+import { useFormatter } from 'utils/ValueFormat';
 
 import '../style.css';
 
 import * as API from 'types/api';
-import * as UI from 'types/ui';
 
 import { SettingPageProps } from 'routes/Settings/types';
 import { Trans } from 'react-i18next';
@@ -24,23 +23,25 @@ import ShareProfileCloneDropdown from './ShareProfileCloneDropdown';
 
 interface ShareProfileRowProps {
   profile: API.ShareProfile;
-  t: UI.TranslateF;
 }
 
-const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile, t }) => (
-  <tr>
-    <td className="name dropdown">
-      <ActionMenu
-        caption={<strong>{profile.str}</strong>}
-        actions={ShareProfileEditMenu}
-        itemData={profile}
-        contextElement="#setting-scroll-context"
-      />
-    </td>
-    <td className="size">{formatSize(profile.size, t)}</td>
-    <td className="files">{profile.files}</td>
-  </tr>
-);
+const ShareProfileRow: React.FC<ShareProfileRowProps> = ({ profile }) => {
+  const { formatSize } = useFormatter();
+  return (
+    <tr>
+      <td className="name dropdown">
+        <ActionMenu
+          caption={<strong>{profile.str}</strong>}
+          actions={ShareProfileEditMenu}
+          itemData={profile}
+          contextElement="#setting-scroll-context"
+        />
+      </td>
+      <td className="size">{formatSize(profile.size)}</td>
+      <td className="files">{profile.files}</td>
+    </tr>
+  );
+};
 
 type ShareProfilesPageProps = SettingPageProps;
 
@@ -96,7 +97,7 @@ profiles.';
         </thead>
         <tbody>
           {profiles.map((profile) => (
-            <ShareProfileRow key={profile.id} profile={profile} t={moduleT.plainT} />
+            <ShareProfileRow key={profile.id} profile={profile} />
           ))}
         </tbody>
       </table>

@@ -8,9 +8,10 @@ import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
-import AccessConstants from 'constants/AccessConstants';
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 import { BrowserSessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
+
+import * as API from 'types/api';
 
 const FilelistSessionStore = Reflux.createStore({
   scroll: BrowserSessionScrollPositionKeeper(),
@@ -33,6 +34,6 @@ const FilelistSessionStore = Reflux.createStore({
 });
 
 export default SessionStoreDecorator(
-  SocketSubscriptionDecorator(FilelistSessionStore, AccessConstants.FILELISTS_VIEW),
+  SocketSubscriptionDecorator(FilelistSessionStore, API.AccessEnum.FILELISTS_VIEW),
   FilelistSessionActions,
 );

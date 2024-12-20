@@ -7,7 +7,7 @@ import Icon from 'components/semantic/Icon';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 export type ConnectStateCellProps = RowWrapperCellChildProps<
   API.FavoriteHubConnectState,

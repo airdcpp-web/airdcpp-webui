@@ -3,7 +3,7 @@ import * as React from 'react';
 import Modal, { ModalProps } from 'components/semantic/Modal';
 
 import IconConstants from 'constants/IconConstants';
-import { formatSize } from 'utils/ValueFormat';
+import { useFormatter } from 'utils/ValueFormat';
 import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 
@@ -50,6 +50,7 @@ const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({
   onConfirm,
   ...other
 }) => {
+  const { formatSize } = useFormatter();
   const [previewFiles, setPreviewFiles] = useState<PreviewFile[] | null>(null);
   const { t } = useTranslation();
 
@@ -89,7 +90,7 @@ const FilePreviewDialog: React.FC<FilePreviewDialogProps> = ({
             overflowX: 'auto',
           }}
         >
-          <LayoutHeader title={file.name} subHeader={formatSize(file.size, t)} />
+          <LayoutHeader title={file.name} subHeader={formatSize(file.size)} />
           {getViewerElement(file, url, t)}
         </div>
       ))}

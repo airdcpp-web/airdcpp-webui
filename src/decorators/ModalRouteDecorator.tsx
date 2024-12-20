@@ -7,7 +7,7 @@ import {
   useLocation,
   useNavigate,
   useParams,
-} from 'react-router-dom';
+} from 'react-router';
 
 export type ModalCloseContext = () => void;
 

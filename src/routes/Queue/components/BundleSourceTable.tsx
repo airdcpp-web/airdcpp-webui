@@ -7,7 +7,7 @@ import DataProviderDecorator, {
 import { QueueBundleSourceActionMenu } from 'actions/ui/queue/QueueBundleSourceActions';
 import QueueConstants from 'constants/QueueConstants';
 
-import { formatSize, formatSpeed } from 'utils/ValueFormat';
+import { useFormatter } from 'utils/ValueFormat';
 
 import { ActionMenu, UserMenu } from 'components/action-menu';
 import { UserFileActions } from 'actions/ui/user/UserActions';
@@ -22,31 +22,32 @@ interface SourceProps {
   t: UI.TranslateF;
 }
 
-const Source: React.FC<SourceProps> = ({ source, bundle, t }) => (
-  <tr>
-    <td className="user dropdown">
-      <UserMenu
-        userIcon={true}
-        user={source.user}
-        ids={UserFileActions}
-        contextElement=".source.modal"
-        remoteMenuId={MenuConstants.HINTED_USER}
-      >
-        <ActionMenu
-          actions={QueueBundleSourceActionMenu}
-          itemData={source}
-          entity={bundle}
-        />
-      </UserMenu>
-    </td>
-    <td className="hubs">{source.user.hub_names}</td>
-    <td className="speed">
-      {source.last_speed > 0 && formatSpeed(source.last_speed, t)}
-    </td>
-    <td className="files">{source.files}</td>
-    <td className="size">{formatSize(source.size, t)}</td>
-  </tr>
-);
+const Source: React.FC<SourceProps> = ({ source, bundle, t }) => {
+  const { formatSize, formatSpeed } = useFormatter();
+  return (
+    <tr>
+      <td className="user dropdown">
+        <UserMenu
+          userIcon={true}
+          user={source.user}
+          ids={UserFileActions}
+          contextElement=".source.modal"
+          remoteMenuId={MenuConstants.HINTED_USER}
+        >
+          <ActionMenu
+            actions={QueueBundleSourceActionMenu}
+            itemData={source}
+            entity={bundle}
+          />
+        </UserMenu>
+      </td>
+      <td className="hubs">{source.user.hub_names}</td>
+      <td className="speed">{source.last_speed > 0 && formatSpeed(source.last_speed)}</td>
+      <td className="files">{source.files}</td>
+      <td className="size">{formatSize(source.size)}</td>
+    </tr>
+  );
+};
 
 const userSort = (a: API.QueueBundleSource, b: API.QueueBundleSource) =>
   a.user.nicks.localeCompare(b.user.nicks);

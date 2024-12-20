@@ -8,7 +8,6 @@ import { LogMessageUrgencies } from 'constants/UrgencyConstants';
 import { toUrgencyMap } from 'utils/UrgencyUtils';
 
 import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
-import AccessConstants from 'constants/AccessConstants';
 import {
   mergeCacheMessages,
   pushMessage,
@@ -141,7 +140,7 @@ type EventStore = typeof Store;
 
 const EventStore: EventStore = SocketSubscriptionDecorator(
   Reflux.createStore(Store),
-  AccessConstants.EVENTS_VIEW,
+  API.AccessEnum.EVENTS_VIEW,
 );
 
 export default EventStore;

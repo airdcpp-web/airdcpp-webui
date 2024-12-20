@@ -4,6 +4,7 @@ import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import {
   ActionHandlerDecorator,
   ActionClickHandler,
@@ -18,11 +19,12 @@ import MenuSection from 'components/semantic/MenuSection';
 import IconConstants from 'constants/IconConstants';
 import { translateActionName } from 'utils/ActionUtils';
 import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
-import LoginStore from 'stores/LoginStore';
+import { Formatter, useFormatter } from 'utils/ValueFormat';
+import { useSession } from 'context/SessionContext';
 
 const getProfileItem = (
   profile: API.ShareProfile,
-  t: UI.TranslateF,
+  formatter: Formatter,
   onClickAction: ActionClickHandler<API.ShareProfile>,
 ) => {
   return (
@@ -38,7 +40,7 @@ const getProfileItem = (
       }
       icon={IconConstants.COPY}
     >
-      {formatProfileNameWithSize(profile, t)}
+      {formatProfileNameWithSize(profile, formatter)}
     </MenuItemLink>
   );
 };
@@ -52,7 +54,9 @@ const ShareProfileCloneDropdown: React.FC<ShareProfileCloneDropdownProps> = ({
   profiles,
   moduleT,
 }) => {
-  if (!LoginStore.hasAccess(ShareProfileCreateAction.access)) {
+  const { hasAccess } = useSession();
+  const formatter = useFormatter();
+  if (!hasAccess(ShareProfileCreateAction.access)) {
     return null;
   }
 
@@ -84,7 +88,7 @@ const ShareProfileCloneDropdown: React.FC<ShareProfileCloneDropdownProps> = ({
             </MenuItemLink>
             <MenuSection caption={moduleT.translate('Clone from an existing profile')}>
               {profiles.map((profile) =>
-                getProfileItem(profile, moduleT.plainT, onClickAction),
+                getProfileItem(profile, formatter, onClickAction),
               )}
             </MenuSection>
           </SectionedDropdown>

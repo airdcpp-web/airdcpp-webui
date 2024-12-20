@@ -71,17 +71,11 @@ export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutData
   {
     urls: {
       installedPackages: ExtensionConstants.EXTENSIONS_URL,
-      packageCatalog: () => fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
+      packageCatalog: ({}) =>
+        fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
     },
     dataConverters: {
       packageCatalog: ({ objects }) => objects,
     },
-    /*onSocketConnected: (addSocketListener, { refetchData }) => {
-    const refetchInstalled = () => refetchData([ 'installedPackages' ]);
-
-    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.ADDED, refetchInstalled);
-    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.REMOVED, refetchInstalled);
-    addSocketListener(ExtensionConstants.MODULE_URL, ExtensionConstants.UPDATED, refetchInstalled);
-  },*/
   },
 );

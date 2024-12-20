@@ -3,15 +3,16 @@ import { actionAccess, runBackgroundSocketAction } from 'utils/ActionUtils';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import LoginStore from 'stores/LoginStore';
-import { NavigateFunction, Location } from 'react-router-dom';
+import { NavigateFunction, Location } from 'react-router';
 import { APISocket } from 'services/SocketService';
+import { AuthenticatedSession } from 'context/SessionContext';
 
 interface CommandProps {
   location: Location;
   navigate: NavigateFunction;
   t: UI.TranslateF;
   socket: APISocket;
+  session: AuthenticatedSession;
 }
 
 type ParamsType = string | undefined;
@@ -24,7 +25,7 @@ type ChatCommandHandler = (
 interface ChatCommand {
   help: string;
   handler: ChatCommandHandler;
-  access?: string;
+  access?: API.AccessEnum;
 }
 
 type ChatCommandList = { [key in string]: ChatCommand };
@@ -54,9 +55,9 @@ const handleClear: ChatCommandHandler = (
   );
 };
 
-const getHelpString = (commands: ChatCommandList) => {
+const getHelpString = (commands: ChatCommandList, session: AuthenticatedSession) => {
   const commandHelp = Object.keys(commands)
-    .filter((command) => actionAccess(commands[command]))
+    .filter((command) => actionAccess(commands[command], session))
     .map((command) => `\t/${command} - ${commands[command].help}`)
     .join('\n');
 
@@ -86,12 +87,12 @@ const CommandHandler = (chatController: UI.ChatController) => {
         commands[command].handler(params, chatController, commandProps);
       } else if (command === 'help') {
         const { session, chatApi } = chatController;
-        const text = getHelpString(commands);
+        const text = getHelpString(commands, commandProps.session);
         const message: API.OutgoingChatStatusMessage = {
           text,
           severity: API.SeverityEnum.INFO,
           type: API.StatusMessageTypeEnum.PRIVATE,
-          owner: `session:${LoginStore.sessionId}`,
+          owner: `session:${commandProps.session.sessionId}`,
         };
 
         chatApi.sendStatusMessage(session, message);

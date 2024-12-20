@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { WithTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import NotificationActions from 'actions/NotificationActions';
 import SearchConstants from 'constants/SearchConstants';
@@ -144,7 +144,7 @@ const Search: React.FC<SearchDataProps> = ({ instance, t }) => {
   const searchT = getModuleT(t, UI.Modules.SEARCH);
   return (
     <OfflineHubMessageDecorator
-      offlineMessage={searchT.t<string>(
+      offlineMessage={searchT.t(
         'searchOffline',
         'You must to be connected to at least one hub in order to perform searches',
       )}

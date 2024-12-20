@@ -1,5 +1,4 @@
 import HashConstants from 'constants/HashConstants';
-import AccessConstants from 'constants/AccessConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -31,7 +30,7 @@ const handleStopHashing: UI.ActionHandler<HashItemData> = ({ socket }) => {
 export const HashStopAction = {
   id: 'stop',
   displayName: 'Stop',
-  access: AccessConstants.SETTINGS_EDIT,
+  access: API.AccessEnum.SETTINGS_EDIT,
   icon: IconConstants.STOP,
   filter: hasFiles,
   handler: handleStopHashing,
@@ -40,7 +39,7 @@ export const HashStopAction = {
 export const HashResumeAction = {
   id: 'resume',
   displayName: 'Resume',
-  access: AccessConstants.SETTINGS_EDIT,
+  access: API.AccessEnum.SETTINGS_EDIT,
   icon: IconConstants.PLAY,
   filter: isPaused,
   handler: handleResumeHashing,
@@ -49,7 +48,7 @@ export const HashResumeAction = {
 export const HashPauseAction = {
   id: 'pause',
   displayName: 'Pause',
-  access: AccessConstants.SETTINGS_EDIT,
+  access: API.AccessEnum.SETTINGS_EDIT,
   icon: IconConstants.PAUSE,
   filter: hasHashers,
   handler: handlePauseHashing,

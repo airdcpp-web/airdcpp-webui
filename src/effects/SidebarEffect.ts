@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Location } from 'react-router-dom';
+import { Location } from 'react-router';
 
 import { RouteItem, HOME_URL, isRouteActive } from 'routes/Routes';
 

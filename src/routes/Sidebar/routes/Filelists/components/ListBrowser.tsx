@@ -12,7 +12,7 @@ import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
 import { filelistDownloadHandler } from 'services/api/FilelistApi';
 import MenuConstants from 'constants/MenuConstants';
-import { Location, useBlocker } from 'react-router-dom';
+import { Location, useBlocker } from 'react-router';
 import { useSyncFilelistLocation } from '../effects/useSyncFilelistLocation';
 import NotificationActions from 'actions/NotificationActions';
 import { FilelistItemActionMenu } from 'actions/ui/filelist';

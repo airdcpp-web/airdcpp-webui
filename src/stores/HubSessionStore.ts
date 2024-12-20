@@ -13,9 +13,8 @@ import {
 import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
 import SessionStoreDecorator from './decorators/SessionStoreDecorator';
 
-import AccessConstants from 'constants/AccessConstants';
-
 import * as API from 'types/api';
+
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
 import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
 
@@ -61,7 +60,7 @@ const HubSessionStore = Reflux.createStore({
 });
 
 export default SessionStoreDecorator<API.Hub>(
-  SocketSubscriptionDecorator(HubSessionStore, AccessConstants.HUBS_VIEW),
+  SocketSubscriptionDecorator(HubSessionStore, API.AccessEnum.HUBS_VIEW),
   HubActions,
   (session) =>
     session.settings.use_main_chat_notify

@@ -15,14 +15,13 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 import FilePreviewDialog from './FilePreviewDialog';
 import TempShareDropdown from './TempShareDropdown';
 import { translate } from 'utils/TranslationUtils';
-import LoginStore from 'stores/LoginStore';
-import AccessConstants from 'constants/AccessConstants';
 import Icon from 'components/semantic/Icon';
 import Button from 'components/semantic/Button';
 import IconConstants from 'constants/IconConstants';
 import { useFileUploader } from './effects/useChatFileUploader';
 import { useMessageComposer } from './effects/useMessageComposer';
 import { useSocket } from 'context/SocketContext';
+import { useSession } from 'context/SessionContext';
 
 const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {
@@ -79,6 +78,7 @@ const userToMention = (user: API.HubUser) => {
 };
 
 export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
+  const { hasAccess } = useSession();
   const dropzoneRef = React.useRef<DropzoneRef>(null);
   const socket = useSocket();
 
@@ -110,8 +110,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
   const className = classNames('ui form composer', { small: mobile }, { large: !mobile });
 
   const hasFileUploadAccess =
-    LoginStore.hasAccess(AccessConstants.FILESYSTEM_EDIT) &&
-    LoginStore.hasAccess(AccessConstants.SETTINGS_EDIT);
+    hasAccess(API.AccessEnum.FILESYSTEM_EDIT) && hasAccess(API.AccessEnum.SETTINGS_EDIT);
 
   const sendButton = (
     <Button

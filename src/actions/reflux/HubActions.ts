@@ -11,7 +11,7 @@ import SessionActionDecorator from './decorators/SessionActionDecorator';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
-import { NavigateFunction, Location } from 'react-router-dom';
+import { NavigateFunction, Location } from 'react-router';
 
 const HubActionConfig: UI.RefluxActionConfigList<API.Hub> = [
   {

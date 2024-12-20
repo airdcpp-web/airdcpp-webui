@@ -1,5 +1,5 @@
-import AccessConstants from 'constants/AccessConstants';
 import { RootSectionType } from 'routes/Settings/types';
+import * as API from 'types/api';
 
 const About: RootSectionType = {
   url: 'about',
@@ -17,7 +17,7 @@ const About: RootSectionType = {
       title: 'Transfer statistics',
       noSave: true,
       url: 'transfers',
-      access: AccessConstants.TRANSFERS,
+      access: API.AccessEnum.TRANSFERS,
       component: require('./components/TransferStatisticsPage').default,
     },
     {
@@ -30,7 +30,7 @@ const About: RootSectionType = {
       title: 'Hub statistics',
       noSave: true,
       url: 'hubs',
-      access: AccessConstants.HUBS_VIEW,
+      access: API.AccessEnum.HUBS_VIEW,
       component: require('./components/HubStatisticsPage').default,
     },
   ],

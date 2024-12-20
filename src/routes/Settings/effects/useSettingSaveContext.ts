@@ -48,8 +48,6 @@ export const useSettingSaveContext = ({
 }: UseSaveContextProps) => {
   const forms = React.useMemo(() => new Map<string, SaveableRef>(), []);
   const [changedProperties, setChangedProperties] = React.useState<string[]>([]);
-  //const hasEditAccess =
-  //  currentMenuItem.local || LoginStore.hasAccess(API.AccessEnum.SETTINGS_EDIT);
 
   React.useEffect(() => {
     setChangedProperties([]);

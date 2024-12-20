@@ -1,6 +1,6 @@
 import * as UI from 'types/ui';
 
-import { formatSize } from './ValueFormat';
+import { Formatter } from './ValueFormat';
 
 export const makeHashMagnetLink = (data: UI.HashMagnet) => {
   const { size, tth, name } = data;
@@ -89,12 +89,12 @@ export const parseMagnetLink = (text: string): UI.HashMagnet | UI.TextMagnet | n
   return null;
 };
 
-export const formatMagnetCaption = (magnet: UI.Magnet, t: UI.TranslateF) => {
+export const formatMagnetCaption = (magnet: UI.Magnet, { formatSize }: Formatter) => {
   const { name, size } = magnet;
 
   let description = '';
   if (!!size) {
-    description += formatSize(size, t);
+    description += formatSize(size);
   }
 
   if (!description) {
