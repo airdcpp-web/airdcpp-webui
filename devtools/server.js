@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const httpProxy = require('http-proxy');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const chalk = require('chalk');
 const minimist = require('minimist');
@@ -10,6 +10,9 @@ const FsBackend = require('i18next-fs-backend');
 const i18nextMiddleware = require('i18next-http-middleware');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+
+const config = require('../webpack.config.js');
+const publicPath = config.output.publicPath || '/';
 
 i18next.use(FsBackend).init({
   lng: 'en',
@@ -38,52 +41,60 @@ if (process.env.NODE_ENV === 'production') {
   process.exit(1);
 }
 
+const targetUrl = (argv.apiSecure ? 'https://' : 'http://') + argv.apiHost;
+
 // Create server
 const app = express();
 
 // Set proxy
-const apiProxy = new httpProxy.createProxyServer({
-  target: (argv.apiSecure ? 'https://' : 'http://') + argv.apiHost,
-  secure: false, // Disable certificate hostname verification (it would always fail)
+const simpleRequestLogger = (proxyServer, options) => {
+  proxyServer.on('proxyReq', (proxyReq, req, res) => {
+    console.log(`[HPM] [${req.method}] ${req.url}`); // outputs: [HPM] GET /users
+  });
+};
+
+const prefixPath = (path) => {
+  return publicPath + path;
+};
+
+const proxyMiddleware = createProxyMiddleware({
+  target: targetUrl,
+  changeOrigin: true,
+  pathFilter: [
+    prefixPath('api'),
+    prefixPath('view'),
+    prefixPath('temp'),
+    prefixPath('js/locales'),
+    prefixPath('proxy'),
+  ],
+  pathRewrite: (path, req) => {
+    return path.replace(publicPath, '/');
+  },
+  on: {
+    error: (err, req, res) => {
+      try {
+        res.end(err);
+      } catch (e) {
+        //
+      }
+    },
+  },
+  plugins: [simpleRequestLogger],
 });
 
-apiProxy.on('error', (err, req, res) => {
-  try {
-    res.end(err);
-  } catch (e) {
-    //
-  }
-});
+app.use(proxyMiddleware);
 
 console.log('');
 
-// Proxying of viewed files must be defined before the generic static file handling
-app.get('/view/*', (req, res) => {
-  apiProxy.web(req, res);
-});
-
-app.post('/temp', (req, res) => {
-  apiProxy.web(req, res);
-});
-
-app.post('/js/locales', (req, res) => {
-  apiProxy.web(req, res);
-});
-
-app.get('/proxy', (req, res) => {
-  apiProxy.web(req, res);
-});
-
 // Set up Webpack
 const webpack = require('webpack');
-const config = require('../webpack.config.js');
 
 console.log(chalk.bold('Building webpack...'));
 
 const compiler = webpack(Object.assign(config, { mode: 'development' }));
 app.use(
   require('webpack-dev-middleware')(compiler, {
-    publicPath: config.output.publicPath,
+    publicPath,
   }),
 );
 
@@ -92,32 +103,31 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use(i18nextMiddleware.handle(i18next));
 
 app.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18next));
-//app.post('/locales/add/:lng/:ns', (req, res) => {
-//  console.warn(req.query, req.body)
-//});
+
+const localizationMiddleware = (req, res, next) => {
+  // Can be used for testing custom translation files
+  const filename = path.join(
+    compiler.context,
+    'resources',
+    req.baseUrl.replace('/js', ''),
+  );
+  fs.readFile(filename, (err, result) => {
+    if (err) {
+      return next(err);
+    }
+
+    res.set('content-type', 'application/json');
+    res.send(result);
+    res.end();
+    return undefined;
+  });
+};
 
 // Setup static file handling
 // https://github.com/ampedandwired/html-webpack-plugin/issues/145#issuecomment-170554832
 app.use('*', (req, res, next) => {
-  // Can be used for testing custom translation files
-  if (req.baseUrl.indexOf('/js/locales') === 0) {
-    const filename = path.join(
-      compiler.context,
-      'resources',
-      req.baseUrl.replace('/js', ''),
-    );
-    fs.readFile(filename, (err, result) => {
-      if (err) {
-        return next(err);
-      }
-
-      res.set('content-type', 'application/json');
-      res.send(result);
-      res.end();
-      return undefined;
-    });
-
-    return;
+  if (req.baseUrl.startsWith('/js/locales')) {
+    return localizationMiddleware(req, res, next);
   }
 
   const filename = path.join(compiler.outputPath, 'index.html');
@@ -134,8 +144,8 @@ app.use('*', (req, res, next) => {
 });
 
 // Listen
-const listener = app.listen(argv.port, argv.bindAddress, (err) => {
-  const { address, port } = listener.address();
+const server = app.listen(argv.port, argv.bindAddress, (err) => {
+  const { address, port } = server.address();
   const fullAddress = `${address}:${port}`;
   if (err) {
     console.error(`Failed to listen on ${fullAddress}: ${err}`);
@@ -145,13 +155,7 @@ const listener = app.listen(argv.port, argv.bindAddress, (err) => {
   console.log(`Listening ${fullAddress}`);
 });
 
-listener.on('upgrade', (req, socket, head) => {
-  console.log(
-    'Upgrade to websocket',
-    req.headers['x-forwarded-for'] || req.socket.remoteAddress,
-  );
-  apiProxy.ws(req, socket, head);
-});
+server.on('upgrade', proxyMiddleware.upgrade); // Websockets
 
-console.log(`API address: ${apiProxy.options.target}`);
+console.log(`API address: ${targetUrl}`);
 console.log('');
