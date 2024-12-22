@@ -10,6 +10,7 @@ import Icon, { IconType } from 'components/semantic/Icon';
 import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
 import IconConstants from 'constants/IconConstants';
 import { MODAL_NODE_ID, useModal } from './effects/useModal';
+import Button from './Button';
 
 type ApproveHandler = () => Promise<void>;
 type RejectHandler = (error: Error) => void;
@@ -65,19 +66,21 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
       </div>
       <div className="actions">
         <div className={cx('two fluid ui buttons', { inverted: basic })}>
-          <div className={cx('ui cancel red basic button', { inverted: basic })}>
-            <Icon icon={IconConstants.CANCEL} />
-            {rejectCaption}
-          </div>
-          <div
-            className={cx('ui ok green basic submit button', {
-              inverted: basic,
-              loading: saving,
-            })}
-          >
-            <Icon icon={IconConstants.SAVE_PLAIN} />
-            {approveCaption}
-          </div>
+          <Button
+            icon={IconConstants.CANCEL}
+            caption={rejectCaption}
+            inverted={basic}
+            color="red"
+            className="cancel basic"
+          />
+          <Button
+            icon={IconConstants.SAVE_PLAIN}
+            caption={approveCaption}
+            loading={saving}
+            inverted={basic}
+            color="green"
+            className="ok basic submit"
+          />
         </div>
       </div>
     </div>,

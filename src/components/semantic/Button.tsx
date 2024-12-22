@@ -15,6 +15,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   disabled?: boolean;
 
   caption: React.ReactNode;
+
+  inverted?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,18 +26,20 @@ const Button: React.FC<ButtonProps> = ({
   caption,
   disabled,
   color,
+  inverted,
   ...other
 }) => {
   const buttonStyle = classNames(
     'ui button',
     { disabled: !!disabled || !!loading },
     { loading: !!loading },
+    { inverted: !!inverted },
     color,
     className,
   );
 
   return (
-    <button className={buttonStyle} {...other}>
+    <button role="button" className={buttonStyle} {...other}>
       <Icon icon={icon} />
       {caption}
     </button>

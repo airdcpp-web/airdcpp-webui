@@ -7,6 +7,9 @@ import * as UI from 'types/ui';
 
 import { translate } from 'utils/TranslationUtils';
 import { useFormatter } from 'utils/ValueFormat';
+import { useTranslation } from 'react-i18next';
+import Loader from 'components/semantic/Loader';
+import Message from 'components/semantic/Message';
 
 export type FileItemIconGetter = (item: API.FilesystemItem) => React.ReactNode | null;
 export type FileItemClickHandler = (item: API.FilesystemItem) => void;
@@ -57,29 +60,49 @@ const FileItem: React.FC<FileItemProps> = ({
 
 export interface FileItemListProps
   extends Pick<FileItemProps, 'itemClickHandler' | 'itemIconGetter'> {
-  items: API.FilesystemItem[];
-  t: UI.TranslateF;
+  items: API.FilesystemItem[] | null;
+  error: string | null;
   selectMode: UI.FileSelectModeEnum;
   currentFileName?: string;
 }
 
-class FileItemList extends React.Component<FileItemListProps> {
-  sort = (a: API.FilesystemItem, b: API.FilesystemItem) => {
-    if (
-      a.type.id !== b.type.id &&
-      (a.type.id === 'directory' || b.type.id === 'directory')
-    ) {
-      return a.type.id === 'directory' ? -1 : 1;
-    }
+const sortFileItem = (a: API.FilesystemItem, b: API.FilesystemItem) => {
+  if (
+    a.type.id !== b.type.id &&
+    (a.type.id === 'directory' || b.type.id === 'directory')
+  ) {
+    return a.type.id === 'directory' ? -1 : 1;
+  }
 
-    return a.name.localeCompare(b.name);
-  };
+  return a.name.localeCompare(b.name);
+};
 
-  render() {
-    const { items, itemClickHandler, itemIconGetter, t, selectMode, currentFileName } =
-      this.props;
+const FileItemList: React.FC<FileItemListProps> = ({
+  items,
+  itemClickHandler,
+  itemIconGetter,
+  selectMode,
+  error,
+  currentFileName,
+}) => {
+  const { t } = useTranslation();
+  if (error) {
     return (
       <div className="table-container">
+        <Message
+          isError={true}
+          title={translate('Failed to load content', t, UI.Modules.COMMON)}
+          description={error}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="table-container">
+      {!items ? (
+        <Loader text={translate('Loading items', t, UI.Modules.COMMON)} />
+      ) : (
         <table className="ui striped compact table">
           <thead>
             <tr>
@@ -88,7 +111,7 @@ class FileItemList extends React.Component<FileItemListProps> {
             </tr>
           </thead>
           <tbody>
-            {items.sort(this.sort).map((item) => (
+            {items.sort(sortFileItem).map((item) => (
               <FileItem
                 key={item.name}
                 selectMode={selectMode}
@@ -101,9 +124,9 @@ class FileItemList extends React.Component<FileItemListProps> {
             ))}
           </tbody>
         </table>
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+  );
+};
 
 export default FileItemList;

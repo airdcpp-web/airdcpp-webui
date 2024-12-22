@@ -21,7 +21,7 @@ export const ModalRouteCloseContext = React.createContext<ModalCloseContext | un
 
 export interface ModalRouteDecoratorChildProps {
   location: Location;
-  handleClose: () => void;
+  handleClose: () => Promise<void>;
   params: Readonly<Params<string>>;
 }
 
@@ -47,12 +47,12 @@ const useRouteModalReturn = (location: Location) => {
   const navigate = useNavigate();
   const params = useParams()!;
 
-  const handleClose = () => {
+  const handleClose = async () => {
     const modalPath = params['*'];
     if (modalPath) {
       const index = location.pathname.lastIndexOf(modalPath);
       const parentPath = location.pathname.substring(0, index - 1);
-      navigate(parentPath);
+      await navigate(parentPath);
     }
   };
 

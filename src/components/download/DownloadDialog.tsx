@@ -33,6 +33,7 @@ import { PathDownloadHandler } from './types';
 
 import './style.css';
 import { useSession } from 'context/SessionContext';
+import { useSocket } from 'context/SocketContext';
 
 export type DownloadDialogProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
@@ -54,6 +55,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hasAccess } = useSession();
+  const socket = useSocket();
 
   const {
     downloadHandler,
@@ -91,7 +93,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
     }
 
     runBackgroundSocketAction(
-      () => addHistory(HistoryStringEnum.DOWNLOAD_DIR, targetPath),
+      () => addHistory(socket, HistoryStringEnum.DOWNLOAD_DIR, targetPath),
       t,
     );
   };
@@ -147,7 +149,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
             <DownloadLayout
               downloadHandler={async (targetPath, targetFilename) => {
                 await handleDownload(targetPath, targetFilename);
-                handleClose();
+                await handleClose();
               }}
               handleBrowse={hasFileBrowserAccess ? handleBrowse : undefined}
               historyPaths={historyPaths}

@@ -9,12 +9,13 @@ import IconConstants from 'constants/IconConstants';
 import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
 
-import Icon, { IconType } from 'components/semantic/Icon';
+import { IconType } from 'components/semantic/Icon';
 import { Translation } from 'react-i18next';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
 import { CommonModalProps, MODAL_NODE_ID, useModal } from './effects/useModal';
+import Button from './Button';
 
 export type ModalProps = React.PropsWithChildren<
   {
@@ -67,15 +68,7 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
   const { approveDisabled, fullHeight, approveCaption, className, children, id } = props;
   const { icon, subHeader, title } = props;
 
-  const approveStyle = classNames(
-    'ui ok green basic button',
-    { disabled: approveDisabled },
-    { loading: saving },
-  );
-
   const mainClass = classNames('ui modal', { full: fullHeight }, className);
-
-  const node = document.getElementById(MODAL_NODE_ID)!;
   return ReactDOM.createPortal(
     <div ref={ref} className={mainClass} id={id} role="dialog">
       <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
@@ -85,27 +78,34 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
         {(t) =>
           props.onApprove ? (
             <div className="actions">
-              <div className={approveStyle}>
-                <Icon icon={IconConstants.SAVE_COLORED} />
-                {approveCaption || translate('Save', t, UI.Modules.COMMON)}
-              </div>
-              <div className="ui cancel red basic button">
-                <Icon icon={IconConstants.CANCEL} />
-                {translate('Cancel', t, UI.Modules.COMMON)}
-              </div>
+              <Button
+                caption={approveCaption || translate('Save', t, UI.Modules.COMMON)}
+                icon={IconConstants.SAVE_COLORED}
+                disabled={approveDisabled}
+                loading={saving}
+                color="green"
+                className="ok basic submit"
+              />
+              <Button
+                caption={translate('Cancel', t, UI.Modules.COMMON)}
+                icon={IconConstants.CANCEL}
+                color="red basic"
+                className="cancel"
+              />
             </div>
           ) : (
             <div className="actions">
-              <div className="ui cancel button">
-                <Icon icon={IconConstants.CLOSE} />
-                {translate('Close', t, UI.Modules.COMMON)}
-              </div>
+              <Button
+                caption={translate('Close', t, UI.Modules.COMMON)}
+                icon={IconConstants.CLOSE}
+                className="cancel"
+              />
             </div>
           )
         }
       </Translation>
     </div>,
-    node,
+    document.getElementById(MODAL_NODE_ID)!,
   );
 });
 

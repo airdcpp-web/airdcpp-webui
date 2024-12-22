@@ -9,7 +9,7 @@ import { Section, SelectedSection, SelectedNameFormatter } from './Section';
 
 interface BrowserBarProps {
   // Function handling the path selection. Receives the selected path as argument.
-  itemClickHandler: (name: string) => void;
+  itemClickHandler: (path: string) => void;
 
   rootName: string;
 

@@ -10,6 +10,7 @@ import LocalSuggestField, { LocalSuggestFieldProps } from './LocalSuggestField';
 import { addHistory } from 'services/api/HistoryApi';
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { useTranslation } from 'react-i18next';
+import { useSocket } from 'context/SocketContext';
 
 export interface HistoryInputProps
   extends Omit<LocalSuggestFieldProps, 'data' | 'submitHandler'> {
@@ -28,10 +29,11 @@ const HistoryInput: React.FC<HistoryInputProps & HistoryInputDataProps> = ({
   refetchData,
   ...other
 }) => {
+  const socket = useSocket();
   const { t } = useTranslation();
   const handleSubmit = async (value: string) => {
     const text = value.trim();
-    await runBackgroundSocketAction(() => addHistory(historyId, text), t);
+    await runBackgroundSocketAction(() => addHistory(socket, historyId, text), t);
 
     refetchData();
     submitHandler(text);
