@@ -20,15 +20,14 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import './style.css';
+import { FileItemSelectionProps } from './effects/useFileItemSelection';
 
 export interface FileBrowserLayoutProps
-  extends Pick<FileItemListProps, 'itemIconGetter'> {
+  extends Pick<FileItemListProps, 'itemIconGetter'>,
+    Pick<FileItemSelectionProps, 'selectMode' | 'initialPath'> {
   // Local storage ID used for saving/loading the last path
   // This will have priority over initialPath
   historyId?: string;
-
-  // Initial directory to show
-  initialPath: string;
 
   currentFileName?: string;
 
@@ -37,7 +36,6 @@ export interface FileBrowserLayoutProps
 
   onFileSelected?: (fileName: string) => void;
   selectedNameFormatter?: SelectedNameFormatter;
-  selectMode: UI.FileSelectModeEnum;
 }
 
 interface State {

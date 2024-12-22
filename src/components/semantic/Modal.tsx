@@ -8,12 +8,13 @@ import IconConstants from 'constants/IconConstants';
 
 import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
+
 import Icon, { IconType } from 'components/semantic/Icon';
 import { Translation } from 'react-i18next';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
-import { CommonModalProps, useModal } from './effects/useModal';
+import { CommonModalProps, MODAL_NODE_ID, useModal } from './effects/useModal';
 
 export type ModalProps = React.PropsWithChildren<
   {
@@ -34,8 +35,6 @@ export type ModalProps = React.PropsWithChildren<
     subHeader?: React.ReactNode;
   } & CommonModalProps
 >;
-
-const NODE_ID = 'modals-node';
 
 export interface ModalHandle {
   hide: () => void;
@@ -76,6 +75,7 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
 
   const mainClass = classNames('ui modal', { full: fullHeight }, className);
 
+  const node = document.getElementById(MODAL_NODE_ID)!;
   return ReactDOM.createPortal(
     <div ref={ref} className={mainClass} id={id} role="dialog">
       <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
@@ -105,7 +105,7 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
         }
       </Translation>
     </div>,
-    document.getElementById(NODE_ID)!,
+    node,
   );
 });
 

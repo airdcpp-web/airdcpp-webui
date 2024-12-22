@@ -2,6 +2,8 @@ import * as React from 'react';
 
 export const MODAL_NODE_ID = 'modals-node';
 
+export const MODAL_PAGE_DIMMER_ID = 'dimmable-page';
+
 export type CommonModalProps = {
   // wasClean is false when using browser navigation
   onClose?: (wasClean: boolean) => void;
@@ -58,7 +60,7 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
     // (the new dimmer would never be set active because the dimmable object is set to dimmed already)
     // Track https://github.com/Semantic-Org/Semantic-UI/issues/4055
     const settings: SemanticUI.ModalSettings = {
-      //context: '#container-main',
+      context: `#${MODAL_PAGE_DIMMER_ID}`,
       detachable: false,
       allowMultiple: true,
       onHide,
@@ -73,15 +75,14 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
         //},
         //namespace: NODE_ID,
       },
-      //namespace: NODE_ID,
       // debug: true,
       // verbose: true,
-      //selector: {
-      //  dimmer:
-      //},
+
       ...customSettings,
     };
 
+    // Missing from type definitions
+    // useFlex true in combination with detachable false is not supported
     Object.assign(settings, {
       useFlex: false,
     });

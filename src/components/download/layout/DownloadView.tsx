@@ -6,6 +6,13 @@ import { getParentPath } from 'utils/FileUtils';
 import { useMobileLayout } from 'utils/BrowserUtils';
 import { toI18nKey } from 'utils/TranslationUtils';
 
+import ShareConstants from 'constants/ShareConstants';
+import {
+  default as HistoryConstants,
+  HistoryStringEnum,
+} from 'constants/HistoryConstants';
+import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
+
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
 import * as API from 'types/api';
@@ -16,21 +23,23 @@ import { BrowseHandler, PathDownloadHandler } from '../types';
 
 import { MobileDownloadLayout } from './MobileDownloadLayout';
 import { NormalDownloadLayout } from './NormalDownloadLayout';
+import DataProviderDecorator from 'decorators/DataProviderDecorator';
 
-export interface DownloadDataProps<
+export interface DownloadLayoutDataProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
 > {
   sharePaths: API.GroupedPath[];
   favoritePaths: API.GroupedPath[];
-  historyPaths: string[];
-  itemInfo: ItemT;
 }
 
 export interface DownloadLayoutProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
-> extends DownloadDataProps<ItemT> {
+> {
   downloadHandler: PathDownloadHandler;
   handleBrowse: BrowseHandler;
+
+  historyPaths: string[];
+  itemInfo: ItemT;
 }
 
 const getMenuItem = (
@@ -51,7 +60,10 @@ const getMenuItem = (
   </MenuItemLink>
 );
 
-export const DownloadView: React.FC<DownloadLayoutProps> = (props) => {
+type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
+  DownloadLayoutProps<ItemT> & DownloadLayoutDataProps<ItemT>;
+
+const DownloadLayout: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const [activeSectionKey, setActiveSectionKey] = useState('history');
 
@@ -91,3 +103,15 @@ export const DownloadView: React.FC<DownloadLayoutProps> = (props) => {
     </Component>
   );
 };
+
+const DownloadLayoutDecorated = DataProviderDecorator<
+  DownloadLayoutProps,
+  DownloadLayoutDataProps
+>(DownloadLayout, {
+  urls: {
+    sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
+    favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
+  },
+});
+
+export { DownloadLayoutDecorated as DownloadLayout };

@@ -2,12 +2,10 @@ import * as React from 'react';
 import { Route, Routes, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
-import ShareConstants from 'constants/ShareConstants';
 import {
   default as HistoryConstants,
   HistoryStringEnum,
 } from 'constants/HistoryConstants';
-import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import FilesystemConstants from 'constants/FilesystemConstants';
 import IconConstants from 'constants/IconConstants';
 
@@ -27,7 +25,7 @@ import { runBackgroundSocketAction } from 'utils/ActionUtils';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 import { addHistory } from 'services/api/HistoryApi';
 
-import { DownloadView, DownloadDataProps } from './layout';
+import { DownloadLayout } from './layout';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -44,8 +42,10 @@ type DownloadDialogRouteProps = ModalRouteDecoratorChildProps;
 
 interface DownloadDialogDataProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
-> extends DataProviderDecoratorChildProps,
-    DownloadDataProps<ItemT> {}
+> extends DataProviderDecoratorChildProps {
+  historyPaths: string[];
+  itemInfo: ItemT;
+}
 
 type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
   DownloadDialogProps<ItemT> & DownloadDialogDataProps<ItemT> & DownloadDialogRouteProps;
@@ -62,8 +62,6 @@ const DownloadDialog: React.FC<Props> = (props) => {
     params,
     session,
     historyPaths,
-    favoritePaths,
-    sharePaths,
     handleClose,
     ...other
   } = props;
@@ -141,20 +139,18 @@ const DownloadDialog: React.FC<Props> = (props) => {
         index
         element={
           <RouteModal
-            id="download-dialog"
+            className="download-dialog"
             fullHeight={true}
             {...commonDialogProps}
             {...other}
           >
-            <DownloadView
+            <DownloadLayout
               downloadHandler={async (targetPath, targetFilename) => {
                 await handleDownload(targetPath, targetFilename);
                 handleClose();
               }}
               handleBrowse={hasFileBrowserAccess ? handleBrowse : undefined}
               historyPaths={historyPaths}
-              favoritePaths={favoritePaths}
-              sharePaths={sharePaths}
               itemInfo={itemInfo}
             />
           </RouteModal>
@@ -170,8 +166,6 @@ export default ModalRouteDecorator<DownloadDialogProps>(
     DownloadDialogDataProps
   >(DownloadDialog, {
     urls: {
-      sharePaths: ShareConstants.GROUPED_ROOTS_GET_URL,
-      favoritePaths: FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
       historyPaths: `${HistoryConstants.STRINGS_URL}/${HistoryStringEnum.DOWNLOAD_DIR}`,
       itemInfo: ({ params, itemDataGetter }, socket) => {
         return itemDataGetter(params.downloadItemId!, socket);

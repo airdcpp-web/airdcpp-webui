@@ -43,7 +43,7 @@ const RouteParamsProvider = <PropsT extends object>({
   );
 };
 
-const useRouteModalReturn = () => {
+const useRouteModalReturn = (location: Location) => {
   const navigate = useNavigate();
   const params = useParams()!;
 
@@ -67,7 +67,7 @@ export default function <PropsT extends object>(
 
   const ModalRouteDecorator: React.FC<Props> = (props) => {
     const location = useLocation();
-    const handleClose = useRouteModalReturn();
+    const handleClose = useRouteModalReturn(location);
     return (
       <Routes>
         <Route
