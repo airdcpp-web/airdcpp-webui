@@ -4,6 +4,7 @@ module.exports = {
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
     '^.+\\.tsx?$': 'ts-jest',
+    // '^.+\\.(css|scss|sass|less)$': 'jest-preview/transforms/css'
   },
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   moduleNameMapper: {

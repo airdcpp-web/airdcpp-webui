@@ -132,11 +132,13 @@ export default function <PropsT extends object, DataT extends object>(
 
     // Replace existing data properties with new data
     assignData = (partialData: any) => {
+      const data = {
+        ...this.state.data,
+        ...partialData,
+      };
+
       this.setState({
-        data: {
-          ...this.state.data,
-          ...partialData,
-        },
+        data,
       });
     };
 

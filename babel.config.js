@@ -28,5 +28,15 @@ module.exports = {
         },
       },
     ],
+    [
+      'transform-replace-expressions',
+      {
+        replace: {
+          // Semantic UI refuses to open modals in test environment because of missing CSS transitions
+          // https://github.com/Semantic-Org/Semantic-UI/issues/3040#issuecomment-232049534
+          'module.can.animate()': 'module.can.animate()||true',
+        },
+      },
+    ],
   ],
 };

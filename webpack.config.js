@@ -90,8 +90,8 @@ const releasePlugins = [
 ];
 
 const debugPlugins = [
-  new webpack.HotModuleReplacementPlugin(),
-  new ReactRefreshWebpackPlugin(),
+  // new webpack.HotModuleReplacementPlugin(),
+  // new ReactRefreshWebpackPlugin(),
 ];
 
 plugins = plugins.concat(release ? releasePlugins : debugPlugins);
@@ -122,7 +122,7 @@ module.exports = {
     assetModuleFilename: 'assets/[name].[hash][ext]',
   },
   watchOptions: {
-    ignored: ['**/*.missing.json', '**/*.test.tsx', '**/*.test.ts'],
+    ignored: ['**/*.missing.json', '**/*.test.tsx', '**/*.test.ts', '**/tests'],
   },
 
   // cheap-module-source-map doesn't seem to work with Uglify

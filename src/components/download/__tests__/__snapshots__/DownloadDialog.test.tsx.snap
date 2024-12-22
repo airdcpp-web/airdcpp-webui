@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DownloadDialog should handle browse dialog download 1`] = `
+[
+  [
+    {
+      "complete": true,
+      "dupe": null,
+      "id": 323,
+      "name": "ubuntu-20.04.2.0-desktop-amd64.iso",
+      "path": "/Downloads/ubuntu-20.04.2.0-desktop-amd64.iso",
+      "size": 2877227008,
+      "time": 1618062636,
+      "tth": "2E2P2K5JP6KARHNFGUMIFENN4SGBENKLPGQNUAA",
+      "type": {
+        "content_type": "",
+        "id": "file",
+        "str": "iso",
+      },
+    },
+    {
+      "cid": "XPI67YM335U72FUS626M6WYFGR5EBZTNCEJU3JA",
+      "flags": [
+        "ccpm",
+        "asch",
+      ],
+      "hub_names": "Test hub 1 (Test hub 2)",
+      "hub_url": "adcs://oden.dyndns.info:41214/?kp=SHA256/RW37PVLRXU5HEXXIKBCFVIKRI6I5T7RXUTFDG2PXBHVUNX4CKW5A",
+      "hub_urls": [
+        "adcs://test1.com:53245?kp=SHA256/EHNK6GWENKR7XBEMZPBDRZMENEIIGZV6NTPUZ2MJOCRH7TAPVOBQ",
+        "adcs://test2.dyndns.info:5555",
+      ],
+      "nicks": "test1 ([100]test1)",
+    },
+    {
+      "priority": -1,
+      "target_directory": "/mnt/disk1/Images/",
+      "target_name": "ubuntu-20.04.2.0-desktop-amd64.iso",
+    },
+    {
+      "id": "HPI67YG335U72FUS626M6WYFGR5EBZTNCEJU3JA",
+      "location": null,
+      "partial_list": true,
+      "read": false,
+      "share_profile": null,
+      "state": {
+        "id": "download_pending",
+        "str": "Download pending",
+        "time_finished": 0,
+      },
+      "total_files": 936066,
+      "total_size": 133137630299481,
+      "user": {
+        "cid": "XPI67YM335U72FUS626M6WYFGR5EBZTNCEJU3JA",
+        "flags": [
+          "ccpm",
+          "asch",
+        ],
+        "hub_names": "Test hub 1 (Test hub 2)",
+        "hub_url": "adcs://oden.dyndns.info:41214/?kp=SHA256/RW37PVLRXU5HEXXIKBCFVIKRI6I5T7RXUTFDG2PXBHVUNX4CKW5A",
+        "hub_urls": [
+          "adcs://test1.com:53245?kp=SHA256/EHNK6GWENKR7XBEMZPBDRZMENEIIGZV6NTPUZ2MJOCRH7TAPVOBQ",
+          "adcs://test2.dyndns.info:5555",
+        ],
+        "nicks": "test1 ([100]test1)",
+      },
+    },
+  ],
+]
+`;
+
+exports[`DownloadDialog should handle download 1`] = `
+[
+  [
+    {
+      "complete": true,
+      "dupe": null,
+      "id": 323,
+      "name": "ubuntu-20.04.2.0-desktop-amd64.iso",
+      "path": "/Downloads/ubuntu-20.04.2.0-desktop-amd64.iso",
+      "size": 2877227008,
+      "time": 1618062636,
+      "tth": "2E2P2K5JP6KARHNFGUMIFENN4SGBENKLPGQNUAA",
+      "type": {
+        "content_type": "",
+        "id": "file",
+        "str": "iso",
+      },
+    },
+    {
+      "cid": "XPI67YM335U72FUS626M6WYFGR5EBZTNCEJU3JA",
+      "flags": [
+        "ccpm",
+        "asch",
+      ],
+      "hub_names": "Test hub 1 (Test hub 2)",
+      "hub_url": "adcs://oden.dyndns.info:41214/?kp=SHA256/RW37PVLRXU5HEXXIKBCFVIKRI6I5T7RXUTFDG2PXBHVUNX4CKW5A",
+      "hub_urls": [
+        "adcs://test1.com:53245?kp=SHA256/EHNK6GWENKR7XBEMZPBDRZMENEIIGZV6NTPUZ2MJOCRH7TAPVOBQ",
+        "adcs://test2.dyndns.info:5555",
+      ],
+      "nicks": "test1 ([100]test1)",
+    },
+    {
+      "priority": -1,
+      "target_directory": "/home/airdcpp/Downloads/",
+      "target_name": "ubuntu-20.04.2.0-desktop-amd64.iso",
+    },
+    {
+      "id": "HPI67YG335U72FUS626M6WYFGR5EBZTNCEJU3JA",
+      "location": null,
+      "partial_list": true,
+      "read": false,
+      "share_profile": null,
+      "state": {
+        "id": "download_pending",
+        "str": "Download pending",
+        "time_finished": 0,
+      },
+      "total_files": 936066,
+      "total_size": 133137630299481,
+      "user": {
+        "cid": "XPI67YM335U72FUS626M6WYFGR5EBZTNCEJU3JA",
+        "flags": [
+          "ccpm",
+          "asch",
+        ],
+        "hub_names": "Test hub 1 (Test hub 2)",
+        "hub_url": "adcs://oden.dyndns.info:41214/?kp=SHA256/RW37PVLRXU5HEXXIKBCFVIKRI6I5T7RXUTFDG2PXBHVUNX4CKW5A",
+        "hub_urls": [
+          "adcs://test1.com:53245?kp=SHA256/EHNK6GWENKR7XBEMZPBDRZMENEIIGZV6NTPUZ2MJOCRH7TAPVOBQ",
+          "adcs://test2.dyndns.info:5555",
+        ],
+        "nicks": "test1 ([100]test1)",
+      },
+    },
+  ],
+]
+`;
