@@ -28,7 +28,7 @@ import * as UI from 'types/ui';
 import { FavoriteHubEntry } from 'types/api';
 import { IndeterminateCheckboxField } from 'components/form/fields/IndeterminateCheckboxField';
 import { profileToEnumValue } from 'utils/ShareProfileUtils';
-import { Formatter, useFormatter } from 'utils/ValueFormat';
+import { Formatter, useFormatter } from 'context/FormatterContext';
 
 const ConnectivityModeOptions: API.SettingEnumOption[] = [
   {

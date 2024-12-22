@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import { useMobileLayout } from 'utils/BrowserUtils';
 

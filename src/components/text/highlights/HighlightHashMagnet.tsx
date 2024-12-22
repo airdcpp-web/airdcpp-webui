@@ -10,7 +10,7 @@ import { dupeToStringType } from 'utils/TypeConvert';
 import { formatMagnetCaption } from 'utils/MagnetUtils';
 import { TableDownloadMenu } from 'components/action-menu';
 import { TableDropdownProps } from 'components/semantic/TableDropdown';
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (
   itemInfo,

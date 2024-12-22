@@ -6,15 +6,7 @@ import {
   TableActionMenuProps,
   TableDownloadMenuProps,
 } from 'components/action-menu';
-import {
-  formatDecimal,
-  formatAbbreviatedDuration,
-  formatConnection,
-  formatDateTime,
-  formatShortDate,
-  formatRelativeTime,
-  useFormatter,
-} from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import FormattedFile from 'components/format/FormattedFile';
 import FormattedIp from 'components/format/FormattedIp';
@@ -28,6 +20,7 @@ import * as UI from 'types/ui';
 import * as API from 'types/api';
 import { ActionHandlerDecorator } from 'decorators/ActionHandlerDecorator';
 import { useSession } from 'context/SessionContext';
+import { formatDecimal } from 'utils/ValueFormat';
 
 const getCellContent = (cellData: any) => {
   if (typeof cellData === 'object') {
@@ -197,19 +190,28 @@ export const SpeedCell: React.FC<NumberCellProps> = ({ cellData }) => {
   return <span className="plain speed cell">{formatSpeed(cellData!)}</span>;
 };
 
-export const DateCell: React.FC<NumberCellProps> = ({ cellData, width }) => (
-  <span className="plain date cell">
-    {!!width && width > 150 ? formatDateTime(cellData!) : formatShortDate(cellData!)}
-  </span>
-);
+export const DateCell: React.FC<NumberCellProps> = ({ cellData, width }) => {
+  const { formatShortDate, formatDateTime } = useFormatter();
+  return (
+    <span className="plain date cell">
+      {!!width && width > 150 ? formatDateTime(cellData!) : formatShortDate(cellData!)}
+    </span>
+  );
+};
 
-export const DurationCell: React.FC<NumberCellProps> = ({ cellData }) => (
-  <span className="plain duration cell">{formatRelativeTime(cellData!)}</span>
-);
+export const DurationCell: React.FC<NumberCellProps> = ({ cellData }) => {
+  const { formatRelativeTime } = useFormatter();
+  return <span className="plain duration cell">{formatRelativeTime(cellData!)}</span>;
+};
 
-export const AbbreviatedDurationCell: React.FC<NumberCellProps> = ({ cellData }) => (
-  <span className="plain abbr-duration cell">{formatAbbreviatedDuration(cellData!)}</span>
-);
+export const AbbreviatedDurationCell: React.FC<NumberCellProps> = ({ cellData }) => {
+  const { formatAbbreviatedDuration } = useFormatter();
+  return (
+    <span className="plain abbr-duration cell">
+      {formatAbbreviatedDuration(cellData!)}
+    </span>
+  );
+};
 
 export interface IpCellProps {
   cellData?: API.IP;
@@ -219,9 +221,10 @@ export const IpCell: React.FC<IpCellProps> = ({ cellData }) => (
   <FormattedIp item={cellData!} />
 );
 
-export const ConnectionCell: React.FC<NumberCellProps> = ({ cellData, t }) => (
-  <span className="plain connection cell">{formatConnection(cellData!, t!)}</span>
-);
+export const ConnectionCell: React.FC<NumberCellProps> = ({ cellData }) => {
+  const { formatConnection } = useFormatter();
+  return <span className="plain connection cell">{formatConnection(cellData!)}</span>;
+};
 
 export const DecimalCell: React.FC<NumberCellProps> = ({ cellData }) => (
   <span className="plain decimal cell">{formatDecimal(cellData!)}</span>

@@ -7,17 +7,18 @@ import WidgetDropdown from './WidgetDropdown';
 import SystemConstants from 'constants/SystemConstants';
 
 import { ListItem } from 'components/semantic/List';
-import { formatRelativeTime } from 'utils/ValueFormat';
 
 import '../style.css';
 import * as UI from 'types/ui';
 import { useSession } from 'context/SessionContext';
+import { useFormatter } from 'context/FormatterContext';
 
 type StatisticsProps = Pick<UI.WidgetProps, 'widgetT'>;
 
 const Statistics = StatisticsDecorator<any, StatisticsProps>(
   ({ stats, widgetT }) => {
     const { systemInfo, user } = useSession();
+    const { formatRelativeTime } = useFormatter();
     return (
       <div className="ui list">
         <ListItem

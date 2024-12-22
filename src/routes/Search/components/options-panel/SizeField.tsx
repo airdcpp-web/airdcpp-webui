@@ -3,8 +3,9 @@ import * as React from 'react';
 import t from 'utils/tcomb-form';
 
 import * as UI from 'types/ui';
-
-import { ByteUnits, formatUnit, parseUnit } from 'utils/ValueFormat';
+import { parseUnit } from 'utils/Formatter';
+import { ByteUnits } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 interface SizeFieldProps {
   moduleT: UI.ModuleTranslator;
@@ -26,6 +27,7 @@ const toFieldValues = (initialValue: number) => {
 };
 
 const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) => {
+  const { formatUnit } = useFormatter();
   const initialData = toFieldValues(value);
   const [displayValue, setDisplayValue] = useState<number | undefined>(initialData.value);
   const [unitIndex, setUnitIndex] = useState<number>(initialData.unitIndex);
@@ -86,7 +88,7 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
       >
         {ByteUnits.map((unit, index) => (
           <option key={unit} value={unit}>
-            {formatUnit(unit, moduleT.plainT)}
+            {formatUnit(unit)}
           </option>
         ))}
       </select>

@@ -36,7 +36,7 @@ import { ShareRootEntryBase } from 'types/api';
 import { translateForm } from 'utils/FormUtils';
 import { Trans } from 'react-i18next';
 import { profileToEnumValue } from 'utils/ShareProfileUtils';
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 const Fields: UI.FormFieldDefinition[] = [
   {

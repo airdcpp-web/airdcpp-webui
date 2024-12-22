@@ -10,7 +10,7 @@ import Message from 'components/semantic/Message';
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
 } from 'decorators/ShareProfileDecorator';
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import '../style.css';
 

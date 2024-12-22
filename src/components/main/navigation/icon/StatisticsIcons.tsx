@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
 
 import HashConstants from 'constants/HashConstants';

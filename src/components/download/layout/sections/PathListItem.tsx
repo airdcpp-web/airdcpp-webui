@@ -5,7 +5,7 @@ import IconConstants from 'constants/IconConstants';
 import Icon from 'components/semantic/Icon';
 
 import { toI18nKey } from 'utils/TranslationUtils';
-import { Formatter, useFormatter } from 'utils/ValueFormat';
+import { Formatter, useFormatter } from 'context/FormatterContext';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

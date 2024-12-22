@@ -4,7 +4,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 //import RedrawDecorator from 'decorators/RedrawDecorator';
-import { formatRelativeTime } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 import { ListItem } from 'components/semantic/List';
@@ -42,6 +42,7 @@ const RecentLayout: React.FC<Props> = ({
   hasSession,
   entryIcon,
 }) => {
+  const { formatRelativeTime } = useFormatter();
   const { t } = useTranslation();
   if (entries.length === 0) {
     return null;

@@ -9,7 +9,7 @@ import Message from 'components/semantic/Message';
 
 import HashConstants from 'constants/HashConstants';
 
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import '../style.css';
 

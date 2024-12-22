@@ -4,7 +4,6 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 import FormattedIp from 'components/format/FormattedIp';
-import { formatConnection } from 'utils/ValueFormat';
 
 import SearchConstants from 'constants/SearchConstants';
 
@@ -17,35 +16,38 @@ import * as UI from 'types/ui';
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import MenuConstants from 'constants/MenuConstants';
+import { useFormatter } from 'context/FormatterContext';
 
 interface UserResultProps {
   result: API.ChildSearchResult;
-  t: UI.TranslateF;
 }
 
-const UserResult: React.FC<UserResultProps> = ({ result, t }) => (
-  <tr>
-    <td className="user dropdown">
-      <UserMenu
-        userIcon={true}
-        user={result.user}
-        directory={result.path}
-        ids={UserFileActions}
-        contextElement=".ui.modal > .content"
-        remoteMenuId={MenuConstants.HINTED_USER}
-      />
-    </td>
-    <td className="hubs">{result.user.hub_names}</td>
-    <td className="connection">{formatConnection(result.connection, t)}</td>
-    <td className="slots">{result.slots.str}</td>
-    <td className="ip">
-      <FormattedIp item={result.ip} />
-    </td>
-    <td className="path" title={result.path}>
-      {result.path}
-    </td>
-  </tr>
-);
+const UserResult: React.FC<UserResultProps> = ({ result }) => {
+  const { formatConnection } = useFormatter();
+  return (
+    <tr>
+      <td className="user dropdown">
+        <UserMenu
+          userIcon={true}
+          user={result.user}
+          directory={result.path}
+          ids={UserFileActions}
+          contextElement=".ui.modal > .content"
+          remoteMenuId={MenuConstants.HINTED_USER}
+        />
+      </td>
+      <td className="hubs">{result.user.hub_names}</td>
+      <td className="connection">{formatConnection(result.connection)}</td>
+      <td className="slots">{result.slots.str}</td>
+      <td className="ip">
+        <FormattedIp item={result.ip} />
+      </td>
+      <td className="path" title={result.path}>
+        {result.path}
+      </td>
+    </tr>
+  );
+};
 
 const resultSort = (a: API.ChildSearchResult, b: API.ChildSearchResult) =>
   a.user.nicks.localeCompare(b.user.nicks);
@@ -87,7 +89,7 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
         </thead>
         <tbody>
           {results.sort(resultSort).map((result) => (
-            <UserResult key={result.user.cid} result={result} t={t} />
+            <UserResult key={result.user.cid} result={result} />
           ))}
         </tbody>
       </table>

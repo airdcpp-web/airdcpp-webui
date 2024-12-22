@@ -19,7 +19,7 @@ import MenuSection from 'components/semantic/MenuSection';
 import IconConstants from 'constants/IconConstants';
 import { translateActionName } from 'utils/ActionUtils';
 import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
-import { Formatter, useFormatter } from 'utils/ValueFormat';
+import { Formatter, useFormatter } from 'context/FormatterContext';
 import { useSession } from 'context/SessionContext';
 
 const getProfileItem = (

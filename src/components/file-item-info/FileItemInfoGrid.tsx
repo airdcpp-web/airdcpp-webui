@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { formatRelativeTime, useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import { DownloadMenu } from 'components/action-menu';
 
@@ -57,7 +57,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({
     return translate(text, t, UI.Modules.COMMON);
   };
 
-  const { formatSize } = useFormatter();
+  const { formatSize, formatRelativeTime } = useFormatter();
   return (
     <div className="ui fileitem info segment">
       <Grid columns="two" stackable={true}>

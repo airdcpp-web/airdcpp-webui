@@ -13,7 +13,7 @@ import {
   HighlightTextLink,
 } from './highlights';
 import { formatMagnetCaption, parseMagnetLink } from 'utils/MagnetUtils';
-import { Formatter, useFormatter } from 'utils/ValueFormat';
+import { Formatter, useFormatter } from 'context/FormatterContext';
 
 interface HighlightProps {
   user: UI.DownloadSource | undefined;

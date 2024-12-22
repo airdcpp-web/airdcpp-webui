@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useMemo } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router';
 import SocketService from 'services/SocketService';
 
@@ -23,6 +23,8 @@ import 'utils/semantic';
 
 import 'style.css';
 import { SocketContext } from 'context/SocketContext';
+import { FormatterContext } from 'context/FormatterContext';
+import { createFormatter } from 'utils/Formatter';
 
 global.Promise = Promise as any;
 
@@ -53,18 +55,21 @@ const router = createBrowserRouter(
 const i18n = initI18n();
 const App = () => {
   const prompt = useInstallPrompt();
+  const formatter = useMemo(() => createFormatter(i18n), []);
   return (
     <ErrorBoundary>
       <Suspense fallback={<Loader fullPage={true} text="" />}>
-        <SocketContext.Provider value={SocketService}>
-          <I18nextProvider i18n={i18n}>
-            <InstallPromptContext.Provider value={prompt}>
-              <MeasuredBackground>
-                <RouterProvider router={router} />
-              </MeasuredBackground>
-            </InstallPromptContext.Provider>
-          </I18nextProvider>
-        </SocketContext.Provider>
+        <FormatterContext.Provider value={formatter}>
+          <SocketContext.Provider value={SocketService}>
+            <I18nextProvider i18n={i18n}>
+              <InstallPromptContext.Provider value={prompt}>
+                <MeasuredBackground>
+                  <RouterProvider router={router} />
+                </MeasuredBackground>
+              </InstallPromptContext.Provider>
+            </I18nextProvider>
+          </SocketContext.Provider>
+        </FormatterContext.Provider>
       </Suspense>
     </ErrorBoundary>
   );

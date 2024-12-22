@@ -18,27 +18,30 @@ import {
 } from 'actions/ui/search/SearchTypeActions';
 import SearchConstants from 'constants/SearchConstants';
 import SearchTypeDialog from './SearchTypeDialog';
-import { formatBoolean } from 'utils/ValueFormat';
 import Message from 'components/semantic/Message';
 import IconConstants from 'constants/IconConstants';
+import { useFormatter } from 'context/FormatterContext';
 
 const Row: React.FC<{ type: API.SearchType; moduleT: UI.ModuleTranslator }> = ({
   type,
   moduleT,
-}) => (
-  <tr>
-    <td className="name dropdown">
-      <ActionMenu
-        caption={<strong>{type.str}</strong>}
-        actions={SearchTypeEditActionMenu}
-        itemData={type}
-        contextElement="#setting-scroll-context"
-      />
-    </td>
-    <td className="extensions">{type.extensions.join(', ')}</td>
-    <td className="default">{formatBoolean(type.default_type, moduleT.plainT)}</td>
-  </tr>
-);
+}) => {
+  const { formatBoolean } = useFormatter();
+  return (
+    <tr>
+      <td className="name dropdown">
+        <ActionMenu
+          caption={<strong>{type.str}</strong>}
+          actions={SearchTypeEditActionMenu}
+          itemData={type}
+          contextElement="#setting-scroll-context"
+        />
+      </td>
+      <td className="extensions">{type.extensions.join(', ')}</td>
+      <td className="default">{formatBoolean(type.default_type)}</td>
+    </tr>
+  );
+};
 
 const getRow = (type: API.SearchType, moduleT: UI.ModuleTranslator) => {
   return <Row key={type.id} type={type} moduleT={moduleT} />;

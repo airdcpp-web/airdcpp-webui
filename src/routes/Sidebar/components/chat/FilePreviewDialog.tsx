@@ -3,7 +3,7 @@ import * as React from 'react';
 import Modal, { ModalProps } from 'components/semantic/Modal';
 
 import IconConstants from 'constants/IconConstants';
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 

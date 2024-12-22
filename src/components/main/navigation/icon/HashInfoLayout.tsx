@@ -13,7 +13,7 @@ import * as React from 'react';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { formatSeconds, useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 interface HashInfoLayoutProps {
   stats: API.HashStats;
@@ -41,7 +41,7 @@ export const HashInfoLayout: React.FC<HashInfoLayoutProps> = ({ stats, moduleT }
     ...stats,
   };
 
-  const { formatSize, formatSpeed } = useFormatter();
+  const { formatSize, formatSpeed, formatSeconds } = useFormatter();
   return (
     <div className="hash-layout">
       <div className="ui list">

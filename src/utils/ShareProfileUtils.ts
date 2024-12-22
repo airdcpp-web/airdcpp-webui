@@ -1,6 +1,6 @@
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 
-import { Formatter } from 'utils/ValueFormat';
+import { Formatter } from 'context/FormatterContext';
 
 import * as API from 'types/api';
 

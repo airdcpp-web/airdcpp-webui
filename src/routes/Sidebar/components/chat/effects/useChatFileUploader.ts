@@ -5,7 +5,7 @@ import NotificationActions from 'actions/NotificationActions';
 import * as UI from 'types/ui';
 
 import { toI18nKey } from 'utils/TranslationUtils';
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 interface UseFileUploaderProps {
   appendText: (text: string) => void;

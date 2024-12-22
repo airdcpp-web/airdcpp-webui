@@ -6,7 +6,7 @@ import StatisticsDecorator, {
   StatisticsDecoratorChildProps,
 } from 'decorators/StatisticsDecorator';
 import SystemConstants from 'constants/SystemConstants';
-import { formatDateTime, formatRelativeTime } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import InstallPrompt from 'components/InstallPrompt';
 import { SettingPageProps } from 'routes/Settings/types';
 import LinkConstants from 'constants/LinkConstants';
@@ -20,6 +20,7 @@ const ApplicationPage: React.FC<
 > = ({ stats, moduleT }) => {
   const { translate } = moduleT;
   const { systemInfo } = useSession();
+  const { formatRelativeTime, formatDateTime } = useFormatter();
 
   const buildDate = formatDateTime(UI_BUILD_DATE / 1000);
   return (

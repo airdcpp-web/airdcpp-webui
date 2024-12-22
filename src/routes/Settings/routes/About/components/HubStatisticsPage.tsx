@@ -1,11 +1,6 @@
 import * as React from 'react';
 
-import {
-  formatAverage,
-  formatConnection,
-  formatPercentage,
-  useFormatter,
-} from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import HubConstants from 'constants/HubConstants';
 
@@ -17,6 +12,7 @@ import { Grid, Row, Header } from 'components/semantic/Grid';
 
 //import * as UI from 'types/ui';
 import { SettingPageProps } from 'routes/Settings/types';
+import { formatAverage, formatPercentage } from 'utils/ValueFormat';
 
 interface HubStatisticsPageProps extends SettingPageProps {}
 
@@ -38,7 +34,7 @@ const formatClientRow = (uniqueUsers: number, client: ClientInfo) => {
 const HubStatisticsPage: React.FC<
   HubStatisticsPageProps & StatisticsDecoratorChildProps<any>
 > = ({ stats, moduleT }) => {
-  const { formatSize } = useFormatter();
+  const { formatSize, formatConnection } = useFormatter();
   const { translate } = moduleT;
   return (
     <Grid columns="two" stackable={true}>
@@ -66,11 +62,11 @@ const HubStatisticsPage: React.FC<
       />
       <Row
         title={translate('Average ADC download speed')}
-        text={formatConnection(stats.adc_down_per_user, moduleT.plainT)}
+        text={formatConnection(stats.adc_down_per_user)}
       />
       <Row
         title={translate('Average ADC upload speed')}
-        text={formatConnection(stats.adc_up_per_user, moduleT.plainT)}
+        text={formatConnection(stats.adc_up_per_user)}
       />
       <Header title={translate('Clients')} />
       {stats.clients.map((c: ClientInfo) => formatClientRow(stats.unique_users, c))}

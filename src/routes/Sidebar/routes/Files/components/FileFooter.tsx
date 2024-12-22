@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import RedrawDecorator from 'decorators/RedrawDecorator';
-import { formatRelativeTime } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
 import { useMobileLayout } from 'utils/BrowserUtils';
 
@@ -14,6 +14,7 @@ interface FileFooterProps {
 }
 
 const FileFooter: React.FC<FileFooterProps> = ({ item, sessionT }) => {
+  const { formatRelativeTime } = useFormatter();
   if (useMobileLayout()) {
     return null;
   }

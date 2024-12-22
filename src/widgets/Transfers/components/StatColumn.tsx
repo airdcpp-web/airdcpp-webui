@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { ListItem } from 'components/semantic/List';
 
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

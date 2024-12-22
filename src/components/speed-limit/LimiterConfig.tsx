@@ -11,9 +11,9 @@ import { toI18nKey, translate } from 'utils/TranslationUtils';
 import * as UI from 'types/ui';
 
 import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import { formatUnit } from 'utils/ValueFormat';
 import { Trans } from 'react-i18next';
 import { useSocket } from 'context/SocketContext';
+import { useFormatter } from 'context/FormatterContext';
 
 interface LimiterConfigProps {
   limit: number;
@@ -33,6 +33,7 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({
   unit,
   t,
 }) => {
+  const { formatUnit } = useFormatter();
   const socket = useSocket();
   const save = (newLimit = 0) => {
     runBackgroundSocketAction(
@@ -53,7 +54,7 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({
           i18nKey={toI18nKey('enterLimitUnit', UI.Modules.COMMON)}
           defaultValue={'Enter limit ({{unit}}/s)'}
           values={{
-            unit: formatUnit(unit, t),
+            unit: formatUnit(unit),
           }}
         />
       </div>

@@ -6,7 +6,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { translate } from 'utils/TranslationUtils';
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import { useTranslation } from 'react-i18next';
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';

@@ -4,9 +4,9 @@ import Icon from 'components/semantic/Icon';
 
 import IconConstants from 'constants/IconConstants';
 import RedrawDecorator from 'decorators/RedrawDecorator';
-import { formatRelativeTime } from 'utils/ValueFormat';
 
 import * as UI from 'types/ui';
+import { useFormatter } from 'context/FormatterContext';
 
 export interface FooterProps {
   lastUpdated?: number;
@@ -14,8 +14,9 @@ export interface FooterProps {
   widgetT: UI.ModuleTranslator;
 }
 
-const Footer = RedrawDecorator(
-  ({ lastUpdated, handleUpdate, widgetT }: FooterProps) => (
+const Footer = RedrawDecorator(({ lastUpdated, handleUpdate, widgetT }: FooterProps) => {
+  const { formatRelativeTime } = useFormatter();
+  return (
     <div className="extra content">
       <Icon icon={IconConstants.REFRESH_PLAIN} onClick={handleUpdate} />
       {!!lastUpdated && (
@@ -24,8 +25,7 @@ const Footer = RedrawDecorator(
         </Trans>
       )}
     </div>
-  ),
-  60,
-);
+  );
+}, 60);
 
 export default Footer;

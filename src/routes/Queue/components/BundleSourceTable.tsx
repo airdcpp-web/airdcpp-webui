@@ -7,7 +7,7 @@ import DataProviderDecorator, {
 import { QueueBundleSourceActionMenu } from 'actions/ui/queue/QueueBundleSourceActions';
 import QueueConstants from 'constants/QueueConstants';
 
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import { ActionMenu, UserMenu } from 'components/action-menu';
 import { UserFileActions } from 'actions/ui/user/UserActions';

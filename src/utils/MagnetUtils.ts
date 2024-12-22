@@ -1,6 +1,5 @@
+import { Formatter } from 'context/FormatterContext';
 import * as UI from 'types/ui';
-
-import { Formatter } from './ValueFormat';
 
 export const makeHashMagnetLink = (data: UI.HashMagnet) => {
   const { size, tth, name } = data;

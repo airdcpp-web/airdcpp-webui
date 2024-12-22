@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import RedrawDecorator from 'decorators/RedrawDecorator';
-import { formatRelativeTime } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import Loader from 'components/semantic/Loader';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
@@ -17,6 +17,7 @@ import IconConstants from 'constants/IconConstants';
 interface RefreshCellProps extends RowWrapperCellChildProps<number, API.ShareRootEntry> {}
 
 const RefreshCell: React.FC<RefreshCellProps> = ({ rowDataGetter, cellData, t }) => {
+  const { formatRelativeTime } = useFormatter();
   const state = rowDataGetter!().status;
   if (state.id !== API.ShareRootStatusEnum.NORMAL) {
     return (

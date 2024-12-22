@@ -19,6 +19,8 @@ import {
   MODAL_NODE_ID,
   MODAL_PAGE_DIMMER_ID,
 } from 'components/semantic/effects/useModal';
+import { createFormatter } from 'utils/Formatter';
+import { FormatterContext } from 'context/FormatterContext';
 
 const getMockI18n = () => {
   i18n.use(initReactI18next).init({
@@ -52,22 +54,25 @@ export const MOCK_SESSION: AuthenticatedSession = {
 
 export const TestWrapper: React.FC<TestWrapperProps> = ({ children, socket }) => {
   const i18n = getMockI18n();
+  const formatter = createFormatter(i18n);
   return (
     <ErrorBoundary>
-      <SocketContext.Provider value={socket}>
-        <I18nextProvider i18n={i18n}>
-          <SessionContext.Provider value={MOCK_SESSION}>
-            <section
-              className="ui dimmable blurring minimal"
-              id="container-main"
-              style={{ height: '100%', width: '100%' }}
-            >
-              {children}
-            </section>
-            <div id={MODAL_NODE_ID} className={`ui dimmer ${MODAL_NODE_ID}`} />
-          </SessionContext.Provider>
-        </I18nextProvider>
-      </SocketContext.Provider>
+      <FormatterContext.Provider value={formatter}>
+        <SocketContext.Provider value={socket}>
+          <I18nextProvider i18n={i18n}>
+            <SessionContext.Provider value={MOCK_SESSION}>
+              <section
+                className="ui dimmable blurring minimal"
+                id="container-main"
+                style={{ height: '100%', width: '100%' }}
+              >
+                {children}
+              </section>
+              <div id={MODAL_NODE_ID} className={`ui dimmer ${MODAL_NODE_ID}`} />
+            </SessionContext.Provider>
+          </I18nextProvider>
+        </SocketContext.Provider>
+      </FormatterContext.Provider>
     </ErrorBoundary>
   );
 };

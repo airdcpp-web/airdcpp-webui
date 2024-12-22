@@ -5,7 +5,7 @@ import * as React from 'react';
 import HubConstants from 'constants/HubConstants';
 import HubSessionStore from 'stores/HubSessionStore';
 
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
 import EncryptionState from 'components/EncryptionState';
 

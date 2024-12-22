@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import { formatTimestamp } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 interface TimeStampProps {
   time: number;
 }
 
-export const TimeStamp: React.FC<TimeStampProps> = ({ time }) => (
-  <div className="time">{formatTimestamp(time)}</div>
-);
+export const TimeStamp: React.FC<TimeStampProps> = ({ time }) => {
+  const { formatTimestamp } = useFormatter();
+  return <div className="time">{formatTimestamp(time)}</div>;
+};

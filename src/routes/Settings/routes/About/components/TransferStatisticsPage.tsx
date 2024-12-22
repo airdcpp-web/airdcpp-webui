@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 import { Row, Header, Grid } from 'components/semantic/Grid';
 
 import TransferConstants from 'constants/TransferConstants';

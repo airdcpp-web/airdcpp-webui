@@ -1,11 +1,6 @@
 import * as React from 'react';
 
-import {
-  formatAverage,
-  formatPercentage,
-  formatSeconds,
-  useFormatter,
-} from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 import ShareConstants from 'constants/ShareConstants';
 
@@ -17,13 +12,14 @@ import { Row, Header, Grid } from 'components/semantic/Grid';
 
 //import * as UI from 'types/ui';
 import { SettingPageProps } from 'routes/Settings/types';
+import { formatAverage, formatPercentage } from 'utils/ValueFormat';
 
 type ShareStatisticsPageProps = SettingPageProps;
 
 const ShareStatisticsPage: React.FC<
   ShareStatisticsPageProps & StatisticsDecoratorChildProps<any>
 > = ({ stats, moduleT }) => {
-  const { formatSize } = useFormatter();
+  const { formatSize, formatSeconds } = useFormatter();
   const { translate, t } = moduleT;
   return (
     <Grid columns="two" stackable={true}>

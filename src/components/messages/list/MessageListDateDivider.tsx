@@ -1,13 +1,11 @@
 import * as React from 'react';
 
-import { formatCalendarTime } from 'utils/ValueFormat';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
-import { useTranslation } from 'react-i18next';
+import { useFormatter } from 'context/FormatterContext';
 
 const getMessageDay = (listItem: UI.MessageListItem) => {
   const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;
@@ -49,11 +47,11 @@ interface MessageListDateDividerProps {
 export const MessageListDateDivider: React.FC<MessageListDateDividerProps> = ({
   time,
 }) => {
-  const { t } = useTranslation();
+  const { formatCalendarTime } = useFormatter();
   return (
     <div key={`divider${time}`} className="ui horizontal date divider">
       <Icon icon={IconConstants.DATE} />
-      {formatCalendarTime(time, t)}
+      {formatCalendarTime(time)}
     </div>
   );
 };

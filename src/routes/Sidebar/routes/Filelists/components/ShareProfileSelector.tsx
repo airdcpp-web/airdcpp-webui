@@ -9,7 +9,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
-import { useFormatter } from 'utils/ValueFormat';
+import { useFormatter } from 'context/FormatterContext';
 
 interface ShareProfileSelectorProps {
   // Callback after selecting a profile

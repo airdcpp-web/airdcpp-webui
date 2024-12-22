@@ -18,7 +18,7 @@ import { translate } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
 import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
-import { Formatter, useFormatter } from 'utils/ValueFormat';
+import { Formatter, useFormatter } from 'context/FormatterContext';
 
 export interface ShareProfileFilterProps {}
 

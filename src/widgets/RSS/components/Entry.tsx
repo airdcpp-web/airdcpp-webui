@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import { ActionMenu } from 'components/action-menu';
-import { formatRelativeTime } from 'utils/ValueFormat';
 
 import RSSActions from '../actions/RSSActions';
 import { FeedItem } from '../types';
 import { parseNodeContent } from '../utils';
 
 import * as UI from 'types/ui';
+import { useFormatter } from 'context/FormatterContext';
 
 const parseTitle = (entry: FeedItem) => {
   if (!entry.title) {
@@ -28,6 +28,7 @@ export interface EntryProps extends Pick<UI.WidgetProps, 'widgetT' | 'componentI
 }
 
 const Entry: React.FC<EntryProps> = ({ entry, feedUrl, widgetT }) => {
+  const { formatRelativeTime } = useFormatter();
   const date = entry.pubDate ? entry.pubDate : entry.updated;
   return (
     <div className="item">
