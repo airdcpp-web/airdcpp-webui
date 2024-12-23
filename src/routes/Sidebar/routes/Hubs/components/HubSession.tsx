@@ -32,7 +32,8 @@ const getStorageKey = (sessionId: number) => {
 };
 
 const checkList = (sessionId: number) => {
-  return loadSessionProperty(getStorageKey(sessionId), false);
+  const value = loadSessionProperty(getStorageKey(sessionId), false);
+  return value;
 };
 
 type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject, UI.ChatActionList>;
@@ -48,6 +49,7 @@ const HubSession: React.FC<HubSessionProps> = ({
 
   const toggleListState = () => {
     setShowList(!showList);
+    return !showList;
   };
 
   useEffect(() => {
@@ -81,9 +83,8 @@ const HubSession: React.FC<HubSessionProps> = ({
   };
 
   const onClickUsers = () => {
-    toggleListState();
-
-    saveSessionProperty(getStorageKey(session.id), showList);
+    const newValue = toggleListState();
+    saveSessionProperty(getStorageKey(session.id), newValue);
   };
 
   const handleFileUpload = (file: File) => {

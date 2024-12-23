@@ -117,7 +117,7 @@ const SessionLayout = <
 
   const getChildren = () => {
     const { newLayout: NewLayout, sessionT } = props;
-    if (!props.activeId && NewLayout) {
+    if (NewLayout && location.pathname.endsWith('/new')) {
       return <NewLayout navigate={navigate} location={location} sessionT={sessionT} />;
     }
 
