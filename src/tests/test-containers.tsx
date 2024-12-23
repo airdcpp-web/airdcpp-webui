@@ -110,3 +110,5 @@ export const renderRoutes = (routes: RouteObject[], options: RenderOptions) => {
     router,
   };
 };
+
+export type RouteRenderResult = ReturnType<typeof renderRoutes>;
