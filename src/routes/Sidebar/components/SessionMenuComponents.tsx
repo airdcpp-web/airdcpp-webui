@@ -23,6 +23,7 @@ export const useComponents = <
   props: UI.SessionInfoGetter<SessionT> & {
     activeItem: SessionT | null;
     hasEditAccess: boolean;
+    isNewLayout: boolean;
   } & SessionLayoutLabels &
     SessionLayoutManageProps<SessionT, SessionApiT, UIActionT>,
 ) => {
@@ -50,22 +51,40 @@ export const useComponents = <
   };
 
   const components = {
+    // Current session
     getItemHeaderDescription: () => {
-      const { itemHeaderDescriptionGetter, newDescription, activeItem } = props;
-      if (!activeItem) {
+      const { itemHeaderDescriptionGetter, newDescription, activeItem, isNewLayout } =
+        props;
+      if (isNewLayout) {
         return newDescription;
       }
 
-      return itemHeaderDescriptionGetter(activeItem);
+      if (activeItem) {
+        return itemHeaderDescriptionGetter(activeItem);
+      }
+
+      return null;
     },
     getItemHeaderIcon: () => {
-      const { itemHeaderIconGetter, newIcon, activeItem } = props;
-      return <Icon icon={activeItem ? itemHeaderIconGetter(activeItem) : newIcon} />;
+      const { itemHeaderIconGetter, newIcon, activeItem, isNewLayout } = props;
+      if (isNewLayout) {
+        return <Icon icon={newIcon} />;
+      }
+
+      if (activeItem) {
+        return <Icon icon={itemHeaderIconGetter(activeItem)} />;
+      }
+
+      return null;
     },
     getItemHeaderTitle: () => {
-      const { activeItem, newCaption, remoteMenuId } = props;
-      if (!activeItem) {
+      const { activeItem, newCaption, remoteMenuId, isNewLayout } = props;
+      if (isNewLayout) {
         return <div>{newCaption}</div>;
+      }
+
+      if (!activeItem) {
+        return null;
       }
 
       const { uiActions, actionIds, itemNameGetter, itemHeaderTitleGetter } = props;
@@ -91,6 +110,8 @@ export const useComponents = <
 
       return actionMenu;
     },
+
+    // Other
     getSessionActionMenuItems: () => {
       const { items, hasEditAccess } = props;
       if (!hasEditAccess || items.length === 0) {

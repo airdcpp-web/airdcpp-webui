@@ -65,6 +65,7 @@ const SessionLayout = <
   const { activeItem, onKeyDown } = useSessionManager(props);
 
   const hasEditAccess = hasAccess(props.editAccess);
+  const isNewLayout = !!props.newLayout && location.pathname.endsWith('/new');
 
   const getSessionChildren = () => {
     const {
@@ -117,7 +118,7 @@ const SessionLayout = <
 
   const getChildren = () => {
     const { newLayout: NewLayout, sessionT } = props;
-    if (NewLayout && location.pathname.endsWith('/new')) {
+    if (isNewLayout && NewLayout) {
       return <NewLayout navigate={navigate} location={location} sessionT={sessionT} />;
     }
 
@@ -149,7 +150,7 @@ const SessionLayout = <
     getNewButton,
     getSessionMenuItems,
     getSessionActionMenuItems,
-  } = useComponents({ ...props, activeItem, hasEditAccess });
+  } = useComponents({ ...props, activeItem, hasEditAccess, isNewLayout });
   return (
     <MenuLayout
       itemHeaderTitle={getItemHeaderTitle()}
