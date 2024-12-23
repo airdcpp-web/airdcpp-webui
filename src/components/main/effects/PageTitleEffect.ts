@@ -1,7 +1,7 @@
 import { useSession } from 'context/SessionContext';
 import { useEffect } from 'react';
 
-import { LoginState } from 'stores/LoginStore';
+import LoginStore, { LoginState } from 'stores/LoginStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -20,7 +20,7 @@ const updateTitle = (systemInfo: API.SystemInfo | null, prefix = '') => {
 
 // Add hostname in the title if we are authentication
 export const useAuthPageTitle = (login: LoginState) => {
-  const { systemInfo } = useSession();
+  const { systemInfo } = LoginStore;
   useEffect(() => {
     updateTitle(systemInfo);
     return () => updateTitle(null);

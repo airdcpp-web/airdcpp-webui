@@ -14,8 +14,6 @@ import { useUrgencyPageTitle } from './effects/PageTitleEffect';
 
 import * as UI from 'types/ui';
 import { useLayoutWidth } from 'context/LayoutWidthContext';
-import { SessionContext } from 'context/SessionContext';
-import LoginStore from 'stores/LoginStore';
 
 interface AuthenticatedAppProps {}
 
@@ -32,13 +30,11 @@ const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
 
     const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
     return (
-      <SessionContext.Provider value={LoginStore}>
-        <div id="authenticated-app">
-          <ActivityTracker />
-          <Notifications />
-          <MainLayout className="main-layout" urgencies={urgencies} />
-        </div>
-      </SessionContext.Provider>
+      <div id="authenticated-app">
+        <ActivityTracker />
+        <Notifications />
+        <MainLayout className="main-layout" urgencies={urgencies} />
+      </div>
     );
   },
 );

@@ -5,9 +5,11 @@ import Message from 'components/semantic/Message';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import { LoginError } from 'stores/LoginStore';
+import { parseLoginError } from 'utils/AuthUtils';
 
 interface ErrorBoxProps {
-  lastError: string | null;
+  lastError: LoginError | null;
   t: UI.TranslateF;
 }
 
@@ -22,7 +24,7 @@ export const ErrorBox: React.FC<ErrorBoxProps> = ({ lastError, t }) => {
       description={t(toI18nKey('authenticationFailed', UI.Modules.LOGIN), {
         defaultValue: 'Authentication failed: {{lastError}}',
         replace: {
-          lastError,
+          lastError: parseLoginError(lastError, t),
         },
       })}
     />

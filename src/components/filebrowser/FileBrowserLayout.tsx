@@ -20,6 +20,7 @@ import { useSession } from 'context/SessionContext';
 import { useSocket } from 'context/SocketContext';
 import { useTranslation } from 'react-i18next';
 import NotificationActions from 'actions/NotificationActions';
+import { SubmitCallback } from 'components/semantic/ActionInput';
 
 export interface FileBrowserLayoutProps
   extends Pick<FileItemListProps, 'itemIconGetter'>,
@@ -170,7 +171,7 @@ const FileBrowserLayout: React.FC<Props> = ({
     }
   };
 
-  const createDirectory = (directoryName: string) => {
+  const createDirectory: SubmitCallback = (directoryName) => {
     const newPath = currentDirectory + directoryName + pathSeparator;
     socket
       .post(FilesystemConstants.DIRECTORY_URL, { path: newPath })
@@ -179,7 +180,7 @@ const FileBrowserLayout: React.FC<Props> = ({
       })
       .catch((error: Error) => {
         NotificationActions.error({
-          title: t('Failed to create directory', UI.Modules.COMMON),
+          title: translate('Failed to create directory', t, UI.Modules.COMMON),
           message: error.message,
         });
       });
@@ -214,7 +215,11 @@ const FileBrowserLayout: React.FC<Props> = ({
         error={dataState.error}
       />
       {canCreateDirectory && (
-        <CreateDirectorySection handleAction={createDirectory} t={t} />
+        <CreateDirectorySection
+          key={currentDirectory}
+          handleAction={createDirectory}
+          t={t}
+        />
       )}
       {selectMode === UI.FileSelectModeEnum.FILE &&
         !!onFileSelected &&

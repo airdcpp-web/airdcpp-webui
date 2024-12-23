@@ -34,3 +34,10 @@ export interface RouteComponentProps {
 }
 
 export type RouteParams = Readonly<Params<string>>;
+
+export type Callback = () => void;
+
+export interface TranslatableMessage {
+  id: string;
+  message: string;
+}

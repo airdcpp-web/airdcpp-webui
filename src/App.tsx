@@ -19,12 +19,15 @@ import { InstallPromptContext } from 'context/InstallPromptContext';
 import { ErrorBoundary } from 'components/ErrorBoundary';
 import { MeasuredBackground } from 'components/main/MeasuredBackground';
 
-import 'utils/semantic';
-
-import 'style.css';
 import { SocketContext } from 'context/SocketContext';
 import { FormatterContext } from 'context/FormatterContext';
 import { createFormatter } from 'utils/Formatter';
+import LoginStore from 'stores/LoginStore';
+import { SessionContext } from 'context/SessionContext';
+
+import 'utils/semantic';
+
+import 'style.css';
 
 global.Promise = Promise as any;
 
@@ -64,7 +67,9 @@ const App = () => {
             <I18nextProvider i18n={i18n}>
               <InstallPromptContext.Provider value={prompt}>
                 <MeasuredBackground>
-                  <RouterProvider router={router} />
+                  <SessionContext.Provider value={LoginStore}>
+                    <RouterProvider router={router} />
+                  </SessionContext.Provider>
                 </MeasuredBackground>
               </InstallPromptContext.Provider>
             </I18nextProvider>

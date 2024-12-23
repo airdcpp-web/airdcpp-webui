@@ -2,9 +2,11 @@ import * as React from 'react';
 
 import Button, { ButtonProps } from 'components/semantic/Button';
 
+export type SubmitCallback = (value: string) => void;
+
 export interface ActionInputProps extends Omit<ButtonProps, 'type'> {
   // Function to call with the value
-  handleAction: (value: string) => void;
+  handleAction: SubmitCallback;
 
   // Input placeholder
   placeholder: string;

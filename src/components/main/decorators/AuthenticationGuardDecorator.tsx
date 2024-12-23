@@ -1,31 +1,21 @@
 import * as React from 'react';
 
-import LoginStore, {
-  LoginError,
-  LoginState,
-  TranslatableLoginError,
-} from 'stores/LoginStore';
+import LoginStore, { LoginError, LoginState } from 'stores/LoginStore';
 
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
 import { useStore } from 'effects/StoreListenerEffect';
 import { useSessionGuard } from '../effects/LoginGuardEffect';
 import { useAuthPageTitle } from '../effects/PageTitleEffect';
 import { useStoreDataFetch } from '../effects/StoreDataFetchEffect';
-import { useTranslation } from 'react-i18next';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+
 import { useLocation } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { parseLoginError } from 'utils/AuthUtils';
 
 interface AuthenticationGuardDecoratorProps {}
-
-const parseError = (error: TranslatableLoginError | string, t: UI.TranslateF) => {
-  if (typeof error === 'string') {
-    return error;
-  }
-
-  return t(toI18nKey(error.id, UI.Modules.LOGIN), error.message);
-};
 
 const getConnectStatusMessage = (lastError: LoginError, t: UI.TranslateF) => {
   if (!!lastError) {
@@ -34,7 +24,7 @@ const getConnectStatusMessage = (lastError: LoginError, t: UI.TranslateF) => {
       'Attempting to re-establish connection...',
     );
 
-    return `${parseError(lastError, t)}. ${msg}`;
+    return `${parseLoginError(lastError, t)}. ${msg}`;
   }
 
   return translate('Connecting to the server...', t, UI.Modules.LOGIN);

@@ -14,15 +14,11 @@ import LoginActions from 'actions/reflux/LoginActions';
 import SocketService from 'services/SocketService';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
 
-export interface TranslatableLoginError {
-  id: string;
-  message: string;
-}
-
-export type LoginError = TranslatableLoginError | string | null;
+export type LoginError = UI.TranslatableMessage | string | null;
 
 export interface LoginState {
   socketAuthenticated: boolean;
@@ -30,6 +26,7 @@ export interface LoginState {
   hasSession: boolean;
   allowLogin: boolean;
   showNewUserIntro: boolean;
+  refreshToken: string | null;
 }
 
 const errorToString = (error: ErrorResponse | string) => {
@@ -89,6 +86,7 @@ const LoginStore = {
       socketAuthenticated: this._socketAuthenticated,
       hasSession: this.hasSession,
       showNewUserIntro: this.showNewUserIntro,
+      refreshToken: this.refreshToken,
     };
   },
 

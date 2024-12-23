@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import * as React from 'react';
 
 import LoginActions from 'actions/reflux/LoginActions';
-import LoginStore from 'stores/LoginStore';
+import LoginStore, { LoginState } from 'stores/LoginStore';
 
 import Checkbox from 'components/semantic/Checkbox';
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
@@ -16,10 +16,12 @@ import { translate } from 'utils/TranslationUtils';
 import * as UI from 'types/ui';
 import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
+import { useStore } from 'effects/StoreListenerEffect';
 
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
+  const { refreshToken, allowLogin, lastError } = useStore<LoginState>(LoginStore);
   const { t } = useTranslation();
 
   const [rememberMe, setRememberMe] = useState(false);
@@ -27,7 +29,7 @@ const Login: React.FC<LoginProps> = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const [loading, setLoading] = useSessionState();
-  if (!!LoginStore.refreshToken) {
+  if (!!refreshToken) {
     return (
       <SocketConnectStatus
         message={translate('Connecting to the server...', t, UI.Modules.LOGIN)}
@@ -82,7 +84,7 @@ const Login: React.FC<LoginProps> = () => {
             <SubmitButton
               onSubmit={onSubmit}
               loading={loading}
-              allowLogin={LoginStore.allowLogin}
+              allowLogin={allowLogin}
               t={t}
             />
             <div
@@ -103,7 +105,7 @@ const Login: React.FC<LoginProps> = () => {
           <BottomMessage />
         </form>
 
-        <ErrorBox lastError={LoginStore.lastError} t={t} />
+        <ErrorBox lastError={lastError} t={t} />
       </div>
     </div>
   );
