@@ -280,12 +280,15 @@ const FavoriteHubDialog: React.FC<Props> = ({
   };
 
   const onSave: FormSaveHandler<Entry> = (changedFields) => {
-    const hubEntry = toFavoriteHub(changedFields);
+    const updatedEntryFields = toFavoriteHub(changedFields);
     if (isNew) {
-      return socket.post(FavoriteHubConstants.HUBS_URL, hubEntry);
+      return socket.post(FavoriteHubConstants.HUBS_URL, updatedEntryFields);
     }
 
-    return socket.patch(`${FavoriteHubConstants.HUBS_URL}/${hubEntry!.id}`, hubEntry);
+    return socket.patch(
+      `${FavoriteHubConstants.HUBS_URL}/${hubEntry!.id}`,
+      updatedEntryFields,
+    );
   };
 
   const onFieldSetting: FormFieldSettingHandler<Entry> = (
