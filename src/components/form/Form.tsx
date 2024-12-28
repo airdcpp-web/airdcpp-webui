@@ -12,6 +12,7 @@ import {
   reduceChangedFieldValues,
   findFieldByKey,
   formValuesEqual,
+  trimValue,
 } from 'utils/FormUtils';
 import tcomb from 'utils/tcomb-form';
 
@@ -178,10 +179,10 @@ interface State<ValueType> {
   formValue: Partial<ValueType>;
 }
 
-type Props<ValueType extends Partial<UI.FormValueMap>> = FormProps<ValueType>;
-class Form<
-  ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap,
-> extends Component<Props<ValueType>> {
+type Props<ValueType extends UI.FormValueMap> = FormProps<ValueType>;
+class Form<ValueType extends UI.FormValueMap = UI.FormValueMap> extends Component<
+  Props<ValueType>
+> {
   state: State<ValueType>;
 
   sourceValue: Partial<ValueType>;
@@ -306,7 +307,9 @@ class Form<
 
   // Calls props.onSave with changed form values
   save = () => {
-    const validatedFormValue: Partial<ValueType> = this.form!.getValue();
+    const rawValue: ValueType = this.form!.getValue();
+
+    const validatedFormValue = trimValue(rawValue, this.props.fieldDefinitions);
     if (validatedFormValue) {
       // Get the changed fields
       const settingKeys = Object.keys(validatedFormValue);

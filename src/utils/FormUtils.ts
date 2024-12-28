@@ -392,6 +392,34 @@ const setFieldValueByPath = (
   }
 };
 
+const trimValue = <ValueT extends UI.FormValueMap>(
+  initialValue: ValueT,
+  definitions: UI.FormFieldDefinition[],
+): ValueT => {
+  return Object.keys(initialValue).reduce((reduced, valueKey) => {
+    const definition = definitions.find((def) => valueKey === def.key);
+    if (!definition) {
+      console.assert(false, 'DEF missing');
+      return reduced;
+    }
+
+    if (!!definition.definitions && definition.type === API.SettingTypeEnum.STRUCT) {
+      const trimmedObjectValue = trimValue(
+        initialValue[valueKey] as ValueT,
+        definition.definitions,
+      );
+      return { ...reduced, [valueKey]: trimmedObjectValue };
+    }
+
+    const newValue =
+      typeof initialValue[valueKey] === 'string' &&
+      definition.type !== API.SettingTypeEnum.TEXT
+        ? initialValue[valueKey].trim()
+        : initialValue[valueKey];
+    return { ...reduced, [valueKey]: newValue };
+  }, {} as ValueT);
+};
+
 interface ChangedValueProps {
   definitions: UI.FormFieldDefinition[];
   sourceValue: UI.FormValueMap | null;
@@ -405,7 +433,7 @@ const reduceChangedFieldValues = (
 ) => {
   const definition = definitions.find((def) => valueKey === def.key);
   if (!definition) {
-    console.assert('DEF missing');
+    console.assert(false, 'DEF missing');
     return changedValues;
   }
 
@@ -552,6 +580,9 @@ export {
 
   // Reduces an object of current form values that don't match the source data
   reduceChangedFieldValues,
+
+  // Remove leading/trailing whitespace from all string field values
+  trimValue,
   findFieldByKey,
   findFieldValueByPath,
   setFieldValueByPath,

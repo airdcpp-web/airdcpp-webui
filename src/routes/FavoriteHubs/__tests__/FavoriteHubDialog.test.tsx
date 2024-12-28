@@ -154,7 +154,7 @@ describe('FavoriteHubDialog', () => {
       { userEvent, getByLabelText },
       {
         Name: 'Hub name',
-        'Hub URL': 'adcs://example.com:1511',
+        'Hub URL': 'adcs://example.com:1511 ',
       },
     );
 
