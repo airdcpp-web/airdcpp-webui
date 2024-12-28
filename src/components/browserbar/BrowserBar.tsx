@@ -102,8 +102,18 @@ class BrowserBar extends PureComponent<BrowserBarProps> {
 
     return (
       <div className={className}>
-        <div className="path-navigation" ref={(c) => (this.wrapper = c!)}>
-          <div className="ui breadcrumb" ref={(c) => (this.breadcrumb = c!)}>
+        <div
+          className="path-navigation"
+          ref={(c) => {
+            this.wrapper = c!;
+          }}
+        >
+          <div
+            className="ui breadcrumb"
+            ref={(c) => {
+              this.breadcrumb = c!;
+            }}
+          >
             {tokens.map(this.formatSection)}
           </div>
         </div>

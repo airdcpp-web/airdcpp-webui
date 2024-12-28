@@ -63,7 +63,13 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
     );
 
     return (
-      <div ref={(c) => (this.c = c!)} className={checkboxStyle} style={style}>
+      <div
+        ref={(c) => {
+          this.c = c!;
+        }}
+        className={checkboxStyle}
+        style={style}
+      >
         <input type="checkbox" defaultChecked={checked} />
         {!!caption && <label>{caption}</label>}
       </div>

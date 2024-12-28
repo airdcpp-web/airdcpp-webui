@@ -67,7 +67,9 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     return (
       <div className={classNames('table', 'dropdown', className)}>
         <Popup
-          ref={(c) => (this.popupNode = c!)}
+          ref={(c) => {
+            this.popupNode = c!;
+          }}
           className="basic dropdown-content"
           trigger={trigger}
           settings={settings}

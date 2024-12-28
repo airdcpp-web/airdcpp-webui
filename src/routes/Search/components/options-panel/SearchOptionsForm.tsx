@@ -137,7 +137,9 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
     return (
       <div>
         <Form<Entry>
-          ref={(c) => (this.form = c!)}
+          ref={(c) => {
+            this.form = c!;
+          }}
           onFieldChanged={this.onFieldChanged}
           onFieldSetting={this.onFieldSetting}
           onSave={this.onSave}

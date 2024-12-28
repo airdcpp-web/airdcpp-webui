@@ -45,7 +45,13 @@ export class InputDialog extends React.Component<InputFieldProps, State> {
     return (
       <ConfirmDialog onApproved={this.onApproved} {...other}>
         <form className="ui input dialog">
-          <input ref={(c) => (this.c = c!)} onChange={this.onChanged} {...inputProps} />
+          <input
+            ref={(c) => {
+              this.c = c!;
+            }}
+            onChange={this.onChanged}
+            {...inputProps}
+          />
 
           {/* 
           // A hack to cheat browser not to use autofill for the real password field

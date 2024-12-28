@@ -367,7 +367,9 @@ class Form<ValueType extends UI.FormValueMap = UI.FormValueMap> extends Componen
             <div className={classNames('form', className)}>
               {!!title && <div className="ui form header">{title}</div>}
               <TcombForm
-                ref={(c) => (this.form = c)}
+                ref={(c) => {
+                  this.form = c;
+                }}
                 id={id}
                 type={type}
                 options={options}

@@ -142,7 +142,13 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
     );
 
     return (
-      <div ref={(c) => (this.c = c!)} {...dropDownElementProps} className={className}>
+      <div
+        ref={(c) => {
+          this.c = c!;
+        }}
+        {...dropDownElementProps}
+        className={className}
+      >
         {leftIcon && !!caption && icon}
         <DropdownCaption icon={captionIcon}>{!!caption ? caption : icon}</DropdownCaption>
         {leftIcon || !caption ? null : icon}
