@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.13.1-beta.2",
+  "version": "2.13.1-beta.4",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/airdcpp-web/airdcpp-webui.git"
+    "url": "git+https://github.com/airdcpp-web/airdcpp-webui.git"
   },
   "scripts": {
     "clean": "rimraf dist",
