@@ -1,8 +1,8 @@
 import * as UI from 'types/ui';
 import { getModuleT, toI18nKey } from './TranslationUtils';
+import { getRandomInt } from './ValueUtils';
 
-export const createWidgetId = (typeId: string) =>
-  `${typeId}_${Math.floor(Math.random() * 100000000 + 1)}`;
+export const createWidgetId = (typeId: string) => `${typeId}_${getRandomInt(1, 1000000)}`;
 
 // Key for widget settings in local storage (should not be accessed directly by the widget)
 export const widgetIdToSettingKey = (id: string) => `widget_${id}`;

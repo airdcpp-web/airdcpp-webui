@@ -1,3 +1,5 @@
+import { getRandomInt } from './ValueUtils';
+
 const REPORT_RERENDER = true;
 
 export const MemoReporter = REPORT_RERENDER
@@ -19,3 +21,7 @@ export const MemoReporter = REPORT_RERENDER
         return true;
       }
   : () => undefined; // Use the default prop comparison from React.memo
+
+export const getDebugId = () => {
+  return getRandomInt(1, 1000000);
+};
