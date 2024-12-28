@@ -63,7 +63,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({
       <Grid columns="two" stackable={true}>
         <Row title={gridT('Name')} text={fileItem.name} />
         <Row title={gridT('Type/content')} text={fileItem.type.str} />
-        <Row title={gridT('Size')} text={formatSize(fileItem.size, true)} />
+        <Row title={gridT('Size')} text={formatSize(fileItem.size, 2, true)} />
         <Row
           title={gridT('Last modified')}
           text={formatRelativeTime(fileItem.time || 0)}

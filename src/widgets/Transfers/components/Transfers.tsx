@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 
 //@ts-ignore
-import { TimeSeries } from 'pondjs';
+// import { TimeSeries } from 'pondjs';
 
 import Loader from 'components/semantic/Loader';
 import StatColumn from './StatColumn';
@@ -51,8 +51,6 @@ class Transfers extends PureComponent<
   TransferProps & SocketSubscriptionDecoratorChildProps,
   State
 > {
-  //displayName: 'Transfers',
-
   idleInterval: number | undefined;
 
   state: State = {
@@ -140,17 +138,10 @@ class Transfers extends PureComponent<
       return <Loader inline={true} />;
     }
 
-    const data = {
-      name: 'traffic',
-      columns: ['time', 'in', 'out'],
-      points,
-    };
-
-    const trafficSeries = new TimeSeries(data);
     return (
       <div ref={measureRef} className="transfers-container">
         <SpeedChart
-          trafficSeries={trafficSeries}
+          trafficSeries={points}
           maxDownload={maxDownload}
           maxUpload={maxUpload}
           widgetT={widgetT}

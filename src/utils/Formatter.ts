@@ -67,6 +67,7 @@ const formatUnits = (
   units: string[],
   threshold: number,
   t: UI.TranslateF,
+  decimals = 2,
 ) => {
   const { unitIndex, value } = parseUnit(initialValue, units, threshold);
 
@@ -75,8 +76,14 @@ const formatUnits = (
   return `${formattedValue} ${localizedUnit}`;
 };
 
-const formatSize = (bytes: number, t: UI.TranslateF, i18n: i18n, addExact = false) => {
-  let ret = formatUnits(bytes, ByteUnits, 1024, t);
+const formatSize = (
+  bytes: number,
+  t: UI.TranslateF,
+  i18n: i18n,
+  decimals = 2,
+  addExact = false,
+) => {
+  let ret = formatUnits(bytes, ByteUnits, 1024, t, decimals);
   if (addExact && bytes > 1024) {
     ret += ` (${t(toI18nKey('xBytes', UI.Modules.COMMON), {
       defaultValue: '{{bytes}} bytes',
@@ -172,8 +179,13 @@ const formatSeconds = (seconds: number) => {
   return Moment.duration(seconds, 'seconds').humanize();
 };
 
-const formatSpeed = (bytesPerSecond: number, t: UI.TranslateF, i18n: i18n) => {
-  return formatUnitsPerSecond(formatSize(bytesPerSecond, t, i18n), t);
+const formatSpeed = (
+  bytesPerSecond: number,
+  t: UI.TranslateF,
+  i18n: i18n,
+  decimals = 2,
+) => {
+  return formatUnitsPerSecond(formatSize(bytesPerSecond, t, i18n, decimals), t);
 };
 
 const formatBoolean = (value: boolean, t: UI.TranslateF) => {
@@ -189,12 +201,12 @@ export const createFormatter = (i18n: i18n) => {
       return formatBoolean(value, t);
     },
 
-    formatSize: (bytes: number, addExact = false) => {
-      return formatSize(bytes, t, i18n, addExact);
+    formatSize: (bytes: number, decimals = 2, addExact = false) => {
+      return formatSize(bytes, t, i18n, decimals, addExact);
     },
 
-    formatSpeed: (bytesPerSecond: number) => {
-      return formatSpeed(bytesPerSecond, t, i18n);
+    formatSpeed: (bytesPerSecond: number, decimals = 2) => {
+      return formatSpeed(bytesPerSecond, t, i18n, decimals);
     },
 
     formatConnection: (bytes: number) => {
