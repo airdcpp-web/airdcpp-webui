@@ -9,7 +9,7 @@ import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import * as API from 'types/api';
 
 import { useState } from 'react';
-import { HashInfoDialog } from './HashInfoDialog';
+import { HashInfoDialog } from './hash-info-dialog/HashInfoDialog';
 
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
