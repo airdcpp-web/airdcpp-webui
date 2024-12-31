@@ -34,7 +34,23 @@
     "prettier": "prettier --write src"
   },
   "overrides": {
-    "tr46": "^5.0.0"
+    "tr46": "^5.0.0",
+    "reflux": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-portal": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-circular-progressbar": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "@reduxjs/toolkit": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
