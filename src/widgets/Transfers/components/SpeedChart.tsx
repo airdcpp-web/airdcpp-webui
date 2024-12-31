@@ -76,7 +76,7 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
   const series: ApexOptions['series'] = [
     {
       name: 'Download',
-      color: '#C8D5B8',
+      color: '#0ea432',
       data: trafficSeries.map((point: number[]) => ({
         y: point[1],
         x: point[0],
@@ -84,7 +84,7 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
     },
     {
       name: 'Upload',
-      color: 'red',
+      color: '#b21e1e',
       data: trafficSeries.map((point: number[]) => ({
         y: -point[2],
         x: point[0],
