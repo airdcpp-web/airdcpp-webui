@@ -206,7 +206,7 @@ const toFavoriteHub = (
 };
 
 const isAdcHub = (hubUrl?: string) =>
-  !!hubUrl && (hubUrl.indexOf('adc://') === 0 || hubUrl.indexOf('adcs://') === 0);
+  !!hubUrl && (hubUrl.startsWith('adc://') || hubUrl.startsWith('adcs://'));
 
 // Get selection values for the profiles field
 const getFieldProfiles = (
@@ -286,7 +286,7 @@ const FavoriteHubDialog: React.FC<Props> = ({
     }
 
     return socket.patch(
-      `${FavoriteHubConstants.HUBS_URL}/${hubEntry!.id}`,
+      `${FavoriteHubConstants.HUBS_URL}/${hubEntry.id}`,
       updatedEntryFields,
     );
   };

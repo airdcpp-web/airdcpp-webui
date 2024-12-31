@@ -26,10 +26,6 @@ const menuItemToLinkComponent = (
   settingsT: UI.ModuleTranslator,
   { hasAccess }: AuthenticatedSession,
 ) => {
-  /*if (menuItemInfo.debugOnly && process.env.NODE_ENV === 'production') {
-    return null;
-  }*/
-
   if (menuItemInfo.access && !hasAccess(menuItemInfo.access)) {
     return null;
   }
@@ -53,8 +49,8 @@ export const rootMenuItemToLinkComponent = (
 ) => {
   // Browsing is smoother when the child page is loaded directly
   // Don't use the child URL for currently active parent so that the route is detected as active correctly
-  let url = sectionToUrl(rootMenuItem, undefined);
-  if (rootMenuItem.menuItems && location.pathname.indexOf(url) !== 0) {
+  let url = sectionToUrl(rootMenuItem);
+  if (rootMenuItem.menuItems && !location.pathname.startsWith(url)) {
     url = sectionToUrl(rootMenuItem.menuItems[0], rootMenuItem);
   }
 
@@ -70,55 +66,6 @@ export const childMenuItemToLinkComponent = (
   const url = sectionToUrl(childMenuItem, parent);
   return menuItemToLinkComponent(url, childMenuItem, settingsT, session);
 };
-
-/*export const menuItemsToRouteComponentArray = (
-  currentMenuItem: SectionType,
-  menuItems: SectionType[] | undefined,
-  settingsT: UI.ModuleTranslator,
-  moduleT: UI.ModuleTranslator | undefined,
-  parent: SectionType | undefined
-) => {
-  if (!menuItems) {
-    return null;
-  }
-
-  return menuItems.map((item) => (
-    <Route
-      key={item.url}
-      path={sectionToUrl(item, parent)}
-      element={
-        <item.component
-          menuItems={currentMenuItem.menuItems}
-          advancedMenuItems={currentMenuItem.advancedMenuItems}
-          parent={currentMenuItem}
-          parentMenuItems={menuItems}
-          settingsT={settingsT}
-          moduleT={getSubModuleT(moduleT || settingsT, camelCase(item.url))}
-        />
-      }
-    />
-  ));
-};*/
-
-/*export const isItemActive = (
-  item: ChildSectionType,
-  parent: RootSectionType | undefined,
-  location: Location
-) => {
-  return location.pathname.indexOf(sectionToUrl(item, parent)) === 0;
-};
-
-export const findMenuItem = (
-  menuItems: ChildSectionType[],
-  parent: RootSectionType | undefined,
-  location: Location
-) => {
-  if (!menuItems) {
-    return null;
-  }
-
-  return menuItems.find((item) => isItemActive(item, parent, location));
-};*/
 
 export const findMainSection = (
   mainSection: string | undefined,

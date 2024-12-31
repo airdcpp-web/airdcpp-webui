@@ -29,10 +29,6 @@ import '../style.css';
 
 const RESULT_WAIT_PERIOD = 4000;
 
-/*interface SearchLocationState {
-  searchString?: string;
-}*/
-
 interface SearchProps {}
 
 interface SearchDataProps extends DataProviderDecoratorChildProps, WithTranslation {
@@ -47,7 +43,7 @@ const loadHubOptions = () => {
 };
 
 const saveHubOptions = (hubs: string[] | null) => {
-  if (!hubs || !hubs.length) {
+  if (!hubs?.length) {
     removeSessionProperty(SEARCH_HUBS_KEY);
   } else {
     saveSessionProperty(SEARCH_HUBS_KEY, hubs);
@@ -106,7 +102,7 @@ const Search: React.FC<SearchDataProps> = ({ instance, t }) => {
 
   const checkLocationState = () => {
     const { state } = location;
-    if (state && state.searchString /* && state.searchString !== searchString*/) {
+    if (state?.searchString /* && state.searchString !== searchString*/) {
       search(state.searchString);
 
       // Avoid searching for it again
@@ -125,7 +121,7 @@ const Search: React.FC<SearchDataProps> = ({ instance, t }) => {
 
   useEffect(() => {
     checkLocationState();
-  }, [location.state && location.state.searchString]);
+  }, [location.state?.searchString]);
 
   useEffect(() => {
     if (!running) {

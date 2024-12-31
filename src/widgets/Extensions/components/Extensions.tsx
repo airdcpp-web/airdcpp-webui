@@ -59,6 +59,7 @@ const NpmPackageLayout: React.FC<NpmPackageLayoutProps & NpmPackageLayoutDataPro
     {packageCatalog.length > 0 && (
       <div className="ui divided list">
         {packageCatalog
+          .slice()
           .sort(packageDateSort)
           .map((data) => getItem(data.package, widgetT, installedPackages))}
       </div>
@@ -71,8 +72,7 @@ export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutData
   {
     urls: {
       installedPackages: ExtensionConstants.EXTENSIONS_URL,
-      packageCatalog: ({}) =>
-        fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
+      packageCatalog: () => fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
     },
     dataConverters: {
       packageCatalog: ({ objects }) => objects,

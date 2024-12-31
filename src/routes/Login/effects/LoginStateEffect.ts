@@ -11,8 +11,7 @@ export interface LoginLocationState {
 }
 
 const useSessionState = () => {
-  const loadingState = useState(false);
-  const setLoading = loadingState[1];
+  const [loading, setLoading] = useState(false);
   const { i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ const useSessionState = () => {
 
       // Redirect to the main app
       const state = location.state as LoginLocationState;
-      const nextPath = state && state.nextPath ? state.nextPath : '/';
+      const nextPath = state?.nextPath ?? '/';
       navigate(nextPath, { replace: true });
     } else if (!!loginInfo.lastError && !LoginStore.refreshToken) {
       // Keep the loading state as true as long as there is socket actions happening
@@ -53,7 +52,7 @@ const useSessionState = () => {
     }
   }, []);
 
-  return loadingState;
+  return { loading, setLoading };
 };
 
 export { useSessionState };

@@ -10,6 +10,7 @@ import * as API from 'types/api';
 import IconConstants from 'constants/IconConstants';
 import { UserSelectField } from 'components/select';
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
+import LinkButton from 'components/semantic/LinkButton';
 
 const hasSession = (entry: API.HistoryItem) => {
   return PrivateChatSessionStore.getSession(entry.user!.cid);
@@ -26,7 +27,12 @@ const MessageNew: React.FC<NewSessionLayoutProps> = (props) => {
   };
 
   const recentUserRender = (entry: API.HistoryItem) => {
-    return <a onClick={(_) => handleSubmit(entry.user!)}>{entry.user!.nicks}</a>;
+    return (
+      <LinkButton
+        onClick={(_) => handleSubmit(entry.user!)}
+        caption={entry.user!.nicks}
+      />
+    );
   };
 
   const { sessionT } = props;

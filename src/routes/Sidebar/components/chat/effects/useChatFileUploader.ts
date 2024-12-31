@@ -71,11 +71,7 @@ export const useFileUploader = ({
   };
 
   const onPaste = (evt: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    if (
-      evt.clipboardData &&
-      evt.clipboardData.files &&
-      (evt.clipboardData as any).files.length
-    ) {
+    if (evt.clipboardData?.files.length) {
       const files: File[] = [];
 
       {

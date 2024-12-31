@@ -16,8 +16,9 @@ class LogSection extends Component<LogSectionProps> {
     enabled: false,
   };
 
-  convertKey = (suffix?: string) => {
-    return `log_${this.props.section}${suffix ? `_${suffix}` : ''}`;
+  convertKey = (optionalSuffix?: string) => {
+    const suffix = optionalSuffix ? `_${optionalSuffix}` : '';
+    return `log_${this.props.section}${suffix}`;
   };
 
   onSettingsReceived = (settings: API.SettingValueMap) => {

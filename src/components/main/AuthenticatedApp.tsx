@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import ActivityTracker from 'components/main/ActivityTracker';
 import Notifications from 'components/main/Notifications';
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import AuthenticationGuardDecorator from 'components/main/decorators/AuthenticationGuardDecorator';
 import MainLayoutMobile from 'components/main/MainLayoutMobile';
@@ -28,7 +28,7 @@ const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
     useUrgencyPageTitle(urgencies);
     useLayoutWidth(); // Update the layout in case of resize
 
-    const MainLayout = useMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
+    const MainLayout = usingMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
     return (
       <div id="authenticated-app">
         <ActivityTracker />

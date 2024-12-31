@@ -80,14 +80,17 @@ const BundleSourceTable: React.FC<
           </tr>
         </thead>
         <tbody>
-          {sources.sort(userSort).map((source) => (
-            <Source
-              key={source.user.cid}
-              source={source}
-              bundle={bundle!}
-              t={queueT.plainT}
-            />
-          ))}
+          {sources
+            .slice()
+            .sort(userSort)
+            .map((source) => (
+              <Source
+                key={source.user.cid}
+                source={source}
+                bundle={bundle}
+                t={queueT.plainT}
+              />
+            ))}
         </tbody>
       </table>
     </div>
@@ -99,7 +102,7 @@ export default DataProviderDecorator<BundleSourceTableProps, BundleSourceTableDa
   {
     urls: {
       sources: ({ bundle }, socket) =>
-        socket.get(`${QueueConstants.BUNDLES_URL}/${bundle!.id}/sources`),
+        socket.get(`${QueueConstants.BUNDLES_URL}/${bundle.id}/sources`),
     },
     onSocketConnected: (addSocketListener, { refetchData, props }) => {
       addSocketListener<API.QueueBundle>(
@@ -107,7 +110,7 @@ export default DataProviderDecorator<BundleSourceTableProps, BundleSourceTableDa
         QueueConstants.BUNDLE_SOURCES,
         (data) => {
           // Avoid flickering when there are many bundles running
-          if (data.id === props.bundle!.id) {
+          if (data.id === props.bundle.id) {
             refetchData();
           }
         },

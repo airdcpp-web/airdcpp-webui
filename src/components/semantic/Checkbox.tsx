@@ -23,7 +23,7 @@ export interface CheckboxProps {
   className?: string;
   style?: React.CSSProperties;
   settings?: SemanticUI.CheckboxSettings;
-  beforeUnchecked?: () => void;
+  beforeUnchecked?: () => void | false;
 
   id?: string;
   name?: string;

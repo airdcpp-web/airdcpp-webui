@@ -3,7 +3,6 @@ import * as React from 'react';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
-//import RedrawDecorator from 'decorators/RedrawDecorator';
 import { useFormatter } from 'context/FormatterContext';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';

@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 import * as React from 'react';
 
-//import ExternalLink from 'components/ExternalLink';
-//import LinkConstants from 'constants/LinkConstants';
 import Message from 'components/semantic/Message';
 import Button from 'components/semantic/Button';
 
@@ -47,7 +45,7 @@ const InstallPrompt: React.FC<InstallPromptProps> = ({ alwaysShow }) => {
           <Button
             className="primary"
             caption={translate('Install', t, UI.Modules.COMMON)}
-            onClick={() => prompt!()}
+            onClick={() => prompt()}
             icon={IconConstants.CREATE}
           />
           {!alwaysShow && (

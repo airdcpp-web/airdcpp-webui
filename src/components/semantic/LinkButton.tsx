@@ -1,49 +1,35 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
-import Icon, { IconType } from 'components/semantic/Icon';
 
 import 'fomantic-ui-css/components/button.min.css';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon?: IconType;
-
-  // Show spinner
-  loading?: boolean;
-
+export interface LinkButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   // Disable button (the button will be disabled automatically when 'loading' is true)
   disabled?: boolean;
 
   caption: React.ReactNode;
-
-  inverted?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const LinkButton: React.FC<LinkButtonProps> = ({
   className,
-  loading,
-  icon,
   caption,
   disabled,
-  color,
-  inverted,
+  color = 'blue',
   ...other
 }) => {
   const buttonStyle = classNames(
-    'ui button',
-    { disabled: !!disabled || !!loading },
-    { loading: !!loading },
-    { inverted: !!inverted },
+    'ui button basic link',
+    { disabled: !!disabled },
     color,
     className,
   );
 
   return (
     <button className={buttonStyle} {...other}>
-      <Icon icon={icon} />
       {caption}
     </button>
   );
 };
 
-export default Button;
+export default LinkButton;

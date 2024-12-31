@@ -53,7 +53,7 @@ const PriorityCell: React.FC<
 );
 
 class Queue extends React.Component<WithTranslation> {
-  static displayName = 'Queue';
+  static readonly displayName = 'Queue';
 
   isActive = (cellData: any, rowData: API.QueueBundle) => {
     return !rowData.status.downloaded;

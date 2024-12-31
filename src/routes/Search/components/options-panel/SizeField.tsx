@@ -33,7 +33,7 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
   const [unitIndex, setUnitIndex] = useState<number>(initialData.unitIndex);
 
   const valueToBytes = () => {
-    let ret = displayValue || 0;
+    let ret = displayValue ?? 0;
     if (!!unitIndex) {
       for (let i = 1; i <= unitIndex; i++) {
         ret *= 1024;
@@ -68,7 +68,7 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
         type="number"
         {...inputProps}
         min={0}
-        value={displayValue || ''}
+        value={displayValue ?? ''}
         onChange={(evt) => {
           const newValue = !!evt.target.value ? parseInt(evt.target.value) : null;
           if (!!newValue) {

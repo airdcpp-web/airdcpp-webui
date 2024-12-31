@@ -4,6 +4,7 @@ import * as UI from 'types/ui';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Icon, { IconType } from 'components/semantic/Icon';
 import MenuItemLink from 'components/semantic/MenuItemLink';
+import LinkButton from 'components/semantic/LinkButton';
 
 // Convert action menu items to React components where the submenus will be shown in the original layout with animation
 // Suitable for TableDropdown
@@ -100,15 +101,18 @@ const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
           <div ref={ref} className="ui text menu vertical table-items">
             {activeSubmenu ? (
               <>
-                <a
+                <LinkButton
                   className="header item"
                   onClick={() => {
                     setActiveSubmenu(null);
                   }}
-                >
-                  <Icon icon="chevron left" />
-                  {activeSubmenu.item!.children}
-                </a>
+                  caption={
+                    <>
+                      <Icon icon="chevron left" />
+                      {activeSubmenu.item!.children}
+                    </>
+                  }
+                />
                 {buildMenuList(activeSubmenu.children!, hideMenu, setActiveSubmenu)}
               </>
             ) : (

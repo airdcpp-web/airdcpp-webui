@@ -10,7 +10,6 @@ import 'fomantic-ui-css/components/label.min.css';
 import 'fomantic-ui-css/components/list.min.css';
 import 'fomantic-ui-css/components/menu.min.css';
 import 'fomantic-ui-css/components/message.min.css';
-import 'fomantic-ui-css/components/menu.min.css';
 import 'fomantic-ui-css/components/progress.min.css';
 import 'fomantic-ui-css/components/reset.min.css';
 import 'fomantic-ui-css/components/segment.min.css';

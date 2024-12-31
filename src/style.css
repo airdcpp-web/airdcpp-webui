@@ -29,6 +29,15 @@ section#container-main,
   height: 100dvh;
 }
 
+.ui.button.basic.link {
+  box-shadow: 0 0 !important;
+  padding: unset;
+}
+
+.ui.button.basic.link:hover {
+  text-decoration:underline;
+}
+
 .ui.checkbox.floating {
   width: 100%;
   margin: 10px 0px;
@@ -50,6 +59,7 @@ section#container-main,
 
 .ui.dropdown {
   font-size: inherit;
+  max-width: 100%;
 }
 
 .ui.dropdown .menu > .item:not(.submenu) {
@@ -88,9 +98,24 @@ section#container-main,
   align-self: center;
 }
 
+.ui.dropdown .menu {
+  z-index: 1000;
+}
+
 .ui.dropdown .menu .header {
   display: flex;
 }
+
+.ui.dropdown:not(.button) > .caption {
+  user-select: auto !important;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+td .ui.dropdown > .caption > .icon-caption {
+  display: contents;
+}
+
 
 .divided.list .item .description {
   font-size: 90%;
@@ -259,24 +284,6 @@ section#container-main,
 td:not(.dropdown),
 th {
   overflow: hidden;
-}
-
-.ui.dropdown .menu {
-  z-index: 1000;
-}
-
-.ui.dropdown:not(.button) > .caption {
-  user-select: auto !important;
-  overflow: hidden;
-  max-width: 100%;
-}
-
-.ui.dropdown {
-  max-width: 100%;
-}
-
-td .ui.dropdown > .caption > .icon-caption {
-  display: contents;
 }
 
 .notifications-tl h4.notification-title {

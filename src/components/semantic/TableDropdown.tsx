@@ -27,7 +27,7 @@ export interface TableDropdownProps {
 }
 
 class TableDropdown extends React.Component<TableDropdownProps> {
-  static defaultProps: Pick<
+  static readonly defaultProps: Pick<
     TableDropdownProps,
     'linkCaption' | 'triggerIcon' | 'position'
   > = {

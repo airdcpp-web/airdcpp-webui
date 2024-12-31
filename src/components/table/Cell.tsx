@@ -21,15 +21,12 @@ import * as API from 'types/api';
 import { ActionHandlerDecorator } from 'decorators/ActionHandlerDecorator';
 import { useSession } from 'context/SessionContext';
 import { formatDecimal } from 'utils/ValueFormat';
+import LinkButton from 'components/semantic/LinkButton';
 
 const getCellContent = (cellData: any) => {
   if (typeof cellData === 'object') {
     return Array.isArray(cellData) ? cellData.length : cellData.str;
   }
-
-  //if (typeof cellData === 'boolean') {
-  //  return cellData ? 'Yes' : 'No';
-  //}
 
   if (cellData === 0) {
     return null;
@@ -52,7 +49,7 @@ interface HeaderCellProps extends CellProps {
 
 export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellProps) => (
   <Cell {...props}>
-    <a onClick={onClick}>{label}</a>
+    <LinkButton onClick={onClick} color="black" caption={label} />
   </Cell>
 );
 
@@ -83,6 +80,7 @@ export const FileActionCell = <
         typeInfo={rowDataGetter!().type}
         caption={cellData}
         className="icon-caption"
+        linkColor="black"
       />
     }
     itemData={rowDataGetter!}
@@ -145,7 +143,7 @@ export const ActionLinkCell = <
   return (
     <ActionHandlerDecorator<ItemDataT, EntityT>>
       {({ onClickAction }) => (
-        <a
+        <LinkButton
           className="plain link cell"
           onClick={() =>
             onClickAction({
@@ -155,26 +153,13 @@ export const ActionLinkCell = <
               entity: entity as EntityT,
             })
           }
-        >
-          {getCellContent(cellData)}
-        </a>
+          caption={getCellContent(cellData)}
+          color="black"
+        />
       )}
     </ActionHandlerDecorator>
   );
-
-  /*return (
-    <ActionButton
-      actions={ actions }
-      actionId={ actionId }
-      tag="a"
-      semanticClassName="plain link cell"
-      icon={ null }
-      caption={ getCellContent(cellData) }
-    />
-  );*/
 };
-
-//export const ActionLinkCell = ActionHandlerDecorator(ActionLinkCellPlain);
 
 export interface NumberCellProps extends RowWrapperCellChildProps<number, any> {
   cellData?: number;
@@ -267,10 +252,11 @@ export const FileDownloadCell = <
         onClick={clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter!) : null}
         caption={cellData}
         className="icon-caption"
+        linkColor="black"
       />
     }
     user={userGetter(rowDataGetter!())}
-    linkCaption={!!clickHandlerGetter ? false : true}
+    linkCaption={!clickHandlerGetter}
     itemInfoGetter={rowDataGetter!}
     downloadHandler={downloadHandler}
     {...props}

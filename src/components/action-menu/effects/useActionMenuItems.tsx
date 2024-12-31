@@ -85,7 +85,7 @@ export const useActionMenuItems = <
     const menus = getMenus();
 
     // Local items
-    const children = menus.filter(hasLocalItems).reduce((reduced, menu, menuIndex) => {
+    let children = menus.filter(hasLocalItems).reduce((reduced, menu, menuIndex) => {
       const onClickHandler = (action: ActionData<ItemDataT, EntityT>) => {
         if (!!onClickMenuItem) {
           onClickMenuItem();
@@ -105,7 +105,7 @@ export const useActionMenuItems = <
 
     // Remote items (insert after all local items so that the previous menu item positions won't change)
     if (remoteMenus) {
-      remoteMenus.reduce(reduceRemoteMenuItems, children);
+      children = remoteMenus.reduce(reduceRemoteMenuItems, children);
     }
 
     return children;

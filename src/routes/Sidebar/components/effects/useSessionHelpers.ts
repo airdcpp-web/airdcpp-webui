@@ -28,7 +28,6 @@ export const useSessionRouteHelpers = ({ baseUrl }: SessionRouteHelperProps) => 
 
   const newUrl = `/${baseUrl}/new`;
   const replaceNew = () => {
-    // const { navigate } = props;
     navigate(newUrl, { replace: true });
   };
 

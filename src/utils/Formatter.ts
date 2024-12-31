@@ -189,9 +189,7 @@ const formatSpeed = (
 };
 
 const formatBoolean = (value: boolean, t: UI.TranslateF) => {
-  return value
-    ? translate('Yes', t, UI.Modules.COMMON)
-    : translate('No', t, UI.Modules.COMMON);
+  return translate(value ? 'Yes' : 'No', t, UI.Modules.COMMON);
 };
 
 export const createFormatter = (i18n: i18n) => {

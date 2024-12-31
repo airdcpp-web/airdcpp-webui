@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { getParentPath } from 'utils/FileUtils';
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 import { toI18nKey } from 'utils/TranslationUtils';
 
 import ShareConstants from 'constants/ShareConstants';
@@ -90,7 +90,7 @@ const DownloadLayout: React.FC<Props> = (props) => {
     getMenuItem(s, activeSectionKey, setActiveSectionKey, t),
   );
 
-  const Component = useMobileLayout() ? MobileDownloadLayout : NormalDownloadLayout;
+  const Component = usingMobileLayout() ? MobileDownloadLayout : NormalDownloadLayout;
   return (
     <Component
       key={activeSection.key} // Ensure that section-specific data is refetched

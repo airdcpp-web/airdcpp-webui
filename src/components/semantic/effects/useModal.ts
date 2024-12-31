@@ -13,7 +13,7 @@ export type CommonModalProps = {
 type ModalSettings = Partial<SemanticUI.ModalSettings>;
 
 export const useModal = (props: CommonModalProps, customSettings: ModalSettings) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = React.useRef<HTMLDialogElement>(null);
 
   // Set to true when the modal is being closed cleanly (backdrop click/action buttons)
   // We need to clean the DOM for non-clean closures
@@ -51,7 +51,7 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
       return false;
     }
 
-    return;
+    return void 0;
   };
 
   React.useLayoutEffect(() => {

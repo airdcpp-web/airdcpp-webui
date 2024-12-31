@@ -46,7 +46,7 @@ interface State {
 const ANIMATION_DURATION = 200;
 
 class Dropdown extends React.PureComponent<DropdownProps, State> {
-  static defaultProps: Pick<DropdownProps, 'direction' | 'leftIcon'> = {
+  static readonly defaultProps: Pick<DropdownProps, 'direction' | 'leftIcon'> = {
     direction: 'auto',
     leftIcon: false,
   };
@@ -103,12 +103,21 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
     $(this.c).dropdown(settings);
   };
 
+  getIcon = () => {
+    const { triggerIcon, selection } = this.props;
+
+    if (triggerIcon !== undefined) {
+      return triggerIcon;
+    }
+
+    return selection ? 'dropdown' : IconConstants.EXPAND;
+  };
+
   render() {
     const {
       leftIcon,
       caption,
       button,
-      triggerIcon,
       captionIcon,
       dropDownElementProps,
       selection,
@@ -128,18 +137,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       { 'selection fluid': selection },
     );
 
-    const icon = (
-      <Icon
-        icon={
-          triggerIcon !== undefined
-            ? triggerIcon
-            : selection
-              ? 'dropdown'
-              : IconConstants.EXPAND
-        }
-        className="trigger"
-      />
-    );
+    const icon = <Icon icon={this.getIcon()} className="trigger" />;
 
     return (
       <div

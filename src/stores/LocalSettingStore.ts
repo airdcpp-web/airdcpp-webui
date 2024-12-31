@@ -112,7 +112,7 @@ const Store = {
       return this.settings[key];
     }
 
-    return this.getDefinition(key)!.default_value;
+    return this.getDefinition(key).default_value;
   },
 
   getValues() {

@@ -17,6 +17,7 @@ import { Trans } from 'react-i18next';
 import IconConstants from 'constants/IconConstants';
 import Button from 'components/semantic/Button';
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
+import LinkButton from 'components/semantic/LinkButton';
 
 class HubNew extends Component<NewSessionLayoutProps> {
   handleConnect = (hubUrl: string) => {
@@ -33,7 +34,12 @@ class HubNew extends Component<NewSessionLayoutProps> {
   };
 
   recentHubRender = (entry: API.HistoryItem) => {
-    return <a onClick={(_) => this.handleConnect(entry.hub_url)}>{entry.name}</a>;
+    return (
+      <LinkButton
+        onClick={(_) => this.handleConnect(entry.hub_url)}
+        caption={entry.name}
+      />
+    );
   };
 
   render() {

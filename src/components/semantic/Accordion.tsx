@@ -12,7 +12,7 @@ type AccordionProps = React.PropsWithChildren<{
 }>;
 
 class Accordion extends Component<AccordionProps> {
-  static defaultProps: Pick<AccordionProps, 'className'> = {
+  static readonly defaultProps: Pick<AccordionProps, 'className'> = {
     className: '',
   };
 

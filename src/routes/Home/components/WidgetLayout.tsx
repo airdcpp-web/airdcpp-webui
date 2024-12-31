@@ -25,17 +25,17 @@ const mapWidget = (
   layoutItem: Layout,
   rootWidgetT: UI.ModuleTranslator,
 ): React.ReactNode => {
-  const widgetInfo = WidgetStore.getWidgetInfoById(layoutItem.i!);
+  const widgetInfo = WidgetStore.getWidgetInfoById(layoutItem.i);
   invariant(widgetInfo, 'Widget info missing');
   if (!widgetInfo) {
     return null;
   }
 
-  const settings = WidgetStore.getWidgetSettings(layoutItem.i!, widgetInfo);
+  const settings = WidgetStore.getWidgetSettings(layoutItem.i, widgetInfo);
   return (
     <Widget
       key={layoutItem.i}
-      componentId={layoutItem.i!}
+      componentId={layoutItem.i}
       widgetInfo={widgetInfo}
       settings={settings}
       rootWidgetT={rootWidgetT}

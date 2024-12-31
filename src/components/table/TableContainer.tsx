@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Table, ColumnProps } from 'fixed-data-table-2';
 
 import TableActions from 'actions/TableActions';
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import Measure, { ContentRect } from 'react-measure';
 import RowWrapperCell from 'components/table/RowWrapperCell';
@@ -207,7 +207,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     const { cell, columnKey, renderCondition } = column.props;
     const { store, rowClassNameGetter, moduleId, t } = this.props;
 
-    const mobileView = useMobileLayout();
+    const mobileView = usingMobileLayout();
     if (!mobileView) {
       // Get column width
       if (!!columnKey && !!this.state.columnWidths[columnKey]) {

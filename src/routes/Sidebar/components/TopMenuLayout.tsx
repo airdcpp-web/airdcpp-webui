@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import ActionButton from 'components/ActionButton';
 import SectionedDropdown from 'components/semantic/SectionedDropdown';
@@ -58,7 +58,7 @@ const CloseButton = <
   actions,
   activeItem,
 }: CloseButtonProps<SessionT, UIActionsT>) => {
-  if (!activeItem || useMobileLayout()) {
+  if (!activeItem || usingMobileLayout()) {
     return null;
   }
 

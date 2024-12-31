@@ -122,7 +122,7 @@ const LoginStore = {
       this._lastError = {
         id: 'sessionLost',
         message: 'Session lost',
-      }; // translate('Session lost', i18n.t.bind(i18n), UI.Modules.LOGIN);
+      };
     } else {
       this._lastError = errorToString(error);
     }

@@ -11,6 +11,7 @@ import * as API from 'types/api';
 import IconConstants from 'constants/IconConstants';
 import { UserSelectField } from 'components/select';
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
+import LinkButton from 'components/semantic/LinkButton';
 
 const FilelistNew: React.FC<NewSessionLayoutProps> = (props) => {
   const handleSubmit = (user: API.HintedUser) => {
@@ -35,11 +36,9 @@ const FilelistNew: React.FC<NewSessionLayoutProps> = (props) => {
   };
 
   const recentUserRender = (entry: API.HistoryItem) => {
-    return (
-      <a onClick={(_) => handleSubmit(entry.user!)}>
-        {entry.user!.nicks + (entry.description ? ` (${entry.description})` : '')}
-      </a>
-    );
+    const caption =
+      entry.user!.nicks + (entry.description ? ` (${entry.description})` : '');
+    return <LinkButton onClick={(_) => handleSubmit(entry.user!)} caption={caption} />;
   };
 
   const hasSession = (entry: API.HistoryItem) => {

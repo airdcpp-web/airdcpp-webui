@@ -27,10 +27,6 @@ interface DataProps extends DataProviderDecoratorChildProps {
   fileItem: API.FilelistItem;
 }
 
-/*interface RouteProps {
-  itemId: string;
-}*/
-
 type Props = FilelistItemInfoDialogProps & ModalRouteDecoratorChildProps;
 
 export const FilelistItemGetter = (session: API.FilelistSession) => {
@@ -42,7 +38,7 @@ export const FilelistItemGetter = (session: API.FilelistSession) => {
 };
 
 class FilelistItemInfoDialog extends Component<Props & DataProps> {
-  static displayName = 'FilelistItemInfoDialog';
+  static readonly displayName = 'FilelistItemInfoDialog';
 
   render() {
     const { fileItem, session } = this.props;

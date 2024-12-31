@@ -8,7 +8,7 @@ import Button from 'components/semantic/Button';
 import * as UI from 'types/ui';
 
 import IconConstants from 'constants/IconConstants';
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 import { SearchOptionsButton, SearchOptions } from './options-panel';
 
 interface SearchInputProps {
@@ -28,7 +28,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 }) => {
   const [options, setOptions] = useState<SearchOptions | null>(defaultOptions);
 
-  const mobile = useMobileLayout();
+  const mobile = usingMobileLayout();
   return (
     <div className="search-container">
       <div className="search-area">

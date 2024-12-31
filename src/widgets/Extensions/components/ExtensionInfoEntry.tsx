@@ -8,7 +8,6 @@ import { compareVersions } from 'compare-versions';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { DataFetchError } from 'decorators/DataProviderDecorator';
 import { Link } from 'react-router';
 
 interface VersionProps {
@@ -34,7 +33,6 @@ const Version: React.FC<VersionProps> = ({ packageInfo, moduleT }) => {
 export interface ExtensionProps {
   installedPackage?: API.Extension;
   npmPackage: UI.NpmPackage;
-  npmError?: DataFetchError | null;
   moduleT: UI.ModuleTranslator;
 }
 

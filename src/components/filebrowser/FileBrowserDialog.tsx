@@ -44,7 +44,7 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
   } = useFileItemSelection({ onConfirm, initialPath, selectMode, historyId });
 
   const selectDirectory = selectMode === UI.FileSelectModeEnum.DIRECTORY;
-  const showApprove = selectMode !== UI.FileSelectModeEnum.EXISTING_FILE ? true : false;
+  const showApprove = selectMode !== UI.FileSelectModeEnum.EXISTING_FILE;
   const { t } = useTranslation();
   return (
     <ModalComponent

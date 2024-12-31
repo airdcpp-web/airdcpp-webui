@@ -45,7 +45,7 @@ const typeToMenuItem = (
   selectedItem: UI.SearchTypeItem,
 ) => (
   <MenuItemLink
-    key={type.id || SearchConstants.DEFAULT_SEARCH_TYPE}
+    key={type.id ?? SearchConstants.DEFAULT_SEARCH_TYPE}
     onClick={() => onChange(type.id)}
     icon={<SearchTypeIcon type={type} />}
     active={selectedItem.id === type.id}

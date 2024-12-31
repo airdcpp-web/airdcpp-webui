@@ -98,13 +98,12 @@ class Transfers extends PureComponent<
     this.idleInterval = window.setInterval(this.checkIdle, IDLE_APPEND_INTERVAL_MS);
   };
 
-  onStatsReceived = (stats: API.TransferStats) => {
-    this.setState({
-      points: addSpeed(this.state.points, stats.speed_down, stats.speed_up),
-      maxDownload: Math.max(stats.speed_down, this.state.maxDownload),
-      maxUpload: Math.max(stats.speed_up, this.state.maxUpload),
-      stats,
-    });
+  onStatsReceived = (newStats: API.TransferStats) => {
+    this.setState((prevState) => ({
+      points: addSpeed(prevState.points, newStats.speed_down, newStats.speed_up),
+      maxDownload: Math.max(newStats.speed_down, prevState.maxDownload),
+      maxUpload: Math.max(newStats.speed_up, prevState.maxUpload),
+    }));
   };
 
   onStatsUpdated = (newStats: Partial<API.TransferStats>) => {
@@ -117,7 +116,7 @@ class Transfers extends PureComponent<
     //
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
     if (!hasEllapsedSinceLastUpdate(points, 100)) {
-      //console.log(`Transfer widget: burst update ignored`);
+      console.debug(`Transfer widget: burst update ignored`);
       return;
     }
 

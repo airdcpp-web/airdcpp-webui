@@ -11,7 +11,7 @@ import TableFilterDecorator, {
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 import { translate } from 'utils/TranslationUtils';
 import { Translation } from 'react-i18next';
 
@@ -57,7 +57,7 @@ class TextFilter extends React.PureComponent<
   timer: number | undefined;
   input: HTMLInputElement;
 
-  static defaultProps: Pick<TextFilterProps, 'autoFocus'> = {
+  static readonly defaultProps: Pick<TextFilterProps, 'autoFocus'> = {
     autoFocus: true,
   };
 
@@ -118,7 +118,7 @@ class TextFilter extends React.PureComponent<
                 onChange={this.onTextChanged}
                 value={value}
                 type="text"
-                autoFocus={!useMobileLayout() && autoFocus}
+                autoFocus={!usingMobileLayout() && autoFocus}
               />
               <SectionedDropdown
                 className="filter-method right top pointing"

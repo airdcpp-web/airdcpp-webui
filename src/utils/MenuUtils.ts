@@ -1,5 +1,3 @@
-// import invariant from 'invariant';
-
 import { actionFilter, actionAccess } from 'utils/ActionUtils';
 
 import * as UI from 'types/ui';

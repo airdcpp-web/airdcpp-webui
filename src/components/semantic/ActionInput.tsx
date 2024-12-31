@@ -14,7 +14,7 @@ export interface ActionInputProps extends Omit<ButtonProps, 'type'> {
 }
 
 class ActionInput extends React.PureComponent<ActionInputProps> {
-  static defaultProps: Pick<ActionInputProps, 'type'> = {
+  static readonly defaultProps: Pick<ActionInputProps, 'type'> = {
     type: 'text',
   };
 

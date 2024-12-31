@@ -43,10 +43,10 @@ const handleOpenLink: Handler = ({ itemData }) => {
 
   if (typeof entry.link === 'string') {
     link = entry.link;
-  } else if (entry.link && entry.link.attr.href && entry.link.attr.href.length > 2) {
+  } else if (entry?.link?.attr.href && entry.link.attr.href.length > 2) {
     link = entry.link.attr.href;
 
-    if (link[0] === '/' && link[1] !== '/') {
+    if (link.startsWith('//')) {
       // Relative paths, add the base URL (at least Github seems to use these)
       const urlLocation = getLocation(feedUrl);
       if (urlLocation) {

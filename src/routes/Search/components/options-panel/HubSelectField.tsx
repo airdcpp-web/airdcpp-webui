@@ -32,7 +32,7 @@ const HubSelectField: React.FC<Props> = ({ hubs, value, onChange }) => {
       return false;
     }
 
-    return;
+    return void 0;
   };
 
   return (

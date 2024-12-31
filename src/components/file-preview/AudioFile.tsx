@@ -12,7 +12,9 @@ const AudioFile: React.FC<MediaFileDecoratorChildProps> = ({ mediaRef, mediaProp
       maxHeight: '100%',
     }}
     {...mediaProps}
-  />
+  >
+    <track kind="captions" />
+  </audio>
 );
 
 const AudioFileDecorated = MediaFileDecorator(AudioFile);

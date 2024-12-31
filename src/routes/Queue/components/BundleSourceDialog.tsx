@@ -24,14 +24,10 @@ interface DataProps extends DataProviderDecoratorChildProps {
   bundle: API.QueueBundle;
 }
 
-/*interface RouteProps {
-  bundleId: string;
-}*/
-
 type Props = BundleSourceDialogProps & ModalRouteDecoratorChildProps;
 
 class SourceDialog extends Component<Props & DataProps> {
-  static displayName = 'SourceDialog';
+  static readonly displayName = 'SourceDialog';
 
   render() {
     const { bundle, queueT } = this.props;

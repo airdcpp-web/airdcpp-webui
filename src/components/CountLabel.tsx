@@ -15,11 +15,11 @@ export interface CountLabelProps {
   size?: string;
   circular?: boolean;
   className?: string;
-  onClick?: (evt: React.SyntheticEvent<any>) => void;
+  // onClick?: (evt: React.SyntheticEvent<any>) => void;
 }
 
 const CountLabel = React.forwardRef<HTMLDivElement, CountLabelProps>(function CountLabel(
-  { urgencies, empty = false, size, className, circular = false, onClick },
+  { urgencies, empty = false, size, className, circular = false },
   ref,
 ) {
   // We must always have valid urgencies when the component is rendered (checked by AnimatedCountLabel)
@@ -42,7 +42,7 @@ const CountLabel = React.forwardRef<HTMLDivElement, CountLabelProps>(function Co
   );
 
   return (
-    <div ref={ref} className={labelClassName} onClick={onClick}>
+    <div ref={ref} className={labelClassName}>
       {empty ? null : urgencies[max]}
     </div>
   );

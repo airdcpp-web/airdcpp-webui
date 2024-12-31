@@ -57,7 +57,7 @@ interface WebUsersPageDataProps extends DataProviderDecoratorChildProps {
 }
 
 class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataProps> {
-  static displayName = 'WebUsersPage';
+  static readonly displayName = 'WebUsersPage';
 
   render() {
     const { users, moduleT } = this.props;

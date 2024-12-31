@@ -127,7 +127,7 @@ describe('ShareDirectoryDialog', () => {
       },
     ];
 
-    const renderData = await renderRoutes(routes, {
+    const renderData = renderRoutes(routes, {
       socket,
       routerProps: { initialEntries: ['/home'] },
     });
@@ -214,7 +214,7 @@ describe('ShareDirectoryDialog', () => {
 
     // Set the initial browse dialog path
     const path = '/home/airdcpp/Downloads/';
-    saveLocalProperty(getBrowseStorageKey(FilesystemConstants.LOCATION_DOWNLOAD)!, path);
+    saveLocalProperty(getBrowseStorageKey(FilesystemConstants.LOCATION_DOWNLOAD), path);
 
     // Open dialog and select the initial path
     expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
@@ -253,7 +253,5 @@ describe('ShareDirectoryDialog', () => {
 
     expect(onCreated).toHaveBeenCalledTimes(1);
     expect(onCreated.mock.calls[0]).toMatchSnapshot();
-
-    // stop();
   }, 100000);
 });

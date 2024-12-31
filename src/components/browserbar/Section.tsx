@@ -4,6 +4,7 @@ import './style.css';
 
 import 'fomantic-ui-css/components/breadcrumb.min.css';
 import Icon from 'components/semantic/Icon';
+import LinkButton from 'components/semantic/LinkButton';
 
 export type SelectedNameFormatter = (
   caption: React.ReactNode,
@@ -17,9 +18,7 @@ interface SectionProps {
 
 export const Section: React.FC<SectionProps> = ({ caption, onClick }) => (
   <div className="path-token">
-    <a className="section" onClick={onClick}>
-      {caption}
-    </a>
+    <LinkButton className="section" onClick={onClick} caption={caption} />
     <Icon icon="right chevron divider" />
   </div>
 );

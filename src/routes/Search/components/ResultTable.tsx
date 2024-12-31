@@ -69,8 +69,8 @@ const UserCell: React.FC<
 );
 
 const resultUserGetter = (rowData: API.GroupedSearchResult) => {
-  if (!rowData || !rowData.users) {
-    return rowData.users.user;
+  if (!rowData?.users) {
+    return rowData?.users?.user;
   }
 
   return rowData.users.user;
@@ -106,7 +106,7 @@ export interface ResultTableProps {
 }
 
 class ResultTable extends React.Component<ResultTableProps> {
-  static displayName = 'ResultTable';
+  static readonly displayName = 'ResultTable';
 
   rowClassNameGetter = (rowData: API.GroupedSearchResult) => {
     return dupeToStringType(rowData.dupe);

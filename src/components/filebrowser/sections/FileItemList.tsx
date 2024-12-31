@@ -111,17 +111,20 @@ const FileItemList: React.FC<FileItemListProps> = ({
             </tr>
           </thead>
           <tbody>
-            {items.sort(sortFileItem).map((item) => (
-              <FileItem
-                key={item.name}
-                selectMode={selectMode}
-                item={item}
-                itemClickHandler={itemClickHandler}
-                itemIconGetter={itemIconGetter}
-                selected={item.name === currentFileName}
-                t={t}
-              />
-            ))}
+            {items
+              .slice()
+              .sort(sortFileItem)
+              .map((item) => (
+                <FileItem
+                  key={item.name}
+                  selectMode={selectMode}
+                  item={item}
+                  itemClickHandler={itemClickHandler}
+                  itemIconGetter={itemIconGetter}
+                  selected={item.name === currentFileName}
+                  t={t}
+                />
+              ))}
           </tbody>
         </table>
       )}

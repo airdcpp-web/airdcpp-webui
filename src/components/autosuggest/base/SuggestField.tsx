@@ -52,13 +52,13 @@ export type SuggestFieldProps<SuggestionT> = Omit<
 class SuggestField<SuggestionT = any> extends React.Component<
   SuggestFieldProps<SuggestionT>
 > {
-  static defaultProps = {
+  static readonly defaultProps = {
     autoFocus: true,
     defaultValue: '',
   };
 
   state = {
-    text: this.props.defaultValue || '',
+    text: this.props.defaultValue ?? '',
   };
 
   componentDidUpdate(prevProps: SuggestFieldProps<SuggestionT>) {
@@ -92,10 +92,6 @@ class SuggestField<SuggestionT = any> extends React.Component<
 
   isSubmitDisabled = () => {
     return this.state.text.length === 0;
-  };
-
-  getSuggestionValue = (suggestion: SuggestionT) => {
-    return suggestion;
   };
 
   onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -150,7 +146,6 @@ class SuggestField<SuggestionT = any> extends React.Component<
       <Autosuggest
         {...other}
         theme={theme}
-        //initialValue={ defaultValue }
         inputProps={inputAttributes}
         onSuggestionSelected={this.onSuggestionSelected}
       />

@@ -4,7 +4,7 @@ import Measure from 'react-measure';
 import { LocalSettings } from 'constants/SettingConstants';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
 import LocalSettingStore from 'stores/LocalSettingStore';
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import Background1500px from '../../../resources/images/background_winter_1500px.jpg';
 import Background3840px from '../../../resources/images/background_winter_3840px.jpg';
@@ -15,7 +15,7 @@ const getBackgroundImage = () => {
     return url;
   }
 
-  if (useMobileLayout()) {
+  if (usingMobileLayout()) {
     return null;
   }
 

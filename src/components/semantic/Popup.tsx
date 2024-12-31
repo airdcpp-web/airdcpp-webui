@@ -37,9 +37,7 @@ interface PopupContentProps extends Pick<PopupProps, 'children'> {
 const PopupContent: React.FC<PopupContentProps> = (props) => {
   const content = useMemo<ChildType>(() => {
     const { children } = props;
-    return typeof children === 'function'
-      ? children(props.hide)
-      : (children as ChildType);
+    return typeof children === 'function' ? children(props.hide) : children;
   }, [props.contentUpdateTrigger]);
 
   useEffect(() => {
@@ -56,7 +54,7 @@ interface State {
   visible: boolean;
 }
 class Popup extends React.PureComponent<PopupProps, State> {
-  static defaultProps: Pick<PopupProps, 'position' | 'triggerClassName'> = {
+  static readonly defaultProps: Pick<PopupProps, 'position' | 'triggerClassName'> = {
     position: 'bottom left',
     triggerClassName: '',
   };

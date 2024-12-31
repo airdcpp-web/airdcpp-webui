@@ -7,6 +7,7 @@ import HubSessionStore from 'stores/HubSessionStore';
 
 import { useNavigate, useLocation, NavigateFunction, Location } from 'react-router';
 import { AuthenticatedSession, useSession } from 'context/SessionContext';
+import ExternalLink from 'components/ExternalLink';
 
 const onClickLink = (
   evt: React.MouseEvent,
@@ -16,9 +17,9 @@ const onClickLink = (
 ) => {
   const uri: string = (evt.target as any).href;
   if (
-    uri.indexOf('adc://') === 0 ||
-    uri.indexOf('adcs://') === 0 ||
-    uri.indexOf('dchub://') === 0
+    uri.startsWith('adc://') ||
+    uri.startsWith('adcs://') ||
+    uri.startsWith('dchub://')
   ) {
     evt.preventDefault();
 
@@ -44,15 +45,11 @@ export const HighlightUrlLink: React.FC<HighlightUrlLinkProps> = ({ text, ...oth
   const location = useLocation();
   const navigate = useNavigate();
   return (
-    <a
-      className="highlight url link"
-      href={text}
-      target="_blank"
-      rel="noreferrer"
+    <ExternalLink
       onClick={(evt) => onClickLink(evt, location, navigate, session)}
-      {...other}
+      url={text}
     >
       {text}
-    </a>
+    </ExternalLink>
   );
 };

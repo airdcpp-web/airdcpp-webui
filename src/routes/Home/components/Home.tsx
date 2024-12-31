@@ -8,7 +8,7 @@ import WidgetLayout from 'routes/Home/components/WidgetLayout';
 import '../style.css';
 
 class Home extends Component {
-  static displayName = 'Home';
+  static readonly displayName = 'Home';
 
   render() {
     return (

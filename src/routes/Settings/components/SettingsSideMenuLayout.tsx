@@ -56,7 +56,7 @@ const Content: React.FC<ContentProps> = ({
     <div className="ui segment">
       <LayoutHeader
         title={translateSettingSectionTitle(selectedChildMenuItem.title, settingsT)}
-        icon={<Icon color="green" icon={selectedRootMenuItem!.icon} />}
+        icon={<Icon color="green" icon={selectedRootMenuItem.icon} />}
         rightComponent={getSaveButton()}
       />
       <div className="options">

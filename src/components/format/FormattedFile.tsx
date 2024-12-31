@@ -4,6 +4,7 @@ import cx from 'classnames';
 import FileIcon from 'components/icon/FileIcon';
 
 import * as API from 'types/api';
+import LinkButton from 'components/semantic/LinkButton';
 
 interface FormattedFileProps {
   onClick?: (() => void) | null;
@@ -11,6 +12,7 @@ interface FormattedFileProps {
   caption: React.ReactNode;
   selected?: boolean;
   className?: string;
+  linkColor?: string;
 }
 
 const FormattedFile: React.FC<FormattedFileProps> = ({
@@ -19,9 +21,10 @@ const FormattedFile: React.FC<FormattedFileProps> = ({
   caption,
   selected,
   className,
+  linkColor,
 }) => {
   if (onClick) {
-    caption = <a onClick={onClick}>{caption}</a>;
+    caption = <LinkButton onClick={onClick} color={linkColor} caption={caption} />;
   }
 
   return (

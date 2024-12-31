@@ -7,7 +7,7 @@ import SideMenuLayout from './SideMenuLayout';
 
 import Message from 'components/semantic/Message';
 
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -127,6 +127,17 @@ const SessionLayout = <
 
   const { disableSideMenu, items, unreadInfoStore, sessionT, uiActions } = props;
 
+  const useTopMenu = disableSideMenu || usingMobileLayout(layoutWidth);
+
+  const {
+    getItemHeaderTitle,
+    getItemHeaderDescription,
+    getItemHeaderIcon,
+    getNewButton,
+    getSessionMenuItems,
+    getSessionActionMenuItems,
+  } = useComponents({ ...props, activeItem, hasEditAccess, isNewLayout });
+
   if (!hasEditAccess && items.length === 0) {
     // Nothing to show
     return (
@@ -140,17 +151,7 @@ const SessionLayout = <
     );
   }
 
-  const useTopMenu = disableSideMenu || useMobileLayout(layoutWidth);
-
   const MenuLayout = useTopMenu ? TopMenuLayout : SideMenuLayout;
-  const {
-    getItemHeaderTitle,
-    getItemHeaderDescription,
-    getItemHeaderIcon,
-    getNewButton,
-    getSessionMenuItems,
-    getSessionActionMenuItems,
-  } = useComponents({ ...props, activeItem, hasEditAccess, isNewLayout });
   return (
     <MenuLayout
       itemHeaderTitle={getItemHeaderTitle()}

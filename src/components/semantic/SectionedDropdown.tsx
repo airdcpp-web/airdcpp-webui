@@ -15,9 +15,9 @@ const SectionedDropdown: React.FC<SectionedDropdownProps> = ({ children, ...othe
     <Dropdown {...other}>
       {React.Children.map(validChildren, (child, index) => {
         return (
-          <Fragment key={index}>
+          <Fragment key={(child as React.ReactElement<any>).key ?? index}>
             {child}
-            {validChildren.length && index !== validChildren.length - 1 && (
+            {!!validChildren.length && index !== validChildren.length - 1 && (
               <div className="ui divider" />
             )}
           </Fragment>

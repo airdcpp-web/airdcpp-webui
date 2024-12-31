@@ -68,7 +68,7 @@ const typeToComponent = (
     default:
   }
 
-  throw `Field type ${type} is not supported`;
+  throw Error(`Field type ${type} is not supported`);
 };
 
 const parseDefinitions = (definitions: UI.FormFieldDefinition[]): tcomb.Type<any> => {
@@ -154,7 +154,7 @@ const normalizeSettingValueMap = (
                 return normalizeSettingValueMap(arrayItem, definitions!);
               }
 
-              throw `Invalid value for a list struct ${arrayItem}`;
+              throw Error(`Invalid value for a list struct ${arrayItem}`);
             });
           } else if (item_type === API.SettingTypeEnum.HINTED_USER) {
             reducedValue[key] = fieldValue;
@@ -169,7 +169,7 @@ const normalizeSettingValueMap = (
           ) {
             reducedValue[key] = normalizeSettingValueMap(fieldValue, definitions!);
           } else {
-            throw `Invalid value for a struct ${key}`;
+            throw Error(`Invalid value for a struct ${key}`);
           }
         } else if (type === API.SettingTypeEnum.HINTED_USER) {
           reducedValue[key] = fieldValue as UI.FormValueBase;
@@ -178,7 +178,7 @@ const normalizeSettingValueMap = (
         }
       } else if (!value) {
         // Initialize empty value but don't merge missing fields into an existing value (we might be merging)
-        reducedValue[key] = default_value ? default_value : null;
+        reducedValue[key] = default_value || null;
       }
 
       return reducedValue;

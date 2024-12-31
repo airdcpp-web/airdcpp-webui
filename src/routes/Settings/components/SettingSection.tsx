@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import SettingsSideMenuLayout from './SettingsSideMenuLayout';
 import SettingsTopMenuLayout from './SettingsTopMenuLayout';
@@ -61,7 +61,7 @@ const SettingSection: React.FC<SettingSectionProps> = (props) => {
   });
 
   const SectionLayoutComponent =
-    useMobileLayout() || window.innerWidth < 1000
+    usingMobileLayout() || window.innerWidth < 1000
       ? SettingsTopMenuLayout
       : SettingsSideMenuLayout;
 
@@ -85,20 +85,22 @@ const SettingSection: React.FC<SettingSectionProps> = (props) => {
     ),
   };
 
+  const getSaveButton = (className: string) => {
+    if (selectedChildMenuItem.noSave) {
+      return null;
+    }
+
+    return (
+      <SaveButton settingsT={settingsT} saveState={saveState} className={className} />
+    );
+  };
+
   return (
     <SettingSaveContext.Provider value={saveContext}>
       <SectionLayoutComponent
         settingsT={settingsT}
         location={location}
-        getSaveButton={(className) =>
-          !selectedChildMenuItem.noSave && (
-            <SaveButton
-              settingsT={settingsT}
-              saveState={saveState}
-              className={className}
-            />
-          )
-        }
+        getSaveButton={getSaveButton}
         message={getMessage(selectedChildMenuItem, settingsT)}
         contentClassname={contentClassname}
         menu={menu}

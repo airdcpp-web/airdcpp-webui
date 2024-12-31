@@ -12,7 +12,9 @@ const VideoFile: React.FC<MediaFileDecoratorChildProps> = ({ mediaRef, mediaProp
       maxHeight: '100%',
     }}
     {...mediaProps}
-  />
+  >
+    <track kind="captions" />
+  </video>
 );
 
 const VideoFileDecorated = MediaFileDecorator(VideoFile);

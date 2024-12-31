@@ -6,7 +6,7 @@ import LoginStore, { LoginState } from 'stores/LoginStore';
 
 import Checkbox from 'components/semantic/Checkbox';
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
-import { useSessionState } from '../effects/UseLoginStateEffect';
+import { useSessionState } from '../effects/LoginStateEffect';
 import { ErrorBox, BottomMessage, SubmitButton } from './LoginLayoutComponents';
 
 import '../style.css';
@@ -28,7 +28,7 @@ const Login: React.FC<LoginProps> = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const [loading, setLoading] = useSessionState();
+  const { loading, setLoading } = useSessionState();
   if (!!refreshToken) {
     return (
       <SocketConnectStatus

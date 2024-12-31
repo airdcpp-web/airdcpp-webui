@@ -1,5 +1,5 @@
 import { fireEvent, getByText, RenderResult, waitFor } from '@testing-library/react';
-import userEventOriginal, { userEvent, UserEvent } from '@testing-library/user-event';
+import userEventOriginal, { UserEvent } from '@testing-library/user-event';
 import selectEvent from './react-select-event';
 
 type FieldValueMap = {
@@ -20,12 +20,7 @@ export const expectFieldsDisabled = (
 ) => {
   for (const label of labels) {
     const element = getByLabelText(label) as HTMLInputElement;
-    /*if (label.indexOf('file') !== -1) {
-      // File field, no browse button
-      expect(element.querySelector('input')).not.toBeTruthy();
-    } else*/ {
-      expect(element.hasAttribute('disabled')).toBe(true);
-    }
+    expect(element.hasAttribute('disabled')).toBe(true);
   }
 };
 

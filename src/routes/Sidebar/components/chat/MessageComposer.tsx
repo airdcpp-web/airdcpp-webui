@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { MentionsInput, Mention, DataFunc } from 'react-mentions';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import UserConstants from 'constants/UserConstants';
 
@@ -102,11 +102,11 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
       })
       .then((users: API.HubUser[]) => callback(users.map(userToMention)))
       .catch((error: ErrorResponse) =>
-        console.log(`Failed to fetch suggestions: ${error}`),
+        console.log(`Failed to fetch suggestions: ${error.message}`),
       );
   };
 
-  const mobile = useMobileLayout();
+  const mobile = usingMobileLayout();
   const className = classNames('ui form composer', { small: mobile }, { large: !mobile });
 
   const hasFileUploadAccess =

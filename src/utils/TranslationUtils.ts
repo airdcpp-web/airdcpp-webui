@@ -26,7 +26,7 @@ export const toI18nKey = (
   invariant(!key.includes(' '), 'Invalid i18key');
   if (
     UI.SubNamespaces[key.toUpperCase() as keyof typeof UI.SubNamespaces] ||
-    (reservedSubNamespaces && reservedSubNamespaces.includes(key))
+    reservedSubNamespaces?.includes(key)
   ) {
     key += 'Caption';
   }

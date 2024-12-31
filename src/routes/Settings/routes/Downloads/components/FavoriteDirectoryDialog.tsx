@@ -87,7 +87,7 @@ const FavoriteDirectoryDialog: React.FC<Props> = ({
     }
 
     return socket.patch(
-      `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directoryEntry!.id}`,
+      `${FavoriteDirectoryConstants.DIRECTORIES_URL}/${directoryEntry.id}`,
       changedFields,
     );
   };

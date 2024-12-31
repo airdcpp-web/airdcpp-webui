@@ -19,6 +19,7 @@ import {
 } from 'decorators/SocketSubscriptionDecorator';
 import { errorResponseToString } from 'utils/TypeConvert';
 import { DataFetchError } from 'decorators/DataProviderDecorator';
+import classNames from 'classnames';
 
 interface VersionProps {
   title: string;
@@ -58,15 +59,7 @@ const formatAuthor = (
   npmPackage?: UI.NpmPackage,
   installedPackage?: API.Extension,
 ) => {
-  let author: string | undefined;
-  if (installedPackage && installedPackage.author) {
-    author = installedPackage.author;
-  }
-
-  if (npmPackage) {
-    author = npmPackage.publisher.username;
-  }
-
+  const author = npmPackage ? npmPackage.publisher.username : installedPackage?.author;
   if (!author) {
     return null;
   }
@@ -179,9 +172,9 @@ class Extension extends React.PureComponent<
       <div className="item extension">
         <ExtensionIcon installedPackage={installedPackage} hasUpdate={hasUpdate} />
         <div className="content">
-          <a className="header">
+          <div className="header">
             {npmPackage ? npmPackage.name : installedPackage!.name}
-          </a>
+          </div>
           <div className="meta author">
             {formatAuthor(moduleT, npmPackage, installedPackage)}
           </div>
@@ -199,7 +192,10 @@ class Extension extends React.PureComponent<
             />
             <div>{!npmPackage && formatNote(moduleT, installedPackage, npmError)}</div>
             <Version
-              className={npmPackage ? (!hasUpdate ? 'latest' : 'outdated') : undefined}
+              className={classNames({
+                outdated: hasUpdate,
+                latest: npmPackage && !hasUpdate,
+              })}
               title={translate('Installed version')}
               packageInfo={installedPackage}
               moduleT={moduleT}

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { OnChangeHandlerFunc } from 'react-mentions';
-import { useLocation } from 'react-router';
+import { useLocation, Location, useNavigate } from 'react-router';
 import * as UI from 'types/ui';
 
 import {
@@ -11,7 +11,6 @@ import {
 } from 'utils/BrowserUtils';
 import ChatCommandHandler from '../ChatCommandHandler';
 
-import { Location, useNavigate } from 'react-router';
 import { useSocket } from 'context/SocketContext';
 import { useSession } from 'context/SessionContext';
 
@@ -102,7 +101,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     const textTrimmed = inputText.replace(/\s+$/, '');
 
     if (textTrimmed) {
-      if (textTrimmed[0] === '/') {
+      if (textTrimmed.startsWith('/')) {
         handleCommand(textTrimmed);
       }
 

@@ -10,6 +10,7 @@ import { Formatter, useFormatter } from 'context/FormatterContext';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 import { PathDownloadHandler } from '../../types';
+import LinkButton from 'components/semantic/LinkButton';
 
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;
@@ -44,10 +45,15 @@ export const PathListItem: React.FC<PathItemProps> = ({
     <div className="item">
       <Icon icon={IconConstants.FOLDER} />
       <div className="content">
-        <a onClick={() => downloadHandler(pathInfo.path)}>
-          {pathInfo.path}
-          <span className="disk-info">{formatFreeSpace(pathInfo, t, formatter)}</span>
-        </a>
+        <LinkButton
+          onClick={() => downloadHandler(pathInfo.path)}
+          caption={
+            <>
+              {pathInfo.path}
+              <span className="disk-info">{formatFreeSpace(pathInfo, t, formatter)}</span>
+            </>
+          }
+        />
       </div>
     </div>
   );

@@ -124,10 +124,7 @@ const ShareDirectoryDialog: React.FC<Props> = ({
       return socket.post(ShareRootConstants.ROOTS_URL, changedFields);
     }
 
-    return socket.patch(
-      `${ShareRootConstants.ROOTS_URL}/${rootEntry!.id}`,
-      changedFields,
-    );
+    return socket.patch(`${ShareRootConstants.ROOTS_URL}/${rootEntry.id}`, changedFields);
   };
 
   const onFieldSetting: FormFieldSettingHandler<Entry> = (

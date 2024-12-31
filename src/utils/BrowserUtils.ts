@@ -70,8 +70,8 @@ export const hasTouchSupport = () => {
 
 export const hasCopySupport = () => !!(navigator as any).clipboard;
 
-export const useMobileLayout = (width?: number | null) => {
-  return (width || window.innerWidth) < 700 || window.innerHeight < 500;
+export const usingMobileLayout = (width?: number | null) => {
+  return (width ?? window.innerWidth) < 700 || window.innerHeight < 500;
 };
 
 export const pushUnique = (

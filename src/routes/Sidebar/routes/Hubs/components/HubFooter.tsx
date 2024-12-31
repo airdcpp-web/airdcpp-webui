@@ -17,7 +17,7 @@ import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
 } from 'decorators/SocketSubscriptionDecorator';
-import { useMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from 'utils/BrowserUtils';
 import { useLayoutWidth } from 'context/LayoutWidthContext';
 import { ActionMenu } from 'components/action-menu';
 import { HubSettingActionMenu } from 'actions/ui/hub/HubSettingActions';
@@ -82,7 +82,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
           </>
         }
       />
-      {!useMobileLayout(layoutWidth) && (
+      {!usingMobileLayout(layoutWidth) && (
         <FooterItem
           text={sessionT.t('sharePerUser', {
             defaultValue: '{{total}} ({{average}}/user)',

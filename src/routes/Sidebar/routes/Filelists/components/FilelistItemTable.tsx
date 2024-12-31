@@ -1,4 +1,3 @@
-//import { useMemo } from 'react';
 import * as React from 'react';
 
 import { dupeToStringType } from 'utils/TypeConvert';
@@ -91,7 +90,6 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
     const { files, directories } = location!.type as API.DirectoryType;
     if (files !== 0 || directories !== 0) {
       return <Loader text={translate('Updating view')} />;
-      //return null;
     }
 
     // The directory was changed but the download state hasn't changed yet
@@ -114,10 +112,6 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
     }
 
     return undefined;
-  };
-
-  userGetter = () => {
-    return this.props.session.user;
   };
 
   render() {

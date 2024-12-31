@@ -23,11 +23,6 @@ export const actionAccess = <ItemDataT extends UI.ActionDataValueType>(
   action: Pick<UI.ActionDefinition<ItemDataT>, 'access'>,
   { hasAccess }: AuthenticatedSession,
 ) => {
-  //invariant(
-  //  !action.hasOwnProperty('access') || action.access,
-  //  `Invalid access supplied for an action ${action.displayName}`
-  //);
-
   return !action.access || hasAccess(action.access);
 };
 
@@ -47,7 +42,7 @@ export const toActionI18nKey = (
   moduleId: string | string[],
 ) => {
   invariant(!!action.displayName, 'Invalid action');
-  return textToI18nKey(action.displayName!, [
+  return textToI18nKey(action.displayName, [
     ...toArray(moduleId),
     UI.SubNamespaces.ACTIONS,
   ]);

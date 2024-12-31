@@ -66,7 +66,7 @@ const SearchTypeDialog: React.FC<Props> = ({
     }
 
     return socket.patch(
-      `${SearchConstants.SEARCH_TYPES_URL}/${searchTypeEntry!.id}`,
+      `${SearchConstants.SEARCH_TYPES_URL}/${searchTypeEntry.id}`,
       changedFields,
     );
   };

@@ -35,7 +35,7 @@ export default function <DropdownPropsT extends object>(
   Component: React.ComponentType<UserMenuDecoratorChildProps & DropdownPropsT>,
 ) {
   class UserMenu extends React.PureComponent<UserMenuDecoratorProps & DropdownPropsT> {
-    static defaultProps: Pick<UserMenuDecoratorProps, 'directory'> = {
+    static readonly defaultProps: Pick<UserMenuDecoratorProps, 'directory'> = {
       directory: '/',
     };
 

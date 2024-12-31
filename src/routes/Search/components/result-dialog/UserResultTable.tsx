@@ -88,9 +88,12 @@ const UserResultTable: React.FC<UserResultTableProps & UserResultTableDataProps>
           </tr>
         </thead>
         <tbody>
-          {results.sort(resultSort).map((result) => (
-            <UserResult key={result.user.cid} result={result} />
-          ))}
+          {results
+            .slice()
+            .sort(resultSort)
+            .map((result) => (
+              <UserResult key={result.user.cid} result={result} />
+            ))}
         </tbody>
       </table>
     </div>

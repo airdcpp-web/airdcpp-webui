@@ -25,14 +25,8 @@ import DownloadDialog from '../DownloadDialog';
 import * as UI from 'types/ui';
 import * as API from 'types/api';
 import { MockHintedUserResponse } from 'tests/mocks/api/user';
-import {
-  act,
-  waitForElementToBeRemoved,
-  waitFor,
-  fireEvent,
-} from '@testing-library/react';
+import { waitForElementToBeRemoved, waitFor, fireEvent } from '@testing-library/react';
 
-// import preview from 'jest-preview';
 import { HistoryStringPathResponse } from 'tests/mocks/api/history';
 import {
   createTestModalController,
@@ -114,7 +108,7 @@ describe('DownloadDialog', () => {
       },
     ];
 
-    const renderData = await renderRoutes(routes, {
+    const renderData = renderRoutes(routes, {
       socket,
       routerProps: { initialEntries: ['/home'] },
     });

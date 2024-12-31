@@ -34,7 +34,7 @@ export class InputDialog extends React.Component<InputFieldProps, State> {
 
   onApproved = () => {
     if (!this.c.reportValidity()) {
-      return Promise.reject();
+      return Promise.reject(Error('Invalid input'));
     }
 
     return this.props.onApproved(this.state.value);

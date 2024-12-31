@@ -29,14 +29,10 @@ interface DataProps extends DataProviderDecoratorChildProps {
   parentResult: API.GroupedSearchResult;
 }
 
-/*interface RouteProps {
-  resultId: string;
-}*/
-
 type Props = ResultDialogProps & ModalRouteDecoratorChildProps;
 
 class ResultDialog extends Component<Props & DataProps> {
-  static displayName = 'ResultDialog';
+  static readonly displayName = 'ResultDialog';
 
   itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = (
     itemId,

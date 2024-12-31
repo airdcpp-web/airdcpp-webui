@@ -42,10 +42,6 @@ class VirtualTable extends React.PureComponent<VirtualTableProps> {
   );
 
   componentDidMount() {
-    //this._dataLoader = new RowDataLoader(this.props.store, () => this.forceUpdate() );
-
-    //this.unsubscribe = this.props.store.listen(this._dataLoader.onItemsUpdated.bind(this._dataLoader));
-
     this.start(this.props.entityId);
   }
 

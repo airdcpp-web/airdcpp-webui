@@ -98,7 +98,7 @@ describe('FavoriteHubDialog', () => {
       },
     ];
 
-    const renderData = await renderRoutes(routes, {
+    const renderData = renderRoutes(routes, {
       socket,
       routerProps: { initialEntries: ['/home'] },
     });
@@ -137,11 +137,11 @@ describe('FavoriteHubDialog', () => {
 
     expect(onUpdated).toHaveBeenCalledTimes(1);
     expect(onUpdated.mock.calls[0]).toMatchSnapshot();
-  }, 100000);
+  });
 
   test('should create new', async () => {
     const userEvent = setupUserEvent();
-    const { getByText, getByLabelText, modalController, onCreated, onUpdated } =
+    const { getByText, getByLabelText, modalController, onCreated } =
       await renderDialog(null);
 
     await modalController.openDialog();
@@ -162,7 +162,5 @@ describe('FavoriteHubDialog', () => {
 
     expect(onCreated).toHaveBeenCalledTimes(1);
     expect(onCreated.mock.calls[0]).toMatchSnapshot();
-
-    // stop();
-  }, 100000);
+  });
 });

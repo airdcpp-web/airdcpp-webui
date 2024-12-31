@@ -35,7 +35,7 @@ const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({
 interface TransfersProps extends WithTranslation {}
 
 class Transfers extends React.Component<TransfersProps> {
-  static displayName = 'Transfers';
+  static readonly displayName = 'Transfers';
 
   isPositive = (cellData: number) => {
     return cellData > 0;

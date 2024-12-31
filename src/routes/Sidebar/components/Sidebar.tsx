@@ -3,7 +3,7 @@ import { memo, useEffect, useRef, useState } from 'react';
 import {
   loadLocalProperty,
   saveLocalProperty,
-  useMobileLayout,
+  usingMobileLayout,
 } from 'utils/BrowserUtils';
 import Loader from 'components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
@@ -74,12 +74,12 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
       setVisibility(Visibility.VISIBLE);
     };
 
-    if (resizable.current && resizable.current.resizable) {
+    if (resizable.current?.resizable) {
       $(resizable.current.resizable).sidebar({
         context: '.sidebar-context',
         transition: 'overlay',
         mobileTransition: 'overlay',
-        closable: !useMobileLayout(),
+        closable: !usingMobileLayout(),
         onVisible: onVisible,
         onShow: onShow,
         onHidden: onHidden,
@@ -91,7 +91,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (resizable.current && resizable.current.resizable) {
+    if (resizable.current?.resizable) {
       const shouldShow = showSidebar(props);
       if (shouldShow && visibility === Visibility.HIDDEN) {
         $(resizable.current.resizable).sidebar('show');
@@ -148,7 +148,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
         top: false,
         right: false,
         bottom: false,
-        left: !useMobileLayout(),
+        left: !usingMobileLayout(),
         topRight: false,
         bottomRight: false,
         bottomLeft: false,
