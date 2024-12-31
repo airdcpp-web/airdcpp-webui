@@ -16,14 +16,16 @@ export const FileNameSection: React.FC<FileNameSectionProps> = ({
 }) => (
   <form className="ui form segment file-name">
     <div className="field">
-      <label>{translate('Filename', t, UI.Modules.COMMON)}</label>
-      <div className="ui input">
-        <input
-          value={currentFileName}
-          onChange={(evt) => onChange(evt.target.value)}
-          autoFocus={false}
-        />
-      </div>
+      <label htmlFor="filename-input">
+        {translate('Filename', t, UI.Modules.COMMON)}
+      </label>
+      <input
+        className="ui input"
+        value={currentFileName}
+        onChange={(evt) => onChange(evt.target.value)}
+        autoFocus={false}
+        id="filename-input"
+      />
     </div>
   </form>
 );

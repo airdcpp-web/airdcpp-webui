@@ -1,6 +1,6 @@
 import Modal, { ModalProps } from 'components/semantic/Modal';
 
-import FileBrowserLayout, { FileBrowserLayoutProps } from './FileBrowserLayout';
+import FileBrowserLayout from './FileBrowserLayout';
 
 import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,6 @@ import { translate } from 'utils/TranslationUtils';
 import * as UI from 'types/ui';
 
 import IconConstants from 'constants/IconConstants';
-import { getFilePath } from 'utils/FileUtils';
 import RouteModal from 'components/semantic/RouteModal';
 import {
   FileItemSelectionProps,
@@ -19,7 +18,7 @@ import {
 export interface FileBrowserDialogProps
   extends FileItemSelectionProps,
     Omit<ModalProps, 'title' | 'location'>,
-    Pick<FileBrowserLayoutProps, 'historyId'> {
+    Pick<FileItemSelectionProps, 'historyId'> {
   title?: React.ReactNode;
   modalComponent?: React.ComponentType<ModalProps>;
 }
@@ -41,7 +40,8 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
     currentFileName,
     onDirectoryChanged,
     onFileSelected,
-  } = useFileItemSelection({ onConfirm, initialPath, selectMode });
+    currentDirectory,
+  } = useFileItemSelection({ onConfirm, initialPath, selectMode, historyId });
 
   const selectDirectory = selectMode === UI.FileSelectModeEnum.DIRECTORY;
   const showApprove = selectMode !== UI.FileSelectModeEnum.EXISTING_FILE ? true : false;
@@ -59,10 +59,9 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
       icon={icon || (selectDirectory ? IconConstants.BROWSE : IconConstants.FILE)}
     >
       <FileBrowserLayout
-        initialPath={getFilePath(initialPath)}
+        currentDirectory={currentDirectory}
         onDirectoryChanged={onDirectoryChanged}
         onFileSelected={onFileSelected}
-        historyId={historyId}
         selectMode={selectMode}
         currentFileName={currentFileName}
       />

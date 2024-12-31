@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FilesystemConstants from 'constants/FilesystemConstants';
 
-import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 import { translate } from 'utils/TranslationUtils';
 
 import BrowserBar, { SelectedNameFormatter } from 'components/browserbar';
@@ -24,10 +23,8 @@ import { SubmitCallback } from 'components/semantic/ActionInput';
 
 export interface FileBrowserLayoutProps
   extends Pick<FileItemListProps, 'itemIconGetter'>,
-    Pick<FileItemSelectionProps, 'selectMode' | 'initialPath'> {
-  // Local storage ID used for saving/loading the last path
-  // This will have priority over initialPath
-  historyId?: string;
+    Pick<FileItemSelectionProps, 'selectMode'> {
+  currentDirectory: string;
 
   currentFileName?: string;
 
@@ -56,8 +53,7 @@ const FileBrowserLayout: React.FC<Props> = ({
   selectMode,
   currentFileName,
   onFileSelected,
-  historyId,
-  initialPath = '',
+  currentDirectory,
 }) => {
   const { t } = useTranslation();
 
@@ -68,37 +64,12 @@ const FileBrowserLayout: React.FC<Props> = ({
   const pathSeparator = systemInfo.path_separator;
   const isWindows = systemInfo.platform === API.PlatformEnum.WINDOWS;
 
-  const getStorageKey = () => {
-    if (!historyId) {
-      return undefined;
-    }
-
-    return `browse_${historyId}`;
-  };
-
   const getRootPath = () => {
     return isWindows ? '' : '/';
   };
 
-  const getInitialPath = () => {
-    const loadedPath = loadLocalProperty<string | undefined>(getStorageKey());
-    if (loadedPath) {
-      return loadedPath;
-    }
-
-    return initialPath.length === 0 ? getRootPath() : initialPath;
-  };
-
-  const [currentDirectory, setCurrentDirectory] = useState(getInitialPath());
-
-  const handleDirectoryChanged = () => {
-    // Save the location
-    saveLocalProperty(getStorageKey(), currentDirectory);
-
-    // Props
-    if (onDirectoryChanged) {
-      onDirectoryChanged(currentDirectory);
-    }
+  const handleDirectoryChanged = (newPath: string) => {
+    onDirectoryChanged(newPath);
   };
 
   const [dataState, setDataState] = useState<DataLoaderState>({
@@ -154,7 +125,6 @@ const FileBrowserLayout: React.FC<Props> = ({
 
   useEffect(() => {
     resetError();
-    handleDirectoryChanged();
     fetchItems(currentDirectory);
   }, [currentDirectory]);
 
@@ -162,7 +132,7 @@ const FileBrowserLayout: React.FC<Props> = ({
     if (item.type.id !== 'file') {
       // Directory/drive/other
       const nextPath = joinDirectory(currentDirectory, item.name, pathSeparator);
-      setCurrentDirectory(nextPath);
+      handleDirectoryChanged(nextPath);
     } else {
       // File
       if (onFileSelected) {
@@ -176,7 +146,7 @@ const FileBrowserLayout: React.FC<Props> = ({
     socket
       .post(FilesystemConstants.DIRECTORY_URL, { path: newPath })
       .then(() => {
-        setCurrentDirectory(newPath);
+        handleDirectoryChanged(newPath);
       })
       .catch((error: Error) => {
         NotificationActions.error({
@@ -202,7 +172,7 @@ const FileBrowserLayout: React.FC<Props> = ({
         rootPath={getRootPath()}
         rootName={rootName}
         itemClickHandler={(path) => {
-          setCurrentDirectory(path);
+          handleDirectoryChanged(path);
         }}
         selectedNameFormatter={selectedNameFormatter}
       />
