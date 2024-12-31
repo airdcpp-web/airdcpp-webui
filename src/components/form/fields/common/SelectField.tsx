@@ -40,6 +40,7 @@ const SelectTemplate: TCombTemplate = {
     const { formT } = locals.context;
     return (
       <Select
+        name={locals.attrs.name}
         value={value}
         options={options}
         onChange={onChange}
@@ -47,6 +48,7 @@ const SelectTemplate: TCombTemplate = {
         noOptionsMessage={() => formT.translate('No options')}
         components={MultiSelectComponents}
         menuPlacement="top"
+        inputId={locals.attrs.id}
       />
     );
   },

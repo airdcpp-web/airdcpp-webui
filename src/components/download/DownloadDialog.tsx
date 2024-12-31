@@ -34,6 +34,7 @@ import { PathDownloadHandler } from './types';
 import './style.css';
 import { useSession } from 'context/SessionContext';
 import { useSocket } from 'context/SocketContext';
+import { getFileName, getFilePath } from 'utils/FileUtils';
 
 export type DownloadDialogProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
@@ -121,9 +122,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
         path="browse/*"
         element={
           <FileBrowserDialog
-            onConfirm={(path, directoryPath, fileName) =>
-              handleDownload(directoryPath, fileName)
-            }
+            onConfirm={(path) => handleDownload(getFilePath(path), getFileName(path))}
             initialPath={getInitialBrowsePath()}
             selectMode={
               itemInfo.type.id === 'directory'

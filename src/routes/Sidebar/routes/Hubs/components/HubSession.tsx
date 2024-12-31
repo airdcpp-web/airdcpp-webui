@@ -94,7 +94,7 @@ const HubSession: React.FC<HubSessionProps> = ({
 
   const checkbox = (
     <Checkbox
-      className="userlist-button"
+      id="userlist-toggle"
       type="toggle"
       caption={sessionT.translate('User list')}
       onChange={onClickUsers}

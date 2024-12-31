@@ -41,7 +41,7 @@
   padding-bottom: 1px;
 }
 
-.hub.session .session-footer .userlist-button label {
+.hub.session .session-footer #userlist-toggle label {
   color: grey;
   font-size: small;
 }

@@ -98,6 +98,7 @@ const Login: React.FC<LoginProps> = () => {
                 caption={translate('Keep me logged in', t, UI.Modules.LOGIN)}
                 onChange={setRememberMe}
                 checked={rememberMe}
+                id="remember-me"
               />
             </div>
           </div>

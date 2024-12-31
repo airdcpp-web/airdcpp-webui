@@ -364,7 +364,7 @@ class Form<ValueType extends UI.FormValueMap = UI.FormValueMap> extends Componen
           };
 
           return (
-            <div className={classNames('form', className)}>
+            <div role="form" className={classNames('form', className)}>
               {!!title && <div className="ui form header">{title}</div>}
               <TcombForm
                 ref={(c) => {

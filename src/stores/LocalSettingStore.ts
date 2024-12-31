@@ -69,7 +69,7 @@ export const SettingDefinitions: LocalFormFieldDefinition[] = [
   },
   {
     key: LocalSettings.BACKGROUND_IMAGE_URL,
-    type: API.SettingTypeEnum.STRING,
+    type: API.SettingTypeEnum.URL,
     default_value: null,
     optional: true,
     title: 'Custom background image URL',

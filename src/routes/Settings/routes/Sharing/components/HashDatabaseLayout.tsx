@@ -59,6 +59,7 @@ const OptimizeLayout: React.FC<OptimizeLayoutProps> = ({
         disabled={running}
         onChange={setVerify}
         floating={true}
+        id="verify-hash-data"
       />
       <Button
         className="optimize-button"

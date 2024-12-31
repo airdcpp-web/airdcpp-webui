@@ -279,8 +279,8 @@ export const FileDownloadCell = <
 
 // eslint-disable-next-line max-len
 export interface CheckboxCellProps
-  extends Omit<RowWrapperCellChildProps<boolean, any>, 'onChange'>,
-    Omit<CheckboxProps, 'onChange' | 'checked'> {
+  extends Omit<RowWrapperCellChildProps<boolean, any>, 'onChange' | 'id'>,
+    Omit<CheckboxProps, 'onChange' | 'checked' | 'id'> {
   onChange: (checked: boolean, rowData: any) => void;
 }
 

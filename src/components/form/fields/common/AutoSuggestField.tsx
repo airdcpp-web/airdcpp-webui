@@ -19,15 +19,16 @@ type TCombTemplate = {
 const AutoSuggestTemplate: TCombTemplate = {
   renderInput(locals) {
     return (
-      <div className="ui fluid input">
-        <LocalSuggestField
-          placeholder={locals.attrs.placeholder}
-          data={locals.config.suggestionGetter()}
-          onChange={locals.onChange}
-          defaultValue={locals.value ? locals.value : ''}
-          alwaysRenderSuggestions={locals.config.alwaysList}
-        />
-      </div>
+      <LocalSuggestField
+        name={locals.attrs.name}
+        id={locals.attrs.id}
+        disabled={locals.disabled}
+        placeholder={locals.attrs.placeholder}
+        data={locals.config.suggestionGetter()}
+        onChange={locals.onChange}
+        defaultValue={locals.value ? locals.value : ''}
+        alwaysRenderSuggestions={locals.config.alwaysList}
+      />
     );
   },
 };

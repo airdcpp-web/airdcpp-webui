@@ -3,7 +3,7 @@ import { MockHintedUserResponse } from './user';
 export const MOCK_FILELIST_ID = 'filelist1';
 export const MOCK_FILELIST_ITEM_ID = 323;
 
-export const FilelistGetFilelistItemResponse = {
+export const FilelistGetFilelistItemFileResponse = {
   complete: true,
   dupe: null,
   id: MOCK_FILELIST_ITEM_ID,

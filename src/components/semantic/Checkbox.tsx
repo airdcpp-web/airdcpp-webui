@@ -24,6 +24,9 @@ export interface CheckboxProps {
   style?: React.CSSProperties;
   settings?: SemanticUI.CheckboxSettings;
   beforeUnchecked?: () => void;
+
+  id?: string;
+  name?: string;
 }
 
 class Checkbox extends React.PureComponent<CheckboxProps> {
@@ -52,7 +55,8 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
   }
 
   render() {
-    const { className, checked, caption, type, disabled, floating, style } = this.props;
+    const { className, checked, caption, type, disabled, floating, style, id, name } =
+      this.props;
 
     const checkboxStyle = classNames(
       'ui checkbox',
@@ -70,8 +74,8 @@ class Checkbox extends React.PureComponent<CheckboxProps> {
         className={checkboxStyle}
         style={style}
       >
-        <input type="checkbox" defaultChecked={checked} />
-        {!!caption && <label>{caption}</label>}
+        <input id={id} name={name} type="checkbox" defaultChecked={checked} />
+        {!!caption && <label htmlFor={id}>{caption}</label>}
       </div>
     );
   }

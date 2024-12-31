@@ -16,6 +16,7 @@ import {
 import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
+import { getDebugId } from 'utils/DebugUtils';
 
 export type SocketConnectHandler<DataT extends object, PropsT extends object> = (
   addSocketListener: AddSocketListener,
@@ -43,13 +44,17 @@ export type DataConverter<PropsT extends object> = (
   props: PropsT & WithTranslation,
 ) => any;
 
+type DataProviderUrlCallback<PropsT extends object> = (
+  props: PropsT,
+  socket: APISocket,
+) => Promise<object | undefined>;
+
+export type DataProviderUrl<PropsT extends object> =
+  | DataProviderUrlCallback<PropsT>
+  | string;
+
 export type DataProviderUrls<PropsT extends object> = {
-  [key: string]:
-    | ((
-        props: PropsT /*& DataProps<PropsT>*/,
-        socket: APISocket,
-      ) => Promise<object | undefined>)
-    | string;
+  [key: string]: DataProviderUrl<PropsT>;
 };
 
 export interface DataProviderDecoratorSettings<
@@ -59,6 +64,8 @@ export interface DataProviderDecoratorSettings<
   // Key-value map of prop names and API urls
   // Value may also be a function which receives the props and SocketService as argument and performs the data fetch
   urls: DataProviderUrls<PropsT>;
+
+  initialData?: DataT;
 
   // Called when the socket is connected
   onSocketConnected?: SocketConnectHandler<DataT, PropsT>;
@@ -79,7 +86,6 @@ export interface DataProviderDecoratorSettings<
 export interface DataProviderDecoratorChildProps {
   socket: APISocket;
   refetchData: (keys?: string[]) => void;
-  //dataError: DataError | (Error & { status: undefined; code: undefined }) | null;
   dataError: DataFetchError | null;
 }
 
@@ -92,6 +98,7 @@ interface State<DataT extends object> {
 export default function <PropsT extends object, DataT extends object>(
   Component: React.ComponentType<PropsT & DataProviderDecoratorChildProps & DataT>,
   settings: DataProviderDecoratorSettings<PropsT, DataT>,
+  debug = false,
 ) {
   class DataProviderDecorator extends React.Component<
     DataProviderDecoratorProps & DataProps<PropsT> & PropsT,
@@ -100,9 +107,19 @@ export default function <PropsT extends object, DataT extends object>(
     //displayName: 'DataProviderDecorator',
     mounted = false;
 
+    id = getDebugId();
+
     state: State<DataT> = {
-      data: null,
+      data: settings.initialData || null,
       error: null,
+    };
+
+    log = (message: string, ...args: any[]) => {
+      if (!debug) {
+        return;
+      }
+
+      console.log(message, Object.keys(settings.urls).join('_'), this.id, ...args);
     };
 
     componentDidMount() {
@@ -125,6 +142,7 @@ export default function <PropsT extends object, DataT extends object>(
 
     // Recursively merge data object into existing data
     mergeData = (partialData: Partial<DataT>) => {
+      this.log('merge data', partialData);
       this.setState({
         data: merge({}, this.state.data, partialData),
       });
@@ -137,6 +155,7 @@ export default function <PropsT extends object, DataT extends object>(
         ...partialData,
       };
 
+      this.log('data completed', data);
       this.setState({
         data,
       });
@@ -150,25 +169,40 @@ export default function <PropsT extends object, DataT extends object>(
       this.fetchData(keys);
     };
 
+    onUrlFetched = (key: string) => {
+      this.log('Fetched', key);
+    };
+
+    fetchUrl = async (key: string, urlData: DataProviderUrl<PropsT>) => {
+      if (typeof urlData === 'function') {
+        try {
+          const ret = await urlData(this.props, this.props.socket);
+          this.onUrlFetched(key);
+          return ret;
+        } catch (e) {
+          // Handle non-async errors
+          return Promise.reject(e);
+        }
+      }
+
+      const data = await this.props.socket.get(urlData);
+      this.onUrlFetched(key);
+      return data;
+    };
+
     fetchData = (keys?: string[]) => {
       const { urls } = settings;
       if (!keys) {
         keys = Object.keys(urls);
       }
 
-      const promises = keys.map((key) => {
-        const url = urls[key];
-        if (typeof url === 'function') {
-          try {
-            const ret = url(this.props, this.props.socket);
-            return ret;
-          } catch (e) {
-            // Handle non-async errors
-            return Promise.reject(e);
-          }
-        }
+      if (!keys.length) {
+        return;
+      }
 
-        return this.props.socket.get(url);
+      const promises = keys.map(async (key) => {
+        const url = urls[key];
+        return this.fetchUrl(key, url);
       });
 
       Promise.all(promises)
@@ -223,6 +257,7 @@ export default function <PropsT extends object, DataT extends object>(
       const { data, error } = this.state;
       const { t } = this.props;
 
+      this.log('render', data);
       if (!data && !error) {
         return (
           loaderText !== null && (

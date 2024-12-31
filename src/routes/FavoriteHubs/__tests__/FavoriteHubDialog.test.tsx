@@ -1,8 +1,7 @@
 import {
   getConnectedSocket,
   getMockServer,
-  waitForExpect,
-} from 'airdcpp-apisocket/tests/helpers.js';
+} from 'airdcpp-apisocket/tests/mock-server.js';
 
 import { jest } from '@jest/globals';
 import { renderRoutes } from 'tests/test-containers';
@@ -24,6 +23,7 @@ import {
   FavoriteHubGetResponse,
 } from 'tests/mocks/api/favorite-hubs';
 import { setInputFieldValues, setupUserEvent } from 'tests/test-form-helpers';
+import { waitFor } from '@testing-library/dom';
 
 // tslint:disable:no-empty
 describe('FavoriteHubDialog', () => {
@@ -32,31 +32,31 @@ describe('FavoriteHubDialog', () => {
     const { socket } = await getConnectedSocket(server);
 
     // Data fetch
-    server.addDataHandler(
+    server.addRequestHandler(
       'GET',
       ShareProfileConstants.PROFILES_URL,
       ShareProfilesListResponse,
     );
-    server.addDataHandler(
+    server.addRequestHandler(
       'GET',
       `${FavoriteHubConstants.HUBS_URL}/${MOCK_FAVORITE_HUB_ID}`,
       FavoriteHubGetResponse,
     );
 
     // Listeners
-    server.addDataHandler(
-      'POST',
-      `${ShareProfileConstants.PROFILES_URL}/listeners/share_profile_added`,
+    server.addSubscriptionHandler(
+      ShareProfileConstants.PROFILES_URL,
+      'share_profile_added',
       undefined,
     );
-    server.addDataHandler(
-      'POST',
-      `${ShareProfileConstants.PROFILES_URL}/listeners/share_profile_updated`,
+    server.addSubscriptionHandler(
+      ShareProfileConstants.PROFILES_URL,
+      'share_profile_updated',
       undefined,
     );
-    server.addDataHandler(
-      'POST',
-      `${ShareProfileConstants.PROFILES_URL}/listeners/share_profile_removed`,
+    server.addSubscriptionHandler(
+      ShareProfileConstants.PROFILES_URL,
+      'share_profile_removed',
       undefined,
     );
 
@@ -64,13 +64,13 @@ describe('FavoriteHubDialog', () => {
     const onUpdated = jest.fn();
 
     // Save handlers
-    server.addDataHandler(
+    server.addRequestHandler(
       'PATCH',
       `${FavoriteHubConstants.HUBS_URL}/${MOCK_FAVORITE_HUB_ID}`,
       undefined,
       onUpdated,
     );
-    server.addDataHandler('POST', FavoriteHubConstants.HUBS_URL, undefined, onCreated);
+    server.addRequestHandler('POST', FavoriteHubConstants.HUBS_URL, undefined, onCreated);
 
     return { socket, server, onCreated, onUpdated };
   };
@@ -123,7 +123,7 @@ describe('FavoriteHubDialog', () => {
     await modalController.openDialog();
 
     // Check content
-    await waitForExpect(() => expect(getByText('Edit favorite hub')).toBeTruthy());
+    await waitFor(() => expect(getByText('Edit favorite hub')).toBeTruthy());
 
     // Edit
     await setInputFieldValues(
@@ -147,7 +147,7 @@ describe('FavoriteHubDialog', () => {
     await modalController.openDialog();
 
     // Check content
-    await waitForExpect(() => expect(getByText('Add favorite hub')).toBeTruthy());
+    await waitFor(() => expect(getByText('Add favorite hub')).toBeTruthy());
 
     // Edit
     await setInputFieldValues(

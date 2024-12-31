@@ -1,6 +1,6 @@
 import { fireEvent, getByText, RenderResult, waitFor } from '@testing-library/react';
-import userEventOriginal, { UserEvent } from '@testing-library/user-event';
-import selectEvent from 'react-select-event';
+import userEventOriginal, { userEvent, UserEvent } from '@testing-library/user-event';
+import selectEvent from './react-select-event';
 
 type FieldValueMap = {
   [key: string]: string;
@@ -93,48 +93,87 @@ export const setInputFieldValues = async (
   }
 };
 
-export const setSelectFieldValues = async (
-  { getByLabelText }: RenderResult,
-  fieldValueMap: FieldValueMap,
-) => {
-  for (const field of Object.keys(fieldValueMap)) {
-    const input = getByLabelText(field);
-    if (!input) {
-      throw new Error(`Input for field ${field} doesn't exist`);
-    }
-
-    const value = fieldValueMap[field];
-    selectEvent.openMenu(input);
-    await selectEvent.select(input, value);
-  }
-};
-
-export const clearFirstSelectFieldValue = async (
-  { getByLabelText }: RenderResult,
+export const exceptFieldValue = (
+  { getByLabelText }: Pick<RenderResult, 'getByLabelText'>,
   field: string,
+  value: string,
 ) => {
-  const input = getByLabelText(field);
+  const input = getByLabelText(field) as HTMLInputElement;
   if (!input) {
     throw new Error(`Input for field ${field} doesn't exist`);
   }
 
-  await selectEvent.clearFirst(input);
+  expect(input.value).toBe(value);
 };
 
-/*export const expectElementsExist = (testIds, getByTestId) => {
-  for (const testId of testIds) {
-    expect(() => getByTestId(testId)).not.toThrow();
+// REACT-SELECT HELPERS
+export const getSelectFieldValues = (
+  { getByRole }: Pick<RenderResult, 'getByRole'>,
+  field: string,
+) => {
+  const form = getByRole('form');
+  const inputs = form.getElementsByTagName('input');
+  const values = [];
+  for (const input of inputs) {
+    if (input.name === field) {
+      values.push(input.value);
+    }
   }
+  return values;
+};
+
+const EmptySelectValue = [''];
+
+export const clearSelectFieldValue = async (
+  { getByLabelText, getByRole }: Pick<RenderResult, 'getByLabelText' | 'getByRole'>,
+  { label, id }: LabeledItem,
+) => {
+  const input = getByLabelText(label) as HTMLInputElement;
+  if (!input) {
+    throw new Error(`Input for field ${label} doesn't exist`);
+  }
+
+  await selectEvent.clearAll(input);
+
+  await waitFor(() => {
+    const values = getSelectFieldValues({ getByRole }, id);
+    expect(values).toStrictEqual(EmptySelectValue);
+  });
+};
+
+interface LabeledItem {
+  id: string;
+  label: string;
 }
 
-export const expectElementsToMatchSnapshot = (testIds, getByTestId) => {
-  for (const testId of testIds) {
-    expect(getByTestId(testId)).toMatchSnapshot()
-  }
+interface SelectData {
+  field: LabeledItem;
+  options: Array<LabeledItem>;
 }
 
-export const expectElementsMissing = (testIds, getByTestId) => {
-  for (const testId of testIds) {
-    expect(() => getByTestId(testId)).toThrow();
+export const addSelectFieldValues = async (
+  { getByLabelText, getByRole }: Pick<RenderResult, 'getByLabelText' | 'getByRole'>,
+  selectData: SelectData,
+) => {
+  const input = getByLabelText(selectData.field.label) as HTMLInputElement;
+  if (!input) {
+    throw new Error(`Input for field ${selectData.field.label} doesn't exist`);
   }
-}*/
+
+  for (const option of selectData.options) {
+    await selectEvent.select(input, option.label);
+
+    await waitFor(() => {
+      const values = getSelectFieldValues({ getByRole }, selectData.field.id);
+      expect(values).toContain(option.id);
+    });
+  }
+};
+
+export const setSelectFieldValues = async (
+  { getByLabelText, getByRole }: Pick<RenderResult, 'getByLabelText' | 'getByRole'>,
+  selectData: SelectData,
+) => {
+  await clearSelectFieldValue({ getByLabelText, getByRole }, selectData.field);
+  await addSelectFieldValues({ getByLabelText, getByRole }, selectData);
+};

@@ -30,6 +30,7 @@ const CheckboxDialog: React.FC<CheckboxDialogProps> = ({
     <ConfirmDialog onApproved={onApprove} {...other}>
       {checkboxCaption && (
         <Checkbox
+          id="confirm-checkbox"
           checked={false}
           onChange={(state) => (checked.current = state)}
           caption={checkboxCaption}

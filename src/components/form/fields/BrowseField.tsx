@@ -52,7 +52,7 @@ export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
   const { formT } = locals.context;
   return (
     <div className={fieldStyle}>
-      <input ref={inputRef} value={locals.value} onChange={onChange} />
+      <input ref={inputRef} value={locals.value} onChange={onChange} {...locals.attrs} />
       {hasFilesystemAccess && (
         <Button caption={formT.translate('Browse')} onClick={showBrowseDialog} />
       )}

@@ -22,10 +22,11 @@ const PermissionSelector = (moduleT: UI.ModuleTranslator) => {
       const mapPermission = ({ value, text }: UI.FormOption<API.AccessEnum>) => (
         <Checkbox
           key={value}
-          className={value}
+          id={`permission-${value}`}
           checked={locals.value.includes(value)}
           onChange={(checked) => onChange(value, checked)}
           caption={text}
+          name={locals.attrs.name}
         />
       );
 

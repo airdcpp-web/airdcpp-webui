@@ -5,7 +5,7 @@ import i18n from 'i18next';
 import { APISocket } from 'services/SocketService';
 import { render, screen } from '@testing-library/react';
 import { PropsWithChildren } from 'react';
-import { DEFAULT_AUTH_RESPONSE } from 'airdcpp-apisocket/tests/helpers.js';
+import { DEFAULT_AUTH_RESPONSE } from 'airdcpp-apisocket/tests/mock-server.js';
 
 import 'utils/semantic';
 
@@ -33,11 +33,7 @@ const getMockI18n = () => {
   return i18n;
 };
 
-type TestWrapperProps = PropsWithChildren<{
-  socket: APISocket;
-}>;
-
-export const MOCK_SESSION: AuthenticatedSession = {
+const getMockSession = (): AuthenticatedSession => ({
   systemInfo: {
     ...DEFAULT_AUTH_RESPONSE.system,
     api_version: 1,
@@ -50,17 +46,28 @@ export const MOCK_SESSION: AuthenticatedSession = {
   sessionId: 4,
 
   hasAccess: () => true,
-};
+});
 
-export const TestWrapper: React.FC<TestWrapperProps> = ({ children, socket }) => {
-  const i18n = getMockI18n();
-  const formatter = createFormatter(i18n);
+type TestWrapperProps = PropsWithChildren<{
+  socket: APISocket;
+  formatter: ReturnType<typeof createFormatter>;
+  i18n: typeof i18n;
+  session: AuthenticatedSession;
+}>;
+
+export const TestWrapper: React.FC<TestWrapperProps> = ({
+  children,
+  socket,
+  i18n,
+  formatter,
+  session,
+}) => {
   return (
     <ErrorBoundary>
       <FormatterContext.Provider value={formatter}>
         <SocketContext.Provider value={socket}>
           <I18nextProvider i18n={i18n}>
-            <SessionContext.Provider value={MOCK_SESSION}>
+            <SessionContext.Provider value={session}>
               <section
                 className="ui dimmable blurring minimal"
                 id="container-main"
@@ -98,9 +105,21 @@ export const renderRoutes = (routes: RouteObject[], options: RenderOptions) => {
   document.body.setAttribute('height', '2000px');
   document.body.setAttribute('width', '2000px');
 
+  const i18n = getMockI18n();
+  const formatter = createFormatter(i18n);
+  const session = getMockSession();
+
   const testHelpers = render(<RouterProvider router={router} />, {
     container: document.body.appendChild(container),
-    wrapper: (props) => <TestWrapper socket={socket} {...props} />,
+    wrapper: (props) => (
+      <TestWrapper
+        socket={socket}
+        i18n={i18n}
+        formatter={formatter}
+        session={session}
+        {...props}
+      />
+    ),
     ...otherOptions,
   });
 
@@ -108,6 +127,8 @@ export const renderRoutes = (routes: RouteObject[], options: RenderOptions) => {
     ...testHelpers,
     screen,
     router,
+    formatter,
+    session,
   };
 };
 

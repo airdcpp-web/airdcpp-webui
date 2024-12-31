@@ -40,6 +40,7 @@ const HubSelectField: React.FC<Props> = ({ hubs, value, onChange }) => {
       {onlineHubs.map((hub) => (
         <div key={hub.id} className="field">
           <Checkbox
+            id={`hub-${hub.id}-checkbox`}
             caption={
               <>
                 <HubIcon hub={hub} />

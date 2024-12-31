@@ -13,6 +13,7 @@ module.exports = {
     '\\.(css|less)$': '<rootDir>/jest/stubs/CSSStub.js',
   },
   setupFiles: ['./jest/setup.js'],
+  setupFilesAfterEnv: ['./jest/setup-after-env.js'],
   cacheDirectory: './jest/cache/',
   testEnvironment: 'jsdom',
   transformIgnorePatterns: ['node_modules/(?!(escape-string-regexp|airdcpp-apisocket))$'],

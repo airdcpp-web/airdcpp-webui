@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShareDirectoryDialog should create new 1`] = `
+[
+  {
+    "callback_id": 8,
+    "data": {
+      "incoming": false,
+      "path": "/home/airdcpp/Downloads/",
+      "profiles": [
+        28550432,
+        265571564,
+      ],
+      "virtual_name": "Downloads",
+    },
+    "method": "POST",
+    "path": "share_roots",
+  },
+]
+`;
+
+exports[`ShareDirectoryDialog should update existing 1`] = `
+[
+  {
+    "callback_id": 8,
+    "data": {
+      "profiles": [
+        265571564,
+      ],
+      "virtual_name": "Updated name",
+    },
+    "method": "PATCH",
+    "path": "share_roots/YDCXPCVSPNBXH2WFTKTBZIFZBYNWRWRT2OJ5F6Y",
+  },
+]
+`;

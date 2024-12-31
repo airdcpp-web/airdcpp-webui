@@ -1,8 +1,7 @@
 import {
   getConnectedSocket,
   getMockServer,
-  waitForExpect,
-} from 'airdcpp-apisocket/tests/helpers.js';
+} from 'airdcpp-apisocket/tests/mock-server.js';
 
 import { jest } from '@jest/globals';
 import ShareConstants from 'constants/ShareConstants';
@@ -11,7 +10,7 @@ import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 import { FavoriteDirectoriesGroupedPathsResponse } from 'tests/mocks/api/favorite-directories';
 import HistoryConstants, { HistoryStringEnum } from 'constants/HistoryConstants';
 import {
-  FilelistGetFilelistItemResponse,
+  FilelistGetFilelistItemFileResponse,
   FilelistGetResponse,
   MOCK_FILELIST_ITEM_ID,
 } from 'tests/mocks/api/filelist';
@@ -47,28 +46,37 @@ describe('DownloadDialog', () => {
   const getSocket = async () => {
     const { socket } = await getConnectedSocket(server);
 
-    server.addDataHandler(
+    // Target paths fetch
+    server.addRequestHandler(
       'GET',
       ShareConstants.GROUPED_ROOTS_GET_URL,
       ShareGetGroupedRootsResponse,
     );
-    server.addDataHandler(
+    server.addRequestHandler(
       'GET',
       FavoriteDirectoryConstants.GROUPED_DIRECTORIES_URL,
       FavoriteDirectoriesGroupedPathsResponse,
     );
-    server.addDataHandler(
+    server.addRequestHandler(
       'GET',
       `${HistoryConstants.STRINGS_URL}/${HistoryStringEnum.DOWNLOAD_DIR}`,
       HistoryStringPathResponse,
     );
 
-    server.addDataHandler(
+    // Saving of the selected path
+    server.addRequestHandler(
+      'POST',
+      `${HistoryConstants.STRINGS_URL}/${HistoryStringEnum.DOWNLOAD_DIR}`,
+      undefined,
+    );
+
+    // File browser
+    server.addRequestHandler(
       'POST',
       FilesystemConstants.DISK_INFO_URL,
       FilesystemDiskInfoResponse,
     );
-    server.addDataHandler(
+    server.addRequestHandler(
       'POST',
       FilesystemConstants.LIST_URL,
       FilesystemListContentResponse,
@@ -90,7 +98,7 @@ describe('DownloadDialog', () => {
           <DownloadDialog
             downloadHandler={handleDownload}
             itemDataGetter={() =>
-              Promise.resolve(FilelistGetFilelistItemResponse as API.FilelistItem)
+              Promise.resolve(FilelistGetFilelistItemFileResponse as API.FilelistItem)
             }
             userGetter={() => MockHintedUserResponse as API.HintedUser}
             session={FilelistGetResponse}
@@ -129,7 +137,7 @@ describe('DownloadDialog', () => {
     await modalController.openDialog();
 
     // Check content
-    await waitForExpect(() => expect(getByText('Download')).toBeTruthy());
+    await waitFor(() => expect(getByText('Download')).toBeTruthy());
 
     await modalController.closeDialogButton('Close');
 

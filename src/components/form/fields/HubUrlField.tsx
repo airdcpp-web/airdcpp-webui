@@ -14,14 +14,12 @@ type TCombTemplate = {
 const HubUrlTemplate: TCombTemplate = {
   renderInput(locals) {
     return (
-      <div className="ui fluid input">
-        <HubSearchInput
-          onChange={(hubUrl) => {
-            locals.onChange(hubUrl);
-          }}
-          defaultValue={locals.value || undefined}
-        />
-      </div>
+      <HubSearchInput
+        onChange={(hubUrl) => {
+          locals.onChange(hubUrl);
+        }}
+        defaultValue={locals.value || undefined}
+      />
     );
   },
 };

@@ -6,7 +6,6 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { waitForExpect } from 'airdcpp-apisocket/tests/helpers.js';
 import Button from 'components/semantic/Button';
 import { useNavigate } from 'react-router';
 import { RouteRenderResult } from './test-containers';
@@ -15,7 +14,9 @@ export const waitForUrl = async (
   pathName: string,
   router: RouteRenderResult['router'],
 ) => {
-  await waitForExpect(() => expect(router.state.location.pathname).toEqual(pathName));
+  await waitFor(() => {
+    expect(router.state.location.pathname).toEqual(pathName);
+  });
 };
 
 export const waitForData = async (
@@ -63,17 +64,13 @@ export const createTestModalController = ({
   };
 
   const closeDialogButton = async (buttonCaption: string) => {
-    await act(async () => {
-      clickButton(buttonCaption, getByRole);
-      await waitForUrl(initialUrl, router);
-    });
+    clickButton(buttonCaption, getByRole);
+    await waitForUrl(initialUrl, router);
   };
 
   const closeDialogText = async (text: string) => {
-    await act(async () => {
-      expect(fireEvent.click(getByText(text))).toBeTruthy();
-      await waitForUrl(initialUrl, router);
-    });
+    expect(fireEvent.click(getByText(text))).toBeTruthy();
+    await waitForUrl(initialUrl, router);
   };
 
   return { closeDialogButton, closeDialogText, openDialog };

@@ -34,6 +34,8 @@ export type SuggestFieldProps<SuggestionT> = Omit<
     // The same submitHandler is called but without suggestion object
     button?: React.ReactElement<ButtonProps>;
 
+    name?: string;
+
     autoFocus?: boolean;
     placeholder?: string;
     className?: string;
@@ -127,6 +129,8 @@ class SuggestField<SuggestionT = any> extends React.Component<
       placeholder,
       defaultValue,
       button,
+      name,
+      id,
       children,
       ...other
     } = this.props;
@@ -138,6 +142,8 @@ class SuggestField<SuggestionT = any> extends React.Component<
       autoFocus,
       value: text,
       onKeyDown: this.onKeyDown,
+      name,
+      id,
     };
 
     const suggestField = (
