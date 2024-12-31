@@ -55,7 +55,6 @@ const fieldOptionReducer = (
   }
 
   if (fieldDefinitions.type === API.SettingTypeEnum.STRUCT) {
-    // reducedOptions[fieldDefinitions.key].fields = {};
     reducedOptions[fieldDefinitions.key].fields = fieldDefinitions.definitions!.reduce(
       (reduced, cur) => {
         return fieldOptionReducer(
@@ -192,7 +191,7 @@ class Form<ValueType extends UI.FormValueMap = UI.FormValueMap> extends Componen
     super(props);
 
     this.sourceValue = normalizeSettingValueMap(
-      props.sourceValue || undefined,
+      props.sourceValue ?? undefined,
       this.props.fieldDefinitions,
     ) as Partial<ValueType>;
 
@@ -334,7 +333,6 @@ class Form<ValueType extends UI.FormValueMap = UI.FormValueMap> extends Componen
     return (
       <Translation>
         {(t) => {
-          //const { location } = useRouter(); // TODO
           const {
             title,
             fieldDefinitions,

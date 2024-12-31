@@ -1,7 +1,3 @@
-// import * as React from 'react';
-
-// import { Location } from 'react-router';
-
 import * as UI from 'types/ui';
 
 import { InputDialog } from 'components/semantic/InputDialog';
@@ -96,13 +92,13 @@ const getCommonConfirmDialogProps = <
   const { action, moduleData } = actionData;
   const { icon } = action;
   const { approveCaption, rejectCaption, content, checkboxCaption } = translateInput(
-    confirmation!,
+    confirmation,
     actionData,
     t,
   );
   return {
     approveCaption,
-    rejectCaption: rejectCaption || translate(defaultRejectCaption, t, UI.Modules.COMMON),
+    rejectCaption: rejectCaption ?? translate(defaultRejectCaption, t, UI.Modules.COMMON),
     content,
     icon,
     title: translateActionName(action, moduleData, t),

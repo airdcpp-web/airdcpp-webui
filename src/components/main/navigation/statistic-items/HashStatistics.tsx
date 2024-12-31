@@ -22,16 +22,13 @@ const HashStatistics: React.FC<HashStatisticsProps & HashStatisticsDataProps> = 
   // className,
   hashStats,
 }) => {
-  const { formatSpeed, t } = useFormatter();
+  const { formatSpeed } = useFormatter();
   return (
-    <>
-      <StatisticsRow
-        icon={IconConstants.HASH}
-        bytes={hashStats.hash_speed}
-        formatter={formatSpeed}
-        t={t}
-      />
-    </>
+    <StatisticsRow
+      icon={IconConstants.HASH}
+      bytes={hashStats.hash_speed}
+      formatter={formatSpeed}
+    />
   );
 };
 

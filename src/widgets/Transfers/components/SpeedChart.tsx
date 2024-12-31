@@ -100,8 +100,8 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
             options={options}
             series={series}
             type="area"
-            width={bounds && bounds.width ? bounds.width : undefined}
-            height={bounds && bounds.height ? bounds.height : undefined}
+            width={bounds?.width}
+            height={bounds?.height}
           />
         </div>
       )}

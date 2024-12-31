@@ -10,9 +10,7 @@ import * as API from 'types/api';
 import DataProviderDecorator from 'decorators/DataProviderDecorator';
 import { StatisticsRow } from './StatisticsRow';
 
-interface TransferStatisticsProps {
-  // className?: string;
-}
+interface TransferStatisticsProps {}
 
 interface TransferStatisticsDataProps {
   transferStats: Pick<API.TransferStats, 'speed_down' | 'speed_up' | 'queued_bytes'>;
@@ -21,26 +19,23 @@ interface TransferStatisticsDataProps {
 const TransferStatistics: React.FC<
   TransferStatisticsProps & TransferStatisticsDataProps
 > = ({ transferStats }) => {
-  const { formatSize, formatSpeed, t } = useFormatter();
+  const { formatSize, formatSpeed } = useFormatter();
   return (
     <>
       <StatisticsRow
         icon={IconConstants.DOWNLOAD}
         bytes={transferStats.speed_down}
         formatter={formatSpeed}
-        t={t}
       />
       <StatisticsRow
         icon={IconConstants.UPLOAD}
         bytes={transferStats.speed_up}
         formatter={formatSpeed}
-        t={t}
       />
       <StatisticsRow
         icon={IconConstants.QUEUE_COLORED}
         bytes={transferStats.queued_bytes}
         formatter={formatSize}
-        t={t}
       />
     </>
   );

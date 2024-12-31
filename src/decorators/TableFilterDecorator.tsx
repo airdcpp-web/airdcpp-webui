@@ -54,13 +54,15 @@ export default function <PropsT>(
     React.useLayoutEffect(() => {
       return () => {
         const { store, filter, socket } = props;
-        if (store.active) {
-          socket
-            .delete(`${store.viewUrl}/filter/${filter.id}`)
-            .catch((error: ErrorResponse) =>
-              console.error('Failed to delete table filter', error),
-            );
+        if (!store.active) {
+          return;
         }
+
+        socket
+          .delete(`${store.viewUrl}/filter/${filter.id}`)
+          .catch((error: ErrorResponse) =>
+            console.error('Failed to delete table filter', error),
+          );
       };
     }, []);
 

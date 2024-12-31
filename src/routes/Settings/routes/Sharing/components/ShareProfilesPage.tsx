@@ -105,4 +105,4 @@ profiles.';
   );
 };
 
-export default ShareProfileDecorator(ShareProfilesPage, false, undefined);
+export default ShareProfileDecorator(ShareProfilesPage, false);

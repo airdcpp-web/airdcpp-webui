@@ -81,7 +81,7 @@ const handleAction = async <
 
       try {
         const result = await action.handler(handlerData, confirmData);
-        if (action.notifications && action.notifications.onSuccess) {
+        if (action.notifications?.onSuccess) {
           const item = action.notifications.itemConverter
             ? action.notifications.itemConverter(itemData)
             : itemData;
@@ -105,13 +105,19 @@ const handleAction = async <
 
         resolve(result);
       } catch (e) {
-        const reason = !e ? undefined : typeof e === 'string' ? e : e.message;
+        let reason;
+        if (typeof e === 'string') {
+          reason = e;
+        } else if (e) {
+          reason = e.message;
+        }
+
         NotificationActions.error({
           title: translate('Action failed', t, UI.Modules.COMMON),
           message: reason,
         });
 
-        reject(reason);
+        reject(Error(reason));
       }
     });
   });

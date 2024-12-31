@@ -2,14 +2,11 @@ import * as React from 'react';
 
 import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
 
-import * as UI from 'types/ui';
-
 interface StatisticsRowProps {
   icon: IconType;
   cornerIcon?: CornerIconType;
   bytes: number;
   formatter: (bytes: number) => React.ReactNode;
-  t: UI.TranslateF;
 }
 
 export const StatisticsRow: React.FC<StatisticsRowProps> = ({
@@ -17,7 +14,6 @@ export const StatisticsRow: React.FC<StatisticsRowProps> = ({
   cornerIcon,
   bytes,
   formatter,
-  t,
 }) => {
   if (bytes === 0) {
     return null;

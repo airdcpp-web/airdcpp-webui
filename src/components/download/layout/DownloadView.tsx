@@ -7,10 +7,6 @@ import { usingMobileLayout } from 'utils/BrowserUtils';
 import { toI18nKey } from 'utils/TranslationUtils';
 
 import ShareConstants from 'constants/ShareConstants';
-import {
-  default as HistoryConstants,
-  HistoryStringEnum,
-} from 'constants/HistoryConstants';
 import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
 
 import MenuItemLink from 'components/semantic/MenuItemLink';
