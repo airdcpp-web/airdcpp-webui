@@ -29,10 +29,10 @@ import { waitForElementToBeRemoved, waitFor, fireEvent } from '@testing-library/
 
 import { HistoryStringPathResponse } from 'tests/mocks/api/history';
 import {
-  createTestModalController,
-  TestModalNavigateButton,
-  waitForData,
-} from 'tests/test-component-helpers';
+  createTestRouteModalController,
+  TestRouteModalNavigateButton,
+} from 'tests/test-dialog-helpers';
+import { waitForData } from 'tests/test-helpers';
 
 // tslint:disable:no-empty
 describe('DownloadDialog', () => {
@@ -86,7 +86,7 @@ describe('DownloadDialog', () => {
     const DownloadDialogTest = () => {
       return (
         <>
-          <TestModalNavigateButton
+          <TestRouteModalNavigateButton
             modalRoute={`/home/download/${MOCK_FILELIST_ITEM_ID}`}
           />
           <DownloadDialog
@@ -113,7 +113,7 @@ describe('DownloadDialog', () => {
       routerProps: { initialEntries: ['/home'] },
     });
 
-    const modalController = createTestModalController(renderData);
+    const modalController = createTestRouteModalController(renderData);
     return { socket, handleDownload, modalController, ...renderData };
   };
 

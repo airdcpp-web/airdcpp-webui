@@ -140,9 +140,7 @@ export type FormFieldChangeHandler<ValueType = UI.FormValueMap> = (
   valueChanged: boolean,
 ) => null | void | Promise<Partial<ValueType>>;
 
-export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap>
-  extends Pick<FormContext, 'location'> {
-  // Form items to list
+export interface FormProps<ValueType extends Partial<UI.FormValueMap> = UI.FormValueMap> {
   fieldDefinitions: UI.FormFieldDefinition[];
 
   // Source value to use for initial data
@@ -338,7 +336,6 @@ class Form<ValueType extends UI.FormValueMap = UI.FormValueMap> extends Componen
             fieldDefinitions,
             className,
             onFieldSetting,
-            location,
             optionTitleFormatter,
             id,
           } = this.props;
@@ -357,7 +354,6 @@ class Form<ValueType extends UI.FormValueMap = UI.FormValueMap> extends Componen
           );
 
           const context: FormContext = {
-            location,
             formT,
           };
 

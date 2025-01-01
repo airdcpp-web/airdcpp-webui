@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FileBrowserDialog directory selection should create new directory 1`] = `
+[
+  {
+    "directory_path": "/New directory/",
+  },
+  {
+    "directory_path": "/New directory/",
+  },
+]
+`;
+
+exports[`FileBrowserDialog directory selection should select child 1`] = `
+[
+  {
+    "directory_path": "/2 folders/",
+  },
+  {
+    "directory_path": "/2 folders/",
+  },
+]
+`;
+
+exports[`FileBrowserDialog directory selection should select initial 1`] = `
+[
+  {
+    "directory_path": "/",
+  },
+  {
+    "directory_path": "/",
+  },
+]
+`;

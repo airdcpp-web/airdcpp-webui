@@ -109,7 +109,7 @@ const WidgetDialog: React.FC<Props> = (props) => {
     return null;
   }
 
-  const { location, rootWidgetT } = props;
+  const { rootWidgetT } = props;
   const { value, widgetInfo, definitions } = formData;
   const { icon } = widgetInfo;
   const { t } = rootWidgetT;
@@ -125,7 +125,6 @@ const WidgetDialog: React.FC<Props> = (props) => {
         sourceValue={value}
         fieldDefinitions={definitions}
         onSave={onSave}
-        location={location}
       />
 
       <Message

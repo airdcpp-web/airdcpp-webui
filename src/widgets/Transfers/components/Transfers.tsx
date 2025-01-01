@@ -103,6 +103,7 @@ class Transfers extends PureComponent<
       points: addSpeed(prevState.points, newStats.speed_down, newStats.speed_up),
       maxDownload: Math.max(newStats.speed_down, prevState.maxDownload),
       maxUpload: Math.max(newStats.speed_up, prevState.maxUpload),
+      stats: newStats,
     }));
   };
 

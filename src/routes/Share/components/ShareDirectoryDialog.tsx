@@ -83,7 +83,6 @@ const ShareDirectoryDialog: React.FC<Props> = ({
   rootEntry,
   socket,
   virtualNames,
-  location,
   ...other
 }) => {
   const formatter = useFormatter();
@@ -177,7 +176,6 @@ const ShareDirectoryDialog: React.FC<Props> = ({
         onFieldSetting={onFieldSetting}
         onSave={onSave}
         sourceValue={rootEntry as Entry}
-        location={location}
       />
     </RouteModal>
   );

@@ -9,9 +9,9 @@ import { renderRoutes } from 'tests/test-containers';
 import * as UI from 'types/ui';
 
 import {
-  createTestModalController,
-  TestModalNavigateButton,
-} from 'tests/test-component-helpers';
+  createTestRouteModalController,
+  TestRouteModalNavigateButton,
+} from 'tests/test-dialog-helpers';
 import FavoriteHubDialog from '../components/FavoriteHubDialog';
 import { getModuleT } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
@@ -83,7 +83,7 @@ describe('FavoriteHubDialog', () => {
       const favT = getModuleT(t, UI.Modules.FAVORITE_HUBS);
       return (
         <>
-          <TestModalNavigateButton
+          <TestRouteModalNavigateButton
             modalRoute={id ? `/home/entries/${id}` : '/home/entries'}
           />
           <FavoriteHubDialog favT={favT} />
@@ -103,7 +103,7 @@ describe('FavoriteHubDialog', () => {
       routerProps: { initialEntries: ['/home'] },
     });
 
-    const modalController = createTestModalController(renderData);
+    const modalController = createTestRouteModalController(renderData);
     return { modalController, ...renderData, ...other };
   };
 

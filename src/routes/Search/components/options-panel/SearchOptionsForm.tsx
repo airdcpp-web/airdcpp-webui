@@ -133,7 +133,7 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
   };
 
   render() {
-    const { value, onChange, location, moduleT } = this.props;
+    const { value, onChange, moduleT } = this.props;
     return (
       <div>
         <Form<Entry>
@@ -145,7 +145,6 @@ class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
           onSave={this.onSave}
           fieldDefinitions={this.definitions}
           sourceValue={value} // This gets updated on every change at the moment...
-          location={location}
           optionTitleFormatter={(def) => def.title}
           className="search-options"
         />

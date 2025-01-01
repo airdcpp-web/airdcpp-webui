@@ -137,54 +137,60 @@ const normalizeEnumValue = (rawItem: API.SettingEnumOption): UI.FormOption => {
   };
 };
 
+const normalizeListValue = (
+  value: UI.FormValueBase[],
+  { item_type, definitions }: UI.FormFieldDefinition,
+) => {
+  if (item_type === API.SettingTypeEnum.STRUCT) {
+    // Normalize each list object
+    return value.map((arrayItem) => {
+      if (!!arrayItem && typeof arrayItem === 'object') {
+        return normalizeSettingValueMap(arrayItem, definitions!);
+      }
+
+      throw Error(`Invalid value for a list struct ${arrayItem}`);
+    });
+  } else if (item_type === API.SettingTypeEnum.HINTED_USER) {
+    return value;
+  } else {
+    return value.map(normalizeField);
+  }
+};
+
 // Normalize form values received from the API to a form value
 const normalizeSettingValueMap = (
   value: Partial<API.SettingValueMap<UI.FormValueBase>> | undefined,
   valueDefinitions: UI.FormFieldDefinition[],
 ): UI.FormValueMap => {
-  return valueDefinitions.reduce(
-    (reducedValue, { key, type, definitions, default_value, item_type }) => {
-      if (!!value && value.hasOwnProperty(key)) {
-        const fieldValue = value[key];
-        if (type === API.SettingTypeEnum.LIST && Array.isArray(fieldValue)) {
-          if (item_type === API.SettingTypeEnum.STRUCT) {
-            // Normalize each list object
-            reducedValue[key] = fieldValue.map((arrayItem) => {
-              if (!!arrayItem && typeof arrayItem === 'object') {
-                return normalizeSettingValueMap(arrayItem, definitions!);
-              }
-
-              throw Error(`Invalid value for a list struct ${arrayItem}`);
-            });
-          } else if (item_type === API.SettingTypeEnum.HINTED_USER) {
-            reducedValue[key] = fieldValue;
-          } else {
-            reducedValue[key] = fieldValue.map(normalizeField);
-          }
-        } else if (type === API.SettingTypeEnum.STRUCT) {
-          if (
-            !!fieldValue &&
-            typeof fieldValue === 'object' &&
-            !Array.isArray(fieldValue)
-          ) {
-            reducedValue[key] = normalizeSettingValueMap(fieldValue, definitions!);
-          } else {
-            throw Error(`Invalid value for a struct ${key}`);
-          }
-        } else if (type === API.SettingTypeEnum.HINTED_USER) {
-          reducedValue[key] = fieldValue as UI.FormValueBase;
+  return valueDefinitions.reduce((reducedValue, definitions) => {
+    const { type, key, default_value } = definitions;
+    if (!!value && value.hasOwnProperty(key)) {
+      const fieldValue = value[key];
+      if (type === API.SettingTypeEnum.LIST && Array.isArray(fieldValue)) {
+        reducedValue[key] = normalizeListValue(fieldValue, definitions);
+      } else if (type === API.SettingTypeEnum.STRUCT) {
+        if (
+          !!fieldValue &&
+          typeof fieldValue === 'object' &&
+          !Array.isArray(fieldValue)
+        ) {
+          const { definitions: childDefinitions } = definitions;
+          reducedValue[key] = normalizeSettingValueMap(fieldValue, childDefinitions!);
         } else {
-          reducedValue[key] = normalizeField(fieldValue);
+          throw Error(`Invalid value for a struct ${key}`);
         }
-      } else if (!value) {
-        // Initialize empty value but don't merge missing fields into an existing value (we might be merging)
-        reducedValue[key] = default_value || null;
+      } else if (type === API.SettingTypeEnum.HINTED_USER) {
+        reducedValue[key] = fieldValue as UI.FormValueBase;
+      } else {
+        reducedValue[key] = normalizeField(fieldValue);
       }
+    } else if (!value) {
+      // Initialize empty value but don't merge missing fields into an existing value (we might be merging)
+      reducedValue[key] = default_value || null;
+    }
 
-      return reducedValue;
-    },
-    {} as UI.FormValueMap,
-  );
+    return reducedValue;
+  }, {} as UI.FormValueMap);
 };
 
 const intTransformer = {

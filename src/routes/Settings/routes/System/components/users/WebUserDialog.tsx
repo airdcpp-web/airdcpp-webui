@@ -212,13 +212,7 @@ const buildDefinitions = (isNew: boolean, moduleT: UI.ModuleTranslator) => {
   return definitions;
 };
 
-const WebUserDialog: React.FC<Props> = ({
-  user,
-  moduleT,
-  location,
-  socket,
-  ...other
-}) => {
+const WebUserDialog: React.FC<Props> = ({ user, moduleT, socket, ...other }) => {
   const { user: loginUser } = useSession();
   const isNew = !user;
 
@@ -268,7 +262,6 @@ const WebUserDialog: React.FC<Props> = ({
         onFieldSetting={onFieldSetting}
         onSave={onSave}
         sourceValue={user as Entry}
-        location={location}
       />
     </RouteModal>
   );

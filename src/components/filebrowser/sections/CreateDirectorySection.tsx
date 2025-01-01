@@ -19,10 +19,10 @@ export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({
   t,
 }) => (
   <Accordion>
-    <div className="title create-section">
+    <label htmlFor="create_directory" className="title create-section">
       <Icon icon={IconConstants.DROPDOWN} />
       {translate('Create directory', t, UI.Modules.COMMON)}
-    </div>
+    </label>
 
     <div className="content create-section">
       <ActionInput
@@ -30,6 +30,7 @@ export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({
         icon={IconConstants.CREATE}
         handleAction={handleAction}
         placeholder={translate('Directory name', t, UI.Modules.COMMON)}
+        id="create_directory"
       />
     </div>
   </Accordion>

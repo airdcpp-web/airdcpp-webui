@@ -35,7 +35,6 @@ const ExtensionsConfigureDialog: React.FC<Props> = ({
   extension,
   settings,
   fieldDefinitions,
-  location,
   socket,
   ...other
 }) => {
@@ -63,7 +62,6 @@ const ExtensionsConfigureDialog: React.FC<Props> = ({
         onSave={onSave}
         fieldDefinitions={fieldDefinitions}
         sourceValue={settings}
-        location={location}
       />
     </RouteModal>
   );

@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import * as React from 'react';
-import { useLocation } from 'react-router';
 
 import Modal, { ModalProps } from 'components/semantic/Modal';
 import Form, { FormSaveHandler } from 'components/form/Form';
@@ -26,7 +25,6 @@ export const MenuFormDialog: React.FC<MenuFormDialogProps> = ({
   ...other
 }) => {
   const formRef = useRef<Form | null>(null);
-  const location = useLocation();
   const { t } = useTranslation();
   return (
     <Modal
@@ -38,12 +36,7 @@ export const MenuFormDialog: React.FC<MenuFormDialogProps> = ({
       icon={icon}
       dynamicHeight={true}
     >
-      <Form
-        ref={formRef}
-        onSave={onSave}
-        fieldDefinitions={fieldDefinitions}
-        location={location}
-      />
+      <Form ref={formRef} onSave={onSave} fieldDefinitions={fieldDefinitions} />
     </Modal>
   );
 };

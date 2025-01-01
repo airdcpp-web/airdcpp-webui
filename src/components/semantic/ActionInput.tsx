@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Button, { ButtonProps } from 'components/semantic/Button';
 
-export type SubmitCallback = (value: string) => void;
+export type SubmitCallback = (value: string) => void | Promise<void>;
 
 export interface ActionInputProps extends Omit<ButtonProps, 'type'> {
   // Function to call with the value
@@ -13,38 +13,43 @@ export interface ActionInputProps extends Omit<ButtonProps, 'type'> {
   type?: string;
 }
 
-class ActionInput extends React.PureComponent<ActionInputProps> {
-  static readonly defaultProps: Pick<ActionInputProps, 'type'> = {
-    type: 'text',
+const ActionInput: React.FC<ActionInputProps> = ({
+  id,
+  placeholder,
+  handleAction,
+  type = 'text',
+  ...buttonProps
+}) => {
+  const [value, setValue] = React.useState('');
+  const [saving, setSaving] = React.useState(false);
+
+  const handleClick = async () => {
+    setSaving(true);
+    await handleAction(value);
+    setSaving(false);
   };
 
-  state = {
-    value: '',
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
   };
 
-  handleClick = () => {
-    this.props.handleAction(this.state.value);
-  };
-
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: event.target.value });
-  };
-
-  render() {
-    const { type, placeholder, handleAction, ...other /*icon, caption*/ } = this.props;
-    return (
-      <div className="ui action input">
-        <input type={type} placeholder={placeholder} onChange={this.handleChange} />
-        <Button
-          {...other}
-          icon={this.props.icon}
-          caption={this.props.caption}
-          onClick={this.handleClick}
-          disabled={this.state.value.length === 0}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="ui action input">
+      <input
+        type={type}
+        id={id}
+        placeholder={placeholder}
+        onChange={handleChange}
+        value={value}
+      />
+      <Button
+        {...buttonProps}
+        onClick={handleClick}
+        loading={saving}
+        disabled={value.length === 0}
+      />
+    </div>
+  );
+};
 
 export default ActionInput;

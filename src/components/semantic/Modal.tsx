@@ -69,6 +69,7 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
   const { icon, subHeader, title } = props;
 
   const mainClass = classNames('ui modal', { full: fullHeight }, className);
+  const node = document.getElementById(MODAL_NODE_ID)!;
   return ReactDOM.createPortal(
     <dialog ref={ref} className={mainClass} id={id}>
       <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
@@ -105,7 +106,7 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
         }
       </Translation>
     </dialog>,
-    document.getElementById(MODAL_NODE_ID)!,
+    node,
   );
 });
 

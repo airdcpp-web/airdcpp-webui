@@ -141,19 +141,19 @@ const FileBrowserLayout: React.FC<Props> = ({
     }
   };
 
-  const createDirectory: SubmitCallback = (directoryName) => {
+  const createDirectory: SubmitCallback = async (directoryName) => {
+    console.assert(directoryName.length > 0, 'Directory name must be set');
     const newPath = currentDirectory + directoryName + pathSeparator;
-    socket
-      .post(FilesystemConstants.DIRECTORY_URL, { path: newPath })
-      .then(() => {
-        handleDirectoryChanged(newPath);
-      })
-      .catch((error: Error) => {
-        NotificationActions.error({
-          title: translate('Failed to create directory', t, UI.Modules.COMMON),
-          message: error.message,
-        });
+
+    try {
+      await socket.post(FilesystemConstants.DIRECTORY_URL, { path: newPath });
+      handleDirectoryChanged(newPath);
+    } catch (error) {
+      NotificationActions.error({
+        title: translate('Failed to create directory', t, UI.Modules.COMMON),
+        message: error.message,
       });
+    }
   };
 
   const hasEditAccess = hasAccess(API.AccessEnum.FILESYSTEM_EDIT);

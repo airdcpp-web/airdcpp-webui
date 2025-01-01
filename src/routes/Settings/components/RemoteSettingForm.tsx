@@ -13,7 +13,6 @@ import Form, {
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { useLocation } from 'react-router';
 import { SettingSaveContext, getSettingFormId } from '../effects/useSettingSaveContext';
 import { useSocket } from 'context/SocketContext';
 
@@ -40,7 +39,6 @@ const RemoteSettingForm: React.FC<Props> = ({
   ...other
 }) => {
   const saveContext = useContext(SettingSaveContext)!;
-  const location = useLocation();
   const socket = useSocket();
 
   const refetchValues = () => {
@@ -72,7 +70,6 @@ const RemoteSettingForm: React.FC<Props> = ({
         fieldDefinitions={fieldDefinitions}
         sourceValue={settings}
         onFieldChanged={handleFieldChanged}
-        location={location}
       />
     </div>
   );

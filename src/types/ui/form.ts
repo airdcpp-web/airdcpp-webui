@@ -27,7 +27,7 @@ export const enum TranslatableFormDefinitionProperties {
 }
 
 export type FormContext = {
-  location: Location;
+  // location: Location;
   formT: ModuleTranslator;
 };
 

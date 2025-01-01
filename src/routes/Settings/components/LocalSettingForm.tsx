@@ -11,7 +11,6 @@ import Form, {
 import * as UI from 'types/ui';
 
 import { translateForm } from 'utils/FormUtils';
-import { useLocation } from 'react-router';
 import { SettingSaveContext, getSettingFormId } from '../effects/useSettingSaveContext';
 
 export interface LocalSettingFormProps
@@ -30,7 +29,6 @@ const LocalSettingForm: React.FC<LocalSettingFormProps> = ({
     return translateForm(LocalSettingStore.getDefinitions(keys), moduleT);
   }, []);
 
-  const location = useLocation();
   const saveContext = useContext(SettingSaveContext)!;
 
   const onSave: FormSaveHandler<UI.FormValueMap> = (changedSettingArray, allFields) => {
@@ -51,7 +49,6 @@ const LocalSettingForm: React.FC<LocalSettingFormProps> = ({
       <Form
         ref={(f) => saveContext.addFormRef(keys, f)}
         id={getSettingFormId(keys)}
-        location={location}
         onSave={onSave}
         fieldDefinitions={definitions}
         sourceValue={settings}

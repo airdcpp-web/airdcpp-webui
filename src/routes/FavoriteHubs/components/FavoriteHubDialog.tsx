@@ -233,13 +233,7 @@ type Props = FavoriteHubDialogProps &
   ShareProfileDecoratorChildProps &
   ModalRouteDecoratorChildProps;
 
-const FavoriteHubDialog: React.FC<Props> = ({
-  hubEntry,
-  location,
-  favT,
-  profiles,
-  socket,
-}) => {
+const FavoriteHubDialog: React.FC<Props> = ({ hubEntry, favT, profiles, socket }) => {
   const formatter = useFormatter();
 
   const formValue = useMemo<Entry | undefined>(() => toFormEntry(hubEntry), []);
@@ -340,7 +334,6 @@ const FavoriteHubDialog: React.FC<Props> = ({
         onSave={onSave}
         fieldDefinitions={formDefinitions}
         sourceValue={formValue}
-        location={location}
       />
     </RouteModal>
   );

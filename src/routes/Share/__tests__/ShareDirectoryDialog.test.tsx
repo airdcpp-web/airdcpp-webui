@@ -9,11 +9,9 @@ import { renderRoutes } from 'tests/test-containers';
 import * as UI from 'types/ui';
 
 import {
-  clickButton,
-  createTestModalController,
-  TestModalNavigateButton,
-  waitForData,
-} from 'tests/test-component-helpers';
+  createTestRouteModalController,
+  TestRouteModalNavigateButton,
+} from 'tests/test-dialog-helpers';
 import { getModuleT } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import ShareProfileConstants from 'constants/ShareProfileConstants';
@@ -41,6 +39,7 @@ import { FilesystemListContentResponse } from 'tests/mocks/api/filesystem';
 import { getBrowseStorageKey } from 'components/filebrowser/effects/useFileItemSelection';
 import { saveLocalProperty } from 'utils/BrowserUtils';
 import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
+import { clickButton, waitForData } from 'tests/test-helpers';
 
 // tslint:disable:no-empty
 describe('ShareDirectoryDialog', () => {
@@ -112,7 +111,7 @@ describe('ShareDirectoryDialog', () => {
       const shareT = getModuleT(t, UI.Modules.SHARE);
       return (
         <>
-          <TestModalNavigateButton
+          <TestRouteModalNavigateButton
             modalRoute={id ? `/home/directories/${id}` : '/home/directories'}
           />
           <ShareDirectoryDialog shareT={shareT} />
@@ -132,7 +131,7 @@ describe('ShareDirectoryDialog', () => {
       routerProps: { initialEntries: ['/home'] },
     });
 
-    const modalController = createTestModalController(renderData);
+    const modalController = createTestRouteModalController(renderData);
     return { modalController, ...renderData, ...other };
   };
 

@@ -60,7 +60,6 @@ const FavoriteDirectoryDialog: React.FC<Props> = ({
   moduleT,
   virtualNames,
   socket,
-  location,
 }) => {
   const formRef = useRef<Form<Entry>>(null);
   const fieldDefinitions = useMemo(() => translateForm(Entry, moduleT), []);
@@ -130,7 +129,6 @@ const FavoriteDirectoryDialog: React.FC<Props> = ({
         onFieldSetting={onFieldSetting}
         onSave={onSave}
         sourceValue={directoryEntry as Entry}
-        location={location}
       />
     </RouteModal>
   );

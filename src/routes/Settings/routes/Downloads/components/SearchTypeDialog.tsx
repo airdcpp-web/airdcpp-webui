@@ -47,7 +47,6 @@ type Props = SearchTypeDialogProps & DataProps & ModalRouteDecoratorChildProps;
 const SearchTypeDialog: React.FC<Props> = ({
   moduleT,
   searchTypeEntry,
-  location,
   socket,
   ...other
 }) => {
@@ -97,7 +96,6 @@ const SearchTypeDialog: React.FC<Props> = ({
         onFieldSetting={onFieldSetting}
         onSave={onSave}
         sourceValue={searchTypeEntry as Entry}
-        location={location}
       />
     </RouteModal>
   );

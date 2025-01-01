@@ -84,18 +84,7 @@ export const TestWrapper: React.FC<TestWrapperProps> = ({
   );
 };
 
-interface RenderOptions {
-  socket: APISocket;
-  routerProps?: object & {
-    initialEntries: string[];
-  };
-}
-
-export const renderRoutes = (routes: RouteObject[], options: RenderOptions) => {
-  const { socket, routerProps = { initialEntries: ['/'] }, ...otherOptions } = options;
-
-  const router = createMemoryRouter(routes, routerProps);
-
+export const renderNode = (node: React.ReactNode, socket: APISocket) => {
   const container = document.createElement('div');
   container.setAttribute('id', MODAL_PAGE_DIMMER_ID);
 
@@ -109,7 +98,7 @@ export const renderRoutes = (routes: RouteObject[], options: RenderOptions) => {
   const formatter = createFormatter(i18n);
   const session = getMockSession();
 
-  const testHelpers = render(<RouterProvider router={router} />, {
+  const testHelpers = render(node, {
     container: document.body.appendChild(container),
     wrapper: (props) => (
       <TestWrapper
@@ -120,16 +109,34 @@ export const renderRoutes = (routes: RouteObject[], options: RenderOptions) => {
         {...props}
       />
     ),
-    ...otherOptions,
   });
 
   return {
     ...testHelpers,
     screen,
-    router,
     formatter,
     session,
   };
 };
 
+interface RouteRenderOptions {
+  socket: APISocket;
+  routerProps?: object & {
+    initialEntries: string[];
+  };
+}
+
+export const renderRoutes = (routes: RouteObject[], options: RouteRenderOptions) => {
+  const { socket, routerProps = { initialEntries: ['/'] } } = options;
+
+  const router = createMemoryRouter(routes, routerProps);
+
+  const testHelpers = renderNode(<RouterProvider router={router} />, socket);
+  return {
+    ...testHelpers,
+    router,
+  };
+};
+
+export type NodeRenderResult = ReturnType<typeof renderNode>;
 export type RouteRenderResult = ReturnType<typeof renderRoutes>;
