@@ -161,7 +161,7 @@ describe('FileBrowserDialog', () => {
         { 'Create directory': 'New directory' },
       );
 
-      expect(fireEvent.click(getByText('Create'))).toBeTruthy();
+      clickButton('Create', getByRole);
       await waitFor(() =>
         expect(container.querySelector('.ui.action.input.visible')).toBeFalsy(),
       );
@@ -178,8 +178,8 @@ describe('FileBrowserDialog', () => {
   });
 
   describe('file selection', () => {
-    test.skip('should select existing', async () => {
-      const { getByText, modalController, queryByText, onSave, caption } =
+    test('should select existing', async () => {
+      const { getByText, modalController, queryByText, getByRole, onSave, caption } =
         await renderDialog(API.SettingTypeEnum.EXISTING_FILE_PATH);
 
       await modalController.openDialog();
@@ -195,8 +195,43 @@ describe('FileBrowserDialog', () => {
       expect(fireEvent.click(getByText('2 folders'))).toBeTruthy();
       await waitForData('Loading items', queryByText);
 
+      // Select a file
+      clickButton('empty.txt', getByRole);
+
       // Save
-      await modalController.closeDialogButton('empty.txt');
+      await modalController.closeDialogButton('Continue');
+
+      expect(onSave).toHaveBeenCalledTimes(1);
+      expect(onSave.mock.calls[0]).toMatchSnapshot();
+    }, 100000);
+
+    test('should select new', async () => {
+      const userEvent = setupUserEvent();
+      const { getByText, modalController, queryByText, getByLabelText, onSave, caption } =
+        await renderDialog(API.SettingTypeEnum.FILE_PATH);
+
+      await modalController.openDialog();
+
+      // Check content
+      await waitFor(() => expect(getByText(caption)).toBeTruthy());
+
+      // Open dialog
+      expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
+      await waitForData('Loading items', queryByText);
+
+      // Go to child directory
+      expect(fireEvent.click(getByText('2 folders'))).toBeTruthy();
+      await waitForData('Loading items', queryByText);
+
+      // Enter name for the file
+      await setInputFieldValues(
+        { userEvent, getByLabelText },
+        { Filename: 'new_file.txt' },
+      );
+      await userEvent.click(getByText('Select'));
+
+      // Save
+      await modalController.closeDialogButton('Continue');
 
       expect(onSave).toHaveBeenCalledTimes(1);
       expect(onSave.mock.calls[0]).toMatchSnapshot();

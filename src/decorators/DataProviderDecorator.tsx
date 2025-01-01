@@ -17,6 +17,7 @@ import { translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
 import { getDebugId } from 'utils/DebugUtils';
+import { sleep } from 'utils/Promise';
 
 export type SocketConnectHandler<DataT extends object, PropsT extends object> = (
   addSocketListener: AddSocketListener,
@@ -110,7 +111,7 @@ export default function <PropsT extends object, DataT extends object>(
     id = getDebugId();
 
     state: State<DataT> = {
-      data: settings.initialData || null,
+      data: settings.initialData ?? null,
       error: null,
     };
 
@@ -143,9 +144,9 @@ export default function <PropsT extends object, DataT extends object>(
     // Recursively merge data object into existing data
     mergeData = (partialData: Partial<DataT>) => {
       this.log('merge data', partialData);
-      this.setState({
-        data: merge({}, this.state.data, partialData),
-      });
+      this.setState((prevState) => ({
+        data: merge({}, prevState.data, partialData),
+      }));
     };
 
     // Replace existing data properties with new data
@@ -181,7 +182,7 @@ export default function <PropsT extends object, DataT extends object>(
           return ret;
         } catch (e) {
           // Handle non-async errors
-          return Promise.reject(e);
+          return Promise.reject(e as Error);
         }
       }
 
@@ -219,10 +220,9 @@ export default function <PropsT extends object, DataT extends object>(
     ) => {
       const { dataConverters } = settings;
       const url = keys[index];
-      reducedData[url] =
-        dataConverters && dataConverters[url]
-          ? dataConverters[url](data, this.props)
-          : data;
+      reducedData[url] = dataConverters?.[url]
+        ? dataConverters[url](data, this.props)
+        : data;
       return reducedData;
     };
 

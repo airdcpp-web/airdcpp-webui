@@ -122,7 +122,9 @@ const DownloadDialog: React.FC<Props> = (props) => {
         path="browse/*"
         element={
           <FileBrowserDialog
-            onConfirm={(path) => handleDownload(getFilePath(path), getFileName(path))}
+            onConfirm={async (path) => {
+              await handleDownload(getFilePath(path), getFileName(path));
+            }}
             initialPath={getInitialBrowsePath()}
             selectMode={
               itemInfo.type.id === 'directory'

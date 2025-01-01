@@ -1,11 +1,12 @@
 import * as UI from 'types/ui';
 
 import { getFileName, getFilePath } from 'utils/FileUtils';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
 import { useSession } from 'context/SessionContext';
 
 export type FileSelectionHandler = (path: string) => void;
+export type CloseHandler = () => Promise<void> | void;
 
 export interface FileItemSelectionProps {
   // Initial directory to show
@@ -57,30 +58,22 @@ export const useFileItemSelection = ({
     getFilePath(getInitialDirectory()),
   );
   const [currentFileName, setCurrentFileName] = useState(getFileName(initialPath));
-  const selection = useRef(currentDirectory + currentFileName);
 
   const onDirectoryChanged = (newDirectory: string) => {
-    if (selectMode === UI.FileSelectModeEnum.DIRECTORY) {
-      selection.current = newDirectory;
-    } else {
-      selection.current = newDirectory + currentFileName;
-    }
-
     saveLocalProperty(getBrowseStorageKey(historyId), newDirectory);
     setCurrentDirectory(newDirectory);
   };
 
   const onFileSelected = (fileName: string) => {
     if (selectMode === UI.FileSelectModeEnum.EXISTING_FILE) {
-      onConfirm(selection.current + fileName);
+      onConfirm(currentDirectory + fileName);
     } else {
-      selection.current = currentDirectory + currentFileName;
       setCurrentFileName(fileName);
     }
   };
 
   const handleConfirm = () => {
-    onConfirm(selection.current);
+    onConfirm(currentDirectory + currentFileName);
     return Promise.resolve();
   };
 

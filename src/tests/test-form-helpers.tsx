@@ -88,7 +88,7 @@ export const setInputFieldValues = async (
   }
 };
 
-export const exceptFieldValue = (
+export const expectFieldValue = (
   { getByLabelText }: Pick<RenderResult, 'getByLabelText'>,
   field: string,
   value: string,

@@ -22,7 +22,7 @@ import {
 } from 'tests/mocks/api/share-profiles';
 
 import {
-  exceptFieldValue,
+  expectFieldValue,
   setInputFieldValues,
   addSelectFieldValues,
   setupUserEvent,
@@ -222,12 +222,12 @@ describe('ShareDirectoryDialog', () => {
     clickButton('Select', getByRole);
 
     await waitFor(() => {
-      exceptFieldValue({ getByLabelText }, 'Path', path);
+      expectFieldValue({ getByLabelText }, 'Path', path);
     });
 
     // Virtual name should be set based on the path
     await waitFor(() => {
-      exceptFieldValue({ getByLabelText }, 'Virtual name', 'Downloads');
+      expectFieldValue({ getByLabelText }, 'Virtual name', 'Downloads');
     });
 
     // Profiles

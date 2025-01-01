@@ -31,6 +31,7 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
   selectMode,
   onConfirm,
   initialPath = '',
+
   modalComponent: ModalComponent = Modal,
   ...other
 }) => {
@@ -41,7 +42,12 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
     onDirectoryChanged,
     onFileSelected,
     currentDirectory,
-  } = useFileItemSelection({ onConfirm, initialPath, selectMode, historyId });
+  } = useFileItemSelection({
+    onConfirm,
+    initialPath,
+    selectMode,
+    historyId,
+  });
 
   const selectDirectory = selectMode === UI.FileSelectModeEnum.DIRECTORY;
   const showApprove = selectMode !== UI.FileSelectModeEnum.EXISTING_FILE;
@@ -70,5 +76,5 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
 };
 
 export const FileBrowserRouteDialog = ModalRouteDecorator<
-  Omit<FileBrowserDialogProps, 'modalComponent'>
+  Omit<FileBrowserDialogProps, 'modalComponent' | 'handleClose'>
 >((props) => <FileBrowserDialog modalComponent={RouteModal} {...props} />, 'browse');

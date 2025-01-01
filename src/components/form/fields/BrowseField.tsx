@@ -27,6 +27,7 @@ export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
 
   const onConfirm = (path: string) => {
     locals.onChange(path);
+    setDialogOpen(false);
   };
 
   const parseHistoryId = () => {
@@ -59,11 +60,11 @@ export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
       {dialogOpen && (
         <FileBrowserDialog
           onConfirm={onConfirm}
+          onClose={() => setDialogOpen(false)}
           subHeader={locals.label}
           initialPath={locals.value ? locals.value : ''}
           selectMode={locals.config.fileSelectMode}
           historyId={parseHistoryId()}
-          onClose={() => setDialogOpen(false)}
         />
       )}
     </div>

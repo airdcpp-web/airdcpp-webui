@@ -4,10 +4,13 @@ export const MODAL_NODE_ID = 'modals-node';
 
 export const MODAL_PAGE_DIMMER_ID = 'dimmable-page';
 
+export type CloseHandler = (wasClean: boolean) => void;
+export type ApproveHandler = () => Promise<void>;
+
 export type CommonModalProps = {
   // wasClean is false when using browser navigation
-  onClose?: (wasClean: boolean) => void;
-  onApprove?: () => Promise<void>;
+  onClose?: CloseHandler;
+  onApprove?: ApproveHandler;
 };
 
 type ModalSettings = Partial<SemanticUI.ModalSettings>;
@@ -21,6 +24,13 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
 
   const [saving, setSaving] = React.useState(false);
 
+  // We need to store the handlers in a ref because the props may change
+  // (the handlers would be outdated otherwise when being called)
+  const handlers = React.useRef<CommonModalProps>({
+    onClose: props.onClose,
+    onApprove: props.onApprove,
+  });
+
   const onHide = () => {
     closingCleanly.current = true;
   };
@@ -33,14 +43,14 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
   };
 
   const onHidden = () => {
-    const { onClose } = props;
+    const { onClose } = handlers.current;
     if (onClose) {
       onClose(closingCleanly.current);
     }
   };
 
   const onApprove = () => {
-    const { onApprove } = props;
+    const { onApprove } = handlers.current;
     if (onApprove) {
       setSaving(true);
 
@@ -99,6 +109,13 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
       }
     };
   }, []);
+
+  React.useEffect(() => {
+    handlers.current = {
+      onClose: props.onClose,
+      onApprove: props.onApprove,
+    };
+  }, [props.onClose, props.onApprove]);
 
   return { ref, hide, saving };
 };

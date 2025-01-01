@@ -32,3 +32,25 @@ exports[`FileBrowserDialog directory selection should select initial 1`] = `
   },
 ]
 `;
+
+exports[`FileBrowserDialog file selection should select existing 1`] = `
+[
+  {
+    "existing_file_path": "/2 folders/empty.txt",
+  },
+  {
+    "existing_file_path": "/2 folders/empty.txt",
+  },
+]
+`;
+
+exports[`FileBrowserDialog file selection should select new 1`] = `
+[
+  {
+    "file_path": "/2 folders/new_file.txt",
+  },
+  {
+    "file_path": "/2 folders/new_file.txt",
+  },
+]
+`;
