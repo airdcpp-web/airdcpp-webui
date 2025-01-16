@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import TransferStore from 'stores/TransferStore';
+import TransferStore from 'stores/views/TransferStore';
 
 import Message from 'components/semantic/Message';
 

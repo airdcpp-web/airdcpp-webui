@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Button, { ButtonProps } from 'components/semantic/Button';
+import Input from './Input';
 
 export type SubmitCallback = (value: string) => void | Promise<void>;
 
@@ -34,21 +35,20 @@ const ActionInput: React.FC<ActionInputProps> = ({
   };
 
   return (
-    <div className="ui action input">
-      <input
-        type={type}
-        id={id}
-        placeholder={placeholder}
-        onChange={handleChange}
-        value={value}
-      />
+    <Input
+      type={type}
+      id={id}
+      placeholder={placeholder}
+      onChange={handleChange}
+      value={value}
+    >
       <Button
         {...buttonProps}
         onClick={handleClick}
         loading={saving}
         disabled={value.length === 0}
       />
-    </div>
+    </Input>
   );
 };
 

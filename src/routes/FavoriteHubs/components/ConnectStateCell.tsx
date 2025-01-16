@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
 import HubActions from 'actions/reflux/HubActions';
-import HubSessionStore from 'stores/HubSessionStore';
+import HubSessionStore from 'stores/reflux/HubSessionStore';
 
 import Icon from 'components/semantic/Icon';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';

@@ -3,10 +3,10 @@ import {
   configRoutes,
   mainRoutes,
   secondaryRoutes,
-  logoutItem,
   parseMenuItems,
   parseMenuItem,
   RouteItemClickHandler,
+  getLogoutItem,
 } from 'routes/Routes';
 
 import DropdownCaption from 'components/semantic/DropdownCaption';
@@ -19,6 +19,7 @@ import * as UI from 'types/ui';
 import Popup from 'components/semantic/Popup';
 import { useEffect, useRef } from 'react';
 import { useSession } from 'context/SessionContext';
+import { useSocket } from 'context/SocketContext';
 
 interface MainNavigationMobileProps {
   onClose: () => void;
@@ -31,6 +32,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
 }) => {
   const login = useSession();
   const ref = useRef<HTMLDivElement>(null);
+  const socket = useSocket();
 
   useEffect(() => {
     const settings = {
@@ -60,8 +62,6 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
 
   const onClickSecondary: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
-
-    // const { location, history } = this.props;
     const isActive = matchPath(url, location.pathname);
 
     if (!isActive) {
@@ -103,7 +103,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
                     onClick(path, event);
                   })}
                   <div className="ui divider" />
-                  {parseMenuItem(logoutItem)}
+                  {parseMenuItem(getLogoutItem(socket))}
                 </div>
               </div>
             )}

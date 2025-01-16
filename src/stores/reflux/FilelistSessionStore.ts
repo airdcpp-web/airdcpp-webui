@@ -5,11 +5,11 @@ import invariant from 'invariant';
 import FilelistConstants from 'constants/FilelistConstants';
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 
-import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
-import SessionStoreDecorator from './decorators/SessionStoreDecorator';
+import SocketSubscriptionDecorator from '../decorators/SocketSubscriptionDecorator';
+import SessionStoreDecorator from '../decorators/SessionStoreDecorator';
 
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
-import { BrowserSessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
+import { BrowserSessionScrollPositionKeeper } from '../helpers/SessionScrollPositionKeeper';
 
 import * as API from 'types/api';
 

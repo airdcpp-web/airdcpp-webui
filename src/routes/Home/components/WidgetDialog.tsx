@@ -12,7 +12,7 @@ import ModalRouteDecorator, {
 } from 'decorators/ModalRouteDecorator';
 
 import WidgetActions from 'actions/reflux/WidgetActions';
-import WidgetStore from 'stores/WidgetStore';
+import WidgetStore from 'stores/reflux/WidgetStore';
 import { getWidgetT, createWidgetId, translateWidgetName } from 'utils/WidgetUtils';
 
 import * as API from 'types/api';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import HubMessageStore from 'stores/HubMessageStore';
+import HubMessageStore from 'stores/reflux/HubMessageStore';
 
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';

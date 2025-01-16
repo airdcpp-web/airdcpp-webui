@@ -6,7 +6,7 @@ import { default as SystemConstants, AwayEnum } from 'constants/SystemConstants'
 import ActivityActions from 'actions/reflux/ActivityActions';
 import SystemActions from 'actions/reflux/SystemActions';
 
-import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
+import SocketSubscriptionDecorator from '../decorators/SocketSubscriptionDecorator';
 import { AddListener } from 'airdcpp-apisocket';
 
 export interface ActivityState {

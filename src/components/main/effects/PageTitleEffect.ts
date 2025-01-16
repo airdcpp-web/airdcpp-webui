@@ -1,7 +1,7 @@
 import { useSession } from 'context/SessionContext';
 import { useEffect } from 'react';
 
-import LoginStore, { LoginState } from 'stores/LoginStore';
+import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

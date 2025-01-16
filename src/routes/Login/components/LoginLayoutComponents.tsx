@@ -5,7 +5,7 @@ import Message from 'components/semantic/Message';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
-import { LoginError } from 'stores/LoginStore';
+import { LoginError } from 'stores/reflux/LoginStore';
 import { parseLoginError } from 'utils/AuthUtils';
 
 interface ErrorBoxProps {

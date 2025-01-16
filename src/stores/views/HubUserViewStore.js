@@ -1,7 +1,7 @@
 import ViewStoreMixin from 'mixins/ViewStoreMixin';
 import Reflux from 'reflux';
 import HubConstants from 'constants/HubConstants';
-import HubSessionStore from './HubSessionStore';
+import HubSessionStore from '../reflux/HubSessionStore';
 
 export default Reflux.createStore({
   _viewName: 'hub_user_view',

@@ -3,11 +3,11 @@ import * as React from 'react';
 import { default as lazy } from 'decorators/AsyncComponentDecorator';
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 
-import HubSessionStore from 'stores/HubSessionStore';
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
-import FilelistSessionStore from 'stores/FilelistSessionStore';
-import ViewFileStore from 'stores/ViewFileStore';
-import EventStore from 'stores/EventStore';
+import HubSessionStore from 'stores/reflux/HubSessionStore';
+import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
+import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
+import ViewFileStore from 'stores/reflux/ViewFileStore';
+import EventStore from 'stores/reflux/EventStore';
 
 import LoginActions from 'actions/reflux/LoginActions';
 import IconConstants from 'constants/IconConstants';
@@ -19,6 +19,7 @@ import { Trans } from 'react-i18next';
 import { textToI18nKey } from 'utils/TranslationUtils';
 import { Route, matchPath, Location } from 'react-router';
 import { AuthenticatedSession } from 'context/SessionContext';
+import { APISocket } from 'services/SocketService';
 
 export type RouteItemClickHandler = (
   path: string,
@@ -153,18 +154,16 @@ export const secondaryRoutes: RouteItem[] = [
   },
 ];
 
-const onClickLogout: RouteItemClickHandler = (path, e) => {
-  e.preventDefault();
-  LoginActions.logout();
-};
-
-export const logoutItem: RouteItem = {
+export const getLogoutItem = (socket: APISocket): RouteItem => ({
   icon: IconConstants.LOGOUT,
   path: 'logout',
   title: 'Logout',
   className: 'logout',
-  onClick: onClickLogout,
-};
+  onClick: (path, e) => {
+    e.preventDefault();
+    LoginActions.logout(socket);
+  },
+});
 
 const menuItemClickHandler = (
   onClick: RouteItemClickHandler | undefined,

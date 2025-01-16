@@ -1,6 +1,6 @@
 import { checkUnreadSessionInfo } from 'utils/MessageUtils';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
-import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
+import PrivateChatMessageStore from 'stores/reflux/PrivateChatMessageStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

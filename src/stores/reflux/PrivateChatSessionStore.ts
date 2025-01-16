@@ -5,8 +5,8 @@ import invariant from 'invariant';
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 
-import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
-import SessionStoreDecorator from './decorators/SessionStoreDecorator';
+import SocketSubscriptionDecorator from '../decorators/SocketSubscriptionDecorator';
+import SessionStoreDecorator from '../decorators/SessionStoreDecorator';
 
 import { ChatroomUrgencies, PrivateMessageUrgencies } from 'constants/UrgencyConstants';
 

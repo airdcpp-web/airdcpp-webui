@@ -1,4 +1,4 @@
-import LoginStore from 'stores/LoginStore';
+import LoginStore from 'stores/reflux/LoginStore';
 import { fetchData } from 'utils/HttpUtils';
 
 export const uploadTempFile = async (file: File, authToken: string): Promise<string> => {

@@ -1,6 +1,6 @@
 import { useContext, useMemo, useState } from 'react';
 
-import LocalSettingStore from 'stores/LocalSettingStore';
+import LocalSettingStore from 'stores/reflux/LocalSettingStore';
 
 import Form, {
   FormProps,

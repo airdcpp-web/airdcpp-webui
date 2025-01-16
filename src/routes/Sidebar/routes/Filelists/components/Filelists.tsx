@@ -3,7 +3,7 @@ import * as React from 'react';
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
-import FilelistSessionStore from 'stores/FilelistSessionStore';
+import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
 import FilelistSessionAPIActions from 'actions/reflux/FilelistSessionActions';
 
 import FilelistNew from 'routes/Sidebar/routes/Filelists/components/FilelistNew';

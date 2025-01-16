@@ -14,6 +14,7 @@ import * as UI from 'types/ui';
 import { usingMobileLayout } from 'utils/BrowserUtils';
 import { translate } from 'utils/TranslationUtils';
 import { Translation } from 'react-i18next';
+import Input from 'components/semantic/Input';
 
 const getFilterMethodCaption = (method: API.FilterMethod) => {
   switch (method) {
@@ -111,15 +112,15 @@ class TextFilter extends React.PureComponent<
       <Translation>
         {(t) => (
           <div className="text-filter">
-            <div className="ui action input">
-              <input
-                ref={(c: any) => (this.input = c)}
-                placeholder={getPlaceholder(method, t)}
-                onChange={this.onTextChanged}
-                value={value}
-                type="text"
-                autoFocus={!usingMobileLayout() && autoFocus}
-              />
+            <Input
+              ref={(c: any) => (this.input = c)}
+              placeholder={getPlaceholder(method, t)}
+              onChange={this.onTextChanged}
+              value={value}
+              type="text"
+              autoFocus={!usingMobileLayout() && autoFocus}
+              // className="action"
+            >
               <SectionedDropdown
                 className="filter-method right top pointing"
                 button={true}
@@ -136,7 +137,7 @@ class TextFilter extends React.PureComponent<
                     )}
                 </MenuSection>
               </SectionedDropdown>
-            </div>
+            </Input>
           </div>
         )}
       </Translation>

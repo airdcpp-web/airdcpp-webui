@@ -7,10 +7,10 @@ import { default as EventConstants } from 'constants/EventConstants';
 
 import NotificationActions from 'actions/NotificationActions';
 
-import LocalSettingStore from 'stores/LocalSettingStore';
+import LocalSettingStore from 'stores/reflux/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -23,7 +23,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import HubConstants from 'constants/HubConstants';
-import HubSessionStore from 'stores/HubSessionStore';
+import HubSessionStore from 'stores/reflux/HubSessionStore';
 import { useNavigate } from 'react-router';
 
 const getSeverityStr = (severity: Severity) => {

@@ -1,7 +1,7 @@
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
 
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 

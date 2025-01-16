@@ -3,7 +3,7 @@ import * as React from 'react';
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
 
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
 import PrivateChatAPIActions from 'actions/reflux/PrivateChatActions';
 
 import MessageNew from 'routes/Sidebar/routes/Messages/components/MessageNew';

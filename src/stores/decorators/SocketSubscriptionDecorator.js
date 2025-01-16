@@ -1,5 +1,5 @@
 import SocketService from 'services/SocketService';
-import LoginStore from 'stores/LoginStore';
+import LoginStore from 'stores/reflux/LoginStore';
 
 const SocketSubscriptionDecorator = (store, access) => {
   let socketSubscriptions = [];

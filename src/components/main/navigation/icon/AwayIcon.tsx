@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import { AwayEnum } from 'constants/SystemConstants';
 import SystemActions from 'actions/reflux/SystemActions';
-import ActivityStore from 'stores/ActivityStore';
+import ActivityStore from 'stores/reflux/ActivityStore';
 import { useStore } from 'effects/StoreListenerEffect';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';

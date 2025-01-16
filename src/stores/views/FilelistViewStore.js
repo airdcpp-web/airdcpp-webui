@@ -1,7 +1,7 @@
 import ViewStoreMixin from 'mixins/ViewStoreMixin';
 import Reflux from 'reflux';
 import FilelistConstants from 'constants/FilelistConstants';
-import FilelistSessionStore from './FilelistSessionStore';
+import FilelistSessionStore from '../reflux/FilelistSessionStore';
 
 export default Reflux.createStore({
   _viewName: 'filelist_view',

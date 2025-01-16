@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RateLimiter } from 'limiter';
 
-import NotificationStore from 'stores/NotificationStore';
+import NotificationStore from 'stores/reflux/NotificationStore';
 
 import * as UI from 'types/ui';
 

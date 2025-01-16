@@ -11,7 +11,7 @@ import {
   LoginActionModule,
   LoginNewUserIntroSeenAction,
 } from 'actions/ui/login/LoginActions';
-import LoginStore, { LoginState } from 'stores/LoginStore';
+import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import FavoriteHubStore from 'stores/FavoriteHubStore';
+import FavoriteHubStore from 'stores/views/FavoriteHubStore';
 import FavoriteHubDialog from './FavoriteHubDialog';
 
 import VirtualTable from 'components/table/VirtualTable';

@@ -7,7 +7,7 @@ import Message from 'components/semantic/Message';
 import { Link } from 'react-router';
 
 import HubActions from 'actions/reflux/HubActions';
-import HubSessionStore from 'stores/HubSessionStore';
+import HubSessionStore from 'stores/reflux/HubSessionStore';
 
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 

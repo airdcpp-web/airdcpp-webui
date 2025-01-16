@@ -3,8 +3,8 @@ import * as React from 'react';
 import { dupeToStringType } from 'utils/TypeConvert';
 import { TableActionMenu } from 'components/action-menu';
 
-import FilelistViewStore from 'stores/FilelistViewStore';
-import FilelistSessionStore from 'stores/FilelistSessionStore';
+import FilelistViewStore from 'stores/views/FilelistViewStore';
+import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
 
 import VirtualTable from 'components/table/VirtualTable';
 import {

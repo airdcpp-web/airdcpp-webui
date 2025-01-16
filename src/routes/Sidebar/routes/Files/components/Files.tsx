@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
 
-import ViewFileStore from 'stores/ViewFileStore';
+import ViewFileStore from 'stores/reflux/ViewFileStore';
 import ViewFileAPIActions from 'actions/reflux/ViewFileActions';
 
 import FileIcon from 'components/icon/FileIcon';

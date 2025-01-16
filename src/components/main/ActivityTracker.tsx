@@ -4,12 +4,13 @@ import ActivityActions from 'actions/reflux/ActivityActions';
 import LoginActions from 'actions/reflux/LoginActions';
 
 import { AwayEnum } from 'constants/SystemConstants';
-import ActivityStore from 'stores/ActivityStore';
+import ActivityStore from 'stores/reflux/ActivityStore';
+import { APISocket } from 'services/SocketService';
 
 const SYSTEM_ALIVE_TIMEOUT = 30000;
 const USER_ACTIVE_TIMEOUT = 30000;
 
-class ActivityTracker extends Component {
+class ActivityTracker extends Component<{ socket: APISocket }> {
   systemAliveInterval: number | undefined;
   userActivityInteval: number | undefined;
   lastSystemAlive: number;
@@ -47,6 +48,7 @@ class ActivityTracker extends Component {
   }
 
   checkAlive = () => {
+    const { socket } = this.props;
     const currentTime = Date.now();
     if (currentTime > this.lastSystemAlive + SYSTEM_ALIVE_TIMEOUT) {
       // Require 30 seconds of downtime
@@ -56,7 +58,7 @@ class ActivityTracker extends Component {
       );
 
       // Woke up, disconnect the socket (it will be reconnected automatically)
-      LoginActions.disconnect('Connection closed because of inactivity');
+      LoginActions.disconnect('Connection closed because of inactivity', socket);
     }
 
     this.lastSystemAlive = currentTime;

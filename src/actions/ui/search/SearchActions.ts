@@ -1,7 +1,7 @@
 import IconConstants from 'constants/IconConstants';
 
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
-import FilelistSessionStore from 'stores/FilelistSessionStore';
+import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

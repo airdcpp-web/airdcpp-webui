@@ -12,7 +12,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import FileContent from './FileContent';
-import ViewFileStore from 'stores/ViewFileStore';
+import ViewFileStore from 'stores/reflux/ViewFileStore';
 import { SessionChildProps } from 'routes/Sidebar/components/types';
 
 export interface FileSessionProps

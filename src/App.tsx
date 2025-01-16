@@ -22,7 +22,7 @@ import { MeasuredBackground } from 'components/main/MeasuredBackground';
 import { SocketContext } from 'context/SocketContext';
 import { FormatterContext } from 'context/FormatterContext';
 import { createFormatter } from 'utils/Formatter';
-import LoginStore from 'stores/LoginStore';
+import LoginStore from 'stores/reflux/LoginStore';
 import { SessionContext } from 'context/SessionContext';
 
 import 'utils/semantic';

@@ -5,7 +5,7 @@ import VirtualTable from 'components/table/VirtualTable';
 
 import PriorityMenu from 'routes/Queue/components/PriorityMenu';
 import StatusCell from 'routes/Queue/components/StatusCell';
-import QueueBundleViewStore from 'stores/QueueBundleViewStore';
+import QueueBundleViewStore from 'stores/views/QueueBundleViewStore';
 
 import BundleFileDialog from 'routes/Queue/components/BundleFileDialog';
 import SourceDialog from 'routes/Queue/components/BundleSourceDialog';

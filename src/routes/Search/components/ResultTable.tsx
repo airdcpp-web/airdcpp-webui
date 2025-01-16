@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { ResultDialog } from './result-dialog';
 
-import SearchViewStore from 'stores/SearchViewStore';
+import SearchViewStore from 'stores/views/SearchViewStore';
 
 import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';

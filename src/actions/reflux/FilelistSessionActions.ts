@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 
 import FilelistConstants from 'constants/FilelistConstants';
 
-import LoginStore from 'stores/LoginStore';
+import LoginStore from 'stores/reflux/LoginStore';
 import SocketService from 'services/SocketService';
 
 import NotificationActions from 'actions/NotificationActions';

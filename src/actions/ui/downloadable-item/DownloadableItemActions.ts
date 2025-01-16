@@ -4,7 +4,7 @@ import IconConstants from 'constants/IconConstants';
 import SearchConstants from 'constants/SearchConstants';
 
 import ViewFileActions from 'actions/reflux/ViewFileActions';
-import ViewFileStore from 'stores/ViewFileStore';
+import ViewFileStore from 'stores/reflux/ViewFileStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

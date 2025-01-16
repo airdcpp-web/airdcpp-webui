@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import LoginStore, { LoginState } from 'stores/LoginStore';
+import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
 
 import HubActions from 'actions/reflux/HubActions';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';

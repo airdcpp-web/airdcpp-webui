@@ -5,10 +5,10 @@ import invariant from 'invariant';
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 
-import MessageStoreDecorator from './decorators/MessageStoreDecorator';
+import MessageStoreDecorator from '../decorators/MessageStoreDecorator';
 
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
-import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
+import { SessionScrollPositionKeeper } from '../helpers/SessionScrollPositionKeeper';
 
 import * as API from 'types/api';
 

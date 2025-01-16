@@ -1,7 +1,7 @@
 import {
   default as LocalSettingStore,
   SettingDefinitions,
-} from 'stores/LocalSettingStore';
+} from 'stores/reflux/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
 describe('local setting store', () => {

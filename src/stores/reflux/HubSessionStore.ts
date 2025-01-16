@@ -10,13 +10,13 @@ import {
   HubMessageUrgencies,
 } from 'constants/UrgencyConstants';
 
-import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
-import SessionStoreDecorator from './decorators/SessionStoreDecorator';
+import SocketSubscriptionDecorator from '../decorators/SocketSubscriptionDecorator';
+import SessionStoreDecorator from '../decorators/SessionStoreDecorator';
 
 import * as API from 'types/api';
 
 import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
-import { SessionScrollPositionKeeper } from './helpers/SessionScrollPositionKeeper';
+import { SessionScrollPositionKeeper } from '../helpers/SessionScrollPositionKeeper';
 
 const HubSessionStore = Reflux.createStore({
   scroll: SessionScrollPositionKeeper(),

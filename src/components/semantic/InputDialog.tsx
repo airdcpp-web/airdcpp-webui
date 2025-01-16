@@ -44,7 +44,7 @@ export class InputDialog extends React.Component<InputFieldProps, State> {
     const { onApproved, inputProps, ...other } = this.props;
     return (
       <ConfirmDialog onApproved={this.onApproved} {...other}>
-        <form className="ui input dialog">
+        <form className="ui input dialog" name="input">
           <input
             ref={(c) => {
               this.c = c!;

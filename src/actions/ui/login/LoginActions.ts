@@ -5,7 +5,7 @@ import SettingConstants from 'constants/SettingConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import LoginStore from 'stores/LoginStore';
+import LoginStore from 'stores/reflux/LoginStore';
 
 const handleNewUserIntroSeen: UI.ActionHandler<void> = ({ socket }) => {
   LoginStore.onNewUserIntroSeen();

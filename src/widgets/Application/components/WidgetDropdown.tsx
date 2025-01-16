@@ -3,7 +3,7 @@ import * as React from 'react';
 import Dropdown from 'components/semantic/Dropdown';
 import MenuItemLink from 'components/semantic/MenuItemLink';
 
-import WidgetStore from 'stores/WidgetStore';
+import WidgetStore from 'stores/reflux/WidgetStore';
 
 import * as UI from 'types/ui';
 import { translateWidgetName } from 'utils/WidgetUtils';

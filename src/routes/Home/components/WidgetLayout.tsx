@@ -6,7 +6,7 @@ import Widget from 'routes/Home/components/Widget';
 import WidgetDialog from 'routes/Home/components/WidgetDialog';
 
 import { Responsive, WidthProvider, Layout, Layouts } from 'react-grid-layout';
-import WidgetStore from 'stores/WidgetStore';
+import WidgetStore from 'stores/reflux/WidgetStore';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';

@@ -4,7 +4,7 @@ import * as React from 'react';
 import EventAPIActions from 'actions/reflux/EventActions';
 import { EventActionMenu } from 'actions/ui/event/EventActions';
 
-import EventStore from 'stores/EventStore';
+import EventStore from 'stores/reflux/EventStore';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 

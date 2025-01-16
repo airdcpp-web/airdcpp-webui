@@ -7,7 +7,7 @@ import VirtualTable from 'components/table/VirtualTable';
 import PriorityMenu from 'routes/Queue/components/PriorityMenu';
 import StatusCell from 'routes/Queue/components/StatusCell';
 
-import QueueFileViewStore from 'stores/QueueFileViewStore';
+import QueueFileViewStore from 'stores/views/QueueFileViewStore';
 
 import {
   FileActionCell,

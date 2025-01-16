@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import LoginStore, { LoginError, LoginState } from 'stores/LoginStore';
+import LoginStore, { LoginError, LoginState } from 'stores/reflux/LoginStore';
 
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
 import { useStore } from 'effects/StoreListenerEffect';

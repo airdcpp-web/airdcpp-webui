@@ -3,7 +3,7 @@ import Measure from 'react-measure';
 
 import { LocalSettings } from 'constants/SettingConstants';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
-import LocalSettingStore from 'stores/LocalSettingStore';
+import LocalSettingStore from 'stores/reflux/LocalSettingStore';
 import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import Background1500px from '../../../resources/images/background_winter_1500px.jpg';

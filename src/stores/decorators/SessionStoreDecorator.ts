@@ -10,7 +10,7 @@ import {
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import ActivityStore, { ActivityState } from 'stores/ActivityStore';
+import ActivityStore, { ActivityState } from 'stores/reflux/ActivityStore';
 import { IdType } from 'types/api';
 
 export type SessionUrgencyCountMapper<SessionT extends UI.SessionType> = (

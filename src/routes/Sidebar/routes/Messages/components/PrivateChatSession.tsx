@@ -1,7 +1,7 @@
 import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
 import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFooter';
 
-import PrivateChatMessageStore from 'stores/PrivateChatMessageStore';
+import PrivateChatMessageStore from 'stores/reflux/PrivateChatMessageStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

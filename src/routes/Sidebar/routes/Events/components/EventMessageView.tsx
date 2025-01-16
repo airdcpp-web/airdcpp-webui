@@ -9,7 +9,7 @@ import '../style.css';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
-import EventStore from 'stores/EventStore';
+import EventStore from 'stores/reflux/EventStore';
 
 interface EventMessagesProps {
   messages: UI.MessageListItem[];

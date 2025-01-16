@@ -1,7 +1,7 @@
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
-import FilelistSessionStore from 'stores/FilelistSessionStore';
+import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
 
 import ShareProfileSelector from 'routes/Sidebar/routes/Filelists/components/ShareProfileSelector';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';

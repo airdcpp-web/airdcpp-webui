@@ -6,6 +6,7 @@ import * as UI from 'types/ui';
 import { parseUnit } from 'utils/Formatter';
 import { ByteUnits } from 'utils/ValueFormat';
 import { useFormatter } from 'context/FormatterContext';
+import Input from 'components/semantic/Input';
 
 interface SizeFieldProps {
   moduleT: UI.ModuleTranslator;
@@ -61,22 +62,23 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
     }
   }, [value]);
 
+  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (evt) => {
+    const newValue = !!evt.target.value ? parseInt(evt.target.value) : null;
+    if (!!newValue) {
+      setDisplayValue(newValue);
+    } else {
+      setDisplayValue(undefined);
+    }
+  };
+
   return (
     <div style={{ display: 'flex' }}>
-      <input
-        className="ui input"
+      <Input
         type="number"
         {...inputProps}
         min={0}
         value={displayValue ?? ''}
-        onChange={(evt) => {
-          const newValue = !!evt.target.value ? parseInt(evt.target.value) : null;
-          if (!!newValue) {
-            setDisplayValue(newValue);
-          } else {
-            setDisplayValue(undefined);
-          }
-        }}
+        onChange={onInputChange}
       />
       <select
         className="ui select"

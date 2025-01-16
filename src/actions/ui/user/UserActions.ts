@@ -1,8 +1,8 @@
 import PrivateChatActions from 'actions/reflux/PrivateChatActions';
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
 
-import FilelistSessionStore from 'stores/FilelistSessionStore';
-import PrivateChatSessionStore from 'stores/PrivateChatSessionStore';
+import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
+import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
 
 import IconConstants from 'constants/IconConstants';
 

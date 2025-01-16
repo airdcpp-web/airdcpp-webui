@@ -7,7 +7,7 @@ import EventActions from 'actions/reflux/EventActions';
 import { LogMessageUrgencies } from 'constants/UrgencyConstants';
 import { toUrgencyMap } from 'utils/UrgencyUtils';
 
-import SocketSubscriptionDecorator from './decorators/SocketSubscriptionDecorator';
+import SocketSubscriptionDecorator from '../decorators/SocketSubscriptionDecorator';
 import {
   mergeCacheMessages,
   pushMessage,

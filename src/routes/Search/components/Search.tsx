@@ -8,7 +8,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from 'decorators/DataProviderDecorator';
 import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
-import LoginStore from 'stores/LoginStore';
+import LoginStore from 'stores/reflux/LoginStore';
 import { search as doSearch } from 'services/api/SearchApi';
 import { getModuleT } from 'utils/TranslationUtils';
 

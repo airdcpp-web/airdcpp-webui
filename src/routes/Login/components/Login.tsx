@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import * as React from 'react';
 
 import LoginActions from 'actions/reflux/LoginActions';
-import LoginStore, { LoginState } from 'stores/LoginStore';
+import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
 
 import Checkbox from 'components/semantic/Checkbox';
 import SocketConnectStatus from 'components/main/SocketConnectStatus';
@@ -11,18 +11,21 @@ import { ErrorBox, BottomMessage, SubmitButton } from './LoginLayoutComponents';
 
 import '../style.css';
 import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { getModuleT } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
-import Icon from 'components/semantic/Icon';
 import IconConstants from 'constants/IconConstants';
 import { useStore } from 'effects/StoreListenerEffect';
+import Input from 'components/semantic/Input';
+import { useSocket } from 'context/SocketContext';
 
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
   const { refreshToken, allowLogin, lastError } = useStore<LoginState>(LoginStore);
   const { t } = useTranslation();
+  const { translate } = getModuleT(t, UI.Modules.LOGIN);
+  const socket = useSocket();
 
   const [rememberMe, setRememberMe] = useState(false);
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -30,11 +33,7 @@ const Login: React.FC<LoginProps> = () => {
 
   const { loading, setLoading } = useSessionState();
   if (!!refreshToken) {
-    return (
-      <SocketConnectStatus
-        message={translate('Connecting to the server...', t, UI.Modules.LOGIN)}
-      />
-    );
+    return <SocketConnectStatus message={translate('Connecting to the server...')} />;
   }
 
   const onSubmit = (evt: React.SyntheticEvent) => {
@@ -46,40 +45,48 @@ const Login: React.FC<LoginProps> = () => {
       return;
     }
 
-    LoginActions.login(username, password, rememberMe);
+    LoginActions.login(
+      {
+        username,
+        password,
+        rememberMe,
+      },
+      socket,
+    );
     setLoading(true);
   };
 
   return (
     <div className="ui middle aligned center aligned grid login-grid">
       <div className="column">
-        <form className="ui large form" autoComplete="on" onSubmit={onSubmit}>
+        <form
+          className="ui large form"
+          autoComplete="on"
+          onSubmit={onSubmit}
+          name="login"
+        >
           <div className="ui stacked segment">
             <div className="field">
-              <div className="ui left icon input">
-                <Icon icon={IconConstants.USER} />
-                <input
-                  ref={usernameRef}
-                  type="text"
-                  name="username"
-                  placeholder={translate('Username', t, UI.Modules.LOGIN)}
-                  required={true}
-                  autoFocus={true}
-                />
-              </div>
+              <Input
+                ref={usernameRef}
+                icon={IconConstants.USER}
+                name="username"
+                placeholder={translate('Username')}
+                required={true}
+                autoFocus={true}
+                type="text"
+              />
             </div>
             <div className="field">
-              <div className="ui left icon input">
-                <Icon icon={IconConstants.LOCK} />
-                <input
-                  ref={passwordRef}
-                  className="password"
-                  name="password"
-                  placeholder={translate('Password', t, UI.Modules.LOGIN)}
-                  required={true}
-                  type="password"
-                />
-              </div>
+              <Input
+                ref={passwordRef}
+                icon={IconConstants.LOCK}
+                className="password"
+                name="password"
+                placeholder={translate('Password')}
+                required={true}
+                type="password"
+              />
             </div>
             <SubmitButton
               onSubmit={onSubmit}
@@ -95,7 +102,7 @@ const Login: React.FC<LoginProps> = () => {
               }}
             >
               <Checkbox
-                caption={translate('Keep me logged in', t, UI.Modules.LOGIN)}
+                caption={translate('Keep me logged in')}
                 onChange={setRememberMe}
                 checked={rememberMe}
                 id="remember-me"

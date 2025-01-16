@@ -14,6 +14,7 @@ import { useUrgencyPageTitle } from './effects/PageTitleEffect';
 
 import * as UI from 'types/ui';
 import { useLayoutWidth } from 'context/LayoutWidthContext';
+import { useSocket } from 'context/SocketContext';
 
 interface AuthenticatedAppProps {}
 
@@ -24,6 +25,7 @@ export interface MainLayoutProps {
 
 const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
   function AuthenticatedApp(props) {
+    const socket = useSocket();
     const urgencies = useTotalSessionUrgenciesEffect(secondaryRoutes);
     useUrgencyPageTitle(urgencies);
     useLayoutWidth(); // Update the layout in case of resize
@@ -31,7 +33,7 @@ const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(
     const MainLayout = usingMobileLayout() ? MainLayoutMobile : MainLayoutNormal;
     return (
       <div id="authenticated-app">
-        <ActivityTracker />
+        <ActivityTracker socket={socket} />
         <Notifications />
         <MainLayout className="main-layout" urgencies={urgencies} />
       </div>

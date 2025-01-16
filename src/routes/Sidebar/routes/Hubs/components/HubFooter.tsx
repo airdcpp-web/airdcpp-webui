@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import * as React from 'react';
 
 import HubConstants from 'constants/HubConstants';
-import HubSessionStore from 'stores/HubSessionStore';
+import HubSessionStore from 'stores/reflux/HubSessionStore';
 
 import { useFormatter } from 'context/FormatterContext';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';

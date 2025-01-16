@@ -7,7 +7,7 @@ import Button from 'components/semantic/Button';
 import IconConstants from 'constants/IconConstants';
 import { LocalSettings } from 'constants/SettingConstants';
 import { useStore } from 'effects/StoreListenerEffect';
-import LocalSettingStore from 'stores/LocalSettingStore';
+import LocalSettingStore from 'stores/reflux/LocalSettingStore';
 import { InstallPromptContext } from 'context/InstallPromptContext';
 
 import * as UI from 'types/ui';

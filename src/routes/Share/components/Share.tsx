@@ -1,4 +1,4 @@
-import ShareRootStore from 'stores/ShareRootStore';
+import ShareRootStore from 'stores/views/ShareRootStore';
 
 import VirtualTable from 'components/table/VirtualTable';
 import { SizeCell, DurationCell, FileActionCell } from 'components/table/Cell';

@@ -1,4 +1,4 @@
-import { default as WidgetStore, EmptyWidgetSettings } from 'stores/WidgetStore';
+import { default as WidgetStore, EmptyWidgetSettings } from 'stores/reflux/WidgetStore';
 
 import { RSS } from 'widgets/RSS';
 

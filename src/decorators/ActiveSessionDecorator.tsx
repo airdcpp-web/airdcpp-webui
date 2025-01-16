@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import LocalSettingStore from 'stores/LocalSettingStore';
+import LocalSettingStore from 'stores/reflux/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
 import * as UI from 'types/ui';

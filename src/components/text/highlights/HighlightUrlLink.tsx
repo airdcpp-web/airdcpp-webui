@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as API from 'types/api';
 
 import HubActions from 'actions/reflux/HubActions';
-import HubSessionStore from 'stores/HubSessionStore';
+import HubSessionStore from 'stores/reflux/HubSessionStore';
 
 import { useNavigate, useLocation, NavigateFunction, Location } from 'react-router';
 import { AuthenticatedSession, useSession } from 'context/SessionContext';

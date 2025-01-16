@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import * as React from 'react';
 
-import HubSessionStore from 'stores/HubSessionStore';
+import HubSessionStore from 'stores/reflux/HubSessionStore';
 import Message, { MessageDescriptionType } from 'components/semantic/Message';
 
 import * as API from 'types/api';

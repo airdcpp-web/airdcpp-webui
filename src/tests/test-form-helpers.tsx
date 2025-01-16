@@ -57,6 +57,26 @@ export const selectValuesEqual = (
   }
 };
 
+const setInputFieldValue = async (
+  input: HTMLInputElement,
+  value: string,
+  { userEvent }: { userEvent: UserEvent },
+) => {
+  // Focus and type
+  if (input.value) {
+    await userEvent.clear(input);
+  }
+
+  await userEvent.type(input, value);
+
+  await waitFor(() => {
+    expect(input.value).toBe(value);
+  });
+
+  // Blur
+  fireEvent.focusOut(input);
+};
+
 export const setInputFieldValues = async (
   {
     getByLabelText,
@@ -71,20 +91,42 @@ export const setInputFieldValues = async (
     }
 
     const value = fieldValueMap[field];
+    await setInputFieldValue(input, value, { userEvent });
+  }
+};
 
-    // Focus and type
-    if (input.value) {
-      await userEvent.clear(input);
+export const setInputFieldValuesByName = async (
+  { getByRole, userEvent }: Pick<RenderResult, 'getByRole'> & { userEvent: UserEvent },
+  fieldValueMap: FieldValueMap,
+) => {
+  for (const field of Object.keys(fieldValueMap)) {
+    const input = getByRole('textbox', {
+      name: new RegExp(field, 'i'),
+    }) as HTMLInputElement;
+    if (!input) {
+      throw new Error(`Input for field ${field} doesn't exist`);
     }
 
-    await userEvent.type(input, value);
+    const value = fieldValueMap[field];
+    await setInputFieldValue(input, value, { userEvent });
+  }
+};
 
-    await waitFor(() => {
-      expect(input.value).toBe(value);
-    });
+export const setInputFieldValuesByPlaceholder = async (
+  {
+    getByPlaceholderText,
+    userEvent,
+  }: Pick<RenderResult, 'getByPlaceholderText'> & { userEvent: UserEvent },
+  fieldValueMap: FieldValueMap,
+) => {
+  for (const field of Object.keys(fieldValueMap)) {
+    const input = getByPlaceholderText(field) as HTMLInputElement;
+    if (!input) {
+      throw new Error(`Input for field ${field} doesn't exist`);
+    }
 
-    // Blur
-    fireEvent.focusOut(input);
+    const value = fieldValueMap[field];
+    await setInputFieldValue(input, value, { userEvent });
   }
 };
 

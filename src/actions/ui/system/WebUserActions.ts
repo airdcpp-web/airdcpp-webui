@@ -2,7 +2,7 @@ import WebUserConstants from 'constants/WebUserConstants';
 
 import IconConstants from 'constants/IconConstants';
 
-import LoginStore from 'stores/LoginStore';
+import LoginStore from 'stores/reflux/LoginStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';

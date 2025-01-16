@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import HubSessionStore from 'stores/HubSessionStore';
-import HubUserViewStore from 'stores/HubUserViewStore';
+import HubSessionStore from 'stores/reflux/HubSessionStore';
+import HubUserViewStore from 'stores/views/HubUserViewStore';
 
 import { Column } from 'fixed-data-table-2';
 import VirtualTable from 'components/table/VirtualTable';

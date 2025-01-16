@@ -1,5 +1,5 @@
 import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
-import FilelistSessionStore from 'stores/FilelistSessionStore';
+import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
 
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import IconConstants from 'constants/IconConstants';
