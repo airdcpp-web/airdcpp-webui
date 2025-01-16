@@ -140,3 +140,8 @@
 .popup.dropdown-content .ui.dropdown.item {
   margin: 0px 0px;
 }
+
+.virtual-table .public_fixedDataTable_header .button.link,
+.public_fixedDataTableCell_main .button.link {
+  color: black;
+}

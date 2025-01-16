@@ -49,7 +49,7 @@ interface HeaderCellProps extends CellProps {
 
 export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellProps) => (
   <Cell {...props}>
-    <LinkButton onClick={onClick} color="black" caption={label} />
+    <LinkButton onClick={onClick} caption={label} />
   </Cell>
 );
 
@@ -80,7 +80,6 @@ export const FileActionCell = <
         typeInfo={rowDataGetter!().type}
         caption={cellData}
         className="icon-caption"
-        linkColor="black"
       />
     }
     itemData={rowDataGetter!}
@@ -154,7 +153,6 @@ export const ActionLinkCell = <
             })
           }
           caption={getCellContent(cellData)}
-          color="black"
         />
       )}
     </ActionHandlerDecorator>
@@ -252,7 +250,6 @@ export const FileDownloadCell = <
         onClick={clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter!) : null}
         caption={cellData}
         className="icon-caption"
-        linkColor="black"
       />
     }
     user={userGetter(rowDataGetter!())}

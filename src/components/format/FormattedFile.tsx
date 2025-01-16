@@ -12,7 +12,6 @@ interface FormattedFileProps {
   caption: React.ReactNode;
   selected?: boolean;
   className?: string;
-  linkColor?: string;
 }
 
 const FormattedFile: React.FC<FormattedFileProps> = ({
@@ -21,10 +20,9 @@ const FormattedFile: React.FC<FormattedFileProps> = ({
   caption,
   selected,
   className,
-  linkColor,
 }) => {
   if (onClick) {
-    caption = <LinkButton onClick={onClick} color={linkColor} caption={caption} />;
+    caption = <LinkButton onClick={onClick} caption={caption} />;
   }
 
   return (
