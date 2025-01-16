@@ -13,7 +13,7 @@ export interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorEl
 const LinkButton: React.FC<LinkButtonProps> = ({ className, caption, ...other }) => {
   const buttonStyle = classNames('button link', className);
   return (
-    <a className={buttonStyle} {...other}>
+    <a className={buttonStyle} role="button" {...other}>
       {caption}
     </a>
   );

@@ -29,15 +29,6 @@ section#container-main,
   height: 100dvh;
 }
 
-.ui.button.basic.link {
-  box-shadow: 0 0 !important;
-  padding: unset;
-}
-
-.ui.button.basic.link:hover {
-  text-decoration:underline;
-}
-
 .ui.checkbox.floating {
   width: 100%;
   margin: 10px 0px;
