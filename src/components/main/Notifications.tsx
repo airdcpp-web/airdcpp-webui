@@ -2,7 +2,6 @@ import { useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { RateLimiter } from 'limiter';
 
 import NotificationStore from 'stores/reflux/NotificationStore';
@@ -42,7 +41,7 @@ const NotificationMessage = ({ notification, level }: NotificationMessageProps) 
   const { title, message, action } = notification;
   const color = getSeverityColor(level);
   return (
-    <>
+    <div className="notification">
       <div className="content">
         <div className={classNames('ui tiny header', color)} style={{ margin: '0px' }}>
           {title}
@@ -56,12 +55,11 @@ const NotificationMessage = ({ notification, level }: NotificationMessageProps) 
           className="primary"
           style={{
             marginTop: '10px',
-            marginLeft: '5px',
           }}
           color={color}
         />
       )}
-    </>
+    </div>
   );
 };
 
