@@ -1,5 +1,5 @@
 import SocketService from 'services/SocketService';
-import update from 'immutability-helper';
+import { produce } from 'immer';
 
 import isEqual from 'lodash/isEqual';
 
@@ -30,11 +30,13 @@ class RowDataLoader {
       return updated;
     }
 
-    if (old) {
-      this._data[index] = update(old, { $merge: item });
-    } else {
-      this._data[index] = update(old, { $set: item });
-    }
+    // if (old) {
+    this._data = produce(this._data, (draft) => {
+      draft[index] = {
+        ...(draft[index] || {}),
+        ...item,
+      };
+    });
 
     return updated + 1;
   }
