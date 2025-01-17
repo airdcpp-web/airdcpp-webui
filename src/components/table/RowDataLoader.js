@@ -30,7 +30,6 @@ class RowDataLoader {
       return updated;
     }
 
-    // if (old) {
     this._data = produce(this._data, (draft) => {
       draft[index] = {
         ...(draft[index] || {}),
