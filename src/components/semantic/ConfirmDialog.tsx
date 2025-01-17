@@ -53,7 +53,11 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
   // We can't use the basic (fully dimmed) style inside other modals
   const basic = !closeContext;
   return ReactDOM.createPortal(
-    <dialog ref={ref} className={cx('ui modal confirm-dialog', { basic: basic })}>
+    <div
+      role="dialog"
+      ref={ref}
+      className={cx('ui modal confirm-dialog', { basic: basic })}
+    >
       <div className="header">{title}</div>
       <div className="image content">
         <div className="image">
@@ -83,7 +87,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
           />
         </div>
       </div>
-    </dialog>,
+    </div>,
     document.getElementById(MODAL_NODE_ID)!,
   );
 };
