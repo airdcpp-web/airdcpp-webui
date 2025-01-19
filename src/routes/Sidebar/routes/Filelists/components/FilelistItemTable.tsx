@@ -126,6 +126,9 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
           viewId={session.location!.path}
           sessionStore={FilelistSessionStore}
           moduleId={UI.Modules.FILELISTS}
+          textFilterProps={{
+            autoFocus: true,
+          }}
         >
           <Column
             name="Name"

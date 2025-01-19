@@ -84,6 +84,9 @@ class HubUserTable extends React.Component<HubUserTableProps> {
         rowClassNameGetter={this.rowClassNameGetter}
         emptyRowsNodeGetter={this.emptyRowsNodeGetter}
         moduleId={UI.Modules.HUBS}
+        textFilterProps={{
+          autoFocus: true,
+        }}
       >
         <Column
           name="Nick"

@@ -58,10 +58,6 @@ class TextFilter extends React.PureComponent<
   timer: number | undefined;
   input: HTMLInputElement;
 
-  static readonly defaultProps: Pick<TextFilterProps, 'autoFocus'> = {
-    autoFocus: true,
-  };
-
   componentWillUnmount() {
     clearTimeout(this.timer);
   }
@@ -118,9 +114,9 @@ class TextFilter extends React.PureComponent<
               onChange={this.onTextChanged}
               value={value}
               type="text"
-              // autoFocus should never be true as the table may initially be empty
+              // autoFocus shouldn't be enabled for main layout tables as the table may initially be empty
               // and the filter would steal focus when appearing (possibly even when the sidebar is open)
-              autoFocus={usingMobileLayout() || !autoFocus ? false : undefined}
+              autoFocus={usingMobileLayout() ? false : autoFocus}
             >
               <SectionedDropdown
                 className="filter-method right top pointing"

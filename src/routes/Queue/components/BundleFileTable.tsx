@@ -58,6 +58,9 @@ class BundleFileTable extends React.Component<BundleFileTableProps> {
           property: 'bundle',
         }}
         moduleId={UI.Modules.QUEUE}
+        textFilterProps={{
+          autoFocus: true,
+        }}
       >
         <Column
           name="Name"
