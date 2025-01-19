@@ -1,5 +1,5 @@
 import SocketService from 'services/SocketService';
-import { produce } from 'immer';
+import update from 'immutability-helper';
 
 import isEqual from 'lodash/isEqual';
 
@@ -30,12 +30,11 @@ class RowDataLoader {
       return updated;
     }
 
-    this._data = produce(this._data, (draft) => {
-      draft[index] = {
-        ...(draft[index] || {}),
-        ...item,
-      };
-    });
+    if (old) {
+      this._data[index] = update(old, { $merge: item });
+    } else {
+      this._data[index] = update(old, { $set: item });
+    }
 
     return updated + 1;
   }
@@ -60,13 +59,11 @@ class RowDataLoader {
       // Remove rows outside the range
       // Leave the current range in case all old items can be reused
       // (avoids flickering because there is no need to re-render)
-      this._data = produce(this._data, (draft) => {
-        for (let i = 0; i < draft.length; i++) {
-          if (!items[i]) {
-            draft.splice(i, 1);
-          }
+      for (let i = 0; i < this._data.length; i++) {
+        if (!items[i]) {
+          delete this._data[i];
         }
-      });
+      }
 
       // Update rows
       const updatedCount = items.reduce(this.updateItem.bind(this), 0);
@@ -142,7 +139,7 @@ class RowDataLoader {
         console.error('Failed to load data', error);
         for (let i = rowBase; i < endRow; i++) {
           if (this._pendingRequest[i]) {
-            this.removePendingRequests(rowIndex);
+            delete this._pendingRequest[i];
           }
         }
       });
@@ -157,9 +154,7 @@ class RowDataLoader {
     for (let i = 0; i < rows.length; i++) {
       const rowIndex = start + i;
       if (!isEqual(this._data[rowIndex], rows[i])) {
-        this._data = produce(this._data, (draft) => {
-          draft[rowIndex] = rows[i];
-        });
+        this._data[rowIndex] = rows[i];
 
         if (this._pendingRequest[rowIndex]) {
           this._pendingRequest[rowIndex].forEach((f) => f(rows[i]));
@@ -168,7 +163,7 @@ class RowDataLoader {
         console.log('onRowsReceived, row data equals', rowIndex);
       }
 
-      this.removePendingRequests(rowIndex);
+      delete this._pendingRequest[rowIndex];
     }
   }
 }

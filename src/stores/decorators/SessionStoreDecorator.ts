@@ -1,4 +1,4 @@
-import { Draft, produce } from 'immer';
+import update from 'immutability-helper';
 
 import { checkUnreadSessionInfo } from 'utils/MessageUtils';
 import {
@@ -94,10 +94,7 @@ const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
   const Decorator = {
     ...DecoratorPublic,
     _onSessionCreated: (data: SessionT) => {
-      sessions = produce(sessions, (draft) => {
-        draft.push(data as Draft<SessionT>);
-      });
-
+      sessions = update(sessions, { $push: [data] });
       store.trigger(sessions);
     },
 
@@ -120,11 +117,11 @@ const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
       const updatedProperties = checkReadState(id, updatedPropertiesInitial);
 
       const index = sessions.indexOf(session);
-      sessions = produce(sessions, (draft) => {
-        draft[index] = {
-          ...draft[index],
-          ...updatedProperties,
-        };
+      //@ts-ignore
+      sessions = update(sessions, {
+        [index]: {
+          $merge: updatedProperties,
+        },
       });
 
       store.trigger(sessions);
@@ -136,9 +133,7 @@ const SessionStoreDecorator = function <SessionT extends UI.SessionType>(
       }
 
       const index = sessions.indexOf(store.getSession(data.id));
-      sessions = produce(sessions, (draft) => {
-        draft.splice(index, 1);
-      });
+      sessions = update(sessions, { $splice: [[index, 1]] });
       store.trigger(sessions);
     },
 

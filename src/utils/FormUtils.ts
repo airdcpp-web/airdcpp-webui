@@ -12,7 +12,7 @@ import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import upperFirst from 'lodash/upperFirst';
-import { produce } from 'immer';
+import update from 'immutability-helper';
 
 import { textToI18nKey } from './TranslationUtils';
 
@@ -546,9 +546,7 @@ const updateMultiselectValues = <ValueT>(
     values = [...values, value];
   } else {
     const index = values.indexOf(value);
-    values = produce(values, (draft) => {
-      draft.splice(index, 1);
-    });
+    values = update(values, { $splice: [[index, 1]] });
   }
 
   return values;

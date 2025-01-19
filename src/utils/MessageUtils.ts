@@ -1,4 +1,4 @@
-import { produce } from 'immer';
+import update from 'immutability-helper';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
@@ -11,9 +11,7 @@ const checkSplice = (
   if (messages) {
     const toRemove = messages.length - maxCacheMessageCount;
     if (toRemove > 0) {
-      return produce(messages, (draft) => {
-        draft.splice(0, toRemove);
-      });
+      return update(messages, { $splice: [[0, toRemove]] });
     }
   }
 
