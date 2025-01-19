@@ -19,7 +19,6 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
   trafficSeries,
   maxDownload,
   maxUpload,
-  // widgetT,
 }) => {
   const { formatSpeed, formatDateTime } = useFormatter();
   const options = useMemo<ApexOptions>(
@@ -36,6 +35,7 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
       legend: { show: false },
       stroke: {
         curve: 'smooth',
+        width: 1,
       },
       dataLabels: {
         enabled: false,
@@ -54,9 +54,11 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
         axisTicks: {
           show: false,
         },
+        tooltip: {
+          enabled: false,
+        },
       },
       yaxis: {
-        // seriesName: widgetT.translate('Traffic (bps)'),
         labels: {
           formatter: (value) => {
             return formatSpeed(Math.abs(value));
@@ -67,7 +69,6 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
         tickAmount: 4,
         stepSize: 1000000,
         opposite: true,
-        // forceNiceScale: true,
       },
     }),
     [maxUpload, maxDownload],
