@@ -118,8 +118,9 @@ class TextFilter extends React.PureComponent<
               onChange={this.onTextChanged}
               value={value}
               type="text"
-              autoFocus={!usingMobileLayout() && autoFocus}
-              // className="action"
+              // autoFocus should never be true as the table may initially be empty
+              // and the filter would steal focus when appearing (possibly even when the sidebar is open)
+              autoFocus={usingMobileLayout() || !autoFocus ? false : undefined}
             >
               <SectionedDropdown
                 className="filter-method right top pointing"
