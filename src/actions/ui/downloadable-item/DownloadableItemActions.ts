@@ -83,6 +83,7 @@ const canViewImage: Filter = (data) =>
 
 const canCopyTTH: Filter = (data) => hasCopySupport() && !isDirectory(data);
 const canCopyPath: Filter = (data) => hasCopySupport() && !!data.itemData.itemInfo.path;
+const canCopySize: Filter = (data) => hasCopySupport() && data.itemData.itemInfo.size > 0;
 
 // Handlers
 type Handler = UI.ActionHandler<UI.DownloadableItemData, UI.SessionItemBase>;
@@ -320,6 +321,7 @@ export const CopySizeAction = {
   id: 'copySize',
   displayName: 'Copy size',
   icon: IconConstants.COPY,
+  filter: canCopySize,
   handler: handleCopySize,
   notifications: {
     onSuccess: 'Size was copied to clipboard',
