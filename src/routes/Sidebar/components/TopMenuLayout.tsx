@@ -11,27 +11,25 @@ import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 import { useTranslation } from 'react-i18next';
 import { SessionMainLayoutProps } from './types';
+import { useStoreProperty } from 'context/StoreContext';
 
 type SessionDropdownProps<SessionT extends UI.SessionItemBase> = Pick<
   SessionMainLayoutProps<SessionT>,
-  'sessionMenuItems' | 'newButton' | 'unreadInfoStore' | 'listActionMenuGetter'
+  'sessionMenuItems' | 'newButton' | 'sessionStoreSelector' | 'listActionMenuGetter'
 >;
 
 const SessionDropdown = <SessionT extends UI.SessionItemBase>({
   sessionMenuItems,
   newButton,
-  unreadInfoStore,
+  sessionStoreSelector,
   listActionMenuGetter,
 }: SessionDropdownProps<SessionT>) => {
   const { t } = useTranslation();
+  const getTotalUrgencies = useStoreProperty(
+    (state) => sessionStoreSelector(state).getTotalUrgencies,
+  );
   return (
-    <SectionedDropdown
-      triggerIcon={
-        <MenuIcon
-          urgencies={unreadInfoStore ? unreadInfoStore.getTotalUrgencies() : null}
-        />
-      }
-    >
+    <SectionedDropdown triggerIcon={<MenuIcon urgencies={getTotalUrgencies()} />}>
       <MenuSection caption={translate('New', t, UI.Modules.COMMON)}>
         {newButton}
       </MenuSection>

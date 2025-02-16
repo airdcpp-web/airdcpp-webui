@@ -6,16 +6,18 @@ import { RouteItem } from 'routes/Routes';
 import 'mobile.css';
 
 import * as UI from 'types/ui';
+import { useStoreApi } from 'context/StoreContext';
 
 const reduceMenuItemUrgency = (
   urgencyCountMap: UI.UrgencyCountMap,
   menuItem: RouteItem,
+  store: UI.Store,
 ) => {
-  if (!menuItem.unreadInfoStore) {
+  if (!menuItem.unreadInfoStoreSelector) {
     return urgencyCountMap;
   }
 
-  const urgencies = menuItem.unreadInfoStore.getTotalUrgencies();
+  const urgencies = menuItem.unreadInfoStoreSelector(store).getTotalUrgencies();
   if (!urgencies) {
     return urgencyCountMap;
   }
@@ -28,23 +30,26 @@ const reduceMenuItemUrgency = (
   return urgencyCountMap;
 };
 
-const getTotalUrgencies = (routes: RouteItem[]) => {
-  return validateUrgencies(routes.reduce(reduceMenuItemUrgency, {}));
+const getTotalUrgencies = (routes: RouteItem[], store: UI.Store) => {
+  return validateUrgencies(
+    routes.reduce((prev, reduced) => reduceMenuItemUrgency(prev, reduced, store), {}),
+  );
 };
 
 export const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
+  const store = useStoreApi();
   const [urgencies, setUrgencies] = useState<UI.UrgencyCountMap | null>(
-    getTotalUrgencies(routes),
+    getTotalUrgencies(routes, store.getState()),
   );
 
   useEffect(() => {
-    setUrgencies(getTotalUrgencies(routes));
+    setUrgencies(getTotalUrgencies(routes, store.getState()));
     const unsubscribe = routes.reduce(
       (reduced, item) => {
-        if (!!item.unreadInfoStore) {
+        if (!!item.unreadInfoStoreSelector) {
           reduced.push(
-            (item.unreadInfoStore as any).listen(() => {
-              setUrgencies(getTotalUrgencies(routes));
+            store.subscribe(() => {
+              setUrgencies(getTotalUrgencies(routes, store.getState()));
             }),
           );
         }

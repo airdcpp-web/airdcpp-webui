@@ -1,4 +1,5 @@
 import * as API from 'types/api';
+import { SessionType } from './sessions';
 
 export const enum UrgencyEnum {
   HIGHEST = 6,
@@ -23,7 +24,6 @@ export type StatusMessageUrcencies = Record<
   UrgencyEnum
 >;
 
-export interface UnreadInfoStore {
-  getTotalUrgencies: () => UrgencyCountMap | null;
-  isInitialized: () => boolean;
-}
+export type SessionUrgencyCountMapper<SessionT extends SessionType> = (
+  session: SessionT,
+) => ChatMessageUrcencies | StatusMessageUrcencies;

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-
-import * as React from 'react';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 import HubConstants from 'constants/HubConstants';
-import HubSessionStore from 'stores/reflux/HubSessionStore';
 
 import { useFormatter } from 'context/FormatterContext';
 import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
@@ -12,7 +10,6 @@ import EncryptionState from 'components/EncryptionState';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { ErrorResponse } from 'airdcpp-apisocket';
 import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
@@ -115,5 +112,5 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
 
 export default SocketSubscriptionDecorator(
   HubFooter,
-  ({ session }) => !!HubSessionStore.getSession(session.id),
+  // ({ session }) => !!HubSessionStore.getSession(session.id),
 );

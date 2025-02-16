@@ -37,6 +37,7 @@
     "jest.config.js",
     "webpack.config.js",
     "src/sw.js",
-    "resources"
+    "resources",
+    "*.tmp",
   ]
 }

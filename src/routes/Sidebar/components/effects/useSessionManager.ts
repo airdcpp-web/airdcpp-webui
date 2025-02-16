@@ -28,7 +28,7 @@ export interface SessionManagerProps<
 
   baseUrl: string;
 
-  sessionApi: UI.SessionActions<SessionT> & SessionApiT;
+  sessionApi: UI.SessionAPIActions<SessionT> & SessionApiT;
 }
 
 export const useSessionManager = <

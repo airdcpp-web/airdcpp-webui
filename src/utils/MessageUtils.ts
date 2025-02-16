@@ -53,8 +53,6 @@ const checkUnreadCacheInfo = (
     // Don't flash unread counts in the UI
     const unreadCounts = Object.keys(counts.unread).reduce(
       (reduced, messageType) => {
-        // type tmp = keyof UnreadMessageCounts
-        // type tmp2 = keyof MessageCounts['unread']
         reduced[messageType as KeysOfUnion<UnreadMessageCounts>] = 0;
         return reduced;
       },
@@ -103,6 +101,10 @@ const checkUnreadSessionInfo = <SessionT extends UI.UnreadInfo>(
   return unreadInfoItem;
 };
 
+const listMessageSort = (a: UI.MessageListItem, b: UI.MessageListItem) => {
+  return getListMessageTime(a)! - getListMessageTime(b)!;
+};
+
 // Messages may have been received via listener while fetching cached ones
 // Append the received non-dupe messages to fetched list
 const mergeCacheMessages = (
@@ -110,9 +112,9 @@ const mergeCacheMessages = (
   existingMessages: UI.MessageListItem[] | undefined = [],
 ): UI.MessageListItem[] => {
   return [
-    ...cacheMessages,
     ...existingMessages.filter((message) => filterListed(cacheMessages, message)),
-  ];
+    ...cacheMessages,
+  ].sort(listMessageSort);
 };
 
 // Push the message to the existing list of messages (if it's not there yet)
@@ -140,6 +142,7 @@ export {
   pushMessage,
   getListMessageId,
   getListMessageTime,
+  listMessageSort,
   checkSplice,
   getListMessageIdString,
 };

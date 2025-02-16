@@ -1,4 +1,4 @@
-import { MockHintedUserResponse } from './user';
+import { MockHintedUser1Response } from './user';
 
 export const MOCK_FILELIST_ID = 'filelist1';
 export const MOCK_FILELIST_ITEM_ID = 323;
@@ -32,5 +32,5 @@ export const FilelistGetResponse = {
   },
   total_files: 936066,
   total_size: 133137630299481,
-  user: MockHintedUserResponse,
+  user: MockHintedUser1Response,
 };

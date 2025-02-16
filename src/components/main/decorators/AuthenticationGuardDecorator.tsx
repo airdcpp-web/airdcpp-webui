@@ -6,7 +6,6 @@ import SocketConnectStatus from 'components/main/SocketConnectStatus';
 import { useStore } from 'effects/StoreListenerEffect';
 import { useSessionGuard } from '../effects/LoginGuardEffect';
 import { useAuthPageTitle } from '../effects/PageTitleEffect';
-import { useStoreDataFetch } from '../effects/StoreDataFetchEffect';
 import { toI18nKey, translate } from 'utils/TranslationUtils';
 
 import * as UI from 'types/ui';
@@ -14,6 +13,8 @@ import * as UI from 'types/ui';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { parseLoginError } from 'utils/AuthUtils';
+import { StoreProvider } from 'context/StoreContext';
+import { useSocket } from 'context/SocketContext';
 
 interface AuthenticationGuardDecoratorProps {}
 
@@ -32,11 +33,11 @@ const getConnectStatusMessage = (lastError: LoginError, t: UI.TranslateF) => {
 
 function AuthenticationGuardDecorator<PropsT>(Component: React.ComponentType<PropsT>) {
   const Decorator: React.FC<PropsT & AuthenticationGuardDecoratorProps> = (props) => {
+    const socket = useSocket();
     const login = useStore<LoginState>(LoginStore);
     const location = useLocation();
     useSessionGuard(login, location);
     useAuthPageTitle(login);
-    useStoreDataFetch(login);
     const { t } = useTranslation();
 
     if (!login.socketAuthenticated) {
@@ -46,7 +47,11 @@ function AuthenticationGuardDecorator<PropsT>(Component: React.ComponentType<Pro
       );
     }
 
-    return <Component {...props} />;
+    return (
+      <StoreProvider socket={socket} login={LoginStore}>
+        <Component login={login} {...props} />
+      </StoreProvider>
+    );
   };
 
   return Decorator;

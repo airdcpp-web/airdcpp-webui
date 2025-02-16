@@ -5,8 +5,8 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import SearchActions from 'actions/reflux/SearchActions';
 import { APISocket } from 'services/SocketService';
+import { searchForeground } from 'utils/SearchUtils';
 
 type Filter = UI.ActionFilter<API.QueueBundle>;
 const bundleValidationFailed: Filter = ({ itemData: bundle }) =>
@@ -45,7 +45,7 @@ const handleRemoveBundle: Handler = ({ itemData: bundle, socket }, removeFinishe
 };
 
 const handleSearch: Handler = ({ itemData: bundle, location, navigate }) => {
-  return SearchActions.search(bundle, location, navigate);
+  return searchForeground(bundle, location, navigate);
 };
 
 const handleSearchBundleAlternates: Handler = ({ itemData: bundle, socket }) => {

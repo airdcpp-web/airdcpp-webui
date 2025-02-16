@@ -1,11 +1,10 @@
 import * as React from 'react';
 
+import { Params } from 'react-router';
+
 import { TextDecorator } from 'components/text';
 
 import SessionLayout from 'routes/Sidebar/components/SessionLayout';
-
-import HubSessionStore from 'stores/reflux/HubSessionStore';
-import HubAPIActions from 'actions/reflux/HubActions';
 
 import { hubOnlineStatusToColor } from 'utils/TypeConvert';
 
@@ -15,13 +14,15 @@ import HubIcon from 'components/icon/HubIcon';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+
 import {
   SessionProviderDecorator,
   SessionProviderDecoratorChildProps,
 } from 'routes/Sidebar/decorators/SessionProviderDecorator';
 import IconConstants from 'constants/IconConstants';
-import { Params } from 'react-router';
 import { HubActionMenu } from 'actions/ui/hub';
+import { HubAPIActions } from 'actions/store/HubActions';
+import { HubStoreSelector } from 'stores/hubSessionSlice';
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   itemNameGetter(session) {
@@ -62,11 +63,11 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
       editAccess={API.AccessEnum.HUBS_EDIT}
       uiActions={HubActionMenu}
       actionIds={sessionActions}
-      sessionApi={HubAPIActions as UI.SessionActions<API.Hub>}
+      sessionApi={HubAPIActions}
       sessionItemLayout={HubSession}
       newLayout={HubNew}
       sessionT={sessionT}
-      unreadInfoStore={HubSessionStore}
+      sessionStoreSelector={HubStoreSelector}
       remoteMenuId="hub"
       {...ItemHandler}
       {...other}
@@ -74,4 +75,4 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
   );
 };
 
-export default SessionProviderDecorator(Hubs, HubSessionStore, UI.Modules.HUBS);
+export default SessionProviderDecorator(Hubs, HubStoreSelector, UI.Modules.HUBS);

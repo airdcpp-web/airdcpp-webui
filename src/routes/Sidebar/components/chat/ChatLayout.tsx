@@ -9,11 +9,12 @@ import './chat.css';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
+import { useActiveSession } from 'decorators/ActiveSessionDecorator';
 import { useTranslation } from 'react-i18next';
 import { toI18nKey } from 'utils/TranslationUtils';
 import { useChatMessages } from './effects/useChatMessages';
 import { useSession } from 'context/SessionContext';
+import { useStoreProperty } from 'context/StoreContext';
 
 export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;
@@ -21,7 +22,7 @@ export interface ChatSession extends UI.SessionItemBase {
 
 export interface ChatLayoutProps extends UI.ChatController {
   chatAccess: API.AccessEnum;
-  messageStore: UI.SessionMessageStore;
+  storeSelector: UI.MessageStoreSelector;
   highlightRemoteMenuId: string;
 }
 
@@ -29,14 +30,21 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
   session,
   chatAccess,
   chatApi,
-  messageStore,
+  storeSelector,
   highlightRemoteMenuId,
+  chatCommands,
   ...other
 }) => {
   const { hasAccess } = useSession();
   const { t } = useTranslation();
-  const messages = useChatMessages(session, messageStore, chatApi);
+  const messages = useChatMessages(session, storeSelector, chatApi);
   const hasChatAccess = hasAccess(chatAccess);
+  const scrollPositionHandler = useStoreProperty(
+    (state) => storeSelector(state).messages.scroll,
+  );
+
+  useActiveSession(session, chatApi, storeSelector, true);
+
   return (
     <div className="message-view">
       {!hasChatAccess && (
@@ -51,15 +59,21 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
         className="chat"
         messages={messages}
         session={session}
-        scrollPositionHandler={messageStore.scroll}
+        scrollPositionHandler={scrollPositionHandler}
         t={t}
         highlightRemoteMenuId={highlightRemoteMenuId}
       />
       {hasChatAccess && (
-        <MessageComposer session={session} chatApi={chatApi} t={t} {...other} />
+        <MessageComposer
+          session={session}
+          chatApi={chatApi}
+          chatCommands={chatCommands}
+          t={t}
+          {...other}
+        />
       )}
     </div>
   );
 };
 
-export default ActiveSessionDecorator(ChatLayout, true);
+export default ChatLayout;

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import HubMessageStore from 'stores/reflux/HubMessageStore';
-
 import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
 import Checkbox from 'components/semantic/Checkbox';
 
@@ -15,17 +13,20 @@ import {
   HubActionPrompt,
 } from 'routes/Sidebar/routes/Hubs/components/HubPrompt';
 
-import '../style.css';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { shareTempFile } from 'services/api/ShareApi';
-import HubActions from 'actions/reflux/HubActions';
 import IconConstants from 'constants/IconConstants';
 import MenuConstants from 'constants/MenuConstants';
 import { SessionChildProps } from 'routes/Sidebar/components/types';
 import { useSession } from 'context/SessionContext';
+import { HubAPIActions } from 'actions/store/HubActions';
+import { buildChatCommands } from 'routes/Sidebar/components/chat/commands/ChatCommands';
+import { clearHubChatMessages } from 'services/api/HubApi';
+import { HubStoreSelector } from 'stores/hubSessionSlice';
+
+import '../style.css';
 
 const getStorageKey = (sessionId: number) => {
   return `view_userlist_${sessionId}`;
@@ -36,14 +37,11 @@ const checkList = (sessionId: number) => {
   return value;
 };
 
-type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject, UI.ChatActionList>;
+type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject>;
 
-const HubSession: React.FC<HubSessionProps> = ({
-  session,
-  sessionApi,
-  sessionT,
-  uiActions,
-}) => {
+const HubChatCommands = buildChatCommands(API.AccessEnum.HUBS_EDIT, clearHubChatMessages);
+
+const HubSession: React.FC<HubSessionProps> = ({ session, sessionT }) => {
   const [showList, setShowList] = useState(checkList(session.id));
   const login = useSession();
 
@@ -109,10 +107,9 @@ const HubSession: React.FC<HubSessionProps> = ({
         <HubUserTable session={session} sessionT={sessionT} />
       ) : (
         <ChatLayout
-          messageStore={HubMessageStore}
-          chatApi={HubActions as UI.ChatAPI}
-          sessionApi={sessionApi}
-          chatActions={uiActions}
+          storeSelector={HubStoreSelector}
+          chatApi={HubAPIActions}
+          chatCommands={HubChatCommands}
           chatAccess={API.AccessEnum.HUBS_SEND}
           session={session}
           handleFileUpload={handleFileUpload}

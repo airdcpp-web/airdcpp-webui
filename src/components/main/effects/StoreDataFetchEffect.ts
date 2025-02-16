@@ -1,45 +1,48 @@
 import { useEffect } from 'react';
 
+import * as UI from 'types/ui';
+
 import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
 
-import HubActions from 'actions/reflux/HubActions';
-import PrivateChatActions from 'actions/reflux/PrivateChatActions';
-import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
-import ViewFileActions from 'actions/reflux/ViewFileActions';
-import EventActions from 'actions/reflux/EventActions';
-import SystemActions from 'actions/reflux/SystemActions';
-
 import { AccessEnum } from 'types/api';
+import { HubAPIActions } from 'actions/store/HubActions';
+import { useAppStore } from 'context/StoreContext';
+import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
+import { EventAPIActions } from 'actions/store/EventActions';
+import { ActivityAPIActions } from 'actions/store/ActivityActions';
+import { FilelistAPIActions } from 'actions/store/FilelistActions';
+import { ViewFileAPIActions } from 'actions/store/ViewFileActions';
 
-const fetchStoreData = () => {
+const fetchStoreData = (store: UI.Store) => {
   const { hasAccess } = LoginStore;
   if (hasAccess(AccessEnum.PRIVATE_CHAT_VIEW)) {
-    PrivateChatActions.fetchSessions();
+    PrivateChatAPIActions.fetchSessions(store.privateChats);
   }
 
   if (hasAccess(AccessEnum.HUBS_VIEW)) {
-    HubActions.fetchSessions();
+    HubAPIActions.fetchSessions(store.hubs);
   }
 
   if (hasAccess(AccessEnum.FILELISTS_VIEW)) {
-    FilelistSessionActions.fetchSessions();
+    FilelistAPIActions.fetchSessions(store.filelists);
   }
 
   if (hasAccess(AccessEnum.VIEW_FILE_VIEW)) {
-    ViewFileActions.fetchSessions();
+    ViewFileAPIActions.fetchSessions(store.viewFiles);
   }
 
   if (hasAccess(AccessEnum.EVENTS_VIEW)) {
-    EventActions.fetchInfo();
+    EventAPIActions.fetchInfo(store);
   }
 
-  SystemActions.fetchAway();
+  ActivityAPIActions.fetchAway(store);
 };
 
 export const useStoreDataFetch = (login: LoginState) => {
+  const store = useAppStore();
   useEffect(() => {
     if (login.socketAuthenticated) {
-      fetchStoreData();
+      fetchStoreData(store);
     }
   }, [login.socketAuthenticated]);
 };

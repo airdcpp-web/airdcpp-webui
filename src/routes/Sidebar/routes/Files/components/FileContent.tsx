@@ -16,7 +16,7 @@ import { useSession } from 'context/SessionContext';
 export interface FileContentProps {
   session: API.ViewFile;
   sessionT: UI.ModuleTranslator;
-  scrollPositionHandler: UI.ScrollPositionHandler;
+  scrollPositionHandler: UI.ScrollHandler;
 }
 
 interface ViewerElementProps {

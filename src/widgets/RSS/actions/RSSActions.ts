@@ -1,5 +1,3 @@
-import { SearchActions } from 'actions/reflux/SearchActions';
-
 import IconConstants from 'constants/IconConstants';
 
 import { FeedItem } from '../types';
@@ -7,6 +5,7 @@ import { parseNodeContent } from '../utils';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
+import { searchStringForeground } from 'utils/SearchUtils';
 
 interface RSSItemData {
   id: string;
@@ -63,11 +62,8 @@ const handleSearch: Handler = ({ itemData, location, navigate }) => {
     return;
   }
 
-  const itemInfo = {
-    name: parseNodeContent(itemData.entry.title),
-  };
-
-  return SearchActions.search(itemInfo, location, navigate);
+  const searchString = parseNodeContent(itemData.entry.title);
+  return searchStringForeground(searchString, location, navigate);
 };
 
 export const RSSActions: UI.ActionListType<RSSItemData> = {

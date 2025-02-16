@@ -16,3 +16,13 @@ export enum PlatformEnum {
   FREEBSD = 'freebsd',
   OTHER = 'other',
 }
+
+export enum AwayEnum {
+  OFF = 'off',
+  IDLE = 'idle',
+  MANUAL = 'manual',
+}
+
+export interface AwayState {
+  id: AwayEnum;
+}

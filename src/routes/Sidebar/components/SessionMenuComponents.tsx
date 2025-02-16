@@ -139,13 +139,13 @@ export const useComponents = <
     },
     getSessionMenuItems: () => {
       const getSessionMenuItem = (sessionItem: SessionT) => {
-        const { itemNameGetter, unreadInfoStore } = props;
+        const { itemNameGetter, sessionStoreSelector } = props;
         return (
           <SessionMenuItem
             key={sessionItem.id}
             url={getSessionUrl(sessionItem.id)}
             name={itemNameGetter(sessionItem)}
-            unreadInfoStore={unreadInfoStore}
+            unreadInfoStoreSelector={sessionStoreSelector}
             status={getItemStatus(sessionItem)}
             sessionItem={sessionItem}
           />

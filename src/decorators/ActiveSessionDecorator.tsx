@@ -4,11 +4,13 @@ import LocalSettingStore from 'stores/reflux/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
 import * as UI from 'types/ui';
-import { SessionChildProps } from 'routes/Sidebar/components/types';
+import { useStoreProperty } from 'context/StoreContext';
+import { useSocket } from 'context/SocketContext';
+// import { SessionChildProps } from 'routes/Sidebar/components/types';
 
-type SessionType = UI.SessionItemBase;
+// type SessionType = UI.SessionItemBase;
 
-interface ActiveSessionDecoratorProps<
+/*interface ActiveSessionDecoratorProps<
   SessionT extends SessionType,
   ActionT extends object,
 > extends Pick<SessionChildProps<SessionT, ActionT>, 'session'> {
@@ -72,4 +74,55 @@ export default function <
   }
 
   return ActiveSessionDecorator;
-}
+}*/
+
+export const useActiveSession = <SessionT extends UI.SessionType>(
+  session: SessionT,
+  actions: UI.SessionAPIActions<SessionT>,
+  sessionStoreSelector: UI.SessionStoreSelector,
+  useReadDelay = false,
+) => {
+  const socket = useSocket();
+  const setActiveSession = useStoreProperty(
+    (state) => sessionStoreSelector(state).setActiveSession,
+  );
+
+  const readTimeout = React.useRef<number | undefined>(undefined);
+
+  const setRead = (session: SessionT) => {
+    actions.setRead(session, socket);
+    readTimeout.current = undefined;
+  };
+
+  const setSession = (session: SessionT | null) => {
+    if (readTimeout) {
+      // Set the previously active session as read
+      clearTimeout(readTimeout.current);
+
+      if (session) {
+        setRead(session);
+      }
+    }
+
+    setActiveSession(session);
+    if (!session) {
+      return;
+    }
+
+    const timeout = !useReadDelay
+      ? 0
+      : LocalSettingStore.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
+
+    readTimeout.current = window.setTimeout(() => setRead(session), timeout);
+  };
+
+  React.useEffect(() => {
+    return () => {
+      setSession(null);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    setSession(session);
+  }, [session.id]);
+};

@@ -4,7 +4,7 @@ import SocketService from 'services/SocketService';
 import { uploadTempFile } from '../HttpService';
 
 import * as API from 'types/api';
-import { AuthenticatedSession } from 'context/SessionContext';
+import * as UI from 'types/ui';
 
 export interface AddTempShareResponse {
   magnet: string;
@@ -14,7 +14,7 @@ export const shareTempFile = async (
   file: File,
   hubUrl: string,
   cid: string | undefined,
-  { authToken }: AuthenticatedSession,
+  { authToken }: UI.AuthenticatedSession,
 ): Promise<AddTempShareResponse> => {
   // eslint-disable-next-line no-useless-catch
   try {

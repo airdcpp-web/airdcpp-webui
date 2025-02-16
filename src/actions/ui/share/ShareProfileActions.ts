@@ -1,6 +1,3 @@
-import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
-import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
-
 import ShareProfileConstants from 'constants/ShareProfileConstants';
 import IconConstants from 'constants/IconConstants';
 
@@ -9,6 +6,7 @@ import * as UI from 'types/ui';
 
 import { MENU_DIVIDER } from 'constants/ActionConstants';
 import ShareRootConstants from 'constants/ShareRootConstants';
+import { FilelistAPIActions } from 'actions/store/FilelistActions';
 
 type Filter = UI.ActionFilter<API.ShareProfile>;
 const notDefault: Filter = ({ itemData: profile }) => !profile.default;
@@ -61,12 +59,8 @@ const handleRemove: Handler = ({ itemData: profile, socket }) => {
   return socket.delete(ShareProfileConstants.PROFILES_URL + '/' + profile.id);
 };
 
-const handleBrowse: Handler = ({ itemData: profile, location, navigate }) => {
-  return FilelistSessionActions.ownList(profile.id, {
-    location,
-    navigate,
-    sessionStore: FilelistSessionStore,
-  });
+const handleBrowse: Handler = ({ itemData: profile, ...other }) => {
+  return FilelistAPIActions.createLocalSession({ shareProfileId: profile.id }, other);
 };
 
 export const ShareProfileCreateAction = {

@@ -72,6 +72,17 @@ const simpleSessionMapper = (item: UI.ReadStatus): UI.UrgencyCountMap | null => 
   return null;
 };
 
+export const getItemUrgencies = (
+  item: UI.SessionItem,
+  messageUrgencyMappings: UI.SessionUrgencyCountMapper<UI.SessionType> | undefined,
+) => {
+  if (messageUrgencyMappings) {
+    return messageSessionMapper(item as UI.MessageCounts, messageUrgencyMappings(item));
+  }
+
+  return simpleSessionMapper(item as UI.ReadStatus);
+};
+
 // Get urgencyMap [urgency: numberOfSessions] for a list of sessions
 const getSessionUrgencies = (sessions: SessionList, urgencyGetter: UrgencyGetter) => {
   const urgencies = sessions.reduce((reduced, session) => {

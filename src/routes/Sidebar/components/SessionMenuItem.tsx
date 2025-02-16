@@ -7,7 +7,7 @@ import * as UI from 'types/ui';
 interface SessionMenuItemProps {
   url: string;
   name: React.ReactNode;
-  unreadInfoStore: UI.UnreadInfoStore;
+  unreadInfoStoreSelector: UI.SessionStoreSelector;
   status: React.ReactElement<any>;
   sessionItem: UI.SessionItemBase;
 }
@@ -16,7 +16,7 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
   sessionItem,
   status,
   name,
-  unreadInfoStore,
+  unreadInfoStoreSelector,
   url,
 }) => (
   <RouterMenuItemLink
@@ -24,7 +24,7 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
     className="session-item"
     icon={status}
     session={sessionItem}
-    unreadInfoStore={unreadInfoStore}
+    unreadInfoStoreSelector={unreadInfoStoreSelector}
   >
     <span className="session-name">{name}</span>
   </RouterMenuItemLink>

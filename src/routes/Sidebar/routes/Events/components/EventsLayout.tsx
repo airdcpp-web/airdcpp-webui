@@ -1,39 +1,41 @@
 import { useEffect, memo } from 'react';
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
-import EventAPIActions from 'actions/reflux/EventActions';
 import { EventActionMenu } from 'actions/ui/event/EventActions';
-
-import EventStore from 'stores/reflux/EventStore';
 
 import LayoutHeader from 'components/semantic/LayoutHeader';
 
-import '../style.css';
 import EventMessageView from 'routes/Sidebar/routes/Events/components/EventMessageView';
 
 import * as UI from 'types/ui';
 
-import { useStore } from 'effects/StoreListenerEffect';
-import { useTranslation } from 'react-i18next';
 import { translate } from 'utils/TranslationUtils';
 import IconConstants from 'constants/IconConstants';
 import { ActionMenu } from 'components/action-menu';
+import { useAppStore, useStoreProperty } from 'context/StoreContext';
+import { EventAPIActions } from 'actions/store/EventActions';
+
+import '../style.css';
 
 const SystemLog: React.FC = memo(
   function SystemLog() {
+    const store = useAppStore();
+    const setViewActive = useStoreProperty((state) => state.events.setViewActive);
+
     useEffect(() => {
-      EventAPIActions.setActive(true);
+      setViewActive(true);
       EventAPIActions.setRead();
 
-      if (!EventStore.isInitialized()) {
-        EventAPIActions.fetchMessages();
+      if (!store.events.isInitialized()) {
+        EventAPIActions.fetchMessages(store);
       }
 
-      return () => EventAPIActions.setActive(false);
+      return () => setViewActive(false);
     }, []);
 
     const { t } = useTranslation();
-    const messages = useStore<UI.MessageListItem[]>(EventStore);
+    const messages = useStoreProperty((state) => state.events.logMessages);
     return (
       <div className="simple-layout">
         <div className="wrapper">

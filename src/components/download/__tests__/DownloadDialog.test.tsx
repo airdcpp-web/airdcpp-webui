@@ -24,7 +24,7 @@ import DownloadDialog from '../DownloadDialog';
 
 import * as UI from 'types/ui';
 import * as API from 'types/api';
-import { MockHintedUserResponse } from 'tests/mocks/api/user';
+import { MockHintedUser1Response } from 'tests/mocks/api/user';
 import { waitForElementToBeRemoved, waitFor, fireEvent } from '@testing-library/react';
 
 import { HistoryStringPathResponse } from 'tests/mocks/api/history';
@@ -94,7 +94,7 @@ describe('DownloadDialog', () => {
             itemDataGetter={() =>
               Promise.resolve(FilelistGetFilelistItemFileResponse as API.FilelistItem)
             }
-            userGetter={() => MockHintedUserResponse as API.HintedUser}
+            userGetter={() => MockHintedUser1Response as API.HintedUser}
             session={FilelistGetResponse}
           />
         </>

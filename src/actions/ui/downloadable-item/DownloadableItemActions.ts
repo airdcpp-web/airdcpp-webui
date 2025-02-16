@@ -3,19 +3,17 @@ import { sleep } from 'utils/Promise';
 import IconConstants from 'constants/IconConstants';
 import SearchConstants from 'constants/SearchConstants';
 
-import ViewFileActions from 'actions/reflux/ViewFileActions';
-import ViewFileStore from 'stores/reflux/ViewFileStore';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 import { toErrorResponse } from 'utils/TypeConvert';
-import SearchActions from 'actions/reflux/SearchActions';
 import { translate } from 'utils/TranslationUtils';
 import { makeHashMagnetLink, makeTextMagnetLink } from 'utils/MagnetUtils';
 import { hasCopySupport } from 'utils/BrowserUtils';
 import { DupeEnum } from 'types/api';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
+import { ViewFileAPIActions } from 'actions/store/ViewFileActions';
+import { searchForeground } from 'utils/SearchUtils';
 
 const isShareDupe = (dupe: API.Dupe | null) =>
   !!dupe &&
@@ -107,22 +105,20 @@ const handleViewFile = (
   data: UI.ActionHandlerData<UI.DownloadableItemData, UI.SessionItemBase>,
   isText: boolean,
 ) => {
-  const { itemData, location, navigate } = data;
-  const props = {
+  const { itemData, ...other } = data;
+
+  const viewFileData = {
+    ...itemData,
     isText,
-    location,
-    sessionStore: ViewFileStore,
-    history,
-    navigate,
   };
 
   if (notSelf(data)) {
     // Remote file
-    return ViewFileActions.createSession(itemData, props);
+    return ViewFileAPIActions.createRemoteSession(viewFileData, other);
   }
 
   // Local file
-  return ViewFileActions.openLocalFile(itemData.itemInfo.tth, props);
+  return ViewFileAPIActions.createLocalSession(viewFileData, other);
 };
 
 const handleViewText: Handler = (data) => {
@@ -198,7 +194,7 @@ const handleFindNfo: Handler = async ({ itemData, socket, ...other }) => {
 };
 
 export const handleSearch: Handler = ({ itemData, location, navigate }) => {
-  return SearchActions.search(itemData.itemInfo, location, navigate);
+  return searchForeground(itemData.itemInfo, location, navigate);
 };
 
 const handleCopyMagnet: Handler = (data) => {

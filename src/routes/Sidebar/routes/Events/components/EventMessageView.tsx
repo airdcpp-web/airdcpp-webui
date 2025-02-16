@@ -9,14 +9,15 @@ import '../style.css';
 
 import * as UI from 'types/ui';
 import { translate } from 'utils/TranslationUtils';
-import EventStore from 'stores/reflux/EventStore';
+import { useStoreProperty } from 'context/StoreContext';
 
 interface EventMessagesProps {
-  messages: UI.MessageListItem[];
+  messages: UI.MessageListItem[] | null;
   t: UI.TranslateF;
 }
 
 const EventMessageView: React.FC<EventMessagesProps> = ({ messages, t }) => {
+  const scrollHandler = useStoreProperty((state) => state.events.scroll);
   if (!messages) {
     return <Loader text={translate('Loading messages', t, UI.Modules.EVENTS)} />;
   }
@@ -31,7 +32,7 @@ const EventMessageView: React.FC<EventMessagesProps> = ({ messages, t }) => {
     <MessageView
       className="events"
       messages={messages}
-      scrollPositionHandler={EventStore}
+      scrollPositionHandler={scrollHandler}
       t={t}
     />
   );

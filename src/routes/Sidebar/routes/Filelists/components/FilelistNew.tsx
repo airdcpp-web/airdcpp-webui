@@ -1,8 +1,5 @@
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
-import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
-import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
-
 import ShareProfileSelector from 'routes/Sidebar/routes/Filelists/components/ShareProfileSelector';
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
@@ -12,27 +9,27 @@ import IconConstants from 'constants/IconConstants';
 import { UserSelectField } from 'components/select';
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
 import LinkButton from 'components/semantic/LinkButton';
+import { FilelistAPIActions } from 'actions/store/FilelistActions';
+import { useAppStore } from 'context/StoreContext';
+import { useSocket } from 'context/SocketContext';
 
-const FilelistNew: React.FC<NewSessionLayoutProps> = (props) => {
-  const handleSubmit = (user: API.HintedUser) => {
-    const { navigate, location } = props;
-    FilelistSessionActions.createSession(
-      { user },
-      {
-        navigate,
-        location,
-        sessionStore: FilelistSessionStore,
-      },
-    );
+const FilelistNew: React.FC<NewSessionLayoutProps> = ({ navigate, sessionT }) => {
+  const store = useAppStore();
+  const socket = useSocket();
+
+  const createSessionProps = {
+    store,
+    socket,
+    navigate,
+    t: sessionT.plainT,
   };
 
-  const onProfileChanged = (profileId: number) => {
-    const { navigate, location } = props;
-    FilelistSessionActions.ownList(profileId, {
-      navigate,
-      location,
-      sessionStore: FilelistSessionStore,
-    });
+  const handleSubmit = (user: API.HintedUser) => {
+    FilelistAPIActions.createRemoteSession({ user }, createSessionProps);
+  };
+
+  const onProfileChanged = (shareProfileId: number) => {
+    FilelistAPIActions.createLocalSession({ shareProfileId }, createSessionProps);
   };
 
   const recentUserRender = (entry: API.HistoryItem) => {
@@ -42,10 +39,9 @@ const FilelistNew: React.FC<NewSessionLayoutProps> = (props) => {
   };
 
   const hasSession = (entry: API.HistoryItem) => {
-    return FilelistSessionStore.getSession(entry.user!.cid);
+    return !!store.filelists.getSession(entry.user!.cid);
   };
 
-  const { sessionT } = props;
   return (
     <div className="filelist session new">
       <UserSelectField

@@ -31,7 +31,7 @@ export interface SessionLayoutManageProps<
   actionIds?: string[];
 
   uiActions: UI.ModuleActions<SessionT, void, UIActionT>;
-  sessionApi: UI.SessionActions<SessionT> & SessionApiT;
+  sessionApi: UI.SessionAPIActions<SessionT>;
 
   // Item ID that is currently active (if any)
   activeId: API.IdType | undefined;
@@ -39,7 +39,7 @@ export interface SessionLayoutManageProps<
   // AccessConstant defining whether the user has edit permission
   editAccess: API.AccessEnum;
 
-  unreadInfoStore: UI.UnreadInfoStore;
+  sessionStoreSelector: UI.SessionStoreSelector;
 
   remoteMenuId: string;
 }
@@ -59,7 +59,7 @@ export interface SessionMainLayoutProps<
   UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject,
 > extends Pick<
       SessionLayoutManageProps<SessionT, SessionApiT, UIActionsT>,
-      'unreadInfoStore'
+      'sessionStoreSelector'
     >,
     SessionMainLayoutComponents {
   activeItem: SessionT | null;

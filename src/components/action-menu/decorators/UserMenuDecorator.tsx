@@ -4,7 +4,7 @@ import invariant from 'invariant';
 
 import * as UI from 'types/ui';
 
-import { ActionUserType, ActionUserData } from 'actions/ui/user';
+import { ActionUserData } from 'actions/ui/user';
 import { getFilePath } from 'utils/FileUtils';
 
 import UserIcon from 'components/icon/UserIcon';
@@ -19,7 +19,7 @@ export type UserMenuDecoratorProps = Omit<
   'actions' | 'caption' | 'itemData'
 > &
   React.PropsWithChildren<{
-    user: ActionUserType;
+    user: UI.ActionUserType;
     directory?: string;
     userIcon?: string | boolean | null;
     text?: React.ReactNode;

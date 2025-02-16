@@ -1,21 +1,12 @@
 import { createContext, useContext } from 'react';
 
-import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-export interface AuthenticatedSession {
-  systemInfo: API.SystemInfo;
-  hasAccess: (access: API.AccessEnum) => boolean;
-  user: API.LoginUser;
-  authToken: string;
-  sessionId: number;
-}
-
-export type SessionContextType = AuthenticatedSession;
+export type SessionContextType = UI.AuthenticatedSession;
 export const SessionContext = createContext<SessionContextType>(
-  {} as AuthenticatedSession,
+  {} as UI.AuthenticatedSession,
 );
 
 export const useSession = () => {
   return useContext(SessionContext);
-  // return LoginStore as Login;
 };

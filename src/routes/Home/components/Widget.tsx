@@ -7,13 +7,13 @@ import * as UI from 'types/ui';
 
 import { getWidgetT, translateWidgetName } from 'utils/WidgetUtils';
 import { WidgetEditActionMenu } from 'actions/ui/widget';
-import { AuthenticatedSession, useSession } from 'context/SessionContext';
+import { useSession } from 'context/SessionContext';
 
 const getError = (
   widgetInfo: UI.Widget,
   settings: UI.WidgetSettings,
   rootWidgetT: UI.ModuleTranslator,
-  { hasAccess }: AuthenticatedSession,
+  { hasAccess }: UI.AuthenticatedSession,
 ) => {
   if (widgetInfo.formSettings && !settings.widget) {
     return rootWidgetT.t('settingsMissing', 'Widget settings missing');

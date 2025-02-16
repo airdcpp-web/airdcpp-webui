@@ -198,6 +198,7 @@ export interface OfflineHintedUser extends HintedUserBase {
 export interface HintedUser extends HintedUserBase {
   nicks: string;
   hub_names: string;
+  hub_urls: string[];
   flags: HubUserFlag[];
 }
 

@@ -1,13 +1,15 @@
 import classNames from 'classnames';
 
-import HubActions from 'actions/reflux/HubActions';
-import HubSessionStore from 'stores/reflux/HubSessionStore';
-
 import Icon from 'components/semantic/Icon';
 import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 
 import * as API from 'types/api';
-import { useLocation, useNavigate } from 'react-router';
+
+import { useNavigate } from 'react-router';
+import { HubAPIActions } from 'actions/store/HubActions';
+import { useAppStore } from 'context/StoreContext';
+import { useSocket } from 'context/SocketContext';
+import { useTranslation } from 'react-i18next';
 
 export type ConnectStateCellProps = RowWrapperCellChildProps<
   API.FavoriteHubConnectState,
@@ -33,19 +35,26 @@ const ConnectStateCell: React.FC<ConnectStateCellProps> = ({
   cellData,
   rowDataGetter,
 }) => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const store = useAppStore();
+  const socket = useSocket();
+  const { t } = useTranslation();
 
   const handleCreateSession = () => {
-    HubActions.createSession(rowDataGetter!().hub_url, {
-      location,
+    const data = {
+      hubUrl: rowDataGetter!().hub_url,
+    };
+
+    HubAPIActions.createSession(data, {
       navigate,
-      sessionStore: HubSessionStore,
+      store,
+      socket,
+      t,
     });
   };
 
   const handleRemoveSession = () => {
-    HubActions.removeSession({ id: cellData!.current_hub_id });
+    HubAPIActions.removeSession({ id: cellData!.current_hub_id });
   };
 
   const getClickAction = () => {

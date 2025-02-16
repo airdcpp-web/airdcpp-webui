@@ -10,7 +10,7 @@ import {
 } from './common/ChatActions';
 
 export const changePrivateChatHubUrl = (session: API.PrivateChat, hubUrl: string) => {
-  SocketService.patch(PrivateChatConstants.SESSIONS_URL + '/' + session.id, {
+  return SocketService.patch(PrivateChatConstants.SESSIONS_URL + '/' + session.id, {
     hub_url: hubUrl,
   });
 };

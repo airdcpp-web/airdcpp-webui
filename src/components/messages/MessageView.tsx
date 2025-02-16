@@ -18,7 +18,7 @@ interface MessageViewProps {
   messages: UI.MessageListItem[] | null;
   session?: UI.SessionItemBase;
   className?: string;
-  scrollPositionHandler: UI.ScrollPositionHandler;
+  scrollPositionHandler: UI.ScrollHandler;
   highlightRemoteMenuId?: string;
   t: UI.TranslateF;
 }

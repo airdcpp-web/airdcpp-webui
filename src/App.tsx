@@ -7,6 +7,7 @@ import Reflux from 'reflux';
 //@ts-ignore
 import RefluxPromise from 'reflux-promise';
 import Promise from 'utils/Promise';
+import { enableMapSet } from 'immer';
 
 import AuthenticatedApp from 'components/main/AuthenticatedApp';
 import Login from 'routes/Login/components/Login';
@@ -32,6 +33,7 @@ import 'style.css';
 global.Promise = Promise as any;
 
 Reflux.use(RefluxPromise(Promise));
+enableMapSet();
 
 // TODO: migrate other routes to use the new features
 // after https://github.com/remix-run/react-router/discussions/9864 has been resolved

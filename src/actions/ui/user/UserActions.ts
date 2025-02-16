@@ -1,9 +1,3 @@
-import PrivateChatActions from 'actions/reflux/PrivateChatActions';
-import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
-
-import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
-import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
-
 import IconConstants from 'constants/IconConstants';
 
 import UserConstants from 'constants/UserConstants';
@@ -13,15 +7,12 @@ import * as UI from 'types/ui';
 
 import { HubUserFlag } from 'types/api';
 import { MENU_DIVIDER } from 'constants/ActionConstants';
-
-export type ActionUserType =
-  | (API.User & { nick?: string; hub_url?: string })
-  | (API.HintedUser & { nick?: string; id?: number })
-  | (API.HubUser & { nicks?: string });
+import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
+import { FilelistAPIActions } from 'actions/store/FilelistActions';
 
 export interface ActionUserData {
   id: string | API.HintedUserBase;
-  user: ActionUserType;
+  user: UI.ActionUserType;
   directory?: string;
 }
 
@@ -43,25 +34,17 @@ const checkUnignore: Filter = ({ itemData: { user } }) => {
 
 type Handler = UI.ActionHandler<ActionUserData, UI.ActionMenuItemDataValueType>;
 
-const handleMessage: Handler = ({ itemData: userData, location, navigate }) => {
-  return PrivateChatActions.createSession(userData.user, {
-    location,
-    sessionStore: PrivateChatSessionStore,
-    navigate,
-  });
+const handleMessage: Handler = ({ itemData: userData, ...other }) => {
+  return PrivateChatAPIActions.createSession(userData.user, other);
 };
 
-const handleBrowse: Handler = ({ itemData: userData, location, navigate }) => {
+const handleBrowse: Handler = ({ itemData: userData, ...other }) => {
   const createData = {
     user: userData.user,
     path: userData.directory,
   };
 
-  return FilelistSessionActions.createSession(createData, {
-    sessionStore: FilelistSessionStore,
-    location,
-    navigate,
-  });
+  return FilelistAPIActions.createRemoteSession(createData, other);
 };
 
 const handleIgnore: Handler = ({ itemData: userData, socket }) => {

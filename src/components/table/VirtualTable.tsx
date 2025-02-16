@@ -10,6 +10,8 @@ import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import { Translation } from 'react-i18next';
 
 declare module 'fixed-data-table-2' {
@@ -26,7 +28,7 @@ export type VirtualTableProps = Omit<TableFooterProps, 't'> &
     store: any;
 
     // Store containing sessions (must be provided together with entityId)
-    sessionStore?: any;
+    sessionStore?: UI.SessionSlice<UI.SessionType>;
 
     // Filter that is always applied for source items (those will never be displayed or included in the total count)
     sourceFilter?: API.TableFilter;

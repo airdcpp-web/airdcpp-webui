@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { OnChangeHandlerFunc } from 'react-mentions';
 import { useLocation, Location, useNavigate } from 'react-router';
+
 import * as UI from 'types/ui';
 
 import {
@@ -9,10 +10,11 @@ import {
   removeSessionProperty,
   saveSessionProperty,
 } from 'utils/BrowserUtils';
-import ChatCommandHandler from '../ChatCommandHandler';
+import ChatCommandHandler from '../commands/ChatCommandHandler';
 
 import { useSocket } from 'context/SocketContext';
 import { useSession } from 'context/SessionContext';
+import { useAppStore } from 'context/StoreContext';
 
 const getStorageKey = (location: Location) => {
   return `last_message_${location.pathname}`;
@@ -42,6 +44,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
   const navigate = useNavigate();
   const [inputText, setInputText] = React.useState('');
   const socket = useSocket();
+  const store = useAppStore();
 
   const handleCommand = (commandText: string) => {
     let command, params;
@@ -63,6 +66,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
       t,
       socket,
       session,
+      store,
     });
   };
 
@@ -83,7 +87,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
 
   const handleSend = (textToSend: string) => {
     const { chatApi, session } = chatController;
-    chatApi.sendChatMessage(session, textToSend);
+    chatApi.sendChatMessage(socket, session, textToSend);
   };
 
   useEffect(() => {

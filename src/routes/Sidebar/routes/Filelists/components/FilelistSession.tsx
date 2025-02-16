@@ -1,7 +1,5 @@
 import FilelistFooter from 'routes/Sidebar/routes/Filelists/components/FilelistFooter';
 
-import ActiveSessionDecorator from 'decorators/ActiveSessionDecorator';
-
 import Loader from 'components/semantic/Loader';
 import Message from 'components/semantic/Message';
 
@@ -11,6 +9,9 @@ import * as UI from 'types/ui';
 import classNames from 'classnames';
 import ListBrowser from './ListBrowser';
 import { SessionChildProps } from 'routes/Sidebar/components/types';
+import { useActiveSession } from 'decorators/ActiveSessionDecorator';
+import { FilelistAPIActions } from 'actions/store/FilelistActions';
+import { FilelistStoreSelector } from 'stores/filelistSlice';
 
 type FilelistSessionProps = SessionChildProps<
   API.FilelistSession,
@@ -18,8 +19,13 @@ type FilelistSessionProps = SessionChildProps<
   UI.EmptyObject
 >;
 
-const FilelistSession: React.FC<FilelistSessionProps> = (props) => {
-  const { session, sessionT, location: routerLocation } = props;
+const FilelistSession: React.FC<FilelistSessionProps> = ({
+  session,
+  sessionT,
+  location: routerLocation,
+}) => {
+  useActiveSession(session, FilelistAPIActions, FilelistStoreSelector);
+
   const { user, location: listLocation, state } = session;
 
   const isOwnList = user.flags.includes('self');
@@ -55,6 +61,4 @@ const FilelistSession: React.FC<FilelistSessionProps> = (props) => {
   );
 };
 
-export default ActiveSessionDecorator<FilelistSessionProps, API.FilelistSession>(
-  FilelistSession,
-);
+export default FilelistSession;

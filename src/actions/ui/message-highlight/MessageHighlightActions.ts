@@ -3,10 +3,9 @@ import IconConstants from 'constants/IconConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import SearchActions from 'actions/reflux/SearchActions';
-
 import { hasCopySupport } from 'utils/BrowserUtils';
 import { makeTextMagnetLink } from 'utils/MagnetUtils';
+import { searchStringForeground } from 'utils/SearchUtils';
 
 export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & {
   id: number;
@@ -18,10 +17,8 @@ const handleSearch: UI.ActionHandler<HighlightItemInfo> = ({
   location,
   navigate,
 }) => {
-  return SearchActions.search(
-    {
-      name: itemData.magnet ? itemData.magnet.searchString : itemData.text,
-    },
+  return searchStringForeground(
+    itemData.magnet ? itemData.magnet.searchString : itemData.text,
     location,
     navigate,
   );

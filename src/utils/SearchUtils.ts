@@ -1,7 +1,9 @@
 import { pushUnique } from './BrowserUtils';
 import { NavigateFunction, Location } from 'react-router';
 
-export const doSearch = (
+import * as UI from 'types/ui';
+
+export const searchStringForeground = (
   searchString: string,
   location: Location,
   navigate: NavigateFunction,
@@ -16,4 +18,14 @@ export const doSearch = (
     location,
     navigate,
   );
+};
+
+export const searchForeground = (
+  itemInfo: Pick<UI.DownloadableItemInfo, 'type' | 'name'> & { tth?: string },
+  location: Location,
+  navigate: NavigateFunction,
+) => {
+  const searchString =
+    !itemInfo.tth || itemInfo.type.id === 'directory' ? itemInfo.name : itemInfo.tth;
+  searchStringForeground(searchString, location, navigate);
 };

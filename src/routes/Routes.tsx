@@ -3,12 +3,6 @@ import * as React from 'react';
 import { default as lazy } from 'decorators/AsyncComponentDecorator';
 import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
 
-import HubSessionStore from 'stores/reflux/HubSessionStore';
-import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
-import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
-import ViewFileStore from 'stores/reflux/ViewFileStore';
-import EventStore from 'stores/reflux/EventStore';
-
 import LoginActions from 'actions/reflux/LoginActions';
 import IconConstants from 'constants/IconConstants';
 
@@ -18,8 +12,13 @@ import * as UI from 'types/ui';
 import { Trans } from 'react-i18next';
 import { textToI18nKey } from 'utils/TranslationUtils';
 import { Route, matchPath, Location } from 'react-router';
-import { AuthenticatedSession } from 'context/SessionContext';
 import { APISocket } from 'services/SocketService';
+
+import { PrivateChatStoreSelector } from 'stores/privateChatSessionSlice';
+import { HubStoreSelector } from 'stores/hubSessionSlice';
+import { EventStoreSelector } from 'stores/eventSlice';
+import { FilelistStoreSelector } from 'stores/filelistSlice';
+import { ViewFileStoreSelector } from 'stores/viewFileSlice';
 
 export type RouteItemClickHandler = (
   path: string,
@@ -31,7 +30,7 @@ export interface RouteItem {
   path: string;
   matchPath?: string;
   icon: string;
-  unreadInfoStore?: UI.UnreadInfoStore;
+  unreadInfoStoreSelector?: UI.UnreadInfoStoreSelector;
   access?: API.AccessEnum;
   component?: React.ComponentType;
   className?: string;
@@ -103,7 +102,7 @@ export const secondaryRoutes: RouteItem[] = [
     path: '/hubs',
     matchPath: '/hubs/:session?/:id?',
     icon: IconConstants.HUBS_COLORED,
-    unreadInfoStore: HubSessionStore,
+    unreadInfoStoreSelector: HubStoreSelector,
     access: API.AccessEnum.HUBS_VIEW,
     component: lazy(
       () => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs'),
@@ -114,7 +113,7 @@ export const secondaryRoutes: RouteItem[] = [
     path: '/messages',
     matchPath: '/messages/:session?/:id?',
     icon: IconConstants.MESSAGES_COLORED,
-    unreadInfoStore: PrivateChatSessionStore,
+    unreadInfoStoreSelector: PrivateChatStoreSelector,
     access: API.AccessEnum.PRIVATE_CHAT_VIEW,
     component: lazy(
       () => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages'),
@@ -125,7 +124,7 @@ export const secondaryRoutes: RouteItem[] = [
     path: '/filelists',
     matchPath: '/filelists/:session?/:id?',
     icon: IconConstants.FILELISTS_COLORED,
-    unreadInfoStore: FilelistSessionStore,
+    unreadInfoStoreSelector: FilelistStoreSelector,
     access: API.AccessEnum.FILELISTS_VIEW,
     component: lazy(
       () => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists'),
@@ -136,7 +135,7 @@ export const secondaryRoutes: RouteItem[] = [
     path: '/files',
     matchPath: '/files/:session?/:id?',
     icon: IconConstants.FILES_COLORED,
-    unreadInfoStore: ViewFileStore,
+    unreadInfoStoreSelector: ViewFileStoreSelector,
     access: API.AccessEnum.VIEW_FILE_VIEW,
     component: lazy(
       () => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files'),
@@ -146,7 +145,7 @@ export const secondaryRoutes: RouteItem[] = [
     title: 'Events',
     path: '/events',
     icon: IconConstants.EVENTS_COLORED,
-    unreadInfoStore: EventStore,
+    unreadInfoStoreSelector: EventStoreSelector,
     access: API.AccessEnum.EVENTS_VIEW,
     component: lazy(
       () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events'),
@@ -182,7 +181,7 @@ export const parseMenuItem = (
   onClick: RouteItemClickHandler | undefined = undefined,
   showIcon: boolean | undefined = true,
 ) => {
-  const { title, icon, unreadInfoStore, path, className } = route;
+  const { title, icon, unreadInfoStoreSelector, path, className } = route;
   return (
     <RouterMenuItemLink
       key={path}
@@ -190,14 +189,14 @@ export const parseMenuItem = (
       className={className}
       icon={showIcon ? icon + ' navigation' : null}
       onClick={menuItemClickHandler(onClick, route)}
-      unreadInfoStore={unreadInfoStore}
+      unreadInfoStoreSelector={unreadInfoStoreSelector}
     >
       <Trans i18nKey={textToI18nKey(title, UI.SubNamespaces.NAVIGATION)}>{title}</Trans>
     </RouterMenuItemLink>
   );
 };
 
-const filterItem = (item: RouteItem, { hasAccess }: AuthenticatedSession) =>
+const filterItem = (item: RouteItem, { hasAccess }: UI.AuthenticatedSession) =>
   !item.access || hasAccess(item.access);
 
 export const parseRoutes = (routes: RouteItem[]) => {
@@ -216,7 +215,7 @@ export const parseRoutes = (routes: RouteItem[]) => {
 
 export const parseMenuItems = (
   routes: RouteItem[],
-  session: AuthenticatedSession,
+  session: UI.AuthenticatedSession,
   onClick?: RouteItemClickHandler | undefined,
   showIcon?: boolean | undefined,
 ) => {

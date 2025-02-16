@@ -1,19 +1,24 @@
 import * as React from 'react';
 
 import * as API from 'types/api';
+import * as UI from 'types/ui';
 
-import HubActions from 'actions/reflux/HubActions';
-import HubSessionStore from 'stores/reflux/HubSessionStore';
-
-import { useNavigate, useLocation, NavigateFunction, Location } from 'react-router';
-import { AuthenticatedSession, useSession } from 'context/SessionContext';
+import { useNavigate } from 'react-router';
 import ExternalLink from 'components/ExternalLink';
+import { useAppStore } from 'context/StoreContext';
+import { HubAPIActions } from 'actions/store/HubActions';
+import { useSocket } from 'context/SocketContext';
+import { useSession } from 'context/SessionContext';
+
+import { CreateSessionProps } from 'actions/store/decorators/SessionCreatorDecorator';
+
+interface ClickHandlerProps extends CreateSessionProps {
+  session: UI.AuthenticatedSession;
+}
 
 const onClickLink = (
   evt: React.MouseEvent,
-  location: Location,
-  navigate: NavigateFunction,
-  { hasAccess }: AuthenticatedSession,
+  { session, navigate, store, socket }: ClickHandlerProps,
 ) => {
   const uri: string = (evt.target as any).href;
   if (
@@ -23,14 +28,18 @@ const onClickLink = (
   ) {
     evt.preventDefault();
 
-    if (!hasAccess(API.AccessEnum.HUBS_EDIT)) {
+    if (!session.hasAccess(API.AccessEnum.HUBS_EDIT)) {
       return;
     }
 
-    HubActions.createSession(uri, {
-      sessionStore: HubSessionStore,
-      location,
+    const data = {
+      hubUrl: uri,
+    };
+
+    HubAPIActions.createSession(data, {
+      store,
       navigate,
+      socket,
     });
   }
 };
@@ -42,11 +51,12 @@ export interface HighlightUrlLinkProps
 
 export const HighlightUrlLink: React.FC<HighlightUrlLinkProps> = ({ text, ...other }) => {
   const session = useSession();
-  const location = useLocation();
   const navigate = useNavigate();
+  const store = useAppStore();
+  const socket = useSocket();
   return (
     <ExternalLink
-      onClick={(evt) => onClickLink(evt, location, navigate, session)}
+      onClick={(evt) => onClickLink(evt, { navigate, session, store, socket })}
       url={text}
     >
       {text}

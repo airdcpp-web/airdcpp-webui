@@ -4,14 +4,14 @@ import IconConstants from 'constants/IconConstants';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import SearchActions from 'actions/reflux/SearchActions';
+import { searchForeground } from 'utils/SearchUtils';
 
 type Filter = UI.ActionFilter<API.QueueFile>;
 const itemNotFinished: Filter = ({ itemData: file }) => file.time_finished === 0;
 
 type Handler = UI.ActionHandler<API.QueueFile>;
 const handleSearch: Handler = ({ itemData: file, location, navigate }) => {
-  return SearchActions.search(file, location, navigate);
+  return searchForeground(file, location, navigate);
 };
 
 const handleRemoveFile: Handler = (

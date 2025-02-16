@@ -4,7 +4,6 @@ import { dupeToStringType } from 'utils/TypeConvert';
 import { TableActionMenu } from 'components/action-menu';
 
 import FilelistViewStore from 'stores/views/FilelistViewStore';
-import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
 
 import VirtualTable from 'components/table/VirtualTable';
 import {
@@ -27,6 +26,7 @@ import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
 import { filelistDownloadHandler } from 'services/api/FilelistApi';
 import MenuConstants from 'constants/MenuConstants';
 import { FilelistItemActionMenu } from 'actions/ui/filelist';
+import { useAppStore } from 'context/StoreContext';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   session: API.FilelistSession;
@@ -65,16 +65,21 @@ interface ListBrowserProps {
   sessionT: UI.ModuleTranslator;
 }
 
-class FilelistItemTable extends React.Component<ListBrowserProps> {
-  rowClassNameGetter = (rowData: API.FilelistItem) => {
+const FilelistItemTable: React.FC<ListBrowserProps> = ({
+  session,
+  sessionT,
+  onClickDirectory,
+  ...other
+}) => {
+  const rowClassNameGetter = (rowData: API.FilelistItem) => {
     // Don't highlight dupes in own filelist...
-    const isOwnList = this.props.session.user.flags.includes('self');
+    const isOwnList = session.user.flags.includes('self');
     return isOwnList ? '' : dupeToStringType(rowData.dupe);
   };
 
-  emptyRowsNodeGetter = () => {
-    const { location, state } = this.props.session;
-    const { translate } = this.props.sessionT;
+  const emptyRowsNodeGetter = () => {
+    const { location, state } = session;
+    const { translate } = sessionT;
 
     if (state.id === 'download_failed') {
       return (
@@ -105,58 +110,59 @@ class FilelistItemTable extends React.Component<ListBrowserProps> {
     );
   };
 
-  onClickDirectory: FileDownloadCellClickHandler = (cellData, rowDataGetter) => {
+  const handleClickDirectory: FileDownloadCellClickHandler = (
+    cellData,
+    rowDataGetter,
+  ) => {
     if (rowDataGetter().type.id === 'directory') {
-      return () =>
-        this.props.onClickDirectory(this.props.session.location!.path + cellData + '/');
+      return () => onClickDirectory(session.location!.path + cellData + '/');
     }
 
     return undefined;
   };
 
-  render() {
-    const { session } = this.props;
-    return (
-      <>
-        <VirtualTable
-          emptyRowsNodeGetter={this.emptyRowsNodeGetter}
-          rowClassNameGetter={this.rowClassNameGetter}
-          store={FilelistViewStore}
-          entityId={session.id}
-          viewId={session.location!.path}
-          sessionStore={FilelistSessionStore}
-          moduleId={UI.Modules.FILELISTS}
-          textFilterProps={{
-            autoFocus: true,
-          }}
-        >
-          <Column
-            name="Name"
-            width={200}
-            columnKey="name"
-            cell={<NameCell onClickDirectory={this.onClickDirectory} session={session} />}
-            flexGrow={8}
-          />
-          <Column
-            name="Size"
-            width={60}
-            columnKey="size"
-            cell={<SizeCell />}
-            flexGrow={1}
-          />
-          <Column name="Type" width={70} columnKey="type" flexGrow={1} hideWidth={500} />
-          <Column
-            name="Last modified"
-            width={80}
-            columnKey="time"
-            cell={<DurationCell />}
-            flexGrow={1}
-          />
-        </VirtualTable>
-        <FilelistItemInfoDialog session={session} />
-      </>
-    );
-  }
-}
+  // const { session } = this.props;
+  const store = useAppStore();
+  return (
+    <>
+      <VirtualTable
+        emptyRowsNodeGetter={emptyRowsNodeGetter}
+        rowClassNameGetter={rowClassNameGetter}
+        store={FilelistViewStore}
+        entityId={session.id}
+        viewId={session.location!.path}
+        sessionStore={store.filelists}
+        moduleId={UI.Modules.FILELISTS}
+        textFilterProps={{
+          autoFocus: true,
+        }}
+      >
+        <Column
+          name="Name"
+          width={200}
+          columnKey="name"
+          cell={<NameCell onClickDirectory={handleClickDirectory} session={session} />}
+          flexGrow={8}
+        />
+        <Column
+          name="Size"
+          width={60}
+          columnKey="size"
+          cell={<SizeCell />}
+          flexGrow={1}
+        />
+        <Column name="Type" width={70} columnKey="type" flexGrow={1} hideWidth={500} />
+        <Column
+          name="Last modified"
+          width={80}
+          columnKey="time"
+          cell={<DurationCell />}
+          flexGrow={1}
+        />
+      </VirtualTable>
+      <FilelistItemInfoDialog session={session} />
+    </>
+  );
+};
 
 export default FilelistItemTable;

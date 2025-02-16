@@ -1,8 +1,5 @@
 import RecentLayout from 'routes/Sidebar/components/RecentLayout';
 
-import PrivateChatActions from 'actions/reflux/PrivateChatActions';
-import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
-
 import { HistoryEntryEnum } from 'constants/HistoryConstants';
 
 import * as API from 'types/api';
@@ -11,18 +8,27 @@ import IconConstants from 'constants/IconConstants';
 import { UserSelectField } from 'components/select';
 import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
 import LinkButton from 'components/semantic/LinkButton';
-
-const hasSession = (entry: API.HistoryItem) => {
-  return PrivateChatSessionStore.getSession(entry.user!.cid);
-};
+import { useAppStore } from 'context/StoreContext';
+import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
+import { useSocket } from 'context/SocketContext';
+import { useTranslation } from 'react-i18next';
 
 const MessageNew: React.FC<NewSessionLayoutProps> = (props) => {
+  const store = useAppStore();
+  const socket = useSocket();
+  const { t } = useTranslation();
+
+  const hasSession = (entry: API.HistoryItem) => {
+    return !!store.privateChats.getSession(entry.user!.cid);
+  };
+
   const handleSubmit = (user: API.HintedUser) => {
-    const { location, navigate } = props;
-    PrivateChatActions.createSession(user, {
-      sessionStore: PrivateChatSessionStore,
-      location,
+    const { navigate } = props;
+    PrivateChatAPIActions.createSession(user, {
+      store,
       navigate,
+      t,
+      socket,
     });
   };
 

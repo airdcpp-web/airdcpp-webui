@@ -1,27 +1,18 @@
+import { FilelistAPIActions } from 'actions/store/FilelistActions';
 import IconConstants from 'constants/IconConstants';
-
-import FilelistSessionActions from 'actions/reflux/FilelistSessionActions';
-import FilelistSessionStore from 'stores/reflux/FilelistSessionStore';
 
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
 type Handler = UI.ActionHandler<API.GroupedSearchResult>;
-const handleBrowseContent: Handler = ({
-  itemData: groupedResult,
-  location,
-  navigate,
-}) => {
+
+const handleBrowseContent: Handler = ({ itemData: groupedResult, ...other }) => {
   const createData = {
     user: groupedResult.users.user,
     path: groupedResult.path,
   };
 
-  return FilelistSessionActions.createSession(createData, {
-    location,
-    sessionStore: FilelistSessionStore,
-    navigate,
-  });
+  return FilelistAPIActions.createRemoteSession(createData, other);
 };
 
 const handleResult: Handler = ({ itemData: groupedResult, navigate }) => {

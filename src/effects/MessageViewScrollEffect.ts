@@ -14,7 +14,7 @@ const isScrolledToBottom = (element: HTMLElement) => {
 const DEBUG = false;
 
 interface Props {
-  scrollPositionHandler: UI.ScrollPositionHandler;
+  scrollPositionHandler: UI.ScrollHandler;
   session?: UI.SessionItemBase;
   messages: UI.MessageListItem[] | null;
 }

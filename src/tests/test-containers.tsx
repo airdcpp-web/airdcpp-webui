@@ -1,58 +1,32 @@
 import { createMemoryRouter, RouteObject, RouterProvider } from 'react-router';
 import { SocketContext } from 'context/SocketContext';
-import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import { APISocket } from 'services/SocketService';
 import { render, screen } from '@testing-library/react';
 import { PropsWithChildren } from 'react';
-import { DEFAULT_AUTH_RESPONSE } from 'airdcpp-apisocket/tests/mock-server.js';
 
 import 'utils/semantic';
 
-import translations from '../../resources/locales/en/webui.main.json';
-import { i18nOptions } from 'services/LocalizationService';
 import { ErrorBoundary } from 'components/ErrorBoundary';
-import { AuthenticatedSession, SessionContext } from 'context/SessionContext';
+import { SessionContext } from 'context/SessionContext';
 
-import * as API from 'types/api';
+import * as UI from 'types/ui';
+
 import {
   MODAL_NODE_ID,
   MODAL_PAGE_DIMMER_ID,
 } from 'components/semantic/effects/useModal';
 import { createFormatter } from 'utils/Formatter';
 import { FormatterContext } from 'context/FormatterContext';
-
-const getMockI18n = () => {
-  i18n.use(initReactI18next).init({
-    lng: 'en',
-    debug: false,
-    resources: { en: translations },
-    ...i18nOptions,
-  });
-
-  return i18n;
-};
-
-const getMockSession = (): AuthenticatedSession => ({
-  systemInfo: {
-    ...DEFAULT_AUTH_RESPONSE.system,
-    api_version: 1,
-    api_feature_level: 9,
-    client_version: '2.13.2',
-    client_started: 252352355,
-  } as API.SystemInfo,
-  user: DEFAULT_AUTH_RESPONSE.user as API.LoginUser,
-  authToken: DEFAULT_AUTH_RESPONSE.auth_token,
-  sessionId: 4,
-
-  hasAccess: () => true,
-});
+import { getMockI18n } from './mocks/mock-i18n';
+import { getMockSession } from './mocks/mock-session';
 
 type TestWrapperProps = PropsWithChildren<{
   socket: APISocket;
   formatter: ReturnType<typeof createFormatter>;
   i18n: typeof i18n;
-  session: AuthenticatedSession;
+  session: UI.AuthenticatedSession;
 }>;
 
 export const TestWrapper: React.FC<TestWrapperProps> = ({

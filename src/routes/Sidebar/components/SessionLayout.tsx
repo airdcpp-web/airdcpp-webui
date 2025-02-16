@@ -17,7 +17,6 @@ import { useLayoutWidth } from 'context/LayoutWidthContext';
 import { useSessionManager } from './effects/useSessionManager';
 import { useLocation, useNavigate } from 'react-router';
 
-import '../sessions.css';
 import {
   NewSessionLayoutProps,
   SessionChildProps,
@@ -27,6 +26,8 @@ import {
 } from './types';
 import { useComponents } from './SessionMenuComponents';
 import { useSession } from 'context/SessionContext';
+
+import '../sessions.css';
 
 export interface SessionLayoutProps<
   SessionT extends UI.SessionItemBase,
@@ -125,7 +126,7 @@ const SessionLayout = <
     return getSessionChildren();
   };
 
-  const { disableSideMenu, items, unreadInfoStore, sessionT, uiActions } = props;
+  const { disableSideMenu, items, sessionStoreSelector, sessionT, uiActions } = props;
 
   const useTopMenu = disableSideMenu || usingMobileLayout(layoutWidth);
 
@@ -161,7 +162,7 @@ const SessionLayout = <
       sessionMenuItems={getSessionMenuItems()}
       listActionMenuGetter={getSessionActionMenuItems}
       activeItem={activeItem}
-      unreadInfoStore={unreadInfoStore}
+      sessionStoreSelector={sessionStoreSelector}
       onKeyDown={onKeyDown}
       actions={uiActions}
     >

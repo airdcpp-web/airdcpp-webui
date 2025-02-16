@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef } from 'react';
 import * as UI from 'types/ui';
 
 export const useRestoreScroll = (
-  scrollPositionHandler: UI.ScrollPositionHandler,
+  scrollPositionHandler: UI.ScrollHandler,
   session: UI.SessionItemBase,
 ) => {
   const scrollable = useRef<HTMLDivElement | null>(null);

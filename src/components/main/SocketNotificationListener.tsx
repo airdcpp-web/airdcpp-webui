@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
 
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+
 import PrivateChatConstants from 'constants/PrivateChatConstants';
 import ViewFileConstants from 'constants/ViewFileConstants';
 import { default as QueueConstants } from 'constants/QueueConstants';
@@ -10,8 +13,6 @@ import NotificationActions from 'actions/NotificationActions';
 import LocalSettingStore from 'stores/reflux/LocalSettingStore';
 import { LocalSettings } from 'constants/SettingConstants';
 
-import PrivateChatSessionStore from 'stores/reflux/PrivateChatSessionStore';
-
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
@@ -20,11 +21,10 @@ import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
 } from 'decorators/SocketSubscriptionDecorator';
-import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey } from 'utils/TranslationUtils';
 import HubConstants from 'constants/HubConstants';
-import HubSessionStore from 'stores/reflux/HubSessionStore';
-import { useNavigate } from 'react-router';
+
+import { useAppStore } from 'context/StoreContext';
 
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {
@@ -43,14 +43,14 @@ const getSeverityStr = (severity: Severity) => {
   }
 };
 
-const notifyHubMessage = (message: API.ChatMessage) => {
+const notifyHubMessage = (message: API.ChatMessage, store: UI.Store) => {
   if (message.has_mention && LocalSettingStore.getValue(LocalSettings.NOTIFY_MENTION)) {
     return true;
   }
 
   if (LocalSettingStore.getValue(LocalSettings.NOTIFY_HUB_MESSAGE)) {
     const sessionId = message.from.hub_session_id;
-    const session: API.Hub | null = HubSessionStore.getSession(sessionId);
+    const session = store.hubs.getSession(sessionId);
     if (session && session.settings.use_main_chat_notify) {
       return true;
     }
@@ -82,6 +82,7 @@ type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildP
 const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const store = useAppStore();
 
   const translateNotification = (
     text: string,
@@ -158,12 +159,12 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     const hubId = message.from.hub_session_id;
     if (
       message.is_read ||
-      (HubSessionStore.getActiveSessionId() === hubId && document.hasFocus())
+      (store.hubs.activeSessionId === hubId && document.hasFocus())
     ) {
       return;
     }
 
-    if (!notifyHubMessage(message)) {
+    if (!notifyHubMessage(message, store)) {
       return;
     }
 
@@ -184,7 +185,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     const cid = message.reply_to!.cid;
     if (
       message.is_read ||
-      (PrivateChatSessionStore.getActiveSessionId() === cid && document.hasFocus())
+      (store.privateChats.activeSessionId === cid && document.hasFocus())
     ) {
       return;
     }

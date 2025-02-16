@@ -4,7 +4,6 @@ import * as UI from 'types/ui';
 
 import { textToI18nKey, toArray, translate } from './TranslationUtils';
 import NotificationActions from 'actions/NotificationActions';
-import { AuthenticatedSession } from 'context/SessionContext';
 
 export const actionFilter = <
   ItemDataT extends UI.ActionDataValueType,
@@ -21,7 +20,7 @@ export const actionFilter = <
 
 export const actionAccess = <ItemDataT extends UI.ActionDataValueType>(
   action: Pick<UI.ActionDefinition<ItemDataT>, 'access'>,
-  { hasAccess }: AuthenticatedSession,
+  { hasAccess }: UI.AuthenticatedSession,
 ) => {
   return !action.access || hasAccess(action.access);
 };
@@ -32,7 +31,7 @@ export const showAction = <
 >(
   action: UI.ActionDefinition<ItemDataT, EntityT>,
   itemData: ItemDataT | undefined,
-  login: AuthenticatedSession,
+  login: UI.AuthenticatedSession,
 ) => {
   return actionFilter(action, itemData) && actionAccess(action, login);
 };

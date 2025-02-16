@@ -16,6 +16,7 @@ import NotificationActions from 'actions/NotificationActions';
 import { ActionData, ActionDialog, suffixActionI18nKey } from './components/ActionDialog';
 import { APISocket } from 'services/SocketService';
 import { useSocket } from 'context/SocketContext';
+import { useAppStore } from 'context/StoreContext';
 
 interface ActionHandlerDecoratorProps<
   ItemDataT extends UI.ActionDataValueType,
@@ -45,14 +46,10 @@ const isSidebarAction = (actionId: string) =>
 interface HandleAction<
   ItemDataT extends UI.ActionDataValueType,
   EntityT extends UI.ActionEntityValueType,
-> {
+> extends UI.ActionHandlerProps {
   actionData: ActionData<ItemDataT, EntityT>;
   confirmData: boolean | string | undefined;
-  location: Location;
-  navigate: NavigateFunction;
-  t: UI.TranslateF;
   closeModal: ModalCloseContext | undefined;
-  socket: APISocket;
 }
 
 const handleAction = async <
@@ -143,6 +140,16 @@ const ActionHandlerDecorator = <
   const closeModal = useContext(ModalRouteCloseContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const store = useAppStore();
+
+  const commonActionHandlerData = {
+    location,
+    navigate,
+    t,
+    closeModal,
+    socket,
+    store,
+  };
 
   const closeConfirmation = () => {
     setTimeout(() => setConfirmActionData(null));
@@ -156,11 +163,7 @@ const ActionHandlerDecorator = <
     await handleAction({
       actionData: confirmActionData,
       confirmData,
-      location,
-      navigate,
-      t,
-      closeModal,
-      socket,
+      ...commonActionHandlerData,
     });
     closeConfirmation();
   };
@@ -174,11 +177,7 @@ const ActionHandlerDecorator = <
       handleAction({
         actionData,
         confirmData: undefined,
-        location,
-        navigate,
-        t,
-        closeModal,
-        socket,
+        ...commonActionHandlerData,
       });
     }
   };
