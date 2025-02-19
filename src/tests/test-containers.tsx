@@ -21,12 +21,16 @@ import { createFormatter } from 'utils/Formatter';
 import { FormatterContext } from 'context/FormatterContext';
 import { getMockI18n } from './mocks/mock-i18n';
 import { getMockSession } from './mocks/mock-session';
+import { StoreContext } from 'context/StoreContext';
+import { StoreApi } from 'zustand';
+import { createAppStore } from 'stores';
 
 type TestWrapperProps = PropsWithChildren<{
   socket: APISocket;
   formatter: ReturnType<typeof createFormatter>;
   i18n: typeof i18n;
   session: UI.AuthenticatedSession;
+  store: StoreApi<UI.Store>;
 }>;
 
 export const TestWrapper: React.FC<TestWrapperProps> = ({
@@ -35,6 +39,7 @@ export const TestWrapper: React.FC<TestWrapperProps> = ({
   i18n,
   formatter,
   session,
+  store,
 }) => {
   return (
     <ErrorBoundary>
@@ -42,14 +47,16 @@ export const TestWrapper: React.FC<TestWrapperProps> = ({
         <SocketContext.Provider value={socket}>
           <I18nextProvider i18n={i18n}>
             <SessionContext.Provider value={session}>
-              <section
-                className="ui dimmable blurring minimal"
-                id="container-main"
-                style={{ height: '100%', width: '100%' }}
-              >
-                {children}
-              </section>
-              <div id={MODAL_NODE_ID} className={`ui dimmer ${MODAL_NODE_ID}`} />
+              <StoreContext.Provider value={store}>
+                <section
+                  className="ui dimmable blurring minimal"
+                  id="container-main"
+                  style={{ height: '100%', width: '100%' }}
+                >
+                  {children}
+                </section>
+                <div id={MODAL_NODE_ID} className={`ui dimmer ${MODAL_NODE_ID}`} />
+              </StoreContext.Provider>
             </SessionContext.Provider>
           </I18nextProvider>
         </SocketContext.Provider>
@@ -59,18 +66,28 @@ export const TestWrapper: React.FC<TestWrapperProps> = ({
 };
 
 export const renderNode = (node: React.ReactNode, socket: APISocket) => {
+  const windowSize = 2000;
+
+  Object.assign(window, {
+    innerWidth: windowSize,
+    innerHeight: windowSize,
+    outerWidth: windowSize,
+    outerHeight: windowSize,
+  }).dispatchEvent(new Event('resize'));
+
   const container = document.createElement('div');
   container.setAttribute('id', MODAL_PAGE_DIMMER_ID);
 
-  container.setAttribute('width', '2000px');
-  container.setAttribute('height', '2000px');
+  container.setAttribute('width', '100%');
+  container.setAttribute('height', '100%');
 
-  document.body.setAttribute('height', '2000px');
-  document.body.setAttribute('width', '2000px');
+  document.body.setAttribute('height', '100%');
+  document.body.setAttribute('width', '100%');
 
   const i18n = getMockI18n();
   const formatter = createFormatter(i18n);
   const session = getMockSession();
+  const appStore = createAppStore();
 
   const testHelpers = render(node, {
     container: document.body.appendChild(container),
@@ -80,6 +97,7 @@ export const renderNode = (node: React.ReactNode, socket: APISocket) => {
         i18n={i18n}
         formatter={formatter}
         session={session}
+        store={appStore}
         {...props}
       />
     ),

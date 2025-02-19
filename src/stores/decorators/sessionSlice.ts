@@ -6,27 +6,21 @@ import * as UI from 'types/ui';
 import { getItemUrgencies, getSessionUrgencies } from 'utils/UrgencyUtils';
 import { checkUnreadSessionInfo } from 'utils/MessageUtils';
 import { APISocket } from 'services/SocketService';
-import { AddSessionSliceListener } from './sliceSocketListener';
+import { Lens } from '@dhmk/zustand-lens';
 
 export type SessionUrgencyCountMapper<SessionT extends UI.SessionType> = (
   session: SessionT,
 ) => UI.ChatMessageUrcencies | UI.StatusMessageUrcencies;
-
-type SetRead = (id: UI.SessionItemBase, socket: APISocket) => void;
+interface Readable {
+  setRead?: UI.SessionReadHandler;
+}
 
 export const createSessionSlice = <SessionT extends UI.SessionType>(
-  { socket }: UI.StoreInitData,
-  setRead: SetRead,
-  addSocketListener: AddSessionSliceListener,
   messageUrgencyMappings: SessionUrgencyCountMapper<SessionT> | undefined = undefined,
 ) => {
-  type State = UI.SessionSlice<SessionT>;
+  type State = UI.SessionSlice<SessionT> & Readable;
 
-  const createSlice: UI.LensSlice<UI.SessionSlice<SessionT>, State, UI.Store> = (
-    set,
-    get,
-    api,
-  ) => {
+  const createSlice: Lens<State & Readable, UI.Store> = (set, get, api) => {
     const isUnreadUpdate = (updatedProperties: Partial<SessionT>) => {
       return updatedProperties.message_counts || updatedProperties.hasOwnProperty('read');
     };
@@ -41,9 +35,12 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
         api.getState().activity.userActive &&
         isUnreadUpdate(updatedProperties)
       ) {
-        const ret = checkUnreadSessionInfo(updatedProperties as UI.UnreadInfo, () =>
-          setRead({ id }, socket),
-        );
+        const ret = checkUnreadSessionInfo(updatedProperties as UI.UnreadInfo, () => {
+          const readCallback = get().setRead;
+          if (readCallback) {
+            readCallback({ id });
+          }
+        });
 
         return ret as Partial<SessionT>;
       }
@@ -54,6 +51,7 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
     const slice = {
       sessions: [],
       activeSessionId: null,
+      setRead: undefined,
 
       init: (data: SessionT[]) =>
         set(() => ({
@@ -156,13 +154,35 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
 
         return sessions.find((session) => session.id === id);
       },
+
+      setReadHandler: (handler: UI.SessionReadHandler) => {
+        set(() => ({
+          setRead: handler,
+        }));
+      },
     };
 
-    addSocketListener(`created`, slice.createSession);
-    addSocketListener(`updated`, slice.updateSession);
-    addSocketListener(`removed`, slice.removeSession);
     return slice;
   };
 
   return createSlice;
+};
+
+type SetReadAction = (id: UI.SessionItemBase, socket: APISocket) => void;
+
+interface SessionActions<SessionT extends UI.SessionType> {
+  setRead: SetReadAction;
+  fetchSessions: (sessionSlice: UI.SessionSlice<SessionT>) => Promise<void>;
+}
+
+export const initSessionSlice = <SessionT extends UI.SessionType>(
+  sessionSlice: UI.SessionSlice<SessionT>,
+  sessionActions: SessionActions<SessionT>,
+  { addSocketListener, socket }: UI.SessionInitData,
+) => {
+  addSocketListener(`created`, sessionSlice.createSession);
+  addSocketListener(`updated`, sessionSlice.updateSession);
+  addSocketListener(`removed`, sessionSlice.removeSession);
+
+  sessionSlice.setReadHandler((session) => sessionActions.setRead(session, socket));
 };

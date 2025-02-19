@@ -23,7 +23,7 @@ const toCacheMessage = (message: API.StatusMessage): UI.MessageListItem => {
   };
 };
 
-const createEventSlice = ({ socket, login }: UI.StoreInitData) => {
+const createEventSlice = () => {
   const createSlice: Lens<UI.EventSlice, UI.Store> = (set, get, api) => {
     const checkReadState = (cacheInfoNew: API.StatusMessageCounts) => {
       if (get().viewActive && api.getState().activity.userActive) {
@@ -90,22 +90,24 @@ const createEventSlice = ({ socket, login }: UI.StoreInitData) => {
       },
     };
 
-    if (login.hasAccess(API.AccessEnum.EVENTS_VIEW)) {
-      const url = EventConstants.MODULE_URL;
-      socket.addListener(url, EventConstants.MESSAGE, slice.onLogMessage);
-      socket.addListener(url, EventConstants.COUNTS, slice.onMessageCountsReceived);
-    }
-
     return slice;
   };
 
   return createSlice;
 };
 
+export const initEventStore = (store: UI.Store, { socket, login }: UI.StoreInitData) => {
+  if (login.hasAccess(API.AccessEnum.EVENTS_VIEW)) {
+    const url = EventConstants.MODULE_URL;
+    socket.addListener(url, EventConstants.MESSAGE, store.events.onLogMessage);
+    socket.addListener(url, EventConstants.COUNTS, store.events.onMessageCountsReceived);
+  }
+};
+
 export const EventStoreSelector = (state: UI.Store) => state.events;
 
-export const createEventStore = (init: UI.StoreInitData) => {
+export const createEventStore = () => {
   return lens<UI.EventSlice, UI.Store>((...a) => ({
-    ...createEventSlice(init)(...a),
+    ...createEventSlice()(...a),
   }));
 };

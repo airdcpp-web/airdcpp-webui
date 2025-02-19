@@ -12,7 +12,7 @@ import {
   getMockServer,
 } from 'airdcpp-apisocket/tests/mock-server.js';
 
-import { createMockAppStore } from 'tests/mocks/mock-store';
+import { addMockStoreSocketListeners } from 'tests/mocks/mock-store';
 import {
   PrivateChat1,
   PrivateChat1MessageMe,
@@ -20,6 +20,7 @@ import {
   PrivateChat1MessagesResponse,
   PrivateChat1MessageStatus,
 } from 'tests/mocks/api/private-chat';
+import { createAppStore } from 'stores';
 
 const SESSION_ID = PrivateChat1.id;
 const SESSION_BASE = {
@@ -62,6 +63,13 @@ describe('message store', () => {
     server.stop();
   });
 
+  const createMockAppStore = (initProps: UI.StoreInitData) => {
+    const appStore = createAppStore();
+    const mocks = addMockStoreSocketListeners(appStore, initProps, server);
+
+    return { appStore, mocks };
+  };
+
   const initStore = async () => {
     const { socket } = await getConnectedSocket(server);
     const initProps = {
@@ -69,14 +77,13 @@ describe('message store', () => {
       socket,
     };
 
-    const appStore = createMockAppStore(initProps, server);
-
-    appStore.mocks.privateChat.created.fire(PrivateChat1);
-    return appStore;
+    const { appStore, mocks } = createMockAppStore(initProps);
+    mocks.privateChat.created.fire(PrivateChat1);
+    return { appStore, mocks };
   };
 
   const addMessages = (
-    privateChat: ReturnType<typeof createMockAppStore>['mocks']['privateChat'],
+    privateChat: ReturnType<typeof addMockStoreSocketListeners>['privateChat'],
   ) => {
     privateChat.statusMessage.fire(PrivateChat1MessageStatus, SESSION_ID);
     privateChat.chatMessage.fire(PrivateChat1MessageMe, SESSION_ID);

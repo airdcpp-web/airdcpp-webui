@@ -6,11 +6,25 @@ import { MessageListItem } from './messages';
 import { Getter, LensContext, ResolveStoreApi, Setter } from '@dhmk/zustand-lens';
 import { APISocket } from 'services/SocketService';
 import { AuthenticatedSession } from './auth';
+import { SubscriptionCallback } from 'airdcpp-apisocket';
 
 export interface UnreadInfoStore {
   getTotalUrgencies: () => UrgencyCountMap | null;
   isInitialized: () => boolean;
 }
+
+export type AddSliceListener = (
+  listenerName: string,
+  callback: SubscriptionCallback,
+) => Promise<void>;
+
+export interface SessionInitData extends StoreInitData {
+  addSocketListener: AddSliceListener;
+}
+
+export type AddSessionSliceListener = (data: SessionInitData) => void;
+
+export type SessionReadHandler = (session: SessionItemBase) => void;
 
 export interface SessionSlice<SessionT extends SessionType> extends UnreadInfoStore {
   readonly sessions: Array<SessionT> | null;
@@ -24,11 +38,17 @@ export interface SessionSlice<SessionT extends SessionType> extends UnreadInfoSt
   createSession: (session: SessionT) => void;
   updateSession: (session: Partial<SessionT>, id: API.IdType) => void;
   removeSession: (session: SessionT) => void;
+
+  setReadHandler: (handler: SessionReadHandler) => void;
 }
 
 export interface ScrollHandler {
   getScrollData: (id?: API.IdType) => number | undefined;
   setScrollData: (data: number | undefined, id?: API.IdType) => void;
+}
+
+export interface SessionScrollHandler extends ScrollHandler {
+  onSessionRemoved: (data: SessionItemBase) => void;
 }
 
 export interface MessageSlice {
@@ -43,7 +63,7 @@ export interface MessageSlice {
   removeSession: (session: SessionItemBase) => void;
 
   isSessionInitialized: (sessionId: API.IdType) => boolean;
-  scroll: ScrollHandler;
+  scroll: SessionScrollHandler;
 }
 
 export interface HubSessionSlice {
@@ -65,7 +85,7 @@ export type MessageSessionSlice<SessionT extends SessionType> = SessionSlice<Ses
 
 export type ScrollableSessionSlice<SessionT extends SessionType> =
   SessionSlice<SessionT> & {
-    scroll: ScrollHandler;
+    scroll: SessionScrollHandler;
   };
 
 export type HubStore = HubSessionSlice & MessageSessionSlice<API.Hub>;

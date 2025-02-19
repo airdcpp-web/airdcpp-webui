@@ -5,8 +5,8 @@ import {
   HubMessageNotifyUrgencies,
   HubMessageUrgencies,
 } from 'constants/UrgencyConstants';
-import { createSessionSlice } from './decorators/sessionSlice';
-import { createMessageSlice } from './decorators/messageSlice';
+import { createSessionSlice, initSessionSlice } from './decorators/sessionSlice';
+import { createMessageSlice, initMessageSlice } from './decorators/messageSlice';
 import { lens } from '@dhmk/zustand-lens';
 import { HubAPIActions } from 'actions/store/HubActions';
 import HubConstants from 'constants/HubConstants';
@@ -42,7 +42,22 @@ export const createHubSlice: UI.LensSlice<UI.HubSessionSlice, UI.HubStore, UI.St
   },
 });
 
-const createHubStore = (init: UI.StoreInitData) => {
+const createHubStore = () => {
+  return lens<UI.HubStore, UI.Store>((...a) => {
+    const sessionSlice = createSessionSlice<API.Hub>(HubSessionUrgencyGetter)(...a);
+
+    const messageSlice = createMessageSlice();
+
+    return {
+      ...createHubSlice(...a),
+      ...sessionSlice,
+      messages: messageSlice,
+    };
+  });
+};
+
+export const initHubStore = (store: UI.Store, init: UI.StoreInitData) => {
+  // Init listeners
   const addSocketListener = createSessionSliceSocketListener(
     init,
     HubConstants.MODULE_URL,
@@ -50,16 +65,8 @@ const createHubStore = (init: UI.StoreInitData) => {
     API.AccessEnum.HUBS_VIEW,
   );
 
-  return lens<UI.HubStore, UI.Store>((...a) => ({
-    ...createHubSlice(...a),
-    ...createSessionSlice<API.Hub>(
-      init,
-      HubAPIActions.setRead,
-      addSocketListener,
-      HubSessionUrgencyGetter,
-    )(...a),
-    messages: createMessageSlice(addSocketListener),
-  }));
+  initSessionSlice(store.hubs, HubAPIActions, addSocketListener);
+  initMessageSlice(store.hubs.messages, addSocketListener);
 };
 
 export const HubStoreSelector: UI.MessageStoreSelector<API.Hub> = (state) => state.hubs;

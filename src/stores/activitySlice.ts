@@ -4,7 +4,7 @@ import SystemConstants from 'constants/SystemConstants';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-export const createActivitySlice = ({ socket }: UI.StoreInitData) => {
+export const createActivitySlice = () => {
   const createSlice: Lens<UI.ActivitySlice, UI.Store> = (set, get, api) => {
     const slice = {
       away: API.AwayEnum.OFF,
@@ -19,16 +19,19 @@ export const createActivitySlice = ({ socket }: UI.StoreInitData) => {
       },
     };
 
-    const url = SystemConstants.MODULE_URL;
-    socket.addListener(url, SystemConstants.AWAY_STATE, slice.setAway);
     return slice;
   };
 
   return createSlice;
 };
 
-export const createActivityStore = (init: UI.StoreInitData) => {
+export const initActivityStore = (store: UI.Store, { socket }: UI.StoreInitData) => {
+  const url = SystemConstants.MODULE_URL;
+  socket.addListener(url, SystemConstants.AWAY_STATE, store.activity.setAway);
+};
+
+export const createActivityStore = () => {
   return lens<UI.ActivitySlice, UI.Store>((...a) => ({
-    ...createActivitySlice(init)(...a),
+    ...createActivitySlice()(...a),
   }));
 };

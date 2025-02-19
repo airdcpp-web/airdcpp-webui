@@ -1,19 +1,13 @@
 import { useMemo, createContext, useContext, useEffect } from 'react';
-import { createActivityStore } from 'stores/activitySlice';
 
-import { createStore, StoreApi, useStore } from 'zustand';
-import { withLenses } from '@dhmk/zustand-lens';
+import { StoreApi, useStore } from 'zustand';
 
 import * as UI from 'types/ui';
 
-import { createEventStore } from 'stores/eventSlice';
 import { APISocket } from 'services/SocketService';
-import createFilelistStore from 'stores/filelistSlice';
-import createViewFileStore from 'stores/viewFileSlice';
-import createPrivateChatStore from 'stores/privateChatSessionSlice';
-import createHubStore from 'stores/hubSessionSlice';
+import { createAppStore, initAppStore } from 'stores';
 
-const StoreContext = createContext<StoreApi<UI.Store>>(null as unknown as any);
+export const StoreContext = createContext<StoreApi<UI.Store>>(null as unknown as any);
 
 export interface StoreInitProps {
   socket: APISocket;
@@ -22,39 +16,24 @@ export interface StoreInitProps {
 
 type StoreContextProviderProps = React.PropsWithChildren<StoreInitProps>;
 
-export const createAppStore = (initData: StoreInitProps) => {
-  /*const initData = {
-    socket,
-    login,
-  };*/
-
-  return createStore<UI.Store>(
-    withLenses(() => ({
-      // Sessions
-      hubs: createHubStore(initData),
-      privateChats: createPrivateChatStore(initData),
-      viewFiles: createViewFileStore(initData),
-      filelists: createFilelistStore(initData),
-
-      // Other
-      events: createEventStore(initData),
-      activity: createActivityStore(initData),
-    })),
-  );
-};
-
 export const StoreProvider: React.FC<StoreContextProviderProps> = ({
   socket,
   login,
   children,
 }) => {
   const store = useMemo(() => {
-    return createAppStore({
+    const store = createAppStore();
+
+    const initData = {
       socket,
       login,
-    });
+    };
+
+    initAppStore(store.getState(), initData);
+    return store;
   }, []);
 
+  // Clear state when the connection is lost
   useEffect(() => {
     const initialState = store.getInitialState();
     return () => {

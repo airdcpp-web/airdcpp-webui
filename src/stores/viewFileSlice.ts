@@ -1,14 +1,30 @@
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-import { createSessionSlice } from './decorators/sessionSlice';
+import { createSessionSlice, initSessionSlice } from './decorators/sessionSlice';
 import { lens } from '@dhmk/zustand-lens';
 import { ViewFileAPIActions } from 'actions/store/ViewFileActions';
-import { createSessionScrollSlice } from './decorators/scrollSlice';
+import {
+  createSessionScrollSlice,
+  initSessionScrollSlice,
+} from './decorators/scrollSlice';
 import ViewFileConstants from 'constants/ViewFileConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
-const createViewFileStore = (init: UI.StoreInitData) => {
+const createViewFileStore = () => {
+  return lens<UI.ViewFileStore, UI.Store>((...a) => {
+    const sessionSlice = createSessionSlice<API.ViewFile>()(...a);
+
+    const scrollSlice = createSessionScrollSlice();
+    return {
+      ...sessionSlice,
+      scroll: scrollSlice,
+    };
+  });
+};
+
+export const initViewFileStore = (store: UI.Store, init: UI.StoreInitData) => {
+  // Init listeners
   const addSocketListener = createSessionSliceSocketListener(
     init,
     ViewFileConstants.MODULE_URL,
@@ -16,14 +32,8 @@ const createViewFileStore = (init: UI.StoreInitData) => {
     API.AccessEnum.VIEW_FILE_VIEW,
   );
 
-  return lens<UI.ViewFileStore, UI.Store>((...a) => ({
-    ...createSessionSlice<API.ViewFile>(
-      init,
-      ViewFileAPIActions.setRead,
-      addSocketListener,
-    )(...a),
-    scroll: createSessionScrollSlice(addSocketListener),
-  }));
+  initSessionSlice(store.viewFiles, ViewFileAPIActions, addSocketListener);
+  initSessionScrollSlice(store.viewFiles.scroll, addSocketListener);
 };
 
 export const ViewFileStoreSelector: UI.SessionStoreSelector<API.ViewFile> = (state) =>

@@ -1,13 +1,10 @@
 import { lens } from '@dhmk/zustand-lens';
 import * as API from 'types/api';
 import * as UI from 'types/ui';
-import { AddSessionSliceListener } from './sliceSocketListener';
 import { produce } from 'immer';
 
-export const createSessionScrollSlice = (
-  addSessionSliceListener: AddSessionSliceListener,
-) => {
-  interface SessionScrollSlice extends UI.ScrollHandler {
+export const createSessionScrollSlice = () => {
+  interface SessionScrollSlice extends UI.SessionScrollHandler {
     positions: Record<string, number | undefined>;
   }
 
@@ -39,11 +36,17 @@ export const createSessionScrollSlice = (
       },
     };
 
-    addSessionSliceListener('removed', slice.onSessionRemoved);
     return slice;
   });
 
   return createSlice;
+};
+
+export const initSessionScrollSlice = (
+  scrollSlice: UI.SessionScrollHandler,
+  { addSocketListener }: UI.SessionInitData,
+) => {
+  addSocketListener('removed', scrollSlice.onSessionRemoved);
 };
 
 export const createBasicScrollSlice = () => {

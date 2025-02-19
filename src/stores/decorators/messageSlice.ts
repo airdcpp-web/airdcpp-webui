@@ -5,10 +5,9 @@ import * as UI from 'types/ui';
 
 import { checkSplice, mergeCacheMessages, pushMessage } from 'utils/MessageUtils';
 import { lens } from '@dhmk/zustand-lens';
-import { createSessionScrollSlice } from './scrollSlice';
-import { AddSessionSliceListener } from './sliceSocketListener';
+import { createSessionScrollSlice, initSessionScrollSlice } from './scrollSlice';
 
-export const createMessageSlice = (addSocketListener: AddSessionSliceListener) => {
+export const createMessageSlice = () => {
   type State = UI.MessageSlice;
 
   const createSlice = lens<State, UI.Store>((set, get) => {
@@ -42,7 +41,7 @@ export const createMessageSlice = (addSocketListener: AddSessionSliceListener) =
       // Keep track of session IDs for which message fetching has been initialized
       initializedSession: new Set<API.IdType>(),
 
-      scroll: createSessionScrollSlice(addSocketListener),
+      scroll: createSessionScrollSlice(),
 
       onFetchMessages: (session: UI.SessionItemBase) =>
         set(
@@ -112,14 +111,22 @@ export const createMessageSlice = (addSocketListener: AddSessionSliceListener) =
         get().initializedSession.has(sessionId),
     };
 
-    addSocketListener('message', slice.addChatMessage);
-    addSocketListener('status', slice.addStatusMessage);
-
-    addSocketListener('removed', slice.removeSession);
-    addSocketListener('updated', slice.updateSession);
-
     return slice;
   });
 
   return createSlice;
+};
+
+export const initMessageSlice = (
+  messageSlice: UI.MessageSlice,
+  initData: UI.SessionInitData,
+) => {
+  initSessionScrollSlice(messageSlice.scroll, initData);
+
+  const { addSocketListener } = initData;
+  addSocketListener('message', messageSlice.addChatMessage);
+  addSocketListener('status', messageSlice.addStatusMessage);
+
+  addSocketListener('removed', messageSlice.removeSession);
+  addSocketListener('updated', messageSlice.updateSession);
 };
