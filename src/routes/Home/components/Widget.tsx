@@ -32,6 +32,7 @@ export type WidgetProps = React.PropsWithChildren<{
   settings: UI.WidgetSettings;
   componentId: string;
   rootWidgetT: UI.ModuleTranslator;
+  style?: React.CSSProperties;
 }>;
 
 const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
@@ -80,7 +81,7 @@ const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
         ) : (
           <Component
             componentId={componentId}
-            settings={settings.widget}
+            settings={settings.widget || {}}
             widgetT={widgetT}
             rootWidgetT={rootWidgetT}
           />

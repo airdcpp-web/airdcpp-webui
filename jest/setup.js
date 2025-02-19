@@ -12,3 +12,6 @@ import { TextEncoder, TextDecoder } from 'util';
 
 global.TextEncoder = global.TextEncoder || TextEncoder;
 global.TextDecoder = global.TextDecoder || TextDecoder;
+
+import { ResizeObserver } from '@juggle/resize-observer';
+global.ResizeObserver = ResizeObserver;

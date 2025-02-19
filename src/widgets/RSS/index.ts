@@ -1,7 +1,7 @@
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-export const RSS = {
+export const RSSWidgetInfo = {
   typeId: 'rss',
   component: require('./components/RSS').default,
   name: 'RSS feed',

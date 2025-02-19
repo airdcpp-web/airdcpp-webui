@@ -11,10 +11,10 @@ import {
 } from 'utils/BrowserUtils';
 
 import { Application } from 'widgets/Application';
-import { Extensions } from 'widgets/Extensions';
-import { Notepad } from 'widgets/Notepad';
-import { RSS } from 'widgets/RSS';
-import { Transfers } from 'widgets/Transfers';
+import { ExtensionWidgetInfo } from 'widgets/Extensions';
+import { NotepadWidgetInfo } from 'widgets/Notepad';
+import { RSSWidgetInfo } from 'widgets/RSS';
+import { TransferWidgetInfo } from 'widgets/Transfers';
 
 import * as UI from 'types/ui';
 import { Layouts, Layout } from 'react-grid-layout';
@@ -34,7 +34,13 @@ const breakpoints: { [P in string]: number } = {
   xxs: 0,
 };
 
-const widgets = [Application, RSS, Notepad, Transfers, Extensions];
+const widgets = [
+  Application,
+  RSSWidgetInfo,
+  NotepadWidgetInfo,
+  TransferWidgetInfo,
+  ExtensionWidgetInfo,
+];
 
 const LAYOUT_STORAGE_KEY = 'home_layout';
 const LAYOUT_VERSION = 4;
@@ -130,8 +136,8 @@ const Store = {
       } else if (layoutInfo.version === 3) {
         this.layouts = createDefaultWidget(
           layoutInfo.items,
-          Extensions,
-          Application.size.w + RSS.size.w,
+          ExtensionWidgetInfo,
+          Application.size.w + RSSWidgetInfo.size.w,
           0,
         );
       }
@@ -149,7 +155,7 @@ const Store = {
     this.layouts = createDefaultWidget(this.layouts, Application, 0, 0);
     this.layouts = createDefaultWidget(
       this.layouts,
-      RSS,
+      RSSWidgetInfo,
       Application.size.w,
       0,
       'News',
@@ -161,17 +167,17 @@ const Store = {
 
     this.layouts = createDefaultWidget(
       this.layouts,
-      Extensions,
-      Application.size.w + RSS.size.w,
+      ExtensionWidgetInfo,
+      Application.size.w + RSSWidgetInfo.size.w,
       0,
     );
     this.layouts = createDefaultWidget(
       this.layouts,
-      Transfers,
-      Application.size.w + RSS.size.w + Extensions.size.w,
+      TransferWidgetInfo,
+      Application.size.w + RSSWidgetInfo.size.w + ExtensionWidgetInfo.size.w,
       0,
     );
-    this.layouts = createDefaultWidget(this.layouts, Notepad, 0, 5);
+    this.layouts = createDefaultWidget(this.layouts, NotepadWidgetInfo, 0, 5);
   },
 
   getInitialState: function () {

@@ -1,7 +1,7 @@
 import * as UI from 'types/ui';
 //import * as API from 'types/api';
 
-export const Notepad = {
+export const NotepadWidgetInfo = {
   typeId: 'notepad',
   component: require('./components/Notepad').default,
   name: 'Notepad',

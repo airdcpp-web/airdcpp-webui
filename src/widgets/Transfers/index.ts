@@ -5,7 +5,7 @@ import * as UI from 'types/ui';
 
 import TransfersComponent from './components/Transfers';
 
-export const Transfers = {
+export const TransferWidgetInfo = {
   typeId: 'transfers',
   component: TransfersComponent,
   access: API.AccessEnum.TRANSFERS,

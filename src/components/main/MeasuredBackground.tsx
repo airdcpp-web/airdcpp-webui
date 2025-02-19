@@ -1,5 +1,4 @@
 import React from 'react';
-import Measure from 'react-measure';
 
 import { LocalSettings } from 'constants/SettingConstants';
 import { LayoutWidthContext } from 'context/LayoutWidthContext';
@@ -8,6 +7,7 @@ import { usingMobileLayout } from 'utils/BrowserUtils';
 
 import Background1500px from '../../../resources/images/background_winter_1500px.jpg';
 import Background3840px from '../../../resources/images/background_winter_3840px.jpg';
+import useMeasure from 'react-use-measure';
 
 const getBackgroundImage = () => {
   const url = LocalSettingStore.getValue(LocalSettings.BACKGROUND_IMAGE_URL);
@@ -28,24 +28,21 @@ const getBackgroundImageStyle = () => {
 };
 
 export const MeasuredBackground: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const [measureRef, bounds] = useMeasure({
+    debounce: 100,
+  });
   return (
-    <Measure bounds={true}>
-      {({ measureRef, contentRect }) => (
-        <LayoutWidthContext.Provider
-          value={!!contentRect.bounds ? contentRect.bounds.width : null}
-        >
-          <div
-            ref={measureRef}
-            id="background-wrapper"
-            style={{
-              backgroundImage: getBackgroundImageStyle(),
-              height: '100%',
-            }}
-          >
-            {children}
-          </div>
-        </LayoutWidthContext.Provider>
-      )}
-    </Measure>
+    <LayoutWidthContext.Provider value={bounds.width}>
+      <div
+        ref={measureRef}
+        id="background-wrapper"
+        style={{
+          backgroundImage: getBackgroundImageStyle(),
+          height: '100%',
+        }}
+      >
+        {children}
+      </div>
+    </LayoutWidthContext.Provider>
   );
 };

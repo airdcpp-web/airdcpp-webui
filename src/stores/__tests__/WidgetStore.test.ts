@@ -1,6 +1,6 @@
 import { default as WidgetStore, EmptyWidgetSettings } from 'stores/reflux/WidgetStore';
 
-import { RSS } from 'widgets/RSS';
+import { RSSWidgetInfo } from 'widgets/RSS';
 
 import { Layouts, Layout } from 'react-grid-layout';
 import { createWidgetId } from 'utils/WidgetUtils';
@@ -31,7 +31,7 @@ describe('widget store', () => {
 
     expect(hasLayoutItems('dummy')).toEqual(false);
 
-    const rssSettings = WidgetStore.getWidgetSettings('rss_releases', RSS);
+    const rssSettings = WidgetStore.getWidgetSettings('rss_releases', RSSWidgetInfo);
     expect(rssSettings).toEqual({
       name: 'News',
       widget: {
@@ -41,7 +41,7 @@ describe('widget store', () => {
     });
   });
 
-  const widgetId = createWidgetId(RSS.typeId);
+  const widgetId = createWidgetId(RSSWidgetInfo.typeId);
   const settings = {
     name: 'RSS feed',
     widget: {
@@ -51,7 +51,7 @@ describe('widget store', () => {
   };
 
   test('should handle widget actions', () => {
-    WidgetStore.onCreate(widgetId, settings, RSS.typeId);
+    WidgetStore.onCreate(widgetId, settings, RSSWidgetInfo.typeId);
     expect(hasLayoutItems(widgetId)).toEqual(true);
     expect(WidgetStore.getWidgetSettings(widgetId)).toEqual(settings);
 

@@ -1,10 +1,6 @@
-import Chart from 'react-apexcharts';
-
-import Measure from 'react-measure';
+import { memo, useMemo } from 'react';
 
 import * as UI from 'types/ui';
-import { memo, useMemo } from 'react';
-import { ApexOptions } from 'apexcharts';
 import { useFormatter } from 'context/FormatterContext';
 
 export type TrafficSeries = Array<number[]>;
@@ -14,6 +10,10 @@ export interface SpeedChartProps extends Pick<UI.WidgetProps, 'widgetT'> {
   maxDownload: number;
   trafficSeries: any;
 }
+
+import ApexChart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+import useMeasure from 'react-use-measure';
 
 const SpeedChart: React.FC<SpeedChartProps> = ({
   trafficSeries,
@@ -93,20 +93,19 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
     },
   ];
 
+  const [measureRef, bounds] = useMeasure({
+    debounce: 100,
+  });
   return (
-    <Measure bounds={true}>
-      {({ measureRef, contentRect: { bounds } }) => (
-        <div ref={measureRef} className="graph">
-          <Chart
-            options={options}
-            series={series}
-            type="area"
-            width={bounds?.width}
-            height={bounds?.height}
-          />
-        </div>
-      )}
-    </Measure>
+    <div ref={measureRef} className="graph">
+      <ApexChart
+        options={options}
+        series={series}
+        type="area"
+        width={bounds?.width}
+        height={bounds?.height}
+      />
+    </div>
   );
 };
 

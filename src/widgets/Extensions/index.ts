@@ -1,7 +1,7 @@
 import * as API from 'types/api';
 import * as UI from 'types/ui';
 
-export const Extensions = {
+export const ExtensionWidgetInfo = {
   typeId: 'extensions',
   component: require('./components/Extensions').default,
   name: 'Extension releases',
