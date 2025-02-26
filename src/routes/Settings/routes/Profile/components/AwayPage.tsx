@@ -1,6 +1,6 @@
 import * as React from 'react';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Entry = ['away_message', 'away_no_bots', 'away_idle_time'];
 

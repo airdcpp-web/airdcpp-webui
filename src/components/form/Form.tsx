@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import classNames from 'classnames';
 
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
 import {
   normalizeSettingValueMap,
@@ -13,20 +13,20 @@ import {
   findFieldByKey,
   formValuesEqual,
   trimValue,
-} from 'utils/FormUtils';
-import tcomb from 'utils/tcomb-form';
+} from '@/utils/FormUtils';
+import tcomb from '@/utils/tcomb-form';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import './style.css';
 
 import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
 import { Translation } from 'react-i18next';
-import { FormContext } from 'types/ui';
-import { getModuleT } from 'utils/TranslationUtils';
+import { FormContext } from '@/types/ui';
+import { getModuleT } from '@/utils/TranslationUtils';
 
-import { TextDecorator } from 'components/text';
+import { TextDecorator } from '@/components/text';
 
 const TcombForm = tcomb.form.Form;
 

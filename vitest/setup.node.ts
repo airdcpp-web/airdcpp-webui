@@ -1,11 +1,10 @@
 // Fetch polyfill
 import 'whatwg-fetch';
 
-global.getBasePath = () => '/';
-global.isDemoInstance = () => false;
+import './setup.common';
 
-window.$ = require('jquery');
-window.jQuery = require('jquery');
+// global.getBasePath = () => '/';
+// global.isDemoInstance = () => false;
 
 // https://stackoverflow.com/questions/19697858/referenceerror-textencoder-is-not-defined
 import { TextEncoder, TextDecoder } from 'util';

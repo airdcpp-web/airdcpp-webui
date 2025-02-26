@@ -1,6 +1,6 @@
 import { lens } from '@dhmk/zustand-lens';
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { produce } from 'immer';
 
 export const createSessionScrollSlice = () => {

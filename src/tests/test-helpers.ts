@@ -6,6 +6,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { RouteRenderResult } from './test-containers';
+import { expect } from 'vitest';
 
 export const DataLoaderText = /Loading data.*/;
 

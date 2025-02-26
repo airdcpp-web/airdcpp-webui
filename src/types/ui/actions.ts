@@ -1,9 +1,9 @@
-import * as API from 'types/api';
+import * as API from '@/types/api';
 import { TranslateF } from './common';
-import { IconType } from 'components/semantic/Icon';
+import { IconType } from '@/components/semantic/Icon';
 import { Location, NavigateFunction } from 'react-router';
-import { MENU_DIVIDER } from 'constants/ActionConstants';
-import { APISocket } from 'services/SocketService';
+import { MENU_DIVIDER } from '@/constants/ActionConstants';
+import { APISocket } from '@/services/SocketService';
 import { Store } from './store';
 
 // ID is required for menu action item data due to extension hooks

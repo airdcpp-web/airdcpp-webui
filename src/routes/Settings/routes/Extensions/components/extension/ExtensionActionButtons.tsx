@@ -3,24 +3,24 @@ import * as React from 'react';
 import {
   ExtensionInstallNpmAction,
   ExtensionUpdateNpmAction,
-} from 'actions/ui/extension/ExtensionInstallActions';
-import ExtensionConstants from 'constants/ExtensionConstants';
+} from '@/actions/ui/extension/ExtensionInstallActions';
+import ExtensionConstants from '@/constants/ExtensionConstants';
 
-import ActionButton from 'components/ActionButton';
-import ExternalLink from 'components/ExternalLink';
+import ActionButton from '@/components/ActionButton';
+import ExternalLink from '@/components/ExternalLink';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { ActionMenu } from 'components/action-menu';
-import MenuConstants from 'constants/MenuConstants';
-import IconConstants from 'constants/IconConstants';
-import Icon from 'components/semantic/Icon';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { ActionMenu } from '@/components/action-menu';
+import MenuConstants from '@/constants/MenuConstants';
+import IconConstants from '@/constants/IconConstants';
+import Icon from '@/components/semantic/Icon';
 import {
   ExtensionManageActionModule,
   ExtensionManageActionsMenu,
   ExtensionStartAction,
   ExtensionStopAction,
-} from 'actions/ui/extension/ExtensionManageActions';
+} from '@/actions/ui/extension/ExtensionManageActions';
 
 export interface ExtensionActionButtonsProps {
   npmPackage?: UI.NpmPackage;

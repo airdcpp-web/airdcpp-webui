@@ -2,15 +2,15 @@ import * as React from 'react';
 import {
   default as HistoryConstants,
   HistoryEntryEnum,
-} from 'constants/HistoryConstants';
+} from '@/constants/HistoryConstants';
 
 import RemoteSuggestField, { RemoteSuggestFieldProps } from './RemoteSuggestField';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
 export type HubSearchInputProps = Omit<
   RemoteSuggestFieldProps<API.Hub>,

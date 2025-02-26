@@ -5,36 +5,36 @@ import { useTranslation } from 'react-i18next';
 import {
   default as HistoryConstants,
   HistoryStringEnum,
-} from 'constants/HistoryConstants';
-import FilesystemConstants from 'constants/FilesystemConstants';
-import IconConstants from 'constants/IconConstants';
+} from '@/constants/HistoryConstants';
+import FilesystemConstants from '@/constants/FilesystemConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
-import RouteModal, { RouteModalProps } from 'components/semantic/RouteModal';
-import { FileBrowserDialog } from 'components/filebrowser';
+import RouteModal, { RouteModalProps } from '@/components/semantic/RouteModal';
+import { FileBrowserDialog } from '@/components/filebrowser';
 
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import { toI18nKey, translate } from 'utils/TranslationUtils';
-import { addHistory } from 'services/api/HistoryApi';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
+import { toI18nKey, translate } from '@/utils/TranslationUtils';
+import { addHistory } from '@/services/api/HistoryApi';
 
 import { DownloadLayout } from './layout';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { PathDownloadHandler } from './types';
 
 import './style.css';
-import { useSession } from 'context/SessionContext';
-import { useSocket } from 'context/SocketContext';
-import { getFileName, getFilePath } from 'utils/FileUtils';
+import { useSession } from '@/context/SessionContext';
+import { useSocket } from '@/context/SocketContext';
+import { getFileName, getFilePath } from '@/utils/FileUtils';
 
 export type DownloadDialogProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,

@@ -1,24 +1,24 @@
 import { useEffect } from 'react';
 import * as React from 'react';
 
-import Button from 'components/semantic/Button';
+import Button from '@/components/semantic/Button';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import Popup from 'components/semantic/Popup';
+import Popup from '@/components/semantic/Popup';
 import {
   SearchOptionsForm,
   SearchOptionsFormProps,
   SearchOptions,
 } from './SearchOptionsForm';
-import IconConstants from 'constants/IconConstants';
-import Icon from 'components/semantic/Icon';
-import HubConstants from 'constants/HubConstants';
+import IconConstants from '@/constants/IconConstants';
+import Icon from '@/components/semantic/Icon';
+import HubConstants from '@/constants/HubConstants';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import { isValueSet } from 'utils/FormUtils';
+} from '@/decorators/DataProviderDecorator';
+import { isValueSet } from '@/utils/FormUtils';
 import { useLocation } from 'react-router';
 
 interface SearchOptionsButtonProps

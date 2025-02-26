@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { ActionClickHandler } from 'decorators/ActionHandlerDecorator';
-import { parseActionMenu } from 'utils/MenuUtils';
+import { ActionClickHandler } from '@/decorators/ActionHandlerDecorator';
+import { parseActionMenu } from '@/utils/MenuUtils';
 import { localMenuToActionMenuItems } from './helpers/localMenuBuilder';
-import { ActionData } from 'decorators/components/ActionDialog';
-import { useSession } from 'context/SessionContext';
+import { ActionData } from '@/decorators/components/ActionDialog';
+import { useSession } from '@/context/SessionContext';
 
 // This should be used only for constructed menus, not for id arrays
 const hasLocalItems = <

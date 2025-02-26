@@ -1,7 +1,7 @@
-import FilelistConstants from 'constants/FilelistConstants';
+import FilelistConstants from '@/constants/FilelistConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { BuildRemoveSessionAction } from '../decorators/SessionActionDecorator';
 
 const FilelistRemoveAction = BuildRemoveSessionAction(

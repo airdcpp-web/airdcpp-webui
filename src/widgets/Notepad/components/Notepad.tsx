@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import '../style.css';
-import * as UI from 'types/ui';
-import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
-import { widgetIdToLocalStateKey } from 'utils/WidgetUtils';
+import * as UI from '@/types/ui';
+import { loadLocalProperty, saveLocalProperty } from '@/utils/BrowserUtils';
+import { widgetIdToLocalStateKey } from '@/utils/WidgetUtils';
 
 export type NotepadProps = UI.WidgetProps;
 interface State {

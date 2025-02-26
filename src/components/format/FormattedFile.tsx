@@ -1,10 +1,10 @@
 import * as React from 'react';
 import cx from 'classnames';
 
-import FileIcon from 'components/icon/FileIcon';
+import FileIcon from '@/components/icon/FileIcon';
 
-import * as API from 'types/api';
-import LinkButton from 'components/semantic/LinkButton';
+import * as API from '@/types/api';
+import LinkButton from '@/components/semantic/LinkButton';
 
 interface FormattedFileProps {
   onClick?: (() => void) | null;

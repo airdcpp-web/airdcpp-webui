@@ -1,16 +1,16 @@
 import * as React from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { useNavigate } from 'react-router';
-import ExternalLink from 'components/ExternalLink';
-import { useAppStore } from 'context/StoreContext';
-import { HubAPIActions } from 'actions/store/HubActions';
-import { useSocket } from 'context/SocketContext';
-import { useSession } from 'context/SessionContext';
+import ExternalLink from '@/components/ExternalLink';
+import { useAppStore } from '@/context/StoreContext';
+import { HubAPIActions } from '@/actions/store/HubActions';
+import { useSocket } from '@/context/SocketContext';
+import { useSession } from '@/context/SessionContext';
 
-import { CreateSessionProps } from 'actions/store/decorators/SessionCreatorDecorator';
+import { CreateSessionProps } from '@/actions/store/decorators/SessionCreatorDecorator';
 
 interface ClickHandlerProps extends CreateSessionProps {
   session: UI.AuthenticatedSession;

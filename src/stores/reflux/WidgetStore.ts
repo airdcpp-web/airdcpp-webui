@@ -1,28 +1,28 @@
 //@ts-ignore
 import Reflux from 'reflux';
 
-import WidgetActions /*, { WidgetItemInfo }*/ from 'actions/reflux/WidgetActions';
+import WidgetActions /*, { WidgetItemInfo }*/ from '@/actions/reflux/WidgetActions';
 
 import reject from 'lodash/reject';
 import {
   loadLocalProperty,
   removeLocalProperty,
   saveLocalProperty,
-} from 'utils/BrowserUtils';
+} from '@/utils/BrowserUtils';
 
-import { Application } from 'widgets/Application';
-import { ExtensionWidgetInfo } from 'widgets/Extensions';
-import { NotepadWidgetInfo } from 'widgets/Notepad';
-import { RSSWidgetInfo } from 'widgets/RSS';
-import { TransferWidgetInfo } from 'widgets/Transfers';
+import { Application } from '@/widgets/Application';
+import { ExtensionWidgetInfo } from '@/widgets/Extensions';
+import { NotepadWidgetInfo } from '@/widgets/Notepad';
+import { RSSWidgetInfo } from '@/widgets/RSS';
+import { TransferWidgetInfo } from '@/widgets/Transfers';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { Layouts, Layout } from 'react-grid-layout';
 import {
   widgetIdToSettingKey,
   widgetIdToType,
   widgetIdToLocalStateKey,
-} from 'utils/WidgetUtils';
+} from '@/utils/WidgetUtils';
 
 // CONSTANTS
 const cols: { [P in string]: number } = { lg: 14, md: 10, sm: 6, xs: 4, xxs: 2 };

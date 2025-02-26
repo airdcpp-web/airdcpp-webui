@@ -1,15 +1,15 @@
 import invariant from 'invariant';
-import tcomb, { Range, Positive } from 'utils/tcomb-form';
+import tcomb, { Range, Positive } from '@/utils/tcomb-form';
 
 import {
   BrowseField,
   HintedUserSelectField,
   HubUrlField,
   SelectField,
-} from 'components/form/fields';
+} from '@/components/form/fields';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import upperFirst from 'lodash/upperFirst';
 import update from 'immutability-helper';

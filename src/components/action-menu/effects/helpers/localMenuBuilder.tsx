@@ -1,10 +1,10 @@
-import { toActionI18nKey } from 'utils/ActionUtils';
+import { toActionI18nKey } from '@/utils/ActionUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { ActionClickHandler } from 'decorators/ActionHandlerDecorator';
+import { ActionClickHandler } from '@/decorators/ActionHandlerDecorator';
 import { Trans } from 'react-i18next';
-import { parseTranslationModules } from 'utils/TranslationUtils';
+import { parseTranslationModules } from '@/utils/TranslationUtils';
 
 const getDivider = (menuIndex: number, itemIndex: number) => {
   return {

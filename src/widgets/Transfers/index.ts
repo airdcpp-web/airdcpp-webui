@@ -1,7 +1,7 @@
-import { QueueActionMenu } from 'actions/ui/queue';
+import { QueueActionMenu } from '@/actions/ui/queue';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import TransfersComponent from './components/Transfers';
 

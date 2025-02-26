@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import FileIcon from 'components/icon/FileIcon';
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
+import FileIcon from '@/components/icon/FileIcon';
+import Icon from '@/components/semantic/Icon';
+import IconConstants from '@/constants/IconConstants';
 
 const searchTypeToFileItem = (searchType: UI.SearchTypeItem): API.FileItemType => {
   if (searchType.id === 'directory') {

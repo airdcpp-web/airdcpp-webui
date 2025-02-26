@@ -1,15 +1,15 @@
-import Loader from 'components/semantic/Loader';
+import Loader from '@/components/semantic/Loader';
 import StatColumn from './StatColumn';
 import SpeedChart from './SpeedChart';
 
 import useMeasure from 'react-use-measure';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import {
   SocketSubscriptionDecoratorChildProps,
   SocketSubscriptionDecorator,
-} from 'decorators/SocketSubscriptionDecorator';
+} from '@/decorators/SocketSubscriptionDecorator';
 import { useTransferStats } from '../effects/useTransferStats';
 
 import '../style.css';

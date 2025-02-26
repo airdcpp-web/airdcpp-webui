@@ -1,4 +1,4 @@
-import { RootSectionType } from 'routes/Settings/types';
+import { RootSectionType } from '@/routes/Settings/types';
 
 const SpeedLimits: RootSectionType = {
   url: 'speed-limits',

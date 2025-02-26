@@ -1,4 +1,4 @@
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import '../style.css';
 
@@ -15,7 +15,7 @@ import System from '../routes/System';
 import { ChildSectionType, RootSectionType } from '../types';
 import { Navigate, Route, Routes } from 'react-router';
 import SettingSection from './SettingSection';
-import { getModuleT, getSubModuleT } from 'utils/TranslationUtils';
+import { getModuleT, getSubModuleT } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import { camelCase } from 'lodash';
 

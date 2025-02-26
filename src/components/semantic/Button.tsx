@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
-import Icon, { IconType } from 'components/semantic/Icon';
+import Icon, { IconType } from '@/components/semantic/Icon';
 
 import 'fomantic-ui-css/components/button.min.css';
 

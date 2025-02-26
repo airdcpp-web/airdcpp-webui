@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ProtocolPage from 'routes/Settings/routes/Connectivity/components/ProtocolPage';
-import { SettingPageProps } from 'routes/Settings/types';
+import ProtocolPage from '@/routes/Settings/routes/Connectivity/components/ProtocolPage';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Entry = [
   'connection_auto_v6',

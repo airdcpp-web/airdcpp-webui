@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import Loader from 'components/semantic/Loader';
+import Loader from '@/components/semantic/Loader';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { getModuleT, translate } from 'utils/TranslationUtils';
+import { getModuleT, translate } from '@/utils/TranslationUtils';
 import { useParams } from 'react-router';
-import { useStoreProperty } from 'context/StoreContext';
+import { useStoreProperty } from '@/context/StoreContext';
 
 export interface SessionProviderDecoratorProps {}
 

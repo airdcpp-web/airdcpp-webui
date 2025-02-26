@@ -1,5 +1,5 @@
-import SectionedDropdown from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
+import SectionedDropdown from '@/components/semantic/SectionedDropdown';
+import MenuSection from '@/components/semantic/MenuSection';
 
 import {
   configRoutes,
@@ -7,9 +7,9 @@ import {
   parseMenuItems,
   parseMenuItem,
   getLogoutItem,
-} from 'routes/Routes';
-import { useSession } from 'context/SessionContext';
-import { useSocket } from 'context/SocketContext';
+} from '@/routes/Routes';
+import { useSession } from '@/context/SessionContext';
+import { useSocket } from '@/context/SocketContext';
 
 const MainNavigationNormal = () => {
   const login = useSession();

@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
-import { useFormatter } from 'context/FormatterContext';
+import Icon from '@/components/semantic/Icon';
+import IconConstants from '@/constants/IconConstants';
+import { useFormatter } from '@/context/FormatterContext';
 
 const getMessageDay = (listItem: UI.MessageListItem) => {
   const message = !!listItem.chat_message ? listItem.chat_message : listItem.log_message;

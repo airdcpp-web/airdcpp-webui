@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import Icon, { IconProps } from 'components/semantic/Icon';
-import { hubOnlineStatusToColor } from 'utils/TypeConvert';
+import Icon, { IconProps } from '@/components/semantic/Icon';
+import { hubOnlineStatusToColor } from '@/utils/TypeConvert';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 interface HubIconProps extends IconProps {
   hub: API.Hub;

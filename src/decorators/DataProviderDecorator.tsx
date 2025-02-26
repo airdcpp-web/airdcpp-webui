@@ -5,19 +5,18 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 
 import { APISocket, ErrorResponse } from 'airdcpp-apisocket';
 
-import Loader from 'components/semantic/Loader';
-import NotificationActions from 'actions/NotificationActions';
+import Loader from '@/components/semantic/Loader';
+import NotificationActions from '@/actions/NotificationActions';
 import { ModalRouteCloseContext } from './ModalRouteDecorator';
 import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
   AddSocketListener,
 } from './SocketSubscriptionDecorator';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
-import { getDebugId } from 'utils/DebugUtils';
-import { sleep } from 'utils/Promise';
+import * as UI from '@/types/ui';
+import { getDebugId } from '@/utils/DebugUtils';
 
 export type SocketConnectHandler<DataT extends object, PropsT extends object> = (
   addSocketListener: AddSocketListener,

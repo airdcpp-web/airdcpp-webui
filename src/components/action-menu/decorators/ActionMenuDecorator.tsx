@@ -1,20 +1,20 @@
 import * as React from 'react';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import {
   ActionClickHandler,
   ActionHandlerDecorator,
-} from 'decorators/ActionHandlerDecorator';
+} from '@/decorators/ActionHandlerDecorator';
 import {
   MenuFormDialog,
   MenuFormDialogProps,
-} from 'components/action-menu/MenuFormDialog';
+} from '@/components/action-menu/MenuFormDialog';
 import {
   ActionMenuDefinition,
   useActionMenuItems,
-} from 'components/action-menu/effects/useActionMenuItems';
-import { EmptyDropdownContent } from 'components/semantic/EmptyDropdown';
+} from '@/components/action-menu/effects/useActionMenuItems';
+import { EmptyDropdownContent } from '@/components/semantic/EmptyDropdown';
 import { OnShowRemoteMenuForm, useRemoteMenuItems } from '../effects/useRemoteMenuItems';
 
 export interface ActionMenuDecoratorProps<

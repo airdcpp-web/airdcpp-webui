@@ -1,16 +1,16 @@
 import * as React from 'react';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import Icon from 'components/semantic/Icon';
+import Icon from '@/components/semantic/Icon';
 
-import { toI18nKey } from 'utils/TranslationUtils';
-import { Formatter, useFormatter } from 'context/FormatterContext';
+import { toI18nKey } from '@/utils/TranslationUtils';
+import { Formatter, useFormatter } from '@/context/FormatterContext';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { PathDownloadHandler } from '../../types';
-import LinkButton from 'components/semantic/LinkButton';
+import LinkButton from '@/components/semantic/LinkButton';
 
 interface PathItemProps {
   pathInfo: API.DiskSpaceInfo;

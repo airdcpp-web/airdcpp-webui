@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import LayoutHeader from 'components/semantic/LayoutHeader';
-import { Grid } from 'components/semantic/Grid';
+import LayoutHeader from '@/components/semantic/LayoutHeader';
+import { Grid } from '@/components/semantic/Grid';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { SessionMainLayoutProps } from './types';
 
 const SideMenuLayout = <

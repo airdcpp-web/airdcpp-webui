@@ -1,13 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import Progress from 'components/semantic/Progress';
+import Progress from '@/components/semantic/Progress';
 
-import EncryptionState from 'components/EncryptionState';
-import Loader from 'components/semantic/Loader';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import EncryptionState from '@/components/EncryptionState';
+import Loader from '@/components/semantic/Loader';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 const getStatusClass = (cellData: API.TransferStatus, rowData: API.Transfer) => {
   const statusId = cellData.id;

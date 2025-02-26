@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import { SessionFooter } from 'routes/Sidebar/components/SessionFooter';
-import Loader from 'components/semantic/Loader';
-import { ActionMenu } from 'components/action-menu';
-import EncryptionState from 'components/EncryptionState';
+import { SessionFooter } from '@/routes/Sidebar/components/SessionFooter';
+import Loader from '@/components/semantic/Loader';
+import { ActionMenu } from '@/components/action-menu';
+import EncryptionState from '@/components/EncryptionState';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { PrivateChatCCPMActionMenu } from 'actions/ui/private-chat/PrivateChatCCPMActions';
+import { PrivateChatCCPMActionMenu } from '@/actions/ui/private-chat/PrivateChatCCPMActions';
 
 const getCaption = (state: API.CCPMStateEnum, sessionT: UI.ModuleTranslator) => {
   const { translate } = sessionT;

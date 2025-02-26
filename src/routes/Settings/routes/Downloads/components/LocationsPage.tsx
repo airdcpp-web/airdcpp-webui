@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import ExternalLink from 'components/ExternalLink';
-import LinkConstants from 'constants/LinkConstants';
-import Message from 'components/semantic/Message';
+import ExternalLink from '@/components/ExternalLink';
+import LinkConstants from '@/constants/LinkConstants';
+import Message from '@/components/semantic/Message';
 
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import FavoriteDirectoryTable from 'routes/Settings/routes/Downloads/components/FavoriteDirectoryTable';
-import LayoutHeader from 'components/semantic/LayoutHeader';
-import { SettingPageProps } from 'routes/Settings/types';
-import IconConstants from 'constants/IconConstants';
+import FavoriteDirectoryTable from '@/routes/Settings/routes/Downloads/components/FavoriteDirectoryTable';
+import LayoutHeader from '@/components/semantic/LayoutHeader';
+import { SettingPageProps } from '@/routes/Settings/types';
+import IconConstants from '@/constants/IconConstants';
 
 const Entry = ['download_directory'];
 

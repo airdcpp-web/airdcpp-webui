@@ -1,11 +1,11 @@
-import WebUserConstants from 'constants/WebUserConstants';
+import WebUserConstants from '@/constants/WebUserConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import LoginStore from 'stores/reflux/LoginStore';
+import LoginStore from '@/stores/reflux/LoginStore';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 type Filter = UI.ActionFilter<API.WebUser>;
 const isOther: Filter = ({ itemData: user }) => user.id !== LoginStore.user.id;

@@ -1,28 +1,28 @@
-import ShareRootStore from 'stores/views/ShareRootStore';
+import ShareRootStore from '@/stores/views/ShareRootStore';
 
-import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, DurationCell, FileActionCell } from 'components/table/Cell';
+import VirtualTable from '@/components/table/VirtualTable';
+import { SizeCell, DurationCell, FileActionCell } from '@/components/table/Cell';
 import { Column } from 'fixed-data-table-2';
 
-import ShareDirectoryDialog from 'routes/Share/components/ShareDirectoryDialog';
-import ShareProfileFilter from 'components/table/ShareProfileFilter';
+import ShareDirectoryDialog from '@/routes/Share/components/ShareDirectoryDialog';
+import ShareProfileFilter from '@/components/table/ShareProfileFilter';
 
-import { ActionMenu } from 'components/action-menu';
-import RefreshCell from 'routes/Share/components/RefreshCell';
+import { ActionMenu } from '@/components/action-menu';
+import RefreshCell from '@/routes/Share/components/RefreshCell';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { getModuleT } from 'utils/TranslationUtils';
-import MenuConstants from 'constants/MenuConstants';
+import { getModuleT } from '@/utils/TranslationUtils';
+import MenuConstants from '@/constants/MenuConstants';
 import {
   ShareActionMenu,
   ShareRootActionModule,
   ShareRootCreateAction,
   ShareRootEditActionMenu,
-} from 'actions/ui/share';
-import { useSession } from 'context/SessionContext';
+} from '@/actions/ui/share';
+import { useSession } from '@/context/SessionContext';
 
 const ShareRootCreateMenu = {
   actions: {

@@ -1,11 +1,11 @@
-import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
+import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
 import { useEffect, useState } from 'react';
-import LoginActions from 'actions/reflux/LoginActions';
+import LoginActions from '@/actions/reflux/LoginActions';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { useSocket } from 'context/SocketContext';
+import { useSocket } from '@/context/SocketContext';
 
 export interface LoginLocationState {
   nextPath?: string;

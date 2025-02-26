@@ -1,9 +1,11 @@
-import * as UI from 'types/ui';
-//import * as API from 'types/api';
+import * as UI from '@/types/ui';
+//import * as API from '@/types/api';
+
+import Notepad from './components/Notepad';
 
 export const NotepadWidgetInfo = {
   typeId: 'notepad',
-  component: require('./components/Notepad').default,
+  component: Notepad,
   name: 'Notepad',
   icon: 'pen',
   //formSettings: [

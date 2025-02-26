@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Button, { ButtonProps } from 'components/semantic/Button';
+import Button, { ButtonProps } from '@/components/semantic/Button';
 import Input from './Input';
 
 export type SubmitCallback = (value: string) => void | Promise<void>;

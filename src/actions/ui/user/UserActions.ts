@@ -1,14 +1,14 @@
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import UserConstants from 'constants/UserConstants';
+import UserConstants from '@/constants/UserConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { HubUserFlag } from 'types/api';
-import { MENU_DIVIDER } from 'constants/ActionConstants';
-import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
+import { HubUserFlag } from '@/types/api';
+import { MENU_DIVIDER } from '@/constants/ActionConstants';
+import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 
 export interface ActionUserData {
   id: string | API.HintedUserBase;

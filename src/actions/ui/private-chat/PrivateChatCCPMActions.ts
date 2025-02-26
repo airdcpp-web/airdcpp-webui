@@ -1,9 +1,9 @@
-import PrivateChatConstants from 'constants/PrivateChatConstants';
+import PrivateChatConstants from '@/constants/PrivateChatConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 type Filter = UI.ActionFilter<API.PrivateChat>;
 const ccpmConnected: Filter = ({ itemData }) =>

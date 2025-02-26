@@ -1,18 +1,18 @@
 import { useContext } from 'react';
 import * as React from 'react';
 
-import Message from 'components/semantic/Message';
-import Button from 'components/semantic/Button';
+import Message from '@/components/semantic/Message';
+import Button from '@/components/semantic/Button';
 
-import IconConstants from 'constants/IconConstants';
-import { LocalSettings } from 'constants/SettingConstants';
-import { useStore } from 'effects/StoreListenerEffect';
-import LocalSettingStore from 'stores/reflux/LocalSettingStore';
-import { InstallPromptContext } from 'context/InstallPromptContext';
+import IconConstants from '@/constants/IconConstants';
+import { LocalSettings } from '@/constants/SettingConstants';
+import { useStore } from '@/effects/StoreListenerEffect';
+import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
+import { InstallPromptContext } from '@/context/InstallPromptContext';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { translate, toI18nKey } from 'utils/TranslationUtils';
+import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 
 interface InstallPromptProps {

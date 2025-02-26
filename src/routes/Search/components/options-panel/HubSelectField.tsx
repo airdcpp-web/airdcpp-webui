@@ -1,12 +1,13 @@
 import * as React from 'react';
-import t from 'utils/tcomb-form';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import tcomb from '@/utils/tcomb-form';
 
-import Checkbox from 'components/semantic/Checkbox';
-import { updateMultiselectValues } from 'utils/FormUtils';
-import HubIcon from 'components/icon/HubIcon';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+
+import Checkbox from '@/components/semantic/Checkbox';
+import { updateMultiselectValues } from '@/utils/FormUtils';
+import HubIcon from '@/components/icon/HubIcon';
 import { FormAccordion } from './AccordionField';
 
 interface HubSelectFieldProps {
@@ -89,4 +90,4 @@ const HubsSelectField: TCombTemplate = {
   },
 };
 
-export default t.form.Form.templates.select.clone(HubsSelectField);
+export default tcomb.form.Form.templates.select.clone(HubsSelectField);

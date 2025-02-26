@@ -1,14 +1,14 @@
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import ExtensionConstants from 'constants/ExtensionConstants';
+import ExtensionConstants from '@/constants/ExtensionConstants';
 
-import Extension from 'routes/Settings/routes/Extensions/components/extension/Extension';
+import Extension from '@/routes/Settings/routes/Extensions/components/extension/Extension';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { fetchCorsSafeData } from 'services/HttpService';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { fetchCorsSafeData } from '@/services/HttpService';
 
 export interface NpmPackageData {
   name: string;

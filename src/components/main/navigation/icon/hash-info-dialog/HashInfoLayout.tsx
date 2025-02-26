@@ -3,17 +3,17 @@ import {
   HashPauseAction,
   HashResumeAction,
   HashStopAction,
-} from 'actions/ui/hash/HashActions';
-import ActionButton from 'components/ActionButton';
-import { AdjustableSpeedLimit } from 'components/speed-limit';
-import { ListItem } from 'components/semantic/List';
+} from '@/actions/ui/hash/HashActions';
+import ActionButton from '@/components/ActionButton';
+import { AdjustableSpeedLimit } from '@/components/speed-limit';
+import { ListItem } from '@/components/semantic/List';
 
 import * as React from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { useFormatter } from 'context/FormatterContext';
+import { useFormatter } from '@/context/FormatterContext';
 
 interface HashInfoLayoutProps {
   stats: API.HashStats;

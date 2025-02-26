@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import * as React from 'react';
 
-import { TextDecorator } from 'components/text';
-import Message from 'components/semantic/Message';
+import { TextDecorator } from '@/components/text';
+import Message from '@/components/semantic/Message';
 
-import * as UI from 'types/ui';
-import { translate } from 'utils/TranslationUtils';
+import * as UI from '@/types/ui';
+import { translate } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
-import Loader from 'components/semantic/Loader';
+import Loader from '@/components/semantic/Loader';
 
 interface TextFileProps {
   textGetter: () => Promise<string>;

@@ -1,8 +1,7 @@
-import * as API from 'types/api';
+import * as API from '@/types/api';
 import { ModuleTranslator } from './modules';
-import tcomb from 'utils/tcomb-form';
+import tcomb from '@/utils/tcomb-form';
 import { EmptyObject } from './common';
-import { Location } from 'react-router';
 
 export type FormObjectValue = Record<string, any>;
 export type FormValueBase = API.SettingValueBase | FormObjectValue;

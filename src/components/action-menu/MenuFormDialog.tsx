@@ -1,14 +1,14 @@
 import { useRef } from 'react';
 import * as React from 'react';
 
-import Modal, { ModalProps } from 'components/semantic/Modal';
-import Form, { FormSaveHandler } from 'components/form/Form';
+import Modal, { ModalProps } from '@/components/semantic/Modal';
+import Form, { FormSaveHandler } from '@/components/form/Form';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { IconType } from 'components/semantic/Icon';
+import { IconType } from '@/components/semantic/Icon';
 import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
 export interface MenuFormDialogProps extends ModalProps {
   title: string;

@@ -1,4 +1,4 @@
-import 'utils/webpack';
+import '@/utils/webpack';
 
 import { createRoot } from 'react-dom/client';
 import App from './App';

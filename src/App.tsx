@@ -1,34 +1,37 @@
 import { Suspense, useMemo } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router';
-import SocketService from 'services/SocketService';
+
+import { I18nextProvider } from 'react-i18next';
+import { enableMapSet } from 'immer';
 
 //@ts-ignore
 import Reflux from 'reflux';
 //@ts-ignore
 import RefluxPromise from 'reflux-promise';
-import Promise from 'utils/Promise';
-import { enableMapSet } from 'immer';
 
-import AuthenticatedApp from 'components/main/AuthenticatedApp';
-import Login from 'routes/Login/components/Login';
+import Promise from '@/utils/Promise';
 
-import { I18nextProvider } from 'react-i18next';
-import { initI18n } from 'services/LocalizationService';
-import Loader from 'components/semantic/Loader';
-import { useInstallPrompt } from 'components/main/effects/InstallPromptEffect';
-import { InstallPromptContext } from 'context/InstallPromptContext';
-import { ErrorBoundary } from 'components/ErrorBoundary';
-import { MeasuredBackground } from 'components/main/MeasuredBackground';
+import AuthenticatedApp from '@/components/main/AuthenticatedApp';
+import Login from '@/routes/Login/components/Login';
+import Loader from '@/components/semantic/Loader';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { MeasuredBackground } from '@/components/main/MeasuredBackground';
 
-import { SocketContext } from 'context/SocketContext';
-import { FormatterContext } from 'context/FormatterContext';
-import { createFormatter } from 'utils/Formatter';
-import LoginStore from 'stores/reflux/LoginStore';
-import { SessionContext } from 'context/SessionContext';
+import SocketService from '@/services/SocketService';
+import { initI18n } from '@/services/LocalizationService';
 
-import 'utils/semantic';
+import { useInstallPrompt } from '@/components/main/effects/InstallPromptEffect';
+import { InstallPromptContext } from '@/context/InstallPromptContext';
 
-import 'style.css';
+import { SocketContext } from '@/context/SocketContext';
+import { FormatterContext } from '@/context/FormatterContext';
+import { createFormatter } from '@/utils/Formatter';
+import LoginStore from '@/stores/reflux/LoginStore';
+import { SessionContext } from '@/context/SessionContext';
+
+import '@/utils/semantic';
+
+import './style.css';
 
 global.Promise = Promise as any;
 

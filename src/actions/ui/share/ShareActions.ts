@@ -1,8 +1,8 @@
-import ShareConstants from 'constants/ShareConstants';
-import IconConstants from 'constants/IconConstants';
+import ShareConstants from '@/constants/ShareConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const handleRefresh: UI.ActionHandler<void> = ({ socket }) => {
   return socket.post(ShareConstants.REFRESH_URL);

@@ -4,7 +4,7 @@ import SuggestField, { SuggestFieldProps } from './base/SuggestField';
 import SuggestionRenderer from './base/SuggestionRenderer';
 import { RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
 import { ErrorResponse } from 'airdcpp-apisocket';
-import { useSocket } from 'context/SocketContext';
+import { useSocket } from '@/context/SocketContext';
 
 type ForwardedSuggestFieldProps<SuggestionT> = Omit<
   SuggestFieldProps<SuggestionT>,

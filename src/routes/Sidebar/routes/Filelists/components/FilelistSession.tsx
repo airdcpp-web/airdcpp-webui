@@ -1,17 +1,17 @@
-import FilelistFooter from 'routes/Sidebar/routes/Filelists/components/FilelistFooter';
+import FilelistFooter from '@/routes/Sidebar/routes/Filelists/components/FilelistFooter';
 
-import Loader from 'components/semantic/Loader';
-import Message from 'components/semantic/Message';
+import Loader from '@/components/semantic/Loader';
+import Message from '@/components/semantic/Message';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import classNames from 'classnames';
 import ListBrowser from './ListBrowser';
-import { SessionChildProps } from 'routes/Sidebar/components/types';
-import { useActiveSession } from 'decorators/ActiveSessionDecorator';
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
-import { FilelistStoreSelector } from 'stores/filelistSlice';
+import { SessionChildProps } from '@/routes/Sidebar/components/types';
+import { useActiveSession } from '@/decorators/ActiveSessionDecorator';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
+import { FilelistStoreSelector } from '@/stores/filelistSlice';
 
 type FilelistSessionProps = SessionChildProps<
   API.FilelistSession,

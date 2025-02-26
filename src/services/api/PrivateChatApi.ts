@@ -1,7 +1,7 @@
-import SocketService from 'services/SocketService';
+import SocketService from '@/services/SocketService';
 
-import * as API from 'types/api';
-import PrivateChatConstants from 'constants/PrivateChatConstants';
+import * as API from '@/types/api';
+import PrivateChatConstants from '@/constants/PrivateChatConstants';
 import {
   sendChatMessageDecorator,
   clearMessagesDecorator,

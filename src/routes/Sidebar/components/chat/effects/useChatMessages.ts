@@ -1,9 +1,9 @@
-import { useSocket } from 'context/SocketContext';
-import { useAppStore, useStoreProperty } from 'context/StoreContext';
+import { useSocket } from '@/context/SocketContext';
+import { useAppStore, useStoreProperty } from '@/context/StoreContext';
 import { useEffect } from 'react';
 
-// import * as API from 'types/api';
-import * as UI from 'types/ui';
+// import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 /*export type MessageStoreSelector = (
   state: UI.Store,

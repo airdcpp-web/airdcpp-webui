@@ -1,22 +1,22 @@
 import * as React from 'react';
 
-import SessionLayout from 'routes/Sidebar/components/SessionLayout';
+import SessionLayout from '@/routes/Sidebar/components/SessionLayout';
 
-import FileIcon from 'components/icon/FileIcon';
-import Message from 'components/semantic/Message';
+import FileIcon from '@/components/icon/FileIcon';
+import Message from '@/components/semantic/Message';
 
 import FileSession from './FileSession';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import {
   SessionProviderDecoratorChildProps,
   SessionProviderDecorator,
-} from 'routes/Sidebar/decorators/SessionProviderDecorator';
-import { ViewFileActionMenu } from 'actions/ui/viewed-file';
+} from '@/routes/Sidebar/decorators/SessionProviderDecorator';
+import { ViewFileActionMenu } from '@/actions/ui/viewed-file';
 
-import { ViewFileAPIActions } from 'actions/store/ViewFileActions';
-import { ViewFileStoreSelector } from 'stores/viewFileSlice';
+import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
+import { ViewFileStoreSelector } from '@/stores/viewFileSlice';
 
 import '../style.css';
 

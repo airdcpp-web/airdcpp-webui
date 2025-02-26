@@ -1,12 +1,12 @@
-import { default as QueueConstants, StatusEnum } from 'constants/QueueConstants';
+import { default as QueueConstants, StatusEnum } from '@/constants/QueueConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { APISocket } from 'services/SocketService';
-import { searchForeground } from 'utils/SearchUtils';
+import { APISocket } from '@/services/SocketService';
+import { searchForeground } from '@/utils/SearchUtils';
 
 type Filter = UI.ActionFilter<API.QueueBundle>;
 const bundleValidationFailed: Filter = ({ itemData: bundle }) =>

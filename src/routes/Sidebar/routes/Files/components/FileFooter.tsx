@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import RedrawDecorator from 'decorators/RedrawDecorator';
-import { useFormatter } from 'context/FormatterContext';
-import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import RedrawDecorator from '@/decorators/RedrawDecorator';
+import { useFormatter } from '@/context/FormatterContext';
+import { FooterItem, SessionFooter } from '@/routes/Sidebar/components/SessionFooter';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 interface FileFooterProps {
   item: API.ViewFile;

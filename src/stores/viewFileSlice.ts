@@ -1,14 +1,14 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { createSessionSlice, initSessionSlice } from './decorators/sessionSlice';
 import { lens } from '@dhmk/zustand-lens';
-import { ViewFileAPIActions } from 'actions/store/ViewFileActions';
+import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
 import {
   createSessionScrollSlice,
   initSessionScrollSlice,
 } from './decorators/scrollSlice';
-import ViewFileConstants from 'constants/ViewFileConstants';
+import ViewFileConstants from '@/constants/ViewFileConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
 const createViewFileStore = () => {

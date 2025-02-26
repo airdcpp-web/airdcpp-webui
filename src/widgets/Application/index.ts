@@ -1,7 +1,7 @@
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import ApplicationComponent from './components/Application';
-import { SystemActionModule, SystemShutdownAction } from 'actions/ui/system';
+import { SystemActionModule, SystemShutdownAction } from '@/actions/ui/system';
 
 const SystemActionsMenu = {
   actions: {

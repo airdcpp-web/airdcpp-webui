@@ -1,6 +1,6 @@
-import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
+import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { ChildSectionType, RootSectionType, SectionBase } from '../types';
 import { Location } from 'react-router';
 

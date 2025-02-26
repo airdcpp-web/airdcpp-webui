@@ -2,16 +2,16 @@ import * as React from 'react';
 
 import { Table, ColumnProps } from 'fixed-data-table-2';
 
-import TableActions from 'actions/TableActions';
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import TableActions from '@/actions/TableActions';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
 import Measure, { ContentRect } from 'react-measure';
-import RowWrapperCell from 'components/table/RowWrapperCell';
-import { TextCell, HeaderCell } from 'components/table/Cell';
+import RowWrapperCell from '@/components/table/RowWrapperCell';
+import { TextCell, HeaderCell } from '@/components/table/Cell';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { textToI18nKey, toArray } from 'utils/TranslationUtils';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { textToI18nKey, toArray } from '@/utils/TranslationUtils';
 
 const TABLE_ROW_HEIGHT = 50;
 
@@ -118,7 +118,6 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     const maxRows = convertEndToRows(height);
 
     if (store.DEBUG) {
-      // eslint-disable-next-line max-len
       console.log(
         `Settings changed, start: ${startRows}, end: ${maxRows}, height: ${height}`,
         store.viewName,

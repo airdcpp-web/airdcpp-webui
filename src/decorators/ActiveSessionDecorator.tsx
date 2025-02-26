@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import LocalSettingStore from 'stores/reflux/LocalSettingStore';
-import { LocalSettings } from 'constants/SettingConstants';
+import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
+import { LocalSettings } from '@/constants/SettingConstants';
 
-import * as UI from 'types/ui';
-import { useStoreProperty } from 'context/StoreContext';
-import { useSocket } from 'context/SocketContext';
-// import { SessionChildProps } from 'routes/Sidebar/components/types';
+import * as UI from '@/types/ui';
+import { useStoreProperty } from '@/context/StoreContext';
+import { useSocket } from '@/context/SocketContext';
+// import { SessionChildProps } from '@/routes/Sidebar/components/types';
 
 // type SessionType = UI.SessionItemBase;
 

@@ -1,14 +1,14 @@
 import * as React from 'react';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
-import { FormFieldSettingHandler } from 'components/form/Form';
-import { toFormI18nKey } from 'utils/FormUtils';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { FormFieldSettingHandler } from '@/components/form/Form';
+import { toFormI18nKey } from '@/utils/FormUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import Message from 'components/semantic/Message';
-import IconConstants from 'constants/IconConstants';
+import Message from '@/components/semantic/Message';
+import IconConstants from '@/constants/IconConstants';
 
 const Entry = ['tcp_port', 'udp_port', 'tls_port', 'preferred_port_mapper'];
 

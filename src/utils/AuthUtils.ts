@@ -1,4 +1,4 @@
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { toI18nKey } from './TranslationUtils';
 
 export const parseLoginError = (

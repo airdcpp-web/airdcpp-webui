@@ -1,13 +1,13 @@
 import { memo } from 'react';
 
-import Icon from 'components/semantic/Icon';
+import Icon from '@/components/semantic/Icon';
 
-import IconConstants from 'constants/IconConstants';
-import ShareConstants from 'constants/ShareConstants';
+import IconConstants from '@/constants/IconConstants';
+import ShareConstants from '@/constants/ShareConstants';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator from '@/decorators/DataProviderDecorator';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 interface RefreshProgressProps {}
 

@@ -1,8 +1,8 @@
-import ShareRootConstants from 'constants/ShareRootConstants';
-import IconConstants from 'constants/IconConstants';
+import ShareRootConstants from '@/constants/ShareRootConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const handleCreate: UI.ActionHandler<void> = ({ navigate }) => {
   navigate(`directories`);

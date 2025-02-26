@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import TransferConstants from 'constants/TransferConstants';
+import TransferConstants from '@/constants/TransferConstants';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import { AddSocketListener } from 'decorators/SocketSubscriptionDecorator';
+import { AddSocketListener } from '@/decorators/SocketSubscriptionDecorator';
 
-import { APISocket } from 'services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
 const IDLE_APPEND_INTERVAL_MS = 3000;
 const DEFAULT_MAX_EVENTS = 1800; // 30 minutes when transfers are running

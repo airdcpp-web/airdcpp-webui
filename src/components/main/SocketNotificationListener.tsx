@@ -3,28 +3,28 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-import PrivateChatConstants from 'constants/PrivateChatConstants';
-import ViewFileConstants from 'constants/ViewFileConstants';
-import { default as QueueConstants } from 'constants/QueueConstants';
-import { default as EventConstants } from 'constants/EventConstants';
+import PrivateChatConstants from '@/constants/PrivateChatConstants';
+import ViewFileConstants from '@/constants/ViewFileConstants';
+import { default as QueueConstants } from '@/constants/QueueConstants';
+import { default as EventConstants } from '@/constants/EventConstants';
 
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
-import LocalSettingStore from 'stores/reflux/LocalSettingStore';
-import { LocalSettings } from 'constants/SettingConstants';
+import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
+import { LocalSettings } from '@/constants/SettingConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import Severity = API.SeverityEnum;
 import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
-} from 'decorators/SocketSubscriptionDecorator';
-import { translate, toI18nKey } from 'utils/TranslationUtils';
-import HubConstants from 'constants/HubConstants';
+} from '@/decorators/SocketSubscriptionDecorator';
+import { translate, toI18nKey } from '@/utils/TranslationUtils';
+import HubConstants from '@/constants/HubConstants';
 
-import { useAppStore } from 'context/StoreContext';
+import { useAppStore } from '@/context/StoreContext';
 
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {
@@ -293,7 +293,6 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line max-len
     addSocketListener(
       PrivateChatConstants.MODULE_URL,
       PrivateChatConstants.MESSAGE,
@@ -302,7 +301,6 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       API.AccessEnum.PRIVATE_CHAT_VIEW,
     );
 
-    // eslint-disable-next-line max-len
     addSocketListener(
       HubConstants.MODULE_URL,
       HubConstants.HUB_MESSAGE,
@@ -311,7 +309,6 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       API.AccessEnum.HUBS_VIEW,
     );
 
-    // eslint-disable-next-line max-len
     addSocketListener(
       QueueConstants.MODULE_URL,
       QueueConstants.BUNDLE_ADDED,
@@ -319,7 +316,6 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       undefined,
       API.AccessEnum.QUEUE_VIEW,
     );
-    // eslint-disable-next-line max-len
     addSocketListener(
       QueueConstants.MODULE_URL,
       QueueConstants.BUNDLE_STATUS,
@@ -328,7 +324,6 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       API.AccessEnum.QUEUE_VIEW,
     );
 
-    // eslint-disable-next-line max-len
     addSocketListener(
       EventConstants.MODULE_URL,
       EventConstants.MESSAGE,
@@ -336,7 +331,6 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       undefined,
       API.AccessEnum.EVENTS_VIEW,
     );
-    // eslint-disable-next-line max-len
     addSocketListener(
       ViewFileConstants.MODULE_URL,
       ViewFileConstants.FILE_DOWNLOADED,

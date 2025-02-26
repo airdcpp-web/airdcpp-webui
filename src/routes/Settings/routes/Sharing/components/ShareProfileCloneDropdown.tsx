@@ -1,26 +1,26 @@
 import * as React from 'react';
 
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import {
   ActionHandlerDecorator,
   ActionClickHandler,
-} from 'decorators/ActionHandlerDecorator';
+} from '@/decorators/ActionHandlerDecorator';
 import {
   ShareProfileActionModule,
   ShareProfileCloneAction,
   ShareProfileCreateAction,
-} from 'actions/ui/share';
-import SectionedDropdown from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
-import IconConstants from 'constants/IconConstants';
-import { translateActionName } from 'utils/ActionUtils';
-import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
-import { Formatter, useFormatter } from 'context/FormatterContext';
-import { useSession } from 'context/SessionContext';
+} from '@/actions/ui/share';
+import SectionedDropdown from '@/components/semantic/SectionedDropdown';
+import MenuSection from '@/components/semantic/MenuSection';
+import IconConstants from '@/constants/IconConstants';
+import { translateActionName } from '@/utils/ActionUtils';
+import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
+import { Formatter, useFormatter } from '@/context/FormatterContext';
+import { useSession } from '@/context/SessionContext';
 
 const getProfileItem = (
   profile: API.ShareProfile,

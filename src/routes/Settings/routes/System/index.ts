@@ -1,6 +1,6 @@
-import { RootSectionType } from 'routes/Settings/types';
+import { RootSectionType } from '@/routes/Settings/types';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 const System: RootSectionType = {
   url: 'system',

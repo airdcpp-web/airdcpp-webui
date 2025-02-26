@@ -1,32 +1,32 @@
 import * as React from 'react';
 
-import { dupeToStringType } from 'utils/TypeConvert';
-import { TableActionMenu } from 'components/action-menu';
+import { dupeToStringType } from '@/utils/TypeConvert';
+import { TableActionMenu } from '@/components/action-menu';
 
-import FilelistViewStore from 'stores/views/FilelistViewStore';
+import FilelistViewStore from '@/stores/views/FilelistViewStore';
 
-import VirtualTable from 'components/table/VirtualTable';
+import VirtualTable from '@/components/table/VirtualTable';
 import {
   SizeCell,
   DurationCell,
   FileDownloadCell,
   FileDownloadCellClickHandler,
-} from 'components/table/Cell';
+} from '@/components/table/Cell';
 import { Column } from 'fixed-data-table-2';
 
-import IconConstants from 'constants/IconConstants';
-import Loader from 'components/semantic/Loader';
-import Message from 'components/semantic/Message';
+import IconConstants from '@/constants/IconConstants';
+import Loader from '@/components/semantic/Loader';
+import Message from '@/components/semantic/Message';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { FilelistItemInfoDialog } from './item-info-dialog';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
-import { filelistDownloadHandler } from 'services/api/FilelistApi';
-import MenuConstants from 'constants/MenuConstants';
-import { FilelistItemActionMenu } from 'actions/ui/filelist';
-import { useAppStore } from 'context/StoreContext';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
+import { filelistDownloadHandler } from '@/services/api/FilelistApi';
+import MenuConstants from '@/constants/MenuConstants';
+import { FilelistItemActionMenu } from '@/actions/ui/filelist';
+import { useAppStore } from '@/context/StoreContext';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   session: API.FilelistSession;

@@ -2,7 +2,7 @@ import { camelCase } from 'lodash';
 import invariant from 'invariant';
 import { TOptions } from 'i18next';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export const parseTranslationModules = (moduleIds: string | string[]) => {
   if (typeof moduleIds === 'string') {

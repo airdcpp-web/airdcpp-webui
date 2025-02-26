@@ -116,7 +116,6 @@ function getUnionConcreteType(type, value) {
     if (process.env.NODE_ENV !== 'production') {
       t.assert(
         t.isType(concreteType),
-        // eslint-disable-next-line max-len
         () =>
           'Invalid value ' +
           t.assert.stringify(value) +

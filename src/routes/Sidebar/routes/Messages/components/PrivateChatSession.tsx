@@ -1,17 +1,17 @@
-import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
-import MessageFooter from 'routes/Sidebar/routes/Messages/components/MessageFooter';
+import ChatLayout from '@/routes/Sidebar/components/chat/ChatLayout';
+import MessageFooter from '@/routes/Sidebar/routes/Messages/components/MessageFooter';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { shareTempFile } from 'services/api/ShareApi';
-import MenuConstants from 'constants/MenuConstants';
-import { SessionChildProps } from 'routes/Sidebar/components/types';
-import { useSession } from 'context/SessionContext';
-import { buildChatCommands } from 'routes/Sidebar/components/chat/commands/ChatCommands';
-import { clearPrivateChatMessages } from 'services/api/PrivateChatApi';
-import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
-import { PrivateChatStoreSelector } from 'stores/privateChatSessionSlice';
+import { shareTempFile } from '@/services/api/ShareApi';
+import MenuConstants from '@/constants/MenuConstants';
+import { SessionChildProps } from '@/routes/Sidebar/components/types';
+import { useSession } from '@/context/SessionContext';
+import { buildChatCommands } from '@/routes/Sidebar/components/chat/commands/ChatCommands';
+import { clearPrivateChatMessages } from '@/services/api/PrivateChatApi';
+import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
+import { PrivateChatStoreSelector } from '@/stores/privateChatSessionSlice';
 
 type PrivateChatSessionProps = SessionChildProps<
   API.PrivateChat,

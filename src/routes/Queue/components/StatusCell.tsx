@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import Progress from 'components/semantic/Progress';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import Progress from '@/components/semantic/Progress';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 const getStatusClass = (cellData: API.QueueBundleStatus, rowData: API.QueueBundle) => {
   if (cellData.completed) {

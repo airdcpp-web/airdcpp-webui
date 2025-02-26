@@ -1,3 +1,4 @@
+import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
 import * as React from 'react';
 
 export const MODAL_NODE_ID = 'modals-node';
@@ -64,13 +65,16 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
     return void 0;
   };
 
+  const instanceId = React.useContext(UIInstanceContext);
+  const modalNodeId = appendInstanceId(MODAL_NODE_ID, instanceId);
+
   React.useLayoutEffect(() => {
     // We can't use the same context as for modals
     // because the dimmer wouldn't work correctly then
     // (the new dimmer would never be set active because the dimmable object is set to dimmed already)
     // Track https://github.com/Semantic-Org/Semantic-UI/issues/4055
     const settings: SemanticUI.ModalSettings = {
-      context: `#${MODAL_PAGE_DIMMER_ID}`,
+      context: `#${appendInstanceId(MODAL_PAGE_DIMMER_ID, instanceId)}`,
       detachable: false,
       allowMultiple: true,
       onHide,
@@ -79,7 +83,7 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
       onApprove,
 
       dimmerSettings: {
-        dimmerName: MODAL_NODE_ID,
+        dimmerName: modalNodeId,
         //selector: {
         //  dimmer: `> .ui.dimmer.${NODE_ID}`
         //},
@@ -117,5 +121,5 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
     };
   }, [props.onClose, props.onApprove]);
 
-  return { ref, hide, saving };
+  return { ref, hide, saving, modalNodeId };
 };

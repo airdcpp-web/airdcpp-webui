@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import LoginActions from 'actions/reflux/LoginActions';
+import LoginActions from '@/actions/reflux/LoginActions';
 
-import { APISocket } from 'services/SocketService';
-import { useAppStore } from 'context/StoreContext';
-import { ActivityAPIActions } from 'actions/store/ActivityActions';
+import { APISocket } from '@/services/SocketService';
+import { useAppStore } from '@/context/StoreContext';
+import { ActivityAPIActions } from '@/actions/store/ActivityActions';
 
 const SYSTEM_ALIVE_TIMEOUT = 30000;
 const USER_ACTIVE_TIMEOUT = 30000;

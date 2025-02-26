@@ -1,10 +1,10 @@
-import ExtensionConstants from 'constants/ExtensionConstants';
+import ExtensionConstants from '@/constants/ExtensionConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { MENU_DIVIDER } from 'constants/ActionConstants';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { MENU_DIVIDER } from '@/constants/ActionConstants';
 
 type Filter = UI.ActionFilter<API.Extension>;
 const isManaged: Filter = ({ itemData: extension }) => extension.managed;

@@ -1,15 +1,15 @@
 import * as React from 'react';
 
 import { ExtensionInfoEntry } from './ExtensionInfoEntry';
-import ExtensionConstants from 'constants/ExtensionConstants';
+import ExtensionConstants from '@/constants/ExtensionConstants';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import { fetchCorsSafeData } from 'services/HttpService';
+} from '@/decorators/DataProviderDecorator';
+import { fetchCorsSafeData } from '@/services/HttpService';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import 'fomantic-ui-css/components/list.min.css';
 import '../style.css';

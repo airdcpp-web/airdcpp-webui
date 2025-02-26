@@ -1,4 +1,4 @@
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { getModuleT, toI18nKey } from './TranslationUtils';
 import { getRandomInt } from './ValueUtils';
 

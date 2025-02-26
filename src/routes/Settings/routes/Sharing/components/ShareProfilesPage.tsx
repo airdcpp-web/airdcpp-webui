@@ -1,24 +1,24 @@
 import * as React from 'react';
 
-import { ShareProfileEditMenu } from 'actions/ui/share/ShareProfileActions';
+import { ShareProfileEditMenu } from '@/actions/ui/share/ShareProfileActions';
 
-import { ActionMenu } from 'components/action-menu';
+import { ActionMenu } from '@/components/action-menu';
 
 import { Link } from 'react-router';
-import Message from 'components/semantic/Message';
+import Message from '@/components/semantic/Message';
 
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
-} from 'decorators/ShareProfileDecorator';
-import { useFormatter } from 'context/FormatterContext';
+} from '@/decorators/ShareProfileDecorator';
+import { useFormatter } from '@/context/FormatterContext';
 
 import '../style.css';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import { SettingPageProps } from 'routes/Settings/types';
+import { SettingPageProps } from '@/routes/Settings/types';
 import { Trans } from 'react-i18next';
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 import ShareProfileCloneDropdown from './ShareProfileCloneDropdown';
 
 interface ShareProfileRowProps {

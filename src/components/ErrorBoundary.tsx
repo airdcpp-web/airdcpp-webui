@@ -1,9 +1,9 @@
 import { Component } from 'react';
 
-import ExternalLink from 'components/ExternalLink';
-import LinkConstants from 'constants/LinkConstants';
+import ExternalLink from '@/components/ExternalLink';
+import LinkConstants from '@/constants/LinkConstants';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 interface ErrorBoundaryState {
   error: Error | null;

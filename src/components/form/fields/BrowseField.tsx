@@ -2,14 +2,14 @@ import { useRef, useState } from 'react';
 import * as React from 'react';
 import classNames from 'classnames';
 
-import tcomb from 'utils/tcomb-form';
+import tcomb from '@/utils/tcomb-form';
 
-import Button from 'components/semantic/Button';
-import { FileBrowserDialog } from 'components/filebrowser';
+import Button from '@/components/semantic/Button';
+import { FileBrowserDialog } from '@/components/filebrowser';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { useSession } from 'context/SessionContext';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { useSession } from '@/context/SessionContext';
 
 interface BrowseFieldConfig {
   historyId: string;

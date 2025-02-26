@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
+import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 interface SessionMenuItemProps {
   url: string;

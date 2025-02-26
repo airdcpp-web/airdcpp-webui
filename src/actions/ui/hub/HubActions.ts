@@ -1,13 +1,13 @@
-import HubConstants from 'constants/HubConstants';
+import HubConstants from '@/constants/HubConstants';
 
 import { BuildClearChatAction } from '../decorators/ChatActionDecorator';
 import { BuildRemoveSessionAction } from '../decorators/SessionActionDecorator';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { MENU_DIVIDER } from 'constants/ActionConstants';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { MENU_DIVIDER } from '@/constants/ActionConstants';
 
 type Filter = UI.ActionFilter<API.Hub>;
 const notFavorite: Filter = ({ itemData: hub }) => !hub.favorite_hub;

@@ -2,21 +2,21 @@ import { useState } from 'react';
 import * as React from 'react';
 import invariant from 'invariant';
 
-import Widget from 'routes/Home/components/Widget';
-import WidgetDialog from 'routes/Home/components/WidgetDialog';
+import Widget from '@/routes/Home/components/Widget';
+import WidgetDialog from '@/routes/Home/components/WidgetDialog';
 
 import { Responsive, WidthProvider, Layout, Layouts } from 'react-grid-layout';
-import WidgetStore from 'stores/reflux/WidgetStore';
+import WidgetStore from '@/stores/reflux/WidgetStore';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
 import 'fomantic-ui-css/components/card.min.css';
-import { useStore } from 'effects/StoreListenerEffect';
+import { useStore } from '@/effects/StoreListenerEffect';
 
 import { useTranslation } from 'react-i18next';
-import * as UI from 'types/ui';
-import { getModuleT } from 'utils/TranslationUtils';
+import * as UI from '@/types/ui';
+import { getModuleT } from '@/utils/TranslationUtils';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 

@@ -1,21 +1,18 @@
-import {
-  getConnectedSocket,
-  getMockServer,
-} from 'airdcpp-apisocket/tests/mock-server.js';
-
-// import { jest } from '@jest/globals';
-import { renderRoutes } from 'tests/test-containers';
-
-// import * as API from 'types/api';
-// import * as UI from 'types/ui';
-
+import { afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { waitFor } from '@testing-library/dom';
 
-import { TransferWidgetInfo } from 'widgets/Transfers';
-import TransferConstants from 'constants/TransferConstants';
-import { TransferStatsResponse } from 'tests/mocks/api/transfers';
-import { installSvgMocks } from 'tests/mocks/mock-svg';
-import { getWidgetRenderRouteContainer } from 'tests/test-widget';
+import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+
+import { renderRoutes } from '@/tests/test-containers';
+
+// import * as API from '@/types/api';
+// import * as UI from '@/types/ui';
+
+import { TransferWidgetInfo } from '@/widgets/Transfers';
+import TransferConstants from '@/constants/TransferConstants';
+import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
+import { installSvgMocks } from '@/tests/mocks/mock-svg';
+import { getWidgetRenderRouteContainer } from '@/tests/test-widget';
 
 describe('Transfer widget', () => {
   let server: ReturnType<typeof getMockServer>;
@@ -65,7 +62,7 @@ describe('Transfer widget', () => {
   });
 
   describe('render', () => {
-    test.skip('should render', async () => {
+    test('should render', async () => {
       const { getByText } = await renderWidget();
 
       const windowSize = 400;
@@ -81,7 +78,7 @@ describe('Transfer widget', () => {
       await waitFor(() => expect(getByText('Download limit')).toBeTruthy());
     }, 100000);
 
-    test.skip('should purge old events', async () => {
+    test('should purge old events', async () => {
       const { getByText, getByTestId, transferStats } = await renderWidget({
         maxEvents: 10,
       });
@@ -97,7 +94,7 @@ describe('Transfer widget', () => {
 
       const eventCount = getByTestId('transfer-widget-event-count')!;
 
-      expect(eventCount.textContent).toEqual('10');
+      await waitFor(() => expect(eventCount.textContent).toEqual('10'));
     }, 100000);
   });
 });

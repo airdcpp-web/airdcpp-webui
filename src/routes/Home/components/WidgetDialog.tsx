@@ -1,24 +1,24 @@
 import { useCallback, useMemo, useRef } from 'react';
 
-import Message from 'components/semantic/Message';
-import RouteModal from 'components/semantic/RouteModal';
+import Message from '@/components/semantic/Message';
+import RouteModal from '@/components/semantic/RouteModal';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import Form, { FormSaveHandler } from 'components/form/Form';
+import Form, { FormSaveHandler } from '@/components/form/Form';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
-import WidgetActions from 'actions/reflux/WidgetActions';
-import WidgetStore from 'stores/reflux/WidgetStore';
-import { getWidgetT, createWidgetId, translateWidgetName } from 'utils/WidgetUtils';
+import WidgetActions from '@/actions/reflux/WidgetActions';
+import WidgetStore from '@/stores/reflux/WidgetStore';
+import { getWidgetT, createWidgetId, translateWidgetName } from '@/utils/WidgetUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { translateForm } from 'utils/FormUtils';
+import { translateForm } from '@/utils/FormUtils';
 import { useParams } from 'react-router';
 
 type FormValue = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];

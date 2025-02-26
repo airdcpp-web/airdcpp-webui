@@ -1,14 +1,14 @@
 import * as React from 'react';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import ActionButton from 'components/ActionButton';
-import Message from 'components/semantic/Message';
+import ActionButton from '@/components/ActionButton';
+import Message from '@/components/semantic/Message';
 import {
   SystemActionModule,
   SystemRestartWebAction,
-} from 'actions/ui/system/SystemActions';
-import { SettingPageProps } from 'routes/Settings/types';
-import IconConstants from 'constants/IconConstants';
+} from '@/actions/ui/system/SystemActions';
+import { SettingPageProps } from '@/routes/Settings/types';
+import IconConstants from '@/constants/IconConstants';
 
 const PlainEntry = ['web_plain_port', 'web_plain_bind_address'];
 

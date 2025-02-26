@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import Icon, { IconType } from 'components/semantic/Icon';
+import Icon, { IconType } from '@/components/semantic/Icon';
 
 export type ListItemProps = React.PropsWithChildren<{
   header: React.ReactNode;

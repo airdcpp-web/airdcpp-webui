@@ -1,7 +1,7 @@
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import SocketService from 'services/SocketService';
-import QueueConstants from 'constants/QueueConstants';
+import SocketService from '@/services/SocketService';
+import QueueConstants from '@/constants/QueueConstants';
 
 export const createFileBundle = (data: API.QueueFileBundleDownloadData) => {
   return SocketService.post(`${QueueConstants.BUNDLES_URL}/file`, data);

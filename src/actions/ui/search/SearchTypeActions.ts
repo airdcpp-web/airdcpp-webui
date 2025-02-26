@@ -1,8 +1,8 @@
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import SearchConstants from 'constants/SearchConstants';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import SearchConstants from '@/constants/SearchConstants';
 
 type Filter = UI.ActionFilter<API.SearchType>;
 const notDefaultType: Filter = ({ itemData: type }) => !type.default_type;

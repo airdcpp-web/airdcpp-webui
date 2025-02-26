@@ -1,11 +1,11 @@
-import ViewFileConstants from 'constants/ViewFileConstants';
+import ViewFileConstants from '@/constants/ViewFileConstants';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { SessionCreatorDecorator } from './decorators/SessionCreatorDecorator';
-import { APISocket } from 'services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
 interface RemoteViewFileData {
   itemInfo: UI.DownloadableItemInfo;

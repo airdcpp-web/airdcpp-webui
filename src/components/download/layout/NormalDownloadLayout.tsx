@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import Button from 'components/semantic/Button';
-import { Grid } from 'components/semantic/Grid';
+import Button from '@/components/semantic/Button';
+import { Grid } from '@/components/semantic/Grid';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { DownloadLayoutProps } from '../types';
 
 export const NormalDownloadLayout: React.FC<DownloadLayoutProps> = ({

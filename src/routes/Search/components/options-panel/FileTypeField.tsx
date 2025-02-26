@@ -1,16 +1,17 @@
 import * as React from 'react';
-import t from 'utils/tcomb-form';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import tcomb from '@/utils/tcomb-form';
+
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import SearchConstants from 'constants/SearchConstants';
-import Dropdown from 'components/semantic/Dropdown';
-import MenuItemLink from 'components/semantic/MenuItemLink';
-import { SearchTypeIcon } from 'components/icon/SearchTypeIcon';
+} from '@/decorators/DataProviderDecorator';
+import SearchConstants from '@/constants/SearchConstants';
+import Dropdown from '@/components/semantic/Dropdown';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
+import { SearchTypeIcon } from '@/components/icon/SearchTypeIcon';
 
 type OnChangeHandler = (value: string | null) => void;
 
@@ -109,4 +110,4 @@ const FileTypeField: TCombTemplate = {
   },
 };
 
-export default t.form.Form.templates.select.clone(FileTypeField);
+export default tcomb.form.Form.templates.select.clone(FileTypeField);

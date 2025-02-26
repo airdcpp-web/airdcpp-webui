@@ -1,17 +1,17 @@
-import RecentLayout from 'routes/Sidebar/components/RecentLayout';
+import RecentLayout from '@/routes/Sidebar/components/RecentLayout';
 
-import ShareProfileSelector from 'routes/Sidebar/routes/Filelists/components/ShareProfileSelector';
-import { HistoryEntryEnum } from 'constants/HistoryConstants';
+import ShareProfileSelector from '@/routes/Sidebar/routes/Filelists/components/ShareProfileSelector';
+import { HistoryEntryEnum } from '@/constants/HistoryConstants';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import IconConstants from 'constants/IconConstants';
-import { UserSelectField } from 'components/select';
-import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
-import LinkButton from 'components/semantic/LinkButton';
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
-import { useAppStore } from 'context/StoreContext';
-import { useSocket } from 'context/SocketContext';
+import IconConstants from '@/constants/IconConstants';
+import { UserSelectField } from '@/components/select';
+import { NewSessionLayoutProps } from '@/routes/Sidebar/components/types';
+import LinkButton from '@/components/semantic/LinkButton';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
+import { useAppStore } from '@/context/StoreContext';
+import { useSocket } from '@/context/SocketContext';
 
 const FilelistNew: React.FC<NewSessionLayoutProps> = ({ navigate, sessionT }) => {
   const store = useAppStore();

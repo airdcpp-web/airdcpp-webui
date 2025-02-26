@@ -1,23 +1,23 @@
 import { useState, useRef } from 'react';
 import * as React from 'react';
 
-import LoginActions from 'actions/reflux/LoginActions';
-import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
+import LoginActions from '@/actions/reflux/LoginActions';
+import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
 
-import Checkbox from 'components/semantic/Checkbox';
-import SocketConnectStatus from 'components/main/SocketConnectStatus';
+import Checkbox from '@/components/semantic/Checkbox';
+import SocketConnectStatus from '@/components/main/SocketConnectStatus';
 import { useSessionState } from '../effects/LoginStateEffect';
 import { ErrorBox, BottomMessage, SubmitButton } from './LoginLayoutComponents';
 
 import '../style.css';
 import { useTranslation } from 'react-i18next';
-import { getModuleT } from 'utils/TranslationUtils';
+import { getModuleT } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
-import IconConstants from 'constants/IconConstants';
-import { useStore } from 'effects/StoreListenerEffect';
-import Input from 'components/semantic/Input';
-import { useSocket } from 'context/SocketContext';
+import * as UI from '@/types/ui';
+import IconConstants from '@/constants/IconConstants';
+import { useStore } from '@/effects/StoreListenerEffect';
+import Input from '@/components/semantic/Input';
+import { useSocket } from '@/context/SocketContext';
 
 interface LoginProps {}
 

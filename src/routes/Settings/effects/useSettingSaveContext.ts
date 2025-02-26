@@ -1,11 +1,11 @@
 import * as React from 'react';
 import invariant from 'invariant';
 
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
-import Form, { FormFieldChangeHandler } from 'components/form/Form';
+import Form, { FormFieldChangeHandler } from '@/components/form/Form';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import { ChildSectionType } from '../types';
 import { useBlocker } from 'react-router';

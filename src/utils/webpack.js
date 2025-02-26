@@ -1,4 +1,4 @@
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
 // The webpack path must be set before loading any styles
 // Since common styles are imported in the main entry, this must be done in a separate import

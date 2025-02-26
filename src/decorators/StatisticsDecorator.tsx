@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import Message from 'components/semantic/Message';
+import Message from '@/components/semantic/Message';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 import { Translation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
-import { useSocket } from 'context/SocketContext';
+import * as UI from '@/types/ui';
+import { useSocket } from '@/context/SocketContext';
 
 export interface StatisticsDecoratorProps<DataT> {}
 

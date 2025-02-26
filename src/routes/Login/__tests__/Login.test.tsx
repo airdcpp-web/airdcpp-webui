@@ -1,28 +1,30 @@
+import { waitFor } from '@testing-library/dom';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+
 import {
   DEFAULT_AUTH_RESPONSE,
   DEFAULT_CONNECT_PARAMS,
   getMockServer,
   getSocket,
-} from 'airdcpp-apisocket/tests/mock-server.js';
+} from 'airdcpp-apisocket/tests';
 
-import { renderRoutes } from 'tests/test-containers';
+import { renderRoutes } from '@/tests/test-containers';
 
 import {
   setInputFieldValuesByPlaceholder,
   setupUserEvent,
-} from 'tests/test-form-helpers';
-import { waitFor } from '@testing-library/dom';
+} from '@/tests/test-form-helpers';
 import Login from '../components/Login';
-import { waitForUrl } from 'tests/test-helpers';
-import { getLogoutItem, parseMenuItem } from 'routes/Routes';
+import { waitForUrl } from '@/tests/test-helpers';
+import { getLogoutItem, parseMenuItem } from '@/routes/Routes';
 
 // tslint:disable:no-empty
 describe('Login', () => {
   let server: ReturnType<typeof getMockServer>;
 
   const addSuccessLoginHandlers = () => {
-    const onLogin = jest.fn();
-    const onLogout = jest.fn();
+    const onLogin = vi.fn();
+    const onLogout = vi.fn();
 
     server.addRequestHandler(
       'POST',
@@ -117,7 +119,7 @@ describe('Login', () => {
   test.skip('should handle invalid credentials', async () => {
     const userEvent = setupUserEvent();
 
-    const onLoginFailed = jest.fn();
+    const onLoginFailed = vi.fn();
     server.addErrorHandler(
       'POST',
       'sessions/authorize',

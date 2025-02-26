@@ -1,22 +1,22 @@
 import * as React from 'react';
 import cx from 'classnames';
 
-import SectionedDropdown from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import SectionedDropdown from '@/components/semantic/SectionedDropdown';
+import MenuSection from '@/components/semantic/MenuSection';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import ShareConstants from 'constants/ShareConstants';
-import NotificationActions from 'actions/NotificationActions';
-import IconConstants from 'constants/IconConstants';
-import FileIcon from 'components/icon/FileIcon';
+} from '@/decorators/DataProviderDecorator';
+import ShareConstants from '@/constants/ShareConstants';
+import NotificationActions from '@/actions/NotificationActions';
+import IconConstants from '@/constants/IconConstants';
+import FileIcon from '@/components/icon/FileIcon';
 
-import { translate, toI18nKey } from 'utils/TranslationUtils';
+import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 
 export interface TempShareDropdownProps {

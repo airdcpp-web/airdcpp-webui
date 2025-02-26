@@ -1,26 +1,26 @@
 import * as React from 'react';
 
-import WebUserConstants from 'constants/WebUserConstants';
+import WebUserConstants from '@/constants/WebUserConstants';
 import {
   WebUserActionModule,
   WebUserCreateAction,
   WebUserEditActionMenu,
-} from 'actions/ui/system/WebUserActions';
+} from '@/actions/ui/system/WebUserActions';
 
-import ActionButton from 'components/ActionButton';
-import WebUserDialog from 'routes/Settings/routes/System/components/users/WebUserDialog';
+import ActionButton from '@/components/ActionButton';
+import WebUserDialog from '@/routes/Settings/routes/System/components/users/WebUserDialog';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import { ActionMenu } from 'components/action-menu';
+import { ActionMenu } from '@/components/action-menu';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { SettingPageProps } from 'routes/Settings/types';
-import { useFormatter } from 'context/FormatterContext';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { useFormatter } from '@/context/FormatterContext';
 
 interface WebUserRowProps {
   user: API.WebUser;

@@ -1,5 +1,5 @@
-import t from '../components/form/tcomb/main';
-import { FormContext } from 'types/ui';
+import t from '@/components/form/tcomb/main';
+import { FormContext } from '@/types/ui';
 
 export const Positive = t.refinement(t.Number, (n: number) => {
   return n >= 0 && n % 1 === 0;

@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
-import NotificationActions from 'actions/NotificationActions';
-import { errorResponseToString } from 'utils/TypeConvert';
+import NotificationActions from '@/actions/NotificationActions';
+import { errorResponseToString } from '@/utils/TypeConvert';
 
 const NotificationStore = Reflux.createStore({
   listenables: NotificationActions,

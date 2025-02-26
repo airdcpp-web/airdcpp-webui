@@ -1,7 +1,7 @@
-import HubConstants from 'constants/HubConstants';
+import HubConstants from '@/constants/HubConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const handleToggleChatNotify: UI.ActionHandler<API.Hub> = ({ itemData: hub, socket }) => {
   return socket.patch(`${HubConstants.SESSIONS_URL}/${hub.id}`, {

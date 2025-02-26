@@ -1,10 +1,10 @@
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 import { MessageCounts, SessionItemBase, SessionType } from './sessions';
 import { UrgencyCountMap } from './urgencies';
 import { MessageListItem } from './messages';
 import { Getter, LensContext, ResolveStoreApi, Setter } from '@dhmk/zustand-lens';
-import { APISocket } from 'services/SocketService';
+import { APISocket } from '@/services/SocketService';
 import { AuthenticatedSession } from './auth';
 import { SubscriptionCallback } from 'airdcpp-apisocket';
 

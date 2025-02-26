@@ -1,8 +1,8 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import MenuConstants from 'constants/MenuConstants';
-import IconConstants from 'constants/IconConstants';
+import MenuConstants from '@/constants/MenuConstants';
+import IconConstants from '@/constants/IconConstants';
 import { RemoteMenuData } from './remoteMenuFetcher';
 
 interface MenuOptions {

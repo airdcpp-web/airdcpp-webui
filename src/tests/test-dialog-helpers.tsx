@@ -1,9 +1,10 @@
 import { act, fireEvent, waitFor } from '@testing-library/react';
-import Button from 'components/semantic/Button';
+import Button from '@/components/semantic/Button';
 import { useNavigate } from 'react-router';
 import { NodeRenderResult, RouteRenderResult } from './test-containers';
 import { clickButton, waitForUrl } from './test-helpers';
 import { useState } from 'react';
+import { expect } from 'vitest';
 
 export const TestRouteModalNavigateButton = ({ modalRoute }: { modalRoute: string }) => {
   const navigate = useNavigate();

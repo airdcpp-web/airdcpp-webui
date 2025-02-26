@@ -1,6 +1,6 @@
-import { actionFilter, actionAccess } from 'utils/ActionUtils';
+import { actionFilter, actionAccess } from '@/utils/ActionUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export const parseItemData = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined,

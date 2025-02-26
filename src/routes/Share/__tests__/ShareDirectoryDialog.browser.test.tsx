@@ -1,25 +1,23 @@
-import {
-  getConnectedSocket,
-  getMockServer,
-} from 'airdcpp-apisocket/tests/mock-server.js';
+import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
-import { jest } from '@jest/globals';
-import { renderRoutes } from 'tests/test-containers';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import * as UI from 'types/ui';
+import { renderRoutes } from '@/tests/test-containers';
+
+import * as UI from '@/types/ui';
 
 import {
   createTestRouteModalController,
   TestRouteModalNavigateButton,
-} from 'tests/test-dialog-helpers';
-import { getModuleT } from 'utils/TranslationUtils';
+} from '@/tests/test-dialog-helpers';
+import { getModuleT } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
-import ShareProfileConstants from 'constants/ShareProfileConstants';
+import ShareProfileConstants from '@/constants/ShareProfileConstants';
 import {
   ShareProfileDefault,
   ShareProfileEmpty,
   ShareProfilesListResponse,
-} from 'tests/mocks/api/share-profiles';
+} from '@/tests/mocks/api/share-profiles';
 
 import {
   expectFieldValue,
@@ -27,19 +25,19 @@ import {
   addSelectFieldValues,
   setupUserEvent,
   setSelectFieldValues,
-} from 'tests/test-form-helpers';
-import ShareRootConstants from 'constants/ShareRootConstants';
-import { MOCK_SHARE_ROOT_ID, ShareRootGetResponse } from 'tests/mocks/api/share-roots';
+} from '@/tests/test-form-helpers';
+import ShareRootConstants from '@/constants/ShareRootConstants';
+import { MOCK_SHARE_ROOT_ID, ShareRootGetResponse } from '@/tests/mocks/api/share-roots';
 import ShareDirectoryDialog from '../components/ShareDirectoryDialog';
-import ShareConstants from 'constants/ShareConstants';
-import { ShareGetGroupedRootsResponse } from 'tests/mocks/api/share';
+import ShareConstants from '@/constants/ShareConstants';
+import { ShareGetGroupedRootsResponse } from '@/tests/mocks/api/share';
 import { fireEvent, waitFor } from '@testing-library/dom';
-import FilesystemConstants from 'constants/FilesystemConstants';
-import { FilesystemListContentResponse } from 'tests/mocks/api/filesystem';
-import { getBrowseStorageKey } from 'components/filebrowser/effects/useFileItemSelection';
-import { saveLocalProperty } from 'utils/BrowserUtils';
-import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
-import { clickButton, waitForData } from 'tests/test-helpers';
+import FilesystemConstants from '@/constants/FilesystemConstants';
+import { FilesystemListContentResponse } from '@/tests/mocks/api/filesystem';
+import { getBrowseStorageKey } from '@/components/filebrowser/effects/useFileItemSelection';
+import { saveLocalProperty } from '@/utils/BrowserUtils';
+import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
+import { clickButton, waitForData } from '@/tests/test-helpers';
 
 // tslint:disable:no-empty
 describe('ShareDirectoryDialog', () => {
@@ -88,8 +86,8 @@ describe('ShareDirectoryDialog', () => {
       undefined,
     );
 
-    const onCreated = jest.fn();
-    const onUpdated = jest.fn();
+    const onCreated = vi.fn();
+    const onUpdated = vi.fn();
 
     // Save handlers
     server.addRequestHandler(
@@ -145,6 +143,7 @@ describe('ShareDirectoryDialog', () => {
   });
 
   afterEach(() => {
+    localStorage.clear();
     server.stop();
   });
 

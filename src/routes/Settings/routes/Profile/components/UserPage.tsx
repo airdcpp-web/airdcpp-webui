@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { SettingProfileEnum } from 'constants/SettingConstants';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
-import { FormFieldSettingHandler } from 'components/form/Form';
+import { SettingProfileEnum } from '@/constants/SettingConstants';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { FormFieldSettingHandler } from '@/components/form/Form';
 
-import * as UI from 'types/ui';
-import { toFormI18nKey } from 'utils/FormUtils';
-import ExternalLink from 'components/ExternalLink';
-import LinkConstants from 'constants/LinkConstants';
+import * as UI from '@/types/ui';
+import { toFormI18nKey } from '@/utils/FormUtils';
+import ExternalLink from '@/components/ExternalLink';
+import LinkConstants from '@/constants/LinkConstants';
 import { Trans } from 'react-i18next';
 
 const Entry = ['nick', 'description', 'email', 'setting_profile', 'language_file'];

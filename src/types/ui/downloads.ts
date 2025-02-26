@@ -1,5 +1,5 @@
-import { APISocket } from 'services/SocketService';
-import * as API from 'types/api';
+import { APISocket } from '@/services/SocketService';
+import * as API from '@/types/api';
 import { SessionItemBase } from './sessions';
 import { EmptyObject } from './common';
 

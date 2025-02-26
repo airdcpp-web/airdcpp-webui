@@ -1,15 +1,15 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import {
   HubMessageNotifyUrgencies,
   HubMessageUrgencies,
-} from 'constants/UrgencyConstants';
+} from '@/constants/UrgencyConstants';
 import { createSessionSlice, initSessionSlice } from './decorators/sessionSlice';
 import { createMessageSlice, initMessageSlice } from './decorators/messageSlice';
 import { lens } from '@dhmk/zustand-lens';
-import { HubAPIActions } from 'actions/store/HubActions';
-import HubConstants from 'constants/HubConstants';
+import { HubAPIActions } from '@/actions/store/HubActions';
+import HubConstants from '@/constants/HubConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
 const HubSessionUrgencyGetter = (session: API.Hub) =>

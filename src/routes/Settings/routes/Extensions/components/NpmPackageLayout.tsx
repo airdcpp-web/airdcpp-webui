@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import Extension from 'routes/Settings/routes/Extensions/components/extension/Extension';
-import ExtensionConstants from 'constants/ExtensionConstants';
+import Extension from '@/routes/Settings/routes/Extensions/components/extension/Extension';
+import ExtensionConstants from '@/constants/ExtensionConstants';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
 import 'fomantic-ui-css/components/item.min.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { fetchCorsSafeData } from 'services/HttpService';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { fetchCorsSafeData } from '@/services/HttpService';
 
 interface NpmPackageLayoutProps {
   moduleT: UI.ModuleTranslator;

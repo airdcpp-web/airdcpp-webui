@@ -2,15 +2,15 @@ import * as React from 'react';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import HistoryConstants from 'constants/HistoryConstants';
+import HistoryConstants from '@/constants/HistoryConstants';
 
 import LocalSuggestField, { LocalSuggestFieldProps } from './LocalSuggestField';
-import { addHistory } from 'services/api/HistoryApi';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { addHistory } from '@/services/api/HistoryApi';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import { useTranslation } from 'react-i18next';
-import { useSocket } from 'context/SocketContext';
+import { useSocket } from '@/context/SocketContext';
 
 export interface HistoryInputProps
   extends Omit<LocalSuggestFieldProps, 'data' | 'submitHandler'> {

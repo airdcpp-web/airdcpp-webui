@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import { useFormatter } from 'context/FormatterContext';
+import { useFormatter } from '@/context/FormatterContext';
 
-import { DownloadMenu } from 'components/action-menu';
+import { DownloadMenu } from '@/components/action-menu';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
 import './style.css';
-import { Row, Grid } from 'components/semantic/Grid';
+import { Row, Grid } from '@/components/semantic/Grid';
 
 const DupeStrings = {
   //[API.DupeEnum.NONE]: 'None',

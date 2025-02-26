@@ -1,9 +1,9 @@
-import FavoriteHubConstants from 'constants/FavoriteHubConstants';
-import IconConstants from 'constants/IconConstants';
-import { APISocket } from 'services/SocketService';
+import FavoriteHubConstants from '@/constants/FavoriteHubConstants';
+import IconConstants from '@/constants/IconConstants';
+import { APISocket } from '@/services/SocketService';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const sendPassword = (
   socket: APISocket,

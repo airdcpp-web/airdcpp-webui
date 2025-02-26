@@ -1,17 +1,17 @@
 import { PureComponent } from 'react';
 
-import Loader from 'components/semantic/Loader';
-import Message from 'components/semantic/Message';
+import Loader from '@/components/semantic/Loader';
+import Message from '@/components/semantic/Message';
 
-import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
+import { loadSessionProperty, saveSessionProperty } from '@/utils/BrowserUtils';
 
-import Entry from 'widgets/RSS/components/Entry';
-import Footer from 'widgets/RSS/components/Footer';
-import { Settings } from 'widgets/RSS';
-import { FeedItem, RawFeedData } from 'widgets/RSS/types';
-import { fetchRSSFeed, getUniqueEntryKey, parseRSSFeed } from 'widgets/RSS/utils';
+import Entry from '@/widgets/RSS/components/Entry';
+import Footer from '@/widgets/RSS/components/Footer';
+import { Settings } from '@/widgets/RSS';
+import { FeedItem, RawFeedData } from '@/widgets/RSS/types';
+import { fetchRSSFeed, getUniqueEntryKey, parseRSSFeed } from '@/widgets/RSS/utils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import '../style.css';
 

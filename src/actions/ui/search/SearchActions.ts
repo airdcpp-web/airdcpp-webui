@@ -1,8 +1,8 @@
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
-import IconConstants from 'constants/IconConstants';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 type Handler = UI.ActionHandler<API.GroupedSearchResult>;
 

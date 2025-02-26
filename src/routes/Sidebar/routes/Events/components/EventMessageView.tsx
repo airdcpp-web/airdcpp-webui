@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import Loader from 'components/semantic/Loader';
+import Loader from '@/components/semantic/Loader';
 
-import Message from 'components/semantic/Message';
-import MessageView from 'components/messages/MessageView';
+import Message from '@/components/semantic/Message';
+import MessageView from '@/components/messages/MessageView';
 
 import '../style.css';
 
-import * as UI from 'types/ui';
-import { translate } from 'utils/TranslationUtils';
-import { useStoreProperty } from 'context/StoreContext';
+import * as UI from '@/types/ui';
+import { translate } from '@/utils/TranslationUtils';
+import { useStoreProperty } from '@/context/StoreContext';
 
 interface EventMessagesProps {
   messages: UI.MessageListItem[] | null;

@@ -1,4 +1,4 @@
-import TableDropdown, { TableDropdownProps } from 'components/semantic/TableDropdown';
+import TableDropdown, { TableDropdownProps } from '@/components/semantic/TableDropdown';
 
 import ActionMenuDecorator, {
   ActionMenuDecoratorProps,
@@ -10,9 +10,9 @@ import UserMenuDecorator, {
   UserMenuDecoratorProps,
 } from './decorators/UserMenuDecorator';
 
-import { DropdownProps } from 'components/semantic/Dropdown';
+import { DropdownProps } from '@/components/semantic/Dropdown';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { ActionMenuProps, ActionMenu } from './ActionDropdownMenu';
 import { buildMenu } from './builder/slidingMenuBuilder';
 

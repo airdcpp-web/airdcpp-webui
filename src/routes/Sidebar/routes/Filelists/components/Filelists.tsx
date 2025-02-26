@@ -1,23 +1,23 @@
 import * as React from 'react';
 
-import SessionLayout from 'routes/Sidebar/components/SessionLayout';
-import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
+import SessionLayout from '@/routes/Sidebar/components/SessionLayout';
+import UserItemHandlerDecorator from '@/routes/Sidebar/decorators/UserItemHandlerDecorator';
 
-import FilelistNew from 'routes/Sidebar/routes/Filelists/components/FilelistNew';
-import FilelistSession from 'routes/Sidebar/routes/Filelists/components/FilelistSession';
+import FilelistNew from '@/routes/Sidebar/routes/Filelists/components/FilelistNew';
+import FilelistSession from '@/routes/Sidebar/routes/Filelists/components/FilelistSession';
 
 import '../style.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import {
   SessionProviderDecorator,
   SessionProviderDecoratorChildProps,
-} from 'routes/Sidebar/decorators/SessionProviderDecorator';
-import IconConstants from 'constants/IconConstants';
-import { FilelistSessionActionMenu } from 'actions/ui/filelist';
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
-import { FilelistStoreSelector } from 'stores/filelistSlice';
+} from '@/routes/Sidebar/decorators/SessionProviderDecorator';
+import IconConstants from '@/constants/IconConstants';
+import { FilelistSessionActionMenu } from '@/actions/ui/filelist';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
+import { FilelistStoreSelector } from '@/stores/filelistSlice';
 
 const UserItemHandler = UserItemHandlerDecorator(['message']);
 const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {

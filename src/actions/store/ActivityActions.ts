@@ -1,13 +1,13 @@
-import SocketService from 'services/SocketService';
+import SocketService from '@/services/SocketService';
 
-import SessionConstants from 'constants/SessionConstants';
-import SystemConstants from 'constants/SystemConstants';
+import SessionConstants from '@/constants/SessionConstants';
+import SystemConstants from '@/constants/SystemConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import NotificationActions from 'actions/NotificationActions';
-import { translate } from 'utils/TranslationUtils';
+import NotificationActions from '@/actions/NotificationActions';
+import { translate } from '@/utils/TranslationUtils';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 const sendActivity = () => {

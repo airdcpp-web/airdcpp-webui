@@ -1,26 +1,25 @@
-import { checkUnreadSessionInfo, listMessageSort } from 'utils/MessageUtils';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import { checkUnreadSessionInfo, listMessageSort } from '@/utils/MessageUtils';
 
-import { messageSessionMapper } from 'utils/UrgencyUtils';
-import { PrivateMessageUrgencies } from 'constants/UrgencyConstants';
-import { getMockSession } from 'tests/mocks/mock-session';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import {
-  getConnectedSocket,
-  getMockServer,
-} from 'airdcpp-apisocket/tests/mock-server.js';
+import { messageSessionMapper } from '@/utils/UrgencyUtils';
+import { PrivateMessageUrgencies } from '@/constants/UrgencyConstants';
+import { getMockSession } from '@/tests/mocks/mock-session';
 
-import { addMockStoreSocketListeners } from 'tests/mocks/mock-store';
+import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+
+import { addMockStoreSocketListeners } from '@/tests/mocks/mock-store';
 import {
   PrivateChat1,
   PrivateChat1MessageMe,
   PrivateChat1MessageOther,
   PrivateChat1MessagesResponse,
   PrivateChat1MessageStatus,
-} from 'tests/mocks/api/private-chat';
-import { createAppStore } from 'stores';
+} from '@/tests/mocks/api/private-chat';
+import { createAppStore } from '@/stores';
 
 const SESSION_ID = PrivateChat1.id;
 const SESSION_BASE = {
@@ -121,7 +120,7 @@ describe('message store', () => {
   });
 
   test('should reset unread counts for active sessions', () => {
-    const setRead = jest.fn();
+    const setRead = vi.fn();
 
     const data = checkUnreadSessionInfo(chatSessionUnread, setRead);
 

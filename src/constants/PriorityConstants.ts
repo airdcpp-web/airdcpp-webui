@@ -1,4 +1,4 @@
-import { QueuePriorityEnum } from 'types/api';
+import { QueuePriorityEnum } from '@/types/api';
 
 export const PriorityEnum = {
   [QueuePriorityEnum.PAUSED_FORCED]: { str: 'Paused (forced)', id: 0 },

@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
+import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
 
-import { HubAPIActions } from 'actions/store/HubActions';
-import { useAppStore } from 'context/StoreContext';
-import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
-import { EventAPIActions } from 'actions/store/EventActions';
-import { ActivityAPIActions } from 'actions/store/ActivityActions';
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
-import { ViewFileAPIActions } from 'actions/store/ViewFileActions';
+import { HubAPIActions } from '@/actions/store/HubActions';
+import { useAppStore } from '@/context/StoreContext';
+import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
+import { EventAPIActions } from '@/actions/store/EventActions';
+import { ActivityAPIActions } from '@/actions/store/ActivityActions';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
+import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
 
 const fetchStoreData = (store: UI.Store) => {
   const { hasAccess } = LoginStore;

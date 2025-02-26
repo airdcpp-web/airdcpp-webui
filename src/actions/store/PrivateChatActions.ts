@@ -1,10 +1,10 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import ChatActionDecorator from './decorators/ChatActionDecorator';
 import SessionActionDecorator from './decorators/SessionActionDecorator';
-import PrivateChatConstants from 'constants/PrivateChatConstants';
-import { changePrivateChatHubUrl } from 'services/api/PrivateChatApi';
+import PrivateChatConstants from '@/constants/PrivateChatConstants';
+import { changePrivateChatHubUrl } from '@/services/api/PrivateChatApi';
 import { SessionCreatorDecorator } from './decorators/SessionCreatorDecorator';
 
 export const createSession = SessionCreatorDecorator<API.PrivateChat, UI.ActionUserType>({

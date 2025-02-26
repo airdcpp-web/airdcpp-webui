@@ -1,6 +1,6 @@
 import { IntersectionObserverProps } from 'react-intersection-observer';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export interface CommonMessageProps extends Omit<IntersectionObserverProps, 'children'> {
   highlightMenuProps: UI.MessageActionMenuData;

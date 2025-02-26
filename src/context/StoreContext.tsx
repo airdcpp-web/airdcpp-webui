@@ -2,10 +2,10 @@ import { useMemo, createContext, useContext, useEffect } from 'react';
 
 import { StoreApi, useStore } from 'zustand';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { APISocket } from 'services/SocketService';
-import { createAppStore, initAppStore } from 'stores';
+import { APISocket } from '@/services/SocketService';
+import { createAppStore, initAppStore } from '@/stores';
 
 export const StoreContext = createContext<StoreApi<UI.Store>>(null as unknown as any);
 

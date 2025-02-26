@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import { Component } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
+import Icon from '@/components/semantic/Icon';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 import { CommonMessageProps } from '../types';
 import { MessageText } from './MessageText';

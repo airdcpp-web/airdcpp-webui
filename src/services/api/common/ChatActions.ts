@@ -1,6 +1,6 @@
-import SocketService from 'services/SocketService';
+import SocketService from '@/services/SocketService';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 export const sendChatMessageDecorator = (sessionUrl: string) => {
   return (sessionId: number, text: string, thirdPerson: boolean) => {

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import AutoValuePanel from 'routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
-import { SettingPageProps } from 'routes/Settings/types';
+import AutoValuePanel from '@/routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Auto = [
   'upload_auto_limits',

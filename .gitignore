@@ -6,7 +6,6 @@ npm-debug.log
 /dist
 npm-debug.log*
 stats.html
-/jest/cache
 *.missing.json
 * - Copy*
 *.tmp

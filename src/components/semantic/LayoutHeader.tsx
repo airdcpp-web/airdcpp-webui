@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Icon, { IconType } from 'components/semantic/Icon';
+import Icon, { IconType } from '@/components/semantic/Icon';
 
 import classNames from 'classnames';
 

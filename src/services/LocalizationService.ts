@@ -5,7 +5,7 @@ import { initReactI18next } from 'react-i18next';
 
 import Moment from 'moment';
 
-import { fetchData } from 'utils/HttpUtils';
+import { fetchData } from '@/utils/HttpUtils';
 
 const loadLocalFile = (callback: RequestCallback, url: string) => {
   const fullUrl = `/js/locales/${url}`;
@@ -72,6 +72,7 @@ const loadLocales: XHR['options']['request'] = async (options, url, data, callba
   // Load localization file
   try {
     const { default: locale } = await import(
+      /* @vite-ignore */
       /* webpackChunkName: "/locales/[request]" */ `../../resources/locales/${url}`
     );
 

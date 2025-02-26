@@ -1,42 +1,42 @@
 import { useMemo, useRef } from 'react';
-import RouteModal from 'components/semantic/RouteModal';
+import RouteModal from '@/components/semantic/RouteModal';
 
-import ShareConstants from 'constants/ShareConstants';
-import ShareRootConstants from 'constants/ShareRootConstants';
-import IconConstants from 'constants/IconConstants';
+import ShareConstants from '@/constants/ShareConstants';
+import ShareRootConstants from '@/constants/ShareRootConstants';
+import IconConstants from '@/constants/IconConstants';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
-} from 'decorators/ShareProfileDecorator';
+} from '@/decorators/ShareProfileDecorator';
 
-import Message from 'components/semantic/Message';
+import Message from '@/components/semantic/Message';
 
-import t from 'utils/tcomb-form';
+import t from '@/utils/tcomb-form';
 
-import { getLastDirectory } from 'utils/FileUtils';
+import { getLastDirectory } from '@/utils/FileUtils';
 
 import Form, {
   FormSaveHandler,
   FormFieldSettingHandler,
   FormFieldChangeHandler,
-} from 'components/form/Form';
-import FilesystemConstants from 'constants/FilesystemConstants';
-import { AutoSuggestField } from 'components/form/fields';
+} from '@/components/form/Form';
+import FilesystemConstants from '@/constants/FilesystemConstants';
+import { AutoSuggestField } from '@/components/form/fields';
 
 import '../style.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { ShareRootEntryBase } from 'types/api';
-import { translateForm } from 'utils/FormUtils';
+import { ShareRootEntryBase } from '@/types/api';
+import { translateForm } from '@/utils/FormUtils';
 import { Trans } from 'react-i18next';
-import { profileToEnumValue } from 'utils/ShareProfileUtils';
-import { useFormatter } from 'context/FormatterContext';
+import { profileToEnumValue } from '@/utils/ShareProfileUtils';
+import { useFormatter } from '@/context/FormatterContext';
 
 const Fields: UI.FormFieldDefinition[] = [
   {

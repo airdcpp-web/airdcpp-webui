@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import TableActions from 'actions/TableActions';
+import TableActions from '@/actions/TableActions';
 
 import TableFooter, { TableFooterProps } from './TableFooter';
 import TableContainer, { TableContainerProps } from './TableContainer';
@@ -9,8 +9,8 @@ import RowDataLoader from './RowDataLoader';
 import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Translation } from 'react-i18next';
 

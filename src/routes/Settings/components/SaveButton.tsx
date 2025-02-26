@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import Button from 'components/semantic/Button';
+import Button from '@/components/semantic/Button';
 
 import classNames from 'classnames';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { SettingSaveState } from '../effects/useSettingSaveContext';
-import { useSession } from 'context/SessionContext';
+import { useSession } from '@/context/SessionContext';
 
 export interface SaveButtonProps {
   saveState: SettingSaveState;

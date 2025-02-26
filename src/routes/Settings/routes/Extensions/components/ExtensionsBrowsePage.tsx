@@ -3,15 +3,15 @@ import * as React from 'react';
 import {
   ExtensionInstallActionModule,
   ExtensionInstallURLAction,
-} from 'actions/ui/extension/ExtensionInstallActions';
+} from '@/actions/ui/extension/ExtensionInstallActions';
 
-import ActionButton from 'components/ActionButton';
+import ActionButton from '@/components/ActionButton';
 
-import EngineStatusMessage from 'routes/Settings/routes/Extensions/components/EngineStatusMessage';
-import NpmPackageLayout from 'routes/Settings/routes/Extensions/components/NpmPackageLayout';
-import ExtensionsConfigureDialog from 'routes/Settings/routes/Extensions/components/ExtensionsConfigureDialog';
+import EngineStatusMessage from '@/routes/Settings/routes/Extensions/components/EngineStatusMessage';
+import NpmPackageLayout from '@/routes/Settings/routes/Extensions/components/NpmPackageLayout';
+import ExtensionsConfigureDialog from '@/routes/Settings/routes/Extensions/components/ExtensionsConfigureDialog';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 interface ExtensionBrowsePageProps {
   moduleT: UI.ModuleTranslator;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import Accordion from 'components/semantic/Accordion';
+import Accordion from '@/components/semantic/Accordion';
 
-import LogSection from 'routes/Settings/routes/System/components/LogSection';
+import LogSection from '@/routes/Settings/routes/System/components/LogSection';
 
 interface LogSectionGroupProps {
   sectionKeys: string[];

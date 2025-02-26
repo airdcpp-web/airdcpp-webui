@@ -1,8 +1,8 @@
 import { PureComponent } from 'react';
-import t from 'utils/tcomb-form';
+import t from '@/utils/tcomb-form';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import HubSelectField from './HubSelectField';
 import SizeField from './SizeField';
@@ -12,9 +12,9 @@ import Form, {
   FormFieldChangeHandler,
   FormSaveHandler,
   FormFieldSettingHandler,
-} from 'components/form/Form';
-import { isValueSet, translateForm } from 'utils/FormUtils';
-import Button from 'components/semantic/Button';
+} from '@/components/form/Form';
+import { isValueSet, translateForm } from '@/utils/FormUtils';
+import Button from '@/components/semantic/Button';
 import AccordionStructField from './AccordionStructField';
 
 interface Entry extends Pick<API.SearchQuery, 'file_type'>, UI.FormValueMap {

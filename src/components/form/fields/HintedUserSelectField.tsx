@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import t from 'utils/tcomb-form';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { UserSelectField } from 'components/select';
+import tcomb from '@/utils/tcomb-form';
+
+import { UserSelectField } from '@/components/select';
 
 type TCombTemplate = {
   renderInput: (
@@ -50,4 +51,4 @@ const HintedUserTemplate: TCombTemplate = {
 };
 
 export const HintedUserSelectField =
-  t.form.Form.templates.textbox.clone(HintedUserTemplate);
+  tcomb.form.Form.templates.textbox.clone(HintedUserTemplate);

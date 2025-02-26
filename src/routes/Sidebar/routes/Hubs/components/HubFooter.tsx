@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
-import HubConstants from 'constants/HubConstants';
+import HubConstants from '@/constants/HubConstants';
 
-import { useFormatter } from 'context/FormatterContext';
-import { SessionFooter, FooterItem } from 'routes/Sidebar/components/SessionFooter';
-import EncryptionState from 'components/EncryptionState';
+import { useFormatter } from '@/context/FormatterContext';
+import { SessionFooter, FooterItem } from '@/routes/Sidebar/components/SessionFooter';
+import EncryptionState from '@/components/EncryptionState';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
-} from 'decorators/SocketSubscriptionDecorator';
-import { usingMobileLayout } from 'utils/BrowserUtils';
-import { useLayoutWidth } from 'context/LayoutWidthContext';
-import { ActionMenu } from 'components/action-menu';
-import { HubSettingActionMenu } from 'actions/ui/hub/HubSettingActions';
-import { useSocket } from 'context/SocketContext';
+} from '@/decorators/SocketSubscriptionDecorator';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
+import { useLayoutWidth } from '@/context/LayoutWidthContext';
+import { ActionMenu } from '@/components/action-menu';
+import { HubSettingActionMenu } from '@/actions/ui/hub/HubSettingActions';
+import { useSocket } from '@/context/SocketContext';
 
 interface HubFooterProps {
   session: API.Hub;

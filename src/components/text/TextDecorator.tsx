@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import ReactLinkify from 'react-linkify';
 
-import { formatEmojis } from 'utils/emojify/EmojiFormat';
+import { formatEmojis } from '@/utils/emojify/EmojiFormat';
 
 import LinkifyIt from 'linkify-it';
 import tlds from 'tlds';

@@ -1,23 +1,23 @@
 import * as React from 'react';
 
-import SessionLayout from 'routes/Sidebar/components/SessionLayout';
-import UserItemHandlerDecorator from 'routes/Sidebar/decorators/UserItemHandlerDecorator';
+import SessionLayout from '@/routes/Sidebar/components/SessionLayout';
+import UserItemHandlerDecorator from '@/routes/Sidebar/decorators/UserItemHandlerDecorator';
 
-import MessageNew from 'routes/Sidebar/routes/Messages/components/MessageNew';
-import PrivateChatSession from 'routes/Sidebar/routes/Messages/components/PrivateChatSession';
+import MessageNew from '@/routes/Sidebar/routes/Messages/components/MessageNew';
+import PrivateChatSession from '@/routes/Sidebar/routes/Messages/components/PrivateChatSession';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import {
   SessionProviderDecoratorChildProps,
   SessionProviderDecorator,
-} from 'routes/Sidebar/decorators/SessionProviderDecorator';
-import IconConstants from 'constants/IconConstants';
+} from '@/routes/Sidebar/decorators/SessionProviderDecorator';
+import IconConstants from '@/constants/IconConstants';
 
-import { PrivateChatActionMenu } from 'actions/ui/private-chat';
-import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
-import { PrivateChatStoreSelector } from 'stores/privateChatSessionSlice';
+import { PrivateChatActionMenu } from '@/actions/ui/private-chat';
+import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
+import { PrivateChatStoreSelector } from '@/stores/privateChatSessionSlice';
 
 import '../style.css';
 

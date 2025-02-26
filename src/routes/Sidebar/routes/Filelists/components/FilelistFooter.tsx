@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { useFormatter } from 'context/FormatterContext';
-import { FooterItem, SessionFooter } from 'routes/Sidebar/components/SessionFooter';
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import { useFormatter } from '@/context/FormatterContext';
+import { FooterItem, SessionFooter } from '@/routes/Sidebar/components/SessionFooter';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 interface FilelistFooterProps {
   session: API.FilelistSession;

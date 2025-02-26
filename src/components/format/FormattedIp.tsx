@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import 'fomantic-ui-css/components/flag.min.css';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 import classNames from 'classnames';
 
 export interface FormattedIpProps {

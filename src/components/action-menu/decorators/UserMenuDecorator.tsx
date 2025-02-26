@@ -2,17 +2,17 @@ import * as React from 'react';
 import classNames from 'classnames';
 import invariant from 'invariant';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { ActionUserData } from 'actions/ui/user';
-import { getFilePath } from 'utils/FileUtils';
+import { ActionUserData } from '@/actions/ui/user';
+import { getFilePath } from '@/utils/FileUtils';
 
-import UserIcon from 'components/icon/UserIcon';
+import UserIcon from '@/components/icon/UserIcon';
 
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
+import Icon from '@/components/semantic/Icon';
+import IconConstants from '@/constants/IconConstants';
 import { ActionMenuDecoratorProps } from './ActionMenuDecorator';
-import { UserActionMenu } from 'actions/ui/user';
+import { UserActionMenu } from '@/actions/ui/user';
 
 export type UserMenuDecoratorProps = Omit<
   ActionMenuDecoratorProps<ActionUserData, UI.ActionMenuItemEntityValueType>,

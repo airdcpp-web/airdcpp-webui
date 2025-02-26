@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export type SessionContextType = UI.AuthenticatedSession;
 export const SessionContext = createContext<SessionContextType>(

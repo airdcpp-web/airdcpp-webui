@@ -1,14 +1,14 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { createSessionSlice, initSessionSlice } from './decorators/sessionSlice';
 import { lens } from '@dhmk/zustand-lens';
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 import {
   createSessionScrollSlice,
   initSessionScrollSlice,
 } from './decorators/scrollSlice';
-import FilelistConstants from 'constants/FilelistConstants';
+import FilelistConstants from '@/constants/FilelistConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
 const createFilelistStore = () => {

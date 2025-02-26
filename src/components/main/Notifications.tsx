@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { RateLimiter } from 'limiter';
 
-import NotificationStore from 'stores/reflux/NotificationStore';
+import NotificationStore from '@/stores/reflux/NotificationStore';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import Logo from 'images/AirDCPlusPlus.png';
+import Logo from '@resources/images/AirDCPlusPlus.png';
 import SocketNotificationListener from './SocketNotificationListener';
-import Button from 'components/semantic/Button';
+import Button from '@/components/semantic/Button';
 import classNames from 'classnames';
 
 type NotificationLevel = 'error' | 'warning' | 'info' | 'success';

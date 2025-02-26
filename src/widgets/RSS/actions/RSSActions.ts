@@ -1,11 +1,11 @@
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
 import { FeedItem } from '../types';
 import { parseNodeContent } from '../utils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { searchStringForeground } from 'utils/SearchUtils';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { searchStringForeground } from '@/utils/SearchUtils';
 
 interface RSSItemData {
   id: string;

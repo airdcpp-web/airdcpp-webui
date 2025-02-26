@@ -1,8 +1,8 @@
-import ShareProfileConstants from 'constants/ShareProfileConstants';
+import ShareProfileConstants from '@/constants/ShareProfileConstants';
 
-import { Formatter } from 'context/FormatterContext';
+import { Formatter } from '@/context/FormatterContext';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 export const formatProfileNameWithSize = (
   profile: API.ShareProfile,

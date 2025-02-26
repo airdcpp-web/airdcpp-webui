@@ -1,10 +1,10 @@
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import SettingConstants from 'constants/SettingConstants';
-import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
+import SettingConstants from '@/constants/SettingConstants';
+import { FormFieldChangeHandler, FormFieldSettingHandler } from '@/components/form/Form';
 
-import * as API from 'types/api';
-import { useSocket } from 'context/SocketContext';
+import * as API from '@/types/api';
+import { useSocket } from '@/context/SocketContext';
 
 interface AutoValuePanelProps {
   // Type of the value section (from the setting key)

@@ -1,24 +1,24 @@
 import { memo, useState } from 'react';
 
-import SectionedDropdown from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import SectionedDropdown from '@/components/semantic/SectionedDropdown';
+import MenuSection from '@/components/semantic/MenuSection';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
 
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
-} from 'decorators/ShareProfileDecorator';
+} from '@/decorators/ShareProfileDecorator';
 import TableFilterDecorator, {
   TableFilterDecoratorChildProps,
   TableFilterDecoratorProps,
-} from 'decorators/TableFilterDecorator';
+} from '@/decorators/TableFilterDecorator';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
-import IconConstants from 'constants/IconConstants';
-import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
-import { Formatter, useFormatter } from 'context/FormatterContext';
+import IconConstants from '@/constants/IconConstants';
+import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
+import { Formatter, useFormatter } from '@/context/FormatterContext';
 
 export interface ShareProfileFilterProps {}
 

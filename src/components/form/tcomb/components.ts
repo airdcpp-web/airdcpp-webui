@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import t from 'tcomb-validation';
 import {
@@ -17,7 +18,6 @@ const assert = t.assert;
 const SOURCE = 'tcomb-form';
 const noobj = Object.freeze({});
 const noarr = Object.freeze([]);
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
 function getFormComponent(type, options) {
@@ -31,18 +31,18 @@ function getFormComponent(type, options) {
   switch (type.meta.kind) {
     case 'irreducible':
       if (type === t.Boolean) {
-        return Checkbox; // eslint-disable-line no-use-before-define
+        return Checkbox;
       } else if (type === t.Date) {
-        return Datetime; // eslint-disable-line no-use-before-define
+        return Datetime;
       }
-      return Textbox; // eslint-disable-line no-use-before-define
+      return Textbox;
     case 'struct':
     case 'interface':
-      return Struct; // eslint-disable-line no-use-before-define
+      return Struct;
     case 'list':
-      return List; // eslint-disable-line no-use-before-define
+      return List;
     case 'enums':
-      return Select; // eslint-disable-line no-use-before-define
+      return Select;
     case 'maybe':
     case 'subtype':
       return getFormComponent(type.meta.type, options);
@@ -66,15 +66,15 @@ function getComparator(order) {
 
 export const decorators = {
   template(name) {
-    return (Component) => {
-      Component.prototype.getTemplate = function getTemplate() {
+    return (component) => {
+      component.prototype.getTemplate = function getTemplate() {
         return this.props.options.template || this.props.ctx.templates[name];
       };
     };
   },
 
-  attrs(Component) {
-    Component.prototype.getAttrs = function getAttrs() {
+  attrs(component) {
+    component.prototype.getAttrs = function getAttrs() {
       const attrs = t.mixin({}, this.props.options.attrs);
       attrs.id = this.getId();
       attrs.name = this.getName();
@@ -82,14 +82,14 @@ export const decorators = {
     };
   },
 
-  templates(Component) {
-    Component.prototype.getTemplates = function getTemplates() {
+  templates(component) {
+    component.prototype.getTemplates = function getTemplates() {
       return merge(this.props.ctx.templates, this.props.options.templates);
     };
   },
 };
 
-export class Component extends React.Component {
+export class TCombComponent extends React.Component {
   static transformer = {
     format: (value) => (Nil.is(value) ? null : value),
     parse: (value) => value,
@@ -283,13 +283,14 @@ function toNull(value) {
 
 function parseNumber(value) {
   const n = parseFloat(value);
-  const isNumeric = value == n; // eslint-disable-line eqeqeq
+  const isNumeric = value == n;
   return isNumeric ? n : toNull(value);
 }
 
+export
 @decorators.attrs
 @decorators.template('textbox')
-export class Textbox extends Component {
+class Textbox extends TCombComponent {
   static transformer = {
     format: (value) => (Nil.is(value) ? '' : value),
     parse: toNull,
@@ -328,9 +329,10 @@ export class Textbox extends Component {
   }
 }
 
+export
 @decorators.attrs
 @decorators.template('checkbox')
-export class Checkbox extends Component {
+class Checkbox extends TCombComponent {
   static transformer = {
     format: (value) => (Nil.is(value) ? false : value),
     parse: (value) => value,
@@ -345,9 +347,10 @@ export class Checkbox extends Component {
   }
 }
 
+export
 @decorators.attrs
 @decorators.template('select')
-export class Select extends Component {
+class Select extends TCombComponent {
   static transformer = (nullOption) => {
     return {
       format: (value) => (Nil.is(value) && nullOption ? nullOption.value : value),
@@ -409,9 +412,10 @@ export class Select extends Component {
   }
 }
 
+export
 @decorators.attrs
 @decorators.template('radio')
-export class Radio extends Component {
+class Radio extends TCombComponent {
   static transformer = {
     format: (value) => (Nil.is(value) ? null : value),
     parse: (value) => value,
@@ -438,9 +442,10 @@ export class Radio extends Component {
 
 const defaultDatetimeValue = Object.freeze([null, null, null]);
 
+export
 @decorators.attrs
 @decorators.template('date')
-export class Datetime extends Component {
+class Datetime extends TCombComponent {
   static transformer = {
     format: (value) => {
       if (t.Array.is(value)) {
@@ -473,7 +478,7 @@ export class Datetime extends Component {
   }
 }
 
-class ComponentWithChildRefs extends Component {
+class TCombComponentWithChildRefs extends TCombComponent {
   childRefs = {};
 
   setChildRefFor = (prop) => (ref) => {
@@ -485,8 +490,9 @@ class ComponentWithChildRefs extends Component {
   };
 }
 
+export
 @decorators.templates
-export class Struct extends ComponentWithChildRefs {
+class Struct extends TCombComponentWithChildRefs {
   static transformer = {
     format: (value) => (Nil.is(value) ? noobj : value),
     parse: (value) => value,
@@ -621,8 +627,9 @@ function toSameLength(value, keys, uidGenerator) {
   return ret;
 }
 
+export
 @decorators.templates
-export class List extends ComponentWithChildRefs {
+class List extends TCombComponentWithChildRefs {
   static transformer = {
     format: (value) => (Nil.is(value) ? noarr : value),
     parse: (value) => value,
@@ -810,6 +817,7 @@ export class List extends ComponentWithChildRefs {
 
 export class Form extends React.Component {
   inputRef = null;
+  templates = null;
 
   setInputRef = (ref) => {
     this.inputRef = ref;

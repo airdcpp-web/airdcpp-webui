@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 export interface ItemDownloadManager<
   ItemT extends UI.DownloadableItemInfo,

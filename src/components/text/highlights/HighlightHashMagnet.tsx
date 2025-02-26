@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import * as React from 'react';
 import cx from 'classnames';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { createFileBundle } from 'services/api/QueueApi';
-import { dupeToStringType } from 'utils/TypeConvert';
-import { formatMagnetCaption } from 'utils/MagnetUtils';
-import { TableDownloadMenu } from 'components/action-menu';
-import { TableDropdownProps } from 'components/semantic/TableDropdown';
-import { useFormatter } from 'context/FormatterContext';
+import { createFileBundle } from '@/services/api/QueueApi';
+import { dupeToStringType } from '@/utils/TypeConvert';
+import { formatMagnetCaption } from '@/utils/MagnetUtils';
+import { TableDownloadMenu } from '@/components/action-menu';
+import { TableDropdownProps } from '@/components/semantic/TableDropdown';
+import { useFormatter } from '@/context/FormatterContext';
 
 const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (
   itemInfo,

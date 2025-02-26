@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { merge } from 'lodash';
 
-import ShareProfileConstants from 'constants/ShareProfileConstants';
+import ShareProfileConstants from '@/constants/ShareProfileConstants';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
   DataProviderDecoratorSettings,
   DataConverter,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 interface ShareProfileDecoratorDataProps {
   profiles: API.ShareProfile[];

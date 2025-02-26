@@ -1,29 +1,27 @@
-import {
-  getConnectedSocket,
-  getMockServer,
-} from 'airdcpp-apisocket/tests/mock-server.js';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { useTranslation } from 'react-i18next';
+import { waitFor } from '@testing-library/dom';
 
-import { jest } from '@jest/globals';
-import { renderRoutes } from 'tests/test-containers';
+import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
-import * as UI from 'types/ui';
+import { renderRoutes } from '@/tests/test-containers';
+
+import * as UI from '@/types/ui';
 
 import {
   createTestRouteModalController,
   TestRouteModalNavigateButton,
-} from 'tests/test-dialog-helpers';
+} from '@/tests/test-dialog-helpers';
 import FavoriteHubDialog from '../components/FavoriteHubDialog';
-import { getModuleT } from 'utils/TranslationUtils';
-import { useTranslation } from 'react-i18next';
-import ShareProfileConstants from 'constants/ShareProfileConstants';
-import { ShareProfilesListResponse } from 'tests/mocks/api/share-profiles';
-import FavoriteHubConstants from 'constants/FavoriteHubConstants';
+import { getModuleT } from '@/utils/TranslationUtils';
+import ShareProfileConstants from '@/constants/ShareProfileConstants';
+import { ShareProfilesListResponse } from '@/tests/mocks/api/share-profiles';
+import FavoriteHubConstants from '@/constants/FavoriteHubConstants';
 import {
   MOCK_FAVORITE_HUB_ID,
   FavoriteHubGetResponse,
-} from 'tests/mocks/api/favorite-hubs';
-import { setInputFieldValues, setupUserEvent } from 'tests/test-form-helpers';
-import { waitFor } from '@testing-library/dom';
+} from '@/tests/mocks/api/favorite-hubs';
+import { setInputFieldValues, setupUserEvent } from '@/tests/test-form-helpers';
 
 // tslint:disable:no-empty
 describe('FavoriteHubDialog', () => {
@@ -60,8 +58,8 @@ describe('FavoriteHubDialog', () => {
       undefined,
     );
 
-    const onCreated = jest.fn();
-    const onUpdated = jest.fn();
+    const onCreated = vi.fn();
+    const onUpdated = vi.fn();
 
     // Save handlers
     server.addRequestHandler(

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ConfirmDialog, ConfirmDialogProps } from 'components/semantic/ConfirmDialog';
+import { ConfirmDialog, ConfirmDialogProps } from '@/components/semantic/ConfirmDialog';
 
 export interface InputFieldProps extends Omit<ConfirmDialogProps, 'onApproved'> {
   onApproved: (inputValue: string) => Promise<void>;

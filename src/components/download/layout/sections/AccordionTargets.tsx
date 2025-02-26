@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import Accordion from 'components/semantic/Accordion';
-import Icon from 'components/semantic/Icon';
-import Message from 'components/semantic/Message';
+import Accordion from '@/components/semantic/Accordion';
+import Icon from '@/components/semantic/Icon';
+import Message from '@/components/semantic/Message';
 
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { PathDownloadHandler } from '../../types';
 
 import PathList from './PathList';

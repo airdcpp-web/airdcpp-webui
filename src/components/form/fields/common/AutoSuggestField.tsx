@@ -1,9 +1,10 @@
 import * as React from 'react';
 
-import LocalSuggestField from 'components/autosuggest/LocalSuggestField';
+import LocalSuggestField from '@/components/autosuggest/LocalSuggestField';
 
-import * as UI from 'types/ui';
-import t from 'utils/tcomb-form';
+import * as UI from '@/types/ui';
+
+import tcomb from '@/utils/tcomb-form';
 
 interface AutoSuggestFieldConfig {
   alwaysList: boolean;
@@ -33,4 +34,5 @@ const AutoSuggestTemplate: TCombTemplate = {
   },
 };
 
-export const AutoSuggestField = t.form.Form.templates.textbox.clone(AutoSuggestTemplate);
+export const AutoSuggestField =
+  tcomb.form.Form.templates.textbox.clone(AutoSuggestTemplate);

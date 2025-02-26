@@ -1,7 +1,7 @@
-import HubConstants from 'constants/HubConstants';
+import HubConstants from '@/constants/HubConstants';
 
-import * as API from 'types/api';
-// import * as UI from 'types/ui';
+import * as API from '@/types/api';
+// import * as UI from '@/types/ui';
 
 import ChatActionDecorator from './decorators/ChatActionDecorator';
 import SessionActionDecorator from './decorators/SessionActionDecorator';

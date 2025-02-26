@@ -1,21 +1,21 @@
 import { useRef } from 'react';
 
-import RouteModal from 'components/semantic/RouteModal';
-import Form, { FormSaveHandler } from 'components/form/Form';
+import RouteModal from '@/components/semantic/RouteModal';
+import Form, { FormSaveHandler } from '@/components/form/Form';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import ExtensionConstants from 'constants/ExtensionConstants';
-import IconConstants from 'constants/IconConstants';
+import ExtensionConstants from '@/constants/ExtensionConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const getSettingsUrl = (extensionId: string) => {
   return `${ExtensionConstants.EXTENSIONS_URL}/${extensionId}/settings`;

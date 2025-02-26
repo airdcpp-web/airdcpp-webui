@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 
-import * as UI from 'types/ui';
-import { useFormatter } from 'context/FormatterContext';
+import * as UI from '@/types/ui';
+import { useFormatter } from '@/context/FormatterContext';
 
 export type TrafficSeries = Array<number[]>;
 

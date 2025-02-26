@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { UserMenu } from 'components/action-menu';
+import { UserMenu } from '@/components/action-menu';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import MenuConstants from 'constants/MenuConstants';
+import MenuConstants from '@/constants/MenuConstants';
 import { CommonMessageProps } from '../types';
 import { TimeStamp } from './Timestamp';
 import { MessageText } from './MessageText';

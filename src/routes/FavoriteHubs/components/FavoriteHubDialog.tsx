@@ -1,34 +1,34 @@
 import { useMemo, useRef } from 'react';
-import RouteModal from 'components/semantic/RouteModal';
+import RouteModal from '@/components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
-import ShareProfileConstants from 'constants/ShareProfileConstants';
-import FavoriteHubConstants from 'constants/FavoriteHubConstants';
+import ShareProfileConstants from '@/constants/ShareProfileConstants';
+import FavoriteHubConstants from '@/constants/FavoriteHubConstants';
 
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
-} from 'decorators/ShareProfileDecorator';
-import IconConstants from 'constants/IconConstants';
+} from '@/decorators/ShareProfileDecorator';
+import IconConstants from '@/constants/IconConstants';
 
-import t from 'utils/tcomb-form';
+import t from '@/utils/tcomb-form';
 
 import Form, {
   FormFieldChangeHandler,
   FormFieldSettingHandler,
   FormSaveHandler,
-} from 'components/form/Form';
-import { normalizeEnumValue, intTransformer, translateForm } from 'utils/FormUtils';
+} from '@/components/form/Form';
+import { normalizeEnumValue, intTransformer, translateForm } from '@/utils/FormUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { FavoriteHubEntry } from 'types/api';
-import { IndeterminateCheckboxField } from 'components/form/fields/IndeterminateCheckboxField';
-import { profileToEnumValue } from 'utils/ShareProfileUtils';
-import { Formatter, useFormatter } from 'context/FormatterContext';
+import { FavoriteHubEntry } from '@/types/api';
+import { IndeterminateCheckboxField } from '@/components/form/fields/IndeterminateCheckboxField';
+import { profileToEnumValue } from '@/utils/ShareProfileUtils';
+import { Formatter, useFormatter } from '@/context/FormatterContext';
 
 const ConnectivityModeOptions: API.SettingEnumOption[] = [
   {

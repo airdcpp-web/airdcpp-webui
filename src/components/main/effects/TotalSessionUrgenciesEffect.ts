@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { appendToMap, maxUrgency, validateUrgencies } from 'utils/UrgencyUtils';
-import { RouteItem } from 'routes/Routes';
+import { appendToMap, maxUrgency, validateUrgencies } from '@/utils/UrgencyUtils';
+import { RouteItem } from '@/routes/Routes';
 
-import 'mobile.css';
+import '@/mobile.css';
 
-import * as UI from 'types/ui';
-import { useStoreApi } from 'context/StoreContext';
+import * as UI from '@/types/ui';
+import { useStoreApi } from '@/context/StoreContext';
 
 const reduceMenuItemUrgency = (
   urgencyCountMap: UI.UrgencyCountMap,

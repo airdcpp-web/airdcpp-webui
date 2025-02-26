@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import * as React from 'react';
-import Modal, { ModalProps } from 'components/semantic/Modal';
+import Modal, { ModalProps } from '@/components/semantic/Modal';
 
-import IconConstants from 'constants/IconConstants';
-import { useFormatter } from 'context/FormatterContext';
+import IconConstants from '@/constants/IconConstants';
+import { useFormatter } from '@/context/FormatterContext';
 import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { AudioFile, ImageFile, TextFile, VideoFile } from 'components/file-preview';
+import { AudioFile, ImageFile, TextFile, VideoFile } from '@/components/file-preview';
 
-import Message from 'components/semantic/Message';
-import LayoutHeader from 'components/semantic/LayoutHeader';
-import { fileToText } from 'utils/FileUtils';
+import Message from '@/components/semantic/Message';
+import LayoutHeader from '@/components/semantic/LayoutHeader';
+import { fileToText } from '@/utils/FileUtils';
 
 interface FilePreviewDialogProps extends ModalProps {
   files: File[];

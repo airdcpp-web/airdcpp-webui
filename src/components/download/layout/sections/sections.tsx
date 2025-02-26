@@ -3,8 +3,8 @@ import * as React from 'react';
 import PathList from './PathList';
 import AccordionTargets from './AccordionTargets';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { PathDownloadHandler } from '../../types';
 

@@ -1,12 +1,12 @@
-import ShareProfileConstants from 'constants/ShareProfileConstants';
-import IconConstants from 'constants/IconConstants';
+import ShareProfileConstants from '@/constants/ShareProfileConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { MENU_DIVIDER } from 'constants/ActionConstants';
-import ShareRootConstants from 'constants/ShareRootConstants';
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
+import { MENU_DIVIDER } from '@/constants/ActionConstants';
+import ShareRootConstants from '@/constants/ShareRootConstants';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 
 type Filter = UI.ActionFilter<API.ShareProfile>;
 const notDefault: Filter = ({ itemData: profile }) => !profile.default;

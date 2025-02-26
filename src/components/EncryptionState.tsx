@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import Popup from 'components/semantic/Popup';
+import Popup from '@/components/semantic/Popup';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Trans } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
+import { toI18nKey } from '@/utils/TranslationUtils';
 import Icon from './semantic/Icon';
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
 interface Info {
   iconColor: string;

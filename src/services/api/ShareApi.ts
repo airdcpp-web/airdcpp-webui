@@ -1,10 +1,10 @@
-import ShareConstants from 'constants/ShareConstants';
-import SocketService from 'services/SocketService';
+import ShareConstants from '@/constants/ShareConstants';
+import SocketService from '@/services/SocketService';
 
 import { uploadTempFile } from '../HttpService';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 export interface AddTempShareResponse {
   magnet: string;

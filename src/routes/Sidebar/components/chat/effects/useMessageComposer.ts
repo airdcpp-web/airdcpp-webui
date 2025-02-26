@@ -3,18 +3,18 @@ import React, { useEffect } from 'react';
 import { OnChangeHandlerFunc } from 'react-mentions';
 import { useLocation, Location, useNavigate } from 'react-router';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import {
   loadSessionProperty,
   removeSessionProperty,
   saveSessionProperty,
-} from 'utils/BrowserUtils';
+} from '@/utils/BrowserUtils';
 import ChatCommandHandler from '../commands/ChatCommandHandler';
 
-import { useSocket } from 'context/SocketContext';
-import { useSession } from 'context/SessionContext';
-import { useAppStore } from 'context/StoreContext';
+import { useSocket } from '@/context/SocketContext';
+import { useSession } from '@/context/SessionContext';
+import { useAppStore } from '@/context/StoreContext';
 
 const getStorageKey = (location: Location) => {
   return `last_message_${location.pathname}`;

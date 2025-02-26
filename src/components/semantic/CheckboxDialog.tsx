@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Checkbox from 'components/semantic/Checkbox';
+import Checkbox from '@/components/semantic/Checkbox';
 
 import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';

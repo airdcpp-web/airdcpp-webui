@@ -2,23 +2,23 @@ import * as React from 'react';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import ExtensionConstants from 'constants/ExtensionConstants';
+import ExtensionConstants from '@/constants/ExtensionConstants';
 
-import EngineStatusMessage from 'routes/Settings/routes/Extensions/components/EngineStatusMessage';
-import ExtensionsConfigureDialog from 'routes/Settings/routes/Extensions/components/ExtensionsConfigureDialog';
+import EngineStatusMessage from '@/routes/Settings/routes/Extensions/components/EngineStatusMessage';
+import ExtensionsConfigureDialog from '@/routes/Settings/routes/Extensions/components/ExtensionsConfigureDialog';
 
 import { Link } from 'react-router';
-import Message from 'components/semantic/Message';
-import LocalExtension from 'routes/Settings/routes/Extensions/components/LocalExtension';
+import Message from '@/components/semantic/Message';
+import LocalExtension from '@/routes/Settings/routes/Extensions/components/LocalExtension';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { SettingPageProps } from 'routes/Settings/types';
+import { SettingPageProps } from '@/routes/Settings/types';
 import { Trans } from 'react-i18next';
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
 interface ExtensionsManagePageProps extends SettingPageProps {}
 

@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 interface FilterType {

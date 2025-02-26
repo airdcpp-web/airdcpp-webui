@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-namespace */
 import * as React from 'react';
 import * as t from 'tcomb-validation';
 
@@ -20,8 +19,8 @@ export declare namespace form {
   type PlaceholderOptions = 'auto' | 'none';
 
   type ErrorMessage =
-    | JSX.Element
-    | ((value: any, path: Path, context: any) => JSX.Element);
+    | React.ElementType
+    | ((value: any, path: Path, context: any) => React.ElementType);
 
   type TcombI18NOptions = {
     add: string;

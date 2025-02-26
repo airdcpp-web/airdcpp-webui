@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import Modal, { ModalProps } from 'components/semantic/Modal';
+import Modal, { ModalProps } from '@/components/semantic/Modal';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { HashInfoLayout } from './HashInfoLayout';
-import IconConstants from 'constants/IconConstants';
-import { getModuleT } from 'utils/TranslationUtils';
+import IconConstants from '@/constants/IconConstants';
+import { getModuleT } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 
 interface HashInfoDialogProps extends Omit<ModalProps, 'title'> {

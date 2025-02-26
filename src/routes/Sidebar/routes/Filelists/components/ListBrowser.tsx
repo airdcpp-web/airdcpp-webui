@@ -1,21 +1,21 @@
 import * as React from 'react';
 
-import BrowserBar from 'components/browserbar/BrowserBar';
-import { ActionMenu, DownloadMenu } from 'components/action-menu';
+import BrowserBar from '@/components/browserbar/BrowserBar';
+import { ActionMenu, DownloadMenu } from '@/components/action-menu';
 
-import DownloadDialog from 'components/download/DownloadDialog';
+import DownloadDialog from '@/components/download/DownloadDialog';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
-import { filelistDownloadHandler } from 'services/api/FilelistApi';
-import MenuConstants from 'constants/MenuConstants';
+import { filelistDownloadHandler } from '@/services/api/FilelistApi';
+import MenuConstants from '@/constants/MenuConstants';
 import { Location, useBlocker } from 'react-router';
 import { useSyncFilelistLocation } from '../effects/useSyncFilelistLocation';
-import NotificationActions from 'actions/NotificationActions';
-import { FilelistItemActionMenu } from 'actions/ui/filelist';
+import NotificationActions from '@/actions/NotificationActions';
+import { FilelistItemActionMenu } from '@/actions/ui/filelist';
 
 interface ListBrowserProps {
   session: API.FilelistSession;

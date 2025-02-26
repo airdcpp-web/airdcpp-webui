@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import Button from 'components/semantic/Button';
-import Message from 'components/semantic/Message';
-import { toI18nKey, translate } from 'utils/TranslationUtils';
+import Button from '@/components/semantic/Button';
+import Message from '@/components/semantic/Message';
+import { toI18nKey, translate } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
-import { LoginError } from 'stores/reflux/LoginStore';
-import { parseLoginError } from 'utils/AuthUtils';
+import * as UI from '@/types/ui';
+import { LoginError } from '@/stores/reflux/LoginStore';
+import { parseLoginError } from '@/utils/AuthUtils';
 
 interface ErrorBoxProps {
   lastError: LoginError | null;

@@ -1,26 +1,26 @@
 import * as React from 'react';
 
-import ActionButton from 'components/ActionButton';
+import ActionButton from '@/components/ActionButton';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import { ActionMenu } from 'components/action-menu';
+import { ActionMenu } from '@/components/action-menu';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import {
   SearchTypeActionModule,
   SearchTypeCreateAction,
   SearchTypeEditActionMenu,
-} from 'actions/ui/search/SearchTypeActions';
-import SearchConstants from 'constants/SearchConstants';
+} from '@/actions/ui/search/SearchTypeActions';
+import SearchConstants from '@/constants/SearchConstants';
 import SearchTypeDialog from './SearchTypeDialog';
-import Message from 'components/semantic/Message';
-import IconConstants from 'constants/IconConstants';
-import { useFormatter } from 'context/FormatterContext';
+import Message from '@/components/semantic/Message';
+import IconConstants from '@/constants/IconConstants';
+import { useFormatter } from '@/context/FormatterContext';
 
 const Row: React.FC<{ type: API.SearchType; moduleT: UI.ModuleTranslator }> = ({
   type,

@@ -1,4 +1,4 @@
-import { FormFieldDefinition } from 'types/ui/form';
+import { FormFieldDefinition } from '@/types/ui/form';
 
 export type ContextMenuItemIconInfo = { [key in string]: string };
 

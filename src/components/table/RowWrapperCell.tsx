@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CellProps } from 'fixed-data-table-2';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import classNames from 'classnames';
 
 export interface RowWrapperCellChildProps<

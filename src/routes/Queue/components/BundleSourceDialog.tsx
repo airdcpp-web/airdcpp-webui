@@ -1,20 +1,20 @@
 import { Component } from 'react';
-import RouteModal from 'components/semantic/RouteModal';
+import RouteModal from '@/components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
-import FileIcon from 'components/icon/FileIcon';
+import FileIcon from '@/components/icon/FileIcon';
 
-import SourceTable from 'routes/Queue/components/BundleSourceTable';
+import SourceTable from '@/routes/Queue/components/BundleSourceTable';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import QueueConstants from 'constants/QueueConstants';
+} from '@/decorators/DataProviderDecorator';
+import QueueConstants from '@/constants/QueueConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 interface BundleSourceDialogProps {
   queueT: UI.ModuleTranslator;

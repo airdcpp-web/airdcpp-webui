@@ -1,20 +1,20 @@
 import * as React from 'react';
 
-import Message from 'components/semantic/Message';
+import Message from '@/components/semantic/Message';
 import { MessageComposer } from './MessageComposer';
-import MessageView from 'components/messages/MessageView';
+import MessageView from '@/components/messages/MessageView';
 
 import './chat.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { useActiveSession } from 'decorators/ActiveSessionDecorator';
+import { useActiveSession } from '@/decorators/ActiveSessionDecorator';
 import { useTranslation } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
+import { toI18nKey } from '@/utils/TranslationUtils';
 import { useChatMessages } from './effects/useChatMessages';
-import { useSession } from 'context/SessionContext';
-import { useStoreProperty } from 'context/StoreContext';
+import { useSession } from '@/context/SessionContext';
+import { useStoreProperty } from '@/context/StoreContext';
 
 export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;

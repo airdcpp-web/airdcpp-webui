@@ -1,11 +1,11 @@
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { hasCopySupport } from 'utils/BrowserUtils';
-import { makeTextMagnetLink } from 'utils/MagnetUtils';
-import { searchStringForeground } from 'utils/SearchUtils';
+import { hasCopySupport } from '@/utils/BrowserUtils';
+import { makeTextMagnetLink } from '@/utils/MagnetUtils';
+import { searchStringForeground } from '@/utils/SearchUtils';
 
 export type HighlightItemInfo = Pick<API.MessageHighlight, 'text'> & {
   id: number;

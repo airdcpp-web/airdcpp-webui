@@ -1,9 +1,9 @@
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { getFileName, getFilePath } from 'utils/FileUtils';
+import { getFileName, getFilePath } from '@/utils/FileUtils';
 import { useState } from 'react';
-import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
-import { useSession } from 'context/SessionContext';
+import { loadLocalProperty, saveLocalProperty } from '@/utils/BrowserUtils';
+import { useSession } from '@/context/SessionContext';
 
 export type FileSelectionHandler = (path: string) => void;
 export type CloseHandler = () => Promise<void> | void;
@@ -28,7 +28,7 @@ export const getBrowseStorageKey = (historyId: string | undefined) => {
   return `browse_${historyId}`;
 };
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 export const useFileItemSelection = ({
   initialPath,

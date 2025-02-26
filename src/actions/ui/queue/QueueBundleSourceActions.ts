@@ -1,9 +1,9 @@
-import { default as QueueConstants } from 'constants/QueueConstants';
+import { default as QueueConstants } from '@/constants/QueueConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 type ActionHandlerType = UI.ActionHandler<API.QueueBundleSource, API.QueueBundle>;
 

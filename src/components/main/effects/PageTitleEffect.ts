@@ -1,13 +1,13 @@
-import { useSession } from 'context/SessionContext';
+import { useSession } from '@/context/SessionContext';
 import { useEffect } from 'react';
 
-import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
+import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { UrgencyEnum } from 'types/ui';
-import { maxUrgency } from 'utils/UrgencyUtils';
+import { UrgencyEnum } from '@/types/ui';
+import { maxUrgency } from '@/utils/UrgencyUtils';
 
 const updateTitle = (systemInfo: API.SystemInfo | null, prefix = '') => {
   let title = 'AirDC++ Web Client';

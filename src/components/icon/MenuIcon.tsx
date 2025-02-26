@@ -1,8 +1,8 @@
 import * as React from 'react';
-import CountLabel, { CountLabelProps } from 'components/CountLabel';
+import CountLabel, { CountLabelProps } from '@/components/CountLabel';
 import classNames from 'classnames';
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
+import Icon from '@/components/semantic/Icon';
+import IconConstants from '@/constants/IconConstants';
 
 interface MenuIconProps extends Pick<CountLabelProps, 'urgencies'> {
   className?: string;

@@ -6,10 +6,10 @@ import cx from 'classnames';
 import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
 
-import Icon, { IconType } from 'components/semantic/Icon';
-import { ModalRouteCloseContext } from 'decorators/ModalRouteDecorator';
-import IconConstants from 'constants/IconConstants';
-import { MODAL_NODE_ID, useModal } from './effects/useModal';
+import Icon, { IconType } from '@/components/semantic/Icon';
+import { ModalRouteCloseContext } from '@/decorators/ModalRouteDecorator';
+import IconConstants from '@/constants/IconConstants';
+import { useModal } from './effects/useModal';
 import Button from './Button';
 
 type ApproveHandler = () => Promise<void>;
@@ -40,7 +40,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
     }
   };
 
-  const { ref, saving } = useModal(
+  const { ref, saving, modalNodeId } = useModal(
     { onApprove: props.onApproved },
     {
       onDeny,
@@ -88,7 +88,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
         </div>
       </div>
     </div>,
-    document.getElementById(MODAL_NODE_ID)!,
+    document.getElementById(modalNodeId)!,
   );
 };
 

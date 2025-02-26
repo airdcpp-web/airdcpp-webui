@@ -1,18 +1,18 @@
 import { memo } from 'react';
 import isEqual from 'lodash/isEqual';
 
-import { PriorityEnum } from 'constants/PriorityConstants';
+import { PriorityEnum } from '@/constants/PriorityConstants';
 
-import TableDropdown, { DropdownCloseHandler } from 'components/semantic/TableDropdown';
+import TableDropdown, { DropdownCloseHandler } from '@/components/semantic/TableDropdown';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { translate } from 'utils/TranslationUtils';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import { EmptyDropdownCaption } from 'components/semantic/EmptyDropdown';
-import { buildMenu } from 'components/action-menu/builder/slidingMenuBuilder';
-import { useSession } from 'context/SessionContext';
+import { translate } from '@/utils/TranslationUtils';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
+import { EmptyDropdownCaption } from '@/components/semantic/EmptyDropdown';
+import { buildMenu } from '@/components/action-menu/builder/slidingMenuBuilder';
+import { useSession } from '@/context/SessionContext';
 
 interface PriorityMenuProps {
   // Priority object

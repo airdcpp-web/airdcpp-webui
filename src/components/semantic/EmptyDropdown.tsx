@@ -1,11 +1,11 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import Loader from 'components/semantic/Loader';
+import Loader from '@/components/semantic/Loader';
 import { Trans } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
+import { toI18nKey } from '@/utils/TranslationUtils';
 
 import DropdownCaption from './DropdownCaption';
 

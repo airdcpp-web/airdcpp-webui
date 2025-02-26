@@ -2,19 +2,19 @@ import { useEffect, memo } from 'react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { EventActionMenu } from 'actions/ui/event/EventActions';
+import { EventActionMenu } from '@/actions/ui/event/EventActions';
 
-import LayoutHeader from 'components/semantic/LayoutHeader';
+import LayoutHeader from '@/components/semantic/LayoutHeader';
 
-import EventMessageView from 'routes/Sidebar/routes/Events/components/EventMessageView';
+import EventMessageView from '@/routes/Sidebar/routes/Events/components/EventMessageView';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { translate } from 'utils/TranslationUtils';
-import IconConstants from 'constants/IconConstants';
-import { ActionMenu } from 'components/action-menu';
-import { useAppStore, useStoreProperty } from 'context/StoreContext';
-import { EventAPIActions } from 'actions/store/EventActions';
+import { translate } from '@/utils/TranslationUtils';
+import IconConstants from '@/constants/IconConstants';
+import { ActionMenu } from '@/components/action-menu';
+import { useAppStore, useStoreProperty } from '@/context/StoreContext';
+import { EventAPIActions } from '@/actions/store/EventActions';
 
 import '../style.css';
 

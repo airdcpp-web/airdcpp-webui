@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import * as React from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { formatEmojis } from 'utils/emojify/EmojiFormat';
+import { formatEmojis } from '@/utils/emojify/EmojiFormat';
 
 import {
   HighlightBold,
@@ -12,8 +12,8 @@ import {
   HighlightUrlLink,
   HighlightTextLink,
 } from './highlights';
-import { formatMagnetCaption, parseMagnetLink } from 'utils/MagnetUtils';
-import { Formatter, useFormatter } from 'context/FormatterContext';
+import { formatMagnetCaption, parseMagnetLink } from '@/utils/MagnetUtils';
+import { Formatter, useFormatter } from '@/context/FormatterContext';
 
 interface HighlightProps {
   user: UI.DownloadSource | undefined;

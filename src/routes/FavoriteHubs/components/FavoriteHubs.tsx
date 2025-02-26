@@ -1,32 +1,32 @@
 import * as React from 'react';
 
-import FavoriteHubStore from 'stores/views/FavoriteHubStore';
+import FavoriteHubStore from '@/stores/views/FavoriteHubStore';
 import FavoriteHubDialog from './FavoriteHubDialog';
 
-import VirtualTable from 'components/table/VirtualTable';
+import VirtualTable from '@/components/table/VirtualTable';
 import { Column } from 'fixed-data-table-2';
-import { CheckboxCell, ActionMenuCell } from 'components/table/Cell';
+import { CheckboxCell, ActionMenuCell } from '@/components/table/Cell';
 import ConnectStateCell from './ConnectStateCell';
 
-import { ActionMenu, TableActionMenu } from 'components/action-menu';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import { ActionMenu, TableActionMenu } from '@/components/action-menu';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
 import '../style.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { translate, getModuleT } from 'utils/TranslationUtils';
+import { translate, getModuleT } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
-import { updateFavoriteHub } from 'services/api/FavoriteHubApi';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import MenuConstants from 'constants/MenuConstants';
+import { updateFavoriteHub } from '@/services/api/FavoriteHubApi';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
+import MenuConstants from '@/constants/MenuConstants';
 import {
   FavoriteHubActionMenu,
   FavoriteHubEditActionMenu,
   FavoriteHubPasswordActionMenu,
-} from 'actions/ui/favorite-hub';
-import { useSession } from 'context/SessionContext';
+} from '@/actions/ui/favorite-hub';
+import { useSession } from '@/context/SessionContext';
 
 const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = ({
   cellData,

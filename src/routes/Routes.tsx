@@ -1,24 +1,24 @@
 import * as React from 'react';
 
-import { default as lazy } from 'decorators/AsyncComponentDecorator';
-import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
+import { default as lazy } from '@/decorators/AsyncComponentDecorator';
+import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
 
-import LoginActions from 'actions/reflux/LoginActions';
-import IconConstants from 'constants/IconConstants';
+import LoginActions from '@/actions/reflux/LoginActions';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Trans } from 'react-i18next';
-import { textToI18nKey } from 'utils/TranslationUtils';
+import { textToI18nKey } from '@/utils/TranslationUtils';
 import { Route, matchPath, Location } from 'react-router';
-import { APISocket } from 'services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
-import { PrivateChatStoreSelector } from 'stores/privateChatSessionSlice';
-import { HubStoreSelector } from 'stores/hubSessionSlice';
-import { EventStoreSelector } from 'stores/eventSlice';
-import { FilelistStoreSelector } from 'stores/filelistSlice';
-import { ViewFileStoreSelector } from 'stores/viewFileSlice';
+import { PrivateChatStoreSelector } from '@/stores/privateChatSessionSlice';
+import { HubStoreSelector } from '@/stores/hubSessionSlice';
+import { EventStoreSelector } from '@/stores/eventSlice';
+import { FilelistStoreSelector } from '@/stores/filelistSlice';
+import { ViewFileStoreSelector } from '@/stores/viewFileSlice';
 
 export type RouteItemClickHandler = (
   path: string,
@@ -44,28 +44,30 @@ export const mainRoutes: RouteItem[] = [
     title: 'Home',
     path: HOME_URL,
     icon: IconConstants.HOME,
-    component: lazy(() => import(/* webpackChunkName: "home" */ 'routes/Home')),
+    component: lazy(() => import(/* webpackChunkName: "home" */ '@/routes/Home')),
   },
   {
     title: 'Queue',
     path: '/queue',
     icon: IconConstants.QUEUE_COLORED,
     access: API.AccessEnum.QUEUE_VIEW,
-    component: lazy(() => import(/* webpackChunkName: "queue" */ 'routes/Queue')),
+    component: lazy(() => import(/* webpackChunkName: "queue" */ '@/routes/Queue')),
   },
   {
     title: 'Search',
     path: '/search',
     icon: IconConstants.SEARCH,
     access: API.AccessEnum.SEARCH,
-    component: lazy(() => import(/* webpackChunkName: "search" */ 'routes/Search')),
+    component: lazy(() => import(/* webpackChunkName: "search" */ '@/routes/Search')),
   },
   {
     title: 'Transfers',
     path: '/transfers',
     icon: IconConstants.TRANSFERS_COLORED,
     access: API.AccessEnum.TRANSFERS,
-    component: lazy(() => import(/* webpackChunkName: "transfers" */ 'routes/Transfers')),
+    component: lazy(
+      () => import(/* webpackChunkName: "transfers" */ '@/routes/Transfers'),
+    ),
   },
 ];
 
@@ -76,7 +78,7 @@ export const configRoutes = [
     icon: IconConstants.FAVORITE,
     access: API.AccessEnum.FAVORITE_HUBS_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "favorite-hubs" */ 'routes/FavoriteHubs'),
+      () => import(/* webpackChunkName: "favorite-hubs" */ '@/routes/FavoriteHubs'),
     ),
   },
   {
@@ -84,7 +86,7 @@ export const configRoutes = [
     path: '/share',
     icon: IconConstants.FOLDER,
     access: API.AccessEnum.SETTINGS_VIEW,
-    component: lazy(() => import(/* webpackChunkName: "share" */ 'routes/Share')),
+    component: lazy(() => import(/* webpackChunkName: "share" */ '@/routes/Share')),
   },
   {
     title: 'Settings',
@@ -92,7 +94,7 @@ export const configRoutes = [
     // matchPath: '/settings/:mainSection?/:childSection?',
     icon: IconConstants.SETTINGS,
     access: API.AccessEnum.SETTINGS_VIEW,
-    component: lazy(() => import(/* webpackChunkName: "settings" */ 'routes/Settings')),
+    component: lazy(() => import(/* webpackChunkName: "settings" */ '@/routes/Settings')),
   },
 ];
 
@@ -105,7 +107,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStoreSelector: HubStoreSelector,
     access: API.AccessEnum.HUBS_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "hubs" */ 'routes/Sidebar/routes/Hubs'),
+      () => import(/* webpackChunkName: "hubs" */ '@/routes/Sidebar/routes/Hubs'),
     ),
   },
   {
@@ -116,7 +118,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStoreSelector: PrivateChatStoreSelector,
     access: API.AccessEnum.PRIVATE_CHAT_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "messages" */ 'routes/Sidebar/routes/Messages'),
+      () => import(/* webpackChunkName: "messages" */ '@/routes/Sidebar/routes/Messages'),
     ),
   },
   {
@@ -127,7 +129,8 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStoreSelector: FilelistStoreSelector,
     access: API.AccessEnum.FILELISTS_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "filelists" */ 'routes/Sidebar/routes/Filelists'),
+      () =>
+        import(/* webpackChunkName: "filelists" */ '@/routes/Sidebar/routes/Filelists'),
     ),
   },
   {
@@ -138,7 +141,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStoreSelector: ViewFileStoreSelector,
     access: API.AccessEnum.VIEW_FILE_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "files" */ 'routes/Sidebar/routes/Files'),
+      () => import(/* webpackChunkName: "files" */ '@/routes/Sidebar/routes/Files'),
     ),
   },
   {
@@ -148,7 +151,7 @@ export const secondaryRoutes: RouteItem[] = [
     unreadInfoStoreSelector: EventStoreSelector,
     access: API.AccessEnum.EVENTS_VIEW,
     component: lazy(
-      () => import(/* webpackChunkName: "system-log" */ 'routes/Sidebar/routes/Events'),
+      () => import(/* webpackChunkName: "system-log" */ '@/routes/Sidebar/routes/Events'),
     ),
   },
 ];

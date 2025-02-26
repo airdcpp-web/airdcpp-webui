@@ -1,20 +1,17 @@
-import {
-  getConnectedSocket,
-  getMockServer,
-} from 'airdcpp-apisocket/tests/mock-server.js';
+import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
-import { jest } from '@jest/globals';
-import { renderNode } from 'tests/test-containers';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { renderNode } from '@/tests/test-containers';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 import { fireEvent, waitFor } from '@testing-library/dom';
-import FilesystemConstants from 'constants/FilesystemConstants';
-import { FilesystemListContentResponse } from 'tests/mocks/api/filesystem';
-import { MenuFormDialog } from 'components/action-menu/MenuFormDialog';
-import { createTestModalController, useModalButton } from 'tests/test-dialog-helpers';
-import { clickButton, waitForData } from 'tests/test-helpers';
-import { setInputFieldValues, setupUserEvent } from 'tests/test-form-helpers';
+import FilesystemConstants from '@/constants/FilesystemConstants';
+import { FilesystemListContentResponse } from '@/tests/mocks/api/filesystem';
+import { MenuFormDialog } from '@/components/action-menu/MenuFormDialog';
+import { createTestModalController, useModalButton } from '@/tests/test-dialog-helpers';
+import { clickButton, waitForData } from '@/tests/test-helpers';
+import { setInputFieldValues, setupUserEvent } from '@/tests/test-form-helpers';
 
 // tslint:disable:no-empty
 describe('FileBrowserDialog', () => {
@@ -37,7 +34,7 @@ describe('FileBrowserDialog', () => {
   const renderDialog = async (fieldType: API.SettingTypeEnum, defaultValue = '') => {
     const { socket, server, ...other } = await getSocket();
 
-    const onSave = jest.fn(() => Promise.resolve());
+    const onSave = vi.fn(() => Promise.resolve());
     const caption = 'Test dialog';
 
     const ShareDirectoryDialogTest = () => {
@@ -78,6 +75,7 @@ describe('FileBrowserDialog', () => {
   });
 
   afterEach(() => {
+    localStorage.clear();
     server.stop();
   });
 

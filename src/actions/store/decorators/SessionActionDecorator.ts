@@ -1,8 +1,8 @@
-import SocketService from 'services/SocketService';
+import SocketService from '@/services/SocketService';
 
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 type SessionType = UI.SessionItemBase;

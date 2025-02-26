@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import { Row, Header, Grid } from 'components/semantic/Grid';
+import { Row, Header, Grid } from '@/components/semantic/Grid';
 
 import StatisticsDecorator, {
   StatisticsDecoratorChildProps,
-} from 'decorators/StatisticsDecorator';
-import SystemConstants from 'constants/SystemConstants';
-import { useFormatter } from 'context/FormatterContext';
-import InstallPrompt from 'components/InstallPrompt';
-import { SettingPageProps } from 'routes/Settings/types';
-import LinkConstants from 'constants/LinkConstants';
-import ExternalLink from 'components/ExternalLink';
-import { useSession } from 'context/SessionContext';
+} from '@/decorators/StatisticsDecorator';
+import SystemConstants from '@/constants/SystemConstants';
+import { useFormatter } from '@/context/FormatterContext';
+import InstallPrompt from '@/components/InstallPrompt';
+import { SettingPageProps } from '@/routes/Settings/types';
+import LinkConstants from '@/constants/LinkConstants';
+import ExternalLink from '@/components/ExternalLink';
+import { useSession } from '@/context/SessionContext';
 
 interface ApplicationPageProps extends SettingPageProps {}
 

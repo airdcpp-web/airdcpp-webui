@@ -1,10 +1,10 @@
-import QueueConstants from 'constants/QueueConstants';
+import QueueConstants from '@/constants/QueueConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { searchForeground } from 'utils/SearchUtils';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { searchForeground } from '@/utils/SearchUtils';
 
 type Filter = UI.ActionFilter<API.QueueFile>;
 const itemNotFinished: Filter = ({ itemData: file }) => file.time_finished === 0;

@@ -3,10 +3,11 @@ import * as React from 'react';
 import Select from 'react-select';
 import invariant from 'invariant';
 
-import tcomb from 'utils/tcomb-form';
-import { MultiSelectComponents } from 'components/select/common';
+import tcomb from '@/utils/tcomb-form';
 
-import * as UI from 'types/ui';
+import { MultiSelectComponents } from '@/components/select/common';
+
+import * as UI from '@/types/ui';
 
 type TCombTemplate = {
   renderSelect: (locals: UI.FormLocals<any, any[]>) => React.ReactNode;

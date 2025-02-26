@@ -7,19 +7,19 @@ import {
   parseMenuItem,
   RouteItemClickHandler,
   getLogoutItem,
-} from 'routes/Routes';
+} from '@/routes/Routes';
 
-import DropdownCaption from 'components/semantic/DropdownCaption';
+import DropdownCaption from '@/components/semantic/DropdownCaption';
 
-import IconPanel from 'components/main/navigation/IconPanel';
+import IconPanel from '@/components/main/navigation/IconPanel';
 import { Translation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
-import Popup from 'components/semantic/Popup';
+import * as UI from '@/types/ui';
+import Popup from '@/components/semantic/Popup';
 import { useEffect, useRef } from 'react';
-import { useSession } from 'context/SessionContext';
-import { useSocket } from 'context/SocketContext';
+import { useSession } from '@/context/SessionContext';
+import { useSocket } from '@/context/SocketContext';
 
 interface MainNavigationMobileProps {
   onClose: () => void;

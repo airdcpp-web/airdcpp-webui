@@ -1,19 +1,19 @@
 import * as React from 'react';
 
-import ExtensionConstants from 'constants/ExtensionConstants';
-import LinkConstants from 'constants/LinkConstants';
+import ExtensionConstants from '@/constants/ExtensionConstants';
+import LinkConstants from '@/constants/LinkConstants';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import ExternalLink from 'components/ExternalLink';
-import Message from 'components/semantic/Message';
+import ExternalLink from '@/components/ExternalLink';
+import Message from '@/components/semantic/Message';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Trans } from 'react-i18next';
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
 interface EngineStatusMessageProps {
   moduleT: UI.ModuleTranslator;

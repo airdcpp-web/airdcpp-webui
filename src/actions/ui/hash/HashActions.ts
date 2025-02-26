@@ -1,9 +1,9 @@
-import HashConstants from 'constants/HashConstants';
+import HashConstants from '@/constants/HashConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
 interface HashItemData extends API.HashStats {
   id: string;

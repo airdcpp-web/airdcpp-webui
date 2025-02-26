@@ -6,7 +6,7 @@ import Autosuggest, { Theme, Omit } from 'react-autosuggest';
 //@ts-ignore
 import { defaultTheme } from 'react-autosuggest/dist/theme';
 
-import { ButtonProps } from 'components/semantic/Button';
+import { ButtonProps } from '@/components/semantic/Button';
 
 const theme: Theme = {
   ...defaultTheme,

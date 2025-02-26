@@ -1,30 +1,30 @@
 import * as React from 'react';
 
-import { ShareActionModule, ShareRefreshAction } from 'actions/ui/share/ShareActions';
+import { ShareActionModule, ShareRefreshAction } from '@/actions/ui/share/ShareActions';
 import {
   ShareExcludeActionModule,
   ShareExcludeAddAction,
   ShareExcludeEditMenu,
-} from 'actions/ui/share/ShareExcludeActions';
-import ShareConstants from 'constants/ShareConstants';
+} from '@/actions/ui/share/ShareExcludeActions';
+import ShareConstants from '@/constants/ShareConstants';
 
-import ActionButton from 'components/ActionButton';
-import { ActionMenu } from 'components/action-menu';
+import ActionButton from '@/components/ActionButton';
+import { ActionMenu } from '@/components/action-menu';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import { FileBrowserRouteDialog } from 'components/filebrowser';
-import IconConstants from 'constants/IconConstants';
-import Message from 'components/semantic/Message';
-import FilesystemConstants from 'constants/FilesystemConstants';
+} from '@/decorators/DataProviderDecorator';
+import { FileBrowserRouteDialog } from '@/components/filebrowser';
+import IconConstants from '@/constants/IconConstants';
+import Message from '@/components/semantic/Message';
+import FilesystemConstants from '@/constants/FilesystemConstants';
 
-import { SettingPageProps } from 'routes/Settings/types';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { Trans } from 'react-i18next';
-import { useSocket } from 'context/SocketContext';
+import { useSocket } from '@/context/SocketContext';
 
 const Row: React.FC<{ path: string }> = ({ path }) => (
   <tr>

@@ -1,15 +1,15 @@
 import { Location } from 'react-router';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { IconType } from 'components/semantic/Icon';
+import { IconType } from '@/components/semantic/Icon';
 import { ActionListType, ModuleActions } from './actions';
 import { EmptyObject, RouteComponentProps } from './common';
 import { ModuleTranslator } from './modules';
 import { SessionItemBase } from './sessions';
 import { UnreadInfoStore } from './store';
-import { APISocket } from 'services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
 export type SessionAPIActions<SessionT extends SessionItemBase, ActionT = EmptyObject> = {
   removeSession: (session: SessionT) => void;

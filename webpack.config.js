@@ -9,8 +9,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin2');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+// const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 //const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 // Webpack doesn't set the ENV, which causes issues with some plugins: https://github.com/webpack/webpack/issues/2537
@@ -169,9 +170,18 @@ module.exports = {
   },
 
   resolve: {
-    modules: [path.resolve('./src'), path.resolve('./resources'), 'node_modules'],
+    // modules: [path.resolve('./src'), path.resolve('./resources'), 'node_modules'],
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     enforceExtension: false,
+    /*alias: {
+      '@/*': path.resolve(__dirname, 'src/'),
+    },*/
+    plugins: [
+      new TsconfigPathsPlugin({
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        /*configFile: "./path/to/tsconfig.json" */
+      }),
+    ],
   },
 
   plugins: plugins,

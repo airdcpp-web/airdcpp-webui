@@ -1,7 +1,7 @@
-import { actionAccess, runBackgroundSocketAction } from 'utils/ActionUtils';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 type ClearHandler = (id: API.IdType) => Promise<any>;
 

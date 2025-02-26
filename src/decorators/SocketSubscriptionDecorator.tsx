@@ -6,12 +6,12 @@ import {
   EntityId,
 } from 'airdcpp-apisocket';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { useSocket } from 'context/SocketContext';
-import { APISocket } from 'services/SocketService';
-import { useSession } from 'context/SessionContext';
+import { useSocket } from '@/context/SocketContext';
+import { APISocket } from '@/services/SocketService';
+import { useSession } from '@/context/SessionContext';
 
 export interface SocketSubscriptionDecoratorProps {
   session?: UI.SessionItemBase;

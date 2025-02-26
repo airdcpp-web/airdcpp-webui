@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import * as React from 'react';
-import t from 'utils/tcomb-form';
 
-import * as UI from 'types/ui';
-import { parseUnit } from 'utils/Formatter';
-import { ByteUnits } from 'utils/ValueFormat';
-import { useFormatter } from 'context/FormatterContext';
-import Input from 'components/semantic/Input';
+import tcomb from '@/utils/tcomb-form';
+
+import * as UI from '@/types/ui';
+import { parseUnit } from '@/utils/Formatter';
+import { ByteUnits } from '@/utils/ValueFormat';
+import { useFormatter } from '@/context/FormatterContext';
+import Input from '@/components/semantic/Input';
 
 interface SizeFieldProps {
   moduleT: UI.ModuleTranslator;
@@ -114,4 +115,4 @@ const FileTypeField: TCombTemplate = {
   },
 };
 
-export default t.form.Form.templates.textbox.clone(FileTypeField);
+export default tcomb.form.Form.templates.textbox.clone(FileTypeField);

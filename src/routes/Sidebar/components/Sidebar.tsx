@@ -4,15 +4,15 @@ import {
   loadLocalProperty,
   saveLocalProperty,
   usingMobileLayout,
-} from 'utils/BrowserUtils';
-import Loader from 'components/semantic/Loader';
+} from '@/utils/BrowserUtils';
+import Loader from '@/components/semantic/Loader';
 import { Resizable, ResizeCallback } from 're-resizable';
 
-import { RouteItem, parseRoutes } from 'routes/Routes';
+import { RouteItem, parseRoutes } from '@/routes/Routes';
 import { Location, Routes, useNavigate } from 'react-router';
 
 import '../style.css';
-import { LayoutWidthContext, useLayoutWidth } from 'context/LayoutWidthContext';
+import { LayoutWidthContext, useLayoutWidth } from '@/context/LayoutWidthContext';
 
 const MIN_WIDTH = 500;
 

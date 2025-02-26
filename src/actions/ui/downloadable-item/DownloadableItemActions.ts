@@ -1,19 +1,19 @@
-import { sleep } from 'utils/Promise';
+import { sleep } from '@/utils/Promise';
 
-import IconConstants from 'constants/IconConstants';
-import SearchConstants from 'constants/SearchConstants';
+import IconConstants from '@/constants/IconConstants';
+import SearchConstants from '@/constants/SearchConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { toErrorResponse } from 'utils/TypeConvert';
-import { translate } from 'utils/TranslationUtils';
-import { makeHashMagnetLink, makeTextMagnetLink } from 'utils/MagnetUtils';
-import { hasCopySupport } from 'utils/BrowserUtils';
-import { DupeEnum } from 'types/api';
-import { MENU_DIVIDER } from 'constants/ActionConstants';
-import { ViewFileAPIActions } from 'actions/store/ViewFileActions';
-import { searchForeground } from 'utils/SearchUtils';
+import { toErrorResponse } from '@/utils/TypeConvert';
+import { translate } from '@/utils/TranslationUtils';
+import { makeHashMagnetLink, makeTextMagnetLink } from '@/utils/MagnetUtils';
+import { hasCopySupport } from '@/utils/BrowserUtils';
+import { DupeEnum } from '@/types/api';
+import { MENU_DIVIDER } from '@/constants/ActionConstants';
+import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
+import { searchForeground } from '@/utils/SearchUtils';
 
 const isShareDupe = (dupe: API.Dupe | null) =>
   !!dupe &&

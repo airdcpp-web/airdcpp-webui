@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import ActionButton from 'components/ActionButton';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import ActionButton from '@/components/ActionButton';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import { SettingPageProps } from 'routes/Settings/types';
-import { SystemActionModule, SystemRestartWebAction } from 'actions/ui/system';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { SystemActionModule, SystemRestartWebAction } from '@/actions/ui/system';
 
 const Generic = [
   'web_server_threads',

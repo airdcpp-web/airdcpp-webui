@@ -1,16 +1,16 @@
 import { memo } from 'react';
 import * as React from 'react';
 
-import Message, { MessageDescriptionType } from 'components/semantic/Message';
+import Message, { MessageDescriptionType } from '@/components/semantic/Message';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Trans } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
-import IconConstants from 'constants/IconConstants';
-import { useSession } from 'context/SessionContext';
-import { useStoreProperty } from 'context/StoreContext';
+import { toI18nKey } from '@/utils/TranslationUtils';
+import IconConstants from '@/constants/IconConstants';
+import { useSession } from '@/context/SessionContext';
+import { useStoreProperty } from '@/context/StoreContext';
 
 export type OfflineHubMessageDecoratorProps = React.PropsWithChildren<{
   offlineMessage: MessageDescriptionType;

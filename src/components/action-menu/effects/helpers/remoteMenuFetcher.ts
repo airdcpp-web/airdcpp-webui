@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import MenuConstants, { MENU_SUPPORTS } from 'constants/MenuConstants';
-import NotificationActions from 'actions/NotificationActions';
-import { parseActionMenuItemId, parseActionMenuItemIds } from 'utils/MenuUtils';
+import MenuConstants, { MENU_SUPPORTS } from '@/constants/MenuConstants';
+import NotificationActions from '@/actions/NotificationActions';
+import { parseActionMenuItemId, parseActionMenuItemIds } from '@/utils/MenuUtils';
 import { ActionMenuDefinition } from '../useActionMenuItems';
-import { useSocket } from 'context/SocketContext';
+import { useSocket } from '@/context/SocketContext';
 
 export interface RemoteMenuData {
   selectedIds: UI.ActionIdType[];

@@ -1,8 +1,8 @@
 //@ts-ignore
 import Reflux from 'reflux';
-import { APISocket } from 'services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
 const LoginActionConfig: UI.RefluxActionConfigList<any> = [

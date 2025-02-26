@@ -1,13 +1,13 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import MenuConstants, { MENU_SUPPORTS } from 'constants/MenuConstants';
-import { FormSaveHandler } from 'components/form';
-import { MenuFormDialogProps } from 'components/action-menu/MenuFormDialog';
+import MenuConstants, { MENU_SUPPORTS } from '@/constants/MenuConstants';
+import { FormSaveHandler } from '@/components/form';
+import { MenuFormDialogProps } from '@/components/action-menu/MenuFormDialog';
 import { ActionMenuDefinition } from './useActionMenuItems';
 import { RemoteMenuData, useRemoteMenuFetcher } from './helpers/remoteMenuFetcher';
 import { remoteMenuToActionMenuItems } from './helpers/remoteMenuBuilder';
-import { useSocket } from 'context/SocketContext';
+import { useSocket } from '@/context/SocketContext';
 
 export type OnShowRemoteMenuForm = (data: MenuFormDialogProps) => void;
 

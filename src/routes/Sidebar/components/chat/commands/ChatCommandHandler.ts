@@ -1,7 +1,7 @@
-import { actionAccess } from 'utils/ActionUtils';
+import { actionAccess } from '@/utils/ActionUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const getHelpString = (
   commands: UI.ChatCommandList,

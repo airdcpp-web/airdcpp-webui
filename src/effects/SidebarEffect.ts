@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Location } from 'react-router';
 
-import { RouteItem, HOME_URL, isRouteActive } from 'routes/Routes';
+import { RouteItem, HOME_URL, isRouteActive } from '@/routes/Routes';
 
 const showSidebar = (routes: RouteItem[], location: Location) => {
   return !!routes.find((route) => isRouteActive(route, location));

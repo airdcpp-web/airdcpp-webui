@@ -1,16 +1,16 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import Loader from 'components/semantic/Loader';
+import Loader from '@/components/semantic/Loader';
 
-import { useMessageViewScrollEffect } from 'effects';
+import { useMessageViewScrollEffect } from '@/effects';
 import { useMessagesNode } from './effects/MessageNodeManager';
 import { useItemDownloadManager } from '../../effects/ItemDownloadManager';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import DownloadDialog from 'components/download/DownloadDialog';
+import DownloadDialog from '@/components/download/DownloadDialog';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import './messages.css';
 

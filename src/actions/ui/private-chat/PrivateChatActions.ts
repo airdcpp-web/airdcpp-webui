@@ -1,7 +1,7 @@
-import PrivateChatConstants from 'constants/PrivateChatConstants';
+import PrivateChatConstants from '@/constants/PrivateChatConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { BuildRemoveSessionAction } from '../decorators/SessionActionDecorator';
 import { BuildClearChatAction } from '../decorators/ChatActionDecorator';
 

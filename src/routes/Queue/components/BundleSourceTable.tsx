@@ -2,19 +2,19 @@ import * as React from 'react';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import { QueueBundleSourceActionMenu } from 'actions/ui/queue/QueueBundleSourceActions';
-import QueueConstants from 'constants/QueueConstants';
+import { QueueBundleSourceActionMenu } from '@/actions/ui/queue/QueueBundleSourceActions';
+import QueueConstants from '@/constants/QueueConstants';
 
-import { useFormatter } from 'context/FormatterContext';
+import { useFormatter } from '@/context/FormatterContext';
 
-import { ActionMenu, UserMenu } from 'components/action-menu';
-import { UserFileActions } from 'actions/ui/user/UserActions';
+import { ActionMenu, UserMenu } from '@/components/action-menu';
+import { UserFileActions } from '@/actions/ui/user/UserActions';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import MenuConstants from 'constants/MenuConstants';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import MenuConstants from '@/constants/MenuConstants';
 
 interface SourceProps {
   bundle: API.QueueBundle;

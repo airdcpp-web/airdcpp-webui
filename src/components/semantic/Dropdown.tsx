@@ -9,7 +9,7 @@ import Icon, { IconType } from './Icon';
 import 'fomantic-ui-css/components/button.min.css'; // for button style
 import 'fomantic-ui-css/components/dropdown';
 import 'fomantic-ui-css/components/dropdown.min.css';
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
 export type DropdownProps = React.PropsWithChildren<{
   // If caption isn't specified, the icon will be used as main trigger

@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import ExternalLink from 'components/ExternalLink';
-import LinkConstants from 'constants/LinkConstants';
+import ExternalLink from '@/components/ExternalLink';
+import LinkConstants from '@/constants/LinkConstants';
 
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
 import { Trans } from 'react-i18next';
 
 const Entry = ['download_speed', 'upload_speed'];

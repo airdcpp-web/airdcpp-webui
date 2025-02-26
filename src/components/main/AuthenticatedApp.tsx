@@ -1,23 +1,23 @@
 import { memo } from 'react';
 import * as React from 'react';
 
-// import ActivityTracker from 'components/main/ActivityTracker';
-import Notifications from 'components/main/Notifications';
-import { usingMobileLayout } from 'utils/BrowserUtils';
+// import ActivityTracker from '@/components/main/ActivityTracker';
+import Notifications from '@/components/main/Notifications';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
-import AuthenticationGuardDecorator from 'components/main/decorators/AuthenticationGuardDecorator';
-import MainLayoutMobile from 'components/main/MainLayoutMobile';
-import MainLayoutNormal from 'components/main/MainLayoutNormal';
+import AuthenticationGuardDecorator from '@/components/main/decorators/AuthenticationGuardDecorator';
+import MainLayoutMobile from '@/components/main/MainLayoutMobile';
+import MainLayoutNormal from '@/components/main/MainLayoutNormal';
 import { useTotalSessionUrgenciesEffect } from './effects/TotalSessionUrgenciesEffect';
-import { secondaryRoutes } from 'routes/Routes';
+import { secondaryRoutes } from '@/routes/Routes';
 import { useUrgencyPageTitle } from './effects/PageTitleEffect';
 
-import * as UI from 'types/ui';
-import { useLayoutWidth } from 'context/LayoutWidthContext';
-import { useSocket } from 'context/SocketContext';
+import * as UI from '@/types/ui';
+import { useLayoutWidth } from '@/context/LayoutWidthContext';
+import { useSocket } from '@/context/SocketContext';
 import { useActivityTracker } from './ActivityTracker';
 import { useStoreDataFetch } from './effects/StoreDataFetchEffect';
-import { LoginState } from 'stores/reflux/LoginStore';
+import { LoginState } from '@/stores/reflux/LoginStore';
 
 interface AuthenticatedAppProps {
   login: LoginState;

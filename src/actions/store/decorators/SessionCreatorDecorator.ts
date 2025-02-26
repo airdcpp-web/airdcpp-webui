@@ -1,8 +1,8 @@
-import { APISocket } from 'services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
 

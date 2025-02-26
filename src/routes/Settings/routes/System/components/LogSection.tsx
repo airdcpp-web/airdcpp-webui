@@ -1,10 +1,10 @@
 import { Component } from 'react';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
 import '../style.css';
-import { FormFieldChangeHandler, FormFieldSettingHandler } from 'components/form/Form';
+import { FormFieldChangeHandler, FormFieldSettingHandler } from '@/components/form/Form';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 export interface LogSectionProps {
   section: string;

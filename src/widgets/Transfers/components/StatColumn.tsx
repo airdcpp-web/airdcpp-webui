@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { ListItem } from 'components/semantic/List';
+import { ListItem } from '@/components/semantic/List';
 
-import { useFormatter } from 'context/FormatterContext';
+import { useFormatter } from '@/context/FormatterContext';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { AdjustableSpeedLimit } from 'components/speed-limit';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { AdjustableSpeedLimit } from '@/components/speed-limit';
 
 interface StatColumnProps extends Pick<UI.WidgetProps, 'widgetT'> {
   stats: API.TransferStats;

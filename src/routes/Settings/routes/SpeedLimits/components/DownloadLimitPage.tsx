@@ -1,8 +1,8 @@
 import * as React from 'react';
-import AutoValuePanel from 'routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
+import AutoValuePanel from '@/routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
 
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Auto = ['download_auto_limits', 'download_slots', 'download_max_start_speed'];
 

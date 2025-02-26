@@ -1,9 +1,9 @@
-import EventConstants from 'constants/EventConstants';
+import EventConstants from '@/constants/EventConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
 const handleClear: UI.ActionHandler<void> = ({ socket }) => {
   return socket.delete(EventConstants.MESSAGES_URL);

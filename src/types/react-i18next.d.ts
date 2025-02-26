@@ -13,7 +13,6 @@ declare module 'i18next' {
 
   // Workaround for https://github.com/isaachinman/next-i18next/issues/1781
   interface TFunction {
-    // eslint-disable-next-line @typescript-eslint/prefer-function-type
     <TKeys extends TFuncKey = string, TInterpolationMap extends StringMap = StringMap>(
       key: TKeys,
       options?: TOptions<TInterpolationMap> | string,

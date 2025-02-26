@@ -1,8 +1,8 @@
 import { Lens, lens } from '@dhmk/zustand-lens';
-import SystemConstants from 'constants/SystemConstants';
+import SystemConstants from '@/constants/SystemConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 export const createActivitySlice = () => {
   const createSlice: Lens<UI.ActivitySlice, UI.Store> = (set, get, api) => {

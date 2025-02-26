@@ -8,13 +8,13 @@ import {
   loadSessionProperty,
   saveSessionProperty,
   removeSessionProperty,
-} from 'utils/BrowserUtils';
+} from '@/utils/BrowserUtils';
 
-import LoginActions from 'actions/reflux/LoginActions';
-import SocketService from 'services/SocketService';
+import LoginActions from '@/actions/reflux/LoginActions';
+import SocketService from '@/services/SocketService';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
 

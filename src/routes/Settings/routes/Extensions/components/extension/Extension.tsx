@@ -1,24 +1,24 @@
 import * as React from 'react';
 import Moment from 'moment';
 
-import ExtensionConstants from 'constants/ExtensionConstants';
+import ExtensionConstants from '@/constants/ExtensionConstants';
 
-import ExtensionIcon from 'routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
-import ExtensionActionButtons from 'routes/Settings/routes/Extensions/components/extension/ExtensionActionButtons';
+import ExtensionIcon from '@/routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
+import ExtensionActionButtons from '@/routes/Settings/routes/Extensions/components/extension/ExtensionActionButtons';
 
 import { compareVersions } from 'compare-versions';
 
 import 'fomantic-ui-css/components/item.min.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import {
   SocketSubscriptionDecoratorChildProps,
   SocketSubscriptionDecorator,
-} from 'decorators/SocketSubscriptionDecorator';
-import { errorResponseToString } from 'utils/TypeConvert';
-import { DataFetchError } from 'decorators/DataProviderDecorator';
+} from '@/decorators/SocketSubscriptionDecorator';
+import { errorResponseToString } from '@/utils/TypeConvert';
+import { DataFetchError } from '@/decorators/DataProviderDecorator';
 import classNames from 'classnames';
 
 interface VersionProps {
@@ -137,19 +137,16 @@ class Extension extends React.PureComponent<
     const { addSocketListener, npmPackage } = this.props;
 
     if (!!npmPackage) {
-      // eslint-disable-next-line max-len
       addSocketListener(
         ExtensionConstants.MODULE_URL,
         ExtensionConstants.INSTALLATION_STARTED,
         this.onInstallationStarted,
       );
-      // eslint-disable-next-line max-len
       addSocketListener(
         ExtensionConstants.MODULE_URL,
         ExtensionConstants.INSTALLATION_SUCCEEDED,
         this.onInstallationCompleted,
       );
-      // eslint-disable-next-line max-len
       addSocketListener(
         ExtensionConstants.MODULE_URL,
         ExtensionConstants.INSTALLATION_FAILED,

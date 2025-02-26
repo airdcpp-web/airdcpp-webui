@@ -2,36 +2,36 @@ import * as React from 'react';
 
 import { ResultDialog } from './result-dialog';
 
-import SearchViewStore from 'stores/views/SearchViewStore';
+import SearchViewStore from '@/stores/views/SearchViewStore';
 
 import { Column } from 'fixed-data-table-2';
-import VirtualTable from 'components/table/VirtualTable';
+import VirtualTable from '@/components/table/VirtualTable';
 import {
   SizeCell,
   DurationCell,
   ConnectionCell,
   FileDownloadCell,
   DecimalCell,
-} from 'components/table/Cell';
-import { ActionMenu, TableActionMenu, TableUserMenu } from 'components/action-menu';
+} from '@/components/table/Cell';
+import { ActionMenu, TableActionMenu, TableUserMenu } from '@/components/action-menu';
 
-import { dupeToStringType } from 'utils/TypeConvert';
-import { UserFileActions } from 'actions/ui/user/UserActions';
-import Message from 'components/semantic/Message';
+import { dupeToStringType } from '@/utils/TypeConvert';
+import { UserFileActions } from '@/actions/ui/user/UserActions';
+import Message from '@/components/semantic/Message';
 
-import DownloadDialog from 'components/download/DownloadDialog';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import DownloadDialog from '@/components/download/DownloadDialog';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Trans } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
-import { searchDownloadHandler } from 'services/api/SearchApi';
-import IconConstants from 'constants/IconConstants';
-import MenuConstants from 'constants/MenuConstants';
-import SearchConstants from 'constants/SearchConstants';
-import { GroupedSearchResultActionMenu, SearchActionMenu } from 'actions/ui/search';
+import { toI18nKey } from '@/utils/TranslationUtils';
+import { searchDownloadHandler } from '@/services/api/SearchApi';
+import IconConstants from '@/constants/IconConstants';
+import MenuConstants from '@/constants/MenuConstants';
+import SearchConstants from '@/constants/SearchConstants';
+import { GroupedSearchResultActionMenu, SearchActionMenu } from '@/actions/ui/search';
 
 const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: UI.TranslateF) => {
   if (count > 1) {

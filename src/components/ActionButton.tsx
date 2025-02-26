@@ -1,11 +1,11 @@
-import Button, { ButtonProps } from 'components/semantic/Button';
-import { showAction, translateActionName } from 'utils/ActionUtils';
-import { IconType } from 'components/semantic/Icon';
+import Button, { ButtonProps } from '@/components/semantic/Button';
+import { showAction, translateActionName } from '@/utils/ActionUtils';
+import { IconType } from '@/components/semantic/Icon';
 
-import * as UI from 'types/ui';
-import { ActionHandlerDecorator } from 'decorators/ActionHandlerDecorator';
+import * as UI from '@/types/ui';
+import { ActionHandlerDecorator } from '@/decorators/ActionHandlerDecorator';
 import { useTranslation } from 'react-i18next';
-import { useSession } from 'context/SessionContext';
+import { useSession } from '@/context/SessionContext';
 
 export interface ActionButtonProps<
   ItemDataT extends UI.ActionDataValueType,

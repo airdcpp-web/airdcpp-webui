@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Loader from 'components/semantic/Loader';
+import Loader from '@/components/semantic/Loader';
 
 interface SocketConnectStatusProps {
   message: string;

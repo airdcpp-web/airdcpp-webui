@@ -1,7 +1,7 @@
 import Moment from 'moment';
 
 import { toI18nKey, translate } from './TranslationUtils';
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { i18n } from 'i18next';
 import { ByteUnits } from './ValueFormat';
 

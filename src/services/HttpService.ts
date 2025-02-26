@@ -1,5 +1,5 @@
-import LoginStore from 'stores/reflux/LoginStore';
-import { fetchData } from 'utils/HttpUtils';
+import LoginStore from '@/stores/reflux/LoginStore';
+import { fetchData } from '@/utils/HttpUtils';
 
 export const uploadTempFile = async (file: File, authToken: string): Promise<string> => {
   // eslint-disable-next-line no-useless-catch

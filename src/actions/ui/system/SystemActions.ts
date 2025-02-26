@@ -1,9 +1,9 @@
-import SystemConstants from 'constants/SystemConstants';
+import SystemConstants from '@/constants/SystemConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const handleRestartWeb: UI.ActionHandler<void> = ({ socket }) => {
   return socket.post(SystemConstants.MODULE_URL + '/restart_web');

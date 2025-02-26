@@ -1,11 +1,11 @@
 import { memo } from 'react';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { useStoreProperty } from 'context/StoreContext';
-import { ActivityAPIActions } from 'actions/store/ActivityActions';
+import { useStoreProperty } from '@/context/StoreContext';
+import { ActivityAPIActions } from '@/actions/store/ActivityActions';
 
 const isAway = (away: API.AwayEnum) => {
   return away !== API.AwayEnum.OFF;

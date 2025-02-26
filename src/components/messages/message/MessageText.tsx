@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { HighlightedText } from '../../text/HighlightedText';
 

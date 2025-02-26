@@ -1,20 +1,20 @@
 import * as React from 'react';
 
-import LoginStore, { LoginError, LoginState } from 'stores/reflux/LoginStore';
+import LoginStore, { LoginError, LoginState } from '@/stores/reflux/LoginStore';
 
-import SocketConnectStatus from 'components/main/SocketConnectStatus';
-import { useStore } from 'effects/StoreListenerEffect';
+import SocketConnectStatus from '@/components/main/SocketConnectStatus';
+import { useStore } from '@/effects/StoreListenerEffect';
 import { useSessionGuard } from '../effects/LoginGuardEffect';
 import { useAuthPageTitle } from '../effects/PageTitleEffect';
-import { toI18nKey, translate } from 'utils/TranslationUtils';
+import { toI18nKey, translate } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { parseLoginError } from 'utils/AuthUtils';
-import { StoreProvider } from 'context/StoreContext';
-import { useSocket } from 'context/SocketContext';
+import { parseLoginError } from '@/utils/AuthUtils';
+import { StoreProvider } from '@/context/StoreContext';
+import { useSocket } from '@/context/SocketContext';
 
 interface AuthenticationGuardDecoratorProps {}
 

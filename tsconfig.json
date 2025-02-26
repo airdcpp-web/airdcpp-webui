@@ -16,8 +16,11 @@
     "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "*": [
+      "@/*": [
         "src/*",
+      ],
+      "@resources/*": [
+        "resources/*",
       ],
     },
     "experimentalDecorators": true,
@@ -32,10 +35,11 @@
     "node_modules",
     "scripts",
     "webpack",
-    "jest",
+    "vitest",
     "babel.config.js",
-    "jest.config.js",
+    "vitest.*",
     "webpack.config.js",
+    "eslint.config.mjs",
     "src/sw.js",
     "resources",
     "*.tmp",

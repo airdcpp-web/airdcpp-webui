@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import LoginActions from 'actions/reflux/LoginActions';
-import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
+import LoginActions from '@/actions/reflux/LoginActions';
+import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
 
 import { useNavigate, Location } from 'react-router';
-import { useSocket } from 'context/SocketContext';
+import { useSocket } from '@/context/SocketContext';
 
 export const useSessionGuard = (login: LoginState, location: Location) => {
   const [prevSocketAuthenticated, setPrevSocketAuthenticated] = useState(

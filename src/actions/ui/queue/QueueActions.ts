@@ -1,11 +1,11 @@
-import QueueConstants from 'constants/QueueConstants';
+import QueueConstants from '@/constants/QueueConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { MENU_DIVIDER } from 'constants/ActionConstants';
-import { APISocket } from 'services/SocketService';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { MENU_DIVIDER } from '@/constants/ActionConstants';
+import { APISocket } from '@/services/SocketService';
 
 const setBundlePriorities = (socket: APISocket, prio: API.QueuePriorityEnum) => {
   return socket.post(QueueConstants.BUNDLES_URL + '/priority', {

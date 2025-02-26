@@ -1,4 +1,4 @@
-import SocketService from 'services/SocketService';
+import SocketService from '@/services/SocketService';
 import update from 'immutability-helper';
 
 import isEqual from 'lodash/isEqual';

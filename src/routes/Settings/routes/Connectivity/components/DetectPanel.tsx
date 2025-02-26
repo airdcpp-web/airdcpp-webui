@@ -1,23 +1,23 @@
 import * as React from 'react';
 
-import ActionButton from 'components/ActionButton';
+import ActionButton from '@/components/ActionButton';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import ConnectivityConstants from 'constants/ConnectivityConstants';
+import ConnectivityConstants from '@/constants/ConnectivityConstants';
 
-import { Row, Grid } from 'components/semantic/Grid';
+import { Row, Grid } from '@/components/semantic/Grid';
 
 import '../style.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import {
   ConnectivityActionModule,
   ConnectivityDetectAction,
-} from 'actions/ui/connectivity';
-import Button from 'components/semantic/Button';
+} from '@/actions/ui/connectivity';
+import Button from '@/components/semantic/Button';
 
 const formatProtocolStatus = (
   protocolStatus: API.ConnectivityProtocolStatus,

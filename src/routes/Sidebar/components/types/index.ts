@@ -1,9 +1,9 @@
 //import * as React from 'react';
 
-import { IconType } from 'components/semantic/Icon';
+import { IconType } from '@/components/semantic/Icon';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 export interface SessionLayoutLabels {
   // Label for button that opens a new session

@@ -1,15 +1,15 @@
-import Dropdown from 'components/semantic/Dropdown';
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import Dropdown from '@/components/semantic/Dropdown';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
 
 import ShareProfileDecorator, {
   ShareProfileDecoratorChildProps,
-} from 'decorators/ShareProfileDecorator';
+} from '@/decorators/ShareProfileDecorator';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { formatProfileNameWithSize } from 'utils/ShareProfileUtils';
-import { useFormatter } from 'context/FormatterContext';
+import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
+import { useFormatter } from '@/context/FormatterContext';
 
 interface ShareProfileSelectorProps {
   // Callback after selecting a profile

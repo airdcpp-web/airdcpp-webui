@@ -1,18 +1,18 @@
 import * as React from 'react';
 
-import { useFormatter } from 'context/FormatterContext';
+import { useFormatter } from '@/context/FormatterContext';
 
-import HubConstants from 'constants/HubConstants';
+import HubConstants from '@/constants/HubConstants';
 
 import StatisticsDecorator, {
   StatisticsDecoratorChildProps,
-} from 'decorators/StatisticsDecorator';
+} from '@/decorators/StatisticsDecorator';
 
-import { Grid, Row, Header } from 'components/semantic/Grid';
+import { Grid, Row, Header } from '@/components/semantic/Grid';
 
-//import * as UI from 'types/ui';
-import { SettingPageProps } from 'routes/Settings/types';
-import { formatAverage, formatPercentage } from 'utils/ValueFormat';
+//import * as UI from '@/types/ui';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { formatAverage, formatPercentage } from '@/utils/ValueFormat';
 
 interface HubStatisticsPageProps extends SettingPageProps {}
 

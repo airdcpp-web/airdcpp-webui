@@ -1,7 +1,7 @@
 import { useState, useRef, useLayoutEffect } from 'react';
 
-import * as UI from 'types/ui';
-import { getListMessageIdString } from 'utils/MessageUtils';
+import * as UI from '@/types/ui';
+import { getListMessageIdString } from '@/utils/MessageUtils';
 
 const MAX_IS_BOTTOM_OFFSET_PX = 30;
 

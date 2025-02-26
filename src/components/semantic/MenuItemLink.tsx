@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 
-import Icon, { IconType } from 'components/semantic/Icon';
+import Icon, { IconType } from '@/components/semantic/Icon';
 
 export interface MenuItemLinkProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;

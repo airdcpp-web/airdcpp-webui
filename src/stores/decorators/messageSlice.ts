@@ -1,9 +1,9 @@
 import { produce } from 'immer';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { checkSplice, mergeCacheMessages, pushMessage } from 'utils/MessageUtils';
+import { checkSplice, mergeCacheMessages, pushMessage } from '@/utils/MessageUtils';
 import { lens } from '@dhmk/zustand-lens';
 import { createSessionScrollSlice, initSessionScrollSlice } from './scrollSlice';
 

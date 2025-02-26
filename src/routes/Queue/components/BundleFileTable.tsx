@@ -1,28 +1,28 @@
 import * as React from 'react';
 import { Column } from 'fixed-data-table-2';
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import VirtualTable from 'components/table/VirtualTable';
+import VirtualTable from '@/components/table/VirtualTable';
 
-import PriorityMenu from 'routes/Queue/components/PriorityMenu';
-import StatusCell from 'routes/Queue/components/StatusCell';
+import PriorityMenu from '@/routes/Queue/components/PriorityMenu';
+import StatusCell from '@/routes/Queue/components/StatusCell';
 
-import QueueFileViewStore from 'stores/views/QueueFileViewStore';
+import QueueFileViewStore from '@/stores/views/QueueFileViewStore';
 
 import {
   FileActionCell,
   SizeCell,
   SpeedCell,
   AbbreviatedDurationCell,
-} from 'components/table/Cell';
+} from '@/components/table/Cell';
 
 import '../style.css';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
-import { setFilePriority } from 'services/api/QueueApi';
-import MenuConstants from 'constants/MenuConstants';
-import { QueueFileActionMenu } from 'actions/ui/queue';
+import * as API from '@/types/api';
+import { setFilePriority } from '@/services/api/QueueApi';
+import MenuConstants from '@/constants/MenuConstants';
+import { QueueFileActionMenu } from '@/actions/ui/queue';
 
 const PriorityCell: React.FC<
   RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>

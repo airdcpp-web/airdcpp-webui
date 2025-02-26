@@ -1,13 +1,13 @@
-import { QueueSourceRemoveAction } from 'actions/ui/queue/QueueSourceActions';
+import { QueueSourceRemoveAction } from '@/actions/ui/queue/QueueSourceActions';
 
-import { QueueFileRemoveAction } from 'actions/ui/queue/QueueFileActions';
+import { QueueFileRemoveAction } from '@/actions/ui/queue/QueueFileActions';
 
-import { default as TransferConstants, StatusEnum } from 'constants/TransferConstants';
-import IconConstants from 'constants/IconConstants';
+import { default as TransferConstants, StatusEnum } from '@/constants/TransferConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { MENU_DIVIDER } from 'constants/ActionConstants';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { MENU_DIVIDER } from '@/constants/ActionConstants';
 
 // Filters
 type Filter = UI.ActionFilter<API.Transfer>;

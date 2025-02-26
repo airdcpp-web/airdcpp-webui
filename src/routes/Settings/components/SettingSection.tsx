@@ -1,12 +1,12 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
 import SettingsSideMenuLayout from './SettingsSideMenuLayout';
 import SettingsTopMenuLayout from './SettingsTopMenuLayout';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import { childMenuItemToLinkComponent, rootMenuItemToLinkComponent } from './MenuItems';
 import { useLocation } from 'react-router';
@@ -15,10 +15,10 @@ import {
   SettingSaveContext,
   useSettingSaveContext,
 } from '../effects/useSettingSaveContext';
-import Message from 'components/semantic/Message';
-import IconConstants from 'constants/IconConstants';
+import Message from '@/components/semantic/Message';
+import IconConstants from '@/constants/IconConstants';
 import SaveButton from './SaveButton';
-import { useSession } from 'context/SessionContext';
+import { useSession } from '@/context/SessionContext';
 
 export interface SettingRootSectionProps {
   settingsT: UI.ModuleTranslator;

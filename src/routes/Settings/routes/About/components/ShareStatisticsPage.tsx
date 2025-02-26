@@ -1,18 +1,18 @@
 import * as React from 'react';
 
-import { useFormatter } from 'context/FormatterContext';
+import { useFormatter } from '@/context/FormatterContext';
 
-import ShareConstants from 'constants/ShareConstants';
+import ShareConstants from '@/constants/ShareConstants';
 
 import StatisticsDecorator, {
   StatisticsDecoratorChildProps,
-} from 'decorators/StatisticsDecorator';
+} from '@/decorators/StatisticsDecorator';
 
-import { Row, Header, Grid } from 'components/semantic/Grid';
+import { Row, Header, Grid } from '@/components/semantic/Grid';
 
-//import * as UI from 'types/ui';
-import { SettingPageProps } from 'routes/Settings/types';
-import { formatAverage, formatPercentage } from 'utils/ValueFormat';
+//import * as UI from '@/types/ui';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { formatAverage, formatPercentage } from '@/utils/ValueFormat';
 
 type ShareStatisticsPageProps = SettingPageProps;
 
@@ -26,7 +26,6 @@ const ShareStatisticsPage: React.FC<
       <Row title={translate('Total share size')} text={formatSize(stats.total_size)} />
       <Row
         title={translate('Total files')}
-        // eslint-disable-next-line max-len
         text={t('totalFilesValue', {
           defaultValue: '{{totalCount}} ({{uniqueCount}} unique)',
           replace: {
@@ -65,7 +64,6 @@ const ShareStatisticsPage: React.FC<
       />
       <Row
         title={translate('Text searches')}
-        // eslint-disable-next-line max-len
         text={t('searchesPerSecondValue', {
           defaultValue: '{{totalCount}} ({{matchedCount}} matched per second)',
           replace: {
@@ -93,7 +91,6 @@ const ShareStatisticsPage: React.FC<
       />
       <Row
         title={translate('Average text search tokens (non-filtered)')}
-        // eslint-disable-next-line max-len
         text={t('searchesAverageTokensValue', {
           defaultValue: '{{tokenCount}} ({{tokenLength}} bytes per token)',
           replace: {

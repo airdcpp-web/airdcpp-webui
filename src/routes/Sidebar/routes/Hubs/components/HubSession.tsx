@@ -1,30 +1,30 @@
 import { useEffect, useState } from 'react';
 
-import { loadSessionProperty, saveSessionProperty } from 'utils/BrowserUtils';
-import Checkbox from 'components/semantic/Checkbox';
+import { loadSessionProperty, saveSessionProperty } from '@/utils/BrowserUtils';
+import Checkbox from '@/components/semantic/Checkbox';
 
-import ChatLayout from 'routes/Sidebar/components/chat/ChatLayout';
-import HubUserTable from 'routes/Sidebar/routes/Hubs/components/HubUserTable';
+import ChatLayout from '@/routes/Sidebar/components/chat/ChatLayout';
+import HubUserTable from '@/routes/Sidebar/routes/Hubs/components/HubUserTable';
 
-import HubFooter from 'routes/Sidebar/routes/Hubs/components/HubFooter';
+import HubFooter from '@/routes/Sidebar/routes/Hubs/components/HubFooter';
 import {
   RedirectPrompt,
   PasswordPrompt,
   HubActionPrompt,
-} from 'routes/Sidebar/routes/Hubs/components/HubPrompt';
+} from '@/routes/Sidebar/routes/Hubs/components/HubPrompt';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { shareTempFile } from 'services/api/ShareApi';
-import IconConstants from 'constants/IconConstants';
-import MenuConstants from 'constants/MenuConstants';
-import { SessionChildProps } from 'routes/Sidebar/components/types';
-import { useSession } from 'context/SessionContext';
-import { HubAPIActions } from 'actions/store/HubActions';
-import { buildChatCommands } from 'routes/Sidebar/components/chat/commands/ChatCommands';
-import { clearHubChatMessages } from 'services/api/HubApi';
-import { HubStoreSelector } from 'stores/hubSessionSlice';
+import { shareTempFile } from '@/services/api/ShareApi';
+import IconConstants from '@/constants/IconConstants';
+import MenuConstants from '@/constants/MenuConstants';
+import { SessionChildProps } from '@/routes/Sidebar/components/types';
+import { useSession } from '@/context/SessionContext';
+import { HubAPIActions } from '@/actions/store/HubActions';
+import { buildChatCommands } from '@/routes/Sidebar/components/chat/commands/ChatCommands';
+import { clearHubChatMessages } from '@/services/api/HubApi';
+import { HubStoreSelector } from '@/stores/hubSessionSlice';
 
 import '../style.css';
 

@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import 'fomantic-ui-css/components/loader.min.css';
 import { Trans } from 'react-i18next';
 
-import * as UI from 'types/ui';
-import { toI18nKey } from 'utils/TranslationUtils';
+import * as UI from '@/types/ui';
+import { toI18nKey } from '@/utils/TranslationUtils';
 
 interface LoaderProps {
   inline?: boolean;

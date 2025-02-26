@@ -1,9 +1,10 @@
-import { default as WidgetStore, EmptyWidgetSettings } from 'stores/reflux/WidgetStore';
+import { default as WidgetStore, EmptyWidgetSettings } from '@/stores/reflux/WidgetStore';
 
-import { RSSWidgetInfo } from 'widgets/RSS';
+import { RSSWidgetInfo } from '@/widgets/RSS';
 
 import { Layouts, Layout } from 'react-grid-layout';
-import { createWidgetId } from 'utils/WidgetUtils';
+import { createWidgetId } from '@/utils/WidgetUtils';
+import { describe, expect, test } from 'vitest';
 
 const countWidgetIds = (id: string, layouts: Layouts) => {
   return Object.keys(layouts).reduce((sum, key) => {

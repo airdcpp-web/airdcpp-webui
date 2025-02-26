@@ -1,22 +1,21 @@
 import { useState, useContext } from 'react';
 import * as React from 'react';
 
-import { useNavigate, useLocation, Location, NavigateFunction } from 'react-router';
+import { useNavigate, useLocation, Location } from 'react-router';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import {
   ModalCloseContext,
   ModalRouteCloseContext,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 import { ActionData, ActionDialog, suffixActionI18nKey } from './components/ActionDialog';
-import { APISocket } from 'services/SocketService';
-import { useSocket } from 'context/SocketContext';
-import { useAppStore } from 'context/StoreContext';
+import { useSocket } from '@/context/SocketContext';
+import { useAppStore } from '@/context/StoreContext';
 
 interface ActionHandlerDecoratorProps<
   ItemDataT extends UI.ActionDataValueType,

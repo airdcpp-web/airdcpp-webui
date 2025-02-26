@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export const useRestoreScroll = (
   scrollPositionHandler: UI.ScrollHandler,

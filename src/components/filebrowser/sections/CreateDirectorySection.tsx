@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import Accordion from 'components/semantic/Accordion';
-import ActionInput, { ActionInputProps } from 'components/semantic/ActionInput';
+import Accordion from '@/components/semantic/Accordion';
+import ActionInput, { ActionInputProps } from '@/components/semantic/ActionInput';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { translate } from 'utils/TranslationUtils';
-import IconConstants from 'constants/IconConstants';
-import Icon from 'components/semantic/Icon';
+import { translate } from '@/utils/TranslationUtils';
+import IconConstants from '@/constants/IconConstants';
+import Icon from '@/components/semantic/Icon';
 
 export interface CreateDirectorySectionProps
   extends Pick<ActionInputProps, 'handleAction'> {

@@ -1,6 +1,6 @@
 const MODULE_URL = 'queue';
 
-export { QueueBundleStatusEnum as StatusEnum } from 'types/api';
+export { QueueBundleStatusEnum as StatusEnum } from '@/types/api';
 
 export default {
   MODULE_URL: MODULE_URL,

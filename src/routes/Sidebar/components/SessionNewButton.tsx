@@ -1,8 +1,8 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import IconConstants from 'constants/IconConstants';
-import RouterMenuItemLink from 'components/semantic/RouterMenuItemLink';
+import IconConstants from '@/constants/IconConstants';
+import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
 
 interface SessionNewButtonProps {
   url: string;

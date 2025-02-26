@@ -1,7 +1,5 @@
-import { SubscriptionCallback, SubscriptionRemoveHandler } from 'airdcpp-apisocket';
-
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 export const createSessionSliceSocketListener = (
   { socket, login }: UI.StoreInitData,

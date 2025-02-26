@@ -1,19 +1,19 @@
 import * as React from 'react';
 
-import Button from 'components/semantic/Button';
-import ActionInput from 'components/semantic/ActionInput';
+import Button from '@/components/semantic/Button';
+import ActionInput from '@/components/semantic/ActionInput';
 
-import SettingConstants from 'constants/SettingConstants';
+import SettingConstants from '@/constants/SettingConstants';
 
-import IconConstants from 'constants/IconConstants';
-import { toI18nKey, translate } from 'utils/TranslationUtils';
+import IconConstants from '@/constants/IconConstants';
+import { toI18nKey, translate } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import { Trans } from 'react-i18next';
-import { useSocket } from 'context/SocketContext';
-import { useFormatter } from 'context/FormatterContext';
+import { useSocket } from '@/context/SocketContext';
+import { useFormatter } from '@/context/FormatterContext';
 
 interface LimiterConfigProps {
   limit: number;

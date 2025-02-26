@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import UserConstants from 'constants/UserConstants';
+import UserConstants from '@/constants/UserConstants';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import Message from 'components/semantic/Message';
+} from '@/decorators/DataProviderDecorator';
+import Message from '@/components/semantic/Message';
 
-import { UserMenu } from 'components/action-menu';
+import { UserMenu } from '@/components/action-menu';
 
-import * as API from 'types/api';
-import { SettingPageProps } from 'routes/Settings/types';
-import MenuConstants from 'constants/MenuConstants';
+import * as API from '@/types/api';
+import { SettingPageProps } from '@/routes/Settings/types';
+import MenuConstants from '@/constants/MenuConstants';
 
 const Row: React.FC<{ ignoreInfo: API.IgnoredUser }> = ({ ignoreInfo }) => (
   <tr>

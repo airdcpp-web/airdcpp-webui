@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
+import { loadLocalProperty, saveLocalProperty } from '@/utils/BrowserUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { useLocation } from 'react-router';
 import { useSessionRouteHelpers } from './useSessionHelpers';

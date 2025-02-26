@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Icon, { IconType, CornerIconType } from 'components/semantic/Icon';
+import Icon, { IconType, CornerIconType } from '@/components/semantic/Icon';
 
 interface StatisticsRowProps {
   icon: IconType;

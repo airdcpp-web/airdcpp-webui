@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import FormattedFile from 'components/format/FormattedFile';
-import Popup from 'components/semantic/Popup';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import FormattedFile from '@/components/format/FormattedFile';
+import Popup from '@/components/semantic/Popup';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 const NameCaption: React.FC<RowWrapperCellChildProps<string, API.Transfer>> = ({
   cellData,

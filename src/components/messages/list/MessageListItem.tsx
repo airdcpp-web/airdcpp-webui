@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { ChatMessage, StatusMessage } from '../message';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 import { CommonMessageProps } from '../types';
 
 interface MessageListItemProps extends CommonMessageProps {

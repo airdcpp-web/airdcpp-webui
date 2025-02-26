@@ -1,13 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { ActionMenu } from 'components/action-menu';
+import { ActionMenu } from '@/components/action-menu';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { getWidgetT, translateWidgetName } from 'utils/WidgetUtils';
-import { WidgetEditActionMenu } from 'actions/ui/widget';
-import { useSession } from 'context/SessionContext';
+import { getWidgetT, translateWidgetName } from '@/utils/WidgetUtils';
+import { WidgetEditActionMenu } from '@/actions/ui/widget';
+import { useSession } from '@/context/SessionContext';
 
 const getError = (
   widgetInfo: UI.Widget,

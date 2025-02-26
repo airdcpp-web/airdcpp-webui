@@ -1,9 +1,10 @@
 import * as React from 'react';
 
-import * as UI from 'types/ui';
-import t from 'utils/tcomb-form';
+import * as UI from '@/types/ui';
 
-import HubSearchInput from 'components/autosuggest/HubSearchInput';
+import tcomb from '@/utils/tcomb-form';
+
+import HubSearchInput from '@/components/autosuggest/HubSearchInput';
 
 type TCombTemplate = {
   renderInput: (
@@ -24,4 +25,4 @@ const HubUrlTemplate: TCombTemplate = {
   },
 };
 
-export const HubUrlField = t.form.Form.templates.textbox.clone(HubUrlTemplate);
+export const HubUrlField = tcomb.form.Form.templates.textbox.clone(HubUrlTemplate);

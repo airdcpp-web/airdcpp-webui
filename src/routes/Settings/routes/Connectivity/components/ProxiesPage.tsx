@@ -1,9 +1,9 @@
 import * as React from 'react';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import { OutgoingConnectionModeEnum } from 'constants/SettingConstants';
-import { SettingPageProps } from 'routes/Settings/types';
-import { FormFieldSettingHandler } from 'components/form/Form';
+import { OutgoingConnectionModeEnum } from '@/constants/SettingConstants';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { FormFieldSettingHandler } from '@/components/form/Form';
 
 const Entry = [
   'outgoing_mode',

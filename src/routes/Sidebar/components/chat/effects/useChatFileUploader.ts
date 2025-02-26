@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { toI18nKey } from 'utils/TranslationUtils';
-import { useFormatter } from 'context/FormatterContext';
+import { toI18nKey } from '@/utils/TranslationUtils';
+import { useFormatter } from '@/context/FormatterContext';
 
 interface UseFileUploaderProps {
   appendText: (text: string) => void;

@@ -2,17 +2,17 @@ import * as React from 'react';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import { useFormatter } from 'context/FormatterContext';
+} from '@/decorators/DataProviderDecorator';
+import { useFormatter } from '@/context/FormatterContext';
 
-import LayoutHeader from 'components/semantic/LayoutHeader';
-import { ListItem } from 'components/semantic/List';
+import LayoutHeader from '@/components/semantic/LayoutHeader';
+import { ListItem } from '@/components/semantic/List';
 
-import HistoryConstants from 'constants/HistoryConstants';
+import HistoryConstants from '@/constants/HistoryConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { translate, toI18nKey } from 'utils/TranslationUtils';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 
 interface RecentLayoutProps {

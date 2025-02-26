@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import LayoutHeader from 'components/semantic/LayoutHeader';
-import { SettingSectionLayoutProps } from 'routes/Settings/types';
+import LayoutHeader from '@/components/semantic/LayoutHeader';
+import { SettingSectionLayoutProps } from '@/routes/Settings/types';
 import { translateSettingSectionTitle } from './MenuItems';
-import Icon from 'components/semantic/Icon';
+import Icon from '@/components/semantic/Icon';
 
 type SideMenuProps = Pick<SettingSectionLayoutProps, 'menu' | 'settingsT'>;
 
@@ -30,7 +30,6 @@ const TopRootSectionMenu: React.FC<TopMenuProps> = ({ menu }) => (
   <div className="ui secondary pointing menu settings top-menu">{menu.rootMenuItems}</div>
 );
 
-// eslint-disable-next-line max-len
 type ContentProps = React.PropsWithChildren<
   Pick<
     SettingSectionLayoutProps,

@@ -1,6 +1,7 @@
 import { fireEvent, getByText, RenderResult, waitFor } from '@testing-library/react';
 import userEventOriginal, { UserEvent } from '@testing-library/user-event';
 import selectEvent from './react-select-event';
+import { expect } from 'vitest';
 
 type FieldValueMap = {
   [key: string]: string;
@@ -8,7 +9,6 @@ type FieldValueMap = {
 
 export const setupUserEvent = () => {
   const userEvent = userEventOriginal.setup({
-    // advanceTimers: jest.advanceTimersByTime,
     delay: null,
   });
   return userEvent;

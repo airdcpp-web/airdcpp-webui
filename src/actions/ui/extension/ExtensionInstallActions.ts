@@ -1,12 +1,12 @@
-import { APISocket } from 'services/SocketService';
-import { fetchCorsSafeData } from 'services/HttpService';
+import { APISocket } from '@/services/SocketService';
+import { fetchCorsSafeData } from '@/services/HttpService';
 
-import ExtensionConstants from 'constants/ExtensionConstants';
+import ExtensionConstants from '@/constants/ExtensionConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const downloadExtension = (
   socket: APISocket,

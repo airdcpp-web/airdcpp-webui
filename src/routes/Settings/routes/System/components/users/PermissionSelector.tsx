@@ -1,11 +1,11 @@
-import t from 'utils/tcomb-form';
+import tcomb from '@/utils/tcomb-form';
 
-import Checkbox from 'components/semantic/Checkbox';
-import Message from 'components/semantic/Message';
+import Checkbox from '@/components/semantic/Checkbox';
+import Message from '@/components/semantic/Message';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { updateMultiselectValues } from 'utils/FormUtils';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { updateMultiselectValues } from '@/utils/FormUtils';
 
 type AccessOptionType = {
   value: API.AccessEnum;
@@ -13,7 +13,7 @@ type AccessOptionType = {
 };
 
 const PermissionSelector = (moduleT: UI.ModuleTranslator) => {
-  return t.form.Form.templates.select.clone({
+  return tcomb.form.Form.templates.select.clone({
     renderSelect: (locals: UI.FormLocals<AccessOptionType, API.AccessEnum[]>) => {
       const onChange = (access: API.AccessEnum, checked: boolean) => {
         locals.onChange(updateMultiselectValues(locals.value, access, checked));

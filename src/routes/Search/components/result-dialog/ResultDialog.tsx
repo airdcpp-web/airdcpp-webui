@@ -1,24 +1,24 @@
 import { Component } from 'react';
-import RouteModal from 'components/semantic/RouteModal';
+import RouteModal from '@/components/semantic/RouteModal';
 
-import FileIcon from 'components/icon/FileIcon';
+import FileIcon from '@/components/icon/FileIcon';
 
-import DownloadDialog from 'components/download/DownloadDialog';
+import DownloadDialog from '@/components/download/DownloadDialog';
 
 import UserResultTable from './UserResultTable';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import SearchConstants from 'constants/SearchConstants';
+} from '@/decorators/DataProviderDecorator';
+import SearchConstants from '@/constants/SearchConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { FileItemInfoGrid } from 'components/file-item-info';
-import { searchDownloadHandler } from 'services/api/SearchApi';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { FileItemInfoGrid } from '@/components/file-item-info';
+import { searchDownloadHandler } from '@/services/api/SearchApi';
 
 interface ResultDialogProps {
   searchT: UI.ModuleTranslator;

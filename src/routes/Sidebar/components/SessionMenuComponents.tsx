@@ -1,15 +1,15 @@
-import { ActionMenu } from 'components/action-menu';
+import { ActionMenu } from '@/components/action-menu';
 import SessionNewButton from './SessionNewButton';
 import SessionMenuItem from './SessionMenuItem';
 
-import Icon from 'components/semantic/Icon';
+import Icon from '@/components/semantic/Icon';
 
-import IconConstants from 'constants/IconConstants';
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import IconConstants from '@/constants/IconConstants';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 import { SessionLayoutLabels, SessionLayoutManageProps } from './types';
 import { useLocation } from 'react-router';
 import { useSessionRouteHelpers } from './effects/useSessionHelpers';

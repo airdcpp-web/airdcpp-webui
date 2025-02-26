@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import SectionedDropdown, {
   SectionedDropdownProps,
-} from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
+} from '@/components/semantic/SectionedDropdown';
+import MenuSection from '@/components/semantic/MenuSection';
 import ActionMenuDecorator, {
   ActionMenuDecoratorChildProps,
-} from 'components/action-menu/decorators/ActionMenuDecorator';
+} from '@/components/action-menu/decorators/ActionMenuDecorator';
 import { buildMenu } from './builder/expandMenuBuilder';
 
 export interface ActionMenuProps extends SectionedDropdownProps {

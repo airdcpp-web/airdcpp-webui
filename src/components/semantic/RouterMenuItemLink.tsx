@@ -4,12 +4,12 @@ import * as React from 'react';
 import classNames from 'classnames';
 
 import { NavLink } from 'react-router';
-import CountLabel from 'components/CountLabel';
-import Icon, { IconType } from 'components/semantic/Icon';
+import CountLabel from '@/components/CountLabel';
+import Icon, { IconType } from '@/components/semantic/Icon';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { useStoreProperty } from 'context/StoreContext';
+import { useStoreProperty } from '@/context/StoreContext';
 
 type RouterMenuItemLinkProps = React.PropsWithChildren<{
   url: string;

@@ -1,11 +1,11 @@
 import { Draft, produce } from 'immer';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { getItemUrgencies, getSessionUrgencies } from 'utils/UrgencyUtils';
-import { checkUnreadSessionInfo } from 'utils/MessageUtils';
-import { APISocket } from 'services/SocketService';
+import { getItemUrgencies, getSessionUrgencies } from '@/utils/UrgencyUtils';
+import { checkUnreadSessionInfo } from '@/utils/MessageUtils';
+import { APISocket } from '@/services/SocketService';
 import { Lens } from '@dhmk/zustand-lens';
 
 export type SessionUrgencyCountMapper<SessionT extends UI.SessionType> = (

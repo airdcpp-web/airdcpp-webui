@@ -1,9 +1,11 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+
+import Extensions from './components/Extensions';
 
 export const ExtensionWidgetInfo = {
   typeId: 'extensions',
-  component: require('./components/Extensions').default,
+  component: Extensions,
   name: 'Extension releases',
   nameKey: 'extensions',
   icon: 'green puzzle',

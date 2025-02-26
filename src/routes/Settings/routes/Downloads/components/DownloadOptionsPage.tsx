@@ -1,6 +1,6 @@
 import * as React from 'react';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Entry = ['allow_slow_overlap', 'finished_remove_exit', 'use_partial_sharing'];
 

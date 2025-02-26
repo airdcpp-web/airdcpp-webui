@@ -1,18 +1,18 @@
 import * as React from 'react';
 
-import RedrawDecorator from 'decorators/RedrawDecorator';
-import { useFormatter } from 'context/FormatterContext';
-import Loader from 'components/semantic/Loader';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import RedrawDecorator from '@/decorators/RedrawDecorator';
+import { useFormatter } from '@/context/FormatterContext';
+import Loader from '@/components/semantic/Loader';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { translate } from 'utils/TranslationUtils';
-import { abortRefreshTask, refreshPaths } from 'services/api/ShareApi';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
+import { translate } from '@/utils/TranslationUtils';
+import { abortRefreshTask, refreshPaths } from '@/services/api/ShareApi';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
+import Icon from '@/components/semantic/Icon';
+import IconConstants from '@/constants/IconConstants';
 
 interface RefreshCellProps extends RowWrapperCellChildProps<number, API.ShareRootEntry> {}
 

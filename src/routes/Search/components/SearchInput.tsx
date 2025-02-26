@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import * as React from 'react';
 
-import HistoryInput from 'components/autosuggest/HistoryInput';
-import { HistoryStringEnum } from 'constants/HistoryConstants';
-import Button from 'components/semantic/Button';
+import HistoryInput from '@/components/autosuggest/HistoryInput';
+import { HistoryStringEnum } from '@/constants/HistoryConstants';
+import Button from '@/components/semantic/Button';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import IconConstants from 'constants/IconConstants';
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import IconConstants from '@/constants/IconConstants';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 import { SearchOptionsButton, SearchOptions } from './options-panel';
 
 interface SearchInputProps {

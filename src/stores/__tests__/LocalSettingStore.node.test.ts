@@ -1,8 +1,9 @@
 import {
   default as LocalSettingStore,
   SettingDefinitions,
-} from 'stores/reflux/LocalSettingStore';
-import { LocalSettings } from 'constants/SettingConstants';
+} from '@/stores/reflux/LocalSettingStore';
+import { LocalSettings } from '@/constants/SettingConstants';
+import { describe, expect, test } from 'vitest';
 
 describe('local setting store', () => {
   const findDefinition = (key: LocalSettings) =>

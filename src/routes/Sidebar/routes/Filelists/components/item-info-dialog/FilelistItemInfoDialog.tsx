@@ -1,23 +1,23 @@
 import { Component } from 'react';
-import RouteModal from 'components/semantic/RouteModal';
+import RouteModal from '@/components/semantic/RouteModal';
 
-import FileIcon from 'components/icon/FileIcon';
+import FileIcon from '@/components/icon/FileIcon';
 
-import DownloadDialog from 'components/download/DownloadDialog';
+import DownloadDialog from '@/components/download/DownloadDialog';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { FileItemInfoGrid } from 'components/file-item-info';
-import FilelistConstants from 'constants/FilelistConstants';
-import { filelistDownloadHandler } from 'services/api/FilelistApi';
+import { FileItemInfoGrid } from '@/components/file-item-info';
+import FilelistConstants from '@/constants/FilelistConstants';
+import { filelistDownloadHandler } from '@/services/api/FilelistApi';
 
 interface FilelistItemInfoDialogProps {
   session: API.FilelistSession;

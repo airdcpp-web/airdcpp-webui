@@ -1,15 +1,15 @@
 import * as React from 'react';
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import '../style.css';
-import { SettingPageProps } from 'routes/Settings/types';
-import { FormFieldSettingHandler } from 'components/form/Form';
+import { SettingPageProps } from '@/routes/Settings/types';
+import { FormFieldSettingHandler } from '@/components/form/Form';
 import { Trans } from 'react-i18next';
-import { toFormI18nKey } from 'utils/FormUtils';
-import { useSession } from 'context/SessionContext';
+import { toFormI18nKey } from '@/utils/FormUtils';
+import { useSession } from '@/context/SessionContext';
 
 const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {

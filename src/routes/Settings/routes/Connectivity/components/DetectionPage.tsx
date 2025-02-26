@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import DetectPanel from 'routes/Settings/routes/Connectivity/components/DetectPanel';
+import DetectPanel from '@/routes/Settings/routes/Connectivity/components/DetectPanel';
 
-import ExternalLink from 'components/ExternalLink';
-import LinkConstants from 'constants/LinkConstants';
-import Message from 'components/semantic/Message';
+import ExternalLink from '@/components/ExternalLink';
+import LinkConstants from '@/constants/LinkConstants';
+import Message from '@/components/semantic/Message';
 import { Trans } from 'react-i18next';
-import { SettingPageProps } from 'routes/Settings/types';
-import IconConstants from 'constants/IconConstants';
+import { SettingPageProps } from '@/routes/Settings/types';
+import IconConstants from '@/constants/IconConstants';
 
 const DetectionPage: React.FC<SettingPageProps> = ({ moduleT }) => {
   const { toI18nKey } = moduleT;

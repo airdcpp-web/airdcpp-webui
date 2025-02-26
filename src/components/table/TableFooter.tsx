@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import TextFilter, { TextFilterProps } from './TextFilter';
-import Icon from 'components/semantic/Icon';
-import IconConstants from 'constants/IconConstants';
-import { TableFilterDecoratorProps } from 'decorators/TableFilterDecorator';
+import Icon from '@/components/semantic/Icon';
+import IconConstants from '@/constants/IconConstants';
+import { TableFilterDecoratorProps } from '@/decorators/TableFilterDecorator';
 
 const CountInfo: React.FC<{ store: any }> = ({ store }) => {
   if (store.totalCount < 0) {

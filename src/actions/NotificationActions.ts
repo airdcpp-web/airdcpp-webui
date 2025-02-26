@@ -1,7 +1,7 @@
 //@ts-ignore
 import Reflux from 'reflux';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 const NotificationActionConfig: UI.RefluxActionConfigList<UI.Notification> = [
   'success',

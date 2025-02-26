@@ -1,7 +1,7 @@
 import { pushUnique } from './BrowserUtils';
 import { NavigateFunction, Location } from 'react-router';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export const searchStringForeground = (
   searchString: string,

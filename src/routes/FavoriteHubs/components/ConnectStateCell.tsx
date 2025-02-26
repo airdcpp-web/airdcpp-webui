@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 
-import Icon from 'components/semantic/Icon';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import Icon from '@/components/semantic/Icon';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 import { useNavigate } from 'react-router';
-import { HubAPIActions } from 'actions/store/HubActions';
-import { useAppStore } from 'context/StoreContext';
-import { useSocket } from 'context/SocketContext';
+import { HubAPIActions } from '@/actions/store/HubActions';
+import { useAppStore } from '@/context/StoreContext';
+import { useSocket } from '@/context/SocketContext';
 import { useTranslation } from 'react-i18next';
 
 export type ConnectStateCellProps = RowWrapperCellChildProps<

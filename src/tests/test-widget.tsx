@@ -1,8 +1,9 @@
-import * as UI from 'types/ui';
-
-import { getModuleT } from 'utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
-import Widget from 'routes/Home/components/Widget';
+
+import * as UI from '@/types/ui';
+
+import { getModuleT } from '@/utils/TranslationUtils';
+import Widget from '@/routes/Home/components/Widget';
 
 export const getWidgetRenderRouteContainer = (
   widget: UI.Widget,
@@ -19,10 +20,10 @@ export const getWidgetRenderRouteContainer = (
         }}
         rootWidgetT={getModuleT(t, UI.Modules.WIDGETS, [])}
         style={{
-          // width: '500px',
-          // height: '300px'
-          width: '100%',
-          height: '100%',
+          width: '500px',
+          height: '300px',
+          // width: '100%',
+          // height: '100%',
         }}
       />
     );

@@ -1,10 +1,10 @@
-import { userOnlineStatusToColor } from 'utils/TypeConvert';
-import { UserMenu } from 'components/action-menu';
-import UserIcon from 'components/icon/UserIcon';
+import { userOnlineStatusToColor } from '@/utils/TypeConvert';
+import { UserMenu } from '@/components/action-menu';
+import UserIcon from '@/components/icon/UserIcon';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import MenuConstants from 'constants/MenuConstants';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import MenuConstants from '@/constants/MenuConstants';
 
 interface UserSessionBase {
   user: API.HintedUser;

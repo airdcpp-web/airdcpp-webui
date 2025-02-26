@@ -1,7 +1,7 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { ErrorResponse, FieldError } from 'airdcpp-apisocket';
-import { DataFetchError } from 'decorators/DataProviderDecorator';
+import { DataFetchError } from '@/decorators/DataProviderDecorator';
 
 export const dupeToStringType = (dupeInfo: API.Dupe | null) => {
   if (!dupeInfo) {

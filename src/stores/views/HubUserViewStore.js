@@ -1,6 +1,6 @@
-import ViewStoreMixin from 'mixins/ViewStoreMixin';
+import ViewStoreMixin from '@/mixins/ViewStoreMixin';
 import Reflux from 'reflux';
-import HubConstants from 'constants/HubConstants';
+import HubConstants from '@/constants/HubConstants';
 // import HubSessionStore from '../reflux/HubSessionStore.ts.tmp';
 
 export default Reflux.createStore({

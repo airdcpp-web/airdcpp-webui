@@ -1,7 +1,7 @@
 import { toMockHintedUser } from '../helpers/mock-user-helpers';
 import { HubADC1, HubADC2, HubADC3, HubNMDC1 } from './hubs';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 const User1Base = {
   cid: 'HNLUODI2YZ2U7FDWMHFNJU65ERGKUN4MH7GW5LY',

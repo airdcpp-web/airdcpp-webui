@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 interface FooterItemProps {
   label?: string;

@@ -1,9 +1,9 @@
 import { XMLParser, X2jOptions } from 'fast-xml-parser';
 import { decode } from 'he';
 
-import { fetchCorsSafeData } from 'services/HttpService';
+import { fetchCorsSafeData } from '@/services/HttpService';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import { FeedItem, FeedNode, RawFeedData } from './types';
 

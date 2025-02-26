@@ -2,10 +2,10 @@
 
 /*import { useEffect, useState } from 'react';
 
-import LocalSettingStore from 'stores/LocalSettingStore';
-import { LocalSettings } from 'constants/SettingConstants';
+import LocalSettingStore from '@/stores/LocalSettingStore';
+import { LocalSettings } from '@/constants/SettingConstants';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 
 type SessionType = UI.SessionItemBase;

@@ -1,8 +1,8 @@
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import WidgetActions from 'actions/reflux/WidgetActions';
+import WidgetActions from '@/actions/reflux/WidgetActions';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export interface WidgetItemInfo {
   widgetInfo: UI.Widget;

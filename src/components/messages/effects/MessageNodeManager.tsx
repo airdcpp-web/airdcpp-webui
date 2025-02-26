@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import * as React from 'react';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { getListMessageId, getListMessageIdString } from 'utils/MessageUtils';
+import { getListMessageId, getListMessageIdString } from '@/utils/MessageUtils';
 
 import { MessageListItem } from '../list/MessageListItem';
 import { MessageListDateDivider, showDateDivider } from '../list/MessageListDateDivider';

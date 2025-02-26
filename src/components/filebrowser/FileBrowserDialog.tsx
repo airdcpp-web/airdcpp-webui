@@ -1,15 +1,15 @@
-import Modal, { ModalProps } from 'components/semantic/Modal';
+import Modal, { ModalProps } from '@/components/semantic/Modal';
 
 import FileBrowserLayout from './FileBrowserLayout';
 
-import ModalRouteDecorator from 'decorators/ModalRouteDecorator';
+import ModalRouteDecorator from '@/decorators/ModalRouteDecorator';
 import { useTranslation } from 'react-i18next';
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import IconConstants from 'constants/IconConstants';
-import RouteModal from 'components/semantic/RouteModal';
+import IconConstants from '@/constants/IconConstants';
+import RouteModal from '@/components/semantic/RouteModal';
 import {
   FileItemSelectionProps,
   useFileItemSelection,

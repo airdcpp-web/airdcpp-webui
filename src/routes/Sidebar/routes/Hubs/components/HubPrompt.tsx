@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import ActionInput from 'components/semantic/ActionInput';
-import Button from 'components/semantic/Button';
+import ActionInput from '@/components/semantic/ActionInput';
+import Button from '@/components/semantic/Button';
 
-import Icon, { IconType } from 'components/semantic/Icon';
+import Icon, { IconType } from '@/components/semantic/Icon';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { Trans } from 'react-i18next';
-import { sendHubPassword, acceptHubRedirect } from 'services/api/HubApi';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import IconConstants from 'constants/IconConstants';
-import { useSession } from 'context/SessionContext';
+import { sendHubPassword, acceptHubRedirect } from '@/services/api/HubApi';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
+import IconConstants from '@/constants/IconConstants';
+import { useSession } from '@/context/SessionContext';
 
 interface HubActionPromptProps {
   icon: IconType;

@@ -1,15 +1,15 @@
 import { Component } from 'react';
 import RemoteSettingForm, {
   RemoteSettingFormProps,
-} from 'routes/Settings/components/RemoteSettingForm';
-import Message from 'components/semantic/Message';
-import IconConstants from 'constants/IconConstants';
+} from '@/routes/Settings/components/RemoteSettingForm';
+import Message from '@/components/semantic/Message';
+import IconConstants from '@/constants/IconConstants';
 
-import { IncomingConnectionModeEnum } from 'constants/SettingConstants';
-import { FormFieldSettingHandler } from 'components/form/Form';
+import { IncomingConnectionModeEnum } from '@/constants/SettingConstants';
+import { FormFieldSettingHandler } from '@/components/form/Form';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 interface ProtocolPageProps extends RemoteSettingFormProps {
   moduleT: UI.ModuleTranslator;

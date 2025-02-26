@@ -1,14 +1,14 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { lens } from '@dhmk/zustand-lens';
 
-import { ChatroomUrgencies, PrivateMessageUrgencies } from 'constants/UrgencyConstants';
+import { ChatroomUrgencies, PrivateMessageUrgencies } from '@/constants/UrgencyConstants';
 import { createSessionSlice, initSessionSlice } from './decorators/sessionSlice';
 import { createMessageSlice, initMessageSlice } from './decorators/messageSlice';
 
-import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
-import PrivateChatConstants from 'constants/PrivateChatConstants';
+import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
+import PrivateChatConstants from '@/constants/PrivateChatConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
 const PrivateChatSessionUrgencyGetter = (session: API.PrivateChat) =>

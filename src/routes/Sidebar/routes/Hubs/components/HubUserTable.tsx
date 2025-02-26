@@ -1,23 +1,24 @@
 import * as React from 'react';
-
-import HubUserViewStore from 'stores/views/HubUserViewStore';
-
 import { Column } from 'fixed-data-table-2';
-import VirtualTable from 'components/table/VirtualTable';
-import { SizeCell, ConnectionCell, IpCell } from 'components/table/Cell';
 
-import { TableUserMenu } from 'components/action-menu';
+import HubUserViewStore from '@/stores/views/HubUserViewStore';
 
-import Message from 'components/semantic/Message';
-import Loader from 'components/semantic/Loader';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import VirtualTable from '@/components/table/VirtualTable';
+import { SizeCell, ConnectionCell, IpCell } from '@/components/table/Cell';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import IconConstants from 'constants/IconConstants';
-import MenuConstants from 'constants/MenuConstants';
-import { useStoreProperty } from 'context/StoreContext';
-import { HubStoreSelector } from 'stores/hubSessionSlice';
+import { TableUserMenu } from '@/components/action-menu';
+
+import Message from '@/components/semantic/Message';
+import Loader from '@/components/semantic/Loader';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
+
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+
+import IconConstants from '@/constants/IconConstants';
+import MenuConstants from '@/constants/MenuConstants';
+import { useStoreProperty } from '@/context/StoreContext';
+import { HubStoreSelector } from '@/stores/hubSessionSlice';
 
 interface NickCellProps extends RowWrapperCellChildProps<string, API.HubUser> {
   session: API.Hub;

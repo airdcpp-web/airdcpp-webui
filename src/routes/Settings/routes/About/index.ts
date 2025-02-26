@@ -1,5 +1,5 @@
-import { RootSectionType } from 'routes/Settings/types';
-import * as API from 'types/api';
+import { RootSectionType } from '@/routes/Settings/types';
+import * as API from '@/types/api';
 
 const About: RootSectionType = {
   url: 'about',

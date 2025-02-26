@@ -1,10 +1,10 @@
-import FilelistConstants from 'constants/FilelistConstants';
+import FilelistConstants from '@/constants/FilelistConstants';
 
-import SocketService from 'services/SocketService';
+import SocketService from '@/services/SocketService';
 import { createFileBundle } from './QueueApi';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 export const filelistDownloadHandler: UI.DownloadHandler<API.FilelistItem> = (
   itemInfo,

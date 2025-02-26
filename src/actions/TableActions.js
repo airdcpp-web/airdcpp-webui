@@ -1,8 +1,8 @@
 import Reflux from 'reflux';
 
-import SocketService from 'services/SocketService';
+import SocketService from '@/services/SocketService';
 
-import LoginStore from 'stores/reflux/LoginStore';
+import LoginStore from '@/stores/reflux/LoginStore';
 
 const TableActions = Reflux.createActions([
   { setRange: { asyncResult: true } },

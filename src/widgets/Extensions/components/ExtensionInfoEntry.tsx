@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Moment from 'moment';
 
-import ExtensionIcon from 'routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
+import ExtensionIcon from '@/routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
 
 import { compareVersions } from 'compare-versions';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Link } from 'react-router';
 

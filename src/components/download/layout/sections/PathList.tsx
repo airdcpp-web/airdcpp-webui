@@ -1,13 +1,13 @@
-import FilesystemConstants from 'constants/FilesystemConstants';
+import FilesystemConstants from '@/constants/FilesystemConstants';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator from '@/decorators/DataProviderDecorator';
 
-import Message from 'components/semantic/Message';
+import Message from '@/components/semantic/Message';
 
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { PathDownloadHandler } from '../../types';
 import { PathListItem } from './PathListItem';

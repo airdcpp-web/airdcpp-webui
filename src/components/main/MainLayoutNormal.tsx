@@ -2,17 +2,17 @@ import { memo } from 'react';
 import { Routes, useLocation } from 'react-router';
 import classNames from 'classnames';
 
-import MainNavigation from 'components/main/navigation/MainNavigationNormal';
-import SideMenu from 'components/main/navigation/SideMenu';
-import SiteHeader from 'components/main/SiteHeader';
+import MainNavigation from '@/components/main/navigation/MainNavigationNormal';
+import SideMenu from '@/components/main/navigation/SideMenu';
+import SiteHeader from '@/components/main/SiteHeader';
 
-import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from '@/routes/Routes';
 
-import Sidebar from 'routes/Sidebar/components/Sidebar';
-import { useSidebarEffect } from 'effects';
+import Sidebar from '@/routes/Sidebar/components/Sidebar';
+import { useSidebarEffect } from '@/effects';
 import { MainLayoutProps } from './AuthenticatedApp';
 
-import 'normal.css';
+import '@/normal.css';
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const { className } = props;

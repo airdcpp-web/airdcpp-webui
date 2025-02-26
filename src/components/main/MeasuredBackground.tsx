@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { LocalSettings } from 'constants/SettingConstants';
-import { LayoutWidthContext } from 'context/LayoutWidthContext';
-import LocalSettingStore from 'stores/reflux/LocalSettingStore';
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import { LocalSettings } from '@/constants/SettingConstants';
+import { LayoutWidthContext } from '@/context/LayoutWidthContext';
+import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
 import Background1500px from '../../../resources/images/background_winter_1500px.jpg';
 import Background3840px from '../../../resources/images/background_winter_3840px.jpg';

@@ -1,12 +1,15 @@
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { InputDialog } from 'components/semantic/InputDialog';
+import { InputDialog } from '@/components/semantic/InputDialog';
 import { useTranslation } from 'react-i18next';
-import { translate, toI18nKey, toArray } from 'utils/TranslationUtils';
+import { translate, toI18nKey, toArray } from '@/utils/TranslationUtils';
 
 import { upperFirst } from 'lodash';
-import { translateActionName } from 'utils/ActionUtils';
-import { CheckboxDialog, CheckboxDialogProps } from 'components/semantic/CheckboxDialog';
+import { translateActionName } from '@/utils/ActionUtils';
+import {
+  CheckboxDialog,
+  CheckboxDialogProps,
+} from '@/components/semantic/CheckboxDialog';
 
 export interface ActionData<
   ItemDataT extends UI.ActionDataValueType,

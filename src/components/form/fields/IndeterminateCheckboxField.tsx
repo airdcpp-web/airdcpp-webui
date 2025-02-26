@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import * as React from 'react';
 
-import * as UI from 'types/ui';
-import t from 'utils/tcomb-form';
+import * as UI from '@/types/ui';
+
+import tcomb from '@/utils/tcomb-form';
 
 interface IndeterminateCheckboxProps {
   locals: UI.FormLocals<any, boolean | null, UI.EmptyObject>;
@@ -52,6 +53,6 @@ const IndeterminateCheckboxTemplate: TCombTemplate = {
   },
 };
 
-export const IndeterminateCheckboxField = t.form.Form.templates.checkbox.clone(
+export const IndeterminateCheckboxField = tcomb.form.Form.templates.checkbox.clone(
   IndeterminateCheckboxTemplate,
 );

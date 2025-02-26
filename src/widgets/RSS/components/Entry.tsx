@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { ActionMenu } from 'components/action-menu';
+import { ActionMenu } from '@/components/action-menu';
 
 import RSSActions from '../actions/RSSActions';
 import { FeedItem } from '../types';
 import { parseNodeContent } from '../utils';
 
-import * as UI from 'types/ui';
-import { useFormatter } from 'context/FormatterContext';
+import * as UI from '@/types/ui';
+import { useFormatter } from '@/context/FormatterContext';
 
 const parseTitle = (entry: FeedItem) => {
   if (!entry.title) {

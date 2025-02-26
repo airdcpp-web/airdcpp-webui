@@ -6,7 +6,7 @@ import {
   MockHintedUser1Response,
 } from './user';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 export const PrivateChat1 = {
   ccpm_state: {

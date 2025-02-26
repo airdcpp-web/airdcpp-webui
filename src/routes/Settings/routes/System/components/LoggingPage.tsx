@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import ExternalLink from 'components/ExternalLink';
-import LinkConstants from 'constants/LinkConstants';
+import ExternalLink from '@/components/ExternalLink';
+import LinkConstants from '@/constants/LinkConstants';
 
-import Message from 'components/semantic/Message';
-import { SettingPageProps } from 'routes/Settings/types';
-import IconConstants from 'constants/IconConstants';
+import Message from '@/components/semantic/Message';
+import { SettingPageProps } from '@/routes/Settings/types';
+import IconConstants from '@/constants/IconConstants';
 import LogSectionGroup from './LogSectionGroup';
 import { Trans } from 'react-i18next';
 

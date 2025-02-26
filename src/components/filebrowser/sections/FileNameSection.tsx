@@ -1,8 +1,8 @@
-import Input from 'components/semantic/Input';
+import Input from '@/components/semantic/Input';
 import * as React from 'react';
 
-import * as UI from 'types/ui';
-import { translate } from 'utils/TranslationUtils';
+import * as UI from '@/types/ui';
+import { translate } from '@/utils/TranslationUtils';
 
 export interface FileNameSectionProps {
   currentFileName: string;

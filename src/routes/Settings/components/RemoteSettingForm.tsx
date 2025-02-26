@@ -1,20 +1,20 @@
 import { useContext } from 'react';
-import SettingConstants from 'constants/SettingConstants';
+import SettingConstants from '@/constants/SettingConstants';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
 import Form, {
   FormProps,
   FormSaveHandler,
   FormFieldChangeHandler,
-} from 'components/form/Form';
+} from '@/components/form/Form';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { SettingSaveContext, getSettingFormId } from '../effects/useSettingSaveContext';
-import { useSocket } from 'context/SocketContext';
+import { useSocket } from '@/context/SocketContext';
 
 export interface RemoteSettingFormProps
   extends Omit<FormProps, 'onSave' | 'value' | 'fieldDefinitions' | 'location'> {

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Popup from './Popup';
 import DropdownCaption from './DropdownCaption';
 import Icon, { IconType } from './Icon';
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
 // A popup-based class for handling dropdowns in Fixed Data Table
 // The normal styled dropdown won"t work there because the table cell won"t allow overflow

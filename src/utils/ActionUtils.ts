@@ -1,9 +1,9 @@
 import invariant from 'invariant';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import { textToI18nKey, toArray, translate } from './TranslationUtils';
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
 export const actionFilter = <
   ItemDataT extends UI.ActionDataValueType,

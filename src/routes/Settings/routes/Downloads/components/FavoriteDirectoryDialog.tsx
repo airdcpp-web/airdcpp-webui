@@ -1,33 +1,33 @@
 import { useMemo, useRef } from 'react';
-import RouteModal from 'components/semantic/RouteModal';
+import RouteModal from '@/components/semantic/RouteModal';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
-import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
-import IconConstants from 'constants/IconConstants';
+import FavoriteDirectoryConstants from '@/constants/FavoriteDirectoryConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import t from 'utils/tcomb-form';
+import t from '@/utils/tcomb-form';
 
-import { getLastDirectory } from 'utils/FileUtils';
+import { getLastDirectory } from '@/utils/FileUtils';
 
 import Form, {
   FormFieldChangeHandler,
   FormSaveHandler,
   FormFieldSettingHandler,
-} from 'components/form';
-import { AutoSuggestField } from 'components/form/fields';
+} from '@/components/form';
+import { AutoSuggestField } from '@/components/form/fields';
 
-import FilesystemConstants from 'constants/FilesystemConstants';
+import FilesystemConstants from '@/constants/FilesystemConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { translateForm } from 'utils/FormUtils';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { translateForm } from '@/utils/FormUtils';
 
 const Entry: UI.FormFieldDefinition[] = [
   {

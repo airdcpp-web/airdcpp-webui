@@ -1,16 +1,16 @@
-import RecentLayout from 'routes/Sidebar/components/RecentLayout';
+import RecentLayout from '@/routes/Sidebar/components/RecentLayout';
 
-import { HistoryEntryEnum } from 'constants/HistoryConstants';
+import { HistoryEntryEnum } from '@/constants/HistoryConstants';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import IconConstants from 'constants/IconConstants';
-import { UserSelectField } from 'components/select';
-import { NewSessionLayoutProps } from 'routes/Sidebar/components/types';
-import LinkButton from 'components/semantic/LinkButton';
-import { useAppStore } from 'context/StoreContext';
-import { PrivateChatAPIActions } from 'actions/store/PrivateChatActions';
-import { useSocket } from 'context/SocketContext';
+import IconConstants from '@/constants/IconConstants';
+import { UserSelectField } from '@/components/select';
+import { NewSessionLayoutProps } from '@/routes/Sidebar/components/types';
+import LinkButton from '@/components/semantic/LinkButton';
+import { useAppStore } from '@/context/StoreContext';
+import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
+import { useSocket } from '@/context/SocketContext';
 import { useTranslation } from 'react-i18next';
 
 const MessageNew: React.FC<NewSessionLayoutProps> = (props) => {

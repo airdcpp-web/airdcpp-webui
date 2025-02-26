@@ -1,15 +1,15 @@
 import { useState, memo } from 'react';
 import { Routes } from 'react-router';
 
-import SiteHeader from 'components/main/SiteHeader';
-import MainNavigation from 'components/main/navigation/MainNavigationMobile';
+import SiteHeader from '@/components/main/SiteHeader';
+import MainNavigation from '@/components/main/navigation/MainNavigationMobile';
 
-import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from 'routes/Routes';
+import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from '@/routes/Routes';
 
 import { MainLayoutProps } from './AuthenticatedApp';
-import { MenuIcon } from 'components/action-menu';
+import { MenuIcon } from '@/components/action-menu';
 
-import 'mobile.css';
+import '@/mobile.css';
 
 const MainLayoutMobile: React.FC<MainLayoutProps> = memo(
   function MainLayoutMobile(props) {

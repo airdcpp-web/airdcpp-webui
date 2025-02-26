@@ -1,10 +1,10 @@
-import FilelistConstants from 'constants/FilelistConstants';
+import FilelistConstants from '@/constants/FilelistConstants';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { refreshVirtual } from 'services/api/ShareApi';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { refreshVirtual } from '@/services/api/ShareApi';
 
 type Filter = UI.ActionFilter<API.FilelistItem, API.FilelistSession>;
 

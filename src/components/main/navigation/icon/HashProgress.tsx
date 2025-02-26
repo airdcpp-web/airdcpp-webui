@@ -1,12 +1,12 @@
 import { memo, useEffect } from 'react';
 
-import HashConstants from 'constants/HashConstants';
-import IconConstants from 'constants/IconConstants';
+import HashConstants from '@/constants/HashConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import Icon from 'components/semantic/Icon';
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import Icon from '@/components/semantic/Icon';
+import DataProviderDecorator from '@/decorators/DataProviderDecorator';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 import { useState } from 'react';
 import { HashInfoDialog } from './hash-info-dialog/HashInfoDialog';

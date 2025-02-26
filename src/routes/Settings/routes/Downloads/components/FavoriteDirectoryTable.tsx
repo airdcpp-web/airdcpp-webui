@@ -4,20 +4,20 @@ import {
   FavoriteDirectoryActionModule,
   FavoriteDirectoryCreateAction,
   FavoriteDirectoryEditActionMenu,
-} from 'actions/ui/favorite-directory/FavoriteDirectoryActions';
-import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
+} from '@/actions/ui/favorite-directory/FavoriteDirectoryActions';
+import FavoriteDirectoryConstants from '@/constants/FavoriteDirectoryConstants';
 
-import ActionButton from 'components/ActionButton';
+import ActionButton from '@/components/ActionButton';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import { ActionMenu } from 'components/action-menu';
-import FavoriteDirectoryDialog from 'routes/Settings/routes/Downloads/components/FavoriteDirectoryDialog';
+import { ActionMenu } from '@/components/action-menu';
+import FavoriteDirectoryDialog from '@/routes/Settings/routes/Downloads/components/FavoriteDirectoryDialog';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const Row: React.FC<{ directory: API.FavoriteDirectoryEntry }> = ({ directory }) => (
   <tr>

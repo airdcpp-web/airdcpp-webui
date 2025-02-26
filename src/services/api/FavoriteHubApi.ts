@@ -1,7 +1,7 @@
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import SocketService from 'services/SocketService';
-import FavoriteHubConstants from 'constants/FavoriteHubConstants';
+import SocketService from '@/services/SocketService';
+import FavoriteHubConstants from '@/constants/FavoriteHubConstants';
 
 export const updateFavoriteHub = (
   hub: API.FavoriteHubEntry,

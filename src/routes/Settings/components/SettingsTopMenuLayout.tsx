@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import Dropdown from 'components/semantic/Dropdown';
-import SectionedDropdown from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
-import Icon from 'components/semantic/Icon';
-import { SettingSectionLayoutProps } from 'routes/Settings/types';
+import Dropdown from '@/components/semantic/Dropdown';
+import SectionedDropdown from '@/components/semantic/SectionedDropdown';
+import MenuSection from '@/components/semantic/MenuSection';
+import Icon from '@/components/semantic/Icon';
+import { SettingSectionLayoutProps } from '@/routes/Settings/types';
 import { translateSettingSectionTitle } from './MenuItems';
 
 type TopSectionSelectionMenuProps = Pick<

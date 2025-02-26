@@ -1,21 +1,21 @@
-import EventConstants, { SeverityEnum } from 'constants/EventConstants';
+import EventConstants, { SeverityEnum } from '@/constants/EventConstants';
 
-import { LogMessageUrgencies } from 'constants/UrgencyConstants';
-import { toUrgencyMap } from 'utils/UrgencyUtils';
+import { LogMessageUrgencies } from '@/constants/UrgencyConstants';
+import { toUrgencyMap } from '@/utils/UrgencyUtils';
 
 import {
   mergeCacheMessages,
   pushMessage,
   checkUnreadCacheInfo,
   checkSplice,
-} from 'utils/MessageUtils';
+} from '@/utils/MessageUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Lens, lens } from '@dhmk/zustand-lens';
 import { createBasicScrollSlice } from './decorators/scrollSlice';
-import { EventAPIActions } from 'actions/store/EventActions';
+import { EventAPIActions } from '@/actions/store/EventActions';
 
 const toCacheMessage = (message: API.StatusMessage): UI.MessageListItem => {
   return {

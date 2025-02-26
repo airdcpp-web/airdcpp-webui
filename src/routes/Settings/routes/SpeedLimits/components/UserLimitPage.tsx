@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import AutoValuePanel from 'routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
-import { SettingPageProps } from 'routes/Settings/types';
+import AutoValuePanel from '@/routes/Settings/routes/SpeedLimits/components/AutoValuePanel';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Auto = ['mcn_auto_limits', 'mcn_down', 'mcn_up'];
 

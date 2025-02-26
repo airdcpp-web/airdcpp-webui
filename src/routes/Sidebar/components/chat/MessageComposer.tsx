@@ -4,24 +4,24 @@ import classNames from 'classnames';
 import { MentionsInput, Mention, DataFunc } from 'react-mentions';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
-import UserConstants from 'constants/UserConstants';
+import UserConstants from '@/constants/UserConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
 import FilePreviewDialog from './FilePreviewDialog';
 import TempShareDropdown from './TempShareDropdown';
-import { translate } from 'utils/TranslationUtils';
-import Icon from 'components/semantic/Icon';
-import Button from 'components/semantic/Button';
-import IconConstants from 'constants/IconConstants';
+import { translate } from '@/utils/TranslationUtils';
+import Icon from '@/components/semantic/Icon';
+import Button from '@/components/semantic/Button';
+import IconConstants from '@/constants/IconConstants';
 import { useFileUploader } from './effects/useChatFileUploader';
 import { useMessageComposer } from './effects/useMessageComposer';
-import { useSocket } from 'context/SocketContext';
-import { useSession } from 'context/SessionContext';
+import { useSocket } from '@/context/SocketContext';
+import { useSession } from '@/context/SessionContext';
 
 const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {

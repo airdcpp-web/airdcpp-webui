@@ -1,4 +1,4 @@
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 export interface AuthenticatedSession {
   systemInfo: API.SystemInfo;

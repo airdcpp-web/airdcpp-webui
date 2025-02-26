@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 
-import IconPanel from 'components/main/navigation/IconPanel';
+import IconPanel from '@/components/main/navigation/IconPanel';
 import { matchPath, Location, useNavigate } from 'react-router';
 import {
   secondaryRoutes,
   parseMenuItems,
   RouteItemClickHandler,
   HOME_URL,
-} from 'routes/Routes';
-import { useSession } from 'context/SessionContext';
+} from '@/routes/Routes';
+import { useSession } from '@/context/SessionContext';
 
 interface SideMenuProps {
   location: Location;

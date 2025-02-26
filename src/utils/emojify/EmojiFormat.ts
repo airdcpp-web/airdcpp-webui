@@ -1,5 +1,5 @@
 // Convert :D, :P etc. to unicode
-import { emojify as emojisToUnicode } from 'utils/emojify/asciiToUnicodeEmoji';
+import { emojify as emojisToUnicode } from '@/utils/emojify/asciiToUnicodeEmoji';
 
 import emoji from 'react-easy-emoji';
 //@ts-ignore

@@ -2,7 +2,7 @@ import { FormFieldDefinition } from './form';
 import { ModuleActions } from './actions';
 import { ModuleTranslator } from './modules';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
 export interface WidgetSettings<SettingsT = Record<string, any>> {
   widget: SettingsT;

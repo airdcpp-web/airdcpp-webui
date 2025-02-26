@@ -1,20 +1,20 @@
 import * as React from 'react';
 
-import SectionedDropdown from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import SectionedDropdown from '@/components/semantic/SectionedDropdown';
+import MenuSection from '@/components/semantic/MenuSection';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
 
 import TableFilterDecorator, {
   TableFilterDecoratorChildProps,
-} from 'decorators/TableFilterDecorator';
+} from '@/decorators/TableFilterDecorator';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { usingMobileLayout } from 'utils/BrowserUtils';
-import { translate } from 'utils/TranslationUtils';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
+import { translate } from '@/utils/TranslationUtils';
 import { Translation } from 'react-i18next';
-import Input from 'components/semantic/Input';
+import Input from '@/components/semantic/Input';
 
 const getFilterMethodCaption = (method: API.FilterMethod) => {
   switch (method) {

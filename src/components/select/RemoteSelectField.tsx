@@ -1,7 +1,7 @@
 import { GroupBase } from 'react-select';
 import Select, { AsyncProps as SelectProps } from 'react-select/async';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export interface RemoteSelectFieldProps<SuggestionT extends object>
   extends SelectProps<SuggestionT, false, GroupBase<SuggestionT>> {

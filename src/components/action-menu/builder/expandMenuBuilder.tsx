@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
-import * as UI from 'types/ui';
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import * as UI from '@/types/ui';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
 
 // Convert action menu items to React components for regular Dropdown component
 

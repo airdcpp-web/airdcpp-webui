@@ -1,19 +1,19 @@
 import * as React from 'react';
 
-import Loader from 'components/semantic/Loader';
+import Loader from '@/components/semantic/Loader';
 
 import TopMenuLayout from './TopMenuLayout';
 import SideMenuLayout from './SideMenuLayout';
 
-import Message from 'components/semantic/Message';
+import Message from '@/components/semantic/Message';
 
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { translate, toI18nKey } from 'utils/TranslationUtils';
-import { useLayoutWidth } from 'context/LayoutWidthContext';
+import { translate, toI18nKey } from '@/utils/TranslationUtils';
+import { useLayoutWidth } from '@/context/LayoutWidthContext';
 import { useSessionManager } from './effects/useSessionManager';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -25,7 +25,7 @@ import {
   SessionLocationState,
 } from './types';
 import { useComponents } from './SessionMenuComponents';
-import { useSession } from 'context/SessionContext';
+import { useSession } from '@/context/SessionContext';
 
 import '../sessions.css';
 

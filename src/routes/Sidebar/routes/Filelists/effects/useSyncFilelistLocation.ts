@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { changeFilelistDirectory } from 'services/api/FilelistApi';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
+import { changeFilelistDirectory } from '@/services/api/FilelistApi';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import { Location, useNavigate } from 'react-router';
 
 export type FilelistLocationState = { directory: string } | undefined;

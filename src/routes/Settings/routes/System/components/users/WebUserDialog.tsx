@@ -1,29 +1,29 @@
 import { useMemo, useRef } from 'react';
-import RouteModal from 'components/semantic/RouteModal';
+import RouteModal from '@/components/semantic/RouteModal';
 
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
-import WebUserConstants from 'constants/WebUserConstants';
-import AccessConstants from 'constants/AccessConstants';
-import PermissionSelector from 'routes/Settings/routes/System/components/users/PermissionSelector';
+import WebUserConstants from '@/constants/WebUserConstants';
+import AccessConstants from '@/constants/AccessConstants';
+import PermissionSelector from '@/routes/Settings/routes/System/components/users/PermissionSelector';
 
-import t from 'utils/tcomb-form';
+import t from '@/utils/tcomb-form';
 
-import Form, { FormSaveHandler, FormFieldSettingHandler } from 'components/form/Form';
+import Form, { FormSaveHandler, FormFieldSettingHandler } from '@/components/form/Form';
 
 import '../../style.css';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { translateForm } from 'utils/FormUtils';
-import { getSubModuleT } from 'utils/TranslationUtils';
-import IconConstants from 'constants/IconConstants';
-import { useSession } from 'context/SessionContext';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { translateForm } from '@/utils/FormUtils';
+import { getSubModuleT } from '@/utils/TranslationUtils';
+import IconConstants from '@/constants/IconConstants';
+import { useSession } from '@/context/SessionContext';
 
 const enum PermissionAction {
   EDIT = 'Edit',

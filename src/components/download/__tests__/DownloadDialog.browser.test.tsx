@@ -1,38 +1,37 @@
-import {
-  getConnectedSocket,
-  getMockServer,
-} from 'airdcpp-apisocket/tests/mock-server.js';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { waitForElementToBeRemoved, waitFor, fireEvent } from '@testing-library/react';
 
-import { jest } from '@jest/globals';
-import ShareConstants from 'constants/ShareConstants';
-import { ShareGetGroupedRootsResponse } from 'tests/mocks/api/share';
-import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
-import { FavoriteDirectoriesGroupedPathsResponse } from 'tests/mocks/api/favorite-directories';
-import HistoryConstants, { HistoryStringEnum } from 'constants/HistoryConstants';
+import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+
+import ShareConstants from '@/constants/ShareConstants';
+import { ShareGetGroupedRootsResponse } from '@/tests/mocks/api/share';
+import FavoriteDirectoryConstants from '@/constants/FavoriteDirectoryConstants';
+import { FavoriteDirectoriesGroupedPathsResponse } from '@/tests/mocks/api/favorite-directories';
+import HistoryConstants, { HistoryStringEnum } from '@/constants/HistoryConstants';
 import {
   FilelistGetFilelistItemFileResponse,
   FilelistGetResponse,
   MOCK_FILELIST_ITEM_ID,
-} from 'tests/mocks/api/filelist';
-import FilesystemConstants from 'constants/FilesystemConstants';
+} from '@/tests/mocks/api/filelist';
+import FilesystemConstants from '@/constants/FilesystemConstants';
 import {
   FilesystemDiskInfoResponse,
   FilesystemListContentResponse,
-} from 'tests/mocks/api/filesystem';
-import { renderRoutes } from 'tests/test-containers';
+} from '@/tests/mocks/api/filesystem';
+import { renderRoutes } from '@/tests/test-containers';
 import DownloadDialog from '../DownloadDialog';
 
-import * as UI from 'types/ui';
-import * as API from 'types/api';
-import { MockHintedUser1Response } from 'tests/mocks/api/user';
-import { waitForElementToBeRemoved, waitFor, fireEvent } from '@testing-library/react';
+import * as UI from '@/types/ui';
+import * as API from '@/types/api';
 
-import { HistoryStringPathResponse } from 'tests/mocks/api/history';
+import { MockHintedUser1Response } from '@/tests/mocks/api/user';
+
+import { HistoryStringPathResponse } from '@/tests/mocks/api/history';
 import {
   createTestRouteModalController,
   TestRouteModalNavigateButton,
-} from 'tests/test-dialog-helpers';
-import { waitForData } from 'tests/test-helpers';
+} from '@/tests/test-dialog-helpers';
+import { waitForData } from '@/tests/test-helpers';
 
 // tslint:disable:no-empty
 describe('DownloadDialog', () => {
@@ -81,7 +80,7 @@ describe('DownloadDialog', () => {
 
   const renderDialog = async () => {
     const socket = await getSocket();
-    const handleDownload = jest.fn<UI.DownloadHandler<API.FilelistItem>>();
+    const handleDownload = vi.fn<UI.DownloadHandler<API.FilelistItem>>();
 
     const DownloadDialogTest = () => {
       return (
@@ -123,6 +122,7 @@ describe('DownloadDialog', () => {
 
   afterEach(() => {
     server.stop();
+    localStorage.clear();
   });
 
   test('should load and close', async () => {

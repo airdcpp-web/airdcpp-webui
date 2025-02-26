@@ -1,23 +1,23 @@
 import { useEffect } from 'react';
 import * as React from 'react';
 
-import UserConstants from 'constants/UserConstants';
+import UserConstants from '@/constants/UserConstants';
 
 import OfflineHubMessageDecorator, {
   OfflineHubMessageDecoratorProps,
-} from 'decorators/OfflineHubMessageDecorator';
+} from '@/decorators/OfflineHubMessageDecorator';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { getModuleT, translate } from 'utils/TranslationUtils';
+import { getModuleT, translate } from '@/utils/TranslationUtils';
 import {
   RemoteSelectField,
   RemoteSelectFieldProps,
-} from 'components/select/RemoteSelectField';
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
-import { useSocket } from 'context/SocketContext';
+} from '@/components/select/RemoteSelectField';
+import DataProviderDecorator from '@/decorators/DataProviderDecorator';
+import { useSocket } from '@/context/SocketContext';
 
 interface HintedUserFormatterProps {
   option: API.OfflineHintedUser;

@@ -2,24 +2,24 @@ import { useState } from 'react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { getParentPath } from 'utils/FileUtils';
-import { usingMobileLayout } from 'utils/BrowserUtils';
-import { toI18nKey } from 'utils/TranslationUtils';
+import { getParentPath } from '@/utils/FileUtils';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
+import { toI18nKey } from '@/utils/TranslationUtils';
 
-import ShareConstants from 'constants/ShareConstants';
-import FavoriteDirectoryConstants from 'constants/FavoriteDirectoryConstants';
+import ShareConstants from '@/constants/ShareConstants';
+import FavoriteDirectoryConstants from '@/constants/FavoriteDirectoryConstants';
 
-import MenuItemLink from 'components/semantic/MenuItemLink';
+import MenuItemLink from '@/components/semantic/MenuItemLink';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { getDownloadSections, DownloadSection } from './sections';
 import { BrowseHandler, PathDownloadHandler } from '../types';
 
 import { MobileDownloadLayout } from './MobileDownloadLayout';
 import { NormalDownloadLayout } from './NormalDownloadLayout';
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator from '@/decorators/DataProviderDecorator';
 
 export interface DownloadLayoutDataProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,

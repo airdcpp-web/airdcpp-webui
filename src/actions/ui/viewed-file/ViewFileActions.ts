@@ -1,9 +1,9 @@
-import ViewFileConstants from 'constants/ViewFileConstants';
+import ViewFileConstants from '@/constants/ViewFileConstants';
 
 import { BuildRemoveSessionAction } from '../decorators/SessionActionDecorator';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 const ViewFileRemoveAction = BuildRemoveSessionAction(
   ViewFileConstants.SESSIONS_URL,

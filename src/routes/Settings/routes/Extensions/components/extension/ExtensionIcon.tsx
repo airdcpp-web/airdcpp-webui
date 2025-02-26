@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import Icon from 'components/semantic/Icon';
+import Icon from '@/components/semantic/Icon';
 
-import * as API from 'types/api';
-import IconConstants from 'constants/IconConstants';
+import * as API from '@/types/api';
+import IconConstants from '@/constants/IconConstants';
 
 const getCornerIcon = (
   installedPackage: API.Extension | undefined,

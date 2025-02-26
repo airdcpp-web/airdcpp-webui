@@ -1,19 +1,19 @@
-import FilelistConstants from 'constants/FilelistConstants';
+import FilelistConstants from '@/constants/FilelistConstants';
 
-import LoginStore from 'stores/reflux/LoginStore';
-import { APISocket } from 'services/SocketService';
+import LoginStore from '@/stores/reflux/LoginStore';
+import { APISocket } from '@/services/SocketService';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
-import { getFilePath } from 'utils/FileUtils';
+import { getFilePath } from '@/utils/FileUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import {
   changeFilelistHubUrl,
   changeFilelistShareProfile,
   changeFilelistDirectory,
-} from 'services/api/FilelistApi';
+} from '@/services/api/FilelistApi';
 import { SessionCreatorDecorator } from './decorators/SessionCreatorDecorator';
 
 interface CreateRemoteSessionData {

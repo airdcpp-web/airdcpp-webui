@@ -1,20 +1,20 @@
 import cx from 'classnames';
 
-import IconConstants from 'constants/IconConstants';
-import Loader from 'components/semantic/Loader';
-import Message from 'components/semantic/Message';
+import IconConstants from '@/constants/IconConstants';
+import Loader from '@/components/semantic/Loader';
+import Message from '@/components/semantic/Message';
 
-import { useActiveSession } from 'decorators/ActiveSessionDecorator';
-import FileFooter from 'routes/Sidebar/routes/Files/components/FileFooter';
+import { useActiveSession } from '@/decorators/ActiveSessionDecorator';
+import FileFooter from '@/routes/Sidebar/routes/Files/components/FileFooter';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import FileContent from './FileContent';
-import { SessionChildProps } from 'routes/Sidebar/components/types';
-import { FilelistStoreSelector } from 'stores/filelistSlice';
-import { FilelistAPIActions } from 'actions/store/FilelistActions';
-import { useStoreProperty } from 'context/StoreContext';
+import { SessionChildProps } from '@/routes/Sidebar/components/types';
+import { FilelistStoreSelector } from '@/stores/filelistSlice';
+import { FilelistAPIActions } from '@/actions/store/FilelistActions';
+import { useStoreProperty } from '@/context/StoreContext';
 
 export interface FileSessionProps
   extends SessionChildProps<API.ViewFile, UI.EmptyObject, UI.EmptyObject> {

@@ -1,4 +1,4 @@
-import { RootSectionType } from 'routes/Settings/types';
+import { RootSectionType } from '@/routes/Settings/types';
 
 const Downloads: RootSectionType = {
   url: 'downloads',

@@ -5,23 +5,23 @@ import {
   TableDownloadMenu,
   TableActionMenuProps,
   TableDownloadMenuProps,
-} from 'components/action-menu';
-import { useFormatter } from 'context/FormatterContext';
+} from '@/components/action-menu';
+import { useFormatter } from '@/context/FormatterContext';
 
-import FormattedFile from 'components/format/FormattedFile';
-import FormattedIp from 'components/format/FormattedIp';
+import FormattedFile from '@/components/format/FormattedFile';
+import FormattedIp from '@/components/format/FormattedIp';
 
-import Checkbox, { CheckboxProps } from 'components/semantic/Checkbox';
-import { showAction } from 'utils/ActionUtils';
+import Checkbox, { CheckboxProps } from '@/components/semantic/Checkbox';
+import { showAction } from '@/utils/ActionUtils';
 import { Cell, CellProps } from 'fixed-data-table-2';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as UI from 'types/ui';
-import * as API from 'types/api';
-import { ActionHandlerDecorator } from 'decorators/ActionHandlerDecorator';
-import { useSession } from 'context/SessionContext';
-import { formatDecimal } from 'utils/ValueFormat';
-import LinkButton from 'components/semantic/LinkButton';
+import * as UI from '@/types/ui';
+import * as API from '@/types/api';
+import { ActionHandlerDecorator } from '@/decorators/ActionHandlerDecorator';
+import { useSession } from '@/context/SessionContext';
+import { formatDecimal } from '@/utils/ValueFormat';
+import LinkButton from '@/components/semantic/LinkButton';
 
 const getCellContent = (cellData: any) => {
   if (typeof cellData === 'object') {
@@ -260,7 +260,6 @@ export const FileDownloadCell = <
   />
 );
 
-// eslint-disable-next-line max-len
 export interface CheckboxCellProps
   extends Omit<RowWrapperCellChildProps<boolean, any>, 'onChange' | 'id'>,
     Omit<CheckboxProps, 'onChange' | 'checked' | 'id'> {

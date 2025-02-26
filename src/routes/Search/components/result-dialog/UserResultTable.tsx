@@ -2,21 +2,21 @@ import * as React from 'react';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import FormattedIp from 'components/format/FormattedIp';
+} from '@/decorators/DataProviderDecorator';
+import FormattedIp from '@/components/format/FormattedIp';
 
-import SearchConstants from 'constants/SearchConstants';
+import SearchConstants from '@/constants/SearchConstants';
 
-import { UserMenu } from 'components/action-menu';
-import { UserFileActions } from 'actions/ui/user/UserActions';
+import { UserMenu } from '@/components/action-menu';
+import { UserFileActions } from '@/actions/ui/user/UserActions';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { useTranslation } from 'react-i18next';
-import { translate, toI18nKey } from 'utils/TranslationUtils';
-import MenuConstants from 'constants/MenuConstants';
-import { useFormatter } from 'context/FormatterContext';
+import { translate, toI18nKey } from '@/utils/TranslationUtils';
+import MenuConstants from '@/constants/MenuConstants';
+import { useFormatter } from '@/context/FormatterContext';
 
 interface UserResultProps {
   result: API.ChildSearchResult;

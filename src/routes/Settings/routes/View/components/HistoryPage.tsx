@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Entry = ['history_search_max', 'history_download_max', 'history_chat_log_lines'];
 

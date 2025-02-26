@@ -2,20 +2,20 @@ import { useEffect, useState } from 'react';
 import { WithTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 
-import NotificationActions from 'actions/NotificationActions';
-import SearchConstants from 'constants/SearchConstants';
+import NotificationActions from '@/actions/NotificationActions';
+import SearchConstants from '@/constants/SearchConstants';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
-import OfflineHubMessageDecorator from 'decorators/OfflineHubMessageDecorator';
-import LoginStore from 'stores/reflux/LoginStore';
-import { search as doSearch } from 'services/api/SearchApi';
-import { getModuleT } from 'utils/TranslationUtils';
+} from '@/decorators/DataProviderDecorator';
+import OfflineHubMessageDecorator from '@/decorators/OfflineHubMessageDecorator';
+import LoginStore from '@/stores/reflux/LoginStore';
+import { search as doSearch } from '@/services/api/SearchApi';
+import { getModuleT } from '@/utils/TranslationUtils';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import ResultTable from 'routes/Search/components/ResultTable';
+import ResultTable from '@/routes/Search/components/ResultTable';
 
 import { SearchInput } from './SearchInput';
 import { SearchOptions } from './options-panel';
@@ -23,7 +23,7 @@ import {
   loadSessionProperty,
   removeSessionProperty,
   saveSessionProperty,
-} from 'utils/BrowserUtils';
+} from '@/utils/BrowserUtils';
 
 import '../style.css';
 

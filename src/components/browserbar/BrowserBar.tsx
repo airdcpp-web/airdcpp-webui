@@ -94,6 +94,7 @@ class BrowserBar extends PureComponent<BrowserBarProps> {
   };
 
   render() {
+    const { selectedNameFormatter, path } = this.props;
     const { current, tokens } = this.parsePath();
 
     const className = classNames('ui segment browserbar', {
@@ -120,10 +121,13 @@ class BrowserBar extends PureComponent<BrowserBarProps> {
 
         <SelectedSection
           key={current}
-          selectedNameFormatter={this.props.selectedNameFormatter}
+          selectedNameFormatter={selectedNameFormatter}
           caption={this.formatName(current)}
           token={current}
         />
+        <div data-testid="browserbar-path" style={{ display: 'none' }}>
+          {path}
+        </div>
       </div>
     );
   }

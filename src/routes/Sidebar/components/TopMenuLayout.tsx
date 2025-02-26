@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { usingMobileLayout } from 'utils/BrowserUtils';
+import { usingMobileLayout } from '@/utils/BrowserUtils';
 
-import ActionButton from 'components/ActionButton';
-import SectionedDropdown from 'components/semantic/SectionedDropdown';
-import MenuSection from 'components/semantic/MenuSection';
-import { MenuIcon } from 'components/icon/MenuIcon';
+import ActionButton from '@/components/ActionButton';
+import SectionedDropdown from '@/components/semantic/SectionedDropdown';
+import MenuSection from '@/components/semantic/MenuSection';
+import { MenuIcon } from '@/components/icon/MenuIcon';
 
-import * as UI from 'types/ui';
-import { translate } from 'utils/TranslationUtils';
-import IconConstants from 'constants/IconConstants';
+import * as UI from '@/types/ui';
+import { translate } from '@/utils/TranslationUtils';
+import IconConstants from '@/constants/IconConstants';
 import { useTranslation } from 'react-i18next';
 import { SessionMainLayoutProps } from './types';
-import { useStoreProperty } from 'context/StoreContext';
+import { useStoreProperty } from '@/context/StoreContext';
 
 type SessionDropdownProps<SessionT extends UI.SessionItemBase> = Pick<
   SessionMainLayoutProps<SessionT>,

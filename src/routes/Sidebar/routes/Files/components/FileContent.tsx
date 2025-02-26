@@ -1,17 +1,17 @@
 import { memo } from 'react';
 import * as React from 'react';
 
-import { AudioFile, ImageFile, VideoFile, TextFile } from 'components/file-preview';
+import { AudioFile, ImageFile, VideoFile, TextFile } from '@/components/file-preview';
 
 import Moment from 'moment';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { fetchData } from 'utils/HttpUtils';
-import { useRestoreScroll } from 'effects';
+import { fetchData } from '@/utils/HttpUtils';
+import { useRestoreScroll } from '@/effects';
 import { useHref } from 'react-router';
-import { useSession } from 'context/SessionContext';
+import { useSession } from '@/context/SessionContext';
 
 export interface FileContentProps {
   session: API.ViewFile;
@@ -37,7 +37,6 @@ const getViewerElement = (
   item: API.ViewFile,
 ): React.ComponentType<ViewerElementProps> | null => {
   if (item.text) {
-    // eslint-disable-next-line react/display-name
     return (props: ViewerElementProps) => (
       <TextFile
         {...props}
@@ -56,15 +55,12 @@ const getViewerElement = (
 
   switch (item.type.content_type) {
     case 'audio':
-      // eslint-disable-next-line react/display-name
       return (props: ViewerElementProps) => (
         <AudioFile autoPlay={useAutoPlay(item)} {...props} />
       );
     case 'picture':
-      // eslint-disable-next-line react/display-name
       return (props: ViewerElementProps) => <ImageFile {...props} />;
     case 'video':
-      // eslint-disable-next-line react/display-name
       return (props: ViewerElementProps) => (
         <VideoFile autoPlay={useAutoPlay(item)} {...props} />
       );

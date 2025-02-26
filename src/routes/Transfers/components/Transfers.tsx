@@ -1,32 +1,32 @@
 import * as React from 'react';
 
-import TransferStore from 'stores/views/TransferStore';
+import TransferStore from '@/stores/views/TransferStore';
 
-import Message from 'components/semantic/Message';
+import Message from '@/components/semantic/Message';
 
-import NameCell from 'routes/Transfers/components/NameCell';
-import StatusCell from 'routes/Transfers/components/StatusCell';
-import UserCell from 'routes/Transfers/components/UserCell';
+import NameCell from '@/routes/Transfers/components/NameCell';
+import StatusCell from '@/routes/Transfers/components/StatusCell';
+import UserCell from '@/routes/Transfers/components/UserCell';
 
 import { Column } from 'fixed-data-table-2';
-import VirtualTable from 'components/table/VirtualTable';
+import VirtualTable from '@/components/table/VirtualTable';
 import {
   SizeCell,
   SpeedCell,
   AbbreviatedDurationCell,
   IpCell,
-} from 'components/table/Cell';
+} from '@/components/table/Cell';
 
 import '../style.css';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { getModuleT } from 'utils/TranslationUtils';
-import IconConstants from 'constants/IconConstants';
-import { ActionMenu } from 'components/action-menu';
-import { TransferActionMenu } from 'actions/ui/transfer';
+import { getModuleT } from '@/utils/TranslationUtils';
+import IconConstants from '@/constants/IconConstants';
+import { ActionMenu } from '@/components/action-menu';
+import { TransferActionMenu } from '@/actions/ui/transfer';
 
 const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({
   cellData,

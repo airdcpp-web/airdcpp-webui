@@ -1,7 +1,7 @@
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { DEFAULT_AUTH_RESPONSE } from 'airdcpp-apisocket/tests/mock-server.js';
+import { DEFAULT_AUTH_RESPONSE } from 'airdcpp-apisocket/tests';
 
 export const getMockSession = (): UI.AuthenticatedSession => ({
   systemInfo: {

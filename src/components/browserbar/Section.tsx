@@ -3,8 +3,8 @@ import * as React from 'react';
 import './style.css';
 
 import 'fomantic-ui-css/components/breadcrumb.min.css';
-import Icon from 'components/semantic/Icon';
-import LinkButton from 'components/semantic/LinkButton';
+import Icon from '@/components/semantic/Icon';
+import LinkButton from '@/components/semantic/LinkButton';
 
 export type SelectedNameFormatter = (
   caption: React.ReactNode,

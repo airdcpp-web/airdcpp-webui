@@ -2,11 +2,11 @@
 import Reflux from 'reflux';
 import invariant from 'invariant';
 
-import { loadLocalProperty, saveLocalProperty } from 'utils/BrowserUtils';
-import { LocalSettings } from 'constants/SettingConstants';
+import { loadLocalProperty, saveLocalProperty } from '@/utils/BrowserUtils';
+import { LocalSettings } from '@/constants/SettingConstants';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 type LocalFormFieldDefinition = UI.FormFieldDefinition & {
   default_value: UI.FormValueBase;

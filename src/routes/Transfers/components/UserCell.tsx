@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import { UserFileActions } from 'actions/ui/user/UserActions';
+import { UserFileActions } from '@/actions/ui/user/UserActions';
 
-import { TableActionMenu, TableUserMenu } from 'components/action-menu';
-import IconConstants from 'constants/IconConstants';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import { TableActionMenu, TableUserMenu } from '@/components/action-menu';
+import IconConstants from '@/constants/IconConstants';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
-import MenuConstants from 'constants/MenuConstants';
+import * as API from '@/types/api';
+import MenuConstants from '@/constants/MenuConstants';
 import classNames from 'classnames';
-import { TransferItemActionMenu } from 'actions/ui/transfer';
+import { TransferItemActionMenu } from '@/actions/ui/transfer';
 
 const UserCaption: React.FC<RowWrapperCellChildProps<API.HintedUser, API.Transfer>> = ({
   cellData,

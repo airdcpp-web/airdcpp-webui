@@ -1,11 +1,11 @@
-import EventConstants from 'constants/EventConstants';
-import SocketService from 'services/SocketService';
+import EventConstants from '@/constants/EventConstants';
+import SocketService from '@/services/SocketService';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { ErrorResponse } from 'react-router';
-import NotificationActions from 'actions/NotificationActions';
+import NotificationActions from '@/actions/NotificationActions';
 
 const fetchInfo = async (store: UI.Store) => {
   let eventInfo: API.StatusMessageCounts | null = null;

@@ -1,10 +1,10 @@
-import { AddTempShareResponse } from 'services/api/ShareApi';
+import { AddTempShareResponse } from '@/services/api/ShareApi';
 import { SessionItemBase, SessionType } from './sessions';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { APISocket } from 'services/SocketService';
+import { APISocket } from '@/services/SocketService';
 import { MessageSlice } from './store';
 import { SessionAPIActions } from './session-layout';
 import { ActionHandlerProps } from './actions';

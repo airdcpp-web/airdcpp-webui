@@ -1,27 +1,27 @@
 import * as React from 'react';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 
-import Checkbox from 'components/semantic/Checkbox';
-import Button from 'components/semantic/Button';
-import Message from 'components/semantic/Message';
+import Checkbox from '@/components/semantic/Checkbox';
+import Button from '@/components/semantic/Button';
+import Message from '@/components/semantic/Message';
 
-import HashConstants from 'constants/HashConstants';
+import HashConstants from '@/constants/HashConstants';
 
-import { useFormatter } from 'context/FormatterContext';
+import { useFormatter } from '@/context/FormatterContext';
 
 import '../style.css';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { Trans } from 'react-i18next';
-import { runBackgroundSocketAction } from 'utils/ActionUtils';
-import { Row, Grid } from 'components/semantic/Grid';
-import IconConstants from 'constants/IconConstants';
-import { useSocket } from 'context/SocketContext';
-import { useSession } from 'context/SessionContext';
+import { runBackgroundSocketAction } from '@/utils/ActionUtils';
+import { Row, Grid } from '@/components/semantic/Grid';
+import IconConstants from '@/constants/IconConstants';
+import { useSocket } from '@/context/SocketContext';
+import { useSession } from '@/context/SessionContext';
 
 interface OptimizeLayoutProps {
   running: boolean;

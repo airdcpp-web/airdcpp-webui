@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import FormattedFile from 'components/format/FormattedFile';
+import FormattedFile from '@/components/format/FormattedFile';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { translate } from 'utils/TranslationUtils';
-import { useFormatter } from 'context/FormatterContext';
+import { translate } from '@/utils/TranslationUtils';
+import { useFormatter } from '@/context/FormatterContext';
 import { useTranslation } from 'react-i18next';
-import Loader from 'components/semantic/Loader';
-import Message from 'components/semantic/Message';
+import Loader from '@/components/semantic/Loader';
+import Message from '@/components/semantic/Message';
 
 export type FileItemIconGetter = (item: API.FilesystemItem) => React.ReactNode | null;
 export type FileItemClickHandler = (item: API.FilesystemItem) => void;

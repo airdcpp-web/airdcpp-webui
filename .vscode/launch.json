@@ -11,22 +11,33 @@
       "program": "${workspaceFolder}\\devtools\\server.js",
       //"preLaunchTask": "build"
     }, {
-      "name": "Run Tests With Debugger",
       "type": "node",
       "request": "launch",
-      "port": 5858,
-      //"stopOnEntry": false,
-      "runtimeArgs": [
-        "--inspect-brk=5858",
-        "${workspaceRoot}/node_modules/jest-cli/bin/jest",
-        "--runInBand",
-        "--coverage",
-        "false"
-      ],
+      "name": "Run Vitest Browser",
+      "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "args": ["run", "${relativeFile}", "--inspect-brk=localhost:9229", "--browser", "--no-file-parallelism"]
     }, {
-
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to Vitest Browser",
+      "port": 9229
+    }, {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Current Test File (node)",
+      "autoAttachChildProcesses": true,
+      "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+      "args": ["run", "${relativeFile}"],
+      "smartStep": true,
+      "console": "integratedTerminal"
     }
-	]
+	],
+  "compounds": [
+    {
+      "name": "Debug Vitest Browser",
+      "configurations": ["Attach to Vitest Browser", "Run Vitest Browser"],
+      "stopAll": true
+    }
+  ]
 }

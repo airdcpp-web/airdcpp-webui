@@ -1,12 +1,12 @@
 import * as React from 'react';
 import cx from 'classnames';
 
-import { TableActionMenu } from 'components/action-menu';
+import { TableActionMenu } from '@/components/action-menu';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
-import { dupeToStringType } from 'utils/TypeConvert';
-import { MessageHighlightActionMenu } from 'actions/ui/message-highlight';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
+import { dupeToStringType } from '@/utils/TypeConvert';
+import { MessageHighlightActionMenu } from '@/actions/ui/message-highlight';
 
 export interface HighlightTextLinkProps /*extends Pick<TableDropdownProps, 'position'>*/ {
   text: string;

@@ -1,21 +1,21 @@
 import { Link } from 'react-router';
-import LinkConstants from 'constants/LinkConstants';
+import LinkConstants from '@/constants/LinkConstants';
 
-import ActionButton from 'components/ActionButton';
-import ExternalLink from 'components/ExternalLink';
-import { TextDecorator } from 'components/text';
-import Message from 'components/semantic/Message';
-import { useStore } from 'effects/StoreListenerEffect';
+import ActionButton from '@/components/ActionButton';
+import ExternalLink from '@/components/ExternalLink';
+import { TextDecorator } from '@/components/text';
+import Message from '@/components/semantic/Message';
+import { useStore } from '@/effects/StoreListenerEffect';
 
 import {
   LoginActionModule,
   LoginNewUserIntroSeenAction,
-} from 'actions/ui/login/LoginActions';
-import LoginStore, { LoginState } from 'stores/reflux/LoginStore';
+} from '@/actions/ui/login/LoginActions';
+import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
 import { Trans } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
+import { toI18nKey } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 const NewUserIntro = () => {
   const { showNewUserIntro } = useStore<LoginState>(LoginStore);

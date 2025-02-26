@@ -1,7 +1,7 @@
 import update from 'immutability-helper';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 // Remove the oldest messages to match the maximum cache count
 const checkSplice = (

@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { Column } from 'fixed-data-table-2';
 
-import VirtualTable from 'components/table/VirtualTable';
+import VirtualTable from '@/components/table/VirtualTable';
 
-import PriorityMenu from 'routes/Queue/components/PriorityMenu';
-import StatusCell from 'routes/Queue/components/StatusCell';
-import QueueBundleViewStore from 'stores/views/QueueBundleViewStore';
+import PriorityMenu from '@/routes/Queue/components/PriorityMenu';
+import StatusCell from '@/routes/Queue/components/StatusCell';
+import QueueBundleViewStore from '@/stores/views/QueueBundleViewStore';
 
-import BundleFileDialog from 'routes/Queue/components/BundleFileDialog';
-import SourceDialog from 'routes/Queue/components/BundleSourceDialog';
+import BundleFileDialog from '@/routes/Queue/components/BundleFileDialog';
+import SourceDialog from '@/routes/Queue/components/BundleSourceDialog';
 
-import { ActionMenu } from 'components/action-menu';
-import Message from 'components/semantic/Message';
+import { ActionMenu } from '@/components/action-menu';
+import Message from '@/components/semantic/Message';
 
 import {
   ActionLinkCell,
@@ -20,26 +20,26 @@ import {
   SpeedCell,
   AbbreviatedDurationCell,
   DurationCell,
-} from 'components/table/Cell';
+} from '@/components/table/Cell';
 
 import '../style.css';
-import { RowWrapperCellChildProps } from 'components/table/RowWrapperCell';
+import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { getModuleT } from 'utils/TranslationUtils';
-import { setBundlePriority } from 'services/api/QueueApi';
-import IconConstants from 'constants/IconConstants';
-import MenuConstants from 'constants/MenuConstants';
+import { getModuleT } from '@/utils/TranslationUtils';
+import { setBundlePriority } from '@/services/api/QueueApi';
+import IconConstants from '@/constants/IconConstants';
+import MenuConstants from '@/constants/MenuConstants';
 import {
   QueueActionMenu,
   QueueBundleActionMenu,
   QueueBundleActionModule,
   QueueBundleViewContentAction,
   QueueBundleViewSourcesAction,
-} from 'actions/ui/queue';
+} from '@/actions/ui/queue';
 
 const PriorityCell: React.FC<
   RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>

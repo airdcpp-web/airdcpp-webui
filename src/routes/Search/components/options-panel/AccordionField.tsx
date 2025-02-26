@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 import Accordion, {
   AccordionContent,
   AccordionTitle,
-} from 'components/semantic/Accordion';
-import IconConstants from 'constants/IconConstants';
-import Icon from 'components/semantic/Icon';
-import { isValueSet } from 'utils/FormUtils';
+} from '@/components/semantic/Accordion';
+import IconConstants from '@/constants/IconConstants';
+import Icon from '@/components/semantic/Icon';
+import { isValueSet } from '@/utils/FormUtils';
 
 type FormAccordionProps = React.PropsWithChildren<{
   locals: UI.FormLocals;

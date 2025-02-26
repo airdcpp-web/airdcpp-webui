@@ -1,4 +1,4 @@
-import { createFormatter } from 'utils/Formatter';
+import { createFormatter } from '@/utils/Formatter';
 import { createContext, useContext } from 'react';
 
 export type Formatter = ReturnType<typeof createFormatter>;

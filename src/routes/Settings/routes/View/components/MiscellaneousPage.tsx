@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { LocalSettings } from 'constants/SettingConstants';
-import LocalSettingForm from 'routes/Settings/components/LocalSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
+import { LocalSettings } from '@/constants/SettingConstants';
+import LocalSettingForm from '@/routes/Settings/components/LocalSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Entry = [
   LocalSettings.UNREAD_LABEL_DELAY,

@@ -1,22 +1,22 @@
 import { useMemo, useRef } from 'react';
-import RouteModal from 'components/semantic/RouteModal';
+import RouteModal from '@/components/semantic/RouteModal';
 
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
-} from 'decorators/DataProviderDecorator';
+} from '@/decorators/DataProviderDecorator';
 import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
-} from 'decorators/ModalRouteDecorator';
+} from '@/decorators/ModalRouteDecorator';
 
-import IconConstants from 'constants/IconConstants';
+import IconConstants from '@/constants/IconConstants';
 
-import Form, { FormFieldSettingHandler, FormSaveHandler } from 'components/form/Form';
+import Form, { FormFieldSettingHandler, FormSaveHandler } from '@/components/form/Form';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { translateForm } from 'utils/FormUtils';
-import SearchConstants from 'constants/SearchConstants';
+import { translateForm } from '@/utils/FormUtils';
+import SearchConstants from '@/constants/SearchConstants';
 
 const Entry: UI.FormFieldDefinition[] = [
   {

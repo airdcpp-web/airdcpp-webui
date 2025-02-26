@@ -1,16 +1,16 @@
 import { useContext, useMemo, useState } from 'react';
 
-import LocalSettingStore from 'stores/reflux/LocalSettingStore';
+import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
 
 import Form, {
   FormProps,
   FormSaveHandler,
   FormFieldChangeHandler,
-} from 'components/form/Form';
+} from '@/components/form/Form';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
-import { translateForm } from 'utils/FormUtils';
+import { translateForm } from '@/utils/FormUtils';
 import { SettingSaveContext, getSettingFormId } from '../effects/useSettingSaveContext';
 
 export interface LocalSettingFormProps

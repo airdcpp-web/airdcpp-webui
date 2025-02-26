@@ -7,7 +7,7 @@ const MODULE_URL = 'events';
   ERROR = 'error',
 }*/
 
-export { SeverityEnum } from 'types/api';
+export { SeverityEnum } from '@/types/api';
 
 export default {
   MODULE_URL: MODULE_URL,

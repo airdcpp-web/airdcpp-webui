@@ -1,8 +1,8 @@
-import { SimpleSessionUnreadUrgency } from 'constants/UrgencyConstants';
+import { SimpleSessionUnreadUrgency } from '@/constants/UrgencyConstants';
 import invariant from 'invariant';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 // Get an array of urgencies that have a count
 const getValidUrgencyArray = (urgencies: UI.UrgencyCountMap): number[] => {

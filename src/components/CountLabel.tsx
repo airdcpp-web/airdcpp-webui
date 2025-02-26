@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { maxUrgency } from 'utils/UrgencyUtils';
-import { urgencyToColor } from 'utils/TypeConvert';
+import { maxUrgency } from '@/utils/UrgencyUtils';
+import { urgencyToColor } from '@/utils/TypeConvert';
 import classNames from 'classnames';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export interface CountLabelProps {
   // Urgency mapping [ urgency -> count ]

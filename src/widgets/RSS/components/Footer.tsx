@@ -1,12 +1,12 @@
 import { Trans } from 'react-i18next';
 
-import Icon from 'components/semantic/Icon';
+import Icon from '@/components/semantic/Icon';
 
-import IconConstants from 'constants/IconConstants';
-import RedrawDecorator from 'decorators/RedrawDecorator';
+import IconConstants from '@/constants/IconConstants';
+import RedrawDecorator from '@/decorators/RedrawDecorator';
 
-import * as UI from 'types/ui';
-import { useFormatter } from 'context/FormatterContext';
+import * as UI from '@/types/ui';
+import { useFormatter } from '@/context/FormatterContext';
 
 export interface FooterProps {
   lastUpdated?: number;

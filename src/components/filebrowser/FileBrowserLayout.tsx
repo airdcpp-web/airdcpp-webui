@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
 
-import FilesystemConstants from 'constants/FilesystemConstants';
+import FilesystemConstants from '@/constants/FilesystemConstants';
 
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
-import BrowserBar, { SelectedNameFormatter } from 'components/browserbar';
+import BrowserBar, { SelectedNameFormatter } from '@/components/browserbar';
 
 import FileItemList, { FileItemListProps } from './sections/FileItemList';
 import { CreateDirectorySection } from './sections/CreateDirectorySection';
 import { FileNameSection } from './sections/FileNameSection';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import './style.css';
 import { FileItemSelectionProps } from './effects/useFileItemSelection';
-import { useSession } from 'context/SessionContext';
-import { useSocket } from 'context/SocketContext';
+import { useSession } from '@/context/SessionContext';
+import { useSocket } from '@/context/SocketContext';
 import { useTranslation } from 'react-i18next';
-import NotificationActions from 'actions/NotificationActions';
-import { SubmitCallback } from 'components/semantic/ActionInput';
+import NotificationActions from '@/actions/NotificationActions';
+import { SubmitCallback } from '@/components/semantic/ActionInput';
 
 export interface FileBrowserLayoutProps
   extends Pick<FileItemListProps, 'itemIconGetter'>,

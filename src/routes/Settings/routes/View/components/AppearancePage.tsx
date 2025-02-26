@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import RemoteSettingForm from 'routes/Settings/components/RemoteSettingForm';
-import { SettingPageProps } from 'routes/Settings/types';
+import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Entry = ['use_main_chat_notify', 'show_joins', 'format_release_names'];
 

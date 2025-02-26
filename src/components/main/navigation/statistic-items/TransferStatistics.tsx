@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { useFormatter } from 'context/FormatterContext';
+import { useFormatter } from '@/context/FormatterContext';
 
-import IconConstants from 'constants/IconConstants';
-import TransferConstants from 'constants/TransferConstants';
+import IconConstants from '@/constants/IconConstants';
+import TransferConstants from '@/constants/TransferConstants';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import DataProviderDecorator from 'decorators/DataProviderDecorator';
+import DataProviderDecorator from '@/decorators/DataProviderDecorator';
 import { StatisticsRow } from './StatisticsRow';
 
 interface TransferStatisticsProps {}

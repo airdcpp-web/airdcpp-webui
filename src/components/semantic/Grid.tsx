@@ -2,9 +2,9 @@ import * as React from 'react';
 import classNames from 'classnames';
 
 import { Trans } from 'react-i18next';
-import { toI18nKey } from 'utils/TranslationUtils';
+import { toI18nKey } from '@/utils/TranslationUtils';
 
-import * as UI from 'types/ui';
+import * as UI from '@/types/ui';
 
 export interface RowProps {
   title: React.ReactNode;

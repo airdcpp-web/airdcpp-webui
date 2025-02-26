@@ -1,16 +1,16 @@
 import * as React from 'react';
 
-import LimiterConfig from 'components/speed-limit/LimiterConfig';
-import Popup from 'components/semantic/Popup';
+import LimiterConfig from '@/components/speed-limit/LimiterConfig';
+import Popup from '@/components/semantic/Popup';
 
-import * as API from 'types/api';
-import * as UI from 'types/ui';
+import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
-import { translate } from 'utils/TranslationUtils';
+import { translate } from '@/utils/TranslationUtils';
 
 import './style.css';
 import { useTranslation } from 'react-i18next';
-import { useSession } from 'context/SessionContext';
+import { useSession } from '@/context/SessionContext';
 
 export interface AdjustableSpeedLimitProps {
   limit: number;

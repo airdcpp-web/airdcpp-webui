@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import * as API from 'types/api';
+import * as API from '@/types/api';
 
-import HashStatistics from 'components/main/navigation/statistic-items/HashStatistics';
+import HashStatistics from '@/components/main/navigation/statistic-items/HashStatistics';
 
-import AwayIcon from 'components/main/navigation/icon/AwayIcon';
+import AwayIcon from '@/components/main/navigation/icon/AwayIcon';
 import RefreshProgress from './icon/RefreshProgress';
 import HashProgress from './icon/HashProgress';
-import { useSession } from 'context/SessionContext';
+import { useSession } from '@/context/SessionContext';
 import TransferStatistics from './statistic-items/TransferStatistics';
 
 const IconPanel: React.FC = () => {
