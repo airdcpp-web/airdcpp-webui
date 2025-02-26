@@ -25,13 +25,21 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+
+      # Setup
       - run: npm ci
       - run: npm install @vitest/coverage-v8
       - run: npx playwright install --with-deps
-      - run: npm run build --if-present
+
+      # Run tests
       - run: npx vitest --coverage --browser.headless
+
+      # Coverage
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: airdcpp-web/airdcpp-webui
+
+      # Build
+      - run: npm run build --if-present
