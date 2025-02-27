@@ -16,7 +16,7 @@
       "name": "Run Vitest Browser",
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "console": "integratedTerminal",
-      "args": ["run", "${relativeFile}", "--inspect-brk=localhost:9229", "--browser", "--no-file-parallelism"]
+      "args": ["run", "${relativeFile}", "--inspect-brk=localhost:9229", "--browser", "--no-file-parallelism", "--browser.headless"]
     }, {
       "type": "chrome",
       "request": "attach",

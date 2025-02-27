@@ -26,9 +26,15 @@ describe('FileBrowserDialog', () => {
       FilesystemListContentResponse,
     );
 
-    server.addRequestHandler('POST', FilesystemConstants.DIRECTORY_URL, undefined);
+    const onDirectoryCreated = vi.fn();
+    server.addRequestHandler(
+      'POST',
+      FilesystemConstants.DIRECTORY_URL,
+      undefined,
+      onDirectoryCreated,
+    );
 
-    return { socket, server };
+    return { socket, server, onDirectoryCreated };
   };
 
   const renderDialog = async (fieldType: API.SettingTypeEnum, defaultValue = '') => {
@@ -37,7 +43,7 @@ describe('FileBrowserDialog', () => {
     const onSave = vi.fn(() => Promise.resolve());
     const caption = 'Test dialog';
 
-    const ShareDirectoryDialogTest = () => {
+    const FileBrowserDialogTest = () => {
       const FormDefinitions: API.SettingDefinition[] = [
         {
           key: fieldType,
@@ -64,7 +70,7 @@ describe('FileBrowserDialog', () => {
       );
     };
 
-    const renderData = renderNode(<ShareDirectoryDialogTest />, socket);
+    const renderData = renderNode(<FileBrowserDialogTest />, socket);
 
     const modalController = createTestModalController(renderData);
     return { modalController, onSave, caption, ...renderData, ...other };
@@ -75,8 +81,8 @@ describe('FileBrowserDialog', () => {
   });
 
   afterEach(() => {
-    localStorage.clear();
     server.stop();
+    localStorage.clear();
   });
 
   describe('directory selection', () => {
@@ -137,6 +143,7 @@ describe('FileBrowserDialog', () => {
         onSave,
         caption,
         container,
+        onDirectoryCreated,
       } = await renderDialog(API.SettingTypeEnum.DIRECTORY_PATH);
 
       await modalController.openDialog();
@@ -150,6 +157,7 @@ describe('FileBrowserDialog', () => {
 
       // Create new directory
       expect(fireEvent.click(getByText('Create directory'))).toBeTruthy();
+
       await waitFor(() =>
         expect(container.querySelector('.ui.action.input.visible')).toBeTruthy(),
       );
@@ -160,9 +168,13 @@ describe('FileBrowserDialog', () => {
       );
 
       clickButton('Create', getByRole);
-      await waitFor(() =>
-        expect(container.querySelector('.ui.action.input.visible')).toBeFalsy(),
-      );
+      await waitFor(() => {
+        expect(onDirectoryCreated).toHaveBeenCalledTimes(1);
+      });
+
+      await waitFor(() => {
+        expect(container.querySelector('.ui.action.input.visible')).toBeFalsy();
+      });
 
       // Select the new directory
       clickButton('Select', getByRole);

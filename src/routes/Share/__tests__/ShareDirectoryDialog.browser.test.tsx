@@ -143,8 +143,8 @@ describe('ShareDirectoryDialog', () => {
   });
 
   afterEach(() => {
-    localStorage.clear();
     server.stop();
+    localStorage.clear();
   });
 
   test('should update existing', async () => {
