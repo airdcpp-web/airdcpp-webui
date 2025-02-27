@@ -9,7 +9,7 @@ import * as UI from '@/types/ui';
 import classNames from 'classnames';
 import ListBrowser from './ListBrowser';
 import { SessionChildProps } from '@/routes/Sidebar/components/types';
-import { useActiveSession } from '@/decorators/ActiveSessionDecorator';
+import { useActiveSession } from '@/effects/ActiveSessionEffect';
 import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 import { FilelistStoreSelector } from '@/stores/filelistSlice';
 

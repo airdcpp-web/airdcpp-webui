@@ -168,7 +168,7 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
   return createSlice;
 };
 
-type SetReadAction = (id: UI.SessionItemBase, socket: APISocket) => void;
+type SetReadAction = (id: UI.SessionItemBase, socket: APISocket) => Promise<any>;
 
 interface SessionActions<SessionT extends UI.SessionType> {
   setRead: SetReadAction;
@@ -184,5 +184,9 @@ export const initSessionSlice = <SessionT extends UI.SessionType>(
   addSocketListener(`updated`, sessionSlice.updateSession);
   addSocketListener(`removed`, sessionSlice.removeSession);
 
-  sessionSlice.setReadHandler((session) => sessionActions.setRead(session, socket));
+  sessionSlice.setReadHandler((session) => {
+    sessionActions.setRead(session, socket).catch((error) => {
+      console.error(`Failed to mark session ${session.id} as read`, error);
+    });
+  });
 };

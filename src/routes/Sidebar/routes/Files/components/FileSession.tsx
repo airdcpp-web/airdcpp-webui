@@ -4,7 +4,7 @@ import IconConstants from '@/constants/IconConstants';
 import Loader from '@/components/semantic/Loader';
 import Message from '@/components/semantic/Message';
 
-import { useActiveSession } from '@/decorators/ActiveSessionDecorator';
+import { useActiveSession } from '@/effects/ActiveSessionEffect';
 import FileFooter from '@/routes/Sidebar/routes/Files/components/FileFooter';
 
 import * as API from '@/types/api';
@@ -12,9 +12,9 @@ import * as UI from '@/types/ui';
 
 import FileContent from './FileContent';
 import { SessionChildProps } from '@/routes/Sidebar/components/types';
-import { FilelistStoreSelector } from '@/stores/filelistSlice';
-import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 import { useStoreProperty } from '@/context/StoreContext';
+import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
+import { ViewFileStoreSelector } from '@/stores/viewFileSlice';
 
 export interface FileSessionProps
   extends SessionChildProps<API.ViewFile, UI.EmptyObject, UI.EmptyObject> {
@@ -23,7 +23,7 @@ export interface FileSessionProps
 }
 
 const FileSession: React.FC<FileSessionProps> = ({ session, sessionT }) => {
-  useActiveSession(session, FilelistAPIActions, FilelistStoreSelector);
+  useActiveSession(session, ViewFileAPIActions, ViewFileStoreSelector);
   const scrollPositionHandler = useStoreProperty((state) => state.filelists.scroll);
 
   if (!session.content_ready) {

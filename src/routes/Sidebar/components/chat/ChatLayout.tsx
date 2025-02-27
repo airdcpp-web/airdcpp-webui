@@ -9,7 +9,7 @@ import './chat.css';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-import { useActiveSession } from '@/decorators/ActiveSessionDecorator';
+import { useActiveSession } from '@/effects/ActiveSessionEffect';
 import { useTranslation } from 'react-i18next';
 import { toI18nKey } from '@/utils/TranslationUtils';
 import { useChatMessages } from './effects/useChatMessages';
