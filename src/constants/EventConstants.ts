@@ -1,12 +1,5 @@
 const MODULE_URL = 'events';
 
-/*export const enum SeverityEnum {
-  NOTIFY = 'notify',
-  INFO = 'info',
-  WARNING = 'warning',
-  ERROR = 'error',
-}*/
-
 export { SeverityEnum } from '@/types/api';
 
 export default {

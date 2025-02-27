@@ -4,8 +4,8 @@ import SocketService from '@/services/SocketService';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-import { ErrorResponse } from 'react-router';
 import NotificationActions from '@/actions/NotificationActions';
+import { ErrorResponse } from 'airdcpp-apisocket';
 
 const fetchInfo = async (store: UI.Store) => {
   let eventInfo: API.StatusMessageCounts | null = null;

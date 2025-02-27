@@ -2,7 +2,7 @@ import { memo } from 'react';
 import * as React from 'react';
 
 // import ActivityTracker from '@/components/main/ActivityTracker';
-import Notifications from '@/components/main/Notifications';
+import Notifications from '@/components/main/notifications/Notifications';
 import { usingMobileLayout } from '@/utils/BrowserUtils';
 
 import AuthenticationGuardDecorator from '@/components/main/decorators/AuthenticationGuardDecorator';
