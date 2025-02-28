@@ -1,18 +1,29 @@
-//@ts-ignore
-import Reflux from 'reflux';
-import invariant from 'invariant';
-
-import { loadLocalProperty, saveLocalProperty } from '@/utils/BrowserUtils';
-import { LocalSettings } from '@/constants/SettingConstants';
-
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
+
+export const enum LocalSettings {
+  NOTIFY_MENTION = 'notify_mention_my_nick',
+  NOTIFY_PM_USER = 'notify_pm_user',
+  NOTIFY_PM_BOT = 'notify_pm_bot',
+  NOTIFY_HUB_MESSAGE = 'notify_hub_message',
+
+  NOTIFY_BUNDLE_STATUS = 'notify_bundle_status',
+
+  NOTIFY_EVENTS_INFO = 'notify_events_info',
+  NOTIFY_EVENTS_WARNING = 'notify_events_warning',
+  NOTIFY_EVENTS_ERROR = 'notify_events_error',
+
+  UNREAD_LABEL_DELAY = 'unread_label_delay',
+  BACKGROUND_IMAGE_URL = 'background_image_url',
+
+  NO_INSTALL_PROMPT = 'no_install_prompt',
+}
 
 type LocalFormFieldDefinition = UI.FormFieldDefinition & {
   default_value: UI.FormValueBase;
 };
 
-export const SettingDefinitions: LocalFormFieldDefinition[] = [
+export const LocalSettingDefinitions: LocalFormFieldDefinition[] = [
   {
     key: LocalSettings.NOTIFY_MENTION,
     type: API.SettingTypeEnum.BOOLEAN,
@@ -81,61 +92,3 @@ export const SettingDefinitions: LocalFormFieldDefinition[] = [
     title: `Never show the application install prompt in Home view`,
   },
 ];
-
-// Settings are saved in local storage only after the default value has been modified
-// Default value from the respective definition is returned otherwise
-const Store = {
-  settings: {} as UI.FormValueMap,
-
-  init() {
-    this.settings = loadLocalProperty('local_settings', {});
-  },
-
-  getInitialState() {
-    return this.getValues();
-  },
-
-  getDefinition(key: string) {
-    const definition = SettingDefinitions.find((def) => def.key === key);
-    invariant(definition, `Invalid local setting key ${key} supplied`);
-    return definition;
-  },
-
-  // Return setting item infos (see API help for settings/items/info for details)
-  getDefinitions(keys: string[]) {
-    return keys.map(this.getDefinition);
-  },
-
-  // Get the current value by key (or default value if no value has been set)
-  getValue(key: string) {
-    if (this.settings.hasOwnProperty(key)) {
-      return this.settings[key];
-    }
-
-    return this.getDefinition(key).default_value;
-  },
-
-  getValues() {
-    return SettingDefinitions.reduce((reduced, { key }) => {
-      reduced[key] = this.getValue(key);
-      return reduced;
-    }, {} as UI.FormValueMap);
-  },
-
-  setValue(key: string, value: UI.FormValueMap[keyof UI.FormValueMap]) {
-    this.setValues({
-      [key]: value,
-    });
-  },
-
-  // Append values for the provided key -> value object
-  setValues(items: UI.FormValueMap) {
-    this.settings = Object.assign({}, this.settings, items);
-    saveLocalProperty('local_settings', this.settings);
-    (this as any).trigger(this.getValues());
-  },
-};
-
-const LocalSettingStore = Reflux.createStore(Store);
-
-export default LocalSettingStore;

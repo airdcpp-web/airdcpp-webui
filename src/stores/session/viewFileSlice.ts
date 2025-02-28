@@ -12,7 +12,7 @@ import ViewFileConstants from '@/constants/ViewFileConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
 const createViewFileStore = () => {
-  return lens<UI.ViewFileStore, UI.Store>((...a) => {
+  return lens<UI.ViewFileStore, UI.SessionStore>((...a) => {
     const sessionSlice = createSessionSlice<API.ViewFile>()(...a);
 
     const scrollSlice = createSessionScrollSlice();
@@ -23,7 +23,10 @@ const createViewFileStore = () => {
   });
 };
 
-export const initViewFileStore = (store: UI.Store, init: UI.StoreInitData) => {
+export const initViewFileStore = (
+  sessionStore: UI.SessionStore,
+  init: UI.SessionStoreInitData,
+) => {
   // Init listeners
   const addSocketListener = createSessionSliceSocketListener(
     init,
@@ -32,8 +35,8 @@ export const initViewFileStore = (store: UI.Store, init: UI.StoreInitData) => {
     API.AccessEnum.VIEW_FILE_VIEW,
   );
 
-  initSessionSlice(store.viewFiles, ViewFileAPIActions, addSocketListener);
-  initSessionScrollSlice(store.viewFiles.scroll, addSocketListener);
+  initSessionSlice(sessionStore.viewFiles, ViewFileAPIActions, addSocketListener);
+  initSessionScrollSlice(sessionStore.viewFiles.scroll, addSocketListener);
 };
 
 export const ViewFileStoreSelector: UI.SessionStoreSelector<API.ViewFile> = (state) =>

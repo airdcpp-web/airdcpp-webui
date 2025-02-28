@@ -25,7 +25,8 @@ const createRemoteSession = SessionCreatorDecorator<
   API.FilelistSession,
   CreateRemoteSessionData
 >({
-  existingSessionGetter: ({ user }, store) => store.filelists.getSession(user.cid),
+  existingSessionGetter: ({ user }, sessionStore) =>
+    sessionStore.filelists.getSession(user.cid),
   sectionUrlPath: '/filelists',
   onExists: (session, { user, path = '/' }) => {
     if (user.hub_url && session.user.hub_url !== user.hub_url) {
@@ -58,8 +59,8 @@ const createLocalSession = SessionCreatorDecorator<
   API.FilelistSession,
   CreateLocalSessionData
 >({
-  existingSessionGetter: (data, store) =>
-    store.filelists.getSession(LoginStore.systemInfo.cid),
+  existingSessionGetter: (data, sessionStore) =>
+    sessionStore.filelists.getSession(LoginStore.systemInfo.cid),
   onExists: (session, { shareProfileId }) => {
     if (session.share_profile!.id !== shareProfileId) {
       changeFilelistShareProfile(session, shareProfileId);

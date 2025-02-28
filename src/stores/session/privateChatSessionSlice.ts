@@ -15,7 +15,7 @@ const PrivateChatSessionUrgencyGetter = (session: API.PrivateChat) =>
   session.user.flags.includes('bot') ? ChatroomUrgencies : PrivateMessageUrgencies;
 
 const createPrivateChatStore = () => {
-  return lens<UI.PrivateChatStore, UI.Store>((...a) => {
+  return lens<UI.PrivateChatStore, UI.SessionStore>((...a) => {
     const sessionSlice = createSessionSlice<API.PrivateChat>(
       PrivateChatSessionUrgencyGetter,
     )(...a);
@@ -29,7 +29,10 @@ const createPrivateChatStore = () => {
   });
 };
 
-export const initPrivateChatStore = (store: UI.Store, init: UI.StoreInitData) => {
+export const initPrivateChatStore = (
+  sessionStore: UI.SessionStore,
+  init: UI.SessionStoreInitData,
+) => {
   // Init listeners
   const addSocketListener = createSessionSliceSocketListener(
     init,
@@ -38,8 +41,8 @@ export const initPrivateChatStore = (store: UI.Store, init: UI.StoreInitData) =>
     API.AccessEnum.PRIVATE_CHAT_VIEW,
   );
 
-  initSessionSlice(store.privateChats, PrivateChatAPIActions, addSocketListener);
-  initMessageSlice(store.privateChats.messages, addSocketListener);
+  initSessionSlice(sessionStore.privateChats, PrivateChatAPIActions, addSocketListener);
+  initMessageSlice(sessionStore.privateChats.messages, addSocketListener);
 };
 
 export const PrivateChatStoreSelector: UI.MessageStoreSelector<API.PrivateChat> = (

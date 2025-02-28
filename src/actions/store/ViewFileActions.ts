@@ -14,8 +14,8 @@ interface RemoteViewFileData {
 }
 
 const createRemoteSession = SessionCreatorDecorator<API.ViewFile, RemoteViewFileData>({
-  existingSessionGetter: ({ itemInfo }, store) =>
-    store.viewFiles.getSession(itemInfo.tth),
+  existingSessionGetter: ({ itemInfo }, sessionStore) =>
+    sessionStore.viewFiles.getSession(itemInfo.tth),
   sectionUrlPath: '/files',
   createHandler: (data, socket) => {
     const { itemInfo, isText } = data;
@@ -30,8 +30,8 @@ const createRemoteSession = SessionCreatorDecorator<API.ViewFile, RemoteViewFile
 });
 
 const createLocalSession = SessionCreatorDecorator<API.ViewFile, RemoteViewFileData>({
-  existingSessionGetter: ({ itemInfo }, store) =>
-    store.viewFiles.getSession(itemInfo.tth),
+  existingSessionGetter: ({ itemInfo }, sessionStore) =>
+    sessionStore.viewFiles.getSession(itemInfo.tth),
   sectionUrlPath: '/files',
   createHandler: (data, socket) => {
     const { itemInfo, isText } = data;

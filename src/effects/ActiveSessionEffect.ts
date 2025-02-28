@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
-import { LocalSettings } from '@/constants/SettingConstants';
-
 import * as UI from '@/types/ui';
 
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 import { useSocket } from '@/context/SocketContext';
+import { useAppStore } from '@/context/AppStoreContext';
+import { LocalSettings } from '@/constants/LocalSettingConstants';
 
 export const useActiveSession = <SessionT extends UI.SessionType>(
   session: SessionT,
@@ -14,8 +13,9 @@ export const useActiveSession = <SessionT extends UI.SessionType>(
   sessionStoreSelector: UI.SessionStoreSelector,
   useReadDelay = false,
 ) => {
+  const appStore = useAppStore();
   const socket = useSocket();
-  const setActiveSession = useStoreProperty(
+  const setActiveSession = useSessionStoreProperty(
     (state) => sessionStoreSelector(state).setActiveSession,
   );
 
@@ -34,7 +34,7 @@ export const useActiveSession = <SessionT extends UI.SessionType>(
 
     const timeout = !useReadDelay
       ? 0
-      : LocalSettingStore.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
+      : appStore.settings.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
 
     readTimeout.current = window.setTimeout(() => setRead(session), timeout);
   };

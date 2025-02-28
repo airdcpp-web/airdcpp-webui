@@ -17,8 +17,8 @@ import * as UI from '@/types/ui';
 
 import IconConstants from '@/constants/IconConstants';
 import MenuConstants from '@/constants/MenuConstants';
-import { useStoreProperty } from '@/context/StoreContext';
-import { HubStoreSelector } from '@/stores/hubSessionSlice';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
+import { HubStoreSelector } from '@/stores/session/hubSessionSlice';
 
 interface NickCellProps extends RowWrapperCellChildProps<string, API.HubUser> {
   session: API.Hub;
@@ -75,7 +75,7 @@ const HubUserTable: React.FC<HubUserTableProps> = ({ session, sessionT }) => {
     );
   };
 
-  const hubStore = useStoreProperty(HubStoreSelector);
+  const hubStore = useSessionStoreProperty(HubStoreSelector);
   return (
     <VirtualTable
       store={HubUserViewStore}

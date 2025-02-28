@@ -15,11 +15,11 @@ import { createSessionSliceSocketListener } from './decorators/sliceSocketListen
 const HubSessionUrgencyGetter = (session: API.Hub) =>
   session.settings.use_main_chat_notify ? HubMessageNotifyUrgencies : HubMessageUrgencies;
 
-export const createHubSlice: UI.LensSlice<UI.HubSessionSlice, UI.HubStore, UI.Store> = (
-  set,
-  get,
-  api,
-) => ({
+export const createHubSlice: UI.PartialLensSlice<
+  UI.HubSessionSlice,
+  UI.HubStore,
+  UI.SessionStore
+> = (set, get, api) => ({
   hasConnectedHubs: () => {
     const { sessions } = get();
     if (!sessions) {
@@ -43,7 +43,7 @@ export const createHubSlice: UI.LensSlice<UI.HubSessionSlice, UI.HubStore, UI.St
 });
 
 const createHubStore = () => {
-  return lens<UI.HubStore, UI.Store>((...a) => {
+  return lens<UI.HubStore, UI.SessionStore>((...a) => {
     const sessionSlice = createSessionSlice<API.Hub>(HubSessionUrgencyGetter)(...a);
 
     const messageSlice = createMessageSlice();
@@ -56,7 +56,10 @@ const createHubStore = () => {
   });
 };
 
-export const initHubStore = (store: UI.Store, init: UI.StoreInitData) => {
+export const initHubStore = (
+  sessionStore: UI.SessionStore,
+  init: UI.SessionStoreInitData,
+) => {
   // Init listeners
   const addSocketListener = createSessionSliceSocketListener(
     init,
@@ -65,8 +68,8 @@ export const initHubStore = (store: UI.Store, init: UI.StoreInitData) => {
     API.AccessEnum.HUBS_VIEW,
   );
 
-  initSessionSlice(store.hubs, HubAPIActions, addSocketListener);
-  initMessageSlice(store.hubs.messages, addSocketListener);
+  initSessionSlice(sessionStore.hubs, HubAPIActions, addSocketListener);
+  initMessageSlice(sessionStore.hubs.messages, addSocketListener);
 };
 
 export const HubStoreSelector: UI.MessageStoreSelector<API.Hub> = (state) => state.hubs;

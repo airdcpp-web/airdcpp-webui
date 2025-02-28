@@ -10,9 +10,6 @@ import { default as EventConstants } from '@/constants/EventConstants';
 
 import NotificationActions from '@/actions/NotificationActions';
 
-import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
-import { LocalSettings } from '@/constants/SettingConstants';
-
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
@@ -24,7 +21,9 @@ import {
 import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import HubConstants from '@/constants/HubConstants';
 
-import { useAppStore } from '@/context/StoreContext';
+import { useSessionStore } from '@/context/SessionStoreContext';
+import { LocalSettings } from '@/constants/LocalSettingConstants';
+import { useAppStore } from '@/context/AppStoreContext';
 
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {
@@ -43,14 +42,19 @@ const getSeverityStr = (severity: Severity) => {
   }
 };
 
-const notifyHubMessage = (message: API.ChatMessage, store: UI.Store) => {
-  if (message.has_mention && LocalSettingStore.getValue(LocalSettings.NOTIFY_MENTION)) {
+const notifyHubMessage = (
+  message: API.ChatMessage,
+  appStore: UI.AppStore,
+  sessionStore: UI.SessionStore,
+) => {
+  const { settings } = appStore;
+  if (message.has_mention && settings.getValue(LocalSettings.NOTIFY_MENTION)) {
     return true;
   }
 
-  if (LocalSettingStore.getValue(LocalSettings.NOTIFY_HUB_MESSAGE)) {
+  if (settings.getValue(LocalSettings.NOTIFY_HUB_MESSAGE)) {
     const sessionId = message.from.hub_session_id;
-    const session = store.hubs.getSession(sessionId);
+    const session = sessionStore.hubs.getSession(sessionId);
     if (session && session.settings.use_main_chat_notify) {
       return true;
     }
@@ -59,16 +63,17 @@ const notifyHubMessage = (message: API.ChatMessage, store: UI.Store) => {
   return false;
 };
 
-const notifyPrivateMessage = (message: API.ChatMessage) => {
-  if (message.has_mention && LocalSettingStore.getValue(LocalSettings.NOTIFY_MENTION)) {
+const notifyPrivateMessage = (message: API.ChatMessage, appStore: UI.AppStore) => {
+  const { settings } = appStore;
+  if (message.has_mention && settings.getValue(LocalSettings.NOTIFY_MENTION)) {
     return true;
   }
 
   if (message.reply_to!.flags.includes('bot')) {
-    if (LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_BOT)) {
+    if (settings.getValue(LocalSettings.NOTIFY_PM_BOT)) {
       return true;
     }
-  } else if (LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_USER)) {
+  } else if (settings.getValue(LocalSettings.NOTIFY_PM_USER)) {
     return true;
   }
 
@@ -82,7 +87,9 @@ type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildP
 const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const store = useAppStore();
+
+  const sessionStore = useSessionStore();
+  const appStore = useAppStore();
 
   const translateNotification = (
     text: string,
@@ -114,21 +121,22 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
             },
     };
 
+    const { settings } = appStore;
     if (severity === Severity.NOTIFY) {
       NotificationActions.info(notification);
     } else if (
       severity === Severity.INFO &&
-      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_INFO)
+      settings.getValue(LocalSettings.NOTIFY_EVENTS_INFO)
     ) {
       NotificationActions.info(notification);
     } else if (
       severity === Severity.WARNING &&
-      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)
+      settings.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)
     ) {
       NotificationActions.warning(notification);
     } else if (
       severity === Severity.ERROR &&
-      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)
+      settings.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)
     ) {
       NotificationActions.error(notification);
     }
@@ -159,12 +167,12 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     const hubId = message.from.hub_session_id;
     if (
       message.is_read ||
-      (store.hubs.activeSessionId === hubId && document.hasFocus())
+      (sessionStore.hubs.activeSessionId === hubId && document.hasFocus())
     ) {
       return;
     }
 
-    if (!notifyHubMessage(message, store)) {
+    if (!notifyHubMessage(message, appStore, sessionStore)) {
       return;
     }
 
@@ -185,12 +193,12 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     const cid = message.reply_to!.cid;
     if (
       message.is_read ||
-      (store.privateChats.activeSessionId === cid && document.hasFocus())
+      (sessionStore.privateChats.activeSessionId === cid && document.hasFocus())
     ) {
       return;
     }
 
-    if (!notifyPrivateMessage(message)) {
+    if (!notifyPrivateMessage(message, appStore)) {
       return;
     }
 
@@ -208,7 +216,8 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   };
 
   const onBundleStatus = (bundle: API.QueueBundle) => {
-    if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
+    const { settings } = appStore;
+    if (!settings.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
       return;
     }
 

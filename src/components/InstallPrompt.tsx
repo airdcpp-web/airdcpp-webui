@@ -5,29 +5,32 @@ import Message from '@/components/semantic/Message';
 import Button from '@/components/semantic/Button';
 
 import IconConstants from '@/constants/IconConstants';
-import { LocalSettings } from '@/constants/SettingConstants';
-import { useStore } from '@/effects/StoreListenerEffect';
-import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
 import { InstallPromptContext } from '@/context/InstallPromptContext';
 
 import * as UI from '@/types/ui';
 
 import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
+import { useAppStore, useAppStoreProperty } from '@/context/AppStoreContext';
+import { LocalSettings } from '@/constants/LocalSettingConstants';
 
 interface InstallPromptProps {
   alwaysShow?: boolean;
 }
 
 const InstallPrompt: React.FC<InstallPromptProps> = ({ alwaysShow }) => {
-  const localSettings = useStore<UI.FormValueMap>(LocalSettingStore);
+  const skipInstallPrompt = useAppStoreProperty((state) =>
+    state.settings.getValue(LocalSettings.NO_INSTALL_PROMPT),
+  );
+  const appStore = useAppStore();
+
   const prompt = useContext(InstallPromptContext);
   const { t } = useTranslation();
   if (!prompt) {
     return null;
   }
 
-  if (!alwaysShow && !!localSettings[LocalSettings.NO_INSTALL_PROMPT]) {
+  if (!alwaysShow && skipInstallPrompt) {
     return null;
   }
 
@@ -52,7 +55,7 @@ const InstallPrompt: React.FC<InstallPromptProps> = ({ alwaysShow }) => {
             <Button
               caption={translate(`Don't install`, t, UI.Modules.COMMON)}
               onClick={() =>
-                LocalSettingStore.setValue(LocalSettings.NO_INSTALL_PROMPT, true)
+                appStore.settings.setValue(LocalSettings.NO_INSTALL_PROMPT, true)
               }
             />
           )}

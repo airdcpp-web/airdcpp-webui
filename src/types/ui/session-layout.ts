@@ -8,7 +8,7 @@ import { ActionListType, ModuleActions } from './actions';
 import { EmptyObject, RouteComponentProps } from './common';
 import { ModuleTranslator } from './modules';
 import { SessionItemBase } from './sessions';
-import { UnreadInfoStore } from './store';
+import { UnreadInfoStore } from './session-store';
 import { APISocket } from '@/services/SocketService';
 
 export type SessionAPIActions<SessionT extends SessionItemBase, ActionT = EmptyObject> = {

@@ -7,7 +7,7 @@ import * as UI from '@/types/ui';
 import NotificationActions from '@/actions/NotificationActions';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
-const fetchInfo = async (store: UI.Store) => {
+const fetchInfo = async (sessionStore: UI.SessionStore) => {
   let eventInfo: API.StatusMessageCounts | null = null;
   try {
     eventInfo = await SocketService.get<API.StatusMessageCounts>(EventConstants.INFO_URL);
@@ -17,10 +17,10 @@ const fetchInfo = async (store: UI.Store) => {
     return;
   }
 
-  store.events.onMessageCountsReceived(eventInfo);
+  sessionStore.events.onMessageCountsReceived(eventInfo);
 };
 
-const fetchMessages = async (store: UI.Store) => {
+const fetchMessages = async (sessionStore: UI.SessionStore) => {
   let messages: API.StatusMessage[] | null = null;
   try {
     messages = await SocketService.get<API.StatusMessage[]>(
@@ -32,7 +32,7 @@ const fetchMessages = async (store: UI.Store) => {
     return;
   }
 
-  store.events.onMessagesFetched(messages);
+  sessionStore.events.onMessagesFetched(messages);
 };
 
 const setRead = () => {

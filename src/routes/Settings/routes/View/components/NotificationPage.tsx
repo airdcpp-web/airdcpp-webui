@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import { LocalSettings } from '@/constants/SettingConstants';
 import LocalSettingForm from '@/routes/Settings/components/LocalSettingForm';
 
-import '../style.css';
 import { SettingPageProps } from '@/routes/Settings/types';
+import { LocalSettings } from '@/constants/LocalSettingConstants';
+
+import '../style.css';
 
 const PopupEntry = [
   LocalSettings.NOTIFY_MENTION,

@@ -1,12 +1,12 @@
 import { useSocket } from '@/context/SocketContext';
-import { useAppStore, useStoreProperty } from '@/context/StoreContext';
+import { useSessionStore, useSessionStoreProperty } from '@/context/SessionStoreContext';
 import { useEffect } from 'react';
 
 // import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 /*export type MessageStoreSelector = (
-  state: UI.Store,
+  state: UI.SessionStore,
 ) => UI.MessageSlice & UI.SessionSlice<UI.SessionType>;*/
 
 export const useChatMessages = (
@@ -15,18 +15,18 @@ export const useChatMessages = (
   chatAPI: UI.ChatAPIActions,
 ) => {
   // const [messages, setMessages] = useState<UI.MessageListItem[] | null>([]);
-  //const messages = useStoreProperty((state) => state.hubs.messages.get(session.id));
-  const messages = useStoreProperty((state) =>
+  //const messages = useSessionStoreProperty((state) => state.hubs.messages.get(session.id));
+  const messages = useSessionStoreProperty((state) =>
     messageStoreSelector(state).messages.messages.get(session.id),
   );
-  /*const isSessionInitialized = useStoreProperty(
+  /*const isSessionInitialized = useSessionStoreProperty(
     (state) => messageStoreSelector(state).messages.isSessionInitialized,
   );
-  const onMessagesFetched = useStoreProperty(
+  const onMessagesFetched = useSessionStoreProperty(
     (state) => messageStoreSelector(state).messages.onMessagesFetched,
   );*/
 
-  const store = useAppStore();
+  const store = useSessionStore();
   const socket = useSocket();
 
   useEffect(() => {

@@ -8,7 +8,8 @@ import { changePrivateChatHubUrl } from '@/services/api/PrivateChatApi';
 import { SessionCreatorDecorator } from './decorators/SessionCreatorDecorator';
 
 export const createSession = SessionCreatorDecorator<API.PrivateChat, UI.ActionUserType>({
-  existingSessionGetter: ({ cid }, store) => store.privateChats.getSession(cid),
+  existingSessionGetter: ({ cid }, sessionStore) =>
+    sessionStore.privateChats.getSession(cid),
 
   onExists: (session, user) => {
     if (!!user.hub_url && session.user.hub_url !== user.hub_url) {

@@ -8,24 +8,24 @@ import IconConstants from '@/constants/IconConstants';
 import { UserSelectField } from '@/components/select';
 import { NewSessionLayoutProps } from '@/routes/Sidebar/components/types';
 import LinkButton from '@/components/semantic/LinkButton';
-import { useAppStore } from '@/context/StoreContext';
+import { useSessionStore } from '@/context/SessionStoreContext';
 import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
 import { useSocket } from '@/context/SocketContext';
 import { useTranslation } from 'react-i18next';
 
 const MessageNew: React.FC<NewSessionLayoutProps> = (props) => {
-  const store = useAppStore();
+  const sessionStore = useSessionStore();
   const socket = useSocket();
   const { t } = useTranslation();
 
   const hasSession = (entry: API.HistoryItem) => {
-    return !!store.privateChats.getSession(entry.user!.cid);
+    return !!sessionStore.privateChats.getSession(entry.user!.cid);
   };
 
   const handleSubmit = (user: API.HintedUser) => {
     const { navigate } = props;
     PrivateChatAPIActions.createSession(user, {
-      store,
+      sessionStore,
       navigate,
       t,
       socket,

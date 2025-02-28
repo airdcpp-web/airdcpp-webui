@@ -4,7 +4,7 @@ import * as API from '@/types/api';
 
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 import { ActivityAPIActions } from '@/actions/store/ActivityActions';
 
 const isAway = (away: API.AwayEnum) => {
@@ -12,7 +12,7 @@ const isAway = (away: API.AwayEnum) => {
 };
 
 const AwayIcon = memo(function AwayIcon() {
-  const away = useStoreProperty((state) => state.activity.away);
+  const away = useSessionStoreProperty((state) => state.activity.away);
   const { t } = useTranslation();
 
   const iconColor = isAway(away) ? 'yellow' : 'grey';

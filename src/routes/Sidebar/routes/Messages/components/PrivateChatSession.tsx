@@ -11,7 +11,7 @@ import { useSession } from '@/context/SessionContext';
 import { buildChatCommands } from '@/routes/Sidebar/components/chat/commands/ChatCommands';
 import { clearPrivateChatMessages } from '@/services/api/PrivateChatApi';
 import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
-import { PrivateChatStoreSelector } from '@/stores/privateChatSessionSlice';
+import { PrivateChatStoreSelector } from '@/stores/session/privateChatSessionSlice';
 
 type PrivateChatSessionProps = SessionChildProps<
   API.PrivateChat,

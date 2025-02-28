@@ -12,9 +12,9 @@ import * as UI from '@/types/ui';
 
 import FileContent from './FileContent';
 import { SessionChildProps } from '@/routes/Sidebar/components/types';
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
-import { ViewFileStoreSelector } from '@/stores/viewFileSlice';
+import { ViewFileStoreSelector } from '@/stores/session/viewFileSlice';
 
 export interface FileSessionProps
   extends SessionChildProps<API.ViewFile, UI.EmptyObject, UI.EmptyObject> {
@@ -24,7 +24,9 @@ export interface FileSessionProps
 
 const FileSession: React.FC<FileSessionProps> = ({ session, sessionT }) => {
   useActiveSession(session, ViewFileAPIActions, ViewFileStoreSelector);
-  const scrollPositionHandler = useStoreProperty((state) => state.filelists.scroll);
+  const scrollPositionHandler = useSessionStoreProperty(
+    (state) => state.filelists.scroll,
+  );
 
   if (!session.content_ready) {
     if (session.download_state!.id === 'download_failed') {

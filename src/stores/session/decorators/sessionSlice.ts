@@ -20,7 +20,7 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
 ) => {
   type State = UI.SessionSlice<SessionT> & Readable;
 
-  const createSlice: Lens<State & Readable, UI.Store> = (set, get, api) => {
+  const createSlice: Lens<State & Readable, UI.SessionStore> = (set, get, api) => {
     const isUnreadUpdate = (updatedProperties: Partial<SessionT>) => {
       return updatedProperties.message_counts || updatedProperties.hasOwnProperty('read');
     };

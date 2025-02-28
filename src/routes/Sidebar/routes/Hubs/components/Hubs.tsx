@@ -22,7 +22,7 @@ import {
 import IconConstants from '@/constants/IconConstants';
 import { HubActionMenu } from '@/actions/ui/hub';
 import { HubAPIActions } from '@/actions/store/HubActions';
-import { HubStoreSelector } from '@/stores/hubSessionSlice';
+import { HubStoreSelector } from '@/stores/session/hubSessionSlice';
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   itemNameGetter(session) {

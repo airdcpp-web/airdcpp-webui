@@ -10,7 +10,7 @@ import { createSessionScrollSlice, initSessionScrollSlice } from './scrollSlice'
 export const createMessageSlice = () => {
   type State = UI.MessageSlice;
 
-  const createSlice = lens<State, UI.Store>((set, get) => {
+  const createSlice = lens<State, UI.SessionStore>((set, get) => {
     type MessageCache = UI.MessageListItem[];
     type ChatSession = UI.SessionItemBase;
 

@@ -5,7 +5,7 @@ import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 import { APISocket } from '@/services/SocketService';
-import { MessageSlice } from './store';
+import { MessageSlice } from './session-store';
 import { SessionAPIActions } from './session-layout';
 import { ActionHandlerProps } from './actions';
 

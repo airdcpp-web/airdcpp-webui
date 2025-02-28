@@ -21,9 +21,9 @@ import { createFormatter } from '@/utils/Formatter';
 import { FormatterContext } from '@/context/FormatterContext';
 import { getMockI18n } from './mocks/mock-i18n';
 import { getMockSession } from './mocks/mock-session';
-import { StoreContext } from '@/context/StoreContext';
+import { SessionStoreContext } from '@/context/SessionStoreContext';
 import { StoreApi } from 'zustand';
-import { createAppStore } from '@/stores';
+import { createSessionStore } from '@/stores/session';
 import {
   appendInstanceId,
   generateInstanceId,
@@ -35,7 +35,7 @@ type TestWrapperProps = PropsWithChildren<{
   formatter: ReturnType<typeof createFormatter>;
   i18n: typeof i18n;
   session: UI.AuthenticatedSession;
-  store: StoreApi<UI.Store>;
+  sessionStore: StoreApi<UI.SessionStore>;
   instanceId: number;
 }>;
 
@@ -45,7 +45,7 @@ export const TestWrapper: React.FC<TestWrapperProps> = ({
   i18n,
   formatter,
   session,
-  store,
+  sessionStore,
   instanceId,
 }) => {
   const modalNodeId = appendInstanceId(MODAL_NODE_ID, instanceId);
@@ -56,7 +56,7 @@ export const TestWrapper: React.FC<TestWrapperProps> = ({
           <SocketContext.Provider value={socket}>
             <I18nextProvider i18n={i18n}>
               <SessionContext.Provider value={session}>
-                <StoreContext.Provider value={store}>
+                <SessionStoreContext.Provider value={sessionStore}>
                   <section
                     className="ui dimmable blurring minimal"
                     id="container-main"
@@ -65,7 +65,7 @@ export const TestWrapper: React.FC<TestWrapperProps> = ({
                     {children}
                   </section>
                   <div id={modalNodeId} className={`ui dimmer ${modalNodeId}`} />
-                </StoreContext.Provider>
+                </SessionStoreContext.Provider>
               </SessionContext.Provider>
             </I18nextProvider>
           </SocketContext.Provider>
@@ -102,7 +102,7 @@ export const renderNode = (node: React.ReactNode, socket: APISocket) => {
   const i18n = getMockI18n();
   const formatter = createFormatter(i18n);
   const session = getMockSession();
-  const appStore = createAppStore();
+  const sessionStore = createSessionStore();
 
   const testHelpers = render(node, {
     container: document.body.appendChild(container),
@@ -112,7 +112,7 @@ export const renderNode = (node: React.ReactNode, socket: APISocket) => {
         i18n={i18n}
         formatter={formatter}
         session={session}
-        store={appStore}
+        sessionStore={sessionStore}
         instanceId={instanceId}
         {...props}
       />

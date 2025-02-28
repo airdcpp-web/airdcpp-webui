@@ -5,7 +5,7 @@ import * as UI from '@/types/ui';
 
 import { useNavigate } from 'react-router';
 import ExternalLink from '@/components/ExternalLink';
-import { useAppStore } from '@/context/StoreContext';
+import { useSessionStore } from '@/context/SessionStoreContext';
 import { HubAPIActions } from '@/actions/store/HubActions';
 import { useSocket } from '@/context/SocketContext';
 import { useSession } from '@/context/SessionContext';
@@ -18,7 +18,7 @@ interface ClickHandlerProps extends CreateSessionProps {
 
 const onClickLink = (
   evt: React.MouseEvent,
-  { session, navigate, store, socket }: ClickHandlerProps,
+  { session, navigate, sessionStore, socket }: ClickHandlerProps,
 ) => {
   const uri: string = (evt.target as any).href;
   if (
@@ -37,7 +37,7 @@ const onClickLink = (
     };
 
     HubAPIActions.createSession(data, {
-      store,
+      sessionStore,
       navigate,
       socket,
     });
@@ -52,11 +52,11 @@ export interface HighlightUrlLinkProps
 export const HighlightUrlLink: React.FC<HighlightUrlLinkProps> = ({ text, ...other }) => {
   const session = useSession();
   const navigate = useNavigate();
-  const store = useAppStore();
+  const sessionStore = useSessionStore();
   const socket = useSocket();
   return (
     <ExternalLink
-      onClick={(evt) => onClickLink(evt, { navigate, session, store, socket })}
+      onClick={(evt) => onClickLink(evt, { navigate, session, sessionStore, socket })}
       url={text}
     >
       {text}

@@ -19,7 +19,7 @@ import {
   PrivateChat1MessagesResponse,
   PrivateChat1MessageStatus,
 } from '@/tests/mocks/api/private-chat';
-import { createAppStore } from '@/stores';
+import { createSessionStore } from '@/stores/session';
 
 const SESSION_ID = PrivateChat1.id;
 const SESSION_BASE = {
@@ -62,11 +62,11 @@ describe('message store', () => {
     server.stop();
   });
 
-  const createMockAppStore = (initProps: UI.StoreInitData) => {
-    const appStore = createAppStore();
-    const mocks = addMockStoreSocketListeners(appStore, initProps, server);
+  const createMockSessionStore = (initProps: UI.SessionStoreInitData) => {
+    const sessionStore = createSessionStore();
+    const mocks = addMockStoreSocketListeners(sessionStore, initProps, server);
 
-    return { appStore, mocks };
+    return { sessionStore, mocks };
   };
 
   const initStore = async () => {
@@ -76,9 +76,9 @@ describe('message store', () => {
       socket,
     };
 
-    const { appStore, mocks } = createMockAppStore(initProps);
+    const { sessionStore, mocks } = createMockSessionStore(initProps);
     mocks.privateChat.created.fire(PrivateChat1);
-    return { appStore, mocks };
+    return { sessionStore, mocks };
   };
 
   const addMessages = (
@@ -91,20 +91,20 @@ describe('message store', () => {
 
   test('should add individual messages', async () => {
     const {
-      appStore,
+      sessionStore,
       mocks: { privateChat },
     } = await initStore();
 
     addMessages(privateChat);
 
-    expect(appStore.getState().privateChats.messages.messages.get(SESSION_ID)).toEqual(
-      PrivateChat1MessagesResponse,
-    );
+    expect(
+      sessionStore.getState().privateChats.messages.messages.get(SESSION_ID),
+    ).toEqual(PrivateChat1MessagesResponse);
   });
 
   test('should clear messages', async () => {
     const {
-      appStore,
+      sessionStore,
       mocks: { privateChat },
     } = await initStore();
 
@@ -115,7 +115,7 @@ describe('message store', () => {
     privateChat.updated.fire(emptyCounts, SESSION_ID);
 
     expect(
-      appStore.getState().privateChats.messages.messages.get(SESSION_ID)!.length,
+      sessionStore.getState().privateChats.messages.messages.get(SESSION_ID)!.length,
     ).toEqual(0);
   });
 
@@ -151,7 +151,7 @@ describe('message store', () => {
 
   test('should handle messages received during fetching', async () => {
     const {
-      appStore,
+      sessionStore,
       mocks: { privateChat },
     } = await initStore();
 
@@ -167,7 +167,7 @@ describe('message store', () => {
 
     privateChat.chatMessage.fire(ChatMessageReceived, SESSION_ID);
 
-    appStore
+    sessionStore
       .getState()
       .privateChats.messages.onMessagesFetched(
         SESSION_BASE,
@@ -175,7 +175,9 @@ describe('message store', () => {
       );
 
     // All messages should have been stored
-    expect(appStore.getState().privateChats.messages.messages.get(SESSION_ID)).toEqual(
+    expect(
+      sessionStore.getState().privateChats.messages.messages.get(SESSION_ID),
+    ).toEqual(
       [
         ...PrivateChat1MessagesResponse,
         {
@@ -187,11 +189,11 @@ describe('message store', () => {
 
   test('should remove duplicates arriving after fetching', async () => {
     const {
-      appStore,
+      sessionStore,
       mocks: { privateChat },
     } = await initStore();
 
-    appStore
+    sessionStore
       .getState()
       .privateChats.messages.onMessagesFetched(
         SESSION_BASE,
@@ -200,36 +202,40 @@ describe('message store', () => {
 
     privateChat.chatMessage.fire(PrivateChat1MessageOther, SESSION_ID);
 
-    expect(appStore.getState().privateChats.messages.messages.get(SESSION_ID)).toEqual(
-      PrivateChat1MessagesResponse,
-    );
+    expect(
+      sessionStore.getState().privateChats.messages.messages.get(SESSION_ID),
+    ).toEqual(PrivateChat1MessagesResponse);
   });
 
   test('should remove session data', async () => {
     const {
-      appStore,
+      sessionStore,
       mocks: { privateChat },
     } = await initStore();
 
-    appStore
+    sessionStore
       .getState()
       .privateChats.messages.onMessagesFetched(
         SESSION_BASE,
         PrivateChat1MessagesResponse,
       );
 
-    expect(appStore.getState().privateChats.messages.isSessionInitialized(SESSION_ID));
-    expect(appStore.getState().privateChats.messages.messages.get(SESSION_ID)).toEqual(
-      PrivateChat1MessagesResponse,
+    expect(
+      sessionStore.getState().privateChats.messages.isSessionInitialized(SESSION_ID),
     );
+    expect(
+      sessionStore.getState().privateChats.messages.messages.get(SESSION_ID),
+    ).toEqual(PrivateChat1MessagesResponse);
 
     privateChat.removed.fire({
       id: SESSION_ID,
     });
 
-    expect(!appStore.getState().privateChats.messages.isSessionInitialized(SESSION_ID));
-    expect(appStore.getState().privateChats.messages.messages.get(SESSION_ID)).toEqual(
-      undefined,
+    expect(
+      !sessionStore.getState().privateChats.messages.isSessionInitialized(SESSION_ID),
     );
+    expect(
+      sessionStore.getState().privateChats.messages.messages.get(SESSION_ID),
+    ).toEqual(undefined);
   });
 });

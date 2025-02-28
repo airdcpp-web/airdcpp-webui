@@ -8,7 +8,7 @@ export const createSessionScrollSlice = () => {
     positions: Record<string, number | undefined>;
   }
 
-  const createSlice = lens<SessionScrollSlice, UI.Store>((set, get) => {
+  const createSlice = lens<SessionScrollSlice, UI.SessionStore>((set, get) => {
     const slice = {
       positions: {} as SessionScrollSlice['positions'],
 
@@ -54,7 +54,7 @@ export const createBasicScrollSlice = () => {
     scrollPosition: number | undefined;
   }
 
-  const createSlice = lens<BasicScrollSlice, UI.Store>((set, get) => {
+  const createSlice = lens<BasicScrollSlice, UI.SessionStore>((set, get) => {
     const slice = {
       scrollPosition: undefined,
 

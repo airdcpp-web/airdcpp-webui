@@ -11,7 +11,7 @@ import { translate } from '@/utils/TranslationUtils';
 import IconConstants from '@/constants/IconConstants';
 import { useTranslation } from 'react-i18next';
 import { SessionMainLayoutProps } from './types';
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 type SessionDropdownProps<SessionT extends UI.SessionItemBase> = Pick<
   SessionMainLayoutProps<SessionT>,
@@ -25,7 +25,7 @@ const SessionDropdown = <SessionT extends UI.SessionItemBase>({
   listActionMenuGetter,
 }: SessionDropdownProps<SessionT>) => {
   const { t } = useTranslation();
-  const getTotalUrgencies = useStoreProperty(
+  const getTotalUrgencies = useSessionStoreProperty(
     (state) => sessionStoreSelector(state).getTotalUrgencies,
   );
   return (

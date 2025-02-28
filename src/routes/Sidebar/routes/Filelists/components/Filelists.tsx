@@ -17,7 +17,7 @@ import {
 import IconConstants from '@/constants/IconConstants';
 import { FilelistSessionActionMenu } from '@/actions/ui/filelist';
 import { FilelistAPIActions } from '@/actions/store/FilelistActions';
-import { FilelistStoreSelector } from '@/stores/filelistSlice';
+import { FilelistStoreSelector } from '@/stores/session/filelistSlice';
 
 const UserItemHandler = UserItemHandlerDecorator(['message']);
 const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {

@@ -26,7 +26,7 @@ import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 import { filelistDownloadHandler } from '@/services/api/FilelistApi';
 import MenuConstants from '@/constants/MenuConstants';
 import { FilelistItemActionMenu } from '@/actions/ui/filelist';
-import { useAppStore } from '@/context/StoreContext';
+import { useSessionStore } from '@/context/SessionStoreContext';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   session: API.FilelistSession;
@@ -122,7 +122,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
   };
 
   // const { session } = this.props;
-  const store = useAppStore();
+  const sessionStore = useSessionStore();
   return (
     <>
       <VirtualTable
@@ -131,7 +131,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
         store={FilelistViewStore}
         entityId={session.id}
         viewId={session.location!.path}
-        sessionStore={store.filelists}
+        sessionStore={sessionStore.filelists}
         moduleId={UI.Modules.FILELISTS}
         textFilterProps={{
           autoFocus: true,

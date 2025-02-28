@@ -5,14 +5,14 @@ import * as API from '@/types/api';
 import LoginActions from '@/actions/reflux/LoginActions';
 
 import { APISocket } from '@/services/SocketService';
-import { useAppStore } from '@/context/StoreContext';
+import { useSessionStore } from '@/context/SessionStoreContext';
 import { ActivityAPIActions } from '@/actions/store/ActivityActions';
 
 const SYSTEM_ALIVE_TIMEOUT = 30000;
 const USER_ACTIVE_TIMEOUT = 30000;
 
 export const useActivityTracker = (socket: APISocket) => {
-  const activityStore = useAppStore().activity;
+  const activityStore = useSessionStore().activity;
 
   const lastUserActive = useRef(Date.now());
   const lastSystemAlive = useRef(Date.now());
