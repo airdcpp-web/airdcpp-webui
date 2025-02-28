@@ -10,7 +10,7 @@ const SystemActionsMenu = {
   moduleData: SystemActionModule,
 };
 
-export const Application = {
+export const ApplicationWidgetInfo = {
   typeId: 'application',
   component: ApplicationComponent,
   name: 'Application',

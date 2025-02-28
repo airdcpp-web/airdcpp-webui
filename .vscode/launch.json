@@ -9,11 +9,10 @@
       "request": "launch",
       "name": "Launch dev server",
       "program": "${workspaceFolder}\\devtools\\server.js",
-      //"preLaunchTask": "build"
     }, {
       "type": "node",
       "request": "launch",
-      "name": "Run Vitest Browser",
+      "name": "Debug current test file (browser)",
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "console": "integratedTerminal",
       "args": ["run", "${relativeFile}", "--inspect-brk=localhost:9229", "--browser", "--no-file-parallelism", "--browser.headless"]
@@ -32,12 +31,5 @@
       "smartStep": true,
       "console": "integratedTerminal"
     }
-	],
-  "compounds": [
-    {
-      "name": "Debug Vitest Browser",
-      "configurations": ["Attach to Vitest Browser", "Run Vitest Browser"],
-      "stopAll": true
-    }
-  ]
+	]
 }

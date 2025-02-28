@@ -5,9 +5,10 @@ import { ActionMenu } from '@/components/action-menu';
 
 import * as UI from '@/types/ui';
 
-import { getWidgetT, translateWidgetName } from '@/utils/WidgetUtils';
+import { getWidgetT, translateWidgetName } from '@/routes/Home/widgets/WidgetUtils';
 import { WidgetEditActionMenu } from '@/actions/ui/widget';
 import { useSession } from '@/context/SessionContext';
+import { HomeLayoutStore } from '../stores/homeLayoutSlice';
 
 const getError = (
   widgetInfo: UI.Widget,
@@ -33,10 +34,20 @@ export type WidgetProps = React.PropsWithChildren<{
   componentId: string;
   rootWidgetT: UI.ModuleTranslator;
   style?: React.CSSProperties;
+  layoutStore: HomeLayoutStore;
 }>;
 
 const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
-  { widgetInfo, settings, componentId, children, className, rootWidgetT, ...other },
+  {
+    widgetInfo,
+    settings,
+    componentId,
+    children,
+    className,
+    rootWidgetT,
+    layoutStore,
+    ...other
+  },
   ref,
 ) {
   const session = useSession();
@@ -65,6 +76,7 @@ const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
             id: componentId,
             widgetInfo,
             settings,
+            layoutStore,
           }}
         >
           {!!widgetInfo.actionMenu && (

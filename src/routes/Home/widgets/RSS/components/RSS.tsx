@@ -5,11 +5,11 @@ import Message from '@/components/semantic/Message';
 
 import { loadSessionProperty, saveSessionProperty } from '@/utils/BrowserUtils';
 
-import Entry from '@/widgets/RSS/components/Entry';
-import Footer from '@/widgets/RSS/components/Footer';
-import { Settings } from '@/widgets/RSS';
-import { FeedItem, RawFeedData } from '@/widgets/RSS/types';
-import { fetchRSSFeed, getUniqueEntryKey, parseRSSFeed } from '@/widgets/RSS/utils';
+import Entry from './Entry';
+import Footer from './Footer';
+import { Settings } from '../';
+import { FeedItem, RawFeedData } from '../types';
+import { fetchRSSFeed, getUniqueEntryKey, parseRSSFeed } from '../utils';
 
 import * as UI from '@/types/ui';
 

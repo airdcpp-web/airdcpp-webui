@@ -3,12 +3,16 @@ import { useTranslation } from 'react-i18next';
 import * as UI from '@/types/ui';
 
 import { getModuleT } from '@/utils/TranslationUtils';
+
 import Widget from '@/routes/Home/components/Widget';
+import { createHomeLayoutStore } from '@/routes/Home/stores/homeLayoutSlice';
 
 export const getWidgetRenderRouteContainer = (
   widget: UI.Widget,
   settings: object = {},
 ) => {
+  const layoutStore = createHomeLayoutStore();
+
   const TestWidget = () => {
     const { t } = useTranslation();
     return (
@@ -25,6 +29,7 @@ export const getWidgetRenderRouteContainer = (
           // width: '100%',
           // height: '100%',
         }}
+        layoutStore={layoutStore.getState()}
       />
     );
   };

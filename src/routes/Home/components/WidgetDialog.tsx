@@ -11,15 +11,23 @@ import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
 } from '@/decorators/ModalRouteDecorator';
 
-import WidgetActions from '@/actions/reflux/WidgetActions';
-import WidgetStore from '@/stores/reflux/WidgetStore';
-import { getWidgetT, createWidgetId, translateWidgetName } from '@/utils/WidgetUtils';
+// import WidgetActions from '@/actions/reflux/WidgetActions';
+// import WidgetStore from '@/stores/reflux/WidgetStore';
+import {
+  getWidgetT,
+  createWidgetId,
+  translateWidgetName,
+  loadWidgetSettings,
+  getWidgetInfoById,
+} from '@/routes/Home/widgets/WidgetUtils';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 import { translateForm } from '@/utils/FormUtils';
 import { useParams } from 'react-router';
+import { Widgets } from '../widgets';
+import { UseLayoutStore } from '../stores/homeLayoutSlice';
 
 type FormValue = Pick<UI.WidgetSettings, 'name'> & UI.WidgetSettings['widget'];
 
@@ -31,7 +39,7 @@ const settingsToFormValue = (
     return undefined;
   }
 
-  const settings = WidgetStore.getWidgetSettings(widgetId, widgetInfo);
+  const settings = loadWidgetSettings(widgetId, widgetInfo);
   return {
     name: settings.name,
     ...settings.widget,
@@ -62,19 +70,18 @@ const buildDefinitions = (widgetInfo: UI.Widget, rootWidgetT: UI.ModuleTranslato
 
 interface WidgetDialogProps {
   rootWidgetT: UI.ModuleTranslator;
+  layoutStore: UseLayoutStore;
 }
 
 type Props = WidgetDialogProps & ModalRouteDecoratorChildProps;
 
-const WidgetDialog: React.FC<Props> = (props) => {
+const WidgetDialog: React.FC<Props> = ({ rootWidgetT, layoutStore }) => {
   const formRef = useRef<Form<FormValue> | null>(null);
   const params = useParams();
 
   const formData = useMemo(() => {
-    const { rootWidgetT } = props;
-
     const { typeId, widgetId } = params;
-    const widgetInfo = WidgetStore.getWidgetInfoById(typeId!);
+    const widgetInfo = getWidgetInfoById(typeId!, Widgets);
     if (!!widgetInfo) {
       return {
         value: settingsToFormValue(widgetId, widgetInfo),
@@ -96,10 +103,10 @@ const WidgetDialog: React.FC<Props> = (props) => {
     const { typeId, widgetId } = params;
     if (!widgetId) {
       // New widget
-      WidgetActions.create(createWidgetId(typeId!), settings, typeId);
+      layoutStore.getState().createWidget(createWidgetId(typeId!), settings, typeId!);
     } else {
       // Existing widget
-      WidgetActions.edit(widgetId, settings);
+      layoutStore.getState().updateWidget(widgetId, settings);
     }
 
     return Promise.resolve();
@@ -109,7 +116,6 @@ const WidgetDialog: React.FC<Props> = (props) => {
     return null;
   }
 
-  const { rootWidgetT } = props;
   const { value, widgetInfo, definitions } = formData;
   const { icon } = widgetInfo;
   const { t } = rootWidgetT;

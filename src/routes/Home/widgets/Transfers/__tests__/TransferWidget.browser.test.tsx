@@ -8,7 +8,7 @@ import { renderRoutes } from '@/tests/test-containers';
 // import * as API from '@/types/api';
 // import * as UI from '@/types/ui';
 
-import { TransferWidgetInfo } from '@/widgets/Transfers';
+import { TransferWidgetInfo } from '../';
 import TransferConstants from '@/constants/TransferConstants';
 import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
 import { installSvgMocks } from '@/tests/mocks/mock-svg';

@@ -1,18 +1,25 @@
 import IconConstants from '@/constants/IconConstants';
+import { HomeLayoutStore } from '@/routes/Home/stores/homeLayoutSlice';
 
-import WidgetActions from '@/actions/reflux/WidgetActions';
+// import WidgetActions from '@/actions/reflux/WidgetActions';
 
 import * as UI from '@/types/ui';
 
-export interface WidgetItemInfo {
+/*export interface WidgetItemInfo {
   widgetInfo: UI.Widget;
-  id: string;
   settings: UI.WidgetSettings;
+}*/
+
+export interface WidgetActionItemData {
+  id: string;
+  widgetInfo: UI.Widget;
+  settings: UI.WidgetSettings;
+  layoutStore: HomeLayoutStore;
 }
 
 // Filters
-type Filter = UI.ActionFilter<WidgetItemInfo>;
-const notAlwaysShow: Filter = ({ itemData }) => !itemData.widgetInfo.alwaysShow;
+type Filter = UI.ActionFilter<WidgetActionItemData>;
+const notAlwaysShow: Filter = ({ itemData: { widgetInfo } }) => !widgetInfo.alwaysShow;
 
 // Handlers
 const handleCreate: UI.ActionHandler<UI.Widget> = ({
@@ -22,13 +29,13 @@ const handleCreate: UI.ActionHandler<UI.Widget> = ({
   navigate(`/home/widget/${widgetInfo.typeId}`);
 };
 
-type Handler = UI.ActionHandler<WidgetItemInfo>;
-const handleEdit: Handler = ({ itemData: widgetInfo, navigate }) => {
-  navigate(`/home/widget/${widgetInfo.widgetInfo.typeId}/${widgetInfo.id}`);
+type Handler = UI.ActionHandler<WidgetActionItemData>;
+const handleEdit: Handler = ({ itemData: { id, widgetInfo }, navigate }) => {
+  navigate(`/home/widget/${widgetInfo.typeId}/${id}`);
 };
 
-const handleRemove: Handler = ({ itemData: widgetInfo }) => {
-  WidgetActions.remove(widgetInfo.id);
+const handleRemove: Handler = ({ itemData: { id, layoutStore } }) => {
+  layoutStore.removeWidget(id);
 };
 
 // Actions
@@ -65,7 +72,7 @@ export const WidgetActionModule = {
 };
 
 // Menus
-const WidgetEditActions: UI.ActionListType<WidgetItemInfo> = {
+const WidgetEditActions: UI.ActionListType<WidgetActionItemData> = {
   edit: WidgetEditAction,
   remove: WidgetRemoveAction,
 };
