@@ -106,9 +106,12 @@ const handleViewFile = (
   isText: boolean,
 ) => {
   const { itemData, ...other } = data;
+  const { itemInfo, user } = itemData;
 
   const viewFileData = {
-    ...itemData,
+    // Can't use spread because of getters
+    itemInfo,
+    user,
     isText,
   };
 
