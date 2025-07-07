@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import SocketNotificationListener from './SocketNotificationListener';
 import { NotificationMessage } from './NotificationMessage';
 
-import Logo from '@resources/images/AirDCPlusPlus.png';
+import Logo from '../../../../resources/images/AirDCPlusPlus.png';
 
 import {
   NotificationHandler,

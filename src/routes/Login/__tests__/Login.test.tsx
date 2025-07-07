@@ -8,14 +8,14 @@ import {
   getSocket,
 } from 'airdcpp-apisocket/tests';
 
-import { renderRoutes } from '@/tests/test-containers';
+import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import {
   setInputFieldValuesByPlaceholder,
   setupUserEvent,
-} from '@/tests/test-form-helpers';
+} from '@/tests/helpers/test-form-helpers';
 import Login from '../components/Login';
-import { waitForUrl } from '@/tests/test-helpers';
+import { waitForUrl } from '@/tests/helpers/test-helpers';
 import { getLogoutItem, parseMenuItem } from '@/routes/Routes';
 
 // tslint:disable:no-empty
@@ -61,7 +61,7 @@ describe('Login', () => {
       },
     ];
 
-    const renderData = renderRoutes(routes, {
+    const renderData = renderDataRoutes(routes, {
       socket,
       routerProps: { initialEntries: ['/login'] },
     });

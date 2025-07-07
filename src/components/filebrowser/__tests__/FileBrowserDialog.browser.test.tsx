@@ -1,7 +1,7 @@
 import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { renderNode } from '@/tests/test-containers';
+import { renderDataNode } from '@/tests/render/test-renderers';
 
 import * as API from '@/types/api';
 
@@ -9,9 +9,12 @@ import { fireEvent, waitFor } from '@testing-library/dom';
 import FilesystemConstants from '@/constants/FilesystemConstants';
 import { FilesystemListContentResponse } from '@/tests/mocks/api/filesystem';
 import { MenuFormDialog } from '@/components/action-menu/MenuFormDialog';
-import { createTestModalController, useModalButton } from '@/tests/test-dialog-helpers';
-import { clickButton, waitForData } from '@/tests/test-helpers';
-import { setInputFieldValues, setupUserEvent } from '@/tests/test-form-helpers';
+import {
+  createTestModalController,
+  useModalButton,
+} from '@/tests/helpers/test-dialog-helpers';
+import { clickButton, waitForData } from '@/tests/helpers/test-helpers';
+import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
 // tslint:disable:no-empty
 describe('FileBrowserDialog', () => {
@@ -70,7 +73,7 @@ describe('FileBrowserDialog', () => {
       );
     };
 
-    const renderData = renderNode(<FileBrowserDialogTest />, socket);
+    const renderData = renderDataNode(<FileBrowserDialogTest />, socket);
 
     const modalController = createTestModalController(renderData);
     return { modalController, onSave, caption, ...renderData, ...other };

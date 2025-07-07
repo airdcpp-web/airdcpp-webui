@@ -12,3 +12,5 @@ export const ShareGetGroupedRootsResponse = [
     paths: ['/mnt/disk1/🌍/'],
   },
 ];
+
+export const ShareGetRefreshTasksResponse = [];

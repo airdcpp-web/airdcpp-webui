@@ -1,8 +1,5 @@
 import { matchPath, useLocation, useNavigate } from 'react-router';
 import {
-  configRoutes,
-  mainRoutes,
-  secondaryRoutes,
   parseMenuItems,
   parseMenuItem,
   RouteItemClickHandler,
@@ -20,13 +17,19 @@ import Popup from '@/components/semantic/Popup';
 import { useEffect, useRef } from 'react';
 import { useSession } from '@/context/SessionContext';
 import { useSocket } from '@/context/SocketContext';
+import { MainLayoutProps } from '../AuthenticatedApp';
 
-interface MainNavigationMobileProps {
+interface MainNavigationMobileProps
+  extends Pick<MainLayoutProps, 'primaryRoutes' | 'secondaryRoutes' | 'sidebarRoutes'> {
   onClose: () => void;
   visible: boolean;
 }
 
 const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
+  primaryRoutes,
+  secondaryRoutes,
+  sidebarRoutes,
+
   onClose,
   visible,
 }) => {
@@ -79,7 +82,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
           id="mobile-menu"
           className="ui right vertical inverted sidebar menu"
         >
-          {parseMenuItems(mainRoutes, login, onClick)}
+          {parseMenuItems(primaryRoutes, login, onClick)}
           <Popup
             // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
             // https://github.com/Semantic-Org/Semantic-UI/issues/1410
@@ -98,7 +101,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
             {(hide) => (
               <div className="ui dropdown item right fluid active visible">
                 <div className="ui menu transition visible">
-                  {parseMenuItems(configRoutes, login, (path, event) => {
+                  {parseMenuItems(secondaryRoutes, login, (path, event) => {
                     hide();
                     onClick(path, event);
                   })}
@@ -110,7 +113,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
           </Popup>
           <div className="separator" />
 
-          {parseMenuItems(secondaryRoutes, login, onClickSecondary)}
+          {parseMenuItems(sidebarRoutes, login, onClickSecondary)}
           <IconPanel />
         </div>
       )}

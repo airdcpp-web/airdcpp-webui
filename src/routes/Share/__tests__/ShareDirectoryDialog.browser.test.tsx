@@ -2,14 +2,14 @@ import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { renderRoutes } from '@/tests/test-containers';
+import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import * as UI from '@/types/ui';
 
 import {
   createTestRouteModalController,
   TestRouteModalNavigateButton,
-} from '@/tests/test-dialog-helpers';
+} from '@/tests/helpers/test-dialog-helpers';
 import { getModuleT } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import ShareProfileConstants from '@/constants/ShareProfileConstants';
@@ -25,7 +25,7 @@ import {
   addSelectFieldValues,
   setupUserEvent,
   setSelectFieldValues,
-} from '@/tests/test-form-helpers';
+} from '@/tests/helpers/test-form-helpers';
 import ShareRootConstants from '@/constants/ShareRootConstants';
 import { MOCK_SHARE_ROOT_ID, ShareRootGetResponse } from '@/tests/mocks/api/share-roots';
 import ShareDirectoryDialog from '../components/ShareDirectoryDialog';
@@ -37,7 +37,7 @@ import { FilesystemListContentResponse } from '@/tests/mocks/api/filesystem';
 import { getBrowseStorageKey } from '@/components/filebrowser/effects/useFileItemSelection';
 import { saveLocalProperty } from '@/utils/BrowserUtils';
 import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
-import { clickButton, waitForData } from '@/tests/test-helpers';
+import { clickButton, waitForData } from '@/tests/helpers/test-helpers';
 
 // tslint:disable:no-empty
 describe('ShareDirectoryDialog', () => {
@@ -124,7 +124,7 @@ describe('ShareDirectoryDialog', () => {
       },
     ];
 
-    const renderData = renderRoutes(routes, {
+    const renderData = renderDataRoutes(routes, {
       socket,
       routerProps: { initialEntries: ['/home'] },
     });

@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/dom';
 
 import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
-import { renderRoutes } from '@/tests/test-containers';
+import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 // import * as API from '@/types/api';
 // import * as UI from '@/types/ui';
@@ -12,7 +12,7 @@ import { TransferWidgetInfo } from '../';
 import TransferConstants from '@/constants/TransferConstants';
 import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
 import { installSvgMocks } from '@/tests/mocks/mock-svg';
-import { getWidgetRenderRouteContainer } from '@/tests/test-widget';
+import { getWidgetRenderRouteContainer } from '@/tests/layouts/test-widget';
 
 describe('Transfer widget', () => {
   let server: ReturnType<typeof getMockServer>;
@@ -41,7 +41,7 @@ describe('Transfer widget', () => {
       settings,
     );
 
-    const renderData = renderRoutes(routes, {
+    const renderData = renderDataRoutes(routes, {
       socket,
       routerProps: { initialEntries },
     });

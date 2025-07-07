@@ -18,7 +18,7 @@ import {
   FilesystemDiskInfoResponse,
   FilesystemListContentResponse,
 } from '@/tests/mocks/api/filesystem';
-import { renderRoutes } from '@/tests/test-containers';
+import { renderDataRoutes } from '@/tests/render/test-renderers';
 import DownloadDialog from '../DownloadDialog';
 
 import * as UI from '@/types/ui';
@@ -30,8 +30,8 @@ import { HistoryStringPathResponse } from '@/tests/mocks/api/history';
 import {
   createTestRouteModalController,
   TestRouteModalNavigateButton,
-} from '@/tests/test-dialog-helpers';
-import { waitForData } from '@/tests/test-helpers';
+} from '@/tests/helpers/test-dialog-helpers';
+import { waitForData } from '@/tests/helpers/test-helpers';
 
 // tslint:disable:no-empty
 describe('DownloadDialog', () => {
@@ -107,7 +107,7 @@ describe('DownloadDialog', () => {
       },
     ];
 
-    const renderData = renderRoutes(routes, {
+    const renderData = renderDataRoutes(routes, {
       socket,
       routerProps: { initialEntries: ['/home'] },
     });

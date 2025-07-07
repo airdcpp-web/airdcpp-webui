@@ -6,7 +6,7 @@ import MainNavigation from '@/components/main/navigation/MainNavigationNormal';
 import SideMenu from '@/components/main/navigation/SideMenu';
 import SiteHeader from '@/components/main/SiteHeader';
 
-import { configRoutes, mainRoutes, secondaryRoutes, parseRoutes } from '@/routes/Routes';
+import { parseRoutes } from '@/routes/Routes';
 
 import Sidebar from '@/routes/Sidebar/components/Sidebar';
 import { useSidebarEffect } from '@/effects';
@@ -15,24 +15,29 @@ import { MainLayoutProps } from './AuthenticatedApp';
 import '@/normal.css';
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
-  const { className } = props;
+  const { className, sidebarRoutes, primaryRoutes, secondaryRoutes } = props;
   const location = useLocation();
-  const previousLocation = useSidebarEffect(secondaryRoutes, location);
+  const previousLocation = useSidebarEffect(sidebarRoutes, location);
   const mainLocation = !!previousLocation ? previousLocation : location;
   return (
     <div className={classNames(className, 'pushable sidebar-context')} id="normal-layout">
-      <Sidebar routes={secondaryRoutes} previousLocation={previousLocation} />
+      <Sidebar routes={sidebarRoutes} previousLocation={previousLocation} />
       <div className="pusher">
         <SiteHeader>
-          <MainNavigation />
+          <MainNavigation
+            primaryRoutes={primaryRoutes}
+            secondaryRoutes={secondaryRoutes}
+          />
         </SiteHeader>
         <div className="ui site-content">
-          <Routes location={mainLocation}>
-            {parseRoutes([...mainRoutes, ...configRoutes])}
-          </Routes>
+          <Routes location={mainLocation}>{parseRoutes(primaryRoutes)}</Routes>
         </div>
       </div>
-      <SideMenu location={location} previousLocation={previousLocation} />
+      <SideMenu
+        location={location}
+        sidebarRoutes={sidebarRoutes}
+        previousLocation={previousLocation}
+      />
     </div>
   );
 };

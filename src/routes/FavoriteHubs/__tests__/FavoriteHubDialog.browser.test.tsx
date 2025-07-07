@@ -4,14 +4,14 @@ import { waitFor } from '@testing-library/dom';
 
 import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
-import { renderRoutes } from '@/tests/test-containers';
+import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import * as UI from '@/types/ui';
 
 import {
   createTestRouteModalController,
   TestRouteModalNavigateButton,
-} from '@/tests/test-dialog-helpers';
+} from '@/tests/helpers/test-dialog-helpers';
 import FavoriteHubDialog from '../components/FavoriteHubDialog';
 import { getModuleT } from '@/utils/TranslationUtils';
 import ShareProfileConstants from '@/constants/ShareProfileConstants';
@@ -21,7 +21,7 @@ import {
   MOCK_FAVORITE_HUB_ID,
   FavoriteHubGetResponse,
 } from '@/tests/mocks/api/favorite-hubs';
-import { setInputFieldValues, setupUserEvent } from '@/tests/test-form-helpers';
+import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
 // tslint:disable:no-empty
 describe('FavoriteHubDialog', () => {
@@ -96,7 +96,7 @@ describe('FavoriteHubDialog', () => {
       },
     ];
 
-    const renderData = renderRoutes(routes, {
+    const renderData = renderDataRoutes(routes, {
       socket,
       routerProps: { initialEntries: ['/home'] },
     });

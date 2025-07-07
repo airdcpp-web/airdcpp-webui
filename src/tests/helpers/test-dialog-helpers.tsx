@@ -1,20 +1,16 @@
 import { act, fireEvent, waitFor } from '@testing-library/react';
 import Button from '@/components/semantic/Button';
-import { useNavigate } from 'react-router';
-import { NodeRenderResult, RouteRenderResult } from './test-containers';
 import { clickButton, waitForUrl } from './test-helpers';
 import { useState } from 'react';
 import { expect } from 'vitest';
+import { TestRouteNavigateButton } from './test-route-helpers';
+import { BaseRenderResult, DataRouteRenderResult } from '../render/test-renderers';
+
+const TestRouteModalButtonCaption = 'Open modal';
 
 export const TestRouteModalNavigateButton = ({ modalRoute }: { modalRoute: string }) => {
-  const navigate = useNavigate();
   return (
-    <Button
-      caption="Open modal"
-      onClick={() => {
-        navigate(modalRoute);
-      }}
-    />
+    <TestRouteNavigateButton caption={TestRouteModalButtonCaption} route={modalRoute} />
   );
 };
 
@@ -41,7 +37,7 @@ export const createTestRouteModalController = ({
   getByText,
   container,
   router,
-}: RouteRenderResult) => {
+}: DataRouteRenderResult) => {
   const initialUrl = router.state.location.pathname;
 
   const openDialog = async () => {
@@ -71,10 +67,10 @@ export const createTestModalController = ({
   getByRole,
   getByText,
   container,
-}: NodeRenderResult) => {
+}: BaseRenderResult) => {
   const openDialog = async () => {
     await act(async () => {
-      clickButton('Open modal', getByRole);
+      clickButton(TestRouteModalButtonCaption, getByRole);
     });
 
     await waitFor(() =>

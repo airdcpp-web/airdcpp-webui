@@ -7,5 +7,4 @@ export const FormatterContext = createContext<Formatter>({} as Formatter);
 
 export const useFormatter = () => {
   return useContext(FormatterContext);
-  // return LoginStore as Login;
 };

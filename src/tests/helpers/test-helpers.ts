@@ -5,14 +5,14 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { RouteRenderResult } from './test-containers';
 import { expect } from 'vitest';
+import { BasicRouteRenderResult } from '../render/test-renderers';
 
 export const DataLoaderText = /Loading data.*/;
 
 export const waitForUrl = async (
   pathName: string,
-  router: RouteRenderResult['router'],
+  router: BasicRouteRenderResult['router'],
 ) => {
   await waitFor(() => {
     expect(router.state.location.pathname).toEqual(pathName);
