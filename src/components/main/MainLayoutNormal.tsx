@@ -37,7 +37,9 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
             />
           </SiteHeader>
           <div className="ui site-content">
-            <Routes location={mainLocation}>{parseRoutes(primaryRoutes)}</Routes>
+            <Routes location={mainLocation}>
+              {parseRoutes([...primaryRoutes, ...secondaryRoutes])}
+            </Routes>
           </div>
         </div>
         <SideMenu

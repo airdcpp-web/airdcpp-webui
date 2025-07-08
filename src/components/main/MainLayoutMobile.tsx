@@ -41,7 +41,9 @@ const MainLayoutMobile: React.FC<MainLayoutProps> = memo(
             </div>
           </SiteHeader>
           <div className="site-content">
-            <Routes>{parseRoutes([...primaryRoutes, ...secondaryRoutes])}</Routes>
+            <Routes>
+              {parseRoutes([...primaryRoutes, ...secondaryRoutes, ...sidebarRoutes])}
+            </Routes>
           </div>
         </div>
       </div>
