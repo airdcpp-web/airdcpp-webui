@@ -21,6 +21,7 @@ const showBrowserNotification: NotificationHandler = (level, notification) => {
     type: level,
     position: 'top-left',
     autoClose: 5000,
+    closeOnClick: true,
     icon: false,
   });
 };
