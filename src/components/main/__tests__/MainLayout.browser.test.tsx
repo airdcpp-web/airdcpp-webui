@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, expect, test /*, vi*/ } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
-import { fireEvent, waitFor } from '@testing-library/dom';
+import { waitFor } from '@testing-library/dom';
 import {
   createTestModalController,
   TestRouteModalNavigateButton,
@@ -10,7 +10,11 @@ import MainLayoutNormal from '../MainLayoutNormal';
 import IconConstants from '@/constants/IconConstants';
 import RouteModal from '@/components/semantic/RouteModal';
 import ModalRouteDecorator from '@/decorators/ModalRouteDecorator';
-import { TestRouteNavigateButton } from '@/tests/helpers/test-route-helpers';
+import {
+  NavigateBackCaption,
+  TestNavigateBackButton,
+  TestRouteNavigateButton,
+} from '@/tests/helpers/test-route-helpers';
 import { RouteItem } from '@/routes/Routes';
 import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 import TransferConstants from '@/constants/TransferConstants';
@@ -19,32 +23,40 @@ import HashConstants from '@/constants/HashConstants';
 import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
 import { HashStatsResponse } from '@/tests/mocks/api/hash';
 import { ShareGetRefreshTasksResponse } from '@/tests/mocks/api/share';
+import { clickButton, clickMenuItem } from '@/tests/helpers/test-helpers';
 
-const DialogCaption = 'Test dialog';
+import '@/style.css';
+
+const MainDialogOpenCaption = 'Open main test dialog';
+const SidebarDialogOpenCaption = 'Open sidebar test dialog';
+
+const MainDialogCaption = 'Main test dialog';
+
 const SidebarRouteMenuCaption = 'Sidebar route menu item';
 const SidebarRouteContentCaption = 'Sidebar route content';
 
-const SidebarDialogOpenCaption = 'Sidebar dialog open caption';
+const MainDialogSidebarOpenCaption = 'Main dialog sidebar open caption';
 
 const TestRoutes = {
   main: '/main',
   mainModal: '/main/modal',
 
   sidebar: '/sidebar',
+  sidebarModal: '/sidebar/modal',
 };
 
 const TestRouteModalContent = () => {
   return (
     <RouteModal
-      className="search-type"
-      title={DialogCaption}
+      id="modal"
+      title={MainDialogCaption}
       onApprove={() => Promise.resolve()}
       closable={false}
       icon={IconConstants.FOLDER}
     >
-      Test modal
+      Main route test modal
       <TestRouteNavigateButton
-        caption={SidebarDialogOpenCaption}
+        caption={MainDialogSidebarOpenCaption}
         route={TestRoutes.sidebar}
       />
     </RouteModal>
@@ -110,14 +122,27 @@ describe('MainLayout', () => {
     return (
       <>
         <div>Main route</div>
-        <TestRouteModalNavigateButton modalRoute={TestRoutes.mainModal} />
+        <TestRouteModalNavigateButton
+          caption={MainDialogOpenCaption}
+          modalRoute={TestRoutes.mainModal}
+        />
         <TestRouteModal />
       </>
     );
   };
 
   const SidebarComponent = () => {
-    return <div>{SidebarRouteContentCaption}</div>;
+    return (
+      <div>
+        {SidebarRouteContentCaption}
+        <TestRouteModalNavigateButton
+          caption={SidebarDialogOpenCaption}
+          modalRoute={TestRoutes.sidebarModal}
+        />
+        <TestRouteModal />
+        <TestNavigateBackButton />
+      </div>
+    );
   };
 
   const PrimaryRoutes = [
@@ -179,22 +204,53 @@ describe('MainLayout', () => {
   });
 
   describe('normal layout', () => {
-    test('should render modal', async () => {
-      const { getByText, modalController, queryByText } = await renderNormalLayout();
+    test('should close modals when opening sidebar', async () => {
+      const { getByText, modalController, queryByText, getByRole } =
+        await renderNormalLayout();
 
       await waitFor(() => expect(queryByText('Loading data...')).not.toBeInTheDocument());
 
-      await modalController.openDialog();
-
-      // Check content
-      await waitFor(() => expect(getByText(DialogCaption)).toBeTruthy());
+      // Open dialog in the main layout
+      await modalController.openDialog(MainDialogOpenCaption);
+      await waitFor(() => modalController.expectDialogOpen());
 
       // Open sidebar
-      expect(fireEvent.click(getByText(SidebarDialogOpenCaption))).toBeTruthy();
-
+      clickButton(MainDialogSidebarOpenCaption, getByRole);
       await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
 
-      // expect(getByText(DialogCaption)).toBeFalsy();
-    }, 100000);
+      // Dialog should now be closed
+      await waitFor(() => modalController.expectDialogClosed());
+
+      // Navigate back to the modal
+      clickButton(NavigateBackCaption, getByRole);
+      await waitFor(() => modalController.expectDialogOpen());
+
+      // Sidebar should be closed
+      await waitFor(() =>
+        expect(queryByText(SidebarRouteContentCaption)).not.toBeInTheDocument(),
+      );
+    });
+
+    test('should open modals in sidebar', async () => {
+      const { getByText, modalController, queryByText, getByRole } =
+        await renderNormalLayout();
+
+      await waitFor(() => expect(queryByText('Loading data...')).not.toBeInTheDocument());
+
+      // Open sidebar
+      clickMenuItem(SidebarRouteMenuCaption, getByRole);
+      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+
+      // Open sidebar dialog
+      await modalController.openDialog(SidebarDialogOpenCaption);
+      await waitFor(() => modalController.expectDialogOpen());
+
+      // Navigate back to the modal
+      clickButton(NavigateBackCaption, getByRole);
+      await waitFor(() => modalController.expectDialogClosed());
+
+      // Sidebar should still be open
+      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+    });
   });
 });

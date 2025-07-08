@@ -12,32 +12,40 @@ import Sidebar from '@/routes/Sidebar/components/Sidebar';
 import { useSidebarEffect } from '@/effects';
 import { MainLayoutProps } from './AuthenticatedApp';
 
-import '@/normal.css';
+import './style.common.css';
+import './style.normal.css';
+
+import { SidebarContext } from '@/context/SidebarContext';
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const { className, sidebarRoutes, primaryRoutes, secondaryRoutes } = props;
   const location = useLocation();
   const previousLocation = useSidebarEffect(sidebarRoutes, location);
   const mainLocation = !!previousLocation ? previousLocation : location;
+
   return (
     <div className={classNames(className, 'pushable sidebar-context')} id="normal-layout">
-      <Sidebar routes={sidebarRoutes} previousLocation={previousLocation} />
-      <div className="pusher">
-        <SiteHeader>
-          <MainNavigation
-            primaryRoutes={primaryRoutes}
-            secondaryRoutes={secondaryRoutes}
-          />
-        </SiteHeader>
-        <div className="ui site-content">
-          <Routes location={mainLocation}>{parseRoutes(primaryRoutes)}</Routes>
+      <SidebarContext.Provider value={false}>
+        <Sidebar routes={sidebarRoutes} previousLocation={previousLocation} />
+      </SidebarContext.Provider>
+      <SidebarContext.Provider value={!!previousLocation}>
+        <div className="pusher">
+          <SiteHeader>
+            <MainNavigation
+              primaryRoutes={primaryRoutes}
+              secondaryRoutes={secondaryRoutes}
+            />
+          </SiteHeader>
+          <div className="ui site-content">
+            <Routes location={mainLocation}>{parseRoutes(primaryRoutes)}</Routes>
+          </div>
         </div>
-      </div>
-      <SideMenu
-        location={location}
-        sidebarRoutes={sidebarRoutes}
-        previousLocation={previousLocation}
-      />
+        <SideMenu
+          location={location}
+          sidebarRoutes={sidebarRoutes}
+          previousLocation={previousLocation}
+        />
+      </SidebarContext.Provider>
     </div>
   );
 };

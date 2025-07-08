@@ -1,0 +1,16 @@
+.site-header .header-content {
+  width: 100%;
+  display: flex;
+}
+
+.site-header .right {
+  display: flex;
+  margin-left: auto !important;
+}
+
+.main-layout,
+#authenticated-app,
+.pusher,
+.ui.site-content {
+  height: 100dvh;
+}

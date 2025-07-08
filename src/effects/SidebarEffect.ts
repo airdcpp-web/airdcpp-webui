@@ -3,8 +3,8 @@ import { Location } from 'react-router';
 
 import { RouteItem, HOME_URL, isRouteActive } from '@/routes/Routes';
 
-const showSidebar = (routes: RouteItem[], location: Location) => {
-  return !!routes.find((route) => isRouteActive(route, location));
+const showSidebar = (sidebarRoutes: RouteItem[], location: Location) => {
+  return !!sidebarRoutes.find((route) => isRouteActive(route, location));
 };
 
 export const useSidebarEffect = (sidebarRoutes: RouteItem[], location: Location) => {

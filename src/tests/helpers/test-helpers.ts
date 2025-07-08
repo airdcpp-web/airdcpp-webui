@@ -30,3 +30,7 @@ export const waitForData = async (
 export const clickButton = (caption: string, getByRole: RenderResult['getByRole']) => {
   return expect(fireEvent.click(getByRole('button', { name: caption }))).toBeTruthy();
 };
+
+export const clickMenuItem = (caption: string, getByRole: RenderResult['getByRole']) => {
+  return fireEvent.click(getByRole('menuitem', { name: caption }));
+};

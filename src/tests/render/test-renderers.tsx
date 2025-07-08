@@ -19,30 +19,15 @@ import { appendInstanceId, generateInstanceId } from '@/context/InstanceContext'
 import { BaseTestWrapper, SessionTestWrapper } from './test-containers';
 
 export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentType) => {
-  // Base
-  const windowSize = 2000;
-
-  Object.assign(window, {
-    innerWidth: windowSize,
-    innerHeight: windowSize,
-    outerWidth: windowSize,
-    outerHeight: windowSize,
-  }).dispatchEvent(new Event('resize'));
+  // Create container
+  const container = document.createElement('div');
 
   const instanceId = generateInstanceId();
-
-  const container = document.createElement('div');
   container.setAttribute('id', appendInstanceId(MODAL_PAGE_DIMMER_ID, instanceId));
 
-  const containerWidth = `${windowSize}px`;
-  const containerHeight = `${windowSize}px`;
+  window.dispatchEvent(new Event('resize'));
 
-  container.setAttribute('width', containerWidth);
-  container.setAttribute('height', containerHeight);
-
-  document.body.setAttribute('height', containerHeight);
-  document.body.setAttribute('width', containerWidth);
-
+  // Initializers
   const i18n = getMockI18n();
   const formatter = createFormatter(i18n);
 
@@ -50,7 +35,6 @@ export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentT
     container: document.body.appendChild(container),
     wrapper: (props) => (
       <BaseTestWrapper
-        // socket={socket}
         wrapper={wrapper}
         i18n={i18n}
         formatter={formatter}
@@ -77,21 +61,6 @@ export const renderDataNode = (node: React.ReactNode, socket: APISocket) => {
       {children}
     </SessionTestWrapper>
   );
-
-  /*const testHelpers = render(node, {
-    container: document.body.appendChild(container),
-    wrapper: (props) => (
-      <TestWrapper
-        socket={socket}
-        i18n={i18n}
-        formatter={formatter}
-        session={session}
-        store={appStore}
-        instanceId={instanceId}
-        {...props}
-      />
-    ),
-  });*/
 
   const testHelpers = renderBaseNode(node, container);
 

@@ -35,7 +35,7 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = ({
   );
 
   return (
-    <div {...other} className={itemClass} onClick={onClick}>
+    <div {...other} role="menuitem" className={itemClass} onClick={onClick}>
       <Icon icon={icon} />
       <Icon icon={submenuIcon} />
       {children}

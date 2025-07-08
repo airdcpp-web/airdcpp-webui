@@ -39,6 +39,8 @@ export const MeasuredBackground: React.FC<React.PropsWithChildren> = ({ children
         style={{
           backgroundImage: getBackgroundImageStyle(),
           height: '100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
         }}
       >
         {children}
