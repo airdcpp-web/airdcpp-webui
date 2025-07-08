@@ -92,7 +92,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
               </DropdownCaption>
             }
             triggerClassName="item"
-            className="inverted"
+            className="inverted basic"
             position="bottom left"
             settings={{
               distanceAway: -20,
