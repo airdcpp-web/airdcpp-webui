@@ -291,8 +291,13 @@
         "copySizeSuccess": "Size was copied to clipboard",
         "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link was copied to clipboard",
-        "copySuccess": "Text was copied to clipboard"
+        "copySuccess": "Text was copied to clipboard",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Grant extra slot (10 min)",
+      "grantExtraSlotHour": "Grant extra slot (hour)",
+      "grantExtraSlotDay": "Grant extra slot (day)",
+      "grantExtraSlotWeek": "Grant extra slot (week)",
       "prompts": {
         "restartWebSystemApprove": "Continue and restart",
         "restartWebSystemReject": "Don't restart",
