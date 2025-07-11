@@ -25,7 +25,7 @@ const FileContent: React.FC<FileContentProps> = memo(function FileContent({
 }) {
   const { authToken } = useSession();
   const basePath = useHref('/');
-  const { scrollable, restoreScrollPosition } = useRestoreScroll(
+  const { scrollable, onScrollableContentReady } = useRestoreScroll(
     scrollPositionHandler,
     session,
   );
@@ -43,7 +43,7 @@ const FileContent: React.FC<FileContentProps> = memo(function FileContent({
         type={session.mime_type}
         extension={session.type.str}
         sessionT={sessionT}
-        onReady={restoreScrollPosition}
+        onReady={onScrollableContentReady}
       />
     );
   }
