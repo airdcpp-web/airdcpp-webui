@@ -17,7 +17,7 @@ import { Lens, lens } from '@dhmk/zustand-lens';
 import { createBasicScrollSlice } from './decorators/scrollSlice';
 import { EventAPIActions } from '@/actions/store/EventActions';
 
-const toCacheMessage = (message: API.StatusMessage): UI.MessageListItem => {
+export const toEventCacheMessage = (message: API.StatusMessage): UI.MessageListItem => {
   return {
     log_message: message,
   };
@@ -39,12 +39,9 @@ const createEventSlice = () => {
       logMessages: null,
       messageCacheInfo: undefined,
       viewActive: false,
+      isInitialized: false,
 
       scroll: createBasicScrollSlice(),
-
-      isInitialized: () => {
-        return get().logMessages !== undefined;
-      },
 
       setViewActive: (active: boolean) => {
         set({
@@ -55,9 +52,10 @@ const createEventSlice = () => {
       onMessagesFetched: (messages: API.StatusMessage[]) => {
         set({
           logMessages: mergeCacheMessages(
-            messages.map(toCacheMessage),
+            messages.map(toEventCacheMessage),
             get().logMessages || undefined,
           ),
+          isInitialized: true,
         });
       },
 
@@ -67,7 +65,10 @@ const createEventSlice = () => {
         }
 
         set({
-          logMessages: pushMessage(toCacheMessage(data), get().logMessages || undefined),
+          logMessages: pushMessage(
+            toEventCacheMessage(data),
+            get().logMessages || undefined,
+          ),
         });
       },
 

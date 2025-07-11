@@ -27,7 +27,7 @@ const SystemLog: React.FC = memo(
       setViewActive(true);
       EventAPIActions.setRead();
 
-      if (!store.events.isInitialized()) {
+      if (!store.events.isInitialized) {
         EventAPIActions.fetchMessages(store);
       }
 

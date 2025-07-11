@@ -8,25 +8,26 @@ export const EventCountsResponse = {
   },
 };
 
-export const EventMessagesResponse = [
-  {
-    highlights: [],
-    id: 1,
-    is_read: true,
-    label: 'Extensions',
-    severity: 'info',
-    text: '8 extensions were loaded (debug mode)',
-    time: 1739606514,
-    type: 'system',
-  },
-  {
-    highlights: [],
-    id: 6,
-    is_read: true,
-    label: 'airdcpp-share-monitor',
-    severity: 'error',
-    text: "Failed to add path E:\\🌍\\ for monitoring: ENOENT: no such file or directory, watch 'E:\\🌍\\'",
-    time: 1739606515,
-    type: 'system',
-  },
-];
+export const EventMessageInfo = {
+  highlights: [],
+  id: 1,
+  is_read: true,
+  label: 'Extensions',
+  severity: 'info',
+  text: '8 extensions were loaded (debug mode)',
+  time: 1739606514,
+  type: 'system',
+};
+
+export const EventMessageError = {
+  highlights: [],
+  id: 6,
+  is_read: true,
+  label: 'airdcpp-share-monitor',
+  severity: 'error',
+  text: "Failed to add path E:\\🌍\\ for monitoring: ENOENT: no such file or directory, watch 'E:\\🌍\\'",
+  time: 1739606515,
+  type: 'system',
+};
+
+export const EventMessagesResponse = [EventMessageInfo, EventMessageError];

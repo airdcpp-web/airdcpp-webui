@@ -10,7 +10,6 @@ import { SubscriptionCallback } from 'airdcpp-apisocket';
 
 export interface UnreadInfoStore {
   getTotalUrgencies: () => UrgencyCountMap | null;
-  isInitialized: () => boolean;
 }
 
 export type AddSliceListener = (
@@ -29,6 +28,8 @@ export type SessionReadHandler = (session: SessionItemBase) => void;
 export interface SessionSlice<SessionT extends SessionType> extends UnreadInfoStore {
   readonly sessions: Array<SessionT> | null;
   readonly activeSessionId: API.IdType | null;
+
+  isInitialized: () => boolean;
 
   init: (data: SessionT[]) => void;
   setActiveSession: (session: SessionT | null) => void;
@@ -94,6 +95,7 @@ export type FilelistStore = ScrollableSessionSlice<API.FilelistSession>;
 export type ViewFileStore = ScrollableSessionSlice<API.ViewFile>;
 
 export interface EventSlice extends UnreadInfoStore {
+  isInitialized: boolean;
   logMessages: MessageListItem[] | null;
   messageCacheInfo: API.StatusMessageCounts | undefined;
   viewActive: boolean;
