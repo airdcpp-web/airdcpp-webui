@@ -521,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "File {{item.name}} was removed from queue",
         "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
+        "searchAlternatesBundleSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Paused",

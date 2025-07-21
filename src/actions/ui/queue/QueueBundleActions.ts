@@ -84,7 +84,7 @@ export const QueueBundleSearchAction = {
 };
 
 export const QueueBundleSearchAlternatesAction = {
-  id: 'searchBundleAlternates',
+  id: 'searchAlternates',
   displayName: 'Search for alternates',
   icon: IconConstants.SEARCH_ALTERNATES,
   filter: itemNotFinished,
@@ -131,9 +131,9 @@ const QueueBundleActions: UI.ActionListType<API.QueueBundle> = {
   content: QueueBundleViewContentAction,
   divider: null,
   search: QueueBundleSearchAction,
-  searchBundleAlternates: QueueBundleSearchAlternatesAction,
+  searchAlternates: QueueBundleSearchAlternatesAction,
   divider2: null,
-  removeBundle: QueueBundleRemoveAction,
+  remove: QueueBundleRemoveAction,
   divider3: null,
   rescan: QueueBundleRescanAction,
   forceShare: QueueBundleForceShareAction,
