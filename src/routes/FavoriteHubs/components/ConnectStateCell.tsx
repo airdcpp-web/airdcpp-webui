@@ -54,7 +54,7 @@ const ConnectStateCell: React.FC<ConnectStateCellProps> = ({
   };
 
   const handleRemoveSession = () => {
-    HubAPIActions.removeSession({ id: cellData!.current_hub_id });
+    HubAPIActions.removeSession({ id: cellData!.current_hub_id }, socket);
   };
 
   const getClickAction = () => {

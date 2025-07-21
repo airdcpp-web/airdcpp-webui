@@ -172,7 +172,10 @@ type SetReadAction = (id: UI.SessionItemBase, socket: APISocket) => Promise<any>
 
 interface SessionActions<SessionT extends UI.SessionType> {
   setRead: SetReadAction;
-  fetchSessions: (sessionSlice: UI.SessionSlice<SessionT>) => Promise<void>;
+  fetchSessions: (
+    sessionSlice: UI.SessionSlice<SessionT>,
+    socket: APISocket,
+  ) => Promise<void>;
 }
 
 export const initSessionSlice = <SessionT extends UI.SessionType>(

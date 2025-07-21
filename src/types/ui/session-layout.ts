@@ -11,8 +11,8 @@ import { SessionItemBase } from './sessions';
 import { UnreadInfoStore } from './store';
 import { APISocket } from '@/services/SocketService';
 
-export type SessionAPIActions<SessionT extends SessionItemBase, ActionT = EmptyObject> = {
-  removeSession: (session: SessionT) => void;
+export type SessionAPIActions<SessionT extends SessionItemBase> = {
+  removeSession: (session: SessionT, socket: APISocket) => void;
   setRead: (session: UI.SessionItemBase, socket: APISocket) => void;
 };
 

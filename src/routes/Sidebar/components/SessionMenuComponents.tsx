@@ -14,6 +14,7 @@ import { SessionLayoutLabels, SessionLayoutManageProps } from './types';
 import { useLocation } from 'react-router';
 import { useSessionRouteHelpers } from './effects/useSessionHelpers';
 import { useTranslation } from 'react-i18next';
+import { useSocket } from '@/context/SocketContext';
 
 export const useComponents = <
   SessionT extends UI.SessionItemBase,
@@ -27,6 +28,7 @@ export const useComponents = <
   } & SessionLayoutLabels &
     SessionLayoutManageProps<SessionT, SessionApiT, UIActionT>,
 ) => {
+  const socket = useSocket();
   const location = useLocation();
   const { t } = useTranslation();
   const { newUrl, getSessionUrl } = useSessionRouteHelpers({
@@ -120,7 +122,7 @@ export const useComponents = <
 
       const handleCloseAll = () => {
         const { sessionApi, items } = props;
-        items.forEach((session) => sessionApi.removeSession(session));
+        items.forEach((session) => sessionApi.removeSession(session, socket));
       };
 
       return (

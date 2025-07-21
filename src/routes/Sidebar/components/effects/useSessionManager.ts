@@ -8,6 +8,7 @@ import * as UI from '@/types/ui';
 import { useLocation } from 'react-router';
 import { useSessionRouteHelpers } from './useSessionHelpers';
 import { SessionLocationState } from '../types';
+import { useSocket } from '@/context/SocketContext';
 
 const findItem = <SessionT extends UI.SessionItemBase>(
   items: SessionT[],
@@ -39,6 +40,7 @@ export const useSessionManager = <
 ) => {
   const [activeItem, setActiveItem] = React.useState<SessionT | null>(null);
   const location = useLocation();
+  const socket = useSocket();
 
   const { pushSession, replaceSession, newUrl, replaceNew } = useSessionRouteHelpers({
     baseUrl: props.baseUrl,
@@ -162,7 +164,7 @@ export const useSessionManager = <
       const { items, activeId, sessionApi } = props;
       const item = findItem(items, activeId);
       if (!!item) {
-        sessionApi.removeSession(item);
+        sessionApi.removeSession(item, socket);
       }
     }
   };

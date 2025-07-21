@@ -1,4 +1,4 @@
-import SocketService from '@/services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
 import SessionConstants from '@/constants/SessionConstants';
 import SystemConstants from '@/constants/SystemConstants';
@@ -10,24 +10,24 @@ import NotificationActions from '@/actions/NotificationActions';
 import { translate } from '@/utils/TranslationUtils';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
-const sendActivity = () => {
-  SocketService.post(SessionConstants.ACTIVITY_URL, {
-    user_active: true,
-  }).catch(() => {
-    // Ignore
-  });
+const sendActivity = (socket: APISocket) => {
+  socket
+    .post(SessionConstants.ACTIVITY_URL, {
+      user_active: true,
+    })
+    .catch(() => {
+      // Ignore
+    });
 };
 
-const fetchAway = async (store: UI.Store) => {
-  const awayState = await SocketService.get<API.AwayState>(
-    SystemConstants.MODULE_URL + '/away',
-  );
+const fetchAway = async (store: UI.Store, socket: APISocket) => {
+  const awayState = await socket.get<API.AwayState>(SystemConstants.MODULE_URL + '/away');
   store.activity.setAway(awayState);
 };
 
-const setAway = async (away: boolean, t: UI.TranslateF) => {
+const setAway = async (away: boolean, socket: APISocket, t: UI.TranslateF) => {
   try {
-    await SocketService.post(SystemConstants.MODULE_URL + '/away', {
+    await socket.post(SystemConstants.MODULE_URL + '/away', {
       away,
     });
   } catch (e) {

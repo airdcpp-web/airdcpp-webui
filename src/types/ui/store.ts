@@ -94,6 +94,8 @@ export type PrivateChatStore = MessageSessionSlice<API.PrivateChat>;
 export type FilelistStore = ScrollableSessionSlice<API.FilelistSession>;
 export type ViewFileStore = ScrollableSessionSlice<API.ViewFile>;
 
+export type BasicReadHandler = () => void;
+
 export interface EventSlice extends UnreadInfoStore {
   isInitialized: boolean;
   logMessages: MessageListItem[] | null;
@@ -106,6 +108,8 @@ export interface EventSlice extends UnreadInfoStore {
   onMessagesFetched: (messages: API.StatusMessage[]) => void;
   onLogMessage: (data: API.StatusMessage) => void;
   onMessageCountsReceived: (cacheInfoNew: API.StatusMessageCounts) => void;
+
+  setReadHandler: (handler: BasicReadHandler) => void;
 }
 
 export interface SessionStore {

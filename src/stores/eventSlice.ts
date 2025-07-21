@@ -17,6 +17,10 @@ import { Lens, lens } from '@dhmk/zustand-lens';
 import { createBasicScrollSlice } from './decorators/scrollSlice';
 import { EventAPIActions } from '@/actions/store/EventActions';
 
+interface Readable {
+  setRead?: UI.BasicReadHandler;
+}
+
 export const toEventCacheMessage = (message: API.StatusMessage): UI.MessageListItem => {
   return {
     log_message: message,
@@ -24,12 +28,15 @@ export const toEventCacheMessage = (message: API.StatusMessage): UI.MessageListI
 };
 
 const createEventSlice = () => {
-  const createSlice: Lens<UI.EventSlice, UI.Store> = (set, get, api) => {
+  const createSlice: Lens<UI.EventSlice & Readable, UI.Store> = (set, get, api) => {
     const checkReadState = (cacheInfoNew: API.StatusMessageCounts) => {
       if (get().viewActive && api.getState().activity.userActive) {
-        cacheInfoNew = checkUnreadCacheInfo(cacheInfoNew, () =>
-          EventAPIActions.setRead(),
-        ) as API.StatusMessageCounts;
+        cacheInfoNew = checkUnreadCacheInfo(cacheInfoNew, () => {
+          const readCallback = get().setRead;
+          if (readCallback) {
+            readCallback();
+          }
+        }) as API.StatusMessageCounts;
       }
 
       return cacheInfoNew;
@@ -40,6 +47,8 @@ const createEventSlice = () => {
       messageCacheInfo: undefined,
       viewActive: false,
       isInitialized: false,
+
+      setRead: undefined,
 
       scroll: createBasicScrollSlice(),
 
@@ -89,6 +98,12 @@ const createEventSlice = () => {
 
         return toUrgencyMap(messageCacheInfo.unread, LogMessageUrgencies);
       },
+
+      setReadHandler: (handler: UI.BasicReadHandler) => {
+        set(() => ({
+          setRead: handler,
+        }));
+      },
     };
 
     return slice;
@@ -102,6 +117,13 @@ export const initEventStore = (store: UI.Store, { socket, login }: UI.StoreInitD
     const url = EventConstants.MODULE_URL;
     socket.addListener(url, EventConstants.MESSAGE, store.events.onLogMessage);
     socket.addListener(url, EventConstants.COUNTS, store.events.onMessageCountsReceived);
+
+    const { events } = store;
+    events.setReadHandler(() => {
+      EventAPIActions.setRead(socket).catch((error) => {
+        console.error(`Failed to mark events as read`, error);
+      });
+    });
   }
 };
 

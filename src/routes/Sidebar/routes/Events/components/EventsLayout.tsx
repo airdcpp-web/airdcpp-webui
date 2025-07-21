@@ -17,18 +17,20 @@ import { useAppStore, useStoreProperty } from '@/context/StoreContext';
 import { EventAPIActions } from '@/actions/store/EventActions';
 
 import '../style.css';
+import { useSocket } from '@/context/SocketContext';
 
 const SystemLog: React.FC = memo(
   function SystemLog() {
+    const socket = useSocket();
     const store = useAppStore();
     const setViewActive = useStoreProperty((state) => state.events.setViewActive);
 
     useEffect(() => {
       setViewActive(true);
-      EventAPIActions.setRead();
+      EventAPIActions.setRead(socket);
 
       if (!store.events.isInitialized) {
-        EventAPIActions.fetchMessages(store);
+        EventAPIActions.fetchMessages(store, socket);
       }
 
       return () => setViewActive(false);
