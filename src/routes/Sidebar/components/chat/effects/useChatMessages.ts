@@ -16,9 +16,10 @@ export const useChatMessages = (
 ) => {
   // const [messages, setMessages] = useState<UI.MessageListItem[] | null>([]);
   //const messages = useStoreProperty((state) => state.hubs.messages.get(session.id));
-  const messages = useStoreProperty((state) =>
-    messageStoreSelector(state).messages.messages.get(session.id),
-  );
+  const messages = useStoreProperty((state) => {
+    const store = messageStoreSelector(state);
+    return store.messages.messages.get(session.id);
+  });
   /*const isSessionInitialized = useStoreProperty(
     (state) => messageStoreSelector(state).messages.isSessionInitialized,
   );

@@ -35,6 +35,8 @@ const createEventSlice = () => {
           const readCallback = get().setRead;
           if (readCallback) {
             readCallback();
+          } else {
+            console.error('Session store not initialized');
           }
         }) as API.StatusMessageCounts;
       }

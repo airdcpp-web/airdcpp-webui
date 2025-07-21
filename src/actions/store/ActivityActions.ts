@@ -21,13 +21,13 @@ const sendActivity = (socket: APISocket) => {
 };
 
 const fetchAway = async (store: UI.Store, socket: APISocket) => {
-  const awayState = await socket.get<API.AwayState>(SystemConstants.MODULE_URL + '/away');
+  const awayState = await socket.get<API.AwayState>(SystemConstants.AWAY_STATE_URL);
   store.activity.setAway(awayState);
 };
 
 const setAway = async (away: boolean, socket: APISocket, t: UI.TranslateF) => {
   try {
-    await socket.post(SystemConstants.MODULE_URL + '/away', {
+    await socket.post(SystemConstants.AWAY_STATE_URL, {
       away,
     });
   } catch (e) {

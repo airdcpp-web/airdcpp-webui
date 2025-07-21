@@ -13,10 +13,11 @@ import '@/utils/semantic';
 import { MODAL_PAGE_DIMMER_ID } from '@/components/semantic/effects/useModal';
 import { createFormatter } from '@/utils/Formatter';
 import { getMockI18n } from '../mocks/mock-i18n';
-import { getMockSession } from '../mocks/mock-session';
-import { createAppStore } from '@/stores';
 import { appendInstanceId, generateInstanceId } from '@/context/InstanceContext';
 import { BaseTestWrapper, SessionTestWrapper } from './test-containers';
+
+import * as UI from '@/types/ui';
+import { StoreApi } from 'zustand';
 
 export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentType) => {
   // Create container
@@ -51,13 +52,22 @@ export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentT
   };
 };
 
-export const renderDataNode = (node: React.ReactNode, socket: APISocket) => {
+interface DataProps {
+  session: UI.AuthenticatedSession;
+  store: StoreApi<UI.Store>;
+  socket: APISocket;
+}
+
+export const renderDataNode = (
+  node: React.ReactNode,
+  { session, store, socket }: DataProps,
+) => {
   // Session
-  const session = getMockSession();
-  const appStore = createAppStore();
+  // const session = getMockSession();
+  // const appStore = createAppStore();
 
   const container = ({ children }: React.PropsWithChildren) => (
-    <SessionTestWrapper session={session} socket={socket} store={appStore}>
+    <SessionTestWrapper session={session} socket={socket} store={store}>
       {children}
     </SessionTestWrapper>
   );
@@ -86,19 +96,18 @@ export const renderBasicRoutes = (routes: RouteObject[], options: RouteRenderOpt
   };
 };
 
-interface DataRouteRenderOptions extends RouteRenderOptions {
-  socket: APISocket;
-}
+type DataRouteRenderOptions = RouteRenderOptions;
 
 export const renderDataRoutes = (
   routes: RouteObject[],
+  dataProps: DataProps,
   options: DataRouteRenderOptions,
 ) => {
-  const { socket, routerProps = { initialEntries: ['/'] } } = options;
+  const { routerProps = { initialEntries: ['/'] } } = options;
 
   const router = createMemoryRouter(routes, routerProps);
 
-  const testHelpers = renderDataNode(<RouterProvider router={router} />, socket);
+  const testHelpers = renderDataNode(<RouterProvider router={router} />, dataProps);
   return {
     ...testHelpers,
     router,

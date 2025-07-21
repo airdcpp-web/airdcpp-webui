@@ -53,10 +53,11 @@ export const createMessageSlice = () => {
       onMessagesFetched: (session: UI.SessionItemBase, cacheMessages: MessageCache) =>
         set(
           produce<State>((state) => {
-            state.messages.set(
-              session.id,
-              mergeCacheMessages(cacheMessages, get().messages.get(session.id)),
+            const mergedMessages = mergeCacheMessages(
+              cacheMessages,
+              get().messages.get(session.id),
             );
+            state.messages.set(session.id, mergedMessages);
           }),
         ),
 

@@ -16,7 +16,7 @@ import {
   TestRouteNavigateButton,
 } from '@/tests/helpers/test-route-helpers';
 import { RouteItem } from '@/routes/Routes';
-import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+import { getMockServer } from 'airdcpp-apisocket/tests';
 import TransferConstants from '@/constants/TransferConstants';
 import ShareConstants from '@/constants/ShareConstants';
 import HashConstants from '@/constants/HashConstants';
@@ -26,6 +26,7 @@ import { ShareGetRefreshTasksResponse } from '@/tests/mocks/api/share';
 import { clickButton, clickMenuItem } from '@/tests/helpers/test-helpers';
 
 import '@/style.css';
+import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 const MainDialogOpenCaption = 'Open main test dialog';
 const SidebarDialogOpenCaption = 'Open sidebar test dialog';
@@ -69,7 +70,7 @@ const TestRouteModal = ModalRouteDecorator(TestRouteModalContent, 'modal');
 describe('MainLayout', () => {
   let server: ReturnType<typeof getMockServer>;
   const getSocket = async () => {
-    const { socket } = await getConnectedSocket(server);
+    const commonData = await initCommonDataMocks(server);
 
     // Transfers
     const transferStats = server.addSubscriptionHandler(
@@ -109,7 +110,7 @@ describe('MainLayout', () => {
     server.addRequestHandler('GET', HashConstants.STATS_URL, HashStatsResponse);
 
     return {
-      socket,
+      commonData,
       server,
       transferStats,
       shareRefreshStarted,
@@ -166,7 +167,7 @@ describe('MainLayout', () => {
   ];
 
   const renderNormalLayout = async () => {
-    const { socket } = await getSocket();
+    const { commonData } = await getSocket();
     const MainLayoutNormalTest = () => {
       return (
         <MainLayoutNormal
@@ -185,8 +186,7 @@ describe('MainLayout', () => {
       },
     ];
 
-    const renderData = renderDataRoutes(routes, {
-      socket,
+    const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: [TestRoutes.main] },
     });
 

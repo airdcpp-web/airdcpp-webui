@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
+// import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
 
 import { HubAPIActions } from '@/actions/store/HubActions';
 import { useAppStore } from '@/context/StoreContext';
@@ -14,9 +14,14 @@ import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
 import { useSocket } from '@/context/SocketContext';
 import { APISocket } from '@/services/SocketService';
+import { useSession } from '@/context/SessionContext';
 
-const fetchStoreData = (store: UI.Store, socket: APISocket) => {
-  const { hasAccess } = LoginStore;
+const fetchStoreData = (
+  store: UI.Store,
+  socket: APISocket,
+  session: UI.AuthenticatedSession,
+) => {
+  const { hasAccess } = session;
   if (hasAccess(API.AccessEnum.PRIVATE_CHAT_VIEW)) {
     PrivateChatAPIActions.fetchSessions(store.privateChats, socket);
   }
@@ -40,12 +45,15 @@ const fetchStoreData = (store: UI.Store, socket: APISocket) => {
   ActivityAPIActions.fetchAway(store, socket);
 };
 
-export const useStoreDataFetch = (login: LoginState) => {
+export const useStoreDataFetch = (socketAuthenticated: boolean) => {
   const socket = useSocket();
   const store = useAppStore();
+
+  const session = useSession();
+
   useEffect(() => {
-    if (login.socketAuthenticated) {
-      fetchStoreData(store, socket);
+    if (socketAuthenticated) {
+      fetchStoreData(store, socket, session);
     }
-  }, [login.socketAuthenticated]);
+  }, [socketAuthenticated]);
 };

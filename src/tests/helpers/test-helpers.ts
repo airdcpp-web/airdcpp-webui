@@ -5,7 +5,7 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { expect } from 'vitest';
+import { expect, Mock } from 'vitest';
 import { BasicRouteRenderResult } from '../render/test-renderers';
 
 export const DataLoaderText = /Loading data.*/;
@@ -33,4 +33,18 @@ export const clickButton = (caption: string, getByRole: RenderResult['getByRole'
 
 export const clickMenuItem = (caption: string, getByRole: RenderResult['getByRole']) => {
   return fireEvent.click(getByRole('menuitem', { name: caption }));
+};
+
+export const expectResponseToMatchSnapshot = (
+  mock: Mock /*data: { callback_id: any }*/,
+) => {
+  // expect(mock.mock.calls.length).toBe(1);
+
+  expect(mock).toHaveBeenCalledTimes(1);
+
+  const response = mock.mock.calls[0][0];
+
+  const { callback_id, ...other } = response;
+
+  expect(other).toMatchSnapshot();
 };

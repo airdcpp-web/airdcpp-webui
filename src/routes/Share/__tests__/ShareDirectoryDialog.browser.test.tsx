@@ -1,4 +1,4 @@
-import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+import { getMockServer } from 'airdcpp-apisocket/tests';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
@@ -37,13 +37,18 @@ import { FilesystemListContentResponse } from '@/tests/mocks/api/filesystem';
 import { getBrowseStorageKey } from '@/components/filebrowser/effects/useFileItemSelection';
 import { saveLocalProperty } from '@/utils/BrowserUtils';
 import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
-import { clickButton, waitForData } from '@/tests/helpers/test-helpers';
+import {
+  clickButton,
+  expectResponseToMatchSnapshot,
+  waitForData,
+} from '@/tests/helpers/test-helpers';
+import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 // tslint:disable:no-empty
 describe('ShareDirectoryDialog', () => {
   let server: ReturnType<typeof getMockServer>;
   const getSocket = async () => {
-    const { socket } = await getConnectedSocket(server);
+    const commonData = await initCommonDataMocks(server);
 
     // Data fetch
     server.addRequestHandler(
@@ -98,11 +103,11 @@ describe('ShareDirectoryDialog', () => {
     );
     server.addRequestHandler('POST', ShareRootConstants.ROOTS_URL, undefined, onCreated);
 
-    return { socket, server, onCreated, onUpdated };
+    return { commonData, server, onCreated, onUpdated };
   };
 
   const renderDialog = async (id: number | string | null) => {
-    const { socket, server, ...other } = await getSocket();
+    const { commonData, server, ...other } = await getSocket();
 
     const ShareDirectoryDialogTest = () => {
       const { t } = useTranslation();
@@ -124,13 +129,12 @@ describe('ShareDirectoryDialog', () => {
       },
     ];
 
-    const renderData = renderDataRoutes(routes, {
-      socket,
+    const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/home'] },
     });
 
     const modalController = createTestRouteModalController(renderData);
-    return { modalController, ...renderData, ...other };
+    return { modalController, ...commonData, ...renderData, ...other };
   };
 
   const ShareProfileField = {
@@ -186,8 +190,7 @@ describe('ShareDirectoryDialog', () => {
 
     await modalController.closeDialogButton('Save');
 
-    expect(onUpdated).toHaveBeenCalledTimes(1);
-    expect(onUpdated.mock.calls[0]).toMatchSnapshot();
+    expectResponseToMatchSnapshot(onUpdated);
   }, 100000);
 
   test('should create new', async () => {
@@ -249,7 +252,6 @@ describe('ShareDirectoryDialog', () => {
 
     await modalController.closeDialogButton('Save');
 
-    expect(onCreated).toHaveBeenCalledTimes(1);
-    expect(onCreated.mock.calls[0]).toMatchSnapshot();
+    expectResponseToMatchSnapshot(onCreated);
   }, 100000);
 });

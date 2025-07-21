@@ -10,7 +10,7 @@ import { ErrorResponse } from 'airdcpp-apisocket';
 const fetchInfo = async (store: UI.Store, socket: APISocket) => {
   let eventInfo: API.StatusMessageCounts | null = null;
   try {
-    eventInfo = await socket.get<API.StatusMessageCounts>(EventConstants.INFO_URL);
+    eventInfo = await socket.get<API.StatusMessageCounts>(EventConstants.COUNTS_URL);
   } catch (e) {
     const error: ErrorResponse = e;
     NotificationActions.apiError('Failed to fetch event info', error);

@@ -29,8 +29,6 @@ export interface SessionSlice<SessionT extends SessionType> extends UnreadInfoSt
   readonly sessions: Array<SessionT> | null;
   readonly activeSessionId: API.IdType | null;
 
-  isInitialized: () => boolean;
-
   init: (data: SessionT[]) => void;
   setActiveSession: (session: SessionT | null) => void;
   getItemUrgencies: (item: SessionT) => UrgencyCountMap | null;

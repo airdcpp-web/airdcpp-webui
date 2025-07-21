@@ -1,4 +1,4 @@
-import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+import { getMockServer } from 'airdcpp-apisocket/tests';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { renderDataNode } from '@/tests/render/test-renderers';
@@ -15,12 +15,13 @@ import {
 } from '@/tests/helpers/test-dialog-helpers';
 import { clickButton, waitForData } from '@/tests/helpers/test-helpers';
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
+import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 // tslint:disable:no-empty
 describe('FileBrowserDialog', () => {
   let server: ReturnType<typeof getMockServer>;
   const getSocket = async () => {
-    const { socket } = await getConnectedSocket(server);
+    const commonData = await initCommonDataMocks(server);
 
     // Browse dialog
     server.addRequestHandler(
@@ -37,11 +38,11 @@ describe('FileBrowserDialog', () => {
       onDirectoryCreated,
     );
 
-    return { socket, server, onDirectoryCreated };
+    return { commonData, server, onDirectoryCreated };
   };
 
   const renderDialog = async (fieldType: API.SettingTypeEnum, defaultValue = '') => {
-    const { socket, server, ...other } = await getSocket();
+    const { commonData, server, ...other } = await getSocket();
 
     const onSave = vi.fn(() => Promise.resolve());
     const caption = 'Test dialog';
@@ -73,7 +74,7 @@ describe('FileBrowserDialog', () => {
       );
     };
 
-    const renderData = renderDataNode(<FileBrowserDialogTest />, socket);
+    const renderData = renderDataNode(<FileBrowserDialogTest />, commonData);
 
     const modalController = createTestModalController(renderData);
     return { modalController, onSave, caption, ...renderData, ...other };

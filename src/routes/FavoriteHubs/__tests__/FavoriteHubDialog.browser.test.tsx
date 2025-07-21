@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { useTranslation } from 'react-i18next';
 import { waitFor } from '@testing-library/dom';
 
-import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+import { getMockServer } from 'airdcpp-apisocket/tests';
 
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
@@ -22,12 +22,14 @@ import {
   FavoriteHubGetResponse,
 } from '@/tests/mocks/api/favorite-hubs';
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
+import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import { expectResponseToMatchSnapshot } from '@/tests/helpers/test-helpers';
 
 // tslint:disable:no-empty
 describe('FavoriteHubDialog', () => {
   let server: ReturnType<typeof getMockServer>;
   const getSocket = async () => {
-    const { socket } = await getConnectedSocket(server);
+    const commonData = await initCommonDataMocks(server);
 
     // Data fetch
     server.addRequestHandler(
@@ -70,11 +72,11 @@ describe('FavoriteHubDialog', () => {
     );
     server.addRequestHandler('POST', FavoriteHubConstants.HUBS_URL, undefined, onCreated);
 
-    return { socket, server, onCreated, onUpdated };
+    return { commonData, server, onCreated, onUpdated };
   };
 
   const renderDialog = async (id: number | null) => {
-    const { socket, server, ...other } = await getSocket();
+    const { commonData, server, ...other } = await getSocket();
 
     const FavoriteHubDialogTest = () => {
       const { t } = useTranslation();
@@ -96,13 +98,12 @@ describe('FavoriteHubDialog', () => {
       },
     ];
 
-    const renderData = renderDataRoutes(routes, {
-      socket,
+    const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/home'] },
     });
 
     const modalController = createTestRouteModalController(renderData);
-    return { modalController, ...renderData, ...other };
+    return { modalController, ...commonData, ...renderData, ...other };
   };
 
   beforeEach(() => {
@@ -133,8 +134,7 @@ describe('FavoriteHubDialog', () => {
 
     await modalController.closeDialogButton('Save');
 
-    expect(onUpdated).toHaveBeenCalledTimes(1);
-    expect(onUpdated.mock.calls[0]).toMatchSnapshot();
+    expectResponseToMatchSnapshot(onUpdated);
   });
 
   test('should create new', async () => {
@@ -158,7 +158,6 @@ describe('FavoriteHubDialog', () => {
 
     await modalController.closeDialogButton('Save');
 
-    expect(onCreated).toHaveBeenCalledTimes(1);
-    expect(onCreated.mock.calls[0]).toMatchSnapshot();
+    expectResponseToMatchSnapshot(onCreated);
   });
 });

@@ -34,3 +34,5 @@ export const FilelistGetResponse = {
   total_size: 133137630299481,
   user: MockHintedUser1Response,
 };
+
+export const FilelistListResponse = [FilelistGetResponse];

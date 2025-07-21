@@ -41,7 +41,7 @@ const AuthenticatedApp: React.FC<AuthenticatedAppProps> = memo(function Authenti
   const socket = useSocket();
   const urgencies = useTotalSessionUrgenciesEffect(SidebarRoutes);
 
-  useStoreDataFetch(login);
+  useStoreDataFetch(login.socketAuthenticated);
   useUrgencyPageTitle(urgencies);
   useLayoutWidth(); // Update the layout in case of resize
 

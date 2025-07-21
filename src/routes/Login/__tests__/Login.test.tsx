@@ -8,14 +8,14 @@ import {
   getSocket,
 } from 'airdcpp-apisocket/tests';
 
-import { renderDataRoutes } from '@/tests/render/test-renderers';
+import { renderBasicRoutes } from '@/tests/render/test-renderers';
 
 import {
   setInputFieldValuesByPlaceholder,
   setupUserEvent,
 } from '@/tests/helpers/test-form-helpers';
 import Login from '../components/Login';
-import { waitForUrl } from '@/tests/helpers/test-helpers';
+import { expectResponseToMatchSnapshot, waitForUrl } from '@/tests/helpers/test-helpers';
 import { getLogoutItem, parseMenuItem } from '@/routes/Routes';
 
 // tslint:disable:no-empty
@@ -39,7 +39,7 @@ describe('Login', () => {
   };
 
   const renderPage = async () => {
-    const { socket, ...other } = getSocket(DEFAULT_CONNECT_PARAMS);
+    const { socket } = getSocket(DEFAULT_CONNECT_PARAMS);
 
     const LoginPageTest = () => {
       return <Login />;
@@ -61,12 +61,11 @@ describe('Login', () => {
       },
     ];
 
-    const renderData = renderDataRoutes(routes, {
-      socket,
+    const renderData = renderBasicRoutes(routes, {
       routerProps: { initialEntries: ['/login'] },
     });
 
-    return { socket, ...renderData, ...other };
+    return { socket, ...renderData };
   };
 
   beforeEach(() => {
@@ -103,14 +102,12 @@ describe('Login', () => {
     await waitForUrl('/', router);
 
     await waitFor(() => {
-      expect(onLogin).toHaveBeenCalledTimes(1);
-      expect(onLogin.mock.calls[0]).toMatchSnapshot();
+      expectResponseToMatchSnapshot(onLogin);
     });
 
     userEvent.click(getByText('Logout'));
     await waitFor(() => {
-      expect(onLogout).toHaveBeenCalledTimes(1);
-      expect(onLogout.mock.calls[0]).toMatchSnapshot();
+      expectResponseToMatchSnapshot(onLogout);
     });
 
     expect(socket.isConnected()).toBe(false);
