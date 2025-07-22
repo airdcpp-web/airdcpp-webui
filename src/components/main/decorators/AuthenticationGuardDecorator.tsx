@@ -13,7 +13,7 @@ import * as UI from '@/types/ui';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { parseLoginError } from '@/utils/AuthUtils';
-import { StoreProvider } from '@/context/StoreContext';
+import { SessionStoreProvider } from '@/context/SessionStoreContext';
 import { useSocket } from '@/context/SocketContext';
 
 interface AuthenticationGuardDecoratorProps {}
@@ -48,9 +48,9 @@ function AuthenticationGuardDecorator<PropsT>(Component: React.ComponentType<Pro
     }
 
     return (
-      <StoreProvider socket={socket} login={LoginStore}>
+      <SessionStoreProvider socket={socket} login={LoginStore}>
         <Component login={login} {...props} />
-      </StoreProvider>
+      </SessionStoreProvider>
     );
   };
 

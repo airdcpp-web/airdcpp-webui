@@ -10,15 +10,15 @@ import { UserSelectField } from '@/components/select';
 import { NewSessionLayoutProps } from '@/routes/Sidebar/components/types';
 import LinkButton from '@/components/semantic/LinkButton';
 import { FilelistAPIActions } from '@/actions/store/FilelistActions';
-import { useAppStore } from '@/context/StoreContext';
+import { useSessionStore } from '@/context/SessionStoreContext';
 import { useSocket } from '@/context/SocketContext';
 
 const FilelistNew: React.FC<NewSessionLayoutProps> = ({ navigate, sessionT }) => {
-  const store = useAppStore();
+  const sessionStore = useSessionStore();
   const socket = useSocket();
 
   const createSessionProps = {
-    store,
+    sessionStore,
     socket,
     navigate,
     t: sessionT.plainT,
@@ -39,7 +39,7 @@ const FilelistNew: React.FC<NewSessionLayoutProps> = ({ navigate, sessionT }) =>
   };
 
   const hasSession = (entry: API.HistoryItem) => {
-    return !!store.filelists.getSession(entry.user!.cid);
+    return !!sessionStore.filelists.getSession(entry.user!.cid);
   };
 
   return (

@@ -4,8 +4,8 @@ import {
   getMockServer,
 } from 'airdcpp-apisocket/tests';
 import { DEFAULT_MOCK_PERMISSIONS, getMockSession } from './mock-session';
-import { createAppStore } from '@/stores';
 import { addMockStoreInitDataHandlers, addMockStoreSocketListeners } from './mock-store';
+import { createSessionStore } from '@/stores/session';
 
 export const initCommonDataMocks = async (
   server: ReturnType<typeof getMockServer>,
@@ -34,8 +34,8 @@ export const initCommonDataMocks = async (
     socket,
   };
 
-  const store = createAppStore();
+  const sessionStore = createSessionStore();
   addMockStoreInitDataHandlers(server);
-  const mockStoreListeners = addMockStoreSocketListeners(store, initProps, server);
-  return { socket, store, session, mockStoreListeners };
+  const mockStoreListeners = addMockStoreSocketListeners(sessionStore, initProps, server);
+  return { socket, sessionStore, session, mockStoreListeners };
 };

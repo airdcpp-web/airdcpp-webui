@@ -1,6 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
-
-import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
+import { useContext, useMemo } from 'react';
 
 import Form, {
   FormProps,
@@ -12,6 +10,11 @@ import * as UI from '@/types/ui';
 
 import { translateForm } from '@/utils/FormUtils';
 import { SettingSaveContext, getSettingFormId } from '../effects/useSettingSaveContext';
+import { useAppStore, useAppStoreProperty } from '@/context/AppStoreContext';
+import {
+  getLocalSettingDefinitions,
+  getLocalSettingValueMap,
+} from '@/utils/LocalSettingUtils';
 
 export interface LocalSettingFormProps
   extends Omit<FormProps, 'onSave' | 'fieldDefinitions' | 'value' | 'location'> {
@@ -24,16 +27,21 @@ const LocalSettingForm: React.FC<LocalSettingFormProps> = ({
   keys,
   onFieldChanged,
 }) => {
-  const [settings, setSettings] = useState(LocalSettingStore.getValues());
+  const appStore = useAppStore();
+  const storeSettingValues = useAppStoreProperty((state) => state.settings.settings);
+
+  const value = useMemo(() => {
+    return getLocalSettingValueMap(storeSettingValues);
+  }, [storeSettingValues]);
+
   const definitions = useMemo(() => {
-    return translateForm(LocalSettingStore.getDefinitions(keys), moduleT);
+    return translateForm(getLocalSettingDefinitions(keys), moduleT);
   }, []);
 
   const saveContext = useContext(SettingSaveContext)!;
 
   const onSave: FormSaveHandler<UI.FormValueMap> = (changedSettingArray, allFields) => {
-    LocalSettingStore.setValues(changedSettingArray);
-    setSettings(LocalSettingStore.getValues());
+    appStore.settings.setValues(changedSettingArray);
     return Promise.resolve();
   };
 
@@ -51,7 +59,7 @@ const LocalSettingForm: React.FC<LocalSettingFormProps> = ({
         id={getSettingFormId(keys)}
         onSave={onSave}
         fieldDefinitions={definitions}
-        sourceValue={settings}
+        sourceValue={value}
         onFieldChanged={handleFieldChanged}
       />
     </div>

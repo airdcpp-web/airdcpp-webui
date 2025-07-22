@@ -54,20 +54,16 @@ export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentT
 
 interface DataProps {
   session: UI.AuthenticatedSession;
-  store: StoreApi<UI.Store>;
+  sessionStore: StoreApi<UI.SessionStore>;
   socket: APISocket;
 }
 
 export const renderDataNode = (
   node: React.ReactNode,
-  { session, store, socket }: DataProps,
+  { session, sessionStore, socket }: DataProps,
 ) => {
-  // Session
-  // const session = getMockSession();
-  // const appStore = createAppStore();
-
   const container = ({ children }: React.PropsWithChildren) => (
-    <SessionTestWrapper session={session} socket={socket} store={store}>
+    <SessionTestWrapper session={session} socket={socket} sessionStore={sessionStore}>
       {children}
     </SessionTestWrapper>
   );

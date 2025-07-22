@@ -9,7 +9,7 @@ import '../style.css';
 
 import * as UI from '@/types/ui';
 import { translate } from '@/utils/TranslationUtils';
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 interface EventMessagesProps {
   messages: UI.MessageListItem[] | null;
@@ -17,7 +17,7 @@ interface EventMessagesProps {
 }
 
 const EventMessageView: React.FC<EventMessagesProps> = ({ messages, t }) => {
-  const scrollHandler = useStoreProperty((state) => state.events.scroll);
+  const scrollHandler = useSessionStoreProperty((state) => state.events.scroll);
   if (!messages) {
     return <Loader text={translate('Loading messages', t, UI.Modules.EVENTS)} />;
   }

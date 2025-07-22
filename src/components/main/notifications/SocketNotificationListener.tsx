@@ -10,9 +10,6 @@ import { default as EventConstants } from '@/constants/EventConstants';
 
 import NotificationActions from '@/actions/NotificationActions';
 
-import LocalSettingStore from '@/stores/reflux/LocalSettingStore';
-import { LocalSettings } from '@/constants/SettingConstants';
-
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
@@ -24,7 +21,9 @@ import {
 import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import HubConstants from '@/constants/HubConstants';
 
-import { useAppStoreApi } from '@/context/StoreContext';
+import { useSessionStoreApi } from '@/context/SessionStoreContext';
+import { LocalSettings } from '@/constants/LocalSettingConstants';
+import { useAppStoreApi } from '@/context/AppStoreContext';
 
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {
@@ -43,14 +42,19 @@ const getSeverityStr = (severity: Severity) => {
   }
 };
 
-const notifyHubMessage = (message: API.ChatMessage, store: UI.Store) => {
-  if (message.has_mention && LocalSettingStore.getValue(LocalSettings.NOTIFY_MENTION)) {
+const notifyHubMessage = (
+  message: API.ChatMessage,
+  appStore: UI.AppStore,
+  sessionStore: UI.SessionStore,
+) => {
+  const { settings } = appStore;
+  if (message.has_mention && settings.getValue(LocalSettings.NOTIFY_MENTION)) {
     return true;
   }
 
-  if (LocalSettingStore.getValue(LocalSettings.NOTIFY_HUB_MESSAGE)) {
+  if (settings.getValue(LocalSettings.NOTIFY_HUB_MESSAGE)) {
     const sessionId = message.from.hub_session_id;
-    const session = store.hubs.getSession(sessionId);
+    const session = sessionStore.hubs.getSession(sessionId);
     if (session && session.settings.use_main_chat_notify) {
       return true;
     }
@@ -59,16 +63,17 @@ const notifyHubMessage = (message: API.ChatMessage, store: UI.Store) => {
   return false;
 };
 
-const notifyPrivateMessage = (message: API.ChatMessage) => {
-  if (message.has_mention && LocalSettingStore.getValue(LocalSettings.NOTIFY_MENTION)) {
+const notifyPrivateMessage = (message: API.ChatMessage, appStore: UI.AppStore) => {
+  const { settings } = appStore;
+  if (message.has_mention && settings.getValue(LocalSettings.NOTIFY_MENTION)) {
     return true;
   }
 
   if (message.reply_to!.flags.includes('bot')) {
-    if (LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_BOT)) {
+    if (settings.getValue(LocalSettings.NOTIFY_PM_BOT)) {
       return true;
     }
-  } else if (LocalSettingStore.getValue(LocalSettings.NOTIFY_PM_USER)) {
+  } else if (settings.getValue(LocalSettings.NOTIFY_PM_USER)) {
     return true;
   }
 
@@ -82,7 +87,8 @@ type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildP
 const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const store = useAppStoreApi();
+  const sessionStoreApi = useSessionStoreApi();
+  const appStoreApi = useAppStoreApi();
 
   const translateNotification = (
     text: string,
@@ -114,21 +120,22 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
             },
     };
 
+    const { settings } = appStoreApi.getState();
     if (severity === Severity.NOTIFY) {
       NotificationActions.info(notification);
     } else if (
       severity === Severity.INFO &&
-      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_INFO)
+      settings.getValue(LocalSettings.NOTIFY_EVENTS_INFO)
     ) {
       NotificationActions.info(notification);
     } else if (
       severity === Severity.WARNING &&
-      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)
+      settings.getValue(LocalSettings.NOTIFY_EVENTS_WARNING)
     ) {
       NotificationActions.warning(notification);
     } else if (
       severity === Severity.ERROR &&
-      LocalSettingStore.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)
+      settings.getValue(LocalSettings.NOTIFY_EVENTS_ERROR)
     ) {
       NotificationActions.error(notification);
     }
@@ -148,7 +155,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
       return;
     }
 
-    if (skipSessionNotification(file.id, store.getState().viewFiles)) {
+    if (skipSessionNotification(file.id, sessionStoreApi.getState().viewFiles)) {
       return;
     }
 
@@ -170,11 +177,14 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
 
   const onHubMessage = (message: API.ChatMessage) => {
     const hubId = message.from.hub_session_id;
-    if (message.is_read || skipSessionNotification(hubId, store.getState().hubs)) {
+    if (
+      message.is_read ||
+      skipSessionNotification(hubId, sessionStoreApi.getState().hubs)
+    ) {
       return;
     }
 
-    if (!notifyHubMessage(message, store.getState())) {
+    if (!notifyHubMessage(message, appStoreApi.getState(), sessionStoreApi.getState())) {
       return;
     }
 
@@ -193,11 +203,14 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
 
   const onPrivateMessage = (message: API.ChatMessage) => {
     const cid = message.reply_to!.cid;
-    if (message.is_read || skipSessionNotification(cid, store.getState().privateChats)) {
+    if (
+      message.is_read ||
+      skipSessionNotification(cid, sessionStoreApi.getState().privateChats)
+    ) {
       return;
     }
 
-    if (!notifyPrivateMessage(message)) {
+    if (!notifyPrivateMessage(message, appStoreApi.getState())) {
       return;
     }
 
@@ -215,7 +228,8 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   };
 
   const onBundleStatus = (bundle: API.QueueBundle) => {
-    if (!LocalSettingStore.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
+    const { settings } = appStoreApi.getState();
+    if (!settings.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
       return;
     }
 

@@ -14,7 +14,7 @@ import ChatCommandHandler from '../commands/ChatCommandHandler';
 
 import { useSocket } from '@/context/SocketContext';
 import { useSession } from '@/context/SessionContext';
-import { useAppStore } from '@/context/StoreContext';
+import { useSessionStore } from '@/context/SessionStoreContext';
 
 const getStorageKey = (location: Location) => {
   return `last_message_${location.pathname}`;
@@ -44,7 +44,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
   const navigate = useNavigate();
   const [inputText, setInputText] = React.useState('');
   const socket = useSocket();
-  const store = useAppStore();
+  const sessionStore = useSessionStore();
 
   const handleCommand = (commandText: string) => {
     let command, params;
@@ -66,7 +66,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
       t,
       socket,
       session,
-      store,
+      sessionStore,
     });
   };
 

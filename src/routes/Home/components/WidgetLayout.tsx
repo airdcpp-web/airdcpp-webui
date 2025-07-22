@@ -59,7 +59,7 @@ const WidgetLayout = memo(function WidgetLayout() {
     UI.Modules.WIDGETS,
     Widgets.map((w) => w.typeId),
   );
-  // const layouts = useStore<Layouts>(WidgetStore);
+
   const layoutStore = useMemo(() => {
     const store = createHomeLayoutStore();
     store.getState().init();

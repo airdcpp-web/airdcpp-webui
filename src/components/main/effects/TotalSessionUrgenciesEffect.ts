@@ -4,18 +4,18 @@ import { appendToMap, maxUrgency, validateUrgencies } from '@/utils/UrgencyUtils
 import { RouteItem } from '@/routes/Routes';
 
 import * as UI from '@/types/ui';
-import { useStoreApi } from '@/context/StoreContext';
+import { useSessionStoreApi } from '@/context/SessionStoreContext';
 
 const reduceMenuItemUrgency = (
   urgencyCountMap: UI.UrgencyCountMap,
   menuItem: RouteItem,
-  store: UI.Store,
+  sessionStore: UI.SessionStore,
 ) => {
   if (!menuItem.unreadInfoStoreSelector) {
     return urgencyCountMap;
   }
 
-  const urgencies = menuItem.unreadInfoStoreSelector(store).getTotalUrgencies();
+  const urgencies = menuItem.unreadInfoStoreSelector(sessionStore).getTotalUrgencies();
   if (!urgencies) {
     return urgencyCountMap;
   }
@@ -28,26 +28,29 @@ const reduceMenuItemUrgency = (
   return urgencyCountMap;
 };
 
-const getTotalUrgencies = (routes: RouteItem[], store: UI.Store) => {
+const getTotalUrgencies = (routes: RouteItem[], sessionStore: UI.SessionStore) => {
   return validateUrgencies(
-    routes.reduce((prev, reduced) => reduceMenuItemUrgency(prev, reduced, store), {}),
+    routes.reduce(
+      (prev, reduced) => reduceMenuItemUrgency(prev, reduced, sessionStore),
+      {},
+    ),
   );
 };
 
 export const useTotalSessionUrgenciesEffect = (routes: RouteItem[]) => {
-  const store = useStoreApi();
+  const sessionStore = useSessionStoreApi();
   const [urgencies, setUrgencies] = useState<UI.UrgencyCountMap | null>(
-    getTotalUrgencies(routes, store.getState()),
+    getTotalUrgencies(routes, sessionStore.getState()),
   );
 
   useEffect(() => {
-    setUrgencies(getTotalUrgencies(routes, store.getState()));
+    setUrgencies(getTotalUrgencies(routes, sessionStore.getState()));
     const unsubscribe = routes.reduce(
       (reduced, item) => {
         if (!!item.unreadInfoStoreSelector) {
           reduced.push(
-            store.subscribe(() => {
-              setUrgencies(getTotalUrgencies(routes, store.getState()));
+            sessionStore.subscribe(() => {
+              setUrgencies(getTotalUrgencies(routes, sessionStore.getState()));
             }),
           );
         }

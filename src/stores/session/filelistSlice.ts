@@ -12,7 +12,7 @@ import FilelistConstants from '@/constants/FilelistConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
 const createFilelistStore = () => {
-  const slice = lens<UI.FilelistStore, UI.Store>((...a) => {
+  const slice = lens<UI.FilelistStore, UI.SessionStore>((...a) => {
     const sessionSlice = createSessionSlice<API.FilelistSession>()(...a);
     const scrollSlice = createSessionScrollSlice();
 
@@ -25,7 +25,10 @@ const createFilelistStore = () => {
   return slice;
 };
 
-export const initFilelistStore = (store: UI.Store, init: UI.StoreInitData) => {
+export const initFilelistStore = (
+  sessionStore: UI.SessionStore,
+  init: UI.SessionStoreInitData,
+) => {
   // Init listeners
   const addSocketListener = createSessionSliceSocketListener(
     init,
@@ -34,8 +37,8 @@ export const initFilelistStore = (store: UI.Store, init: UI.StoreInitData) => {
     API.AccessEnum.FILELISTS_VIEW,
   );
 
-  initSessionSlice(store.filelists, FilelistAPIActions, addSocketListener);
-  initSessionScrollSlice(store.viewFiles.scroll, addSocketListener);
+  initSessionSlice(sessionStore.filelists, FilelistAPIActions, addSocketListener);
+  initSessionScrollSlice(sessionStore.viewFiles.scroll, addSocketListener);
 };
 
 export const FilelistStoreSelector: UI.SessionStoreSelector<API.FilelistSession> = (

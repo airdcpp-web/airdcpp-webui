@@ -16,7 +16,7 @@ import {
 import { ViewFileActionMenu } from '@/actions/ui/viewed-file';
 
 import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
-import { ViewFileStoreSelector } from '@/stores/viewFileSlice';
+import { ViewFileStoreSelector } from '@/stores/session/viewFileSlice';
 
 import '../style.css';
 

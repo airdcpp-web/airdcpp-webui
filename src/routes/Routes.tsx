@@ -14,11 +14,11 @@ import { textToI18nKey } from '@/utils/TranslationUtils';
 import { Route, matchPath, Location } from 'react-router';
 import { APISocket } from '@/services/SocketService';
 
-import { PrivateChatStoreSelector } from '@/stores/privateChatSessionSlice';
-import { HubStoreSelector } from '@/stores/hubSessionSlice';
-import { EventStoreSelector } from '@/stores/eventSlice';
-import { FilelistStoreSelector } from '@/stores/filelistSlice';
-import { ViewFileStoreSelector } from '@/stores/viewFileSlice';
+import { PrivateChatStoreSelector } from '@/stores/session/privateChatSessionSlice';
+import { HubStoreSelector } from '@/stores/session/hubSessionSlice';
+import { EventStoreSelector } from '@/stores/session/eventSlice';
+import { FilelistStoreSelector } from '@/stores/session/filelistSlice';
+import { ViewFileStoreSelector } from '@/stores/session/viewFileSlice';
 
 export type RouteItemClickHandler = (
   path: string,

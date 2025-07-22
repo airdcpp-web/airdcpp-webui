@@ -22,13 +22,13 @@ import * as UI from '@/types/ui';
 
 import { enableMapSet } from 'immer';
 import { StoreApi } from 'zustand';
-import { initAppStore } from '@/stores';
+import { initSessionStore } from '@/stores/session';
 
 enableMapSet();
 
 export const addMockStoreSocketListeners = (
-  store: StoreApi<UI.Store>,
-  initProps: UI.StoreInitData,
+  sessionStore: StoreApi<UI.SessionStore>,
+  initProps: UI.SessionStoreInitData,
   server: ReturnType<typeof getMockServer>,
 ) => {
   const addSessionSubscriptionHandlers = (moduleName: string, listenerPrefix: string) => {
@@ -114,7 +114,7 @@ export const addMockStoreSocketListeners = (
   const events = addEventSubscriptionHandlers();
   const activity = addActivitySubscriptionHandlers();
 
-  initAppStore(store.getState(), initProps);
+  initSessionStore(sessionStore.getState(), initProps);
   return {
     hub,
     privateChat,

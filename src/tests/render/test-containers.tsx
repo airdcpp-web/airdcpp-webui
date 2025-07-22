@@ -14,9 +14,10 @@ import * as UI from '@/types/ui';
 import { MODAL_NODE_ID } from '@/components/semantic/effects/useModal';
 import { createFormatter } from '@/utils/Formatter';
 import { FormatterContext } from '@/context/FormatterContext';
-import { StoreContext } from '@/context/StoreContext';
 import { StoreApi } from 'zustand';
 import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
+import { SessionStoreContext } from '@/context/SessionStoreContext';
+import { AppStoreProvider } from '@/context/AppStoreContext';
 
 const BaseComponent: React.FC<PropsWithChildren<{ instanceId: number }>> = ({
   instanceId,
@@ -57,9 +58,11 @@ export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
       <UIInstanceContext.Provider value={instanceId}>
         <FormatterContext.Provider value={formatter}>
           <I18nextProvider i18n={i18n}>
-            <Wrapper>
-              <BaseComponent instanceId={instanceId}>{children}</BaseComponent>
-            </Wrapper>
+            <AppStoreProvider>
+              <Wrapper>
+                <BaseComponent instanceId={instanceId}>{children}</BaseComponent>
+              </Wrapper>
+            </AppStoreProvider>
           </I18nextProvider>
         </FormatterContext.Provider>
       </UIInstanceContext.Provider>
@@ -70,70 +73,22 @@ export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
 type SessionWrapperProps = PropsWithChildren<{
   socket: APISocket;
   session: UI.AuthenticatedSession;
-  store: StoreApi<UI.Store>;
+  sessionStore: StoreApi<UI.SessionStore>;
 }>;
 
 export const SessionTestWrapper: React.FC<SessionWrapperProps> = ({
   socket,
   session,
-  store,
+  sessionStore,
   children,
 }) => {
   return (
     <SocketContext.Provider value={socket}>
       <SessionContext.Provider value={session}>
-        <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
+        <SessionStoreContext.Provider value={sessionStore}>
+          {children}
+        </SessionStoreContext.Provider>
       </SessionContext.Provider>
     </SocketContext.Provider>
   );
 };
-
-/*type TestWrapperProps = PropsWithChildren<
-  UIBaseWrapperProps & {
-    socket: APISocket;
-    session: UI.AuthenticatedSession;
-    store: StoreApi<UI.Store>;
-  }
->;
-
-export const DataTestWrapper: React.FC<TestWrapperProps> = ({
-  children,
-  socket,
-  i18n,
-  formatter,
-  session,
-  store,
-  instanceId,
-}) => {
-  return (
-    <BaseTestWrapper instanceId={instanceId} formatter={formatter} i18n={i18n}>
-      <SessionWrapper socket={socket} session={session} store={store}>
-        <BaseComponent instanceId={instanceId}>{children}</BaseComponent>
-      </SessionWrapper>
-    </BaseTestWrapper>
-  );
-};*/
-
-/*type DataTestWrapperProps = PropsWithChildren<
-  {
-    socket: APISocket;
-    session: UI.AuthenticatedSession;
-    store: StoreApi<UI.Store>;
-  }
->;
-
-export const DataTestWrapper: React.FC<DataTestWrapperProps> = ({
-  children,
-  socket,
-  // i18n,
-  // formatter,
-  session,
-  store,
-  // instanceId,
-}) => {
-  return (
-    <SessionWrapper socket={socket} session={session} store={store}>
-      {children}
-    </SessionWrapper>
-  );
-};*/

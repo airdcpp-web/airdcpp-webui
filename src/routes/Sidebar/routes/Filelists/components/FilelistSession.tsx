@@ -11,7 +11,7 @@ import ListBrowser from './ListBrowser';
 import { SessionChildProps } from '@/routes/Sidebar/components/types';
 import { useActiveSession } from '@/effects/ActiveSessionEffect';
 import { FilelistAPIActions } from '@/actions/store/FilelistActions';
-import { FilelistStoreSelector } from '@/stores/filelistSlice';
+import { FilelistStoreSelector } from '@/stores/session/filelistSlice';
 
 type FilelistSessionProps = SessionChildProps<
   API.FilelistSession,

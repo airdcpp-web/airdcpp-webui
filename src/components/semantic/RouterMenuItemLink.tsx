@@ -9,7 +9,7 @@ import Icon, { IconType } from '@/components/semantic/Icon';
 
 import * as UI from '@/types/ui';
 
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 type RouterMenuItemLinkProps = React.PropsWithChildren<{
   url: string;
@@ -49,7 +49,7 @@ const RouterMenuItemLink = memo<RouterMenuItemLinkProps>(
     unreadInfoStoreSelector,
     session,
   }) {
-    const unreadInfoStore = useStoreProperty((state) =>
+    const unreadInfoStore = useSessionStoreProperty((state) =>
       unreadInfoStoreSelector ? unreadInfoStoreSelector(state) : null,
     );
 

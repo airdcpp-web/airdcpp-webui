@@ -13,31 +13,32 @@ import * as UI from '@/types/ui';
 import { translate } from '@/utils/TranslationUtils';
 import IconConstants from '@/constants/IconConstants';
 import { ActionMenu } from '@/components/action-menu';
-import { useAppStore, useStoreProperty } from '@/context/StoreContext';
+import { useSessionStore, useSessionStoreProperty } from '@/context/SessionStoreContext';
 import { EventAPIActions } from '@/actions/store/EventActions';
 
 import '../style.css';
+
 import { useSocket } from '@/context/SocketContext';
 
 const SystemLog: React.FC = memo(
   function SystemLog() {
+    const sessionStore = useSessionStore();
+    const setViewActive = useSessionStoreProperty((state) => state.events.setViewActive);
     const socket = useSocket();
-    const store = useAppStore();
-    const setViewActive = useStoreProperty((state) => state.events.setViewActive);
 
     useEffect(() => {
       setViewActive(true);
       EventAPIActions.setRead(socket);
 
-      if (!store.events.isInitialized) {
-        EventAPIActions.fetchMessages(store, socket);
+      if (!sessionStore.events.isInitialized) {
+        EventAPIActions.fetchMessages(sessionStore, socket);
       }
 
       return () => setViewActive(false);
     }, []);
 
     const { t } = useTranslation();
-    const messages = useStoreProperty((state) => state.events.logMessages);
+    const messages = useSessionStoreProperty((state) => state.events.logMessages);
     return (
       <div className="simple-layout">
         <div className="wrapper">

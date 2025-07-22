@@ -12,7 +12,8 @@ interface CreateSessionProps {
 }
 
 const createSession = SessionCreatorDecorator<API.Hub, CreateSessionProps>({
-  existingSessionGetter: ({ hubUrl }, store) => store.hubs.getSessionByUrl(hubUrl),
+  existingSessionGetter: ({ hubUrl }, sessionStore) =>
+    sessionStore.hubs.getSessionByUrl(hubUrl),
   sectionUrlPath: '/hubs',
   createHandler: ({ hubUrl }, socket) => {
     return socket.post<API.Hub>(HubConstants.SESSIONS_URL, {

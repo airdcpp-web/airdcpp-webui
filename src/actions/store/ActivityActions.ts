@@ -20,9 +20,9 @@ const sendActivity = (socket: APISocket) => {
     });
 };
 
-const fetchAway = async (store: UI.Store, socket: APISocket) => {
+const fetchAway = async (sessionStore: UI.SessionStore, socket: APISocket) => {
   const awayState = await socket.get<API.AwayState>(SystemConstants.AWAY_STATE_URL);
-  store.activity.setAway(awayState);
+  sessionStore.activity.setAway(awayState);
 };
 
 const setAway = async (away: boolean, socket: APISocket, t: UI.TranslateF) => {

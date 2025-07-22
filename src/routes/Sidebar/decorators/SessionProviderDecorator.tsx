@@ -7,7 +7,7 @@ import * as UI from '@/types/ui';
 import { useTranslation } from 'react-i18next';
 import { getModuleT, translate } from '@/utils/TranslationUtils';
 import { useParams } from 'react-router';
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 export interface SessionProviderDecoratorProps {}
 
@@ -27,7 +27,9 @@ const SessionProviderDecorator = <SessionT extends UI.SessionType>(
     const sessionT = getModuleT(t, moduleId);
     const params = useParams();
 
-    const sessions = useStoreProperty((state) => sessionStoreSelector(state).sessions);
+    const sessions = useSessionStoreProperty(
+      (state) => sessionStoreSelector(state).sessions,
+    );
     if (!sessions) {
       return <Loader text={translate('Loading sessions', t, UI.Modules.COMMON)} />;
     }

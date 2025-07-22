@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { toI18nKey } from '@/utils/TranslationUtils';
 import { useChatMessages } from './effects/useChatMessages';
 import { useSession } from '@/context/SessionContext';
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;
@@ -39,7 +39,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
   const { t } = useTranslation();
   const messages = useChatMessages(session, storeSelector, chatApi);
   const hasChatAccess = hasAccess(chatAccess);
-  const scrollPositionHandler = useStoreProperty(
+  const scrollPositionHandler = useSessionStoreProperty(
     (state) => storeSelector(state).messages.scroll,
   );
 

@@ -155,7 +155,7 @@ describe('Private messages', () => {
       mockStoreListeners,
       onSession1Read,
       onSession2Read,
-      store,
+      sessionStore,
     } = await renderLayout();
 
     const onNotification = vi.fn();
@@ -163,7 +163,7 @@ describe('Private messages', () => {
 
     await waitLoaded(queryByText);
 
-    expect(store.getState().privateChats.activeSessionId).toEqual(PrivateChat1.id);
+    expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat1.id);
 
     // Send message for the active session
     mockStoreListeners.privateChat.chatMessage.fire(
@@ -196,7 +196,7 @@ describe('Private messages', () => {
     const session2MenuItem = queryByText(PrivateChat2.user.nicks);
     await userEvent.click(session2MenuItem!);
     await waitFor(() => expect(onSession2Read).toHaveBeenCalledTimes(1));
-    expect(store.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
+    expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
 
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
 

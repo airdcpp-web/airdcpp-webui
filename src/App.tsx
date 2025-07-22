@@ -32,6 +32,7 @@ import { SessionContext } from '@/context/SessionContext';
 import '@/utils/semantic';
 
 import './style.css';
+import { AppStoreProvider } from './context/AppStoreContext';
 
 global.Promise = Promise as any;
 
@@ -68,17 +69,19 @@ const App = () => {
     <ErrorBoundary>
       <Suspense fallback={<Loader fullPage={true} text="" />}>
         <FormatterContext.Provider value={formatter}>
-          <SocketContext.Provider value={SocketService}>
-            <I18nextProvider i18n={i18n}>
-              <InstallPromptContext.Provider value={prompt}>
-                <MeasuredBackground>
-                  <SessionContext.Provider value={LoginStore}>
-                    <RouterProvider router={router} />
-                  </SessionContext.Provider>
-                </MeasuredBackground>
-              </InstallPromptContext.Provider>
-            </I18nextProvider>
-          </SocketContext.Provider>
+          <AppStoreProvider>
+            <SocketContext.Provider value={SocketService}>
+              <I18nextProvider i18n={i18n}>
+                <InstallPromptContext.Provider value={prompt}>
+                  <MeasuredBackground>
+                    <SessionContext.Provider value={LoginStore}>
+                      <RouterProvider router={router} />
+                    </SessionContext.Provider>
+                  </MeasuredBackground>
+                </InstallPromptContext.Provider>
+              </I18nextProvider>
+            </SocketContext.Provider>
+          </AppStoreProvider>
         </FormatterContext.Provider>
       </Suspense>
     </ErrorBoundary>

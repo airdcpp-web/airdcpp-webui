@@ -17,7 +17,7 @@ import IconConstants from '@/constants/IconConstants';
 
 import { PrivateChatActionMenu } from '@/actions/ui/private-chat';
 import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
-import { PrivateChatStoreSelector } from '@/stores/privateChatSessionSlice';
+import { PrivateChatStoreSelector } from '@/stores/session/privateChatSessionSlice';
 
 import '../style.css';
 

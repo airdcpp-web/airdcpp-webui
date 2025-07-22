@@ -24,7 +24,7 @@ import { useSession } from '@/context/SessionContext';
 import { HubAPIActions } from '@/actions/store/HubActions';
 import { buildChatCommands } from '@/routes/Sidebar/components/chat/commands/ChatCommands';
 import { clearHubChatMessages } from '@/services/api/HubApi';
-import { HubStoreSelector } from '@/stores/hubSessionSlice';
+import { HubStoreSelector } from '@/stores/session/hubSessionSlice';
 
 import '../style.css';
 

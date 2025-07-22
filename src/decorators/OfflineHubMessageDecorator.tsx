@@ -10,7 +10,7 @@ import { Trans } from 'react-i18next';
 import { toI18nKey } from '@/utils/TranslationUtils';
 import IconConstants from '@/constants/IconConstants';
 import { useSession } from '@/context/SessionContext';
-import { useStoreProperty } from '@/context/StoreContext';
+import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 export type OfflineHubMessageDecoratorProps = React.PropsWithChildren<{
   offlineMessage: MessageDescriptionType;
@@ -19,7 +19,9 @@ export type OfflineHubMessageDecoratorProps = React.PropsWithChildren<{
 // Disables the component if there are no online hubs
 const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = memo(
   function OfflineHubMessageDecorator(props) {
-    const hasConnectedHubs = useStoreProperty((state) => state.hubs.hasConnectedHubs());
+    const hasConnectedHubs = useSessionStoreProperty((state) =>
+      state.hubs.hasConnectedHubs(),
+    );
 
     const { hasAccess } = useSession();
     if (!hasConnectedHubs && hasAccess(API.AccessEnum.HUBS_VIEW)) {

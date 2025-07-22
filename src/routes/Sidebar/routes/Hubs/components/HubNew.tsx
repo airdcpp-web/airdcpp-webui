@@ -14,11 +14,11 @@ import Button from '@/components/semantic/Button';
 import { NewSessionLayoutProps } from '@/routes/Sidebar/components/types';
 import LinkButton from '@/components/semantic/LinkButton';
 import { HubAPIActions } from '@/actions/store/HubActions';
-import { useAppStore } from '@/context/StoreContext';
+import { useSessionStore } from '@/context/SessionStoreContext';
 import { useSocket } from '@/context/SocketContext';
 
 const HubNew: React.FC<NewSessionLayoutProps> = ({ sessionT, navigate }) => {
-  const store = useAppStore();
+  const sessionStore = useSessionStore();
   const { t } = useTranslation();
   const socket = useSocket();
 
@@ -26,7 +26,7 @@ const HubNew: React.FC<NewSessionLayoutProps> = ({ sessionT, navigate }) => {
     HubAPIActions.createSession(
       { hubUrl },
       {
-        store,
+        sessionStore,
         navigate,
         t,
         socket,
@@ -35,7 +35,7 @@ const HubNew: React.FC<NewSessionLayoutProps> = ({ sessionT, navigate }) => {
   };
 
   const hasSession = (entry: API.HistoryItem) => {
-    return !!store.hubs.getSessionByUrl(entry.hub_url);
+    return !!sessionStore.hubs.getSessionByUrl(entry.hub_url);
   };
 
   const recentHubRender = (entry: API.HistoryItem) => {
