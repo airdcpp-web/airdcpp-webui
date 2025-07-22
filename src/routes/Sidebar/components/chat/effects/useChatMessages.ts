@@ -1,5 +1,8 @@
 import { useSocket } from '@/context/SocketContext';
-import { useSessionStore, useSessionStoreProperty } from '@/context/SessionStoreContext';
+import {
+  useSessionStoreApi,
+  useSessionStoreProperty,
+} from '@/context/SessionStoreContext';
 import { useEffect } from 'react';
 
 import * as UI from '@/types/ui';
@@ -13,12 +16,12 @@ export const useChatMessages = (
     messageStoreSelector(state).messages.messages.get(session.id),
   );
 
-  const store = useSessionStore();
+  const sessionStoreApi = useSessionStoreApi();
   const socket = useSocket();
 
   useEffect(() => {
     // Session changed, update the messages
-    const messageStore = messageStoreSelector(store).messages;
+    const messageStore = messageStoreSelector(sessionStoreApi.getState()).messages;
     if (!messageStore.isSessionInitialized(session.id)) {
       chatAPI.fetchMessages(socket, session, messageStore);
     }
