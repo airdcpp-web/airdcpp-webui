@@ -94,7 +94,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
         <div className="actions">
           {userlistToggle}
           <ActionMenu
-            className="top left pointing"
+            className="top right pointing"
             actions={HubSettingActionMenu}
             header={sessionT.translate('Notification settings')}
             itemData={session}
