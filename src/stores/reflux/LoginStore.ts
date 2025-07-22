@@ -35,6 +35,10 @@ const errorToString = (error: ErrorResponse | string) => {
     : (error as string);
 };
 
+export const hasAccess = (permissions: API.AccessEnum[], access: API.AccessEnum) => {
+  return permissions.includes(access) || permissions.includes(API.AccessEnum.ADMIN);
+};
+
 const LOGIN_PROPS_KEY = 'login_properties';
 const REFRESH_TOKEN_KEY = 'refresh_token';
 
@@ -163,7 +167,7 @@ const LoginStore = {
 
   hasAccess(access: API.AccessEnum) {
     const { permissions } = this.loginProperties!.user;
-    return permissions.includes(access) || permissions.includes(API.AccessEnum.ADMIN);
+    return hasAccess(permissions, access);
   },
 
   onDisconnect(reason: string) {

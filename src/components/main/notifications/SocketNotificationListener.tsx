@@ -24,7 +24,7 @@ import {
 import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import HubConstants from '@/constants/HubConstants';
 
-import { useAppStore } from '@/context/StoreContext';
+import { useAppStoreApi } from '@/context/StoreContext';
 
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {
@@ -82,7 +82,7 @@ type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildP
 const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const store = useAppStore();
+  const store = useAppStoreApi();
 
   const translateNotification = (
     text: string,
@@ -134,8 +134,21 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     }
   };
 
+  const skipSessionNotification = (
+    sessionId: API.IdType,
+    sessionSlice: UI.SessionSlice<UI.SessionType>,
+  ) => {
+    const isActiveSession = sessionSlice.activeSessionId === sessionId;
+    const hasFocus = document.hasFocus();
+    return isActiveSession && hasFocus;
+  };
+
   const onViewFileDownloaded = (file: API.ViewFile) => {
     if (!file.content_ready) {
+      return;
+    }
+
+    if (skipSessionNotification(file.id, store.getState().viewFiles)) {
       return;
     }
 
@@ -157,14 +170,11 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
 
   const onHubMessage = (message: API.ChatMessage) => {
     const hubId = message.from.hub_session_id;
-    if (
-      message.is_read ||
-      (store.hubs.activeSessionId === hubId && document.hasFocus())
-    ) {
+    if (message.is_read || skipSessionNotification(hubId, store.getState().hubs)) {
       return;
     }
 
-    if (!notifyHubMessage(message, store)) {
+    if (!notifyHubMessage(message, store.getState())) {
       return;
     }
 
@@ -183,10 +193,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
 
   const onPrivateMessage = (message: API.ChatMessage) => {
     const cid = message.reply_to!.cid;
-    if (
-      message.is_read ||
-      (store.privateChats.activeSessionId === cid && document.hasFocus())
-    ) {
+    if (message.is_read || skipSessionNotification(cid, store.getState().privateChats)) {
       return;
     }
 

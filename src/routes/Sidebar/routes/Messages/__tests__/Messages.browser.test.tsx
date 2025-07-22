@@ -22,11 +22,22 @@ import PrivateChatConstants from '@/constants/PrivateChatConstants';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
+import * as API from '@/types/api';
+import SocketNotificationListener from '@/components/main/notifications/SocketNotificationListener';
+import {
+  NOTIFICATION_EVENT_TYPE,
+  NotificationEventEmitter,
+} from '@/components/main/notifications/effects/NotificationManager';
+
 // tslint:disable:no-empty
 describe('Private messages', () => {
   let server: ReturnType<typeof getMockServer>;
   const getSocket = async () => {
-    const commonData = await initCommonDataMocks(server);
+    const commonData = await initCommonDataMocks(server, [
+      API.AccessEnum.PRIVATE_CHAT_VIEW,
+      API.AccessEnum.PRIVATE_CHAT_EDIT,
+      API.AccessEnum.PRIVATE_CHAT_SEND,
+    ]);
 
     // Temp shares
     server.addRequestHandler(
@@ -85,6 +96,7 @@ describe('Private messages', () => {
       return (
         <>
           <Messages />
+          <SocketNotificationListener />
         </>
       );
     };
@@ -117,10 +129,10 @@ describe('Private messages', () => {
   });
 
   const waitLoaded = async (queryByText: RenderResult['queryByText']) => {
-    // await waitFor(() => queryByText(/Loading sessions/i));
+    await waitFor(() => queryByText(/Loading sessions/i));
     await waitForElementToBeRemoved(() => queryByText(/Loading sessions/i));
 
-    // await waitFor(() => queryByText(/Loading messages/i));
+    await waitFor(() => queryByText(/Loading messages/i));
     await waitForElementToBeRemoved(() => queryByText(/Loading messages/i));
   };
 
@@ -143,9 +155,15 @@ describe('Private messages', () => {
       mockStoreListeners,
       onSession1Read,
       onSession2Read,
+      store,
     } = await renderLayout();
 
+    const onNotification = vi.fn();
+    NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
+
     await waitLoaded(queryByText);
+
+    expect(store.getState().privateChats.activeSessionId).toEqual(PrivateChat1.id);
 
     // Send message for the active session
     mockStoreListeners.privateChat.chatMessage.fire(
@@ -153,10 +171,12 @@ describe('Private messages', () => {
         ...PrivateChat1MessageOther,
         text: 'Chat 1 new message',
         id: PrivateChat1MessageOther.id + 1,
+        is_read: false,
       },
       PrivateChat1.id,
     );
     await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(1));
+    expect(onNotification).toHaveBeenCalledTimes(0);
 
     // Send message for the background session
     mockStoreListeners.privateChat.chatMessage.fire(
@@ -164,16 +184,19 @@ describe('Private messages', () => {
         ...PrivateChat2MessageOther,
         text: 'Chat 2 new message',
         id: PrivateChat2MessageOther.id + 1,
+        is_read: false,
       },
       PrivateChat2.id,
     );
     await waitFor(() => expect(onSession2Read).toHaveBeenCalledTimes(0));
+    // expect(onNotification).toHaveBeenCalledTimes(1);
 
     // Activate the background session
     const userEvent = setupUserEvent();
     const session2MenuItem = queryByText(PrivateChat2.user.nicks);
     await userEvent.click(session2MenuItem!);
     await waitFor(() => expect(onSession2Read).toHaveBeenCalledTimes(1));
+    expect(store.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
 
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
 

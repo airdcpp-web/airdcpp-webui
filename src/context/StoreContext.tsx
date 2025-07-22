@@ -66,6 +66,15 @@ export const useAppStore = () => {
   return useStore(store);
 };
 
+export const useAppStoreApi = () => {
+  const store = useContext<StoreContextType>(StoreContext);
+  if (!store) {
+    throw new Error('Missing StoreProvider');
+  }
+
+  return store;
+};
+
 export const useStoreApi = () => {
   const store = useContext<StoreContextType>(StoreContext);
   return store;
