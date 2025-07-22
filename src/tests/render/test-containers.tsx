@@ -17,7 +17,7 @@ import { FormatterContext } from '@/context/FormatterContext';
 import { StoreApi } from 'zustand';
 import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
 import { SessionStoreContext } from '@/context/SessionStoreContext';
-import { AppStoreProvider } from '@/context/AppStoreContext';
+import { AppStoreContext } from '@/context/AppStoreContext';
 
 const BaseComponent: React.FC<PropsWithChildren<{ instanceId: number }>> = ({
   instanceId,
@@ -44,12 +44,14 @@ type UIBaseWrapperProps = PropsWithChildren<{
   formatter: ReturnType<typeof createFormatter>;
   i18n: typeof i18n;
   instanceId: number;
+  appStore: StoreApi<UI.AppStore>;
   wrapper?: React.ComponentType;
 }>;
 
 export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
   formatter,
   instanceId,
+  appStore,
   wrapper: Wrapper = SimpleWrapper,
   children,
 }) => {
@@ -58,11 +60,11 @@ export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
       <UIInstanceContext.Provider value={instanceId}>
         <FormatterContext.Provider value={formatter}>
           <I18nextProvider i18n={i18n}>
-            <AppStoreProvider>
+            <AppStoreContext.Provider value={appStore}>
               <Wrapper>
                 <BaseComponent instanceId={instanceId}>{children}</BaseComponent>
               </Wrapper>
-            </AppStoreProvider>
+            </AppStoreContext.Provider>
           </I18nextProvider>
         </FormatterContext.Provider>
       </UIInstanceContext.Provider>

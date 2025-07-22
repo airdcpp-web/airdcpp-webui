@@ -23,6 +23,7 @@ export interface TempShareDropdownProps {
   handleUpload: (evt: React.SyntheticEvent<any>) => void;
   style?: React.CSSProperties;
   className?: string;
+  hasAccess: UI.AccessF;
 
   // Allows temporarily replacing the content without
   // the need to refetch all temp share data
@@ -113,19 +114,27 @@ export default DataProviderDecorator<TempShareDropdownProps, DataProps>(
   TempShareDropdown,
   {
     urls: {
-      files: ShareConstants.TEMP_SHARES_URL,
+      files: ({ hasAccess }, socket) => {
+        if (!hasAccess(API.AccessEnum.SETTINGS_VIEW)) {
+          return Promise.resolve([]);
+        }
+
+        return socket.get(ShareConstants.TEMP_SHARES_URL);
+      },
     },
     onSocketConnected: (addSocketListener, { refetchData }) => {
       addSocketListener(
         ShareConstants.MODULE_URL,
         ShareConstants.TEMP_ITEM_ADDED,
         () => refetchData(),
+        undefined,
         API.AccessEnum.SETTINGS_VIEW,
       );
       addSocketListener(
         ShareConstants.MODULE_URL,
         ShareConstants.TEMP_ITEM_REMOVED,
         () => refetchData(),
+        undefined,
         API.AccessEnum.SETTINGS_VIEW,
       );
     },

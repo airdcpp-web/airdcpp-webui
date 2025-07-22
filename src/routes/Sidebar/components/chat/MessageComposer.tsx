@@ -161,6 +161,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
               <TempShareDropdown
                 className="blue large"
                 handleUpload={open}
+                hasAccess={hasAccess}
                 overrideContent={!text ? null : sendButton}
               />
             )}

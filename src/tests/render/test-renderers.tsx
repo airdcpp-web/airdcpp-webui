@@ -18,6 +18,7 @@ import { BaseTestWrapper, SessionTestWrapper } from './test-containers';
 
 import * as UI from '@/types/ui';
 import { StoreApi } from 'zustand';
+import { createAppStore } from '@/stores/app';
 
 export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentType) => {
   // Create container
@@ -31,6 +32,7 @@ export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentT
   // Initializers
   const i18n = getMockI18n();
   const formatter = createFormatter(i18n);
+  const appStore = createAppStore();
 
   const testHelpers = render(node, {
     container: document.body.appendChild(container),
@@ -40,6 +42,7 @@ export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentT
         i18n={i18n}
         formatter={formatter}
         instanceId={instanceId}
+        appStore={appStore}
         {...props}
       />
     ),
@@ -49,6 +52,7 @@ export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentT
     ...testHelpers,
     screen,
     formatter,
+    appStore,
   };
 };
 

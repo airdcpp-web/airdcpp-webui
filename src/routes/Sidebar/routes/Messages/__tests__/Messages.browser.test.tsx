@@ -16,30 +16,24 @@ import {
   PrivateChat2MessagesResponse,
 } from '@/tests/mocks/api/private-chat';
 import { useStoreDataFetch } from '@/components/main/effects/StoreDataFetchEffect';
-import ShareConstants from '@/constants/ShareConstants';
-import { ShareTempItemListResponse } from '@/tests/mocks/api/share';
 import PrivateChatConstants from '@/constants/PrivateChatConstants';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
 import * as API from '@/types/api';
+
 import SocketNotificationListener from '@/components/main/notifications/SocketNotificationListener';
 import {
   NOTIFICATION_EVENT_TYPE,
   NotificationEventEmitter,
 } from '@/components/main/notifications/effects/NotificationManager';
+import { LocalSettings } from '@/constants/LocalSettingConstants';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
   let server: ReturnType<typeof getMockServer>;
-  const getSocket = async () => {
-    const commonData = await initCommonDataMocks(server, [
-      API.AccessEnum.PRIVATE_CHAT_VIEW,
-      API.AccessEnum.PRIVATE_CHAT_EDIT,
-      API.AccessEnum.PRIVATE_CHAT_SEND,
-    ]);
 
-    // Temp shares
+  /*const addTempShareHandlers = () => {
     server.addRequestHandler(
       'GET',
       ShareConstants.TEMP_SHARES_URL,
@@ -55,6 +49,14 @@ describe('Private messages', () => {
       ShareConstants.MODULE_URL,
       ShareConstants.TEMP_ITEM_REMOVED,
     );
+  }*/
+
+  const getSocket = async () => {
+    const commonData = await initCommonDataMocks(server, [
+      API.AccessEnum.PRIVATE_CHAT_VIEW,
+      API.AccessEnum.PRIVATE_CHAT_EDIT,
+      API.AccessEnum.PRIVATE_CHAT_SEND,
+    ]);
 
     // Messages
     const onSession1Read = vi.fn();
@@ -85,7 +87,11 @@ describe('Private messages', () => {
       PrivateChat2MessagesResponse,
     );
 
-    return { commonData, tempItemAdded, tempItemRemoved, onSession1Read, onSession2Read };
+    return {
+      commonData,
+      onSession1Read,
+      onSession2Read,
+    };
   };
 
   const renderLayout = async () => {
@@ -156,7 +162,10 @@ describe('Private messages', () => {
       onSession1Read,
       onSession2Read,
       sessionStore,
+      appStore,
     } = await renderLayout();
+
+    appStore.getState().settings.setValue(LocalSettings.NOTIFY_PM_BOT, true); // The second session is for a bot
 
     const onNotification = vi.fn();
     NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
@@ -189,12 +198,13 @@ describe('Private messages', () => {
       PrivateChat2.id,
     );
     await waitFor(() => expect(onSession2Read).toHaveBeenCalledTimes(0));
-    // expect(onNotification).toHaveBeenCalledTimes(1);
+    expect(onNotification).toHaveBeenCalledTimes(1);
 
     // Activate the background session
     const userEvent = setupUserEvent();
     const session2MenuItem = queryByText(PrivateChat2.user.nicks);
     await userEvent.click(session2MenuItem!);
+
     await waitFor(() => expect(onSession2Read).toHaveBeenCalledTimes(1));
     expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
 

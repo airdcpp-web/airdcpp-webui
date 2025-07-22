@@ -2,8 +2,9 @@ import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
+import { APISocket } from '@/services/SocketService';
 
-type ClearHandler = (id: API.IdType) => Promise<any>;
+type ClearHandler = (id: API.IdType, socket: APISocket) => Promise<any>;
 
 export const buildChatCommands = (
   editAccess: API.AccessEnum,
@@ -15,8 +16,8 @@ export const buildChatCommands = (
     }
   };
 
-  const handleClear: UI.ChatCommandHandler = (params, { session }, { t }) => {
-    runBackgroundSocketAction(() => clearAPIAction(session.id), t);
+  const handleClear: UI.ChatCommandHandler = (params, { session }, { t, socket }) => {
+    runBackgroundSocketAction(() => clearAPIAction(session.id, socket), t);
   };
 
   const commands: UI.ChatCommandList = {

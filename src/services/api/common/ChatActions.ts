@@ -1,10 +1,10 @@
-import SocketService from '@/services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
-import * as API from '@/types/api';
+// import * as API from '@/types/api';
 
-export const sendChatMessageDecorator = (sessionUrl: string) => {
-  return (sessionId: number, text: string, thirdPerson: boolean) => {
-    return SocketService.post(`${sessionUrl}/${sessionId}/chat_message`, {
+/*export const sendChatMessageDecorator = (sessionUrl: string) => {
+  return (sessionId: number, text: string, thirdPerson: boolean, socket: APISocket) => {
+    return socket.post(`${sessionUrl}/${sessionId}/chat_message`, {
       text,
       third_person: thirdPerson,
     });
@@ -12,8 +12,8 @@ export const sendChatMessageDecorator = (sessionUrl: string) => {
 };
 
 export const sendStatusMessageDecorator = (sessionUrl: string) => {
-  return (sessionId: number, text: string, severity: API.SeverityEnum) => {
-    return SocketService.post(`${sessionUrl}/${sessionId}/status_message`, {
+  return (sessionId: number, text: string, severity: API.SeverityEnum, socket: APISocket) => {
+    return socket.post(`${sessionUrl}/${sessionId}/status_message`, {
       text,
       severity,
     });
@@ -21,16 +21,16 @@ export const sendStatusMessageDecorator = (sessionUrl: string) => {
 };
 
 export const fetchMessagesDecorator = (sessionUrl: string) => {
-  return (sessionId: number) =>
-    SocketService.get(`${sessionUrl}/${sessionId}/messages/0`);
+  return (sessionId: number, socket: APISocket) =>
+    socket.get(`${sessionUrl}/${sessionId}/messages/0`);
 };
 
 export const setReadDecorator = (sessionUrl: string) => {
-  return (sessionId: number) =>
-    SocketService.post(`${sessionUrl}/${sessionId}/messages/read`);
-};
+  return (sessionId: number, socket: APISocket) =>
+    socket.post(`${sessionUrl}/${sessionId}/messages/read`);
+};*/
 
 export const clearMessagesDecorator = (sessionUrl: string) => {
-  return (sessionId: number) =>
-    SocketService.delete(`${sessionUrl}/${sessionId}/messages`);
+  return (sessionId: number, socket: APISocket) =>
+    socket.delete(`${sessionUrl}/${sessionId}/messages`);
 };
