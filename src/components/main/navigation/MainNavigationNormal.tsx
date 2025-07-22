@@ -18,7 +18,7 @@ const MainNavigationNormal: React.FC<MainNavigationNormalProps> = ({
   const login = useSession();
   const socket = useSocket();
   return (
-    <div className="item right">
+    <div className="item right" role="menu">
       {parseMenuItems(primaryRoutes, login, undefined, false)}
 
       <SectionedDropdown className="top right">

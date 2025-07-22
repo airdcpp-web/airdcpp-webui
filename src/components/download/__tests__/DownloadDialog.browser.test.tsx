@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { waitForElementToBeRemoved, waitFor, fireEvent } from '@testing-library/react';
+import { waitFor, fireEvent } from '@testing-library/react';
 
 import { getMockServer } from 'airdcpp-apisocket/tests';
 
@@ -161,8 +161,7 @@ describe('DownloadDialog', () => {
     expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
 
     // Open browse dialog
-    await waitFor(() => queryByText(/Loading items/i));
-    await waitForElementToBeRemoved(() => queryByText(/Loading items/i));
+    await waitForData(/Loading items/i, queryByText);
 
     // Close it
     await modalController.closeDialogButton('Cancel');

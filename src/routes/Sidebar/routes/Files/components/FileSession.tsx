@@ -25,7 +25,7 @@ export interface FileSessionProps
 const FileSession: React.FC<FileSessionProps> = ({ session, sessionT }) => {
   useActiveSession(session, ViewFileAPIActions, ViewFileStoreSelector);
   const scrollPositionHandler = useSessionStoreProperty(
-    (state) => state.filelists.scroll,
+    (state) => state.viewFiles.scroll,
   );
 
   if (!session.content_ready) {

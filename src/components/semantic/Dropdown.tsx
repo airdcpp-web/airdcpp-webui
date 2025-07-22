@@ -123,6 +123,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       selection,
       size,
       menuElementClassName,
+      children,
     } = this.props;
 
     const className = classNames(
@@ -151,8 +152,8 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
         <DropdownCaption icon={captionIcon}>{!!caption ? caption : icon}</DropdownCaption>
         {leftIcon || !caption ? null : icon}
 
-        <div className={classNames('menu', menuElementClassName)}>
-          {this.state.visible ? this.props.children : <div className="item" />}
+        <div className={classNames('menu', menuElementClassName)} role="menu">
+          {this.state.visible ? children : <div className="item" />}
         </div>
       </div>
     );

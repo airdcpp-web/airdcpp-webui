@@ -1,5 +1,5 @@
-import { afterEach, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
-import { RenderResult, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { RenderResult, waitFor } from '@testing-library/react';
 
 import { getMockServer } from 'airdcpp-apisocket/tests';
 
@@ -29,6 +29,7 @@ import {
 } from '@/components/main/notifications/effects/NotificationManager';
 import { LocalSettings } from '@/constants/LocalSettingConstants';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
+import { waitForData } from '@/tests/helpers/test-helpers';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
@@ -123,10 +124,6 @@ describe('Private messages', () => {
     return { ...commonData, ...renderData, ...other };
   };
 
-  beforeAll(() => {
-    localStorage.setItem('debug', 'true');
-  });
-
   beforeEach(() => {
     server = getMockServer();
   });
@@ -137,11 +134,8 @@ describe('Private messages', () => {
   });
 
   const waitLoaded = async (queryByText: RenderResult['queryByText']) => {
-    await waitFor(() => queryByText(/Loading sessions/i));
-    await waitForElementToBeRemoved(() => queryByText(/Loading sessions/i));
-
-    await waitFor(() => queryByText(/Loading messages/i));
-    await waitForElementToBeRemoved(() => queryByText(/Loading messages/i));
+    await waitForData(/Loading sessions/i, queryByText);
+    await waitForData(/Loading messages/i, queryByText);
   };
 
   test('should load messages', async () => {
@@ -174,7 +168,11 @@ describe('Private messages', () => {
 
     await waitLoaded(queryByText);
 
-    expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat1.id);
+    await waitFor(() =>
+      expect(sessionStore.getState().privateChats.activeSessionId).toEqual(
+        PrivateChat1.id,
+      ),
+    );
 
     // Send message for the active session
     mockStoreListeners.privateChat.chatMessage.fire(

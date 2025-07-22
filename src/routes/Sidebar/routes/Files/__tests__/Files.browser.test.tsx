@@ -1,5 +1,10 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
-import { fireEvent, RenderResult, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 
 import { getMockServer } from 'airdcpp-apisocket/tests';
 
@@ -128,7 +133,11 @@ describe('Viewed files', () => {
 
   const selectSession = async (
     sessionLabel: string,
-    { getByLabelText, getByText }: Pick<RenderResult, 'getByLabelText' | 'getByText'>,
+    {
+      getByLabelText,
+      getByText,
+      getByRole,
+    }: Pick<RenderResult, 'getByLabelText' | 'getByText' | 'getByRole'>,
   ) => {
     const userEvent = setupUserEvent();
     const menuTrigger = getByLabelText('Session menu');
@@ -138,6 +147,8 @@ describe('Viewed files', () => {
     const sessionMenuItem = getByText(sessionLabel);
     expect(sessionMenuItem).toBeTruthy();
     await userEvent.click(sessionMenuItem!);
+
+    await waitForElementToBeRemoved(() => getByRole('menu'));
   };
 
   const waitText = async (text: string, getByText: RenderResult['getByText']) => {
@@ -145,15 +156,17 @@ describe('Viewed files', () => {
   };
 
   test('should load file content', async () => {
-    // fetchMocker.mockOnce(ViewedFileLongContent);
-
-    const { getByText, getByLabelText, socket } = await renderLayout();
+    const { getByText, getByLabelText, getByRole, socket } = await renderLayout();
 
     // Check content
     await waitText('This is long text file', getByText);
 
     // Open a different session
-    await selectSession(ViewedFileNfoResponse.name, { getByLabelText, getByText });
+    await selectSession(ViewedFileNfoResponse.name, {
+      getByLabelText,
+      getByText,
+      getByRole,
+    });
 
     // Check content
     await waitText('This is NFO', getByText);
@@ -162,23 +175,42 @@ describe('Viewed files', () => {
   });
 
   test('should remember scroll position', async () => {
-    const { getByText, getByLabelText, getByRole, socket } = await renderLayout();
+    const { getByText, getByLabelText, getByRole, socket, sessionStore } =
+      await renderLayout();
 
     await waitText('This is long text file', getByText);
 
     const scrollContainer = getByRole('article');
 
+    //scrollContainer.scrollTo({
+    //  top: 200,
+    //});
     fireEvent.scroll(scrollContainer, { target: { scrollTop: 200 } });
 
     await waitFor(() => expect(scrollContainer.scrollTop).toBe(200));
+    await waitFor(() =>
+      expect(
+        sessionStore
+          .getState()
+          .viewFiles.scroll.getScrollData(ViewedFileTextLongResponse.id),
+      ).toBe(200),
+    );
 
     // Switch to another session
-    await selectSession(ViewedFileNfoResponse.name, { getByLabelText, getByText });
+    await selectSession(ViewedFileNfoResponse.name, {
+      getByLabelText,
+      getByText,
+      getByRole,
+    });
     await waitText('This is NFO', getByText);
     expect(scrollContainer.scrollTop).toBe(0);
 
     // Switch back to the original one, the scroll position should remain
-    await selectSession(ViewedFileTextLongResponse.name, { getByLabelText, getByText });
+    await selectSession(ViewedFileTextLongResponse.name, {
+      getByLabelText,
+      getByText,
+      getByRole,
+    });
     await waitText('This is long text file', getByText);
     await waitFor(() => expect(scrollContainer.scrollTop).toBe(200));
 

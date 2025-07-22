@@ -13,13 +13,14 @@ export const createSessionScrollSlice = () => {
       positions: {} as SessionScrollSlice['positions'],
 
       getScrollData: (entityId: API.IdType) => {
-        const ret = get().positions[entityId];
-        //console.log(`[SCROLL] Getting scroll position ${ret} for session ${entityId}`);
+        const positions = get().positions;
+        const ret = positions[entityId];
+        // console.log(`[SCROLL] Getting scroll position ${ret} for session ${entityId}`);
         return ret;
       },
 
       setScrollData: (data: number, entityId: API.IdType) => {
-        //console.log(`[SCROLL] Setting scroll position ${data} for session ${entityId}`);
+        // console.log(`[SCROLL] Setting scroll position ${data} for session ${entityId}`);
         set(
           produce<SessionScrollSlice>((state) => {
             state.positions[entityId] = data;

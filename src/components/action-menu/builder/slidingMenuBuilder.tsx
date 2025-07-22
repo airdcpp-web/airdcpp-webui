@@ -98,7 +98,7 @@ const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
           classNames={className}
           timeout={{ enter: 200, exit: 200 }}
         >
-          <div ref={ref} className="ui text menu vertical table-items">
+          <div ref={ref} className="ui text menu vertical table-items" role="menu">
             {activeSubmenu ? (
               <>
                 <LinkButton

@@ -43,7 +43,7 @@ const Loader: React.FC<LoaderProps> = ({
 
   if (inline) {
     return (
-      <div className="inline-loader">
+      <div role="progressbar" className="inline-loader">
         <div className={style} />
         {content}
       </div>
@@ -55,14 +55,20 @@ const Loader: React.FC<LoaderProps> = ({
       <div className="ui dimmer page visible active">
         <div className="content">
           <div className="center">
-            <div className={style}>{content}</div>
+            <div role="progressbar" className={style}>
+              {content}
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  return <div className={style}>{content}</div>;
+  return (
+    <div role="progressbar" className={style}>
+      {content}
+    </div>
+  );
 };
 
 export default Loader;
