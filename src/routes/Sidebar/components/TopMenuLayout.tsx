@@ -29,7 +29,9 @@ const SessionDropdown = <SessionT extends UI.SessionItemBase>({
     (state) => sessionStoreSelector(state).getTotalUrgencies,
   );
   return (
-    <SectionedDropdown triggerIcon={<MenuIcon urgencies={getTotalUrgencies()} />}>
+    <SectionedDropdown
+      triggerIcon={<MenuIcon label="Session menu" urgencies={getTotalUrgencies()} />}
+    >
       <MenuSection caption={translate('New', t, UI.Modules.COMMON)}>
         {newButton}
       </MenuSection>

@@ -19,8 +19,17 @@ import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
 import { SessionStoreContext } from '@/context/SessionStoreContext';
 import { AppStoreContext } from '@/context/AppStoreContext';
 
-const BaseComponent: React.FC<PropsWithChildren<{ instanceId: number }>> = ({
+export const VIEW_SCROLLABLE = '100%';
+export const VIEW_FIXED_HEIGHT = '600px';
+
+interface BaseComponentProps {
+  instanceId: number;
+  viewType: string;
+}
+
+const BaseComponent: React.FC<PropsWithChildren<BaseComponentProps>> = ({
   instanceId,
+  viewType,
   children,
 }) => {
   const modalNodeId = appendInstanceId(MODAL_NODE_ID, instanceId);
@@ -29,7 +38,7 @@ const BaseComponent: React.FC<PropsWithChildren<{ instanceId: number }>> = ({
       <section
         className="ui dimmable blurring minimal"
         id="container-main"
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: viewType, width: '100%' }}
       >
         {children}
       </section>
@@ -46,6 +55,7 @@ type UIBaseWrapperProps = PropsWithChildren<{
   instanceId: number;
   appStore: StoreApi<UI.AppStore>;
   wrapper?: React.ComponentType;
+  viewType: string;
 }>;
 
 export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
@@ -53,6 +63,7 @@ export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
   instanceId,
   appStore,
   wrapper: Wrapper = SimpleWrapper,
+  viewType,
   children,
 }) => {
   return (
@@ -62,7 +73,9 @@ export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
           <I18nextProvider i18n={i18n}>
             <AppStoreContext.Provider value={appStore}>
               <Wrapper>
-                <BaseComponent instanceId={instanceId}>{children}</BaseComponent>
+                <BaseComponent viewType={viewType} instanceId={instanceId}>
+                  {children}
+                </BaseComponent>
               </Wrapper>
             </AppStoreContext.Provider>
           </I18nextProvider>

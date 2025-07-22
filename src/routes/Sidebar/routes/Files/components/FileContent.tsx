@@ -49,9 +49,9 @@ const FileContent: React.FC<FileContentProps> = memo(function FileContent({
   }
 
   return (
-    <div ref={scrollable} className="content">
+    <article ref={scrollable} className="content">
       {child}
-    </div>
+    </article>
   );
 });
 

@@ -9,10 +9,8 @@ export const useRestoreScroll = (
   const [isReady, setIsReady] = useState(false);
   const scrollable = useRef<HTMLDivElement | null>(null);
   const onScroll = (evt: UIEvent) => {
-    scrollPositionHandler.setScrollData(
-      (evt.target as HTMLElement).scrollTop,
-      session.id,
-    );
+    const scrollPosition = (evt.target as HTMLElement).scrollTop;
+    scrollPositionHandler.setScrollData(scrollPosition, session.id);
   };
 
   const onScrollableContentReady = () => {

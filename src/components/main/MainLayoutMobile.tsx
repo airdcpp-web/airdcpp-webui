@@ -32,6 +32,7 @@ const MainLayoutMobile: React.FC<MainLayoutProps> = memo(
           <SiteHeader>
             <div className="right">
               <MenuIcon
+                label="Mobile menu"
                 urgencies={urgencies}
                 onClick={() => {
                   setMenuVisible(true);

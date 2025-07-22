@@ -14,13 +14,17 @@ import { MODAL_PAGE_DIMMER_ID } from '@/components/semantic/effects/useModal';
 import { createFormatter } from '@/utils/Formatter';
 import { getMockI18n } from '../mocks/mock-i18n';
 import { appendInstanceId, generateInstanceId } from '@/context/InstanceContext';
-import { BaseTestWrapper, SessionTestWrapper } from './test-containers';
+import { BaseTestWrapper, SessionTestWrapper, VIEW_SCROLLABLE } from './test-containers';
 
 import * as UI from '@/types/ui';
 import { StoreApi } from 'zustand';
 import { createAppStore } from '@/stores/app';
 
-export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentType) => {
+export const renderBaseNode = (
+  node: React.ReactNode,
+  viewType = VIEW_SCROLLABLE,
+  wrapper?: React.ComponentType,
+) => {
   // Create container
   const container = document.createElement('div');
 
@@ -43,6 +47,7 @@ export const renderBaseNode = (node: React.ReactNode, wrapper?: React.ComponentT
         formatter={formatter}
         instanceId={instanceId}
         appStore={appStore}
+        viewType={viewType}
         {...props}
       />
     ),
@@ -65,6 +70,7 @@ interface DataProps {
 export const renderDataNode = (
   node: React.ReactNode,
   { session, sessionStore, socket }: DataProps,
+  viewType = VIEW_SCROLLABLE,
 ) => {
   const container = ({ children }: React.PropsWithChildren) => (
     <SessionTestWrapper session={session} socket={socket} sessionStore={sessionStore}>
@@ -72,7 +78,7 @@ export const renderDataNode = (
     </SessionTestWrapper>
   );
 
-  const testHelpers = renderBaseNode(node, container);
+  const testHelpers = renderBaseNode(node, viewType, container);
 
   return {
     ...testHelpers,
@@ -82,14 +88,15 @@ export const renderDataNode = (
 
 interface RouteRenderOptions {
   routerProps?: MemoryRouterOpts;
+  viewType?: string;
 }
 
 export const renderBasicRoutes = (routes: RouteObject[], options: RouteRenderOptions) => {
-  const { routerProps = { initialEntries: ['/'] } } = options;
+  const { viewType, routerProps = { initialEntries: ['/'] } } = options;
 
   const router = createMemoryRouter(routes, routerProps);
 
-  const testHelpers = renderBaseNode(<RouterProvider router={router} />);
+  const testHelpers = renderBaseNode(<RouterProvider router={router} />, viewType);
   return {
     ...testHelpers,
     router,
@@ -103,11 +110,15 @@ export const renderDataRoutes = (
   dataProps: DataProps,
   options: DataRouteRenderOptions,
 ) => {
-  const { routerProps = { initialEntries: ['/'] } } = options;
+  const { viewType, routerProps = { initialEntries: ['/'] } } = options;
 
   const router = createMemoryRouter(routes, routerProps);
 
-  const testHelpers = renderDataNode(<RouterProvider router={router} />, dataProps);
+  const testHelpers = renderDataNode(
+    <RouterProvider router={router} />,
+    dataProps,
+    viewType,
+  );
   return {
     ...testHelpers,
     router,

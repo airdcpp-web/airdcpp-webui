@@ -7,11 +7,12 @@ import IconConstants from '@/constants/IconConstants';
 interface MenuIconProps extends Pick<CountLabelProps, 'urgencies'> {
   className?: string;
   onClick?: (evt: React.SyntheticEvent<any>) => void;
+  label: string;
 }
 
 // A plain menu icon trigger for dropdowns (with urgency label support)
-const MenuIcon: React.FC<MenuIconProps> = ({ urgencies, className, onClick }) => (
-  <div className={classNames('icon-menu', className)}>
+const MenuIcon: React.FC<MenuIconProps> = ({ urgencies, className, onClick, label }) => (
+  <div className={classNames('icon-menu', className)} aria-label={label}>
     <Icon icon={IconConstants.MENU} onClick={onClick} />
     <CountLabel urgencies={urgencies} size="mini" empty={true} circular={true} />
   </div>

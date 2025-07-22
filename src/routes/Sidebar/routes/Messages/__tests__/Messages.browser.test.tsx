@@ -28,6 +28,7 @@ import {
   NotificationEventEmitter,
 } from '@/components/main/notifications/effects/NotificationManager';
 import { LocalSettings } from '@/constants/LocalSettingConstants';
+import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
@@ -116,6 +117,7 @@ describe('Private messages', () => {
 
     const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/messages'] },
+      viewType: VIEW_FIXED_HEIGHT,
     });
 
     return { ...commonData, ...renderData, ...other };

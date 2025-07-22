@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 
-export const ViewedFileLong = `
+export const ViewedFileLongContent = `
+This is long text file
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1
 2
@@ -51,4 +52,8 @@ export const ViewedFileLong = `
 48
 49
 50
+`;
+
+export const ViewedFileNfoContent = `
+This is NFO
 `;
