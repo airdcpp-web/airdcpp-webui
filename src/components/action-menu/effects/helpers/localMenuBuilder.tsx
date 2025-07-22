@@ -39,7 +39,7 @@ const actionToActionMenuItem = <
         <Trans
           i18nKey={toActionI18nKey(
             action,
-            parseTranslationModules(menu.moduleData.moduleId),
+            parseTranslationModules(menu.moduleData.moduleId), // TODO: nest under subId
           )}
           defaults={action.displayName}
         >

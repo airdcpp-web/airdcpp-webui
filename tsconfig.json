@@ -19,9 +19,6 @@
       "@/*": [
         "src/*",
       ],
-      "@resources/*": [
-        "resources/*",
-      ],
     },
     "experimentalDecorators": true,
     "esModuleInterop": true,

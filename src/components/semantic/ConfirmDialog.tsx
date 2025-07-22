@@ -7,10 +7,10 @@ import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
 
 import Icon, { IconType } from '@/components/semantic/Icon';
-import { ModalRouteCloseContext } from '@/decorators/ModalRouteDecorator';
 import IconConstants from '@/constants/IconConstants';
 import { useModal } from './effects/useModal';
 import Button from './Button';
+import { useModalCloseContext } from '@/context/ModalCloseContext';
 
 type ApproveHandler = () => Promise<void>;
 type RejectHandler = (error: Error) => void;
@@ -32,7 +32,7 @@ export type ConfirmDialogProps = ConfirmDialogOptions &
   }>;
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = (props) => {
-  const closeContext = React.useContext(ModalRouteCloseContext);
+  const closeContext = useModalCloseContext();
 
   const onDeny = () => {
     if (props.onRejected) {

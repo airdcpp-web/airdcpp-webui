@@ -52,7 +52,7 @@ export const useActivityTracker = (socket: APISocket) => {
       setUserInactive();
     } else {
       // Notify API that the user is still active
-      ActivityAPIActions.sendActivity();
+      ActivityAPIActions.sendActivity(socket);
     }
   };
 
@@ -65,7 +65,7 @@ export const useActivityTracker = (socket: APISocket) => {
     // Change the away state instantly when the user is known to be active again on the system
     // (window focus isn't relevant for this)
     if (activityStore.away === API.AwayEnum.IDLE) {
-      ActivityAPIActions.sendActivity();
+      ActivityAPIActions.sendActivity(socket);
     }
 
     // Mouse over a background window? Don't mark sessions as read
@@ -86,7 +86,7 @@ export const useActivityTracker = (socket: APISocket) => {
     // Detect system wakeup and reconnect the socket then (the old connection is most likely not alive)
     const systemAliveInterval = window.setInterval(checkAlive, 2000);
 
-    ActivityAPIActions.sendActivity();
+    ActivityAPIActions.sendActivity(socket);
 
     return () => {
       window.removeEventListener('mousemove', setActive);

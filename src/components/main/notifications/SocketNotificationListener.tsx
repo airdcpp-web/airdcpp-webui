@@ -21,9 +21,9 @@ import {
 import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import HubConstants from '@/constants/HubConstants';
 
-import { useSessionStore } from '@/context/SessionStoreContext';
+import { useSessionStoreApi } from '@/context/SessionStoreContext';
 import { LocalSettings } from '@/constants/LocalSettingConstants';
-import { useAppStore } from '@/context/AppStoreContext';
+import { useAppStoreApi } from '@/context/AppStoreContext';
 
 const getSeverityStr = (severity: Severity) => {
   switch (severity) {
@@ -87,9 +87,8 @@ type Props = SocketNotificationListenerProps & SocketSubscriptionDecoratorChildP
 const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
-  const sessionStore = useSessionStore();
-  const appStore = useAppStore();
+  const sessionStoreApi = useSessionStoreApi();
+  const appStoreApi = useAppStoreApi();
 
   const translateNotification = (
     text: string,
@@ -121,7 +120,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
             },
     };
 
-    const { settings } = appStore;
+    const { settings } = appStoreApi.getState();
     if (severity === Severity.NOTIFY) {
       NotificationActions.info(notification);
     } else if (
@@ -142,8 +141,21 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     }
   };
 
+  const skipSessionNotification = (
+    sessionId: API.IdType,
+    sessionSlice: UI.SessionSlice<UI.SessionType>,
+  ) => {
+    const isActiveSession = sessionSlice.activeSessionId === sessionId;
+    const hasFocus = document.hasFocus();
+    return isActiveSession && hasFocus;
+  };
+
   const onViewFileDownloaded = (file: API.ViewFile) => {
     if (!file.content_ready) {
+      return;
+    }
+
+    if (skipSessionNotification(file.id, sessionStoreApi.getState().viewFiles)) {
       return;
     }
 
@@ -167,12 +179,12 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     const hubId = message.from.hub_session_id;
     if (
       message.is_read ||
-      (sessionStore.hubs.activeSessionId === hubId && document.hasFocus())
+      skipSessionNotification(hubId, sessionStoreApi.getState().hubs)
     ) {
       return;
     }
 
-    if (!notifyHubMessage(message, appStore, sessionStore)) {
+    if (!notifyHubMessage(message, appStoreApi.getState(), sessionStoreApi.getState())) {
       return;
     }
 
@@ -193,12 +205,12 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     const cid = message.reply_to!.cid;
     if (
       message.is_read ||
-      (sessionStore.privateChats.activeSessionId === cid && document.hasFocus())
+      skipSessionNotification(cid, sessionStoreApi.getState().privateChats)
     ) {
       return;
     }
 
-    if (!notifyPrivateMessage(message, appStore)) {
+    if (!notifyPrivateMessage(message, appStoreApi.getState())) {
       return;
     }
 
@@ -216,7 +228,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   };
 
   const onBundleStatus = (bundle: API.QueueBundle) => {
-    const { settings } = appStore;
+    const { settings } = appStoreApi.getState();
     if (!settings.getValue(LocalSettings.NOTIFY_BUNDLE_STATUS)) {
       return;
     }

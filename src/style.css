@@ -6,26 +6,7 @@ body {
   background: #eeeeee;
 }
 
-#background-wrapper {
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.site-header .header-content {
-  width: 100%;
-  display: flex;
-}
-
-.site-header .right {
-  display: flex;
-  margin-left: auto !important;
-}
-
-section#container-main,
-.main-layout,
-#authenticated-app,
-.pusher,
-.ui.site-content {
+section#container-main {
   height: 100dvh;
 }
 

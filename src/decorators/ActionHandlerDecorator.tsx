@@ -1,14 +1,10 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import * as React from 'react';
 
 import { useNavigate, useLocation, Location } from 'react-router';
 
 import * as UI from '@/types/ui';
 
-import {
-  ModalCloseContext,
-  ModalRouteCloseContext,
-} from '@/decorators/ModalRouteDecorator';
 import { useTranslation } from 'react-i18next';
 import { translate } from '@/utils/TranslationUtils';
 
@@ -16,6 +12,7 @@ import NotificationActions from '@/actions/NotificationActions';
 import { ActionData, ActionDialog, suffixActionI18nKey } from './components/ActionDialog';
 import { useSocket } from '@/context/SocketContext';
 import { useSessionStore } from '@/context/SessionStoreContext';
+import { ModalCloseContext, useModalCloseContext } from '@/context/ModalCloseContext';
 
 interface ActionHandlerDecoratorProps<
   ItemDataT extends UI.ActionDataValueType,
@@ -39,9 +36,6 @@ export interface ActionHandlerDecoratorChildProps<
   location: Location;
 }
 
-const isSidebarAction = (actionId: string) =>
-  actionId === 'browse' || actionId === 'message';
-
 interface HandleAction<
   ItemDataT extends UI.ActionDataValueType,
   EntityT extends UI.ActionEntityValueType,
@@ -62,9 +56,6 @@ const handleAction = async <
   ...actionHandlerProps
 }: HandleAction<ItemDataT, EntityT>) => {
   const { action, itemData, entity } = actionData;
-  if (!!closeModal && isSidebarAction(action.id)) {
-    closeModal();
-  }
 
   return new Promise((resolve, reject) => {
     setTimeout(async () => {
@@ -136,7 +127,7 @@ const ActionHandlerDecorator = <
     EntityT
   > | null>(null);
   const { t } = useTranslation();
-  const closeModal = useContext(ModalRouteCloseContext);
+  const closeModal = useModalCloseContext();
   const location = useLocation();
   const navigate = useNavigate();
   const sessionStore = useSessionStore();

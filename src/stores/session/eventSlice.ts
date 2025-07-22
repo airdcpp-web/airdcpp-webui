@@ -17,19 +17,32 @@ import { Lens, lens } from '@dhmk/zustand-lens';
 import { createBasicScrollSlice } from './decorators/scrollSlice';
 import { EventAPIActions } from '@/actions/store/EventActions';
 
-const toCacheMessage = (message: API.StatusMessage): UI.MessageListItem => {
+interface Readable {
+  setRead?: UI.BasicReadHandler;
+}
+
+export const toEventCacheMessage = (message: API.StatusMessage): UI.MessageListItem => {
   return {
     log_message: message,
   };
 };
 
 const createEventSlice = () => {
-  const createSlice: Lens<UI.EventSlice, UI.SessionStore> = (set, get, api) => {
+  const createSlice: Lens<UI.EventSlice & Readable, UI.SessionStore> = (
+    set,
+    get,
+    api,
+  ) => {
     const checkReadState = (cacheInfoNew: API.StatusMessageCounts) => {
       if (get().viewActive && api.getState().activity.userActive) {
-        cacheInfoNew = checkUnreadCacheInfo(cacheInfoNew, () =>
-          EventAPIActions.setRead(),
-        ) as API.StatusMessageCounts;
+        cacheInfoNew = checkUnreadCacheInfo(cacheInfoNew, () => {
+          const readCallback = get().setRead;
+          if (readCallback) {
+            readCallback();
+          } else {
+            console.error('Session store not initialized');
+          }
+        }) as API.StatusMessageCounts;
       }
 
       return cacheInfoNew;
@@ -39,12 +52,11 @@ const createEventSlice = () => {
       logMessages: null,
       messageCacheInfo: undefined,
       viewActive: false,
+      isInitialized: false,
+
+      setRead: undefined,
 
       scroll: createBasicScrollSlice(),
-
-      isInitialized: () => {
-        return get().logMessages !== undefined;
-      },
 
       setViewActive: (active: boolean) => {
         set({
@@ -55,9 +67,10 @@ const createEventSlice = () => {
       onMessagesFetched: (messages: API.StatusMessage[]) => {
         set({
           logMessages: mergeCacheMessages(
-            messages.map(toCacheMessage),
+            messages.map(toEventCacheMessage),
             get().logMessages || undefined,
           ),
+          isInitialized: true,
         });
       },
 
@@ -67,7 +80,10 @@ const createEventSlice = () => {
         }
 
         set({
-          logMessages: pushMessage(toCacheMessage(data), get().logMessages || undefined),
+          logMessages: pushMessage(
+            toEventCacheMessage(data),
+            get().logMessages || undefined,
+          ),
         });
       },
 
@@ -88,6 +104,12 @@ const createEventSlice = () => {
 
         return toUrgencyMap(messageCacheInfo.unread, LogMessageUrgencies);
       },
+
+      setReadHandler: (handler: UI.BasicReadHandler) => {
+        set(() => ({
+          setRead: handler,
+        }));
+      },
     };
 
     return slice;
@@ -102,12 +124,20 @@ export const initEventStore = (
 ) => {
   if (login.hasAccess(API.AccessEnum.EVENTS_VIEW)) {
     const url = EventConstants.MODULE_URL;
+
     socket.addListener(url, EventConstants.MESSAGE, sessionStore.events.onLogMessage);
     socket.addListener(
       url,
       EventConstants.COUNTS,
       sessionStore.events.onMessageCountsReceived,
     );
+
+    const { events } = sessionStore;
+    events.setReadHandler(() => {
+      EventAPIActions.setRead(socket).catch((error) => {
+        console.error(`Failed to mark events as read`, error);
+      });
+    });
   }
 };
 

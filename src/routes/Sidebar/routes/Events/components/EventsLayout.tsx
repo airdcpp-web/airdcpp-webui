@@ -18,17 +18,20 @@ import { EventAPIActions } from '@/actions/store/EventActions';
 
 import '../style.css';
 
+import { useSocket } from '@/context/SocketContext';
+
 const SystemLog: React.FC = memo(
   function SystemLog() {
     const sessionStore = useSessionStore();
     const setViewActive = useSessionStoreProperty((state) => state.events.setViewActive);
+    const socket = useSocket();
 
     useEffect(() => {
       setViewActive(true);
-      EventAPIActions.setRead();
+      EventAPIActions.setRead(socket);
 
-      if (!sessionStore.events.isInitialized()) {
-        EventAPIActions.fetchMessages(sessionStore);
+      if (!sessionStore.events.isInitialized) {
+        EventAPIActions.fetchMessages(sessionStore, socket);
       }
 
       return () => setViewActive(false);

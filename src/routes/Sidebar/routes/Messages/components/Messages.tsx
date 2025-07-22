@@ -43,7 +43,7 @@ const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = 
       newLayout={MessageNew}
       sessionT={sessionT}
       remoteMenuId="private_chat"
-      {...UserItemHandlerDecorator(['browse', 'ignore', 'unignore'])}
+      {...UserItemHandlerDecorator(['browse', 'ignore', 'unignore', 'grant'])}
       {...other}
     />
   );

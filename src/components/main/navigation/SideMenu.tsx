@@ -2,20 +2,20 @@ import { useCallback } from 'react';
 
 import IconPanel from '@/components/main/navigation/IconPanel';
 import { matchPath, Location, useNavigate } from 'react-router';
-import {
-  secondaryRoutes,
-  parseMenuItems,
-  RouteItemClickHandler,
-  HOME_URL,
-} from '@/routes/Routes';
+import { parseMenuItems, RouteItemClickHandler, HOME_URL } from '@/routes/Routes';
 import { useSession } from '@/context/SessionContext';
+import { MainLayoutProps } from '../AuthenticatedApp';
 
-interface SideMenuProps {
+interface SideMenuProps extends Pick<MainLayoutProps, 'sidebarRoutes'> {
   location: Location;
   previousLocation?: Location;
 }
 
-const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
+const SideMenu: React.FC<SideMenuProps> = ({
+  location,
+  previousLocation,
+  sidebarRoutes,
+}) => {
   const navigate = useNavigate();
   const login = useSession();
 
@@ -41,7 +41,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ location, previousLocation }) => {
     [location],
   );
 
-  const menuItems = parseMenuItems(secondaryRoutes, login, onClick);
+  const menuItems = parseMenuItems(sidebarRoutes, login, onClick);
   return (
     <div id="side-menu">
       {menuItems.length > 0 && (

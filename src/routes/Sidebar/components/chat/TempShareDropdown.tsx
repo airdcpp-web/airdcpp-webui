@@ -116,11 +116,17 @@ export default DataProviderDecorator<TempShareDropdownProps, DataProps>(
       files: ShareConstants.TEMP_SHARES_URL,
     },
     onSocketConnected: (addSocketListener, { refetchData }) => {
-      addSocketListener(ShareConstants.MODULE_URL, ShareConstants.TEMP_ITEM_ADDED, () =>
-        refetchData(),
+      addSocketListener(
+        ShareConstants.MODULE_URL,
+        ShareConstants.TEMP_ITEM_ADDED,
+        () => refetchData(),
+        API.AccessEnum.SETTINGS_VIEW,
       );
-      addSocketListener(ShareConstants.MODULE_URL, ShareConstants.TEMP_ITEM_REMOVED, () =>
-        refetchData(),
+      addSocketListener(
+        ShareConstants.MODULE_URL,
+        ShareConstants.TEMP_ITEM_REMOVED,
+        () => refetchData(),
+        API.AccessEnum.SETTINGS_VIEW,
       );
     },
     loaderText: null,

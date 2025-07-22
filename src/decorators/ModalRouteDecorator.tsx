@@ -1,3 +1,4 @@
+import { ModalRouteCloseContext } from '@/context/ModalCloseContext';
 import * as React from 'react';
 import {
   Location,
@@ -8,16 +9,6 @@ import {
   useNavigate,
   useParams,
 } from 'react-router';
-
-export type ModalCloseContext = () => void;
-
-export interface ModalCloseContextProps {
-  closeModal: ModalCloseContext | undefined;
-}
-
-export const ModalRouteCloseContext = React.createContext<ModalCloseContext | undefined>(
-  undefined,
-);
 
 export interface ModalRouteDecoratorChildProps {
   location: Location;

@@ -5,14 +5,14 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { RouteRenderResult } from './test-containers';
-import { expect } from 'vitest';
+import { expect, Mock } from 'vitest';
+import { BasicRouteRenderResult } from '../render/test-renderers';
 
 export const DataLoaderText = /Loading data.*/;
 
 export const waitForUrl = async (
   pathName: string,
-  router: RouteRenderResult['router'],
+  router: BasicRouteRenderResult['router'],
 ) => {
   await waitFor(() => {
     expect(router.state.location.pathname).toEqual(pathName);
@@ -29,4 +29,22 @@ export const waitForData = async (
 
 export const clickButton = (caption: string, getByRole: RenderResult['getByRole']) => {
   return expect(fireEvent.click(getByRole('button', { name: caption }))).toBeTruthy();
+};
+
+export const clickMenuItem = (caption: string, getByRole: RenderResult['getByRole']) => {
+  return fireEvent.click(getByRole('menuitem', { name: caption }));
+};
+
+export const expectResponseToMatchSnapshot = (
+  mock: Mock /*data: { callback_id: any }*/,
+) => {
+  // expect(mock.mock.calls.length).toBe(1);
+
+  expect(mock).toHaveBeenCalledTimes(1);
+
+  const response = mock.mock.calls[0][0];
+
+  const { callback_id, ...other } = response;
+
+  expect(other).toMatchSnapshot();
 };

@@ -109,7 +109,7 @@
       "sizeLimitsName": "Storleksbegränsning"
     },
     "actionsCaption": "Åtgärder...",
-    "searchActions": "Search actions",
+    "searchActions": "Sökåtgärder",
     "resetAll": "Återställ alla",
     "user": "Användare",
     "hubs": "Hubbar",
@@ -203,7 +203,7 @@
     "addFavoriteHub": "Lägg till favorithubb",
     "editFavoriteHub": "Redigera favorithubb",
     "actionsCaption": "Åtgärder...",
-    "favoriteHubActions": "Favorite hub actions",
+    "favoriteHubActions": "Favorithubbsåtgärder",
     "form": {
       "genericName": "Hubbegenskaper",
       "nameName": "Namn",
@@ -265,9 +265,9 @@
   "common": {
     "actions": {
       "copy": "Kopiera",
-      "copyPath": "Copy path",
-      "copySize": "Copy size",
-      "copyTth": "Copy TTH",
+      "copyPath": "Kopiera sökväg",
+      "copySize": "Kopiera storlek",
+      "copyTth": "Kopiera TTH",
       "download": "Ladda ned",
       "downloadTo": "Ladda ned till...",
       "findNfo": "Sök efter NFO-fil",
@@ -287,9 +287,9 @@
       "notifications": {
         "ignoreUserSuccess": "Användaren {{item.nicks}} har lagts till i ignorerade användare",
         "unignoreUserSuccess": "Användaren {{item.nicks}} har tagits bort från ignorerade användare",
-        "copyPathSuccess": "Path was copied to clipboard",
-        "copySizeSuccess": "Size was copied to clipboard",
-        "copyTTHSuccess": "TTH was copied to clipboard",
+        "copyPathSuccess": "Sökvägen har kopierats till urklippet",
+        "copySizeSuccess": "Storleken har kopierats till urklippet",
+        "copyTTHSuccess": "TTH har kopierats till urklippet",
         "copyMagnetSuccess": "Magnet-länken har kopierats till urklipp",
         "copySuccess": "Texten har kopierats till urklippet"
       },
@@ -399,9 +399,9 @@
     "finishedFull": "Färdiga (full)",
     "finishedPartial": "Färdiga (delvis)",
     "shareAndQueue": "Utdelning och kö",
-    "shareQueueAndFinished": "Share, queue and finished",
-    "queueAndFinished": "Queue and finished",
-    "shareAndFinished": "Share and finished",
+    "shareQueueAndFinished": "Dela, kö och klar",
+    "queueAndFinished": "Kö och klar",
+    "shareAndFinished": "Dela och klar",
     "dupePaths": "Dubblettsökvägar",
     "actionsCaption": "Åtgärder...",
     "tth": "TTH",
@@ -566,7 +566,7 @@
       }
     },
     "actionsCaption": "Åtgärder...",
-    "transferActions": "Transfer actions",
+    "transferActions": "Överföringsåtgärder",
     "noActiveTransfers": "Inga aktiva överföringar"
   },
   "settings": {
@@ -577,8 +577,8 @@
       "editUser": "Redigera användare",
       "editDirectory": "Redigera katalog",
       "removeDirectory": "Ta bort katalog",
-      "addProfile": "Create new",
-      "cloneProfile": "Clone profile",
+      "addProfile": "Skapa ny",
+      "cloneProfile": "Kopiera profil",
       "browseFiles": "Bläddra filer",
       "renameProfile": "Döp om profil",
       "addPath": "Lägg till sökväg",
@@ -592,7 +592,7 @@
       "prompts": {
         "cloneProfilePlaceholder": "Ange namn",
         "cloneProfileApprove": "Skapa",
-        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
+        "cloneProfileContent": "Ange ett nytt namn för profilen (kopierar från {{item.name}})",
         "createProfilePlaceholder": "Ange namn",
         "createProfileApprove": "Skapa",
         "createProfileContent": "Ange profilens namn",
@@ -682,12 +682,12 @@
         "manualConfiguration": "{{status}} (manuell konfiguration)",
         "autoDetected": "{{status}} (detekterad automatisk)",
         "detecting": "Detekterar...",
-        "transferPort": "Transfer port",
-        "encryptedTransferPort": "Encrypted transfer port",
-        "searchUdpPort": "Search/UDP port",
-        "boundInterfaceIPv4": "Bound interface (IPv4)",
-        "boundInterfaceIPv6": "Bound interface (IPv6)",
-        "viewAll": "View all"
+        "transferPort": "Överföringsport",
+        "encryptedTransferPort": "Krypterad överföringsport",
+        "searchUdpPort": "Sök/UDP-port",
+        "boundInterfaceIPv4": "Bundet gränssnitt (IPv4)",
+        "boundInterfaceIPv6": "Bundet gränssnitt (IPv6)",
+        "viewAll": "Visa alla"
       },
       "ports": {
         "portsAutoValuesNote": "Portnummer listade på den här sidan kan åsidosättas av portmappare (om aktiverad)",
@@ -863,7 +863,7 @@
         "shareProfilesPartialNote": "Köade filer delas ut via funktionen filsamlingar/filer som inte är helt nedladdade i alla hubbar där utdelningen inte är dold, oavsett de konfigurerade utdelningsprofilerna.",
         "shareProfilesHelp": "Utdelningsprofiler tilldelas för individuella kataloger från <url>Utdelningssidan</url> .",
         "addProfile": "Lägg till profil",
-        "cloneFromAnExistingProfile": "Clone from an existing profile"
+        "cloneFromAnExistingProfile": "Kopiera från en befintlig profil"
       },
       "sharingOptions": {
         "skiplist": "Uteslutningslista"
@@ -964,8 +964,8 @@
       "update": "Uppdatera",
       "stop": "Stopp",
       "configure": "Konfigurera",
-      "enable": "Enable",
-      "disable": "Disable",
+      "enable": "Aktivera",
+      "disable": "Inaktivera",
       "prompts": {
         "installUrlPlaceholder": "Ange webbadress",
         "installUrlApprove": "Installera",

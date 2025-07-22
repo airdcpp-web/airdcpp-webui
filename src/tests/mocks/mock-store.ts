@@ -1,11 +1,22 @@
 import HubConstants from '@/constants/HubConstants';
+import { HubsListResponse } from './api/hubs';
+
 import PrivateChatConstants from '@/constants/PrivateChatConstants';
+import { PrivateChatListResponse } from './api/private-chat';
+
 import FilelistConstants from '@/constants/FilelistConstants';
+import { FilelistListResponse } from './api/filelist';
+
 import ViewFileConstants from '@/constants/ViewFileConstants';
+import { ViewedFilesListResponse } from './api/viewed-files';
+
+import EventConstants from '@/constants/EventConstants';
+import { EventCountsResponse } from './api/events';
+
+import SystemConstants from '@/constants/SystemConstants';
+import { SystemAwayStateResponse } from './api/system';
 
 import { getMockServer } from 'airdcpp-apisocket/tests';
-import EventConstants from '@/constants/EventConstants';
-import SystemConstants from '@/constants/SystemConstants';
 
 import * as UI from '@/types/ui';
 
@@ -113,4 +124,32 @@ export const addMockStoreSocketListeners = (
     activity,
     events,
   };
+};
+
+export const addMockStoreInitDataHandlers = (
+  server: ReturnType<typeof getMockServer>,
+) => {
+  server.addRequestHandler('GET', HubConstants.SESSIONS_URL, HubsListResponse);
+
+  server.addRequestHandler(
+    'GET',
+    PrivateChatConstants.SESSIONS_URL,
+    PrivateChatListResponse,
+  );
+
+  server.addRequestHandler('GET', FilelistConstants.SESSIONS_URL, FilelistListResponse);
+
+  server.addRequestHandler(
+    'GET',
+    ViewFileConstants.SESSIONS_URL,
+    ViewedFilesListResponse,
+  );
+
+  server.addRequestHandler('GET', EventConstants.COUNTS_URL, EventCountsResponse);
+
+  server.addRequestHandler(
+    'GET',
+    SystemConstants.AWAY_STATE_URL,
+    SystemAwayStateResponse,
+  );
 };

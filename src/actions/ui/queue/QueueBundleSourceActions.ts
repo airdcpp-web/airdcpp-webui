@@ -18,7 +18,7 @@ const handleRemoveBundleSource: ActionHandlerType = ({
 };
 
 export const QueueBundleSourceRemoveAction = {
-  id: 'removeBundleSource',
+  id: 'remove',
   displayName: 'Remove source',
   access: API.AccessEnum.QUEUE_EDIT,
   icon: IconConstants.REMOVE,
@@ -26,7 +26,7 @@ export const QueueBundleSourceRemoveAction = {
 };
 
 const BundleSourceActions = {
-  removeBundleSource: QueueBundleSourceRemoveAction,
+  remove: QueueBundleSourceRemoveAction,
 };
 
 export const QueueBundleSourceActionModule = {

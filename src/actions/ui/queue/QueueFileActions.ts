@@ -63,8 +63,8 @@ export const QueueFileRemoveAction = {
 
 const QueueFileActions: UI.ActionListType<API.QueueFile> = {
   search: QueueFileSearchAction,
-  searchFileAlternates: QueueFileSearchAlternatesAction,
-  removeFile: QueueFileRemoveAction,
+  searchAlternates: QueueFileSearchAlternatesAction,
+  remove: QueueFileRemoveAction,
 };
 
 export const QueueFileActionModule = {

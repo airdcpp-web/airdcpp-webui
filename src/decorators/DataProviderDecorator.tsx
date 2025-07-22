@@ -7,7 +7,6 @@ import { APISocket, ErrorResponse } from 'airdcpp-apisocket';
 
 import Loader from '@/components/semantic/Loader';
 import NotificationActions from '@/actions/NotificationActions';
-import { ModalRouteCloseContext } from './ModalRouteDecorator';
 import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
@@ -17,6 +16,7 @@ import { translate } from '@/utils/TranslationUtils';
 
 import * as UI from '@/types/ui';
 import { getDebugId } from '@/utils/DebugUtils';
+import { ModalRouteCloseContext } from '@/context/ModalCloseContext';
 
 export type SocketConnectHandler<DataT extends object, PropsT extends object> = (
   addSocketListener: AddSocketListener,

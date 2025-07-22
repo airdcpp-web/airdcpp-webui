@@ -59,6 +59,7 @@ const hasValidViewUser: Filter = (data) => {
 };
 
 // 200 MB, the web server isn't suitable for sending large files
+// Note: https://github.com/zaphoyd/websocketpp/issues/1009
 const viewableSizeValid: Filter = ({ itemData }) =>
   itemData.itemInfo.size < 200 * 1024 * 1024;
 
@@ -106,9 +107,12 @@ const handleViewFile = (
   isText: boolean,
 ) => {
   const { itemData, ...other } = data;
+  const { itemInfo, user } = itemData;
 
   const viewFileData = {
-    ...itemData,
+    // Can't use spread because of getters
+    itemInfo,
+    user,
     isText,
   };
 

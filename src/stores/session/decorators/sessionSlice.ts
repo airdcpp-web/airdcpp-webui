@@ -39,6 +39,8 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
           const readCallback = get().setRead;
           if (readCallback) {
             readCallback({ id });
+          } else {
+            console.error('Session store not initialized');
           }
         });
 
@@ -49,7 +51,7 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
     };
 
     const slice = {
-      sessions: [],
+      sessions: null,
       activeSessionId: null,
       setRead: undefined,
 
@@ -57,8 +59,6 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
         set(() => ({
           sessions: data,
         })),
-
-      isInitialized: () => !!get().sessions,
 
       createSession: (data: SessionT) => {
         set(
@@ -172,7 +172,10 @@ type SetReadAction = (id: UI.SessionItemBase, socket: APISocket) => Promise<any>
 
 interface SessionActions<SessionT extends UI.SessionType> {
   setRead: SetReadAction;
-  fetchSessions: (sessionSlice: UI.SessionSlice<SessionT>) => Promise<void>;
+  fetchSessions: (
+    sessionSlice: UI.SessionSlice<SessionT>,
+    socket: APISocket,
+  ) => Promise<void>;
 }
 
 export const initSessionSlice = <SessionT extends UI.SessionType>(

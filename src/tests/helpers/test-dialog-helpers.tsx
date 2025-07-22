@@ -1,28 +1,28 @@
 import { act, fireEvent, waitFor } from '@testing-library/react';
 import Button from '@/components/semantic/Button';
-import { useNavigate } from 'react-router';
-import { NodeRenderResult, RouteRenderResult } from './test-containers';
 import { clickButton, waitForUrl } from './test-helpers';
 import { useState } from 'react';
 import { expect } from 'vitest';
+import { TestRouteNavigateButton } from './test-route-helpers';
+import { BaseRenderResult, DataRouteRenderResult } from '../render/test-renderers';
 
-export const TestRouteModalNavigateButton = ({ modalRoute }: { modalRoute: string }) => {
-  const navigate = useNavigate();
-  return (
-    <Button
-      caption="Open modal"
-      onClick={() => {
-        navigate(modalRoute);
-      }}
-    />
-  );
+const DefaultOpenModalButtonCaption = 'Open modal';
+
+export const TestRouteModalNavigateButton = ({
+  modalRoute,
+  caption = DefaultOpenModalButtonCaption,
+}: {
+  modalRoute: string;
+  caption?: string;
+}) => {
+  return <TestRouteNavigateButton caption={caption} route={modalRoute} />;
 };
 
-export const useModalButton = () => {
+export const useModalButton = (caption = DefaultOpenModalButtonCaption) => {
   const [open, setOpen] = useState(false);
   const button = (
     <Button
-      caption="Open modal"
+      caption={caption}
       onClick={() => {
         setOpen(true);
       }}
@@ -41,12 +41,12 @@ export const createTestRouteModalController = ({
   getByText,
   container,
   router,
-}: RouteRenderResult) => {
+}: DataRouteRenderResult) => {
   const initialUrl = router.state.location.pathname;
 
-  const openDialog = async () => {
+  const openDialog = async (caption = DefaultOpenModalButtonCaption) => {
     await act(async () => {
-      clickButton('Open modal', getByRole);
+      clickButton(caption, getByRole);
     });
 
     await waitFor(() =>
@@ -71,15 +71,26 @@ export const createTestModalController = ({
   getByRole,
   getByText,
   container,
-}: NodeRenderResult) => {
-  const openDialog = async () => {
+}: BaseRenderResult) => {
+  const expectDialogOpen = () => {
+    //const dialog = queryByRole('dialog');
+    //expect(dialog).not.toBeInTheDocument();
+
+    expect(container.querySelector('.ui.modal.active.visible')).toBeTruthy();
+  };
+
+  const expectDialogClosed = () => {
+    //const dialog = queryByRole('dialog');
+    //expect(dialog).not.toBeInTheDocument();
+    expect(container.querySelector('.ui.modal.active.visible')).toBeFalsy();
+  };
+
+  const openDialog = async (caption = DefaultOpenModalButtonCaption) => {
     await act(async () => {
-      clickButton('Open modal', getByRole);
+      clickButton(caption, getByRole);
     });
 
-    await waitFor(() =>
-      expect(container.querySelector('.ui.modal.active.visible')).toBeTruthy(),
-    );
+    await waitFor(() => expectDialogOpen());
   };
 
   const closeDialogButton = async (buttonCaption: string) => {
@@ -96,5 +107,11 @@ export const createTestModalController = ({
     );
   };
 
-  return { closeDialogButton, closeDialogText, openDialog };
+  return {
+    closeDialogButton,
+    closeDialogText,
+    openDialog,
+    expectDialogOpen,
+    expectDialogClosed,
+  };
 };

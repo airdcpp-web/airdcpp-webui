@@ -52,7 +52,7 @@ export const useAppStore = () => {
   return useStore(store);
 };
 
-export const useSessionStoreApi = () => {
+export const useAppStoreApi = () => {
   const store = useContext(AppStoreContext);
   return store;
 };

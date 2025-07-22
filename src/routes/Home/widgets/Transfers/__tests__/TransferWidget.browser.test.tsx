@@ -1,9 +1,9 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { waitFor } from '@testing-library/dom';
 
-import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+import { getMockServer } from 'airdcpp-apisocket/tests';
 
-import { renderRoutes } from '@/tests/test-containers';
+import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 // import * as API from '@/types/api';
 // import * as UI from '@/types/ui';
@@ -12,12 +12,13 @@ import { TransferWidgetInfo } from '../';
 import TransferConstants from '@/constants/TransferConstants';
 import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
 import { installSvgMocks } from '@/tests/mocks/mock-svg';
-import { getWidgetRenderRouteContainer } from '@/tests/test-widget';
+import { getWidgetRenderRouteContainer } from '@/tests/layouts/test-widget';
+import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 describe('Transfer widget', () => {
   let server: ReturnType<typeof getMockServer>;
   const getSocket = async () => {
-    const { socket } = await getConnectedSocket(server);
+    const commonData = await initCommonDataMocks(server);
 
     server.addRequestHandler(
       'GET',
@@ -30,19 +31,18 @@ describe('Transfer widget', () => {
       TransferConstants.STATISTICS,
     );
 
-    return { socket, server, transferStats };
+    return { commonData, server, transferStats };
   };
 
   const renderWidget = async (settings: object = {}) => {
-    const { socket, server, ...other } = await getSocket();
+    const { commonData, server, ...other } = await getSocket();
 
     const { routes, initialEntries } = getWidgetRenderRouteContainer(
       TransferWidgetInfo,
       settings,
     );
 
-    const renderData = renderRoutes(routes, {
-      socket,
+    const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries },
     });
 

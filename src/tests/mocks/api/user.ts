@@ -102,6 +102,35 @@ export const Hub1UserMeResponse = {
   upload_speed: 300000,
 };
 
+export const HubNMDC1UserMeResponse = {
+  ...UserMeBase,
+  description: 'This is NMDC me',
+  download_speed: 0,
+  email: '',
+  file_count: 0,
+  flags: ['self', 'asch', 'ccpm', 'away', 'op'],
+  hub_name: HubNMDC1.identity.name,
+  hub_session_id: 1,
+  hub_url: HubNMDC1.hub_url,
+  id: 67653524,
+  ip4: {
+    country: '',
+    ip: '127.0.0.1',
+    str: '127.0.0.1',
+  },
+  ip6: {
+    country: '',
+    ip: '',
+    str: '',
+  },
+  nick: '[HubNmdc]Me',
+  share_size: 62983875460,
+  supports: [],
+  tag: '<AirDC++ V:4.22b-219-g07c071,M:A,H:0/1/2,S:19>',
+  upload_slots: 19,
+  upload_speed: 0,
+};
+
 export const Hub3User2Response = {
   ...User2Base,
   description: 'Demo share',

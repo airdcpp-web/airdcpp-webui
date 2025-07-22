@@ -125,7 +125,7 @@ const localizationMiddleware = (req, res, next) => {
 
 // Setup static file handling
 // https://github.com/ampedandwired/html-webpack-plugin/issues/145#issuecomment-170554832
-app.use('*', (req, res, next) => {
+app.use(/(.*)/, (req, res, next) => {
   if (req.baseUrl.startsWith('/js/locales')) {
     return localizationMiddleware(req, res, next);
   }

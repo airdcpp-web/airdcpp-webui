@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { waitForElementToBeRemoved, waitFor, fireEvent } from '@testing-library/react';
 
-import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
+import { getMockServer } from 'airdcpp-apisocket/tests';
 
 import ShareConstants from '@/constants/ShareConstants';
 import { ShareGetGroupedRootsResponse } from '@/tests/mocks/api/share';
@@ -18,7 +18,7 @@ import {
   FilesystemDiskInfoResponse,
   FilesystemListContentResponse,
 } from '@/tests/mocks/api/filesystem';
-import { renderRoutes } from '@/tests/test-containers';
+import { renderDataRoutes } from '@/tests/render/test-renderers';
 import DownloadDialog from '../DownloadDialog';
 
 import * as UI from '@/types/ui';
@@ -30,14 +30,15 @@ import { HistoryStringPathResponse } from '@/tests/mocks/api/history';
 import {
   createTestRouteModalController,
   TestRouteModalNavigateButton,
-} from '@/tests/test-dialog-helpers';
-import { waitForData } from '@/tests/test-helpers';
+} from '@/tests/helpers/test-dialog-helpers';
+import { waitForData } from '@/tests/helpers/test-helpers';
+import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 // tslint:disable:no-empty
 describe('DownloadDialog', () => {
   let server: ReturnType<typeof getMockServer>;
   const getSocket = async () => {
-    const { socket } = await getConnectedSocket(server);
+    const commonData = await initCommonDataMocks(server);
 
     // Target paths fetch
     server.addRequestHandler(
@@ -75,11 +76,11 @@ describe('DownloadDialog', () => {
       FilesystemListContentResponse,
     );
 
-    return socket;
+    return commonData;
   };
 
   const renderDialog = async () => {
-    const socket = await getSocket();
+    const commonData = await getSocket();
     const handleDownload = vi.fn<UI.DownloadHandler<API.FilelistItem>>();
 
     const DownloadDialogTest = () => {
@@ -107,13 +108,12 @@ describe('DownloadDialog', () => {
       },
     ];
 
-    const renderData = renderRoutes(routes, {
-      socket,
+    const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/home'] },
     });
 
     const modalController = createTestRouteModalController(renderData);
-    return { socket, handleDownload, modalController, ...renderData };
+    return { ...commonData, handleDownload, modalController, ...renderData };
   };
 
   beforeEach(() => {

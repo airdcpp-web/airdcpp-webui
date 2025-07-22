@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { appendToMap, maxUrgency, validateUrgencies } from '@/utils/UrgencyUtils';
 import { RouteItem } from '@/routes/Routes';
 
-import '@/mobile.css';
-
 import * as UI from '@/types/ui';
 import { useSessionStoreApi } from '@/context/SessionStoreContext';
 

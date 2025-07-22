@@ -39,7 +39,7 @@ export interface RouteItem {
 
 export const HOME_URL = '/home';
 
-export const mainRoutes: RouteItem[] = [
+export const PrimaryRoutes: RouteItem[] = [
   {
     title: 'Home',
     path: HOME_URL,
@@ -71,7 +71,7 @@ export const mainRoutes: RouteItem[] = [
   },
 ];
 
-export const configRoutes = [
+export const SecondaryRoutes = [
   {
     title: 'Favorite hubs',
     path: '/favorite-hubs',
@@ -98,7 +98,7 @@ export const configRoutes = [
   },
 ];
 
-export const secondaryRoutes: RouteItem[] = [
+export const SidebarRoutes: RouteItem[] = [
   {
     title: 'Hubs',
     path: '/hubs',

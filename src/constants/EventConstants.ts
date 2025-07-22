@@ -7,7 +7,7 @@ export default {
   MESSAGES_URL: MODULE_URL,
 
   READ_URL: MODULE_URL + '/read',
-  INFO_URL: MODULE_URL + '/counts',
+  COUNTS_URL: MODULE_URL + '/counts',
 
   MESSAGE: 'event_message',
   COUNTS: 'event_counts',

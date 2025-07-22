@@ -58,6 +58,20 @@ const handleUnignore: UI.ActionHandler<ActionUserData> = ({
   return socket.delete(`${UserConstants.IGNORES_URL}/${userData.user.cid}`);
 };
 
+const createGrantHandler = (duration: number) => {
+  const grantHandler: UI.ActionHandler<ActionUserData> = ({
+    itemData: userData,
+    socket,
+  }) => {
+    return socket.post(`${UserConstants.MODULE_URL}/slots/${userData.user.cid}`, {
+      hub_url: userData.user.hub_url,
+      duration,
+    });
+  };
+
+  return grantHandler;
+};
+
 const NicksUnifier = (itemData: ActionUserData) => {
   const nicks = itemData.user.nicks || itemData.user.nick;
   return {
@@ -111,12 +125,62 @@ export const UserUnignoreAction = {
   },
 };
 
+const CommonGrantAction = {
+  icon: 'clock outline',
+  access: API.AccessEnum.SETTINGS_EDIT,
+  filter: checkFlags,
+
+  notifications: {
+    onSuccess: 'Granted slot for user {{item.nicks}}',
+    itemConverter: NicksUnifier,
+  },
+};
+
+export const UserGrantMinutesAction = {
+  id: 'grantMinutes',
+  displayName: 'Grant extra slot (10 min)',
+  handler: createGrantHandler(10 * 60),
+  ...CommonGrantAction,
+};
+
+export const UserGrantHourAction = {
+  id: 'grantHour',
+  displayName: 'Grant extra slot (hour)',
+  handler: createGrantHandler(3600),
+  ...CommonGrantAction,
+};
+
+export const UserGrantDayAction = {
+  id: 'grantDay',
+  displayName: 'Grant extra slot (day)',
+  handler: createGrantHandler(24 * 3600),
+  ...CommonGrantAction,
+};
+
+export const UserGrantWeekAction = {
+  id: 'grantWeek',
+  displayName: 'Grant extra slot (week)',
+  handler: createGrantHandler(7 * 24 * 3600),
+  ...CommonGrantAction,
+};
+
 const UserActions: UI.ActionListType<ActionUserData> = {
   message: UserMessageAction,
   browse: UserBrowseAction,
   divider: MENU_DIVIDER,
   ignore: UserIgnoreAction,
   unignore: UserUnignoreAction,
+  grant: {
+    id: 'slots',
+    displayName: 'Extra slots',
+    icon: IconConstants.UPLOAD,
+    children: {
+      grant10: UserGrantMinutesAction,
+      grantHour: UserGrantHourAction,
+      grantDay: UserGrantDayAction,
+      grantWeek: UserGrantWeekAction,
+    },
+  },
 };
 
 export const UserActionModule = {

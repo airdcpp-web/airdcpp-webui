@@ -13,7 +13,7 @@ export default defineWorkspace([
         provider: 'playwright',
         // https://vitest.dev/guide/browser/playwright
         instances: [{ browser: 'chromium' }],
-        // viewport: { width: 1920, height: 1080 },
+        viewport: { width: 1200, height: 600 },
       },
     },
   },

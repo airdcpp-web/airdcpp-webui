@@ -4,6 +4,7 @@ import {
   MockHintedUserNMDCResponse,
   MockHintedUserOfflineResponse,
   MockHintedUser1Response,
+  HubNMDC1UserMeResponse,
 } from './user';
 
 import * as API from '@/types/api';
@@ -79,7 +80,7 @@ export const PrivateChat1MessageStatus = {
   is_read: true,
   label: '',
   severity: API.SeverityEnum.INFO,
-  text: 'A direct encrypted channel has been established',
+  text: 'A direct encrypted channel has been established (ADC 1)',
   time: 1739705318,
   type: API.StatusMessageTypeEnum.SYSTEM,
 };
@@ -91,7 +92,7 @@ export const PrivateChat1MessageMe = {
   id: 2,
   is_read: true,
   reply_to: Hub1UserMeResponse,
-  text: 'my message',
+  text: 'my message ADC 1',
   third_person: false,
   time: 1739705360,
   to: Hub1User1Response,
@@ -104,10 +105,23 @@ export const PrivateChat1MessageOther = {
   id: 3,
   is_read: true,
   reply_to: Hub1User1Response,
-  text: 'received message',
+  text: 'received ADC 1 message',
   third_person: false,
   time: 1739705382,
   to: Hub1UserMeResponse,
+};
+
+export const PrivateChat2MessageOther = {
+  from: MockHintedUserNMDCResponse,
+  has_mention: false,
+  highlights: [],
+  id: 20,
+  is_read: true,
+  reply_to: MockHintedUserNMDCResponse,
+  text: 'received NMDC message',
+  third_person: false,
+  time: 1739705342,
+  to: HubNMDC1UserMeResponse,
 };
 
 export const PrivateChat1MessagesResponse = [
@@ -119,5 +133,11 @@ export const PrivateChat1MessagesResponse = [
   },
   {
     chat_message: PrivateChat1MessageOther,
+  },
+];
+
+export const PrivateChat2MessagesResponse = [
+  {
+    chat_message: PrivateChat2MessageOther,
   },
 ];

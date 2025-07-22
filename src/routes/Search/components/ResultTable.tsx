@@ -90,7 +90,7 @@ const NameCell: React.FC<NameCellProps> = ({ rowDataGetter, instance, ...props }
     {...props}
   >
     <TableActionMenu
-      actions={SearchActionMenu}
+      actions={GroupedSearchResultActionMenu}
       itemData={rowDataGetter}
       remoteMenuId={MenuConstants.GROUPED_SEARCH_RESULT}
       entity={instance}
