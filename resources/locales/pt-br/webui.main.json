@@ -291,8 +291,13 @@
         "copySizeSuccess": "O tamanho foi copiado para a área de transferência",
         "copyTTHSuccess": "O TTH foi copiado para a área de transferência",
         "copyMagnetSuccess": "Link magnet foi copiado para área de transferência",
-        "copySuccess": "Texto foi copiado para área de transferência"
+        "copySuccess": "Texto foi copiado para área de transferência",
+        "grantHourUserSuccess": "Slot concedido para o usuário {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Conceder slot extra (10 min)",
+      "grantExtraSlotHour": "Conceder slot extra (hora)",
+      "grantExtraSlotDay": "Conceder slot extra (dia)",
+      "grantExtraSlotWeek": "Conceder slot extra (semana)",
       "prompts": {
         "restartWebSystemApprove": "Continuar e reiniciar",
         "restartWebSystemReject": "Não reiniciar",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "Arquivo {{item.name}} foi removido da fila",
         "removeCompletedSuccess": "{{result.count}} pacotes concluídos foram removidos",
-        "searchBundleAlternatesSuccess": "O pacote {{item.name}} foi pesquisado por alternativas"
+        "searchAlternatesBundleSuccess": "O pacote {{item.name}} foi pesquisado por alternativas"
       }
     },
     "paused": "Pausado",

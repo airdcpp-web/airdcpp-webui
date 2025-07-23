@@ -21,13 +21,13 @@
         "feedUrlHelp": "Les flux Atom et RSS sont supportés",
         "feedCacheMinutesName": "Intervalle minimum de réinitialisation (minutes)"
       },
-      "invalidFeed": "Flux invalide/non pris en charge: {{erreur}}"
+      "invalidFeed": "Flux invalide/non pris en charge : {{erreur}}"
     },
     "transfers": {
       "widgetName": "Transferts",
       "trafficBps": "Bande passante (bps)",
       "downloads": "Téléchargements",
-      "uploads": "Envois",
+      "uploads": "Téléversements",
       "downloaded": "Téléchargé",
       "uploaded": "Envoyé",
       "downloadLimit": "Limite de téléchargement",
@@ -38,7 +38,7 @@
     },
     "extensions": {
       "widgetName": "Versions d'extension",
-      "updatedAgo": "Mis à jour le {{date}}"
+      "updatedAgo": "Mis à jour {{date}}"
     },
     "actions": {
       "editWidget": "Éditer le widget",
@@ -106,7 +106,7 @@
       "hubUrlsName": "Hubs",
       "maxSizeName": "Taille maximum",
       "minSizeName": "Taille minimum",
-      "sizeLimitsName": "Tailles limites"
+      "sizeLimitsName": "Limites de taille"
     },
     "actionsCaption": "Actions…",
     "searchActions": "Actions de recherche",
@@ -160,7 +160,7 @@
       "pathName": "Chemin",
       "virtualNameName": "Nom virtuel",
       "virtualNameHelp": "Les répertoires avec des noms virtuels identiques seront fusionnés dans la liste de fichiers",
-      "profilesName": "Profiles de partage",
+      "profilesName": "Profils de partage",
       "profilesHelp": "De nouveaux profils de partage peuvent être créés à partir des paramètres de l'application",
       "incomingName": "Réception"
     }
@@ -179,7 +179,7 @@
         "changePasswordContent": "Entrez le nouveau mot de passe pour le hub {{item.name}}",
         "removePasswordApprove": "Supprimer le mot de passe",
         "removePasswordReject": "Ne pas retirer",
-        "removePasswordContent": "Êtes-vous sûr de vouloir réinitialiser le mot de passe du hub {{item.name}}?",
+        "removePasswordContent": "Êtes-vous sûr de vouloir réinitialiser le mot de passe du hub {{item.name}} ?",
         "createPasswordPlaceholder": "Entrer le mot de passe",
         "createPasswordApprove": "Entrer le mot de passe",
         "createPasswordContent": "Définir mot de passe pour le hub {{item.name}}",
@@ -201,11 +201,11 @@
     "set": "Définir",
     "globalDefault": "Valeur globale par défaut",
     "addFavoriteHub": "Ajouter un hub favori",
-    "editFavoriteHub": "Éditer hub favori",
+    "editFavoriteHub": "Éditer le hub favori",
     "actionsCaption": "Actions…",
     "favoriteHubActions": "Actions du hub favori",
     "form": {
-      "genericName": "Propriétés de hub",
+      "genericName": "Propriétés du hub",
       "nameName": "Nom",
       "hubUrlName": "URL du hub",
       "hubDescriptionName": "Description du hub",
@@ -227,10 +227,10 @@
       "connectionModeV6Option0": "Mode actif",
       "connectionModeV6Option2": "Mode passif",
       "connectionIpV6Name": "Adresse IP",
-      "miscName": "Diverses dérogations",
-      "useMainChatNotifyName": "Utiliser notification de chat",
+      "miscName": "Ajustements divers",
+      "useMainChatNotifyName": "Utiliser la notification de chat",
       "awayMessageName": "Message d’absence",
-      "showJoinsName": "Afficher les entrées/sorties"
+      "showJoinsName": "Afficher les arrivées/départs"
     }
   },
   "filelists": {
@@ -239,7 +239,7 @@
     "offlineMessage": "Vous devez être connecté à au moins un hub pour pouvoir télécharger les listes de fichiers d'autres utilisateurs",
     "directorySize": "Taille du répertoire",
     "totalListSize": "Taille totale de la liste",
-    "browseOwnShare": "Parcourir sa propre liste...",
+    "browseOwnShare": "Parcourir sa propre liste…",
     "root": "Root",
     "userOffline": "Utilisateur déconnecté",
     "userOfflineDesc": "Vous pourrez continuer à naviguer lorsque l'utilisateur se reconnectera",
@@ -289,17 +289,22 @@
         "unignoreUserSuccess": "L'utilisateur {{item.nicks}} n'est maintenant plus ignoré",
         "copyPathSuccess": "Le chemin a été copié dans le presse-papiers",
         "copySizeSuccess": "La taille a été copiée dans le presse-papiers",
-        "copyTTHSuccess": "TTH a été copié dans le presse-papiers",
-        "copyMagnetSuccess": "Le lien Magnet a été copié dans le presse-papiers",
-        "copySuccess": "Le texte a été copié dans le presse-papier"
+        "copyTTHSuccess": "Le TTH a été copié dans le presse-papiers",
+        "copyMagnetSuccess": "Le lien magnet a été copié dans le presse-papiers",
+        "copySuccess": "Le texte a été copié dans le presse-papier",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Accorder extra slot (10 minutes)",
+      "grantExtraSlotHour": "Accorder extra slot (Heure)",
+      "grantExtraSlotDay": "Accorder extra slot (Jour)",
+      "grantExtraSlotWeek": "Accorder extra slot (Semaine)",
       "prompts": {
         "restartWebSystemApprove": "Continuer et redémarrer",
         "restartWebSystemReject": "Ne pas redémarrer",
         "restartWebSystemContent": "Lors de la modification des options de liaison, il est recommandé de redémarrer le serveur Web uniquement quand vous pouvez accéder au serveur pour le dépannage. Si le serveur Web ne revient pas en ligne, vous devez lancer l'application manuellement pour voir s'il y a des messages d'erreur. Le fichier de config se trouve par défaut dans votre répertoire utilisateur (dans le répertoire .AirDC++) au cas où vous auriez besoin de le modifier manuellement. ",
         "shutdownSystemApprove": "Continuer et arrêter",
         "shutdownSystemReject": "Annuler",
-        "shutdownSystemContent": "Êtes-vous sûr de vouloir fermer l'application?"
+        "shutdownSystemContent": "Êtes-vous sûr de vouloir fermer l'application ?"
       }
     },
     "units": {
@@ -312,11 +317,11 @@
       "eib": "EiB",
       "bits": "bit/s",
       "kbits": "Kbit/s",
-      "mbits": "Hashing",
+      "mbits": "Mbit/s",
       "gbits": "Gbit/s"
     },
     "filename": "Fichier",
-    "xBytes": "{{octets}} octets",
+    "xBytes": "{{bytes}} octets",
     "unitsPerSecond": "{{units}}/s",
     "today": "Aujourd’hui",
     "yesterday": "Hier",
@@ -416,7 +421,7 @@
       "maximumValueError": "Valeur maximale autorisée est {{value}}",
       "any": "Tous",
       "directory": "Dossier",
-      "file": "&amp;Fichier",
+      "file": "Fichier",
       "add": "Ajouter",
       "down": "vers le bas",
       "remove": "Retirer",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "Fichier {{item.name}} a été retiré de la file d'attente",
         "removeCompletedSuccess": "{{result.count}} les paquets terminés ont été retirés",
-        "searchBundleAlternatesSuccess": "Paquet {{item.name}} a été recherché pour des alternatives"
+        "searchAlternatesBundleSuccess": "Paquet {{item.name}} a été recherché pour des alternatives"
       }
     },
     "paused": "En pause",

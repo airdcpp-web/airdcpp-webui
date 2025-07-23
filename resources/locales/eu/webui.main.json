@@ -291,8 +291,13 @@
         "copySizeSuccess": "Size was copied to clipboard",
         "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link was copied to clipboard",
-        "copySuccess": "Text was copied to clipboard"
+        "copySuccess": "Text was copied to clipboard",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Bermatu gehiegizko slot-a (10 min)",
+      "grantExtraSlotHour": "Bermatu gehiegizko slot-a (ordu bat)",
+      "grantExtraSlotDay": "Bermatu gehiegizko slot-a (egun bat)",
+      "grantExtraSlotWeek": "Bermatu gehiegizko slot-a (aste bat)",
       "prompts": {
         "restartWebSystemApprove": "Jarraitu eta berrabiarazi",
         "restartWebSystemReject": "Ez berrabiarazi",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "File {{item.name}} was removed from queue",
         "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
+        "searchAlternatesBundleSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "Etenduta",

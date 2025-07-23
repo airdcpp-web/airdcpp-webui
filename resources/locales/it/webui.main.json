@@ -68,6 +68,7 @@
       "info": "INFO",
       "warning": "WARNING",
       "error": "ERROR",
+      "verbose": "VERBOSE",
       "actions": {
         "viewEvents": "View events"
       }
@@ -107,6 +108,8 @@
       "minSizeName": "Minimum size",
       "sizeLimitsName": "Size limits"
     },
+    "actionsCaption": "Actions...",
+    "searchActions": "Search actions",
     "resetAll": "Reset all",
     "user": "Utente",
     "hubs": "Hub",
@@ -199,6 +202,8 @@
     "globalDefault": "Global default",
     "addFavoriteHub": "Add favorite hub",
     "editFavoriteHub": "Edit favorite hub",
+    "actionsCaption": "Actions...",
+    "favoriteHubActions": "Favorite hub actions",
     "form": {
       "genericName": "Hub properties",
       "nameName": "Nome",
@@ -257,9 +262,12 @@
       "details": "Details"
     }
   },
-  "common": {    
+  "common": {
     "actions": {
       "copy": "Copia",
+      "copyPath": "Copy path",
+      "copySize": "Copy size",
+      "copyTth": "Copy TTH",
       "download": "Download",
       "downloadTo": "Scarica in...",
       "findNfo": "Find NFO",
@@ -279,9 +287,17 @@
       "notifications": {
         "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
         "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
+        "copyPathSuccess": "Path was copied to clipboard",
+        "copySizeSuccess": "Size was copied to clipboard",
+        "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link was copied to clipboard",
-        "copySuccess": "Text was copied to clipboard"
+        "copySuccess": "Text was copied to clipboard",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Concedi slot ulteriore (10 min)",
+      "grantExtraSlotHour": "Concedi slot ulteriore (ora)",
+      "grantExtraSlotDay": "Concedi slot ulteriore (giorno)",
+      "grantExtraSlotWeek": "Concedi slot ulteriore (settimana)",
       "prompts": {
         "restartWebSystemApprove": "Continue and restart",
         "restartWebSystemReject": "Don't restart",
@@ -388,6 +404,9 @@
     "finishedFull": "Finished (full)",
     "finishedPartial": "Finished (partial)",
     "shareAndQueue": "Share and queue",
+    "shareQueueAndFinished": "Share, queue and finished",
+    "queueAndFinished": "Queue and finished",
+    "shareAndFinished": "Share and finished",
     "dupePaths": "Dupe paths",
     "actionsCaption": "Actions...",
     "tth": "TTH",
@@ -445,7 +464,7 @@
     "notConnectedToTheHub": "Not connected to the hub",
     "connecting": "Connecting",
     "loadingUserlist": "Loading userlist",
-    "favoriteHubsHint": "Tip: visit the <1>Favorite hubs</1> page to connect using custom settings",
+    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
     "new": "&amp;Connesso",
     "newDesc": "Connect to a new hub",
     "userList": "User list",
@@ -457,7 +476,7 @@
     "passwordRequired": "Password required",
     "password": "Password",
     "submit": "Submit",
-    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."  
+    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."
   },
   "queue": {
     "table": {
@@ -502,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "File {{item.name}} was removed from queue",
         "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
+        "searchAlternatesBundleSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "In pausa",
@@ -551,6 +570,8 @@
         "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
       }
     },
+    "actionsCaption": "Actions...",
+    "transferActions": "Transfer actions",
     "noActiveTransfers": "No active transfers"
   },
   "settings": {
@@ -561,7 +582,8 @@
       "editUser": "Edit user",
       "editDirectory": "Edit directory",
       "removeDirectory": "Remove directory",
-      "addProfile": "Add profile",
+      "addProfile": "Create new",
+      "cloneProfile": "Clone profile",
       "browseFiles": "Browse files",
       "renameProfile": "Rename profile",
       "addPath": "Add path",
@@ -573,6 +595,9 @@
       "editType": "Edit type",
       "removeType": "Remove type",
       "prompts": {
+        "cloneProfilePlaceholder": "Enter name",
+        "cloneProfileApprove": "Create",
+        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
         "createProfilePlaceholder": "Enter name",
         "createProfileApprove": "Create",
         "createProfileContent": "Enter name for the profile",
@@ -655,13 +680,19 @@
     "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <1>an online port checker</1>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <4>DC++'s connectivity FAQ</4>.",
+        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
         "currentAutoDetectionStatus": "Current auto detection status",
         "iPv4Connectivity": "IPv4 connectivity",
         "iPv6Connectivity": "IPv6 connectivity",
         "manualConfiguration": "{{status}} (manual configuration)",
         "autoDetected": "{{status}} (auto detected)",
-        "detecting": "Detecting..."
+        "detecting": "Detecting...",
+        "transferPort": "Transfer port",
+        "encryptedTransferPort": "Encrypted transfer port",
+        "searchUdpPort": "Search/UDP port",
+        "boundInterfaceIPv4": "Bound interface (IPv4)",
+        "boundInterfaceIPv6": "Bound interface (IPv6)",
+        "viewAll": "View all"
       },
       "ports": {
         "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
@@ -684,7 +715,8 @@
           "settingProfileHelp0": "The client is used in normal private/public hubs for transferring files via internet. Use this profile if unsure.",
           "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
           "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelp": "<0>The application must be restarted for the new language to take effect.</0><1>If you want to help with improving the existing translations or translate the application into a new language, please see the <1>instructions for translators</1>.</1>"
+          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
+          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
         }
       },
       "ignoredUsers": {
@@ -705,7 +737,7 @@
         "installedVersion": "Installed version",
         "datePublished": "{{version}} (published {{date}})",
         "readMore": "Read more",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "manage": "Manage..."
       },
       "manage": {
@@ -714,8 +746,8 @@
         "installedVersion": "Installed version",
         "nonListedExtension": "Non-listed extension",
         "readMore": "Read more",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <1>Extension catalog</1> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <1>node</1> is not installed on your system. Please visit <3>engine's home page</3> for installation instructions.",
+        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
+        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
         "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}",
         "unmanagedExtension": "Unmanaged extension",
         "manage": "Manage..."
@@ -833,7 +865,10 @@
         "name": "Nome",
         "totalSize": "Total size",
         "totalFiles": "Total files",
-        "shareProfilesNote": "<0>Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.</0><1>Share profiles are assigned for individual directories from the <1>Share</1> page.</1>"
+        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
+        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page.",
+        "addProfile": "Add profile",
+        "cloneFromAnExistingProfile": "Clone from an existing profile"
       },
       "sharingOptions": {
         "skiplist": "Skiplist"
@@ -850,7 +885,7 @@
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <1>Speedtest.net</1>, to test your speed."
+        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
       },
       "uploadLimits": {
         "manuallySet": "Manually set"
@@ -934,6 +969,8 @@
       "update": "Aggiornamento",
       "stop": "Stop",
       "configure": "&amp;Configura",
+      "enable": "Enable",
+      "disable": "Disable",
       "prompts": {
         "installUrlPlaceholder": "Enter URL",
         "installUrlApprove": "Install",

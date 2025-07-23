@@ -291,8 +291,13 @@
         "copySizeSuccess": "Storleken har kopierats till urklippet",
         "copyTTHSuccess": "TTH har kopierats till urklippet",
         "copyMagnetSuccess": "Magnet-länken har kopierats till urklipp",
-        "copySuccess": "Texten har kopierats till urklippet"
+        "copySuccess": "Texten har kopierats till urklippet",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Bevilja extra slott (10 min)",
+      "grantExtraSlotHour": "Bevilja extra slott (1 timme)",
+      "grantExtraSlotDay": "Bevilja extra slott (1 dag)",
+      "grantExtraSlotWeek": "Bevilja extra slott (1 vecka)",
       "prompts": {
         "restartWebSystemApprove": "Fortsätt och starta om",
         "restartWebSystemReject": "Starta inte om",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "Filen {{item.name}} har tagits bort från kön",
         "removeCompletedSuccess": "{{result.count}} färdiga filsamlingar har tagits bort",
-        "searchBundleAlternatesSuccess": "Filsamlingen {{item.name}} har sökt efter nya källor"
+        "searchAlternatesBundleSuccess": "Filsamlingen {{item.name}} har sökt efter nya källor"
       }
     },
     "paused": "Pausad",

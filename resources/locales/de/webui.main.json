@@ -291,8 +291,13 @@
         "copySizeSuccess": "Size was copied to clipboard",
         "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet Link wurde in die Zwischenablage kopiert",
-        "copySuccess": "Text wurde in die Zwischenablage kopiert"
+        "copySuccess": "Text wurde in die Zwischenablage kopiert",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Extra Slot (10 Min)",
+      "grantExtraSlotHour": "Extra Slot (Stunde)",
+      "grantExtraSlotDay": "Extra Slot (Tag)",
+      "grantExtraSlotWeek": "Extra Slot (Woche)",
       "prompts": {
         "restartWebSystemApprove": "Fortfahren und neustarten",
         "restartWebSystemReject": "Nicht neu starten",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "Datei {{item.name}} wurde aus der Warteschlange entfernt",
         "removeCompletedSuccess": "{{result.count}} fertiggestellte Pakete wurden entfernt",
-        "searchBundleAlternatesSuccess": "Für das Paket {{item.name}} wurde nach Alternativen gesucht"
+        "searchAlternatesBundleSuccess": "Für das Paket {{item.name}} wurde nach Alternativen gesucht"
       }
     },
     "paused": "Pause",

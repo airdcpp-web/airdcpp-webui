@@ -291,8 +291,13 @@
         "copySizeSuccess": "Size was copied to clipboard",
         "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Enlace magnet copiado al portapapeles",
-        "copySuccess": "El texto se ha copiado al portapapeles"
+        "copySuccess": "El texto se ha copiado al portapapeles",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Garantizar Slot extra (10 min)",
+      "grantExtraSlotHour": "Garantizar Slot extra (1 hora)",
+      "grantExtraSlotDay": "Garantizar Slot extra (1 día)",
+      "grantExtraSlotWeek": "Garantizar Slot extra (1 semana)",
       "prompts": {
         "restartWebSystemApprove": "Continuar y reiniciar",
         "restartWebSystemReject": "No reiniciar",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "Se ha eliminado el archivo {{item.name}} de la cola",
         "removeCompletedSuccess": "Se han eliminado {{result.count}} paquetes completados",
-        "searchBundleAlternatesSuccess": "Se han buscado alternativas para el paquete {{item.name}}"
+        "searchAlternatesBundleSuccess": "Se han buscado alternativas para el paquete {{item.name}}"
       }
     },
     "paused": "Pausado",

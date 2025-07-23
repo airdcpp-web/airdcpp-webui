@@ -291,8 +291,13 @@
         "copySizeSuccess": "Size was copied to clipboard",
         "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link werd gekopieerd naar klembord",
-        "copySuccess": "Tekst werd gecopieërd naar clipboard"
+        "copySuccess": "Tekst werd gecopieërd naar clipboard",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Extra slot geven (10 min)",
+      "grantExtraSlotHour": "Extra slot geven (uur)",
+      "grantExtraSlotDay": "Extra slot geven (dag)",
+      "grantExtraSlotWeek": "Extra slot geven (week)",
       "prompts": {
         "restartWebSystemApprove": "Doorgaan en herstarten",
         "restartWebSystemReject": "Niet herstarten",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "File {{item.name}} werd verwijderd ui de queue",
         "removeCompletedSuccess": "{{result.count}} voltooide bundels werden verwijderd",
-        "searchBundleAlternatesSuccess": "De bundel {{item.name}} werd doorzocht op alternatieven"
+        "searchAlternatesBundleSuccess": "De bundel {{item.name}} werd doorzocht op alternatieven"
       }
     },
     "paused": "Pauze",

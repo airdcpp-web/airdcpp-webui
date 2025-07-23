@@ -291,8 +291,13 @@
         "copySizeSuccess": "Koko kopioitiin leikepöydälle",
         "copyTTHSuccess": "TTH kopioitiin leikepöydälle",
         "copyMagnetSuccess": "Magnet-linkki kopioitiin leikepöydälle",
-        "copySuccess": "Teksti kopioitiin leikepöydälle"
+        "copySuccess": "Teksti kopioitiin leikepöydälle",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Anna ylimääräinen latauspaikka (10 min)",
+      "grantExtraSlotHour": "Anna ylimääräinen latauspaikka (tunti)",
+      "grantExtraSlotDay": "Anna ylimääräinen latauspaikka (päivä)",
+      "grantExtraSlotWeek": "Anna ylimääräinen latauspaikka (viikko)",
       "prompts": {
         "restartWebSystemApprove": "Jatka ja käynnistä uudestaan",
         "restartWebSystemReject": "Älä käynnistä uudestaan",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "Tiedosto {{item.name}} poistettiin jonosta",
         "removeCompletedSuccess": "{{result.count}} valmista bundlea poistettiin",
-        "searchBundleAlternatesSuccess": "Bundlelle {{item.name}} haettiin vaihtoehtoisia lähteitä"
+        "searchAlternatesBundleSuccess": "Bundlelle {{item.name}} haettiin vaihtoehtoisia lähteitä"
       }
     },
     "paused": "Pysäytetty",

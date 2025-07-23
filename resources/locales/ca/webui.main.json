@@ -291,8 +291,13 @@
         "copySizeSuccess": "Size was copied to clipboard",
         "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Magnet link was copied to clipboard",
-        "copySuccess": "Text was copied to clipboard"
+        "copySuccess": "Text was copied to clipboard",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Concedeix una ranura extra (10 min.)",
+      "grantExtraSlotHour": "Concedeix una ranura extra (hora)",
+      "grantExtraSlotDay": "Concedeix una ranura extra (dia)",
+      "grantExtraSlotWeek": "Concedeix una ranura extra (setmana)",
       "prompts": {
         "restartWebSystemApprove": "Continue and restart",
         "restartWebSystemReject": "Don't restart",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "File {{item.name}} was removed from queue",
         "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchBundleAlternatesSuccess": "The bundle {{item.name}} was searched for alternates"
+        "searchAlternatesBundleSuccess": "The bundle {{item.name}} was searched for alternates"
       }
     },
     "paused": "En pausa",

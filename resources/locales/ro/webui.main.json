@@ -291,8 +291,13 @@
         "copySizeSuccess": "Size was copied to clipboard",
         "copyTTHSuccess": "TTH was copied to clipboard",
         "copyMagnetSuccess": "Legatura magnet a fost copiata in memorie-clipboard",
-        "copySuccess": "Text was copied to clipboard"
+        "copySuccess": "Text was copied to clipboard",
+        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
       },
+      "grantExtraSlot10Min": "Ofera extra slot (10 min)",
+      "grantExtraSlotHour": "Ofera extra slot (hora)",
+      "grantExtraSlotDay": "Ofera extra slot (zi)",
+      "grantExtraSlotWeek": "Ofera extra slot (saptamina)",
       "prompts": {
         "restartWebSystemApprove": "Contiuua si restarteaza",
         "restartWebSystemReject": "Nu restarta",
@@ -516,7 +521,7 @@
       "notifications": {
         "removeFileSuccess": "Fisierul  {{item.name}}  a fost eliminat din lista",
         "removeCompletedSuccess": "{{result.count}} fisierele terminate au fost eliminate",
-        "searchBundleAlternatesSuccess": "Fisierul  {{item.name}} a fost cautat pentru alternative"
+        "searchAlternatesBundleSuccess": "Fisierul  {{item.name}} a fost cautat pentru alternative"
       }
     },
     "paused": "Pauza",
