@@ -31,6 +31,7 @@ import {
 import createFetchMock from 'vitest-fetch-mock';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
+import { sleep } from '@/utils/Promise';
 
 const fetchMocker = createFetchMock(vi);
 
@@ -180,11 +181,10 @@ describe('Viewed files', () => {
 
     await waitText('This is long text file', getByText);
 
-    const scrollContainer = getByRole('article');
+    await sleep(10); // Make sure that the scroll listeners are added before scrolling
 
-    //scrollContainer.scrollTo({
-    //  top: 200,
-    //});
+    // Scroll
+    const scrollContainer = getByRole('article');
     fireEvent.scroll(scrollContainer, { target: { scrollTop: 200 } });
 
     await waitFor(() => expect(scrollContainer.scrollTop).toBe(200));
