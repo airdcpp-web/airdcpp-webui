@@ -11,6 +11,8 @@ import { waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import Input from '@/components/semantic/Input';
 
+import * as API from '@/types/api';
+
 // tslint:disable:no-empty
 describe('ActivityTracker', () => {
   let server: ReturnType<typeof getMockServer>;
@@ -70,14 +72,14 @@ describe('ActivityTracker', () => {
       system: 10000000,
     };
 
-    const { sessionStore, onActivity } = await renderTracker(timeouts);
+    const { sessionStore, onActivity, getByRole } = await renderTracker(timeouts);
 
     // User not active by default
     expect(sessionStore.getState().activity.userActive).toBeFalsy();
 
     // Simulate user activity
     const user = userEvent.setup();
-    await user.keyboard('test');
+    user.click(getByRole('textbox'));
 
     await waitFor(() => expect(sessionStore.getState().activity.userActive).toBeTruthy());
     expect(onActivity).toBeCalledTimes(1);
@@ -89,7 +91,8 @@ describe('ActivityTracker', () => {
       system: 10000000,
     };
 
-    const { sessionStore, onActivity } = await renderTracker(timeouts, true);
+    const { sessionStore, onActivity, mockStoreListeners, getByRole } =
+      await renderTracker(timeouts, true);
 
     // Set as active
     sessionStore.getState().activity.setUserActive(true);
@@ -98,8 +101,28 @@ describe('ActivityTracker', () => {
     // Simulate inactivity
     vi.advanceTimersByTime(timeouts.user + 10000);
     vi.runOnlyPendingTimers();
+    mockStoreListeners.activity.awayState.fire({
+      id: API.AwayEnum.IDLE,
+    });
+
+    expect(sessionStore.getState().activity.userActive).toBeFalsy();
+    expect(sessionStore.getState().activity.away).toEqual(API.AwayEnum.IDLE);
+    expect(onActivity).toBeCalledTimes(1);
+
+    // Should remain inactive
+    vi.advanceTimersByTime(timeouts.user + 10000);
+    vi.runOnlyPendingTimers();
 
     expect(sessionStore.getState().activity.userActive).toBeFalsy();
     expect(onActivity).toBeCalledTimes(1);
+
+    // Simulate user activity
+    const user = userEvent.setup({ advanceTimers: vi.runOnlyPendingTimers });
+    user.click(getByRole('textbox'));
+
+    vi.runOnlyPendingTimers();
+
+    await waitFor(() => expect(sessionStore.getState().activity.userActive).toBeTruthy());
+    expect(onActivity).toBeCalledTimes(2);
   });
 });
