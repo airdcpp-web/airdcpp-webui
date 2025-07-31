@@ -22,7 +22,8 @@ import {
   ShareRootCreateAction,
   ShareRootEditActionMenu,
 } from '@/actions/ui/share';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 const ShareRootCreateMenu = {
   actions: {
@@ -32,7 +33,7 @@ const ShareRootCreateMenu = {
 };
 
 const Share: React.FC = () => {
-  const { hasAccess } = useSession();
+  const session = useSession();
   const { t } = useTranslation();
   const rowClassNameGetter = (rowData: API.ShareRootEntry) => {
     if (rowData.incoming) {
@@ -45,7 +46,7 @@ const Share: React.FC = () => {
   const shareT = getModuleT(t, UI.Modules.SHARE);
 
   const { translate } = shareT;
-  const editAccess = hasAccess(API.AccessEnum.SETTINGS_EDIT);
+  const editAccess = hasAccess(session, API.AccessEnum.SETTINGS_EDIT);
   return (
     <>
       <VirtualTable

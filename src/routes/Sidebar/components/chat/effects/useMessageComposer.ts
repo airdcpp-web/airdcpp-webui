@@ -13,8 +13,9 @@ import {
 import ChatCommandHandler from '../commands/ChatCommandHandler';
 
 import { useSocket } from '@/context/SocketContext';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { useSessionStore } from '@/context/SessionStoreContext';
+import { useAppStore } from '@/context/AppStoreContext';
 
 const getStorageKey = (location: Location) => {
   return `last_message_${location.pathname}`;
@@ -45,6 +46,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
   const [inputText, setInputText] = React.useState('');
   const socket = useSocket();
   const sessionStore = useSessionStore();
+  const appStore = useAppStore();
 
   const handleCommand = (commandText: string) => {
     let command, params;
@@ -67,6 +69,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
       socket,
       session,
       sessionStore,
+      appStore,
     });
   };
 
@@ -86,8 +89,8 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
   };
 
   const handleSend = (textToSend: string) => {
-    const { chatApi, session } = chatController;
-    chatApi.sendChatMessage(socket, session, textToSend);
+    const { chatApi, chatSession } = chatController;
+    chatApi.sendChatMessage(socket, chatSession, textToSend);
   };
 
   useEffect(() => {

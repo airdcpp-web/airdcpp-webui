@@ -21,7 +21,8 @@ import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import { Row, Grid } from '@/components/semantic/Grid';
 import IconConstants from '@/constants/IconConstants';
 import { useSocket } from '@/context/SocketContext';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 interface OptimizeLayoutProps {
   running: boolean;
@@ -82,7 +83,7 @@ interface HashDatabaseLayoutDataProps extends DataProviderDecoratorChildProps {
 const HashDatabaseLayout: React.FC<
   HashDatabaseLayoutProps & HashDatabaseLayoutDataProps
 > = ({ status, moduleT }) => {
-  const { hasAccess } = useSession();
+  const session = useSession();
   const { formatSize } = useFormatter();
   const socket = useSocket();
   const handleOptimize = (verify: boolean) => {
@@ -108,7 +109,7 @@ const HashDatabaseLayout: React.FC<
           titleWidth="five"
         />
       </Grid>
-      {hasAccess(API.AccessEnum.SETTINGS_EDIT) && (
+      {hasAccess(session, API.AccessEnum.SETTINGS_EDIT) && (
         <OptimizeLayout
           running={status.maintenance_running}
           startHandler={handleOptimize}

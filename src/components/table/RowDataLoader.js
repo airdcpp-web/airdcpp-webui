@@ -1,4 +1,3 @@
-import SocketService from '@/services/SocketService';
 import update from 'immutability-helper';
 
 import isEqual from 'lodash/isEqual';
@@ -7,12 +6,13 @@ const NUMBER_OF_ROWS_PER_REQUEST = 10;
 
 // This will handle fetching only when scrolling. Otherwise the data will be updated through the socket listener.
 class RowDataLoader {
-  constructor(store, onDataLoad) {
+  constructor(store, onDataLoad, socket) {
     this._onDataLoad = onDataLoad;
     this._store = store;
     this._data = [];
     this._pendingRequest = {};
     this._initialDataReceived = false;
+    this._socket = socket;
     this.DEBUG = store.DEBUG;
   }
 
@@ -133,7 +133,8 @@ class RowDataLoader {
     }
 
     const endRow = Math.min(rowBase + NUMBER_OF_ROWS_PER_REQUEST, this._store.rowCount);
-    SocketService.get(this._store.viewUrl + '/items/' + rowBase + '/' + endRow)
+    this._socket
+      .get(this._store.viewUrl + '/items/' + rowBase + '/' + endRow)
       .then(this.onRowsReceived.bind(this, rowBase))
       .catch((error) => {
         console.error('Failed to load data', error);

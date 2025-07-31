@@ -1,6 +1,5 @@
 import FilelistConstants from '@/constants/FilelistConstants';
 
-import LoginStore from '@/stores/reflux/LoginStore';
 import { APISocket } from '@/services/SocketService';
 
 import SessionActionDecorator from './decorators/SessionActionDecorator';
@@ -28,14 +27,14 @@ const createRemoteSession = SessionCreatorDecorator<
   existingSessionGetter: ({ user }, sessionStore) =>
     sessionStore.filelists.getSession(user.cid),
   sectionUrlPath: '/filelists',
-  onExists: (session, { user, path = '/' }) => {
+  onExists: (session, { user, path = '/' }, socket) => {
     if (user.hub_url && session.user.hub_url !== user.hub_url) {
-      changeFilelistHubUrl(session, user.hub_url);
+      changeFilelistHubUrl(session, user.hub_url, socket);
     }
 
     const directory = getFilePath(path);
     if (directory !== '/' && (!session.location || session.location.path !== directory)) {
-      changeFilelistDirectory(session, directory);
+      changeFilelistDirectory(session, directory, socket);
     }
   },
   createHandler: (data, socket) => {
@@ -55,34 +54,32 @@ interface CreateLocalSessionData {
   shareProfileId: number;
 }
 
-const createLocalSession = SessionCreatorDecorator<
-  API.FilelistSession,
-  CreateLocalSessionData
->({
-  existingSessionGetter: (data, sessionStore) =>
-    sessionStore.filelists.getSession(LoginStore.systemInfo.cid),
-  onExists: (session, { shareProfileId }) => {
-    if (session.share_profile!.id !== shareProfileId) {
-      changeFilelistShareProfile(session, shareProfileId);
-    }
-  },
-  sectionUrlPath: '/filelists',
-  createHandler: ({ shareProfileId }, socket) => {
-    return socket.post<API.FilelistSession>(`${FilelistConstants.SESSIONS_URL}/self`, {
-      share_profile: shareProfileId,
-    });
-  },
-});
+const initCreateLocalSession = (filelist: UI.AuthenticatedSession) =>
+  SessionCreatorDecorator<API.FilelistSession, CreateLocalSessionData>({
+    existingSessionGetter: (data, sessionStore) =>
+      sessionStore.filelists.getSession(filelist.system_info.cid),
+    onExists: (filelist, { shareProfileId }, socket) => {
+      if (filelist.share_profile!.id !== shareProfileId) {
+        changeFilelistShareProfile(filelist, shareProfileId, socket);
+      }
+    },
+    sectionUrlPath: '/filelists',
+    createHandler: ({ shareProfileId }, socket) => {
+      return socket.post<API.FilelistSession>(`${FilelistConstants.SESSIONS_URL}/self`, {
+        share_profile: shareProfileId,
+      });
+    },
+  });
 
 // SESSION UPDATES
 
-const setRead = (session: UI.SessionItemBase, socket: APISocket) => {
-  return socket.post(`${FilelistConstants.SESSIONS_URL}/${session.id}/read`);
+const setRead = (filelist: UI.SessionItemBase, socket: APISocket) => {
+  return socket.post(`${FilelistConstants.SESSIONS_URL}/${filelist.id}/read`);
 };
 
 export const FilelistAPIActions = {
   createRemoteSession,
-  createLocalSession,
+  initCreateLocalSession,
   setRead,
   ...SessionActionDecorator(FilelistConstants.SESSIONS_URL),
 };

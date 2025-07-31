@@ -12,6 +12,7 @@ import { TextCell, HeaderCell } from '@/components/table/Cell';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 import { textToI18nKey, toArray } from '@/utils/TranslationUtils';
+import { APISocket } from '@/services/SocketService';
 
 const TABLE_ROW_HEIGHT = 50;
 
@@ -34,6 +35,8 @@ export type TableContainerProps = React.PropsWithChildren<{
   store: any;
 
   dataLoader: any;
+  socket: APISocket;
+
   t: UI.TranslateF;
   moduleId: string | string[];
 
@@ -111,7 +114,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
   }
 
   updateRowRange = () => {
-    const { store } = this.props;
+    const { socket, store } = this.props;
     const { height } = this.state;
 
     const startRows = convertStartToRows(this.scrollPosition);
@@ -125,26 +128,26 @@ class TableContainer extends React.Component<TableContainerProps, State> {
     }
 
     console.assert(store.active, 'Posting data for an inactive view');
-    TableActions.setRange(store.viewUrl, startRows, maxRows);
+    TableActions.setRange(socket, store.viewUrl, startRows, maxRows);
   };
 
   onScrollStart = (horizontal: number, vertical: number) => {
-    const { store } = this.props;
+    const { store, socket } = this.props;
 
     if (store.DEBUG) {
       console.log(`Scrolling started: ${vertical}`, store.viewUrl);
     }
 
     console.assert(store.active, 'Sending pause for an inactive view');
-    TableActions.pause(store.viewUrl, true);
+    TableActions.pause(socket, store.viewUrl, true);
   };
 
   onScrollEnd = (horizontal: number, vertical: number) => {
-    const { store, viewId } = this.props;
+    const { socket, store, viewId } = this.props;
 
     this.scrollPosition = vertical;
     console.assert(store.active, 'Sending pause for an inactive view');
-    TableActions.pause(store.viewUrl, false);
+    TableActions.pause(socket, store.viewUrl, false);
 
     clearTimeout(this.scrollTimer);
     this.scrollTimer = window.setTimeout(this.updateRowRange, 500);
@@ -164,14 +167,14 @@ class TableContainer extends React.Component<TableContainerProps, State> {
   };
 
   onColumnClicked = (sortProperty: string) => {
-    const { store } = this.props;
+    const { socket, store } = this.props;
 
     let sortAscending = true;
     if (sortProperty === store.sortProperty && store.sortAscending) {
       sortAscending = false;
     }
 
-    TableActions.setSort(this.props.store.viewUrl, sortProperty, sortAscending);
+    TableActions.setSort(socket, store.viewUrl, sortProperty, sortAscending);
   };
 
   onColumnResizeEndCallback = (newColumnWidth: number, columnKey: string) => {
@@ -204,7 +207,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
 
     let { flexGrow, width } = column.props;
     const { cell, columnKey, renderCondition } = column.props;
-    const { store, rowClassNameGetter, moduleId, t } = this.props;
+    const { store, rowClassNameGetter, moduleId, t, dataLoader } = this.props;
 
     const mobileView = usingMobileLayout();
     if (!mobileView) {
@@ -228,7 +231,7 @@ class TableContainer extends React.Component<TableContainerProps, State> {
       allowCellsRecycling: true,
       cell: (
         <RowWrapperCell
-          dataLoader={this.props.dataLoader}
+          dataLoader={dataLoader}
           renderCondition={renderCondition}
           rowClassNameGetter={rowClassNameGetter}
           t={t}

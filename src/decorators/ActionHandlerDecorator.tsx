@@ -13,6 +13,7 @@ import { ActionData, ActionDialog, suffixActionI18nKey } from './components/Acti
 import { useSocket } from '@/context/SocketContext';
 import { useSessionStore } from '@/context/SessionStoreContext';
 import { ModalCloseContext, useModalCloseContext } from '@/context/ModalCloseContext';
+import { useAppStore } from '@/context/AppStoreContext';
 
 interface ActionHandlerDecoratorProps<
   ItemDataT extends UI.ActionDataValueType,
@@ -131,6 +132,7 @@ const ActionHandlerDecorator = <
   const location = useLocation();
   const navigate = useNavigate();
   const sessionStore = useSessionStore();
+  const appStore = useAppStore();
 
   const commonActionHandlerData = {
     location,
@@ -139,6 +141,7 @@ const ActionHandlerDecorator = <
     closeModal,
     socket,
     sessionStore,
+    appStore,
   };
 
   const closeConfirmation = () => {

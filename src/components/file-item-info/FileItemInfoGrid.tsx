@@ -42,11 +42,11 @@ interface FileItemInfoGridProps {
   user: API.HintedUser;
   downloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo>;
   showPath?: boolean;
-  session: UI.SessionItemBase;
+  sessionItem: UI.SessionItemBase;
 }
 
 const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({
-  session,
+  sessionItem,
   fileItem,
   user,
   downloadHandler,
@@ -88,7 +88,7 @@ const FileItemInfoGrid: React.FC<FileItemInfoGridProps> = ({
         itemInfoGetter={() => fileItem}
         downloadHandler={downloadHandler}
         contextElement=".ui.modal > .content"
-        entity={session}
+        entity={sessionItem}
       />
     </div>
   );

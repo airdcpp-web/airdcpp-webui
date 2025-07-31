@@ -15,9 +15,10 @@ import { translate } from '@/utils/TranslationUtils';
 import * as UI from '@/types/ui';
 import Popup from '@/components/semantic/Popup';
 import { useEffect, useRef } from 'react';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { useSocket } from '@/context/SocketContext';
 import { MainLayoutProps } from '../AuthenticatedApp';
+import { useAppStore } from '@/context/AppStoreContext';
 
 interface MainNavigationMobileProps
   extends Pick<MainLayoutProps, 'primaryRoutes' | 'secondaryRoutes' | 'sidebarRoutes'> {
@@ -36,6 +37,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
   const login = useSession();
   const ref = useRef<HTMLDivElement>(null);
   const socket = useSocket();
+  const appStore = useAppStore();
 
   useEffect(() => {
     const settings = {
@@ -106,7 +108,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
                     onClick(path, event);
                   })}
                   <div className="ui divider" />
-                  {parseMenuItem(getLogoutItem(socket))}
+                  {parseMenuItem(getLogoutItem(socket, appStore))}
                 </div>
               </div>
             )}

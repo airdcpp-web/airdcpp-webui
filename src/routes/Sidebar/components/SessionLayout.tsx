@@ -25,9 +25,10 @@ import {
   SessionLocationState,
 } from './types';
 import { useComponents } from './SessionMenuComponents';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 
 import '../sessions.css';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export interface SessionLayoutProps<
   SessionT extends UI.SessionItemBase,
@@ -58,14 +59,14 @@ const SessionLayout = <
 >(
   props: SessionLayoutProps<SessionT, SessionApiT, UIActionsT>,
 ) => {
-  const { hasAccess } = useSession();
+  const session = useSession();
   const layoutWidth = useLayoutWidth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const { activeItem, onKeyDown } = useSessionManager(props);
 
-  const hasEditAccess = hasAccess(props.editAccess);
+  const hasEditAccess = hasAccess(session, props.editAccess);
   const isNewLayout = !!props.newLayout && location.pathname.endsWith('/new');
 
   const getSessionChildren = () => {
@@ -107,7 +108,7 @@ const SessionLayout = <
     // We have a session
     return (
       <SessionItemLayout
-        session={activeItem}
+        sessionItem={activeItem}
         sessionApi={sessionApi}
         uiActions={uiActions}
         location={location}

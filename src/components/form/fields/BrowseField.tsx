@@ -9,7 +9,8 @@ import { FileBrowserDialog } from '@/components/filebrowser';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 interface BrowseFieldConfig {
   historyId: string;
@@ -23,7 +24,7 @@ interface BrowserFieldProps {
 export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { hasAccess } = useSession();
+  const session = useSession();
 
   const onConfirm = (path: string) => {
     locals.onChange(path);
@@ -47,7 +48,7 @@ export const BrowseFieldInput = ({ locals }: BrowserFieldProps) => {
     });
   };
 
-  const hasFilesystemAccess = hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
+  const hasFilesystemAccess = hasAccess(session, API.AccessEnum.FILESYSTEM_VIEW);
   const fieldStyle = classNames('ui fluid input field', { action: hasFilesystemAccess });
 
   const { formT } = locals.context;

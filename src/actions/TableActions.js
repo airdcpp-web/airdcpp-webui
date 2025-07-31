@@ -1,9 +1,5 @@
 import Reflux from 'reflux';
 
-import SocketService from '@/services/SocketService';
-
-import LoginStore from '@/stores/reflux/LoginStore';
-
 const TableActions = Reflux.createActions([
   { setRange: { asyncResult: true } },
   { setSort: { asyncResult: true } },
@@ -13,16 +9,18 @@ const TableActions = Reflux.createActions([
   'clear',
 ]);
 
-const postSettings = (settings, viewUrl, action) => {
-  return SocketService.post(viewUrl + '/settings', settings)
+const postSettings = (socket, settings, viewUrl, action) => {
+  return socket
+    .post(viewUrl + '/settings', settings)
     .then((data) => action.completed(viewUrl, data))
     .catch((error) => action.failed(viewUrl, error));
 };
 
-TableActions.close.listen(function (viewUrl, sessionExists) {
-  if (sessionExists && LoginStore.socketAuthenticated) {
+TableActions.close.listen(function (socket, viewUrl, sessionExists) {
+  if (sessionExists) {
     const that = this;
-    return SocketService.delete(viewUrl)
+    return socket
+      .delete(viewUrl)
       .then((data) => that.completed(viewUrl, data))
       .catch((error) => this.failed(viewUrl, error));
   }
@@ -30,8 +28,9 @@ TableActions.close.listen(function (viewUrl, sessionExists) {
   return Promise.resolve();
 });
 
-TableActions.setSort.listen(function (viewUrl, sortProperty, sortAscending) {
+TableActions.setSort.listen(function (socket, viewUrl, sortProperty, sortAscending) {
   postSettings(
+    socket,
     {
       sort_property: sortProperty,
       sort_ascending: sortAscending,
@@ -41,9 +40,10 @@ TableActions.setSort.listen(function (viewUrl, sortProperty, sortAscending) {
   );
 });
 
-TableActions.setRange.listen(function (viewUrl, rangeStart, maxRows) {
+TableActions.setRange.listen(function (socket, viewUrl, rangeStart, maxRows) {
   console.assert(maxRows > 0, 'Invalid max rows');
   postSettings(
+    socket,
     {
       range_start: rangeStart,
       max_count: maxRows,
@@ -53,8 +53,9 @@ TableActions.setRange.listen(function (viewUrl, rangeStart, maxRows) {
   );
 });
 
-TableActions.pause.listen(function (viewUrl, pause) {
+TableActions.pause.listen(function (socket, viewUrl, pause) {
   postSettings(
+    socket,
     {
       paused: pause,
     },
@@ -63,9 +64,10 @@ TableActions.pause.listen(function (viewUrl, pause) {
   );
 });
 
-TableActions.init.listen(function (viewUrl, entityId, filterData) {
+TableActions.init.listen(function (socket, viewUrl, entityId, filterData) {
   if (filterData) {
     postSettings(
+      socket,
       {
         source_filter: filterData,
       },

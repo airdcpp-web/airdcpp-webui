@@ -44,8 +44,8 @@ const createLocalSession = SessionCreatorDecorator<API.ViewFile, RemoteViewFileD
   },
 });
 
-const setRead = (session: UI.SessionItemBase, socket: APISocket) => {
-  return socket.post(`${ViewFileConstants.SESSIONS_URL}/${session.id}/read`);
+const setRead = (viewFile: UI.SessionItemBase, socket: APISocket) => {
+  return socket.post(`${ViewFileConstants.SESSIONS_URL}/${viewFile.id}/read`);
 };
 
 export const ViewFileAPIActions = {

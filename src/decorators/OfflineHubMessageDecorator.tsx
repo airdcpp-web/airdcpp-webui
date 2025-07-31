@@ -9,8 +9,9 @@ import * as UI from '@/types/ui';
 import { Trans } from 'react-i18next';
 import { toI18nKey } from '@/utils/TranslationUtils';
 import IconConstants from '@/constants/IconConstants';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { useSessionStoreProperty } from '@/context/SessionStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export type OfflineHubMessageDecoratorProps = React.PropsWithChildren<{
   offlineMessage: MessageDescriptionType;
@@ -23,8 +24,8 @@ const OfflineHubMessageDecorator: React.FC<OfflineHubMessageDecoratorProps> = me
       state.hubs.hasConnectedHubs(),
     );
 
-    const { hasAccess } = useSession();
-    if (!hasConnectedHubs && hasAccess(API.AccessEnum.HUBS_VIEW)) {
+    const session = useSession();
+    if (!hasConnectedHubs && hasAccess(session, API.AccessEnum.HUBS_VIEW)) {
       return (
         <Message
           className="offline-message"

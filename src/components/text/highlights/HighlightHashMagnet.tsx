@@ -13,15 +13,18 @@ import { TableDropdownProps } from '@/components/semantic/TableDropdown';
 import { useFormatter } from '@/context/FormatterContext';
 
 const magnetDownloadHandler: UI.DownloadHandler<UI.DownloadableItemInfo> = (
-  itemInfo,
-  user,
+  { itemInfo, user },
   downloadData,
+  socket,
 ) => {
-  return createFileBundle({
-    ...itemInfo,
-    ...downloadData,
-    user,
-  });
+  return createFileBundle(
+    {
+      ...itemInfo,
+      ...downloadData,
+      user,
+    },
+    socket,
+  );
 };
 
 export interface HighlightHashMagnetProps extends Pick<TableDropdownProps, 'position'> {
@@ -68,7 +71,7 @@ export const HighlightHashMagnet: React.FC<HighlightHashMagnetProps> = ({
       downloadHandler: magnetDownloadHandler,
       itemDataGetter: () => Promise.resolve(downloadData),
       userGetter: () => downloadUser,
-      session: undefined,
+      sessionItem: undefined,
     });
   }, []);
 

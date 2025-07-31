@@ -43,21 +43,21 @@ export const createMessageSlice = () => {
 
       scroll: createSessionScrollSlice(),
 
-      onFetchMessages: (session: UI.SessionItemBase) =>
+      onFetchMessages: (chatSession: UI.SessionItemBase) =>
         set(
           produce<State>((state) => {
-            state.initializedSession.add(session.id);
+            state.initializedSession.add(chatSession.id);
           }),
         ),
 
-      onMessagesFetched: (session: UI.SessionItemBase, cacheMessages: MessageCache) =>
+      onMessagesFetched: (chatSession: UI.SessionItemBase, cacheMessages: MessageCache) =>
         set(
           produce<State>((state) => {
             const mergedMessages = mergeCacheMessages(
               cacheMessages,
-              get().messages.get(session.id),
+              get().messages.get(chatSession.id),
             );
-            state.messages.set(session.id, mergedMessages);
+            state.messages.set(chatSession.id, mergedMessages);
           }),
         ),
 
@@ -69,10 +69,10 @@ export const createMessageSlice = () => {
         onMessageReceived(sessionId, data, 'log_message');
       },
 
-      updateSession: (session: Partial<UI.MessageCounts>, sessionId: API.IdType) =>
+      updateSession: (chatSession: Partial<UI.MessageCounts>, sessionId: API.IdType) =>
         set(
           produce<State>((state) => {
-            if (!session.message_counts) {
+            if (!chatSession.message_counts) {
               return;
             }
 
@@ -84,7 +84,7 @@ export const createMessageSlice = () => {
             // Message limit exceed or messages were cleared?
             const splicedMessages = checkSplice(
               sessionMessages,
-              session.message_counts.total,
+              chatSession.message_counts.total,
             );
 
             // Don't update the messages if nothing has changed
@@ -96,11 +96,11 @@ export const createMessageSlice = () => {
           }),
         ),
 
-      removeSession: (session: ChatSession) => {
+      removeSession: (chatSession: ChatSession) => {
         set(
           produce<State>((state) => {
-            state.messages.delete(session.id);
-            state.initializedSession.delete(session.id);
+            state.messages.delete(chatSession.id);
+            state.initializedSession.delete(chatSession.id);
           }),
         );
       },

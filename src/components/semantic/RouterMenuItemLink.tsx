@@ -17,21 +17,21 @@ type RouterMenuItemLinkProps = React.PropsWithChildren<{
   className?: string;
   onClick?: (evt: React.SyntheticEvent<any>) => void;
   unreadInfoStoreSelector?: UI.UnreadInfoStoreSelector;
-  session?: UI.SessionItemBase;
+  sessionItem?: UI.SessionItemBase;
 }>;
 
 const getUrgencies = (
   unreadInfoStore: UI.UnreadInfoStore | UI.SessionSlice<UI.SessionType> | null,
-  session: UI.SessionItemBase | undefined,
+  sessionItem: UI.SessionItemBase | undefined,
 ): UI.UrgencyCountMap | null => {
   if (!unreadInfoStore) {
     return null;
   }
 
-  if (!!session && 'getSession' in unreadInfoStore) {
+  if (!!sessionItem && 'getSession' in unreadInfoStore) {
     // Session objects are immutable so the one received via props
     // may be outdated already
-    const currentSession = unreadInfoStore.getSession(session.id);
+    const currentSession = unreadInfoStore.getSession(sessionItem.id);
     return !!currentSession ? unreadInfoStore.getItemUrgencies(currentSession) : null;
   }
 
@@ -47,13 +47,13 @@ const RouterMenuItemLink = memo<RouterMenuItemLinkProps>(
     url,
     children,
     unreadInfoStoreSelector,
-    session,
+    sessionItem,
   }) {
     const unreadInfoStore = useSessionStoreProperty((state) =>
       unreadInfoStoreSelector ? unreadInfoStoreSelector(state) : null,
     );
 
-    const urgencies = getUrgencies(unreadInfoStore, session);
+    const urgencies = getUrgencies(unreadInfoStore, sessionItem);
     return (
       <NavLink
         end={url === '/'}

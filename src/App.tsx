@@ -26,8 +26,6 @@ import { InstallPromptContext } from '@/context/InstallPromptContext';
 import { SocketContext } from '@/context/SocketContext';
 import { FormatterContext } from '@/context/FormatterContext';
 import { createFormatter } from '@/utils/Formatter';
-import LoginStore from '@/stores/reflux/LoginStore';
-import { SessionContext } from '@/context/SessionContext';
 
 import '@/utils/semantic';
 
@@ -74,9 +72,7 @@ const App = () => {
               <I18nextProvider i18n={i18n}>
                 <InstallPromptContext.Provider value={prompt}>
                   <MeasuredBackground>
-                    <SessionContext.Provider value={LoginStore}>
-                      <RouterProvider router={router} />
-                    </SessionContext.Provider>
+                    <RouterProvider router={router} />
                   </MeasuredBackground>
                 </InstallPromptContext.Provider>
               </I18nextProvider>

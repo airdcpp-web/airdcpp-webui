@@ -8,9 +8,10 @@ import ExternalLink from '@/components/ExternalLink';
 import { useSessionStore } from '@/context/SessionStoreContext';
 import { HubAPIActions } from '@/actions/store/HubActions';
 import { useSocket } from '@/context/SocketContext';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 
 import { CreateSessionProps } from '@/actions/store/decorators/SessionCreatorDecorator';
+import { hasAccess } from '@/utils/AuthUtils';
 
 interface ClickHandlerProps extends CreateSessionProps {
   session: UI.AuthenticatedSession;
@@ -28,7 +29,7 @@ const onClickLink = (
   ) {
     evt.preventDefault();
 
-    if (!session.hasAccess(API.AccessEnum.HUBS_EDIT)) {
+    if (!hasAccess(session, API.AccessEnum.HUBS_EDIT)) {
       return;
     }
 

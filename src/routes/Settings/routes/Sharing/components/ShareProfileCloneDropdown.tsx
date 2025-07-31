@@ -20,7 +20,8 @@ import IconConstants from '@/constants/IconConstants';
 import { translateActionName } from '@/utils/ActionUtils';
 import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
 import { Formatter, useFormatter } from '@/context/FormatterContext';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 const getProfileItem = (
   profile: API.ShareProfile,
@@ -54,9 +55,9 @@ const ShareProfileCloneDropdown: React.FC<ShareProfileCloneDropdownProps> = ({
   profiles,
   moduleT,
 }) => {
-  const { hasAccess } = useSession();
+  const session = useSession();
   const formatter = useFormatter();
-  if (!hasAccess(ShareProfileCreateAction.access)) {
+  if (!hasAccess(session, ShareProfileCreateAction.access)) {
     return null;
   }
 

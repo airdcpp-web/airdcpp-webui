@@ -11,7 +11,8 @@ import * as UI from '@/types/ui';
 
 import { useSocket } from '@/context/SocketContext';
 import { APISocket } from '@/services/SocketService';
-import { useSession } from '@/context/SessionContext';
+import { hasAccess } from '@/utils/AuthUtils';
+import { useSession } from '@/context/AppStoreContext';
 
 export interface SocketSubscriptionDecoratorProps {
   session?: UI.SessionItemBase;
@@ -32,6 +33,7 @@ export interface SocketSubscriptionDecoratorChildProps<PropsT = unknown> {
   addSocketListener: AddSocketListener;
   removeSocketListeners: (props?: PropsT) => void;
   socket: APISocket;
+  session: UI.AuthenticatedSession;
 }
 
 const SocketSubscriptionDecorator = function <PropsT extends object>(
@@ -44,7 +46,8 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
   const Decorator: React.FC<PropsT & SocketSubscriptionDecoratorProps> = (props) => {
     const socketSubscriptions = React.useRef<SubscriptionRemoveHandler[]>([]);
     const socket = useSocket();
-    const { hasAccess } = useSession();
+    // const login = useAppStoreProperty((state) => state.login);
+    const session = useSession();
 
     const addSocketListener = async <
       DataT extends object | void,
@@ -56,7 +59,7 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
       entityId: EntityId | undefined,
       access: API.AccessEnum,
     ) => {
-      if (access && !hasAccess(access)) {
+      if (access && !hasAccess(session, access)) {
         return;
       }
 
@@ -89,6 +92,7 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
         addSocketListener={addSocketListener}
         removeSocketListeners={removeSocketListeners}
         socket={socket}
+        session={session}
       />
     );
   };

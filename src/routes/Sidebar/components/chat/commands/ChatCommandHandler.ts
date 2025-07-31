@@ -30,16 +30,16 @@ const CommandHandler = (chatController: UI.ChatController) => {
       if (chatCommands[command]) {
         chatCommands[command].handler(params, chatController, commandProps);
       } else if (command === 'help') {
-        const { session, chatApi } = chatController;
+        const { chatSession, chatApi } = chatController;
         const text = getHelpString(chatCommands, commandProps.session);
         const message: API.OutgoingChatStatusMessage = {
           text,
           severity: API.SeverityEnum.INFO,
           type: API.StatusMessageTypeEnum.PRIVATE,
-          owner: `session:${commandProps.session.sessionId}`,
+          owner: `session:${commandProps.session.session_id}`,
         };
 
-        chatApi.sendStatusMessage(commandProps.socket, session, message);
+        chatApi.sendStatusMessage(commandProps.socket, chatSession, message);
       }
     },
   };

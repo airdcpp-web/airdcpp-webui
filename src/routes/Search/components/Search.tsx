@@ -8,7 +8,7 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from '@/decorators/DataProviderDecorator';
 import OfflineHubMessageDecorator from '@/decorators/OfflineHubMessageDecorator';
-import LoginStore from '@/stores/reflux/LoginStore';
+
 import { search as doSearch } from '@/services/api/SearchApi';
 import { getModuleT } from '@/utils/TranslationUtils';
 
@@ -26,6 +26,7 @@ import {
 } from '@/utils/BrowserUtils';
 
 import '../style.css';
+import { useSocket } from '@/context/SocketContext';
 
 const RESULT_WAIT_PERIOD = 4000;
 
@@ -55,6 +56,7 @@ const Search: React.FC<SearchDataProps> = ({ instance, t }) => {
   const navigate = useNavigate();
   const [searchString, setSearchString] = useState('');
   const [running, setRunning] = useState<API.SearchResponse | null>(null);
+  const socket = useSocket();
 
   const parseOptions = (): SearchOptions | null => {
     const { query } = instance;
@@ -83,15 +85,19 @@ const Search: React.FC<SearchDataProps> = ({ instance, t }) => {
 
     const { hub_urls, size_limits, ...queryOptions } = options || {};
     try {
-      const res = await doSearch(instance, {
-        query: {
-          pattern,
-          ...size_limits,
-          ...queryOptions,
+      const res = await doSearch(
+        instance,
+        {
+          query: {
+            pattern,
+            ...size_limits,
+            ...queryOptions,
+          },
+          priority: API.PriorityEnum.HIGH,
+          hub_urls,
         },
-        priority: API.PriorityEnum.HIGH,
-        hub_urls,
-      });
+        socket,
+      );
 
       setSearchString(pattern);
       setRunning(res);
@@ -168,14 +174,14 @@ const OWNER_ID_SUFFIX = 'webui';
 
 export default DataProviderDecorator<SearchProps, SearchDataProps>(Search, {
   urls: {
-    instance: async (props, socket) => {
+    instance: async ({ session }, socket) => {
       // Try to use a previously created instance for this session
       const instances = await socket.get<API.SearchInstance[]>(
         `${SearchConstants.INSTANCES_URL}`,
       );
 
       const instance = instances.find(
-        (i) => i.owner === `session:${LoginStore.sessionId}:${OWNER_ID_SUFFIX}`,
+        (i) => i.owner === `session:${session.session_id}:${OWNER_ID_SUFFIX}`,
       );
       if (!!instance) {
         return instance;

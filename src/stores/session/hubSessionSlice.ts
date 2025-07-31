@@ -12,8 +12,8 @@ import { HubAPIActions } from '@/actions/store/HubActions';
 import HubConstants from '@/constants/HubConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
-const HubSessionUrgencyGetter = (session: API.Hub) =>
-  session.settings.use_main_chat_notify ? HubMessageNotifyUrgencies : HubMessageUrgencies;
+const HubSessionUrgencyGetter = (hub: API.Hub) =>
+  hub.settings.use_main_chat_notify ? HubMessageNotifyUrgencies : HubMessageUrgencies;
 
 export const createHubSlice: UI.PartialLensSlice<
   UI.HubSessionSlice,
@@ -27,8 +27,7 @@ export const createHubSlice: UI.PartialLensSlice<
     }
 
     return !!sessions.find(
-      (session: API.Hub) =>
-        session.connect_state.id === API.HubConnectStateEnum.CONNECTED,
+      (hub: API.Hub) => hub.connect_state.id === API.HubConnectStateEnum.CONNECTED,
     );
   },
 
@@ -38,7 +37,7 @@ export const createHubSlice: UI.PartialLensSlice<
       return undefined;
     }
 
-    return sessions.find((session: API.Hub) => session.hub_url === hubUrl);
+    return sessions.find((hub) => hub.hub_url === hubUrl);
   },
 });
 

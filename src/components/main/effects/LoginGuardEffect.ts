@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react';
 
-import LoginActions from '@/actions/reflux/LoginActions';
-import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
+import { LoginAPIActions } from '@/actions/store/LoginActions';
 
 import { useNavigate, Location } from 'react-router';
 import { useSocket } from '@/context/SocketContext';
 
-export const useSessionGuard = (login: LoginState, location: Location) => {
+import * as UI from '@/types/ui';
+import { useAppStoreApi } from '@/context/AppStoreContext';
+
+export const useSessionGuard = (login: UI.LoginState, location: Location) => {
   const [prevSocketAuthenticated, setPrevSocketAuthenticated] = useState(
-    LoginStore.getState().socketAuthenticated,
+    login.socketAuthenticated,
   );
+
   const socket = useSocket();
+  const appStoreApi = useAppStoreApi();
 
   const navigate = useNavigate();
+  const session = appStoreApi.getState().login.getSession();
   useEffect(() => {
-    if (login.hasSession && !login.socketAuthenticated) {
-      LoginActions.connect(LoginStore.authToken, socket);
-    } else if (!login.hasSession) {
+    if (session && !login.socketAuthenticated) {
+      LoginAPIActions.connect(session.auth_token, {
+        appStore: appStoreApi.getState(),
+        socket,
+      });
+    } else if (!session) {
       // Go to the login page as we don't have a valid session
       // Return to this page if the session was lost (instead of having been logged out)
 
@@ -27,5 +35,5 @@ export const useSessionGuard = (login: LoginState, location: Location) => {
     }
 
     setPrevSocketAuthenticated(login.socketAuthenticated);
-  }, [login.socketAuthenticated, login.hasSession]);
+  }, [login.socketAuthenticated, session]);
 };

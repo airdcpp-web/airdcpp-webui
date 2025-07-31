@@ -6,7 +6,8 @@ import classNames from 'classnames';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 import { SettingSaveState } from '../effects/useSettingSaveContext';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export interface SaveButtonProps {
   saveState: SettingSaveState;
@@ -17,7 +18,7 @@ export interface SaveButtonProps {
 const SaveButton: React.FC<SaveButtonProps> = ({ saveState, settingsT, className }) => {
   const { local, handleSave, hasChanges } = saveState;
   const [saving, setSaving] = useState(false);
-  const { hasAccess } = useSession();
+  const session = useSession();
 
   const onClick = async () => {
     setSaving(true);
@@ -29,7 +30,8 @@ const SaveButton: React.FC<SaveButtonProps> = ({ saveState, settingsT, className
     }
   };
 
-  const hasEditAccess: boolean = local || hasAccess(API.AccessEnum.SETTINGS_EDIT);
+  const hasEditAccess: boolean =
+    local || hasAccess(session, API.AccessEnum.SETTINGS_EDIT);
 
   let title;
   if (!hasEditAccess) {

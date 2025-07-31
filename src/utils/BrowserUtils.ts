@@ -87,3 +87,25 @@ export const pushUnique = (
     navigate(to, { ...options, replace: true });
   }
 };
+
+export const browserStorageUnavailable = () => {
+  try {
+    sessionStorage.setItem('storage_test', 'test');
+    sessionStorage.removeItem('storage_test');
+  } catch (e) {
+    if (e.code === DOMException.QUOTA_EXCEEDED_ERR && sessionStorage.length === 0) {
+      // Safari and private mode
+      return {
+        id: 'privateBrowsingNotSupported',
+        message: `This site can't be used with your browser if private browsing mode is enabled`,
+      };
+    } else {
+      return {
+        id: 'dataStorageNotSupported',
+        message: `This site can't be used with your browser because it doesn't support data storage`,
+      };
+    }
+  }
+
+  return null;
+};

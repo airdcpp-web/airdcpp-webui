@@ -1,5 +1,6 @@
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export const createSessionSliceSocketListener = (
   { socket, login }: UI.SessionStoreInitData,
@@ -11,7 +12,7 @@ export const createSessionSliceSocketListener = (
     listenerName,
     callback,
   ) => {
-    if (login.hasAccess(access)) {
+    if (hasAccess(login, access)) {
       await socket.addListener(moduleUrl, `${listenerPrefix}_${listenerName}`, callback);
     }
   };

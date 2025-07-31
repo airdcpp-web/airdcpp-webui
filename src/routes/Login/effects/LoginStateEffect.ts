@@ -1,11 +1,10 @@
-import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
 import { useEffect, useState } from 'react';
-import LoginActions from '@/actions/reflux/LoginActions';
+import { LoginAPIActions } from '@/actions/store/LoginActions';
 
-import * as API from '@/types/api';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useSocket } from '@/context/SocketContext';
+import { useAppStoreApi, useAppStoreProperty } from '@/context/AppStoreContext';
 
 export interface LoginLocationState {
   nextPath?: string;
@@ -17,12 +16,19 @@ const useSessionState = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const socket = useSocket();
+  const appStoreApi = useAppStoreApi();
 
-  const checkLoginState = (loginInfo: LoginState) => {
-    if (loginInfo.socketAuthenticated) {
+  const login = useAppStoreProperty((state) => state.login);
+
+  const refreshToken = login.getRefreshToken();
+  const session = login.getSession();
+
+  const checkLoginState = () => {
+    if (login.socketAuthenticated) {
       // Set UI language to match the app language
-      if (!!LoginStore.systemInfo) {
-        const language = (LoginStore.systemInfo as API.SystemInfo).language;
+      const { system_info: systemInfo } = session!;
+      if (systemInfo) {
+        const language = systemInfo.language;
         if (language !== i18n.language) {
           i18n.changeLanguage(language);
         }
@@ -32,7 +38,7 @@ const useSessionState = () => {
       const state = location.state as LoginLocationState;
       const nextPath = state?.nextPath ?? '/';
       navigate(nextPath, { replace: true });
-    } else if (!!loginInfo.lastError && !LoginStore.refreshToken) {
+    } else if (!!login.lastError && !refreshToken) {
       // Keep the loading state as true as long as there is socket actions happening
       // Changing the state to false will allow the login page to update
 
@@ -42,14 +48,15 @@ const useSessionState = () => {
   };
 
   useEffect(() => {
-    checkLoginState(LoginStore.getState());
-    return LoginStore.listen(checkLoginState);
-  }, []);
+    checkLoginState();
+  }, [login]);
 
   useEffect(() => {
-    const refreshToken: string | null = LoginStore.refreshToken;
     if (!!refreshToken) {
-      LoginActions.loginRefreshToken(refreshToken, socket);
+      LoginAPIActions.loginRefreshToken(refreshToken, {
+        socket,
+        appStore: appStoreApi.getState(),
+      });
       setLoading(true);
     }
   }, []);

@@ -7,7 +7,7 @@ import { getMockSession } from '@/tests/mocks/mock-session';
 
 import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
-import { addMockStoreSocketListeners } from '@/tests/mocks/mock-store';
+import { initMockSessionStore } from '@/tests/mocks/mock-store';
 import {
   EventMessageError,
   EventMessageInfo,
@@ -28,7 +28,7 @@ describe('event store', () => {
 
   const createMockAppStore = (initProps: UI.SessionStoreInitData) => {
     const appStore = createSessionStore();
-    const mocks = addMockStoreSocketListeners(appStore, initProps, server);
+    const mocks = initMockSessionStore(appStore, initProps, server);
 
     return { appStore, mocks };
   };
@@ -44,9 +44,7 @@ describe('event store', () => {
     return { appStore, mocks };
   };
 
-  const addMessages = (
-    events: ReturnType<typeof addMockStoreSocketListeners>['events'],
-  ) => {
+  const addMessages = (events: ReturnType<typeof initMockSessionStore>['events']) => {
     events.message.fire(EventMessageInfo);
     events.message.fire(EventMessageError);
   };

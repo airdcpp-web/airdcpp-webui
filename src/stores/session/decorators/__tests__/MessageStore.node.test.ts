@@ -11,7 +11,7 @@ import { getMockSession } from '@/tests/mocks/mock-session';
 
 import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
 
-import { addMockStoreSocketListeners } from '@/tests/mocks/mock-store';
+import { initMockSessionStore } from '@/tests/mocks/mock-store';
 import {
   PrivateChat1,
   PrivateChat1MessageMe,
@@ -64,7 +64,7 @@ describe('message store', () => {
 
   const createMockSessionStore = (initProps: UI.SessionStoreInitData) => {
     const sessionStore = createSessionStore();
-    const mocks = addMockStoreSocketListeners(sessionStore, initProps, server);
+    const mocks = initMockSessionStore(sessionStore, initProps, server);
 
     return { sessionStore, mocks };
   };
@@ -82,7 +82,7 @@ describe('message store', () => {
   };
 
   const addMessages = (
-    privateChat: ReturnType<typeof addMockStoreSocketListeners>['privateChat'],
+    privateChat: ReturnType<typeof initMockSessionStore>['privateChat'],
   ) => {
     privateChat.statusMessage.fire(PrivateChat1MessageStatus, SESSION_ID);
     privateChat.chatMessage.fire(PrivateChat1MessageMe, SESSION_ID);

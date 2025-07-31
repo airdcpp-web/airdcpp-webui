@@ -23,7 +23,7 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
     url={url}
     className="session-item"
     icon={status}
-    session={sessionItem}
+    sessionItem={sessionItem}
     unreadInfoStoreSelector={unreadInfoStoreSelector}
   >
     <span className="session-name">{name}</span>

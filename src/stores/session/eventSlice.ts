@@ -16,6 +16,7 @@ import * as UI from '@/types/ui';
 import { Lens, lens } from '@dhmk/zustand-lens';
 import { createBasicScrollSlice } from './decorators/scrollSlice';
 import { EventAPIActions } from '@/actions/store/EventActions';
+import { hasAccess } from '@/utils/AuthUtils';
 
 interface Readable {
   setRead?: UI.BasicReadHandler;
@@ -122,7 +123,7 @@ export const initEventStore = (
   sessionStore: UI.SessionStore,
   { socket, login }: UI.SessionStoreInitData,
 ) => {
-  if (login.hasAccess(API.AccessEnum.EVENTS_VIEW)) {
+  if (hasAccess(login, API.AccessEnum.EVENTS_VIEW)) {
     const url = EventConstants.MODULE_URL;
 
     socket.addListener(url, EventConstants.MESSAGE, sessionStore.events.onLogMessage);

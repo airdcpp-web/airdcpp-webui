@@ -57,14 +57,14 @@ class ResultDialog extends Component<Props & DataProps> {
         <DownloadDialog
           downloadHandler={searchDownloadHandler}
           itemDataGetter={this.itemDataGetter}
-          session={instance}
+          sessionItem={instance}
         />
         <FileItemInfoGrid
           fileItem={parentResult}
           downloadHandler={searchDownloadHandler}
           user={parentResult.users.user}
           showPath={false}
-          session={instance}
+          sessionItem={instance}
         />
         <UserResultTable parentResult={parentResult} instanceId={instance.id} />
       </RouteModal>

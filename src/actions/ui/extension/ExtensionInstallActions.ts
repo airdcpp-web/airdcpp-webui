@@ -21,13 +21,14 @@ const downloadExtension = (
   });
 };
 
-const handleNpmAction: UI.ActionHandler<UI.NpmPackage> = async ({
+const handleNpmFetchAction: UI.ActionHandler<UI.NpmPackage> = async ({
   itemData: npmPackage,
   socket,
+  appStore,
 }) => {
   const data = await fetchCorsSafeData(
     ExtensionConstants.NPM_PACKAGE_URL + npmPackage.name + '/latest',
-    true,
+    appStore.login.getSession()!,
   );
 
   const { tarball, shasum } = data.dist;
@@ -61,7 +62,7 @@ export const ExtensionInstallNpmAction = {
   displayName: 'Install',
   icon: IconConstants.CREATE,
   access: API.AccessEnum.ADMIN,
-  handler: handleNpmAction,
+  handler: handleNpmFetchAction,
 };
 
 export const ExtensionUpdateNpmAction = {
@@ -69,7 +70,7 @@ export const ExtensionUpdateNpmAction = {
   displayName: 'Update',
   icon: IconConstants.REFRESH_COLORED,
   access: API.AccessEnum.ADMIN,
-  handler: handleNpmAction,
+  handler: handleNpmFetchAction,
 };
 
 export const ExtensionInstallActionModule = {

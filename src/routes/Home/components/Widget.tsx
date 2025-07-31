@@ -7,20 +7,21 @@ import * as UI from '@/types/ui';
 
 import { getWidgetT, translateWidgetName } from '@/routes/Home/widgets/WidgetUtils';
 import { WidgetEditActionMenu } from '@/actions/ui/widget';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { HomeLayoutStore } from '../stores/homeLayoutSlice';
+import { hasAccess } from '@/utils/AuthUtils';
 
 const getError = (
   widgetInfo: UI.Widget,
   settings: UI.WidgetSettings,
   rootWidgetT: UI.ModuleTranslator,
-  { hasAccess }: UI.AuthenticatedSession,
+  session: UI.AuthenticatedSession,
 ) => {
   if (widgetInfo.formSettings && !settings.widget) {
     return rootWidgetT.t('settingsMissing', 'Widget settings missing');
   }
 
-  if (widgetInfo.access && !hasAccess(widgetInfo.access)) {
+  if (widgetInfo.access && !hasAccess(session, widgetInfo.access)) {
     return rootWidgetT.t('accessDenied', `You aren't allowed to access this widget`);
   }
 

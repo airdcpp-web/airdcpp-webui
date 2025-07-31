@@ -11,8 +11,8 @@ import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
 import PrivateChatConstants from '@/constants/PrivateChatConstants';
 import { createSessionSliceSocketListener } from './decorators/sliceSocketListener';
 
-const PrivateChatSessionUrgencyGetter = (session: API.PrivateChat) =>
-  session.user.flags.includes('bot') ? ChatroomUrgencies : PrivateMessageUrgencies;
+const PrivateChatSessionUrgencyGetter = (privateChat: API.PrivateChat) =>
+  privateChat.user.flags.includes('bot') ? ChatroomUrgencies : PrivateMessageUrgencies;
 
 const createPrivateChatStore = () => {
   return lens<UI.PrivateChatStore, UI.SessionStore>((...a) => {

@@ -4,11 +4,12 @@ import { withLenses } from '@dhmk/zustand-lens';
 import * as UI from '@/types/ui';
 
 import { createLocalSettingStore, initLocalSettingStore } from './localSettingSlice';
+import { createLoginStore, initLoginStore } from './loginSlice';
 
 export const createAppStore = () => {
   const store = createStore<UI.AppStore>(
     withLenses(() => ({
-      // Sessions
+      login: createLoginStore(),
       settings: createLocalSettingStore(),
     })),
   );
@@ -16,9 +17,7 @@ export const createAppStore = () => {
   return store;
 };
 
-export const initAppStore = (
-  appStore: UI.AppStore,
-  // initData: UI.SessionStoreInitData,
-) => {
+export const initAppStore = (appStore: UI.AppStore) => {
   initLocalSettingStore(appStore);
+  initLoginStore(appStore);
 };

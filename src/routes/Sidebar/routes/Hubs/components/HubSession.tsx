@@ -16,11 +16,13 @@ import {
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
+import { useSocket } from '@/context/SocketContext';
 import { shareTempFile } from '@/services/api/ShareApi';
 import IconConstants from '@/constants/IconConstants';
 import MenuConstants from '@/constants/MenuConstants';
 import { SessionChildProps } from '@/routes/Sidebar/components/types';
-import { useSession } from '@/context/SessionContext';
+
+import { useSession } from '@/context/AppStoreContext';
 import { HubAPIActions } from '@/actions/store/HubActions';
 import { buildChatCommands } from '@/routes/Sidebar/components/chat/commands/ChatCommands';
 import { clearHubChatMessages } from '@/services/api/HubApi';
@@ -41,9 +43,10 @@ type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject>;
 
 const HubChatCommands = buildChatCommands(API.AccessEnum.HUBS_EDIT, clearHubChatMessages);
 
-const HubSession: React.FC<HubSessionProps> = ({ session, sessionT }) => {
-  const [showList, setShowList] = useState(checkList(session.id));
+const HubSession: React.FC<HubSessionProps> = ({ sessionItem, sessionT }) => {
+  const [showList, setShowList] = useState(checkList(sessionItem.id));
   const login = useSession();
+  const socket = useSocket();
 
   const toggleListState = () => {
     setShowList(!showList);
@@ -51,18 +54,20 @@ const HubSession: React.FC<HubSessionProps> = ({ session, sessionT }) => {
   };
 
   useEffect(() => {
-    setShowList(checkList(session.id));
-  }, [session.id]);
+    setShowList(checkList(sessionItem.id));
+  }, [sessionItem.id]);
 
   const getMessage = () => {
-    const connectState = session.connect_state.id;
+    const connectState = sessionItem.connect_state.id;
 
     if (connectState === API.HubConnectStateEnum.PASSWORD) {
       return (
         <HubActionPrompt
           title={sessionT.translate('Password required')}
           icon={IconConstants.LOCK}
-          content={<PasswordPrompt hub={session} sessionT={sessionT} />}
+          content={
+            <PasswordPrompt hub={sessionItem} sessionT={sessionT} socket={socket} />
+          }
         />
       );
     }
@@ -72,7 +77,9 @@ const HubSession: React.FC<HubSessionProps> = ({ session, sessionT }) => {
         <HubActionPrompt
           title={sessionT.translate('Redirect requested')}
           icon={IconConstants.REDIRECT}
-          content={<RedirectPrompt hub={session} sessionT={sessionT} />}
+          content={
+            <RedirectPrompt hub={sessionItem} sessionT={sessionT} socket={socket} />
+          }
         />
       );
     }
@@ -82,12 +89,12 @@ const HubSession: React.FC<HubSessionProps> = ({ session, sessionT }) => {
 
   const onClickUsers = () => {
     const newValue = toggleListState();
-    saveSessionProperty(getStorageKey(session.id), newValue);
+    saveSessionProperty(getStorageKey(sessionItem.id), newValue);
   };
 
   const handleFileUpload = (file: File) => {
-    const { hub_url } = session;
-    return shareTempFile(file, hub_url, undefined, login);
+    const { hub_url: hubUrl } = sessionItem;
+    return shareTempFile({ file, hubUrl }, login, socket);
   };
 
   const checkbox = (
@@ -104,20 +111,20 @@ const HubSession: React.FC<HubSessionProps> = ({ session, sessionT }) => {
     <div className="hub chat session">
       {getMessage()}
       {showList ? (
-        <HubUserTable session={session} sessionT={sessionT} />
+        <HubUserTable hub={sessionItem} sessionT={sessionT} />
       ) : (
         <ChatLayout
           storeSelector={HubStoreSelector}
           chatApi={HubAPIActions}
           chatCommands={HubChatCommands}
           chatAccess={API.AccessEnum.HUBS_SEND}
-          session={session}
+          chatSession={sessionItem}
           handleFileUpload={handleFileUpload}
           highlightRemoteMenuId={MenuConstants.HUB_MESSAGE_HIGHLIGHT}
-          hubUrl={session.hub_url}
+          hubUrl={sessionItem.hub_url}
         />
       )}
-      <HubFooter userlistToggle={checkbox} session={session} sessionT={sessionT} />
+      <HubFooter userlistToggle={checkbox} hub={sessionItem} sessionT={sessionT} />
     </div>
   );
 };

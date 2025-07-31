@@ -18,12 +18,12 @@ import FileIcon from '@/components/icon/FileIcon';
 
 import { translate, toI18nKey } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export interface TempShareDropdownProps {
   handleUpload: (evt: React.SyntheticEvent<any>) => void;
   style?: React.CSSProperties;
   className?: string;
-  hasAccess: UI.AccessF;
 
   // Allows temporarily replacing the content without
   // the need to refetch all temp share data
@@ -114,8 +114,8 @@ export default DataProviderDecorator<TempShareDropdownProps, DataProps>(
   TempShareDropdown,
   {
     urls: {
-      files: ({ hasAccess }, socket) => {
-        if (!hasAccess(API.AccessEnum.SETTINGS_VIEW)) {
+      files: ({ session }, socket) => {
+        if (!hasAccess(session, API.AccessEnum.SETTINGS_VIEW)) {
           return Promise.resolve([]);
         }
 

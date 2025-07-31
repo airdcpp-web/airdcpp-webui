@@ -20,9 +20,14 @@ import * as UI from '@/types/ui';
 import { StoreApi } from 'zustand';
 import { createAppStore } from '@/stores/app';
 
+export interface BaseRenderProps {
+  appStore: StoreApi<UI.AppStore>;
+}
+
 export const renderBaseNode = (
   node: React.ReactNode,
   viewType = VIEW_SCROLLABLE,
+  { appStore }: BaseRenderProps = { appStore: createAppStore() },
   wrapper?: React.ComponentType,
 ) => {
   // Create container
@@ -36,7 +41,7 @@ export const renderBaseNode = (
   // Initializers
   const i18n = getMockI18n();
   const formatter = createFormatter(i18n);
-  const appStore = createAppStore();
+  // const appStore = createAppStore();
 
   const testHelpers = render(node, {
     container: document.body.appendChild(container),
@@ -61,28 +66,26 @@ export const renderBaseNode = (
   };
 };
 
-interface DataProps {
-  session: UI.AuthenticatedSession;
+interface DataProps extends BaseRenderProps {
   sessionStore: StoreApi<UI.SessionStore>;
   socket: APISocket;
 }
 
 export const renderDataNode = (
   node: React.ReactNode,
-  { session, sessionStore, socket }: DataProps,
+  { sessionStore, socket, ...other }: DataProps,
   viewType = VIEW_SCROLLABLE,
 ) => {
   const container = ({ children }: React.PropsWithChildren) => (
-    <SessionTestWrapper session={session} socket={socket} sessionStore={sessionStore}>
+    <SessionTestWrapper socket={socket} sessionStore={sessionStore}>
       {children}
     </SessionTestWrapper>
   );
 
-  const testHelpers = renderBaseNode(node, viewType, container);
+  const testHelpers = renderBaseNode(node, viewType, other, container);
 
   return {
     ...testHelpers,
-    session,
   };
 };
 
@@ -91,12 +94,22 @@ interface RouteRenderOptions {
   viewType?: string;
 }
 
-export const renderBasicRoutes = (routes: RouteObject[], options: RouteRenderOptions) => {
-  const { viewType, routerProps = { initialEntries: ['/'] } } = options;
+export const renderBasicRoutes = (
+  routes: RouteObject[],
+  routeOptions: RouteRenderOptions,
+  baseOptions?: BaseRenderProps,
+  wrapper?: React.ComponentType,
+) => {
+  const { viewType, routerProps = { initialEntries: ['/'] } } = routeOptions;
 
   const router = createMemoryRouter(routes, routerProps);
 
-  const testHelpers = renderBaseNode(<RouterProvider router={router} />, viewType);
+  const testHelpers = renderBaseNode(
+    <RouterProvider router={router} />,
+    viewType,
+    baseOptions,
+    wrapper,
+  );
   return {
     ...testHelpers,
     router,

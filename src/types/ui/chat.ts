@@ -12,18 +12,18 @@ import { ActionHandlerProps } from './actions';
 export interface ChatAPIActions {
   sendChatMessage: (
     socket: APISocket,
-    session: SessionItemBase,
+    chatSession: SessionItemBase,
     text: string,
     thirdPerson?: boolean,
   ) => void;
   sendStatusMessage: (
     socket: APISocket,
-    session: SessionItemBase,
+    chatSession: SessionItemBase,
     message: API.OutgoingChatStatusMessage,
   ) => void;
   fetchMessages: (
     socket: APISocket,
-    session: SessionItemBase,
+    chatSession: SessionItemBase,
     messageStore: MessageSlice,
   ) => void;
 }
@@ -54,6 +54,6 @@ export interface ChatController {
   chatApi: ChatAPIActions & SessionAPIActions<SessionItemBase>;
   chatCommands: ChatCommandList;
   handleFileUpload: ChatFileUploadHandler;
-  session: SessionType;
+  chatSession: SessionType;
   hubUrl?: string;
 }

@@ -10,7 +10,8 @@ import { translate } from '@/utils/TranslationUtils';
 
 import './style.css';
 import { useTranslation } from 'react-i18next';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export interface AdjustableSpeedLimitProps {
   limit: number;
@@ -24,12 +25,12 @@ export const AdjustableSpeedLimit: React.FC<AdjustableSpeedLimitProps> = ({
   unit,
 }) => {
   const { t } = useTranslation();
-  const { hasAccess } = useSession();
+  const session = useSession();
 
   const value = limit
     ? `${limit} ${unit}/s`
     : translate('Disabled', t, UI.Modules.COMMON);
-  if (!hasAccess(API.AccessEnum.SETTINGS_EDIT)) {
+  if (!hasAccess(session, API.AccessEnum.SETTINGS_EDIT)) {
     return <span>{value}</span>;
   }
 

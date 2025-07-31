@@ -20,7 +20,7 @@ import FilelistConstants from '@/constants/FilelistConstants';
 import { filelistDownloadHandler } from '@/services/api/FilelistApi';
 
 interface FilelistItemInfoDialogProps {
-  session: API.FilelistSession;
+  filelist: API.FilelistSession;
 }
 
 interface DataProps extends DataProviderDecoratorChildProps {
@@ -29,9 +29,9 @@ interface DataProps extends DataProviderDecoratorChildProps {
 
 type Props = FilelistItemInfoDialogProps & ModalRouteDecoratorChildProps;
 
-export const FilelistItemGetter = (session: API.FilelistSession) => {
+export const FilelistItemGetter = (filelist: API.FilelistSession) => {
   const ret: UI.DownloadItemDataGetter<API.FilelistItem> = (itemId, socket) => {
-    return socket.get(`${FilelistConstants.MODULE_URL}/${session.id}/items/${itemId}`);
+    return socket.get(`${FilelistConstants.MODULE_URL}/${filelist.id}/items/${itemId}`);
   };
 
   return ret;
@@ -41,7 +41,7 @@ class FilelistItemInfoDialog extends Component<Props & DataProps> {
   static readonly displayName = 'FilelistItemInfoDialog';
 
   render() {
-    const { fileItem, session } = this.props;
+    const { fileItem, filelist } = this.props;
     return (
       <RouteModal
         className="filelist-item"
@@ -53,15 +53,15 @@ class FilelistItemInfoDialog extends Component<Props & DataProps> {
       >
         <DownloadDialog
           downloadHandler={filelistDownloadHandler}
-          itemDataGetter={FilelistItemGetter(session)}
-          userGetter={() => session.user}
-          session={session}
+          itemDataGetter={FilelistItemGetter(filelist)}
+          userGetter={() => filelist.user}
+          sessionItem={filelist}
         />
         <FileItemInfoGrid
           fileItem={fileItem}
           downloadHandler={filelistDownloadHandler}
-          user={session.user}
-          session={session}
+          user={filelist.user}
+          sessionItem={filelist}
         />
       </RouteModal>
     );
@@ -71,8 +71,8 @@ class FilelistItemInfoDialog extends Component<Props & DataProps> {
 const Decorated = ModalRouteDecorator<FilelistItemInfoDialogProps>(
   DataProviderDecorator<Props, DataProps>(FilelistItemInfoDialog, {
     urls: {
-      fileItem: ({ params, session }, socket) =>
-        FilelistItemGetter(session)(params.itemId!, socket),
+      fileItem: ({ params, filelist }, socket) =>
+        FilelistItemGetter(filelist)(params.itemId!, socket),
     },
   }),
   'item/:itemId',

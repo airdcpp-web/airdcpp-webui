@@ -7,7 +7,6 @@ import { PropsWithChildren } from 'react';
 import '@/utils/semantic';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { SessionContext } from '@/context/SessionContext';
 
 import * as UI from '@/types/ui';
 
@@ -87,23 +86,19 @@ export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
 
 type SessionWrapperProps = PropsWithChildren<{
   socket: APISocket;
-  session: UI.AuthenticatedSession;
   sessionStore: StoreApi<UI.SessionStore>;
 }>;
 
 export const SessionTestWrapper: React.FC<SessionWrapperProps> = ({
   socket,
-  session,
   sessionStore,
   children,
 }) => {
   return (
     <SocketContext.Provider value={socket}>
-      <SessionContext.Provider value={session}>
-        <SessionStoreContext.Provider value={sessionStore}>
-          {children}
-        </SessionStoreContext.Provider>
-      </SessionContext.Provider>
+      <SessionStoreContext.Provider value={sessionStore}>
+        {children}
+      </SessionStoreContext.Provider>
     </SocketContext.Provider>
   );
 };

@@ -20,13 +20,13 @@ type FilelistSessionProps = SessionChildProps<
 >;
 
 const FilelistSession: React.FC<FilelistSessionProps> = ({
-  session,
+  sessionItem,
   sessionT,
   location: routerLocation,
 }) => {
-  useActiveSession(session, FilelistAPIActions, FilelistStoreSelector);
+  useActiveSession(sessionItem, FilelistAPIActions, FilelistStoreSelector);
 
-  const { user, location: listLocation, state } = session;
+  const { user, location: listLocation, state } = sessionItem;
 
   const isOwnList = user.flags.includes('self');
   const className = classNames('filelist session', { self: isOwnList });
@@ -54,9 +54,9 @@ const FilelistSession: React.FC<FilelistSessionProps> = ({
 
   return (
     <div className={className}>
-      <ListBrowser location={routerLocation} session={session} sessionT={sessionT} />
+      <ListBrowser location={routerLocation} filelist={sessionItem} sessionT={sessionT} />
 
-      <FilelistFooter session={session} sessionT={sessionT} />
+      <FilelistFooter filelist={sessionItem} sessionT={sessionT} />
     </div>
   );
 };

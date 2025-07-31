@@ -5,21 +5,21 @@ import ActionButton from '@/components/ActionButton';
 import ExternalLink from '@/components/ExternalLink';
 import { TextDecorator } from '@/components/text';
 import Message from '@/components/semantic/Message';
-import { useStore } from '@/effects/StoreListenerEffect';
 
 import {
   LoginActionModule,
   LoginNewUserIntroSeenAction,
 } from '@/actions/ui/login/LoginActions';
-import LoginStore, { LoginState } from '@/stores/reflux/LoginStore';
+import { useSession } from '@/context/AppStoreContext';
+
 import { Trans } from 'react-i18next';
 import { toI18nKey } from '@/utils/TranslationUtils';
 
 import * as UI from '@/types/ui';
 
 const NewUserIntro = () => {
-  const { showNewUserIntro } = useStore<LoginState>(LoginStore);
-  if (!showNewUserIntro) {
+  const session = useSession();
+  if (!session?.wizard_pending) {
     return null;
   }
 

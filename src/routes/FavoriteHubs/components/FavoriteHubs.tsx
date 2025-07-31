@@ -26,7 +26,9 @@ import {
   FavoriteHubEditActionMenu,
   FavoriteHubPasswordActionMenu,
 } from '@/actions/ui/favorite-hub';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
+import { useSocket } from '@/context/SocketContext';
 
 const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEntry>> = ({
   cellData,
@@ -48,6 +50,7 @@ const PasswordCell: React.FC<RowWrapperCellChildProps<string, API.FavoriteHubEnt
 
 const FavoriteHubs: React.FC = () => {
   const { t } = useTranslation();
+  const socket = useSocket();
 
   const rowClassNameGetter = (rowData: API.FavoriteHubEntry) => {
     switch (rowData.connect_state.id) {
@@ -66,18 +69,22 @@ const FavoriteHubs: React.FC = () => {
   const onChangeAutoConnect = (checked: boolean, rowData: API.FavoriteHubEntry) => {
     return runBackgroundSocketAction(
       () =>
-        updateFavoriteHub(rowData, {
-          auto_connect: checked,
-        }),
+        updateFavoriteHub(
+          rowData,
+          {
+            auto_connect: checked,
+          },
+          socket,
+        ),
       t,
     );
   };
 
   const favT = getModuleT(t, UI.Modules.FAVORITE_HUBS);
 
-  const { hasAccess } = useSession();
+  const session = useSession();
   const { translate } = favT;
-  const editAccess = hasAccess(API.AccessEnum.HUBS_EDIT);
+  const editAccess = hasAccess(session, API.AccessEnum.HUBS_EDIT);
   return (
     <>
       <VirtualTable

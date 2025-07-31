@@ -4,7 +4,7 @@ import { renderDataNode } from '@/tests/render/test-renderers';
 import { getMockServer } from 'airdcpp-apisocket/tests';
 
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
-import { ActivityTimeouts, useActivityTracker } from '../ActivityTracker';
+import { ActivityTimeouts, useActivityTracker } from '../effects/ActivityTrackerEffect';
 import { useSocket } from '@/context/SocketContext';
 import SessionConstants from '@/constants/SessionConstants';
 import { waitFor } from '@testing-library/dom';

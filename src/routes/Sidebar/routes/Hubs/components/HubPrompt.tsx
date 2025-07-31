@@ -11,7 +11,9 @@ import { Trans } from 'react-i18next';
 import { sendHubPassword, acceptHubRedirect } from '@/services/api/HubApi';
 import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import IconConstants from '@/constants/IconConstants';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
+import { APISocket } from '@/services/SocketService';
 
 interface HubActionPromptProps {
   icon: IconType;
@@ -21,8 +23,8 @@ interface HubActionPromptProps {
 
 // Main prompt (HUBS_EDIT permission is required for the content to be rendered)
 const HubActionPrompt: React.FC<HubActionPromptProps> = ({ icon, title, content }) => {
-  const { hasAccess } = useSession();
-  if (!hasAccess(API.AccessEnum.HUBS_EDIT)) {
+  const session = useSession();
+  if (!hasAccess(session, API.AccessEnum.HUBS_EDIT)) {
     return null;
   }
 
@@ -40,17 +42,21 @@ const HubActionPrompt: React.FC<HubActionPromptProps> = ({ icon, title, content 
 interface PasswordPromptProps {
   hub: API.Hub;
   sessionT: UI.ModuleTranslator;
+  socket: APISocket;
 }
 
 // Sub prompts
-const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub, sessionT }) => (
+const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub, sessionT, socket }) => (
   <div className="password prompt">
     <ActionInput
       placeholder={sessionT.translate('Password')}
       caption={sessionT.translate('Submit')}
       icon={IconConstants.CONNECT}
       handleAction={(text) =>
-        runBackgroundSocketAction(() => sendHubPassword(hub, text), sessionT.plainT)
+        runBackgroundSocketAction(
+          () => sendHubPassword(hub, text, socket),
+          sessionT.plainT,
+        )
       }
     />
     <div className="help">
@@ -66,14 +72,15 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({ hub, sessionT }) => (
 interface RedirectPromptProps {
   hub: API.Hub;
   sessionT: UI.ModuleTranslator;
+  socket: APISocket;
 }
 
-const RedirectPrompt: React.FC<RedirectPromptProps> = ({ hub, sessionT }) => (
+const RedirectPrompt: React.FC<RedirectPromptProps> = ({ hub, sessionT, socket }) => (
   <Button
     className="redirect prompt"
     icon={IconConstants.CONNECT}
     onClick={(_) =>
-      runBackgroundSocketAction(() => acceptHubRedirect(hub), sessionT.plainT)
+      runBackgroundSocketAction(() => acceptHubRedirect(hub, socket), sessionT.plainT)
     }
     caption={sessionT.t('acceptRedirect', {
       defaultValue: 'Accept redirect to {{url}}',

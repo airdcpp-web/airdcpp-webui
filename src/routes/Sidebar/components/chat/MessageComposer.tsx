@@ -21,7 +21,8 @@ import IconConstants from '@/constants/IconConstants';
 import { useFileUploader } from './effects/useChatFileUploader';
 import { useMessageComposer } from './effects/useMessageComposer';
 import { useSocket } from '@/context/SocketContext';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {
@@ -78,7 +79,7 @@ const userToMention = (user: API.HubUser) => {
 };
 
 export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
-  const { hasAccess } = useSession();
+  const session = useSession();
   const dropzoneRef = React.useRef<DropzoneRef>(null);
   const socket = useSocket();
 
@@ -110,7 +111,8 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
   const className = classNames('ui form composer', { small: mobile }, { large: !mobile });
 
   const hasFileUploadAccess =
-    hasAccess(API.AccessEnum.FILESYSTEM_EDIT) && hasAccess(API.AccessEnum.SETTINGS_EDIT);
+    hasAccess(session, API.AccessEnum.FILESYSTEM_EDIT) &&
+    hasAccess(session, API.AccessEnum.SETTINGS_EDIT);
 
   const sendButton = (
     <Button
@@ -161,7 +163,6 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
               <TempShareDropdown
                 className="blue large"
                 handleUpload={open}
-                hasAccess={hasAccess}
                 overrideContent={!text ? null : sendButton}
               />
             )}

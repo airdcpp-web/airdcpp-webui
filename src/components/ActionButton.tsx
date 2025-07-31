@@ -5,7 +5,7 @@ import { IconType } from '@/components/semantic/Icon';
 import * as UI from '@/types/ui';
 import { ActionHandlerDecorator } from '@/decorators/ActionHandlerDecorator';
 import { useTranslation } from 'react-i18next';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 
 export interface ActionButtonProps<
   ItemDataT extends UI.ActionDataValueType,

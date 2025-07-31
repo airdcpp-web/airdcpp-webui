@@ -16,7 +16,7 @@ import './messages.css';
 
 interface MessageViewProps {
   messages: UI.MessageListItem[] | null;
-  session?: UI.SessionItemBase;
+  chatSession?: UI.SessionItemBase;
   className?: string;
   scrollPositionHandler: UI.ScrollHandler;
   highlightRemoteMenuId?: string;
@@ -25,7 +25,7 @@ interface MessageViewProps {
 
 const MessageView: React.FC<MessageViewProps> = React.memo(
   function MessageView({ className, t, ...other }) {
-    const downloadManager = useItemDownloadManager(other.session);
+    const downloadManager = useItemDownloadManager(other.chatSession);
     const { messageNodes, visibleItems } = useMessagesNode(other, downloadManager);
 
     const scrollableRef = useMessageViewScrollEffect(other, visibleItems);

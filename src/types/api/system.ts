@@ -1,4 +1,5 @@
 export interface SystemInfo {
+  cid: string;
   api_version: number;
   api_feature_level: number;
   hostname: string;

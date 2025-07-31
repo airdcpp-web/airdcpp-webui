@@ -29,23 +29,23 @@ import { FilelistItemActionMenu } from '@/actions/ui/filelist';
 import { useSessionStore } from '@/context/SessionStoreContext';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
-  session: API.FilelistSession;
+  filelist: API.FilelistSession;
   onClickDirectory: FileDownloadCellClickHandler;
 }
 
 const NameCell: React.FC<NameCellProps> = ({
   rowDataGetter,
   onClickDirectory,
-  session,
+  filelist,
   ...other
 }) => {
   return (
     <FileDownloadCell
       clickHandlerGetter={onClickDirectory}
-      userGetter={() => session.user}
+      userGetter={() => filelist.user}
       downloadHandler={filelistDownloadHandler}
       rowDataGetter={rowDataGetter}
-      entity={session}
+      entity={filelist}
       remoteMenuId={MenuConstants.FILELIST_ITEM}
       {...other}
     >
@@ -53,32 +53,32 @@ const NameCell: React.FC<NameCellProps> = ({
         actions={FilelistItemActionMenu}
         itemData={rowDataGetter}
         ids={['refreshShare', 'details']}
-        entity={session}
+        entity={filelist}
       />
     </FileDownloadCell>
   );
 };
 
 interface ListBrowserProps {
-  session: API.FilelistSession;
+  filelist: API.FilelistSession;
   onClickDirectory: (path: string) => void;
   sessionT: UI.ModuleTranslator;
 }
 
 const FilelistItemTable: React.FC<ListBrowserProps> = ({
-  session,
+  filelist,
   sessionT,
   onClickDirectory,
   ...other
 }) => {
   const rowClassNameGetter = (rowData: API.FilelistItem) => {
     // Don't highlight dupes in own filelist...
-    const isOwnList = session.user.flags.includes('self');
+    const isOwnList = filelist.user.flags.includes('self');
     return isOwnList ? '' : dupeToStringType(rowData.dupe);
   };
 
   const emptyRowsNodeGetter = () => {
-    const { location, state } = session;
+    const { location, state } = filelist;
     const { translate } = sessionT;
 
     if (state.id === 'download_failed') {
@@ -115,7 +115,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
     rowDataGetter,
   ) => {
     if (rowDataGetter().type.id === 'directory') {
-      return () => onClickDirectory(session.location!.path + cellData + '/');
+      return () => onClickDirectory(filelist.location!.path + cellData + '/');
     }
 
     return undefined;
@@ -129,8 +129,8 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
         emptyRowsNodeGetter={emptyRowsNodeGetter}
         rowClassNameGetter={rowClassNameGetter}
         store={FilelistViewStore}
-        entityId={session.id}
-        viewId={session.location!.path}
+        entityId={filelist.id}
+        viewId={filelist.location!.path}
         sessionStore={sessionStore.filelists}
         moduleId={UI.Modules.FILELISTS}
         textFilterProps={{
@@ -141,7 +141,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
           name="Name"
           width={200}
           columnKey="name"
-          cell={<NameCell onClickDirectory={handleClickDirectory} session={session} />}
+          cell={<NameCell onClickDirectory={handleClickDirectory} filelist={filelist} />}
           flexGrow={8}
         />
         <Column
@@ -160,7 +160,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
           flexGrow={1}
         />
       </VirtualTable>
-      <FilelistItemInfoDialog session={session} />
+      <FilelistItemInfoDialog filelist={filelist} />
     </>
   );
 };

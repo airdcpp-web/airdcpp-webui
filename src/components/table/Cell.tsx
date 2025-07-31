@@ -19,7 +19,7 @@ import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 import * as UI from '@/types/ui';
 import * as API from '@/types/api';
 import { ActionHandlerDecorator } from '@/decorators/ActionHandlerDecorator';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { formatDecimal } from '@/utils/ValueFormat';
 import LinkButton from '@/components/semantic/LinkButton';
 

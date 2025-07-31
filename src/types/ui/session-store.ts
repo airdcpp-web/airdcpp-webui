@@ -20,20 +20,20 @@ export interface SessionInitData extends SessionStoreInitData {
   addSocketListener: AddSessionSliceSocketListener;
 }
 
-export type SessionReadHandler = (session: SessionItemBase) => void;
+export type SessionReadHandler = (sessionItem: SessionItemBase) => void;
 
 export interface SessionSlice<SessionT extends SessionType> extends UnreadInfoStore {
   readonly sessions: Array<SessionT> | null;
   readonly activeSessionId: API.IdType | null;
 
   init: (data: SessionT[]) => void;
-  setActiveSession: (session: SessionT | null) => void;
-  getItemUrgencies: (item: SessionT) => UrgencyCountMap | null;
+  setActiveSession: (sessionItem: SessionT | null) => void;
+  getItemUrgencies: (sessionItem: SessionT) => UrgencyCountMap | null;
   getSession: (id: API.IdType) => SessionT | undefined;
 
-  createSession: (session: SessionT) => void;
-  updateSession: (session: Partial<SessionT>, id: API.IdType) => void;
-  removeSession: (session: SessionT) => void;
+  createSession: (sessionItem: SessionT) => void;
+  updateSession: (sessionItem: Partial<SessionT>, id: API.IdType) => void;
+  removeSession: (sessionItem: SessionT) => void;
 
   setReadHandler: (handler: SessionReadHandler) => void;
 }
@@ -51,12 +51,15 @@ export interface MessageSlice {
   messages: Map<API.IdType, MessageListItem[]>;
   initializedSession: Set<API.IdType>;
 
-  onFetchMessages: (session: SessionItemBase) => void;
-  onMessagesFetched: (session: SessionItemBase, cacheMessages: MessageListItem[]) => void;
+  onFetchMessages: (sessionItem: SessionItemBase) => void;
+  onMessagesFetched: (
+    sessionItem: SessionItemBase,
+    cacheMessages: MessageListItem[],
+  ) => void;
   addChatMessage: (data: API.Message, sessionId: API.IdType) => void;
   addStatusMessage: (data: API.Message, sessionId: API.IdType) => void;
-  updateSession: (session: Partial<MessageCounts>, sessionId: API.IdType) => void;
-  removeSession: (session: SessionItemBase) => void;
+  updateSession: (sessionItem: Partial<MessageCounts>, sessionId: API.IdType) => void;
+  removeSession: (sessionItem: SessionItemBase) => void;
 
   isSessionInitialized: (sessionId: API.IdType) => boolean;
   scroll: SessionScrollHandler;

@@ -13,12 +13,14 @@ import { abortRefreshTask, refreshPaths } from '@/services/api/ShareApi';
 import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import Icon from '@/components/semantic/Icon';
 import IconConstants from '@/constants/IconConstants';
+import { useSocket } from '@/context/SocketContext';
 
 interface RefreshCellProps extends RowWrapperCellChildProps<number, API.ShareRootEntry> {}
 
 const RefreshCell: React.FC<RefreshCellProps> = ({ rowDataGetter, cellData, t }) => {
   const { formatRelativeTime } = useFormatter();
   const state = rowDataGetter!().status;
+  const socket = useSocket();
   if (state.id !== API.ShareRootStatusEnum.NORMAL) {
     return (
       <div style={{ display: 'flex' }}>
@@ -29,7 +31,10 @@ const RefreshCell: React.FC<RefreshCellProps> = ({ rowDataGetter, cellData, t })
           onClick={() => {
             const refreshTaskId = rowDataGetter!().status.refresh_task_id;
             if (!!refreshTaskId) {
-              runBackgroundSocketAction(() => abortRefreshTask(refreshTaskId), t!);
+              runBackgroundSocketAction(
+                () => abortRefreshTask(refreshTaskId, socket),
+                t!,
+              );
             }
           }}
         />
@@ -44,7 +49,10 @@ const RefreshCell: React.FC<RefreshCellProps> = ({ rowDataGetter, cellData, t })
         icon={IconConstants.REFRESH_COLORED}
         size="large"
         onClick={() =>
-          runBackgroundSocketAction(() => refreshPaths([rowDataGetter!().path]), t!)
+          runBackgroundSocketAction(
+            () => refreshPaths([rowDataGetter!().path], socket),
+            t!,
+          )
         }
       />
       {cellData === 0

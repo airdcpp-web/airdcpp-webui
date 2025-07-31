@@ -7,13 +7,14 @@ import HashStatistics from '@/components/main/navigation/statistic-items/HashSta
 import AwayIcon from '@/components/main/navigation/icon/AwayIcon';
 import RefreshProgress from './icon/RefreshProgress';
 import HashProgress from './icon/HashProgress';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import TransferStatistics from './statistic-items/TransferStatistics';
+import { hasAccess } from '@/utils/AuthUtils';
 
 const IconPanel: React.FC = () => {
-  const { hasAccess } = useSession();
-  const hasHashAccess = hasAccess(API.AccessEnum.SETTINGS_VIEW);
-  const hasTransferAccess = hasAccess(API.AccessEnum.TRANSFERS);
+  const session = useSession();
+  const hasHashAccess = hasAccess(session, API.AccessEnum.SETTINGS_VIEW);
+  const hasTransferAccess = hasAccess(session, API.AccessEnum.TRANSFERS);
   return (
     <div className="icon-panel">
       <div className="ui centered inverted mini list statistics-icons">

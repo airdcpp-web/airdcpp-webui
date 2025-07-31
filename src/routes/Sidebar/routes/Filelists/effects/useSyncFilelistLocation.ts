@@ -6,26 +6,28 @@ import * as UI from '@/types/ui';
 import { changeFilelistDirectory } from '@/services/api/FilelistApi';
 import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import { Location, useNavigate } from 'react-router';
+import { useSocket } from '@/context/SocketContext';
 
 export type FilelistLocationState = { directory: string } | undefined;
 
 interface ListBrowserProps {
-  session: API.FilelistSession;
+  filelist: API.FilelistSession;
   location: Location;
   sessionT: UI.ModuleTranslator;
 }
 
 // Keeps the current location in sync with the backend
 export const useSyncFilelistLocation = ({
-  session,
+  filelist,
   location,
   sessionT,
 }: ListBrowserProps) => {
   const navigate = useNavigate();
+  const socket = useSocket();
 
   const apiSendChangeDirectory = (directory: string) => {
     runBackgroundSocketAction(
-      () => changeFilelistDirectory(session, directory),
+      () => changeFilelistDirectory(filelist, directory, socket),
       sessionT.plainT,
     );
   };
@@ -54,18 +56,18 @@ export const useSyncFilelistLocation = ({
 
     if (!locationState) {
       // Initial mount
-      updateLocationState(session.location!.path, true);
+      updateLocationState(filelist.location!.path, true);
       return;
     }
 
     // Nothing has changed?
-    if (locationState.directory === session.location!.path) {
+    if (locationState.directory === filelist.location!.path) {
       return;
     }
 
     // Change initiated by another session/GUI, update our location
-    updateLocationState(session.location!.path, true);
-  }, [session.location?.path]);
+    updateLocationState(filelist.location!.path, true);
+  }, [filelist.location?.path]);
 
   // Handler for own changes
   React.useEffect(() => {
@@ -76,7 +78,7 @@ export const useSyncFilelistLocation = ({
     }
 
     const directory = locationState.directory;
-    if (directory === session.location!.path) {
+    if (directory === filelist.location!.path) {
       return;
     }
 

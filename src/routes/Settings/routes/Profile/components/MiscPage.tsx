@@ -4,12 +4,13 @@ import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-import '../style.css';
 import { SettingPageProps } from '@/routes/Settings/types';
 import { FormFieldSettingHandler } from '@/components/form/Form';
 import { Trans } from 'react-i18next';
 import { toFormI18nKey } from '@/utils/FormUtils';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+
+import '../style.css';
 
 const FieldOptionGetter = (moduleT: UI.ModuleTranslator) => {
   const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
@@ -54,7 +55,7 @@ const Entry = [
 ];
 
 const MiscPage: React.FC<SettingPageProps> = ({ moduleT }) => {
-  const { systemInfo } = useSession();
+  const { system_info: systemInfo } = useSession();
   // The locale-specific system encoding is used on Windows by default
   // while other system use UTF-8
   if (systemInfo.platform !== API.PlatformEnum.WINDOWS) {

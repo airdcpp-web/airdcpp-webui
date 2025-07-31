@@ -1,5 +1,5 @@
 import ShareConstants from '@/constants/ShareConstants';
-import SocketService from '@/services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
 import { uploadTempFile } from '../HttpService';
 
@@ -10,24 +10,26 @@ export interface AddTempShareResponse {
   magnet: string;
 }
 
+interface TempFileData {
+  file: File;
+  hubUrl: string;
+  cid?: string;
+}
+
 export const shareTempFile = async (
-  file: File,
-  hubUrl: string,
-  cid: string | undefined,
-  { authToken }: UI.AuthenticatedSession,
+  { file, hubUrl, cid }: TempFileData,
+  { auth_token: authToken }: UI.AuthenticatedSession,
+  socket: APISocket,
 ): Promise<AddTempShareResponse> => {
   // eslint-disable-next-line no-useless-catch
   try {
     const fileId = await uploadTempFile(file, authToken);
-    const res = await SocketService.post<AddTempShareResponse>(
-      ShareConstants.TEMP_SHARES_URL,
-      {
-        name: file.name,
-        file_id: fileId,
-        hub_url: hubUrl,
-        cid,
-      },
-    );
+    const res = await socket.post<AddTempShareResponse>(ShareConstants.TEMP_SHARES_URL, {
+      name: file.name,
+      file_id: fileId,
+      hub_url: hubUrl,
+      cid,
+    });
 
     return res;
   } catch (e) {
@@ -35,26 +37,26 @@ export const shareTempFile = async (
   }
 };
 
-export const refresh = (incoming: boolean) => {
-  return SocketService.post(ShareConstants.REFRESH_URL, {
+export const refresh = (incoming: boolean, socket: APISocket) => {
+  return socket.post(ShareConstants.REFRESH_URL, {
     incoming,
     priority: API.RefreshPriorityTypeEnum.MANUAL,
   });
 };
 
-export const refreshPaths = (paths: string[]) => {
-  return SocketService.post(ShareConstants.REFRESH_PATHS_URL, {
+export const refreshPaths = (paths: string[], socket: APISocket) => {
+  return socket.post(ShareConstants.REFRESH_PATHS_URL, {
     paths,
     priority: API.RefreshPriorityTypeEnum.MANUAL,
   });
 };
 
-export const refreshVirtual = (path: string) => {
-  return SocketService.post(ShareConstants.REFRESH_VIRTUAL_URL, {
+export const refreshVirtual = (path: string, socket: APISocket) => {
+  return socket.post(ShareConstants.REFRESH_VIRTUAL_URL, {
     path,
   });
 };
 
-export const abortRefreshTask = (id: number) => {
-  return SocketService.delete(`${ShareConstants.REFRESH_TASKS_URL}/${id}`);
+export const abortRefreshTask = (id: number, socket: APISocket) => {
+  return socket.delete(`${ShareConstants.REFRESH_TASKS_URL}/${id}`);
 };

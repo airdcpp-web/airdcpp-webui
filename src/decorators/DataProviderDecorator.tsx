@@ -7,6 +7,7 @@ import { APISocket, ErrorResponse } from 'airdcpp-apisocket';
 
 import Loader from '@/components/semantic/Loader';
 import NotificationActions from '@/actions/NotificationActions';
+import { ModalRouteCloseContext } from '@/context/ModalCloseContext';
 import {
   SocketSubscriptionDecorator,
   SocketSubscriptionDecoratorChildProps,
@@ -16,7 +17,6 @@ import { translate } from '@/utils/TranslationUtils';
 
 import * as UI from '@/types/ui';
 import { getDebugId } from '@/utils/DebugUtils';
-import { ModalRouteCloseContext } from '@/context/ModalCloseContext';
 
 export type SocketConnectHandler<DataT extends object, PropsT extends object> = (
   addSocketListener: AddSocketListener,
@@ -31,7 +31,8 @@ export type SocketConnectHandler<DataT extends object, PropsT extends object> = 
 export interface DataProviderDecoratorProps {}
 
 type DataProps<PropsT = UI.EmptyObject> = WithTranslation &
-  SocketSubscriptionDecoratorChildProps<PropsT>;
+  SocketSubscriptionDecoratorChildProps<PropsT> &
+  PropsT;
 
 export interface DataFetchError /*extends Omit<ErrorResponse, 'code'>*/ {
   code?: number;
@@ -45,7 +46,7 @@ export type DataConverter<PropsT extends object> = (
 ) => any;
 
 type DataProviderUrlCallback<PropsT extends object> = (
-  props: PropsT,
+  props: DataProps<PropsT>,
   socket: APISocket,
 ) => Promise<object | undefined>;
 
@@ -83,7 +84,8 @@ export interface DataProviderDecoratorSettings<
   renderOnError?: boolean;
 }
 
-export interface DataProviderDecoratorChildProps {
+export interface DataProviderDecoratorChildProps
+  extends SocketSubscriptionDecoratorChildProps {
   socket: APISocket;
   refetchData: (keys?: string[]) => void;
   dataError: DataFetchError | null;
@@ -101,7 +103,7 @@ export default function <PropsT extends object, DataT extends object>(
   debug = false,
 ) {
   class DataProviderDecorator extends React.Component<
-    DataProviderDecoratorProps & DataProps<PropsT> & PropsT,
+    DataProviderDecoratorProps & DataProps<PropsT>,
     State<DataT>
   > {
     //displayName: 'DataProviderDecorator',

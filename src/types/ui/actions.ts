@@ -5,6 +5,7 @@ import { Location, NavigateFunction } from 'react-router';
 import { MENU_DIVIDER } from '@/constants/ActionConstants';
 import { APISocket } from '@/services/SocketService';
 import { SessionStore } from './session-store';
+import { AppStore } from './app-store';
 
 // ID is required for menu action item data due to extension hooks
 export type ActionIdType = API.IdType | object; // Hinted user doesn't have a simple ID
@@ -37,7 +38,9 @@ export interface ActionHandlerProps {
   t: TranslateF;
   navigate: NavigateFunction;
   socket: APISocket;
+
   sessionStore: SessionStore;
+  appStore: AppStore;
 }
 
 export interface ActionHandlerData<

@@ -2,13 +2,16 @@ import WebUserConstants from '@/constants/WebUserConstants';
 
 import IconConstants from '@/constants/IconConstants';
 
-import LoginStore from '@/stores/reflux/LoginStore';
-
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 type Filter = UI.ActionFilter<API.WebUser>;
-const isOther: Filter = ({ itemData: user }) => user.id !== LoginStore.user.id;
+
+const initIsOther = (session: UI.AuthenticatedSession) => {
+  const isOther: Filter = ({ itemData: user }) => user.id !== session.user.username;
+
+  return isOther;
+};
 
 const handleCreate: UI.ActionHandler<void> = ({ navigate }) => {
   navigate(`users`);
@@ -37,10 +40,10 @@ export const WebUserEditAction = {
   handler: handleEdit,
 };
 
-export const WebUserRemoveAction = {
+export const createWebUserRemoveAction = (session: UI.AuthenticatedSession) => ({
   id: 'remove',
   displayName: 'Remove user',
-  filter: isOther,
+  filter: initIsOther(session),
   icon: IconConstants.REMOVE,
   confirmation: {
     content: 'Are you sure that you want to remove the user {{item.username}}?',
@@ -48,19 +51,21 @@ export const WebUserRemoveAction = {
     rejectCaption: `Don't remove`,
   },
   handler: handleRemove,
-};
+});
 
-const WebUserEditActions: UI.ActionListType<API.WebUser> = {
+const createWebUserEditActions = (
+  session: UI.AuthenticatedSession,
+): UI.ActionListType<API.WebUser> => ({
   edit: WebUserEditAction,
-  remove: WebUserRemoveAction,
-};
+  remove: createWebUserRemoveAction(session),
+});
 
 export const WebUserActionModule = {
   moduleId: UI.Modules.SETTINGS,
   subId: 'webUser',
 };
 
-export const WebUserEditActionMenu = {
+export const createWebUserEditActionMenu = (session: UI.AuthenticatedSession) => ({
   moduleData: WebUserActionModule,
-  actions: WebUserEditActions,
-};
+  actions: createWebUserEditActions(session),
+});

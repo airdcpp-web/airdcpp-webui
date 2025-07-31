@@ -3,7 +3,7 @@ import * as UI from '@/types/ui';
 import { getFileName, getFilePath } from '@/utils/FileUtils';
 import { useState } from 'react';
 import { loadLocalProperty, saveLocalProperty } from '@/utils/BrowserUtils';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 
 export type FileSelectionHandler = (path: string) => void;
 export type CloseHandler = () => Promise<void> | void;
@@ -36,7 +36,7 @@ export const useFileItemSelection = ({
   selectMode,
   historyId,
 }: FileItemSelectionProps) => {
-  const { systemInfo } = useSession();
+  const { system_info: systemInfo } = useSession();
   const isWindows = systemInfo.platform === API.PlatformEnum.WINDOWS;
 
   const getRootPath = () => {

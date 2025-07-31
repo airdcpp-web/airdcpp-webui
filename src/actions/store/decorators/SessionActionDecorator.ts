@@ -21,10 +21,10 @@ export default function (sessionsUrl: string) {
     }
   };
 
-  const removeSession = (session: SessionType, socket: APISocket) => {
-    return socket.delete(`${sessionsUrl}/${session.id}`).catch((e) => {
+  const removeSession = (sessionItem: SessionType, socket: APISocket) => {
+    return socket.delete(`${sessionsUrl}/${sessionItem.id}`).catch((e) => {
       const error = e as ErrorResponse;
-      NotificationActions.apiError('Failed to remove session ' + session.id, error);
+      NotificationActions.apiError('Failed to remove session ' + sessionItem.id, error);
     });
   };
 

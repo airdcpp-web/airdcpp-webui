@@ -60,7 +60,10 @@ const handleRemove: Handler = ({ itemData: profile, socket }) => {
 };
 
 const handleBrowse: Handler = ({ itemData: profile, ...other }) => {
-  return FilelistAPIActions.createLocalSession({ shareProfileId: profile.id }, other);
+  return FilelistAPIActions.initCreateLocalSession(other.appStore.login.getSession()!)(
+    { shareProfileId: profile.id },
+    other,
+  );
 };
 
 export const ShareProfileCreateAction = {

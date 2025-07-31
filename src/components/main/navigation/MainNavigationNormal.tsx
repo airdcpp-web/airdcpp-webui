@@ -2,9 +2,10 @@ import SectionedDropdown from '@/components/semantic/SectionedDropdown';
 import MenuSection from '@/components/semantic/MenuSection';
 
 import { parseMenuItems, parseMenuItem, getLogoutItem } from '@/routes/Routes';
-import { useSession } from '@/context/SessionContext';
 import { useSocket } from '@/context/SocketContext';
 import { MainLayoutProps } from '../AuthenticatedApp';
+import { useAppStore } from '@/context/AppStoreContext';
+import { useSession } from '@/context/AppStoreContext';
 
 type MainNavigationNormalProps = Pick<
   MainLayoutProps,
@@ -15,15 +16,16 @@ const MainNavigationNormal: React.FC<MainNavigationNormalProps> = ({
   primaryRoutes,
   secondaryRoutes,
 }) => {
-  const login = useSession();
   const socket = useSocket();
+  const appStore = useAppStore();
+  const session = useSession();
   return (
     <div className="item right" role="menu">
-      {parseMenuItems(primaryRoutes, login, undefined, false)}
+      {parseMenuItems(primaryRoutes, session, undefined, false)}
 
       <SectionedDropdown className="top right">
-        <MenuSection>{parseMenuItems(secondaryRoutes, login)}</MenuSection>
-        <MenuSection>{parseMenuItem(getLogoutItem(socket))}</MenuSection>
+        <MenuSection>{parseMenuItems(secondaryRoutes, session)}</MenuSection>
+        <MenuSection>{parseMenuItem(getLogoutItem(socket, appStore))}</MenuSection>
       </SectionedDropdown>
     </div>
   );

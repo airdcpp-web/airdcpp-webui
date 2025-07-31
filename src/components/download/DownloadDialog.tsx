@@ -32,9 +32,10 @@ import * as UI from '@/types/ui';
 import { PathDownloadHandler } from './types';
 
 import './style.css';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { useSocket } from '@/context/SocketContext';
 import { getFileName, getFilePath } from '@/utils/FileUtils';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export type DownloadDialogProps<
   ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
@@ -55,7 +56,7 @@ type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
 const DownloadDialog: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { hasAccess } = useSession();
+  const session = useSession();
   const socket = useSocket();
 
   const {
@@ -63,7 +64,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
     itemInfo,
     userGetter,
     params,
-    session,
+    sessionItem,
     historyPaths,
     handleClose,
     ...other
@@ -71,16 +72,19 @@ const DownloadDialog: React.FC<Props> = (props) => {
 
   const handleDownload: PathDownloadHandler = async (targetPath, targetFilename) => {
     try {
-      await downloadHandler(
+      const itemData = {
         itemInfo,
-        !!userGetter ? userGetter(params.downloadItemId!, props) : undefined,
-        {
-          target_name: !!targetFilename ? targetFilename : itemInfo.name,
-          target_directory: targetPath,
-          priority: API.QueuePriorityEnum.DEFAULT,
-        },
-        session,
-      );
+        user: !!userGetter ? userGetter(params.downloadItemId!, props) : undefined,
+        entity: sessionItem,
+      };
+
+      const downloadData = {
+        target_name: !!targetFilename ? targetFilename : itemInfo.name,
+        target_directory: targetPath,
+        priority: API.QueuePriorityEnum.DEFAULT,
+      };
+
+      await downloadHandler(itemData, downloadData, socket);
     } catch (e) {
       NotificationActions.error({
         title: t(toI18nKey('queueingFailed', UI.Modules.COMMON), {
@@ -115,7 +119,7 @@ const DownloadDialog: React.FC<Props> = (props) => {
     closable: false,
   };
 
-  const hasFileBrowserAccess = hasAccess(API.AccessEnum.FILESYSTEM_VIEW);
+  const hasFileBrowserAccess = hasAccess(session, API.AccessEnum.FILESYSTEM_VIEW);
   return (
     <Routes>
       <Route

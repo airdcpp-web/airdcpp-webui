@@ -11,6 +11,7 @@ import 'fomantic-ui-css/components/item.min.css';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
+
 import { fetchCorsSafeData } from '@/services/HttpService';
 
 interface NpmPackageLayoutProps {
@@ -62,7 +63,8 @@ export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutData
   {
     urls: {
       installedPackages: ExtensionConstants.EXTENSIONS_URL,
-      packageCatalog: () => fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
+      packageCatalog: ({ session }) =>
+        fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, session),
     },
     dataConverters: {
       packageCatalog: ({ objects }) => objects,

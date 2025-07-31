@@ -1,4 +1,3 @@
-import SocketService from '@/services/SocketService';
 import TableActions from '@/actions/TableActions';
 
 import invariant from 'invariant';
@@ -13,6 +12,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
   let entityId = null;
   let paused = false;
   let scrollPosition = 0;
+  // let socket = null;
 
   const DEBUG = true;
 
@@ -69,7 +69,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
     listenables: TableActions,
     DEBUG,
 
-    onClose(viewUrl) {
+    onClose(socket, viewUrl) {
       if (viewUrl !== this.viewUrl) {
         return;
       }
@@ -102,16 +102,17 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       paused = enabled;
     },
 
-    onInit(viewUrl, entity) {
+    onInit(socket, viewUrl, _entityId) {
       if (viewUrl !== this.viewUrl) {
         return;
       }
 
       invariant(!active, 'Trying start an active table view');
 
-      entityId = entity;
+      entityId = _entityId;
+      // socket = _socket;
 
-      this.addMessageListener();
+      this.addMessageListener(socket);
       if (DEBUG) {
         console.log(`Starting view ${this.viewUrl}`);
       }
@@ -129,8 +130,8 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       //this.trigger(items);
     },
 
-    addMessageListener() {
-      this._removeMessageListener = SocketService.addViewUpdateListener(
+    addMessageListener(socket) {
+      this._removeMessageListener = socket.addViewUpdateListener(
         this._viewName,
         this._handleUpdate,
         entityId,

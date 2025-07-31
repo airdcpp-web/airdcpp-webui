@@ -7,11 +7,17 @@ export interface DownloadSource extends API.HintedUserBase {
   flags: API.HubUserFlag[];
 }
 
+interface DownloadHandlerData<ItemT extends DownloadableItemInfo> {
+  itemInfo: ItemT;
+  user: DownloadSource | undefined;
+  // downloadData: API.DownloadData;
+  entity: SessionItemBase | undefined;
+}
+
 export type DownloadHandler<ItemT extends DownloadableItemInfo> = (
-  itemInfo: ItemT,
-  user: DownloadSource | undefined,
+  itemData: DownloadHandlerData<ItemT>,
   downloadData: API.DownloadData,
-  entity: SessionItemBase | undefined,
+  socket: APISocket,
 ) => Promise<any>;
 
 export interface DownloadableItemInfo {
@@ -52,7 +58,7 @@ export interface ItemDownloadHandler<
   PropsT extends object = EmptyObject,
 > {
   downloadHandler: DownloadHandler<ItemT>;
-  session: SessionItemBase | undefined;
+  sessionItem: SessionItemBase | undefined;
   itemDataGetter: DownloadItemDataGetter<ItemT>;
   userGetter?: DownloadUserGetter<PropsT>;
 }

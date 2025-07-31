@@ -15,11 +15,12 @@ import * as UI from '@/types/ui';
 
 import './style.css';
 import { FileItemSelectionProps } from './effects/useFileItemSelection';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { useSocket } from '@/context/SocketContext';
 import { useTranslation } from 'react-i18next';
 import NotificationActions from '@/actions/NotificationActions';
 import { SubmitCallback } from '@/components/semantic/ActionInput';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export interface FileBrowserLayoutProps
   extends Pick<FileItemListProps, 'itemIconGetter'>,
@@ -59,8 +60,9 @@ const FileBrowserLayout: React.FC<Props> = ({
 
   const socket = useSocket();
 
-  const { systemInfo, hasAccess } = useSession();
+  const session = useSession();
 
+  const { system_info: systemInfo } = session;
   const pathSeparator = systemInfo.path_separator;
   const isWindows = systemInfo.platform === API.PlatformEnum.WINDOWS;
 
@@ -156,7 +158,7 @@ const FileBrowserLayout: React.FC<Props> = ({
     }
   };
 
-  const hasEditAccess = hasAccess(API.AccessEnum.FILESYSTEM_EDIT);
+  const hasEditAccess = hasAccess(session, API.AccessEnum.FILESYSTEM_EDIT);
   const rootName = translate(isWindows ? 'Computer' : 'Root', t, UI.Modules.COMMON);
 
   const canCreateDirectory =

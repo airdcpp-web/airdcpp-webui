@@ -63,14 +63,14 @@ const LocalExtension = DataProviderDecorator<
   ),
   {
     urls: {
-      npmPackage: ({ installedPackage }) => {
+      npmPackage: ({ installedPackage, session }) => {
         if (installedPackage.private || !installedPackage.managed) {
           return Promise.resolve(undefined);
         }
 
         return fetchCorsSafeData(
           `${ExtensionConstants.NPM_PACKAGE_URL}${installedPackage.name}/latest`,
-          true,
+          session,
         );
       },
     },

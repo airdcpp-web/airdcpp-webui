@@ -11,49 +11,61 @@ type SessionType = UI.SessionItemBase;
 export default function (sessionUrl: string) {
   const fetchMessages = async (
     socket: APISocket,
-    session: SessionType,
+    chatSession: SessionType,
     messageStore: UI.MessageSlice,
   ) => {
     try {
       const messages: UI.MessageListItem[] = await socket.get(
-        `${sessionUrl}/${session.id}/messages/0`,
+        `${sessionUrl}/${chatSession.id}/messages/0`,
       );
-      messageStore.onMessagesFetched(session, messages);
+      messageStore.onMessagesFetched(chatSession, messages);
     } catch (e) {
       const error = e as ErrorResponse;
-      NotificationActions.apiError('Failed to fetch chat messages', error, session.id);
+      NotificationActions.apiError(
+        'Failed to fetch chat messages',
+        error,
+        chatSession.id,
+      );
     }
   };
 
-  const setRead = (session: SessionType, socket: APISocket) => {
-    return socket.post(`${sessionUrl}/${session.id}/messages/read`);
+  const setRead = (chatSession: SessionType, socket: APISocket) => {
+    return socket.post(`${sessionUrl}/${chatSession.id}/messages/read`);
   };
 
   const sendChatMessage = (
     socket: APISocket,
-    session: SessionType,
+    chatSession: SessionType,
     text: string,
     thirdPerson = false,
   ) => {
     socket
-      .post(`${sessionUrl}/${session.id}/chat_message`, {
+      .post(`${sessionUrl}/${chatSession.id}/chat_message`, {
         text,
         third_person: thirdPerson,
       })
       .catch((e) => {
         const error = e as ErrorResponse;
-        NotificationActions.apiError('Failed to send chat message', error, session.id);
+        NotificationActions.apiError(
+          'Failed to send chat message',
+          error,
+          chatSession.id,
+        );
       });
   };
 
   const sendStatusMessage = (
     socket: APISocket,
-    session: SessionType,
+    chatSession: SessionType,
     message: API.OutgoingChatStatusMessage,
   ) => {
-    socket.post(`${sessionUrl}/${session.id}/status_message`, message).catch((e) => {
+    socket.post(`${sessionUrl}/${chatSession.id}/status_message`, message).catch((e) => {
       const error = e as ErrorResponse;
-      NotificationActions.apiError('Failed to send status message', error, session.id);
+      NotificationActions.apiError(
+        'Failed to send status message',
+        error,
+        chatSession.id,
+      );
     });
   };
 

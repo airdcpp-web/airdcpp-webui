@@ -4,6 +4,7 @@ import * as UI from '@/types/ui';
 
 import { textToI18nKey, toArray, translate } from './TranslationUtils';
 import NotificationActions from '@/actions/NotificationActions';
+import { hasAccess } from './AuthUtils';
 
 export const actionFilter = <
   ItemDataT extends UI.ActionDataValueType,
@@ -20,9 +21,9 @@ export const actionFilter = <
 
 export const actionAccess = <ItemDataT extends UI.ActionDataValueType>(
   action: Pick<UI.ActionDefinition<ItemDataT>, 'access'>,
-  { hasAccess }: UI.AuthenticatedSession,
+  session: UI.AuthenticatedSession,
 ) => {
-  return !action.access || hasAccess(action.access);
+  return !action.access || hasAccess(session, action.access);
 };
 
 export const showAction = <

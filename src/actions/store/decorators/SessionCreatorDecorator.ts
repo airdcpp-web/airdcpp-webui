@@ -15,7 +15,11 @@ interface SessionActionCreatorProps<
   SessionT extends UI.SessionType,
   ItemDataT extends object,
 > {
-  onExists?: (session: SessionT, itemData: ItemDataT) => void | Promise<void>;
+  onExists?: (
+    sessionItem: SessionT,
+    itemData: ItemDataT,
+    socket: APISocket,
+  ) => void | Promise<void>;
   existingSessionGetter: (
     itemData: ItemDataT,
     sessionStore: UI.SessionStore,
@@ -41,8 +45,8 @@ export const SessionCreatorDecorator = <
       socket,
     }: Partial<UI.ActionHandlerProps> & CreateSessionProps,
   ) => {
-    const onCreated = (session: SessionT) => {
-      navigate(`${sectionUrlPath}/session/${session.id}`, {
+    const onCreated = (sessionItem: SessionT) => {
+      navigate(`${sectionUrlPath}/session/${sessionItem.id}`, {
         state: {
           pending: true,
         },
@@ -52,7 +56,7 @@ export const SessionCreatorDecorator = <
     let session = existingSessionGetter(itemData, sessionStore);
     if (session) {
       if (onExists) {
-        await onExists(session, itemData);
+        await onExists(session, itemData, socket);
       }
 
       onCreated(session);

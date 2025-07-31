@@ -13,8 +13,9 @@ import { useActiveSession } from '@/effects/ActiveSessionEffect';
 import { useTranslation } from 'react-i18next';
 import { toI18nKey } from '@/utils/TranslationUtils';
 import { useChatMessages } from './effects/useChatMessages';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { useSessionStoreProperty } from '@/context/SessionStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export interface ChatSession extends UI.SessionItemBase {
   hub_url?: string;
@@ -27,7 +28,7 @@ export interface ChatLayoutProps extends UI.ChatController {
 }
 
 const ChatLayout: React.FC<ChatLayoutProps> = ({
-  session,
+  chatSession,
   chatAccess,
   chatApi,
   storeSelector,
@@ -35,15 +36,15 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
   chatCommands,
   ...other
 }) => {
-  const { hasAccess } = useSession();
+  const session = useSession();
   const { t } = useTranslation();
-  const messages = useChatMessages(session, storeSelector, chatApi);
-  const hasChatAccess = hasAccess(chatAccess);
+  const messages = useChatMessages(chatSession, storeSelector, chatApi);
+  const hasChatAccess = hasAccess(session, chatAccess);
   const scrollPositionHandler = useSessionStoreProperty(
     (state) => storeSelector(state).messages.scroll,
   );
 
-  useActiveSession(session, chatApi, storeSelector, true);
+  useActiveSession(chatSession, chatApi, storeSelector, true);
 
   return (
     <div className="message-view">
@@ -58,14 +59,14 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
       <MessageView
         className="chat"
         messages={messages}
-        session={session}
+        chatSession={chatSession}
         scrollPositionHandler={scrollPositionHandler}
         t={t}
         highlightRemoteMenuId={highlightRemoteMenuId}
       />
       {hasChatAccess && (
         <MessageComposer
-          session={session}
+          chatSession={chatSession}
           chatApi={chatApi}
           chatCommands={chatCommands}
           t={t}

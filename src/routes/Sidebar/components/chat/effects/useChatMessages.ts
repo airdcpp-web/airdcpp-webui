@@ -8,12 +8,12 @@ import { useEffect } from 'react';
 import * as UI from '@/types/ui';
 
 export const useChatMessages = (
-  session: UI.SessionItemBase,
+  chatSession: UI.SessionItemBase,
   messageStoreSelector: UI.MessageStoreSelector,
   chatAPI: UI.ChatAPIActions,
 ) => {
   const messages = useSessionStoreProperty((state) =>
-    messageStoreSelector(state).messages.messages.get(session.id),
+    messageStoreSelector(state).messages.messages.get(chatSession.id),
   );
 
   const sessionStoreApi = useSessionStoreApi();
@@ -22,10 +22,10 @@ export const useChatMessages = (
   useEffect(() => {
     // Session changed, update the messages
     const messageStore = messageStoreSelector(sessionStoreApi.getState()).messages;
-    if (!messageStore.isSessionInitialized(session.id)) {
-      chatAPI.fetchMessages(socket, session, messageStore);
+    if (!messageStore.isSessionInitialized(chatSession.id)) {
+      chatAPI.fetchMessages(socket, chatSession, messageStore);
     }
-  }, [session.id]);
+  }, [chatSession.id]);
 
   return messages || null;
 };

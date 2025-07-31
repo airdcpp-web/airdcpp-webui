@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Login > credentials > should handle login 1`] = `
+{
+  "data": {
+    "grant_type": "password",
+    "password": "testpassword",
+    "username": "testuser",
+  },
+  "method": "POST",
+  "path": "sessions/authorize",
+}
+`;
+
+exports[`Login > credentials > should handle login 2`] = `
+{
+  "method": "DELETE",
+  "path": "sessions/self",
+}
+`;
+
+exports[`Login > reconnect > should reconnect socket 1`] = `
+{
+  "data": {
+    "auth_token": "b823187f-4aab-4b71-9764-e63e88401a26",
+  },
+  "method": "POST",
+  "path": "sessions/socket",
+}
+`;

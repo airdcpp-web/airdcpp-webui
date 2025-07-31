@@ -11,10 +11,10 @@ export const createSession = SessionCreatorDecorator<API.PrivateChat, UI.ActionU
   existingSessionGetter: ({ cid }, sessionStore) =>
     sessionStore.privateChats.getSession(cid),
 
-  onExists: (session, user) => {
+  onExists: (session, user, socket) => {
     if (!!user.hub_url && session.user.hub_url !== user.hub_url) {
       // TODO: error handling
-      changePrivateChatHubUrl(session, user.hub_url);
+      changePrivateChatHubUrl(session, user.hub_url, socket);
     }
   },
   sectionUrlPath: '/messages',

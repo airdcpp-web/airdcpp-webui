@@ -18,40 +18,41 @@ import { ViewFileStoreSelector } from '@/stores/session/viewFileSlice';
 
 export interface FileSessionProps
   extends SessionChildProps<API.ViewFile, UI.EmptyObject, UI.EmptyObject> {
-  session: API.ViewFile;
   sessionT: UI.ModuleTranslator;
 }
 
-const FileSession: React.FC<FileSessionProps> = ({ session, sessionT }) => {
-  useActiveSession(session, ViewFileAPIActions, ViewFileStoreSelector);
+const FileSession: React.FC<FileSessionProps> = ({ sessionItem, sessionT }) => {
+  useActiveSession(sessionItem, ViewFileAPIActions, ViewFileStoreSelector);
   const scrollPositionHandler = useSessionStoreProperty(
     (state) => state.viewFiles.scroll,
   );
 
-  if (!session.content_ready) {
-    if (session.download_state!.id === 'download_failed') {
+  if (!sessionItem.content_ready) {
+    if (sessionItem.download_state!.id === 'download_failed') {
       return (
         <div className="file session">
           <Message
             icon={IconConstants.ERROR}
             title={sessionT.translate('Download failed')}
-            description={session.download_state!.str}
+            description={sessionItem.download_state!.str}
           />
         </div>
       );
     }
 
-    return <Loader text={session.download_state!.str} />;
+    return <Loader text={sessionItem.download_state!.str} />;
   }
 
   return (
-    <div className={cx('file session', session.type.str, session.type.content_type)}>
+    <div
+      className={cx('file session', sessionItem.type.str, sessionItem.type.content_type)}
+    >
       <FileContent
-        session={session}
+        file={sessionItem}
         sessionT={sessionT}
         scrollPositionHandler={scrollPositionHandler}
       />
-      <FileFooter item={session} sessionT={sessionT} />
+      <FileFooter item={sessionItem} sessionT={sessionT} />
     </div>
   );
 };

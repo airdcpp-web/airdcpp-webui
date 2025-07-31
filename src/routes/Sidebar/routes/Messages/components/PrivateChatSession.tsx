@@ -7,11 +7,12 @@ import * as UI from '@/types/ui';
 import { shareTempFile } from '@/services/api/ShareApi';
 import MenuConstants from '@/constants/MenuConstants';
 import { SessionChildProps } from '@/routes/Sidebar/components/types';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { buildChatCommands } from '@/routes/Sidebar/components/chat/commands/ChatCommands';
 import { clearPrivateChatMessages } from '@/services/api/PrivateChatApi';
 import { PrivateChatAPIActions } from '@/actions/store/PrivateChatActions';
 import { PrivateChatStoreSelector } from '@/stores/session/privateChatSessionSlice';
+import { useSocket } from '@/context/SocketContext';
 
 type PrivateChatSessionProps = SessionChildProps<
   API.PrivateChat,
@@ -24,13 +25,21 @@ const PrivateChatCommands = buildChatCommands(
   clearPrivateChatMessages,
 );
 
-const PrivateChatSession: React.FC<PrivateChatSessionProps> = ({ session, sessionT }) => {
+const PrivateChatSession: React.FC<PrivateChatSessionProps> = ({
+  sessionItem,
+  sessionT,
+}) => {
   const login = useSession();
+  const socket = useSocket();
   const handleFileUpload = (file: File) => {
-    const { cid, hub_url, flags } = session.user;
+    const { cid, hub_url: hubUrl, flags } = sessionItem.user;
 
     const isPrivate = !flags.includes('nmdc') && !flags.includes('bot');
-    return shareTempFile(file, hub_url, isPrivate ? cid : undefined, login);
+    return shareTempFile(
+      { file, hubUrl, cid: isPrivate ? cid : undefined },
+      login,
+      socket,
+    );
   };
 
   return (
@@ -40,12 +49,12 @@ const PrivateChatSession: React.FC<PrivateChatSessionProps> = ({ session, sessio
         chatApi={PrivateChatAPIActions}
         chatCommands={PrivateChatCommands}
         storeSelector={PrivateChatStoreSelector}
-        session={session}
+        chatSession={sessionItem}
         handleFileUpload={handleFileUpload}
         highlightRemoteMenuId={MenuConstants.PRIVATE_CHAT_MESSAGE_HIGHLIGHT}
       />
 
-      <MessageFooter session={session} sessionT={sessionT} />
+      <MessageFooter privateChat={sessionItem} sessionT={sessionT} />
     </div>
   );
 };

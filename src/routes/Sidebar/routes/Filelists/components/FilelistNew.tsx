@@ -12,10 +12,12 @@ import LinkButton from '@/components/semantic/LinkButton';
 import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 import { useSessionStore } from '@/context/SessionStoreContext';
 import { useSocket } from '@/context/SocketContext';
+import { useSession } from '@/context/AppStoreContext';
 
 const FilelistNew: React.FC<NewSessionLayoutProps> = ({ navigate, sessionT }) => {
   const sessionStore = useSessionStore();
   const socket = useSocket();
+  const session = useSession();
 
   const createSessionProps = {
     sessionStore,
@@ -29,7 +31,10 @@ const FilelistNew: React.FC<NewSessionLayoutProps> = ({ navigate, sessionT }) =>
   };
 
   const onProfileChanged = (shareProfileId: number) => {
-    FilelistAPIActions.createLocalSession({ shareProfileId }, createSessionProps);
+    FilelistAPIActions.initCreateLocalSession(session)(
+      { shareProfileId },
+      createSessionProps,
+    );
   };
 
   const recentUserRender = (entry: API.HistoryItem) => {

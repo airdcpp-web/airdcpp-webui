@@ -21,7 +21,7 @@ import { HubSettingActionMenu } from '@/actions/ui/hub/HubSettingActions';
 import { useSocket } from '@/context/SocketContext';
 
 interface HubFooterProps {
-  session: API.Hub;
+  hub: API.Hub;
   userlistToggle: React.ReactNode;
   sessionT: UI.ModuleTranslator;
 }
@@ -36,9 +36,11 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
   });
 
   useEffect(() => {
+    const { hub } = props;
+
     // Fetch initial
     socket
-      .get<API.HubCounts>(`${HubConstants.SESSIONS_URL}/${props.session.id}/counts`)
+      .get<API.HubCounts>(`${HubConstants.SESSIONS_URL}/${hub.id}/counts`)
       .then(setCounts)
       .catch((error: ErrorResponse) =>
         console.error('Failed to fetch hub counts', error.message),
@@ -50,15 +52,15 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
       url,
       HubConstants.SESSION_COUNTS_UPDATED,
       (data: API.HubCounts) => setCounts(data),
-      props.session.id,
+      hub.id,
     );
 
     return () => props.removeSocketListeners(props);
-  }, [props.session]);
+  }, [props.hub]);
 
   const layoutWidth = useLayoutWidth();
 
-  const { userlistToggle, session, sessionT } = props;
+  const { userlistToggle, hub, sessionT } = props;
   const { user_count: users, share_size: shared } = counts;
 
   const averageShare = formatSize(users > 0 ? shared / users : 0);
@@ -67,7 +69,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
       <FooterItem
         text={
           <>
-            <EncryptionState encryption={session.encryption} />
+            <EncryptionState encryption={hub.encryption} />
             {sessionT.t('xUsers', {
               defaultValue: '{{count}} user',
               defaultValue_plural: '{{count}} users',
@@ -97,9 +99,9 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
             className="top right pointing"
             actions={HubSettingActionMenu}
             header={sessionT.translate('Notification settings')}
-            itemData={session}
+            itemData={hub}
             triggerIcon={
-              session.settings.use_main_chat_notify || session.settings.show_joins
+              hub.settings.use_main_chat_notify || hub.settings.show_joins
                 ? 'yellow bell'
                 : 'bell'
             }

@@ -3,6 +3,7 @@ import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
 import * as UI from '@/types/ui';
 import { ChildSectionType, RootSectionType, SectionBase } from '../types';
 import { Location } from 'react-router';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export const sectionToUrl = (section: SectionBase, parent?: RootSectionType) => {
   if (typeof parent === 'object') {
@@ -23,9 +24,9 @@ const menuItemToLinkComponent = (
   url: string,
   menuItemInfo: SectionBase,
   settingsT: UI.ModuleTranslator,
-  { hasAccess }: UI.AuthenticatedSession,
+  session: UI.AuthenticatedSession,
 ) => {
-  if (menuItemInfo.access && !hasAccess(menuItemInfo.access)) {
+  if (menuItemInfo.access && !hasAccess(session, menuItemInfo.access)) {
     return null;
   }
 

@@ -15,7 +15,7 @@ export const useItemDownloadManager = <
   ItemT extends UI.DownloadableItemInfo,
   PropsT extends object,
 >(
-  session: UI.SessionItemBase | undefined,
+  sessionItem: UI.SessionItemBase | undefined,
 ) => {
   const downloadManager = useMemo<ItemDownloadManager<ItemT, PropsT>>(() => {
     const downloads: { [key in string]: UI.ItemDownloadHandler<ItemT, PropsT> } = {};
@@ -31,12 +31,11 @@ export const useItemDownloadManager = <
 
     const ret: ItemDownloadManager<ItemT, PropsT> = {
       downloadDialogProps: {
-        downloadHandler: (itemInfo, user, downloadData, downloadSession) => {
-          return getDownloadItem(itemInfo.id).downloadHandler(
-            itemInfo,
-            user,
+        downloadHandler: (itemData, downloadData, socket) => {
+          return getDownloadItem(itemData.itemInfo.id).downloadHandler(
+            itemData,
             downloadData,
-            downloadSession,
+            socket,
           );
         },
         userGetter: (itemId, props) => {
@@ -46,7 +45,7 @@ export const useItemDownloadManager = <
         itemDataGetter: (itemId, socket) => {
           return getDownloadItem(itemId).itemDataGetter(itemId, socket);
         },
-        session,
+        sessionItem,
       },
       addDownloadItem: (itemId, itemDownloadHandler) => {
         downloads[itemId] = itemDownloadHandler;

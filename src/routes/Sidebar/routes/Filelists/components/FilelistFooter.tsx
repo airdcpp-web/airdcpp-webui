@@ -8,19 +8,19 @@ import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 interface FilelistFooterProps {
-  session: API.FilelistSession;
+  filelist: API.FilelistSession;
   sessionT: UI.ModuleTranslator;
 }
 
-const FilelistFooter: React.FC<FilelistFooterProps> = ({ session, sessionT }) => {
+const FilelistFooter: React.FC<FilelistFooterProps> = ({ filelist, sessionT }) => {
   const { formatSize } = useFormatter();
   if (usingMobileLayout()) {
     return null;
   }
 
-  let locationText = session.location!.type.str;
+  let locationText = filelist.location!.type.str;
   if (locationText.length > 0) {
-    locationText = `${formatSize(session.location!.size)} (${locationText})`;
+    locationText = `${formatSize(filelist.location!.size)} (${locationText})`;
   }
 
   return (
@@ -28,7 +28,7 @@ const FilelistFooter: React.FC<FilelistFooterProps> = ({ session, sessionT }) =>
       <FooterItem label={sessionT.translate('Directory size')} text={locationText} />
       <FooterItem
         label={sessionT.translate('Total list size')}
-        text={formatSize(session.total_size)}
+        text={formatSize(filelist.total_size)}
       />
     </SessionFooter>
   );

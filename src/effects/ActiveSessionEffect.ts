@@ -8,27 +8,27 @@ import { useAppStore } from '@/context/AppStoreContext';
 import { LocalSettings } from '@/constants/LocalSettingConstants';
 
 export const useActiveSession = <SessionT extends UI.SessionType>(
-  session: SessionT,
+  sessionItem: SessionT,
   actions: UI.SessionAPIActions<SessionT>,
   sessionStoreSelector: UI.SessionStoreSelector,
   useReadDelay = false,
 ) => {
   const appStore = useAppStore();
   const socket = useSocket();
-  const setActiveSession = useSessionStoreProperty(
+  const activeSessionStoreSetter = useSessionStoreProperty(
     (state) => sessionStoreSelector(state).setActiveSession,
   );
 
   const readTimeout = React.useRef<number | undefined>(undefined);
 
-  const setRead = (session: SessionT) => {
-    actions.setRead(session, socket);
+  const setRead = (sessionItemRead: SessionT) => {
+    actions.setRead(sessionItemRead, socket);
     readTimeout.current = undefined;
   };
 
-  const setSession = (session: SessionT | null) => {
-    setActiveSession(session);
-    if (!session) {
+  const setActiveSession = (sessionItemNew: SessionT | null) => {
+    activeSessionStoreSetter(sessionItemNew);
+    if (!sessionItemNew) {
       return;
     }
 
@@ -36,26 +36,26 @@ export const useActiveSession = <SessionT extends UI.SessionType>(
       ? 0
       : appStore.settings.getValue<number>(LocalSettings.UNREAD_LABEL_DELAY) * 1000;
 
-    readTimeout.current = window.setTimeout(() => setRead(session), timeout);
+    readTimeout.current = window.setTimeout(() => setRead(sessionItemNew), timeout);
   };
 
   React.useEffect(() => {
     return () => {
-      setSession(null);
+      setActiveSession(null);
     };
   }, []);
 
   React.useEffect(() => {
-    setSession(session);
+    setActiveSession(sessionItem);
     return () => {
       if (readTimeout.current) {
         // Set the previously active session as read
         clearTimeout(readTimeout.current);
 
-        if (session) {
-          setRead(session);
+        if (sessionItem) {
+          setRead(sessionItem);
         }
       }
     };
-  }, [session.id]);
+  }, [sessionItem.id]);
 };

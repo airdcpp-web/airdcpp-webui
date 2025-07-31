@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import * as API from '@/types/api';
 
-import LoginActions from '@/actions/reflux/LoginActions';
+import { LoginAPIActions } from '@/actions/store/LoginActions';
 
 import { APISocket } from '@/services/SocketService';
 import { useSessionStoreApi } from '@/context/SessionStoreContext';
@@ -37,7 +37,7 @@ export const useActivityTracker = (
       );
 
       // Woke up, disconnect the socket (it will be reconnected automatically)
-      LoginActions.disconnect('Connection closed because of inactivity', socket);
+      LoginAPIActions.disconnect('Connection closed because of inactivity', socket);
     }
 
     lastSystemAlive.current = currentTime;

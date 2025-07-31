@@ -9,7 +9,7 @@ import { APISocket } from '@/services/SocketService';
 import { Lens } from '@dhmk/zustand-lens';
 
 export type SessionUrgencyCountMapper<SessionT extends UI.SessionType> = (
-  session: SessionT,
+  sessionItem: SessionT,
 ) => UI.ChatMessageUrcencies | UI.StatusMessageUrcencies;
 interface Readable {
   setRead?: UI.SessionReadHandler;
@@ -128,9 +128,9 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
         );
       },
 
-      setActiveSession: (session: SessionT | null) =>
+      setActiveSession: (sessionItem: SessionT | null) =>
         set(() => ({
-          activeSessionId: session ? session.id : null,
+          activeSessionId: sessionItem ? sessionItem.id : null,
         })),
 
       getItemUrgencies: (item: SessionT) => {

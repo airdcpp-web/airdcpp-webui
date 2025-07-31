@@ -23,7 +23,7 @@ import * as UI from '@/types/ui';
 import { translateForm } from '@/utils/FormUtils';
 import { getSubModuleT } from '@/utils/TranslationUtils';
 import IconConstants from '@/constants/IconConstants';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 
 const enum PermissionAction {
   EDIT = 'Edit',

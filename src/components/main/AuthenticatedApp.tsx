@@ -19,12 +19,11 @@ import { useUrgencyPageTitle } from './effects/PageTitleEffect';
 import * as UI from '@/types/ui';
 import { useLayoutWidth } from '@/context/LayoutWidthContext';
 import { useSocket } from '@/context/SocketContext';
-import { useActivityTracker } from './ActivityTracker';
+import { useActivityTracker } from './effects/ActivityTrackerEffect';
 import { useStoreDataFetch } from './effects/StoreDataFetchEffect';
-import { LoginState } from '@/stores/reflux/LoginStore';
 
 interface AuthenticatedAppProps {
-  login: LoginState;
+  login: UI.LoginState;
 }
 
 export interface MainLayoutProps {

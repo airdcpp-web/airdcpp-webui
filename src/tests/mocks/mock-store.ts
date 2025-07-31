@@ -26,9 +26,7 @@ import { initSessionStore } from '@/stores/session';
 
 enableMapSet();
 
-export const addMockStoreSocketListeners = (
-  sessionStore: StoreApi<UI.SessionStore>,
-  initProps: UI.SessionStoreInitData,
+export const addMockSessionStoreSocketListeners = (
   server: ReturnType<typeof getMockServer>,
 ) => {
   const addSessionSubscriptionHandlers = (moduleName: string, listenerPrefix: string) => {
@@ -114,7 +112,6 @@ export const addMockStoreSocketListeners = (
   const events = addEventSubscriptionHandlers();
   const activity = addActivitySubscriptionHandlers();
 
-  initSessionStore(sessionStore.getState(), initProps);
   return {
     hub,
     privateChat,
@@ -126,7 +123,7 @@ export const addMockStoreSocketListeners = (
   };
 };
 
-export const addMockStoreInitDataHandlers = (
+export const addMockSessionStoreInitDataHandlers = (
   server: ReturnType<typeof getMockServer>,
 ) => {
   server.addRequestHandler('GET', HubConstants.SESSIONS_URL, HubsListResponse);
@@ -152,4 +149,16 @@ export const addMockStoreInitDataHandlers = (
     SystemConstants.AWAY_STATE_URL,
     SystemAwayStateResponse,
   );
+};
+
+export const initMockSessionStore = (
+  sessionStore: StoreApi<UI.SessionStore>,
+  initProps: UI.SessionStoreInitData,
+  server: ReturnType<typeof getMockServer>,
+) => {
+  addMockSessionStoreInitDataHandlers(server);
+  const listeners = addMockSessionStoreSocketListeners(server);
+
+  initSessionStore(sessionStore.getState(), initProps);
+  return listeners;
 };

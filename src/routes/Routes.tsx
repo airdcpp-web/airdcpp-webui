@@ -3,7 +3,6 @@ import * as React from 'react';
 import { default as lazy } from '@/decorators/AsyncComponentDecorator';
 import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
 
-import LoginActions from '@/actions/reflux/LoginActions';
 import IconConstants from '@/constants/IconConstants';
 
 import * as API from '@/types/api';
@@ -19,6 +18,8 @@ import { HubStoreSelector } from '@/stores/session/hubSessionSlice';
 import { EventStoreSelector } from '@/stores/session/eventSlice';
 import { FilelistStoreSelector } from '@/stores/session/filelistSlice';
 import { ViewFileStoreSelector } from '@/stores/session/viewFileSlice';
+import { LoginAPIActions } from '@/actions/store/LoginActions';
+import { hasAccess } from '@/utils/AuthUtils';
 
 export type RouteItemClickHandler = (
   path: string,
@@ -156,14 +157,14 @@ export const SidebarRoutes: RouteItem[] = [
   },
 ];
 
-export const getLogoutItem = (socket: APISocket): RouteItem => ({
+export const getLogoutItem = (socket: APISocket, appStore: UI.AppStore): RouteItem => ({
   icon: IconConstants.LOGOUT,
   path: 'logout',
   title: 'Logout',
   className: 'logout',
   onClick: (path, e) => {
     e.preventDefault();
-    LoginActions.logout(socket);
+    LoginAPIActions.logout({ appStore, socket });
   },
 });
 
@@ -199,8 +200,8 @@ export const parseMenuItem = (
   );
 };
 
-const filterItem = (item: RouteItem, { hasAccess }: UI.AuthenticatedSession) =>
-  !item.access || hasAccess(item.access);
+const filterItem = (item: RouteItem, session: UI.AuthenticatedSession) =>
+  !item.access || hasAccess(session, item.access);
 
 export const parseRoutes = (routes: RouteItem[]) => {
   return routes.map((route, i) => {

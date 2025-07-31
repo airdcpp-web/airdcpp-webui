@@ -95,7 +95,7 @@ describe('DownloadDialog', () => {
               Promise.resolve(FilelistGetFilelistItemFileResponse as API.FilelistItem)
             }
             userGetter={() => MockHintedUser1Response as API.HintedUser}
-            session={FilelistGetResponse}
+            sessionItem={FilelistGetResponse}
           />
         </>
       );
@@ -114,6 +114,14 @@ describe('DownloadDialog', () => {
 
     const modalController = createTestRouteModalController(renderData);
     return { ...commonData, handleDownload, modalController, ...renderData };
+  };
+
+  const expectDownloadHandlerToMatchSnapshot = (
+    handleDownload: ReturnType<typeof vi.fn<UI.DownloadHandler<API.FilelistItem>>>,
+  ) => {
+    expect(handleDownload).toHaveBeenCalledTimes(1);
+    expect(handleDownload.mock.calls[0][0]).toMatchSnapshot();
+    expect(handleDownload.mock.calls[0][1]).toMatchSnapshot();
   };
 
   beforeEach(() => {
@@ -147,8 +155,7 @@ describe('DownloadDialog', () => {
     await modalController.closeDialogText(HistoryStringPathResponse[0]);
 
     // Check
-    expect(handleDownload).toHaveBeenCalledTimes(1);
-    expect(handleDownload.mock.calls).toMatchSnapshot();
+    expectDownloadHandlerToMatchSnapshot(handleDownload);
 
     socket.disconnect();
   });
@@ -183,8 +190,7 @@ describe('DownloadDialog', () => {
     // Download
     await modalController.closeDialogButton('Download');
 
-    expect(handleDownload).toHaveBeenCalledTimes(1);
-    expect(handleDownload.mock.calls).toMatchSnapshot();
+    expectDownloadHandlerToMatchSnapshot(handleDownload);
 
     socket.disconnect();
   });

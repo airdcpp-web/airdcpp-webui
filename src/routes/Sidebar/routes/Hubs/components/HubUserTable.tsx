@@ -21,31 +21,31 @@ import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 import { HubStoreSelector } from '@/stores/session/hubSessionSlice';
 
 interface NickCellProps extends RowWrapperCellChildProps<string, API.HubUser> {
-  session: API.Hub;
+  hub: API.Hub;
 }
 
-const NickCell: React.FC<NickCellProps> = ({ cellData, rowDataGetter, session }) => (
+const NickCell: React.FC<NickCellProps> = ({ cellData, rowDataGetter, hub }) => (
   <TableUserMenu
     text={cellData}
     user={rowDataGetter!()}
     userIcon={true}
     remoteMenuId={MenuConstants.HUB_USER}
-    entity={session}
+    entity={hub}
   />
 );
 
 interface HubUserTableProps {
-  session: API.Hub;
+  hub: API.Hub;
   sessionT: UI.ModuleTranslator;
 }
 
-const HubUserTable: React.FC<HubUserTableProps> = ({ session, sessionT }) => {
+const HubUserTable: React.FC<HubUserTableProps> = ({ hub, sessionT }) => {
   const rowClassNameGetter = (user: API.HubUser) => {
     return user.flags.join(' ');
   };
 
   const emptyRowsNodeGetter = () => {
-    const connectState = session.connect_state.id;
+    const connectState = hub.connect_state.id;
 
     if (
       connectState === API.HubConnectStateEnum.DISCONNECTED ||
@@ -79,7 +79,7 @@ const HubUserTable: React.FC<HubUserTableProps> = ({ session, sessionT }) => {
   return (
     <VirtualTable
       store={HubUserViewStore}
-      entityId={session.id}
+      entityId={hub.id}
       sessionStore={hubStore}
       rowClassNameGetter={rowClassNameGetter}
       emptyRowsNodeGetter={emptyRowsNodeGetter}
@@ -93,7 +93,7 @@ const HubUserTable: React.FC<HubUserTableProps> = ({ session, sessionT }) => {
         width={170}
         columnKey="nick"
         flexGrow={8}
-        cell={<NickCell session={session} />}
+        cell={<NickCell hub={hub} />}
       />
       <Column
         name="Share size"

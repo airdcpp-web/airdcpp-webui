@@ -18,6 +18,7 @@ export interface SessionLayoutLabels {
 
 export interface SessionLayoutManageProps<
   SessionT extends UI.SessionItemBase,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   SessionApiT extends object = UI.EmptyObject,
   UIActionT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject,
 > {
@@ -78,7 +79,7 @@ export type SessionChildProps<
   'sessionApi' | 'uiActions'
 > &
   UI.RouteComponentProps & {
-    session: SessionT;
+    sessionItem: SessionT;
     sessionT: UI.ModuleTranslator;
   };
 

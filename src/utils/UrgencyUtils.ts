@@ -51,7 +51,7 @@ const toUrgencyMap = (
 };
 
 type SessionList = Array<UI.SessionItem>;
-type UrgencyGetter = (session: UI.SessionItem) => UI.UrgencyCountMap | null;
+type UrgencyGetter = (sessionItem: UI.SessionItem) => UI.UrgencyCountMap | null;
 
 // Returns urgency mapping for a message session with a "message_counts" property
 const messageSessionMapper = (

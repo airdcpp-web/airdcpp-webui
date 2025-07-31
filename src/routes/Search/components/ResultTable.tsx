@@ -254,7 +254,7 @@ class ResultTable extends React.Component<ResultTableProps> {
         <DownloadDialog
           downloadHandler={searchDownloadHandler}
           itemDataGetter={this.itemDataGetter}
-          session={instance}
+          sessionItem={instance}
         />
         <ResultDialog searchT={searchT} instance={instance} />
       </>

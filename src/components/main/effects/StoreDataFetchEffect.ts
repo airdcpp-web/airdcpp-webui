@@ -12,31 +12,31 @@ import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
 import { useSocket } from '@/context/SocketContext';
 import { APISocket } from '@/services/SocketService';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
 
 const fetchStoreData = (
   sessionStore: UI.SessionStore,
   socket: APISocket,
   session: UI.AuthenticatedSession,
 ) => {
-  const { hasAccess } = session;
-  if (hasAccess(API.AccessEnum.PRIVATE_CHAT_VIEW)) {
+  if (hasAccess(session, API.AccessEnum.PRIVATE_CHAT_VIEW)) {
     PrivateChatAPIActions.fetchSessions(sessionStore.privateChats, socket);
   }
 
-  if (hasAccess(API.AccessEnum.HUBS_VIEW)) {
+  if (hasAccess(session, API.AccessEnum.HUBS_VIEW)) {
     HubAPIActions.fetchSessions(sessionStore.hubs, socket);
   }
 
-  if (hasAccess(API.AccessEnum.FILELISTS_VIEW)) {
+  if (hasAccess(session, API.AccessEnum.FILELISTS_VIEW)) {
     FilelistAPIActions.fetchSessions(sessionStore.filelists, socket);
   }
 
-  if (hasAccess(API.AccessEnum.VIEW_FILE_VIEW)) {
+  if (hasAccess(session, API.AccessEnum.VIEW_FILE_VIEW)) {
     ViewFileAPIActions.fetchSessions(sessionStore.viewFiles, socket);
   }
 
-  if (hasAccess(API.AccessEnum.EVENTS_VIEW)) {
+  if (hasAccess(session, API.AccessEnum.EVENTS_VIEW)) {
     EventAPIActions.fetchInfo(sessionStore, socket);
   }
 

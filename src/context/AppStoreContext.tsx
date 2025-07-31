@@ -56,3 +56,8 @@ export const useAppStoreApi = () => {
   const store = useContext(AppStoreContext);
   return store;
 };
+
+export const useSession = () => {
+  const session = useAppStoreProperty((store) => store.login.getSession());
+  return session!;
+};

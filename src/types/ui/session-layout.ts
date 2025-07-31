@@ -12,8 +12,8 @@ import { UnreadInfoStore } from './session-store';
 import { APISocket } from '@/services/SocketService';
 
 export type SessionAPIActions<SessionT extends SessionItemBase> = {
-  removeSession: (session: SessionT, socket: APISocket) => void;
-  setRead: (session: UI.SessionItemBase, socket: APISocket) => void;
+  removeSession: (sessionItem: SessionT, socket: APISocket) => void;
+  setRead: (sessionItem: UI.SessionItemBase, socket: APISocket) => void;
 };
 
 export interface SessionRouteParams {
@@ -60,16 +60,16 @@ export interface SessionLayoutManageProps<
 }
 
 export interface SessionInfoGetter<SessionT> {
-  itemLabelGetter?: (session: SessionT) => React.ReactNode;
-  itemNameGetter: (session: SessionT) => React.ReactNode;
-  itemStatusGetter?: (session: SessionT) => string;
+  itemLabelGetter?: (sessionItem: SessionT) => React.ReactNode;
+  itemNameGetter: (sessionItem: SessionT) => React.ReactNode;
+  itemStatusGetter?: (sessionItem: SessionT) => string;
   itemHeaderTitleGetter?: (
-    session: SessionT,
+    sessionItem: SessionT,
     location: Location,
     actionMenu: any,
   ) => React.ReactNode;
-  itemHeaderDescriptionGetter: (session: SessionT) => React.ReactNode;
-  itemHeaderIconGetter: (session: SessionT) => IconType;
+  itemHeaderDescriptionGetter: (sessionItem: SessionT) => React.ReactNode;
+  itemHeaderIconGetter: (sessionItem: SessionT) => IconType;
 }
 
 export type SessionChildProps<
@@ -81,7 +81,7 @@ export type SessionChildProps<
   'sessionApi' | 'uiActions'
 > &
   RouteComponentProps & {
-    session: SessionT;
+    sessionItem: SessionT;
     sessionT: ModuleTranslator;
   };
 

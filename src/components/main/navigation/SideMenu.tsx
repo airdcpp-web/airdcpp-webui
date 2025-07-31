@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import IconPanel from '@/components/main/navigation/IconPanel';
 import { matchPath, Location, useNavigate } from 'react-router';
 import { parseMenuItems, RouteItemClickHandler, HOME_URL } from '@/routes/Routes';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 import { MainLayoutProps } from '../AuthenticatedApp';
 
 interface SideMenuProps extends Pick<MainLayoutProps, 'sidebarRoutes'> {

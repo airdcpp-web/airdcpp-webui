@@ -4,7 +4,7 @@ import WebUserConstants from '@/constants/WebUserConstants';
 import {
   WebUserActionModule,
   WebUserCreateAction,
-  WebUserEditActionMenu,
+  createWebUserEditActionMenu,
 } from '@/actions/ui/system/WebUserActions';
 
 import ActionButton from '@/components/ActionButton';
@@ -25,16 +25,17 @@ import { useFormatter } from '@/context/FormatterContext';
 interface WebUserRowProps {
   user: API.WebUser;
   moduleT: UI.ModuleTranslator;
+  actions: UI.ModuleActions<API.WebUser>;
 }
 
-const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT }) => {
+const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT, actions }) => {
   const { formatRelativeTime } = useFormatter();
   return (
     <tr>
       <td className="name dropdown">
         <ActionMenu
           caption={<strong>{user.username}</strong>}
-          actions={WebUserEditActionMenu}
+          actions={actions}
           itemData={user}
           contextElement="#setting-scroll-context"
         />
@@ -56,35 +57,43 @@ interface WebUsersPageDataProps extends DataProviderDecoratorChildProps {
   users: API.WebUser[];
 }
 
-class WebUsersPage extends React.Component<WebUsersPageProps & WebUsersPageDataProps> {
-  static readonly displayName = 'WebUsersPage';
+const WebUsersPage: React.FC<WebUsersPageProps & WebUsersPageDataProps> = ({
+  users,
+  moduleT,
+  session,
+}) => {
+  const actions = React.useMemo(() => {
+    return createWebUserEditActionMenu(session);
+  }, [session]);
 
-  render() {
-    const { users, moduleT } = this.props;
-    const { translate } = moduleT;
-    return (
-      <div>
-        <ActionButton action={WebUserCreateAction} moduleData={WebUserActionModule} />
-        <table className="ui striped table">
-          <thead>
-            <tr>
-              <th>{translate('Username')}</th>
-              <th>{translate('Permissions')}</th>
-              <th>{translate('Active sessions')}</th>
-              <th>{translate('Last logged in')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <WebUserRow key={user.username} user={user} moduleT={moduleT} />
-            ))}
-          </tbody>
-        </table>
-        <WebUserDialog moduleT={moduleT} />
-      </div>
-    );
-  }
-}
+  const { translate } = moduleT;
+  return (
+    <div>
+      <ActionButton action={WebUserCreateAction} moduleData={WebUserActionModule} />
+      <table className="ui striped table">
+        <thead>
+          <tr>
+            <th>{translate('Username')}</th>
+            <th>{translate('Permissions')}</th>
+            <th>{translate('Active sessions')}</th>
+            <th>{translate('Last logged in')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <WebUserRow
+              key={user.username}
+              user={user}
+              moduleT={moduleT}
+              actions={actions}
+            />
+          ))}
+        </tbody>
+      </table>
+      <WebUserDialog moduleT={moduleT} />
+    </div>
+  );
+};
 
 export default DataProviderDecorator(WebUsersPage, {
   urls: {

@@ -72,7 +72,8 @@ export default DataProviderDecorator<NpmPackageLayoutProps, NpmPackageLayoutData
   {
     urls: {
       installedPackages: ExtensionConstants.EXTENSIONS_URL,
-      packageCatalog: () => fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, true),
+      packageCatalog: ({ session }) =>
+        fetchCorsSafeData(ExtensionConstants.NPM_PACKAGES_URL, session),
     },
     dataConverters: {
       packageCatalog: ({ objects }) => objects,

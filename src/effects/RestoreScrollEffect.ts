@@ -4,17 +4,17 @@ import * as UI from '@/types/ui';
 
 export const useRestoreScroll = (
   scrollPositionHandler: UI.ScrollHandler,
-  session: UI.SessionItemBase,
+  sessionItem: UI.SessionItemBase,
 ) => {
   const [isReady, setIsReady] = useState(false);
   const scrollable = useRef<HTMLDivElement | null>(null);
   const onScroll = (evt: UIEvent) => {
     const scrollPosition = (evt.target as HTMLElement).scrollTop;
-    scrollPositionHandler.setScrollData(scrollPosition, session.id);
+    scrollPositionHandler.setScrollData(scrollPosition, sessionItem.id);
   };
 
   const onScrollableContentReady = () => {
-    const position = scrollPositionHandler.getScrollData(session.id);
+    const position = scrollPositionHandler.getScrollData(sessionItem.id);
 
     // Wait for the layout to update
     setTimeout(() => {
@@ -48,13 +48,13 @@ export const useRestoreScroll = (
       // Shouldn't happen
       return;
     }
-  }, [scrollable.current, session.id, isReady]);
+  }, [scrollable.current, sessionItem.id, isReady]);
 
   useLayoutEffect(() => {
     if (isReady) {
       setIsReady(false);
     }
-  }, [session.id]);
+  }, [sessionItem.id]);
 
   return {
     scrollable,

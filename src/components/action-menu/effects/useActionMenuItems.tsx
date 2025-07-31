@@ -6,7 +6,7 @@ import { ActionClickHandler } from '@/decorators/ActionHandlerDecorator';
 import { parseActionMenu } from '@/utils/MenuUtils';
 import { localMenuToActionMenuItems } from './helpers/localMenuBuilder';
 import { ActionData } from '@/decorators/components/ActionDialog';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 
 // This should be used only for constructed menus, not for id arrays
 const hasLocalItems = <

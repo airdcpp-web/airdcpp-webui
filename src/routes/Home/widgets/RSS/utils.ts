@@ -33,8 +33,8 @@ const XMLParserOptions: Partial<X2jOptions> = {
   tagValueProcessor: (name, value) => decode(value),
 };
 
-export const fetchRSSFeed = async (feedUrl: string) => {
-  const data = await fetchCorsSafeData(feedUrl, false);
+export const fetchRSSFeed = async (feedUrl: string, session: UI.AuthenticatedSession) => {
+  const data = await fetchCorsSafeData(feedUrl, session, { isJSON: false });
 
   console.log('RSS feed received', feedUrl);
 
@@ -46,8 +46,8 @@ export const fetchRSSFeed = async (feedUrl: string) => {
 export const parseRSSFeed = (
   data: RawFeedData,
   moduleT: UI.ModuleTranslator,
-): FeedItem[] | undefined => {
-  let entries = [];
+): FeedItem[] => {
+  let entries = [] as FeedItem[];
 
   const invalidFeed = (error: string) => {
     console.log(`Invalid feed: ${error}`);
@@ -58,26 +58,22 @@ export const parseRSSFeed = (
   if (rss) {
     if (!rss.channel || !rss.channel.item) {
       invalidFeed('No channel/item');
-      return;
     }
 
-    entries = rss.channel.item;
+    entries = rss.channel!.item!;
   } else if (feed) {
     if (!feed.entry) {
       invalidFeed('No feed entry');
-      return;
     }
 
-    entries = feed.entry;
+    entries = feed.entry!;
   } else {
     invalidFeed('No "rss" or "feed" tag was found');
-    return;
   }
 
   if (!Array.isArray(entries)) {
     if (typeof entries !== 'object') {
       invalidFeed('Entries is not an array or an object');
-      return;
     }
 
     // Single entry, convert to an array

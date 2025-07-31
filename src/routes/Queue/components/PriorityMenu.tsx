@@ -12,7 +12,10 @@ import { translate } from '@/utils/TranslationUtils';
 import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import { EmptyDropdownCaption } from '@/components/semantic/EmptyDropdown';
 import { buildMenu } from '@/components/action-menu/builder/slidingMenuBuilder';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
+import { hasAccess } from '@/utils/AuthUtils';
+import { APISocket } from '@/services/SocketService';
+import { useSocket } from '@/context/SocketContext';
 
 interface PriorityMenuProps {
   // Priority object
@@ -21,15 +24,20 @@ interface PriorityMenuProps {
   // Item with priority properties
   item: API.QueueItemBase;
 
-  prioAction: (item: API.QueueItemBase, priority: API.QueuePriorityEnum) => Promise<any>;
+  prioAction: (
+    item: API.QueueItemBase,
+    priority: API.QueuePriorityEnum,
+    socket: APISocket,
+  ) => Promise<any>;
   t: UI.TranslateF;
 }
 
 const PriorityMenu: React.FC<PriorityMenuProps> = ({ item, itemPrio, prioAction, t }) => {
-  const { hasAccess } = useSession();
+  const session = useSession();
+  const socket = useSocket();
 
   const setPriority = (priorityId: API.QueuePriorityEnum) => {
-    return runBackgroundSocketAction(() => prioAction(item, priorityId), t);
+    return runBackgroundSocketAction(() => prioAction(item, priorityId, socket), t);
   };
 
   const getPriorityListItem = (
@@ -80,7 +88,7 @@ const PriorityMenu: React.FC<PriorityMenuProps> = ({ item, itemPrio, prioAction,
     caption += ` (${translate('Auto', t, UI.Modules.QUEUE).toLocaleLowerCase()})`;
   }
 
-  if (!hasAccess(API.AccessEnum.QUEUE_EDIT)) {
+  if (!hasAccess(session, API.AccessEnum.QUEUE_EDIT)) {
     return <EmptyDropdownCaption caption={caption} />;
   }
 

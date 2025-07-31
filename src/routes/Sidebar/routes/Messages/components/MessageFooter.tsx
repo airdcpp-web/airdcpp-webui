@@ -31,17 +31,17 @@ const getCaption = (state: API.CCPMStateEnum, sessionT: UI.ModuleTranslator) => 
 };
 
 interface CCPMStateProps {
-  session: API.PrivateChat;
+  privateChat: API.PrivateChat;
   sessionT: UI.ModuleTranslator;
 }
 
-const CCPMState: React.FC<CCPMStateProps> = ({ session, sessionT }) => {
-  const { flags } = session.user;
+const CCPMState: React.FC<CCPMStateProps> = ({ privateChat, sessionT }) => {
+  const { flags } = privateChat.user;
   if (!flags.includes('ccpm')) {
     return null;
   }
 
-  const state = session.ccpm_state.id;
+  const state = privateChat.ccpm_state.id;
   if (state === API.CCPMStateEnum.DISCONNECTED && flags.includes('offline')) {
     return null;
   }
@@ -50,14 +50,14 @@ const CCPMState: React.FC<CCPMStateProps> = ({ session, sessionT }) => {
     <SessionFooter>
       <div className="ccpm-state">
         <EncryptionState
-          encryption={session.ccpm_state.encryption}
+          encryption={privateChat.ccpm_state.encryption}
           alwaysVisible={true}
           boundary=".session-container"
         />
         <ActionMenu
           caption={getCaption(state, sessionT)}
           actions={PrivateChatCCPMActionMenu}
-          itemData={session}
+          itemData={privateChat}
         />
       </div>
     </SessionFooter>

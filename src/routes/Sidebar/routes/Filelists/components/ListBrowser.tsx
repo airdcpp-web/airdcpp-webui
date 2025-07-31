@@ -18,13 +18,13 @@ import NotificationActions from '@/actions/NotificationActions';
 import { FilelistItemActionMenu } from '@/actions/ui/filelist';
 
 interface ListBrowserProps {
-  session: API.FilelistSession;
+  filelist: API.FilelistSession;
   location: Location;
   sessionT: UI.ModuleTranslator;
 }
 
 const ListBrowser: React.FC<ListBrowserProps> = (props) => {
-  const { sessionT, session } = props;
+  const { sessionT, filelist } = props;
   const [hasClickedDirectory, setHasClickedDirectory] = React.useState(false);
 
   const updateLocationState = useSyncFilelistLocation(props);
@@ -58,49 +58,49 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
   });
 
   const getCurrentDirectory = () => {
-    return session.location;
+    return filelist.location;
   };
 
   const selectedNameFormatter = (caption: React.ReactNode) => {
     return (
       <DownloadMenu
         caption={caption}
-        user={session.user}
+        user={filelist.user}
         itemInfoGetter={getCurrentDirectory}
         downloadHandler={filelistDownloadHandler}
         contextElement=".session-container"
-        entity={session}
+        entity={filelist}
         remoteMenuId={MenuConstants.FILELIST_ITEM}
       >
         <ActionMenu
-          itemData={session.location}
+          itemData={filelist.location}
           actions={FilelistItemActionMenu}
-          entity={session}
+          entity={filelist}
         />
       </DownloadMenu>
     );
   };
 
   const userGetter = () => {
-    return session.user;
+    return filelist.user;
   };
 
-  const filelistItemFetcher = FilelistItemGetter(session);
+  const filelistItemFetcher = FilelistItemGetter(filelist);
 
   return (
     <div className="browser">
       <BrowserBar
-        path={session.location!.path}
+        path={filelist.location!.path}
         separator="/"
         rootPath="/"
         rootName={sessionT.translate('Root')}
         itemClickHandler={handleClickDirectory}
         selectedNameFormatter={selectedNameFormatter}
         // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
-        entityId={session.id}
+        entityId={filelist.id}
       />
       <FilelistItemTable
-        session={session}
+        filelist={filelist}
         sessionT={sessionT}
         onClickDirectory={handleClickDirectory}
       />
@@ -108,7 +108,7 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
         downloadHandler={filelistDownloadHandler}
         itemDataGetter={filelistItemFetcher}
         userGetter={userGetter}
-        session={session}
+        sessionItem={filelist}
       />
     </div>
   );

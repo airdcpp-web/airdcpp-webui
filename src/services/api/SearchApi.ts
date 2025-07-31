@@ -1,16 +1,15 @@
 import SearchConstants from '@/constants/SearchConstants';
-import SocketService from '@/services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 export const searchDownloadHandler: UI.DownloadHandler<API.GroupedSearchResult> = (
-  itemInfo,
-  user,
+  { itemInfo, entity: instance },
   downloadData,
-  instance,
+  socket,
 ) => {
-  return SocketService.post(
+  return socket.post(
     `${SearchConstants.MODULE_URL}/${instance!.id}/results/${itemInfo.id}/download`,
     downloadData,
   );
@@ -22,8 +21,12 @@ interface SearchData {
   priority: API.PriorityEnum;
 }
 
-export const search = (instance: API.SearchInstance, data: SearchData) => {
-  return SocketService.post<API.SearchResponse>(
+export const search = (
+  instance: API.SearchInstance,
+  data: SearchData,
+  socket: APISocket,
+) => {
+  return socket.post<API.SearchResponse>(
     `${SearchConstants.INSTANCES_URL}/${instance.id}/hub_search`,
     data,
   );

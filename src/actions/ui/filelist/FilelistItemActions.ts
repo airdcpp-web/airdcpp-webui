@@ -27,8 +27,8 @@ const handleReloadDirectory: Handler = ({ itemData: item, entity: session, socke
   });
 };
 
-const handleRefreshShare: Handler = ({ itemData }) => {
-  return refreshVirtual(itemData.path);
+const handleRefreshShare: Handler = ({ itemData, socket }) => {
+  return refreshVirtual(itemData.path, socket);
 };
 
 const handleItemDetails: Handler = ({ itemData, navigate }) => {

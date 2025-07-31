@@ -18,7 +18,7 @@ import {
 import Message from '@/components/semantic/Message';
 import IconConstants from '@/constants/IconConstants';
 import SaveButton from './SaveButton';
-import { useSession } from '@/context/SessionContext';
+import { useSession } from '@/context/AppStoreContext';
 
 export interface SettingRootSectionProps {
   settingsT: UI.ModuleTranslator;

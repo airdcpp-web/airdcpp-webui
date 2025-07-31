@@ -1,4 +1,4 @@
-import SocketService from '@/services/SocketService';
+import { APISocket } from '@/services/SocketService';
 
 import * as API from '@/types/api';
 import PrivateChatConstants from '@/constants/PrivateChatConstants';
@@ -9,8 +9,12 @@ import {
   //fetchMessagesDecorator,
 } from './common/ChatActions';
 
-export const changePrivateChatHubUrl = (session: API.PrivateChat, hubUrl: string) => {
-  return SocketService.patch(PrivateChatConstants.SESSIONS_URL + '/' + session.id, {
+export const changePrivateChatHubUrl = (
+  privateChat: API.PrivateChat,
+  hubUrl: string,
+  socket: APISocket,
+) => {
+  return socket.patch(PrivateChatConstants.SESSIONS_URL + '/' + privateChat.id, {
     hub_url: hubUrl,
   });
 };

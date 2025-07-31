@@ -86,15 +86,18 @@ const canCopySize: Filter = (data) => hasCopySupport() && data.itemData.itemInfo
 
 // Handlers
 type Handler = UI.ActionHandler<UI.DownloadableItemData, UI.SessionItemBase>;
-const handleDownload: Handler = ({ itemData }) => {
+const handleDownload: Handler = ({ itemData, socket }) => {
   const { handler, itemInfo, user, entity } = itemData;
   return handler(
-    itemInfo,
-    user,
+    {
+      itemInfo,
+      user,
+      entity,
+    },
     {
       target_name: itemInfo.name,
     },
-    entity,
+    socket,
   );
 };
 

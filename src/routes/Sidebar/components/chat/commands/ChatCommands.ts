@@ -1,8 +1,8 @@
 import { runBackgroundSocketAction } from '@/utils/ActionUtils';
+import { APISocket } from '@/services/SocketService';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
-import { APISocket } from '@/services/SocketService';
 
 type ClearHandler = (id: API.IdType, socket: APISocket) => Promise<any>;
 
@@ -10,14 +10,18 @@ export const buildChatCommands = (
   editAccess: API.AccessEnum,
   clearAPIAction: ClearHandler,
 ) => {
-  const handleMe: UI.ChatCommandHandler = (params, { chatApi, session }, { socket }) => {
+  const handleMe: UI.ChatCommandHandler = (
+    params,
+    { chatApi, chatSession },
+    { socket },
+  ) => {
     if (params) {
-      chatApi.sendChatMessage(socket, session, params, true);
+      chatApi.sendChatMessage(socket, chatSession, params, true);
     }
   };
 
-  const handleClear: UI.ChatCommandHandler = (params, { session }, { t, socket }) => {
-    runBackgroundSocketAction(() => clearAPIAction(session.id, socket), t);
+  const handleClear: UI.ChatCommandHandler = (params, { chatSession }, { t, socket }) => {
+    runBackgroundSocketAction(() => clearAPIAction(chatSession.id, socket), t);
   };
 
   const commands: UI.ChatCommandList = {
