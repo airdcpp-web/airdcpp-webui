@@ -16,18 +16,24 @@ import {
   setupUserEvent,
 } from '@/tests/helpers/test-form-helpers';
 import Login from '../components/Login';
-import { expectResponseToMatchSnapshot, waitForUrl } from '@/tests/helpers/test-helpers';
+import {
+  clickButton,
+  expectResponseToMatchSnapshot,
+  waitForUrl,
+} from '@/tests/helpers/test-helpers';
 import { getLogoutItem, parseMenuItem } from '@/routes/Routes';
 import { useAppStore } from '@/context/AppStoreContext';
 import { SocketContext } from '@/context/SocketContext';
-//import { SessionTestWrapper } from '@/tests/render/test-containers';
-//import { createSessionStore } from '@/stores/session';
 import AuthenticationGuardDecorator from '@/components/main/decorators/AuthenticationGuardDecorator';
 import {
   addMockSessionStoreInitDataHandlers,
   addMockSessionStoreSocketListeners,
 } from '@/tests/mocks/mock-store';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
+import { TestRouteNavigateButton } from '@/tests/helpers/test-route-helpers';
+
+const ChildRouteUrl = '/child';
+const ChildRouteCaption = 'Go to child';
 
 // tslint:disable:no-empty
 describe('Login', () => {
@@ -53,9 +59,8 @@ describe('Login', () => {
     const { socket } = getSocket({
       ...DEFAULT_CONNECT_PARAMS,
       reconnectInterval: 0.1,
+      // logLevel: 'verbose',
     });
-
-    // const sessionStore = createSessionStore();
 
     const SocketWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
       <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
@@ -65,21 +70,30 @@ describe('Login', () => {
       return <Login />;
     };
 
-    const LoggedInPage = AuthenticationGuardDecorator(() => {
+    const LoggedInPageContent = AuthenticationGuardDecorator(() => {
       const appStore = useAppStore();
-
-      useEffect(() => {
-        addMockSessionStoreSocketListeners(server);
-        addMockSessionStoreInitDataHandlers(server);
-      }, [appStore.login.socketAuthenticated]);
-
       return (
         <div>
           <div>Logged in</div>
           {parseMenuItem(getLogoutItem(socket, appStore))}
+          <TestRouteNavigateButton route={ChildRouteUrl} caption={ChildRouteCaption} />
         </div>
       );
     });
+
+    const LoggedInPage = () => {
+      const appStore = useAppStore();
+      useLayoutEffect(() => {
+        const { clearSessionMockListeners } = addMockSessionStoreSocketListeners(server);
+        const removeGetters = addMockSessionStoreInitDataHandlers(server);
+        return () => {
+          clearSessionMockListeners();
+          removeGetters();
+        };
+      }, [appStore.login.socketAuthenticated]);
+
+      return <LoggedInPageContent />;
+    };
 
     const routes = [
       {
@@ -88,6 +102,10 @@ describe('Login', () => {
       },
       {
         index: true,
+        Component: LoggedInPage,
+      },
+      {
+        path: '/child/*',
         Component: LoggedInPage,
       },
     ];
@@ -112,16 +130,11 @@ describe('Login', () => {
     server.stop();
   });
 
-  const logIn = async () => {
-    const { onLogin, onLogout } = addSuccessLoginHandlers();
-
-    const renderData = await renderPage();
-
-    const { getByRole, getByPlaceholderText, router, socket, appStore } = renderData;
-
-    const onConnected = vi.fn();
-    socket.onConnected = onConnected;
-
+  const fillAndSubmitLogin = async ({
+    getByRole,
+    getByPlaceholderText,
+    appStore,
+  }: Awaited<ReturnType<typeof renderPage>>) => {
     // Check content
     await waitFor(() => expect(getByRole('form')).toBeTruthy(), {
       timeout: 10000,
@@ -141,22 +154,36 @@ describe('Login', () => {
     const button = getByRole('button', { name: 'Login' });
     await userEvent.click(button);
 
-    await waitFor(() => expect(onConnected).toHaveBeenCalledWith(DEFAULT_AUTH_RESPONSE));
-
     await waitFor(() =>
       expect(appStore.getState().login.socketAuthenticated).toBeTruthy(),
     );
+  };
+
+  const doInitialLogin = async () => {
+    const { onLogin, onLogout } = addSuccessLoginHandlers();
+
+    const renderData = await renderPage();
+
+    const { router, socket } = renderData;
+    const onSocketConnected = vi.fn();
+    socket.onConnected = onSocketConnected;
+
+    await fillAndSubmitLogin(renderData);
 
     await waitForUrl('/', router);
-    return { ...renderData, onLogin, onLogout };
+    return { ...renderData, onLogin, onLogout, onSocketConnected };
   };
 
   describe('credentials', () => {
     test('should handle login', async () => {
       const userEvent = setupUserEvent();
 
-      const { getByText, socket, onLogin, onLogout } = await logIn();
+      const { getByText, socket, onLogin, onLogout, onSocketConnected } =
+        await doInitialLogin();
 
+      await waitFor(() =>
+        expect(onSocketConnected).toHaveBeenCalledWith(DEFAULT_AUTH_RESPONSE),
+      );
       await waitFor(() => {
         expectResponseToMatchSnapshot(onLogin);
       });
@@ -211,7 +238,10 @@ describe('Login', () => {
     test('should reconnect socket', async () => {
       const onReconnectSocket = vi.fn();
 
-      const { getByRole, socket, appStore, router } = await logIn();
+      const { getByRole, socket, appStore, router } = await doInitialLogin();
+
+      clickButton(ChildRouteCaption, getByRole);
+      await waitForUrl(ChildRouteUrl, router);
 
       // Disconnect socket
       socket.disconnect();
@@ -236,14 +266,19 @@ describe('Login', () => {
 
       expectResponseToMatchSnapshot(onReconnectSocket);
 
-      await waitForUrl('/', router);
+      await waitForUrl(ChildRouteUrl, router);
     }, 100000);
 
     test('should handle reconnect errors', async () => {
       const onReconnectSocket = vi.fn();
       const onAuth = vi.fn();
 
-      const { getByRole, socket, appStore, router } = await logIn();
+      const renderData = await doInitialLogin();
+
+      const { getByRole, socket, appStore, router } = renderData;
+
+      clickButton(ChildRouteCaption, getByRole);
+      await waitForUrl(ChildRouteUrl, router);
 
       // Disconnect socket
       socket.disconnect();
@@ -271,14 +306,15 @@ describe('Login', () => {
 
       await waitFor(() => expect(getByRole('progressbar')).toBeTruthy());
 
-      //await waitFor(() => {
-      //  expect(appStore.getState().login.socketAuthenticated).toBeTruthy();
-      //});
-
-      // expectResponseToMatchSnapshot(onReconnectSocket);
-
       // We should be back on the login page
       await waitForUrl('/login', router);
+
+      // Re-login
+      addSuccessLoginHandlers();
+      await fillAndSubmitLogin(renderData);
+
+      // The previously active page should be visible
+      await waitForUrl(ChildRouteUrl, router);
     }, 100000);
   });
 });

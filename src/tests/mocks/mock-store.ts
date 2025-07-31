@@ -62,6 +62,15 @@ export const addMockSessionStoreSocketListeners = (
       created,
       updated,
       removed,
+
+      clear: () => {
+        chatMessage.remove();
+        statusMessage.remove();
+
+        created.remove();
+        updated.remove();
+        removed.remove();
+      },
     };
   };
 
@@ -79,6 +88,11 @@ export const addMockSessionStoreSocketListeners = (
     return {
       message,
       counts,
+
+      clear: () => {
+        message.remove();
+        counts.remove();
+      },
     };
   };
 
@@ -90,6 +104,10 @@ export const addMockSessionStoreSocketListeners = (
 
     return {
       awayState,
+
+      clear: () => {
+        awayState.remove();
+      },
     };
   };
 
@@ -120,35 +138,67 @@ export const addMockSessionStoreSocketListeners = (
 
     activity,
     events,
+
+    clearSessionMockListeners: () => {
+      hub.clear();
+      privateChat.clear();
+      filelist.clear();
+      viewFile.clear();
+
+      activity.clear();
+      events.clear();
+    },
   };
 };
 
 export const addMockSessionStoreInitDataHandlers = (
   server: ReturnType<typeof getMockServer>,
 ) => {
-  server.addRequestHandler('GET', HubConstants.SESSIONS_URL, HubsListResponse);
+  const hubs = server.addRequestHandler(
+    'GET',
+    HubConstants.SESSIONS_URL,
+    HubsListResponse,
+  );
 
-  server.addRequestHandler(
+  const privateChats = server.addRequestHandler(
     'GET',
     PrivateChatConstants.SESSIONS_URL,
     PrivateChatListResponse,
   );
 
-  server.addRequestHandler('GET', FilelistConstants.SESSIONS_URL, FilelistListResponse);
+  const filelists = server.addRequestHandler(
+    'GET',
+    FilelistConstants.SESSIONS_URL,
+    FilelistListResponse,
+  );
 
-  server.addRequestHandler(
+  const viewedFiles = server.addRequestHandler(
     'GET',
     ViewFileConstants.SESSIONS_URL,
     ViewedFilesListResponse,
   );
 
-  server.addRequestHandler('GET', EventConstants.COUNTS_URL, EventCountsResponse);
+  const events = server.addRequestHandler(
+    'GET',
+    EventConstants.COUNTS_URL,
+    EventCountsResponse,
+  );
 
-  server.addRequestHandler(
+  const activity = server.addRequestHandler(
     'GET',
     SystemConstants.AWAY_STATE_URL,
     SystemAwayStateResponse,
   );
+
+  return () => {
+    hubs();
+    privateChats();
+    filelists();
+    viewedFiles();
+
+    events();
+    activity();
+  };
 };
 
 export const initMockSessionStore = (
