@@ -28,7 +28,7 @@ export const useSessionGuard = (login: UI.LoginState, location: Location) => {
       // Go to the login page as we don't have a valid session
       // Return to this page if the session was lost (instead of having been logged out)
 
-      console.log('UI: Redirecting to login page');
+      socket.logger.info('UI: Redirecting to login page');
       navigate('/login', {
         state: prevSocketAuthenticated ? null : { nextPath: location.pathname }, // No redirect path when logging out
       });

@@ -21,8 +21,8 @@ const errorToString = (error: ErrorResponse | string) => {
     : (error as string);
 };
 
-const LOGIN_PROPS_KEY = 'login_properties';
-const REFRESH_TOKEN_KEY = 'refresh_token';
+export const LOGIN_PROPS_KEY = 'login_properties';
+export const REFRESH_TOKEN_KEY = 'refresh_token';
 
 const formatSocketError = (error: UI.SocketError): UI.LoginError => {
   if (!error) {
@@ -54,6 +54,7 @@ interface LoginSliceInternal extends UI.LoginSlice {
   loginProperties: API.LoginInfo | null;
 
   handleDisconnect: (error: string) => void;
+  onConnected: (socket: APISocket) => void;
 }
 
 export const createLoginSlice = () => {
@@ -73,6 +74,11 @@ export const createLoginSlice = () => {
         }
       },
 
+      onConnected: (socket: APISocket) => {
+        socket.onDisconnect = get().onDisconnect;
+        socket.onDisconnected = get().onSocketDisconnected;
+      },
+
       onLoginCompleted: (
         socket: APISocket,
         loginInfo: API.LoginInfo,
@@ -85,18 +91,13 @@ export const createLoginSlice = () => {
           saveLocalProperty(REFRESH_TOKEN_KEY, loginInfo.refresh_token);
         }
 
-        socket.onDisconnected = get().onSocketDisconnected;
+        get().onConnected(socket);
       },
 
       // Invalid password etc.
       setLastError: (error: UI.SocketError) => {
         set({ lastError: formatSocketError(error) });
       },
-
-      // Expired refresh token
-      /*onLoginRefreshTokenFailed: (error: SocketError) => {
-        get().clearData(error);
-      },*/
 
       onNewUserIntroSeen: () => {
         const newLoginProps = {
@@ -109,15 +110,9 @@ export const createLoginSlice = () => {
 
       // Ready for use
       onConnectCompleted: (socket: APISocket) => {
-        // get().setLoginProperties(loginInfo);
         set({ socketAuthenticated: true });
 
-        socket.onDisconnected = get().onSocketDisconnected;
-      },
-
-      // Can't connect to the server or session not valid
-      onConnectFailed: (error: UI.SocketError) => {
-        get().resetSession(error);
+        get().onConnected(socket);
       },
 
       hasAccess: (access: API.AccessEnum) => {

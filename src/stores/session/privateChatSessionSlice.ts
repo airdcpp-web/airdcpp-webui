@@ -29,7 +29,7 @@ const createPrivateChatStore = () => {
   });
 };
 
-export const initPrivateChatStore = (
+export const initPrivateChatStore = async (
   sessionStore: UI.SessionStore,
   init: UI.SessionStoreInitData,
 ) => {
@@ -41,8 +41,12 @@ export const initPrivateChatStore = (
     API.AccessEnum.PRIVATE_CHAT_VIEW,
   );
 
-  initSessionSlice(sessionStore.privateChats, PrivateChatAPIActions, addSocketListener);
-  initMessageSlice(sessionStore.privateChats.messages, addSocketListener);
+  await initSessionSlice(
+    sessionStore.privateChats,
+    PrivateChatAPIActions,
+    addSocketListener,
+  );
+  await initMessageSlice(sessionStore.privateChats.messages, addSocketListener);
 };
 
 export const PrivateChatStoreSelector: UI.MessageStoreSelector<API.PrivateChat> = (

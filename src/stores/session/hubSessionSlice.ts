@@ -55,7 +55,7 @@ const createHubStore = () => {
   });
 };
 
-export const initHubStore = (
+export const initHubStore = async (
   sessionStore: UI.SessionStore,
   init: UI.SessionStoreInitData,
 ) => {
@@ -67,8 +67,8 @@ export const initHubStore = (
     API.AccessEnum.HUBS_VIEW,
   );
 
-  initSessionSlice(sessionStore.hubs, HubAPIActions, addSocketListener);
-  initMessageSlice(sessionStore.hubs.messages, addSocketListener);
+  await initSessionSlice(sessionStore.hubs, HubAPIActions, addSocketListener);
+  await initMessageSlice(sessionStore.hubs.messages, addSocketListener);
 };
 
 export const HubStoreSelector: UI.MessageStoreSelector<API.Hub> = (state) => state.hubs;

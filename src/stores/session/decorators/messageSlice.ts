@@ -118,16 +118,16 @@ export const createMessageSlice = () => {
   return createSlice;
 };
 
-export const initMessageSlice = (
+export const initMessageSlice = async (
   messageSlice: UI.MessageSlice,
   initData: UI.SessionInitData,
 ) => {
-  initSessionScrollSlice(messageSlice.scroll, initData);
+  await initSessionScrollSlice(messageSlice.scroll, initData);
 
   const { addSocketListener } = initData;
-  addSocketListener('message', messageSlice.addChatMessage);
-  addSocketListener('status', messageSlice.addStatusMessage);
+  await addSocketListener('message', messageSlice.addChatMessage);
+  await addSocketListener('status', messageSlice.addStatusMessage);
 
-  addSocketListener('removed', messageSlice.removeSession);
-  addSocketListener('updated', messageSlice.updateSession);
+  await addSocketListener('removed', messageSlice.removeSession);
+  await addSocketListener('updated', messageSlice.updateSession);
 };

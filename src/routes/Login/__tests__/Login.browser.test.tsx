@@ -2,9 +2,8 @@ import { waitFor } from '@testing-library/dom';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import {
-  DEFAULT_AUTH_RESPONSE,
-  DEFAULT_CONNECT_PARAMS,
-  DEFAULT_CONNECT_RESPONSE,
+  // DEFAULT_AUTH_RESPONSE,
+  // DEFAULT_CONNECT_RESPONSE,
   getMockServer,
   getSocket,
 } from 'airdcpp-apisocket/tests';
@@ -31,6 +30,12 @@ import {
 } from '@/tests/mocks/mock-store';
 import { useLayoutEffect } from 'react';
 import { TestRouteNavigateButton } from '@/tests/helpers/test-route-helpers';
+import { LOGIN_PROPS_KEY, REFRESH_TOKEN_KEY } from '@/stores/app/loginSlice';
+import { saveLocalProperty, saveSessionProperty } from '@/utils/BrowserUtils';
+import { getMockSession } from '@/tests/mocks/mock-session';
+
+const AuthResponse = getMockSession([]);
+const { refresh_token, ...ConnectResponse } = AuthResponse;
 
 const ChildRouteUrl = '/child';
 const ChildRouteCaption = 'Go to child';
@@ -39,27 +44,22 @@ const ChildRouteCaption = 'Go to child';
 describe('Login', () => {
   let server: ReturnType<typeof getMockServer>;
 
-  const addSuccessLoginHandlers = () => {
+  const addSuccessCredentialAuthHandlers = () => {
     const onLogin = vi.fn();
     const onLogout = vi.fn();
 
-    server.addRequestHandler(
-      'POST',
-      'sessions/authorize',
-      DEFAULT_AUTH_RESPONSE,
-      onLogin,
-    );
+    server.addRequestHandler('POST', 'sessions/authorize', AuthResponse, onLogin);
 
     server.addRequestHandler('DELETE', 'sessions/self', undefined, onLogout);
 
     return { onLogin, onLogout };
   };
 
-  const renderPage = async () => {
+  const renderPage = async (initialRoute = '/login') => {
     const { socket } = getSocket({
-      ...DEFAULT_CONNECT_PARAMS,
       reconnectInterval: 0.1,
-      // logLevel: 'verbose',
+      logLevel: 'none',
+      autoReconnect: false,
     });
 
     const SocketWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
@@ -84,12 +84,8 @@ describe('Login', () => {
     const LoggedInPage = () => {
       const appStore = useAppStore();
       useLayoutEffect(() => {
-        const { clearSessionMockListeners } = addMockSessionStoreSocketListeners(server);
-        const removeGetters = addMockSessionStoreInitDataHandlers(server);
-        return () => {
-          clearSessionMockListeners();
-          removeGetters();
-        };
+        addMockSessionStoreSocketListeners(server);
+        addMockSessionStoreInitDataHandlers(server);
       }, [appStore.login.socketAuthenticated]);
 
       return <LoggedInPageContent />;
@@ -113,13 +109,16 @@ describe('Login', () => {
     const renderData = renderBasicRoutes(
       routes,
       {
-        routerProps: { initialEntries: ['/login'] },
+        routerProps: { initialEntries: [initialRoute] },
       },
       undefined,
       SocketWrapper,
     );
 
-    return { socket, ...renderData };
+    const onSocketConnected = vi.fn();
+    socket.onConnected = onSocketConnected;
+
+    return { socket, onSocketConnected, ...renderData };
   };
 
   beforeEach(() => {
@@ -127,6 +126,9 @@ describe('Login', () => {
   });
 
   afterEach(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+
     server.stop();
   });
 
@@ -160,30 +162,25 @@ describe('Login', () => {
   };
 
   const doInitialLogin = async () => {
-    const { onLogin, onLogout } = addSuccessLoginHandlers();
+    const authHandlerData = addSuccessCredentialAuthHandlers();
 
     const renderData = await renderPage();
 
-    const { router, socket } = renderData;
-    const onSocketConnected = vi.fn();
-    socket.onConnected = onSocketConnected;
-
+    const { router } = renderData;
     await fillAndSubmitLogin(renderData);
-
     await waitForUrl('/', router);
-    return { ...renderData, onLogin, onLogout, onSocketConnected };
+
+    return { ...renderData, ...authHandlerData };
   };
 
   describe('credentials', () => {
     test('should handle login', async () => {
       const userEvent = setupUserEvent();
 
-      const { getByText, socket, onLogin, onLogout, onSocketConnected } =
+      const { getByText, socket, onLogin, onLogout, onSocketConnected, appStore } =
         await doInitialLogin();
 
-      await waitFor(() =>
-        expect(onSocketConnected).toHaveBeenCalledWith(DEFAULT_AUTH_RESPONSE),
-      );
+      await waitFor(() => expect(onSocketConnected).toHaveBeenCalledWith(AuthResponse));
       await waitFor(() => {
         expectResponseToMatchSnapshot(onLogin);
       });
@@ -194,6 +191,7 @@ describe('Login', () => {
       });
 
       expect(socket.isConnected()).toBe(false);
+      expect(appStore.getState().login.getSession()).toBeNull();
     }, 100000);
 
     test('should handle invalid credentials', async () => {
@@ -254,7 +252,7 @@ describe('Login', () => {
       server.addRequestHandler(
         'POST',
         'sessions/socket',
-        DEFAULT_CONNECT_RESPONSE,
+        ConnectResponse,
         onReconnectSocket,
       );
 
@@ -280,6 +278,19 @@ describe('Login', () => {
       clickButton(ChildRouteCaption, getByRole);
       await waitForUrl(ChildRouteUrl, router);
 
+      saveLocalProperty(REFRESH_TOKEN_KEY, AuthResponse.refresh_token);
+
+      socket.onConnect = () => {
+        // Let it fail reconnect
+        server.addErrorHandler(
+          'POST',
+          'sessions/socket',
+          'Invalid session token',
+          400,
+          onReconnectSocket,
+        );
+      };
+
       // Disconnect socket
       socket.disconnect();
 
@@ -287,15 +298,14 @@ describe('Login', () => {
         expect(appStore.getState().login.socketAuthenticated).toBeFalsy(),
       );
 
-      // Let it fail reconnect
-      server.addErrorHandler(
-        'POST',
-        'sessions/socket',
-        'Invalid session token',
-        400,
-        onReconnectSocket,
-      );
+      await waitFor(() => expect(getByRole('progressbar')).toBeTruthy());
+      await waitFor(() => expect(onReconnectSocket).toBeCalled());
 
+      // We should be back on the login page
+      await waitForUrl('/login', router);
+      expect(appStore.getState().login.getSession()).toBeNull();
+
+      // Refresh token should now be attempted
       server.addErrorHandler(
         'POST',
         'sessions/authorize',
@@ -304,16 +314,77 @@ describe('Login', () => {
         onAuth,
       );
 
-      await waitFor(() => expect(getByRole('progressbar')).toBeTruthy());
+      await waitFor(() => expect(onAuth).toBeCalled());
 
-      // We should be back on the login page
-      await waitForUrl('/login', router);
+      // Refresh token should now be removed
+      await waitFor(() => expect(appStore.getState().login.getRefreshToken()).toBeNull());
 
       // Re-login
-      addSuccessLoginHandlers();
+      addSuccessCredentialAuthHandlers();
       await fillAndSubmitLogin(renderData);
 
       // The previously active page should be visible
+      await waitForUrl(ChildRouteUrl, router);
+    }, 100000);
+
+    test('should connect with an existing session', async () => {
+      saveSessionProperty(LOGIN_PROPS_KEY, AuthResponse);
+
+      const onReconnectSocket = vi.fn();
+      server.addRequestHandler(
+        'POST',
+        'sessions/socket',
+        ConnectResponse,
+        onReconnectSocket,
+      );
+
+      const { appStore, router } = await renderPage(ChildRouteUrl);
+
+      await waitFor(() =>
+        expect(appStore.getState().login.socketAuthenticated).toBeTruthy(),
+      );
+
+      expectResponseToMatchSnapshot(onReconnectSocket);
+
+      await waitForUrl(ChildRouteUrl, router);
+    }, 100000);
+  });
+
+  describe('refresh token', () => {
+    test('should use refresh token with an expired session', async () => {
+      const onReconnectSocket = vi.fn();
+      saveSessionProperty(LOGIN_PROPS_KEY, AuthResponse);
+      saveLocalProperty(REFRESH_TOKEN_KEY, AuthResponse.refresh_token);
+
+      server.addErrorHandler(
+        'POST',
+        'sessions/socket',
+        'Invalid session token',
+        400,
+        onReconnectSocket,
+      );
+
+      const onLogin = vi.fn();
+
+      const { appStore, router, socket } = await renderPage(ChildRouteUrl);
+      socket.onConnect = () => {
+        // Handlers will be reset when the reconnect fails and socket gets disconnected
+        server.addRequestHandler('POST', 'sessions/authorize', ConnectResponse, onLogin);
+      };
+
+      // Reconnect should fail
+      await waitFor(() => expect(onReconnectSocket).toBeCalled());
+
+      // We should be back on the login page
+      await waitForUrl('/login', router);
+      await waitFor(() =>
+        expect(appStore.getState().login.socketAuthenticated).toBeTruthy(),
+      );
+
+      // Refresh token should be used for authorization and we are now back on the page that we originally wanted
+      await waitForUrl(ChildRouteUrl, router);
+      expectResponseToMatchSnapshot(onLogin);
+
       await waitForUrl(ChildRouteUrl, router);
     }, 100000);
   });

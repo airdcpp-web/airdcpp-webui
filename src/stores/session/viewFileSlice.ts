@@ -23,7 +23,7 @@ const createViewFileStore = () => {
   });
 };
 
-export const initViewFileStore = (
+export const initViewFileStore = async (
   sessionStore: UI.SessionStore,
   init: UI.SessionStoreInitData,
 ) => {
@@ -35,8 +35,8 @@ export const initViewFileStore = (
     API.AccessEnum.VIEW_FILE_VIEW,
   );
 
-  initSessionSlice(sessionStore.viewFiles, ViewFileAPIActions, addSocketListener);
-  initSessionScrollSlice(sessionStore.viewFiles.scroll, addSocketListener);
+  await initSessionSlice(sessionStore.viewFiles, ViewFileAPIActions, addSocketListener);
+  await initSessionScrollSlice(sessionStore.viewFiles.scroll, addSocketListener);
 };
 
 export const ViewFileStoreSelector: UI.SessionStoreSelector<API.ViewFile> = (state) =>

@@ -24,15 +24,15 @@ export const SessionStoreProvider: React.FC<SessionStoreContextProviderProps> = 
   children,
 }) => {
   const sessionStore = useMemo(() => {
-    const store = createSessionStore();
+    const sessionStoreApi = createSessionStore();
 
     const initData = {
       socket,
       login,
     };
 
-    initSessionStore(store.getState(), initData);
-    return store;
+    initSessionStore(sessionStoreApi, initData);
+    return sessionStoreApi;
   }, []);
 
   // Clear state when the connection is lost

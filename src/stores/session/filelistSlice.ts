@@ -25,7 +25,7 @@ const createFilelistStore = () => {
   return slice;
 };
 
-export const initFilelistStore = (
+export const initFilelistStore = async (
   sessionStore: UI.SessionStore,
   init: UI.SessionStoreInitData,
 ) => {
@@ -37,8 +37,8 @@ export const initFilelistStore = (
     API.AccessEnum.FILELISTS_VIEW,
   );
 
-  initSessionSlice(sessionStore.filelists, FilelistAPIActions, addSocketListener);
-  initSessionScrollSlice(sessionStore.viewFiles.scroll, addSocketListener);
+  await initSessionSlice(sessionStore.filelists, FilelistAPIActions, addSocketListener);
+  await initSessionScrollSlice(sessionStore.viewFiles.scroll, addSocketListener);
 };
 
 export const FilelistStoreSelector: UI.SessionStoreSelector<API.FilelistSession> = (

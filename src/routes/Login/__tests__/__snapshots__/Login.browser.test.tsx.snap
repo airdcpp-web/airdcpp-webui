@@ -19,6 +19,16 @@ exports[`Login > credentials > should handle login 2`] = `
 }
 `;
 
+exports[`Login > reconnect > should connect with an existing session 1`] = `
+{
+  "data": {
+    "auth_token": "b823187f-4aab-4b71-9764-e63e88401a26",
+  },
+  "method": "POST",
+  "path": "sessions/socket",
+}
+`;
+
 exports[`Login > reconnect > should reconnect socket 1`] = `
 {
   "data": {
@@ -26,5 +36,16 @@ exports[`Login > reconnect > should reconnect socket 1`] = `
   },
   "method": "POST",
   "path": "sessions/socket",
+}
+`;
+
+exports[`Login > refresh token > should use refresh token with an expired session 1`] = `
+{
+  "data": {
+    "grant_type": "refresh_token",
+    "refresh_token": "dc66f47d-d060-4c50-aa3b-4a4741938a04",
+  },
+  "method": "POST",
+  "path": "sessions/authorize",
 }
 `;

@@ -201,14 +201,14 @@ export const addMockSessionStoreInitDataHandlers = (
   };
 };
 
-export const initMockSessionStore = (
-  sessionStore: StoreApi<UI.SessionStore>,
+export const initMockSessionStore = async (
+  sessionStoreApi: StoreApi<UI.SessionStore>,
   initProps: UI.SessionStoreInitData,
   server: ReturnType<typeof getMockServer>,
 ) => {
   addMockSessionStoreInitDataHandlers(server);
   const listeners = addMockSessionStoreSocketListeners(server);
 
-  initSessionStore(sessionStore.getState(), initProps);
+  await initSessionStore(sessionStoreApi, initProps);
   return listeners;
 };

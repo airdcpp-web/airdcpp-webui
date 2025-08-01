@@ -1,6 +1,6 @@
 import { createActivityStore, initActivityStore } from '@/stores/session/activitySlice';
 
-import { createStore } from 'zustand';
+import { createStore, StoreApi } from 'zustand';
 import { withLenses } from '@dhmk/zustand-lens';
 
 import * as UI from '@/types/ui';
@@ -25,21 +25,36 @@ export const createSessionStore = () => {
       // Other
       events: createEventStore(),
       activity: createActivityStore(),
+
+      isInitialized: false,
     })),
   );
 
   return store;
 };
 
-export const initSessionStore = (
-  sessionStore: UI.SessionStore,
+export const initSessionStore = async (
+  sessionStoreApi: StoreApi<UI.SessionStore>,
   initData: UI.SessionStoreInitData,
 ) => {
-  initHubStore(sessionStore, initData);
-  initPrivateChatStore(sessionStore, initData);
-  initFilelistStore(sessionStore, initData);
-  initViewFileStore(sessionStore, initData);
+  const sessionStore = sessionStoreApi.getState();
+  const initializers = [
+    initHubStore(sessionStore, initData),
+    initPrivateChatStore(sessionStore, initData),
+    initFilelistStore(sessionStore, initData),
+    initViewFileStore(sessionStore, initData),
 
-  initEventStore(sessionStore, initData);
-  initActivityStore(sessionStore, initData);
+    initEventStore(sessionStore, initData),
+    initActivityStore(sessionStore, initData),
+  ];
+
+  try {
+    await Promise.all(initializers);
+
+    sessionStoreApi.setState({
+      isInitialized: true,
+    });
+  } catch (e) {
+    console.error('Session store initialization failed', e);
+  }
 };

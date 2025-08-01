@@ -26,11 +26,11 @@ describe('event store', () => {
     server.stop();
   });
 
-  const createMockAppStore = (initProps: UI.SessionStoreInitData) => {
-    const appStore = createSessionStore();
-    const mocks = initMockSessionStore(appStore, initProps, server);
+  const createMockSessionStore = async (initProps: UI.SessionStoreInitData) => {
+    const sessionStore = createSessionStore();
+    const mocks = await initMockSessionStore(sessionStore, initProps, server);
 
-    return { appStore, mocks };
+    return { sessionStore, mocks };
   };
 
   const initStore = async () => {
@@ -40,26 +40,28 @@ describe('event store', () => {
       socket,
     };
 
-    const { appStore, mocks } = createMockAppStore(initProps);
-    return { appStore, mocks };
+    const { sessionStore, mocks } = await createMockSessionStore(initProps);
+    return { sessionStore, mocks };
   };
 
-  const addMessages = (events: ReturnType<typeof initMockSessionStore>['events']) => {
+  const addMessages = (
+    events: Awaited<ReturnType<typeof initMockSessionStore>>['events'],
+  ) => {
     events.message.fire(EventMessageInfo);
     events.message.fire(EventMessageError);
   };
 
   test('should add individual messages', async () => {
     const {
-      appStore,
+      sessionStore,
       mocks: { events },
     } = await initStore();
 
     addMessages(events);
 
-    expect(appStore.getState().events.logMessages).toEqual(
+    expect(sessionStore.getState().events.logMessages).toEqual(
       (EventMessagesResponse as API.StatusMessage[]).map(toEventCacheMessage),
     );
-    expect(appStore.getState().events.isInitialized).toBeFalsy();
+    expect(sessionStore.getState().events.isInitialized).toBeFalsy();
   });
 });

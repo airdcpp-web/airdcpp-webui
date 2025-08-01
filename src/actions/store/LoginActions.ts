@@ -32,7 +32,7 @@ const loginRefreshToken = async (
 ) => {
   await socket.waitDisconnected();
   try {
-    const response = await socket.connectRefreshToken(refreshToken, true);
+    const response = await socket.connectRefreshToken(refreshToken, false);
     appStore.login.onLoginCompleted(socket, response as API.LoginInfo, true);
   } catch (e) {
     appStore.login.clear(e);

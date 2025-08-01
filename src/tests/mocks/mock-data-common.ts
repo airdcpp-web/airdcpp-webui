@@ -46,7 +46,7 @@ export const initCommonDataMocks = async (
   // server,
   //);
 
-  const mockStoreListeners = initMockSessionStore(sessionStore, initProps, server);
+  const mockStoreListeners = await initMockSessionStore(sessionStore, initProps, server);
 
   return { socket, appStore, sessionStore, session, mockStoreListeners };
 };

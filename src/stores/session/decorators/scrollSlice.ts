@@ -43,11 +43,11 @@ export const createSessionScrollSlice = () => {
   return createSlice;
 };
 
-export const initSessionScrollSlice = (
+export const initSessionScrollSlice = async (
   scrollSlice: UI.SessionScrollHandler,
   { addSocketListener }: UI.SessionInitData,
 ) => {
-  addSocketListener('removed', scrollSlice.onSessionRemoved);
+  await addSocketListener('removed', scrollSlice.onSessionRemoved);
 };
 
 export const createBasicScrollSlice = () => {

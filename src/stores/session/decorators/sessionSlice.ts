@@ -86,7 +86,7 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
             if (!session) {
               // May happen before the sessions have been fetched
               console.warn(
-                'Update received for a non-existing session',
+                `Update received for a non-existing session ${id}`,
                 updatedPropertiesInitial,
               );
               return;
@@ -178,14 +178,14 @@ interface SessionActions<SessionT extends UI.SessionType> {
   ) => Promise<void>;
 }
 
-export const initSessionSlice = <SessionT extends UI.SessionType>(
+export const initSessionSlice = async <SessionT extends UI.SessionType>(
   sessionSlice: UI.SessionSlice<SessionT>,
   sessionActions: SessionActions<SessionT>,
   { addSocketListener, socket }: UI.SessionInitData,
 ) => {
-  addSocketListener(`created`, sessionSlice.createSession);
-  addSocketListener(`updated`, sessionSlice.updateSession);
-  addSocketListener(`removed`, sessionSlice.removeSession);
+  await addSocketListener(`created`, sessionSlice.createSession);
+  await addSocketListener(`updated`, sessionSlice.updateSession);
+  await addSocketListener(`removed`, sessionSlice.removeSession);
 
   sessionSlice.setReadHandler((session) => {
     sessionActions.setRead(session, socket).catch((error) => {

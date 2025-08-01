@@ -119,15 +119,19 @@ const createEventSlice = () => {
   return createSlice;
 };
 
-export const initEventStore = (
+export const initEventStore = async (
   sessionStore: UI.SessionStore,
   { socket, login }: UI.SessionStoreInitData,
 ) => {
   if (hasAccess(login, API.AccessEnum.EVENTS_VIEW)) {
     const url = EventConstants.MODULE_URL;
 
-    socket.addListener(url, EventConstants.MESSAGE, sessionStore.events.onLogMessage);
-    socket.addListener(
+    await socket.addListener(
+      url,
+      EventConstants.MESSAGE,
+      sessionStore.events.onLogMessage,
+    );
+    await socket.addListener(
       url,
       EventConstants.COUNTS,
       sessionStore.events.onMessageCountsReceived,

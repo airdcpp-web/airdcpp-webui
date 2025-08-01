@@ -11,7 +11,6 @@ export const getMockSession = (
   system_info: {
     ...DEFAULT_AUTH_RESPONSE.system_info,
     api_feature_level: 9,
-    client_version: '2.13.2',
   } as API.SystemInfo,
   user: {
     ...(DEFAULT_AUTH_RESPONSE.user as API.LoginUser),
@@ -20,4 +19,5 @@ export const getMockSession = (
   auth_token: DEFAULT_AUTH_RESPONSE.auth_token,
   session_id: 4,
   wizard_pending: false,
+  refresh_token: 'dc66f47d-d060-4c50-aa3b-4a4741938a04',
 });

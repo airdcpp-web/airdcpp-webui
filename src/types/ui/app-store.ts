@@ -4,7 +4,6 @@ import { FormValueBase, FormValueMap } from './form';
 
 import * as API from '@/types/api';
 import { APISocket } from '@/services/SocketService';
-// import { AuthenticatedSession } from './auth';
 
 export type LocalSettingValues = FormValueMap;
 
@@ -24,17 +23,7 @@ export type SocketError = ErrorResponse | string | null;
 export interface LoginState {
   socketAuthenticated: boolean;
   lastError: LoginError;
-  // hasSession: boolean;
   allowLogin: boolean;
-
-  // hasAccess: (access: API.AccessEnum) => boolean;
-
-  // showNewUserIntro: boolean;
-  // authToken: string | null;
-  // refreshToken: string | null;
-  // systemInfo: API.SystemInfo | null;
-
-  // session: API.LoginInfo | null;
 }
 
 interface LoginActions {
@@ -51,6 +40,7 @@ interface LoginActions {
   onNewUserIntroSeen: () => void;
   onConnectCompleted: (socket: APISocket) => void;
 
+  onDisconnect: (error: string) => void;
   onSocketDisconnected: (error: string) => void;
 
   init(): void;
@@ -62,11 +52,6 @@ interface LoginGetters {
 }
 
 export type LoginSlice = LoginActions & LoginGetters & LoginState;
-// loginProperties: API.LoginInfo | null;
-
-/*socketAuthenticated: boolean;
-  lastError: LoginError;
-  allowLogin: boolean;*/
 
 export interface AppStore {
   login: LoginSlice;

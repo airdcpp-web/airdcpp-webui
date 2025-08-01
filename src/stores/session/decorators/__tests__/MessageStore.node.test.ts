@@ -20,6 +20,7 @@ import {
   PrivateChat1MessageStatus,
 } from '@/tests/mocks/api/private-chat';
 import { createSessionStore } from '@/stores/session';
+import { waitFor } from '@testing-library/dom';
 
 const SESSION_ID = PrivateChat1.id;
 const SESSION_BASE = {
@@ -62,9 +63,9 @@ describe('message store', () => {
     server.stop();
   });
 
-  const createMockSessionStore = (initProps: UI.SessionStoreInitData) => {
+  const createMockSessionStore = async (initProps: UI.SessionStoreInitData) => {
     const sessionStore = createSessionStore();
-    const mocks = initMockSessionStore(sessionStore, initProps, server);
+    const mocks = await initMockSessionStore(sessionStore, initProps, server);
 
     return { sessionStore, mocks };
   };
@@ -76,13 +77,20 @@ describe('message store', () => {
       socket,
     };
 
-    const { sessionStore, mocks } = createMockSessionStore(initProps);
+    const { sessionStore, mocks } = await createMockSessionStore(initProps);
+    sessionStore.getState().privateChats.init([]);
     mocks.privateChat.created.fire(PrivateChat1);
+
+    await waitFor(() =>
+      expect(
+        sessionStore.getState().privateChats.getSession(PrivateChat1.id),
+      ).toBeTruthy(),
+    );
     return { sessionStore, mocks };
   };
 
   const addMessages = (
-    privateChat: ReturnType<typeof initMockSessionStore>['privateChat'],
+    privateChat: Awaited<ReturnType<typeof initMockSessionStore>>['privateChat'],
   ) => {
     privateChat.statusMessage.fire(PrivateChat1MessageStatus, SESSION_ID);
     privateChat.chatMessage.fire(PrivateChat1MessageMe, SESSION_ID);

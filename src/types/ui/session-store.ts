@@ -118,6 +118,8 @@ export interface SessionStore {
 
   activity: ActivitySlice;
   events: EventSlice;
+
+  isInitialized: boolean;
 }
 
 export type SessionStoreSelector<SessionT extends SessionType = SessionType> = (

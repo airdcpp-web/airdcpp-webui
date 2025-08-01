@@ -25,12 +25,16 @@ export const createActivitySlice = () => {
   return createSlice;
 };
 
-export const initActivityStore = (
+export const initActivityStore = async (
   sessionStore: UI.SessionStore,
   { socket }: UI.SessionStoreInitData,
 ) => {
   const url = SystemConstants.MODULE_URL;
-  socket.addListener(url, SystemConstants.AWAY_STATE, sessionStore.activity.setAway);
+  await socket.addListener(
+    url,
+    SystemConstants.AWAY_STATE,
+    sessionStore.activity.setAway,
+  );
 };
 
 export const createActivityStore = () => {
