@@ -3,7 +3,13 @@
 
 /** Simulate user events on react-select dropdowns */
 
-import { Matcher, findAllByText, findByText, waitFor } from '@testing-library/dom';
+import {
+  Matcher,
+  findAllByText,
+  findByRole,
+  findByText,
+  waitFor,
+} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 
 // find the react-select container from its input field 🤷
@@ -27,6 +33,7 @@ export const openMenu = async (
 ) => {
   await user.click(input);
   await user.type(input, '{ArrowDown}');
+  await findByRole(getReactSelectContainerFromInput(input), 'listbox');
 };
 
 // type text in the input field

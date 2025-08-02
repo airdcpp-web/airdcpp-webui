@@ -161,9 +161,10 @@ describe('Login', () => {
 
     const renderData = await renderPage();
 
-    const { router } = renderData;
+    const { router, findAllByText } = renderData;
     await fillAndSubmitLogin(renderData);
     await waitForUrl('/', router);
+    await waitFor(() => expect(findAllByText('Logged in')).toBeTruthy());
 
     return { ...renderData, ...authHandlerData };
   };
