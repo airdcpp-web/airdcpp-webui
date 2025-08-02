@@ -1,3 +1,4 @@
+import { AnimationConstants } from '@/constants/UIConstants';
 import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
 import { useSidebarContext } from '@/context/SidebarContext';
 import * as React from 'react';
@@ -98,6 +99,8 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
 
       onHidden,
       onApprove,
+
+      duration: AnimationConstants.modal,
 
       dimmerSettings: {
         dimmerName: modalNodeId,

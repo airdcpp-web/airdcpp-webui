@@ -84,6 +84,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
         onShow: onShow,
         onHidden: onHidden,
         onHide: onHide,
+
+        duration: 10,
         // debug: true,
         // verbose: true,
       } as SemanticUI.SidebarSettings);

@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import 'fomantic-ui-css/components/popup';
 import 'fomantic-ui-css/components/popup.min.css';
+import { AnimationConstants } from '@/constants/UIConstants';
 
 type ChildType = React.ReactElement<any>;
 
@@ -111,6 +112,7 @@ class Popup extends React.PureComponent<PopupProps, State> {
       popup: this.node as any as JQuery<HTMLElement>,
       onHidden: () => this.onHidden(),
       position: this.props.position,
+      duration: AnimationConstants.popup,
       ...this.props.settings,
     };
 

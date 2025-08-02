@@ -10,6 +10,7 @@ import 'fomantic-ui-css/components/button.min.css'; // for button style
 import 'fomantic-ui-css/components/dropdown';
 import 'fomantic-ui-css/components/dropdown.min.css';
 import IconConstants from '@/constants/IconConstants';
+import { AnimationConstants } from '@/constants/UIConstants';
 
 export type DropdownProps = React.PropsWithChildren<{
   // If caption isn't specified, the icon will be used as main trigger
@@ -42,8 +43,6 @@ export type DropdownProps = React.PropsWithChildren<{
 interface State {
   visible: boolean;
 }
-
-const ANIMATION_DURATION = 200;
 
 class Dropdown extends React.PureComponent<DropdownProps, State> {
   static readonly defaultProps: Pick<DropdownProps, 'direction' | 'leftIcon'> = {
@@ -86,10 +85,10 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
               visible: false,
             });
           },
-          ANIMATION_DURATION,
+          AnimationConstants.dropdown,
         );
       },
-      duration: ANIMATION_DURATION,
+      duration: AnimationConstants.dropdown,
       ...this.props.settings,
       //debug: true,
       //verbose: true,
