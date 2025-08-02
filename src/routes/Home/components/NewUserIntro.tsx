@@ -19,7 +19,7 @@ import * as UI from '@/types/ui';
 
 const NewUserIntro = () => {
   const session = useSession();
-  if (!session?.wizard_pending) {
+  if (!session.wizard_pending) {
     return null;
   }
 

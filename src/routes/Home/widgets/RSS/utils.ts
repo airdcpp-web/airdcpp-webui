@@ -36,8 +36,6 @@ const XMLParserOptions: Partial<X2jOptions> = {
 export const fetchRSSFeed = async (feedUrl: string, session: UI.AuthenticatedSession) => {
   const data = await fetchCorsSafeData(feedUrl, session, { isJSON: false });
 
-  console.log('RSS feed received', feedUrl);
-
   const parser = new XMLParser(XMLParserOptions);
   const jsonFeed = parser.parse(data);
   return jsonFeed;

@@ -39,13 +39,6 @@ export const initCommonDataMocks = async (
   appStore.getState().login.onLoginCompleted(socket, session, true);
 
   const sessionStore = createSessionStore();
-  //addMockSessionStoreInitDataHandlers(server);
-  //const mockStoreListeners = addMockSessionStoreSocketListeners(
-  // sessionStore,
-  // initProps,
-  // server,
-  //);
-
   const mockStoreListeners = await initMockSessionStore(sessionStore, initProps, server);
 
   return { socket, appStore, sessionStore, session, mockStoreListeners };

@@ -5,33 +5,20 @@ import { getMockServer } from 'airdcpp-apisocket/tests';
 
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
-// import * as API from '@/types/api';
-// import * as UI from '@/types/ui';
-
 import { TransferWidgetInfo } from '../';
-import TransferConstants from '@/constants/TransferConstants';
-import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
 import { installSvgMocks } from '@/tests/mocks/mock-svg';
 import { getWidgetRenderRouteContainer } from '@/tests/layouts/test-widget';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import { installTransferWidgetMocks } from '@/tests/mocks/mock-widget';
 
 describe('Transfer widget', () => {
   let server: ReturnType<typeof getMockServer>;
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
 
-    server.addRequestHandler(
-      'GET',
-      TransferConstants.STATISTICS_URL,
-      TransferStatsResponse,
-    );
+    const transferMocks = installTransferWidgetMocks(server);
 
-    const transferStats = server.addSubscriptionHandler(
-      TransferConstants.MODULE_URL,
-      TransferConstants.STATISTICS,
-    );
-
-    return { commonData, server, transferStats };
+    return { commonData, server, ...transferMocks };
   };
 
   const renderWidget = async (settings: object = {}) => {

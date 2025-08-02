@@ -1,12 +1,7 @@
 import { waitFor } from '@testing-library/dom';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import {
-  // DEFAULT_AUTH_RESPONSE,
-  // DEFAULT_CONNECT_RESPONSE,
-  getMockServer,
-  getSocket,
-} from 'airdcpp-apisocket/tests';
+import { getMockServer, getSocket } from 'airdcpp-apisocket/tests';
 
 import { renderBasicRoutes } from '@/tests/render/test-renderers';
 

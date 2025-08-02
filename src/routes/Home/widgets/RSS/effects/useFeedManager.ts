@@ -8,8 +8,10 @@ import { fetchRSSFeed, parseRSSFeed } from '../utils';
 
 import * as UI from '@/types/ui';
 
-import '../style.css';
 import { useSession } from '@/context/AppStoreContext';
+import { UILogger, useLogger } from '@/effects/LoggerEffect';
+
+import '../style.css';
 
 const idToCacheKey = (id: string) => `rss_feed_cache_${id}`;
 
@@ -18,9 +20,7 @@ interface StorageFeed {
   date: number;
 }
 
-// export type RSSProps = UI.WidgetProps<Settings>;
-
-const getCachedFeedInfo = (componentId: string, settings: Settings) => {
+const getCachedFeedInfo = (componentId: string, settings: Settings, logger: UILogger) => {
   const feedInfo = loadSessionProperty<StorageFeed>(idToCacheKey(componentId));
 
   const { feed_url, feed_cache_minutes } = settings;
@@ -29,7 +29,7 @@ const getCachedFeedInfo = (componentId: string, settings: Settings) => {
     const lastValidDate = feedDate + feed_cache_minutes * 60 * 1000;
 
     if (lastValidDate >= Date.now()) {
-      console.log(
+      logger.info(
         `RSS: cached feed will be used (expires in ${
           (lastValidDate - Date.now()) / 60 / 1000
         } minutes)`,
@@ -38,7 +38,7 @@ const getCachedFeedInfo = (componentId: string, settings: Settings) => {
 
       return feedInfo;
     } else {
-      console.log(
+      logger.info(
         `RSS: cached feed had expired ${
           (Date.now() - lastValidDate) / 60 / 1000
         } minutes ago`,
@@ -46,7 +46,7 @@ const getCachedFeedInfo = (componentId: string, settings: Settings) => {
       );
     }
   } else {
-    console.log('RSS: no cached feed', feed_url);
+    logger.info('RSS: no cached feed', feed_url);
   }
 
   return null;
@@ -54,19 +54,14 @@ const getCachedFeedInfo = (componentId: string, settings: Settings) => {
 
 export const useFeedManager = (props: UI.WidgetProps<Settings>) => {
   const { settings, widgetT, componentId } = props;
+  const logger = useLogger();
 
   const session = useSession();
 
   const [feedInfo, setFeedInfo] = useState<StorageFeed | null>(
-    getCachedFeedInfo(componentId, settings),
+    getCachedFeedInfo(componentId, settings, logger),
   );
   const [error, setError] = useState<string | null>(null);
-
-  /*componentDidMount() {
-    if (!this.state.entries) {
-      this.handleUpdate();
-    }
-  }*/
 
   const resetFeed = () => {
     if (feedInfo?.entries) {
@@ -99,9 +94,10 @@ export const useFeedManager = (props: UI.WidgetProps<Settings>) => {
 
     try {
       const jsonFeed = await fetchRSSFeed(feedUrl, session);
+      logger.info('RSS feed received', feedUrl);
       onFeedFetched(jsonFeed);
     } catch (e) {
-      console.log('RSS feed download failed', feedUrl, e);
+      logger.warn('RSS feed download failed', feedUrl, e);
       setError(e.message);
     }
   };

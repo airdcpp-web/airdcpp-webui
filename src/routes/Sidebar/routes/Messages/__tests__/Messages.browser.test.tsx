@@ -35,24 +35,6 @@ import { waitForData } from '@/tests/helpers/test-helpers';
 describe('Private messages', () => {
   let server: ReturnType<typeof getMockServer>;
 
-  /*const addTempShareHandlers = () => {
-    server.addRequestHandler(
-      'GET',
-      ShareConstants.TEMP_SHARES_URL,
-      ShareTempItemListResponse,
-    );
-
-    const tempItemAdded = server.addSubscriptionHandler(
-      ShareConstants.MODULE_URL,
-      ShareConstants.TEMP_ITEM_ADDED,
-    );
-
-    const tempItemRemoved = server.addSubscriptionHandler(
-      ShareConstants.MODULE_URL,
-      ShareConstants.TEMP_ITEM_REMOVED,
-    );
-  }*/
-
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server, [
       API.AccessEnum.PRIVATE_CHAT_VIEW,
