@@ -67,7 +67,7 @@ const InfoMessage: React.FC<InfoMessageProps> = ({ info, encryption }) => (
 
 interface EncryptionStateProps
   extends Partial<Pick<SemanticUI.PopupSettings, 'boundary'>> {
-  encryption?: API.EncryptionInfo;
+  encryption: API.EncryptionInfo | null;
 
   // Show the lock icon even when there is no encryption
   alwaysVisible?: boolean;

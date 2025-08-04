@@ -199,9 +199,15 @@ export const MockHintedUserNMDCResponse = toMockHintedUser(HubNMDC1UserResponse)
 
 export const MockHintedUserOfflineResponse = {
   cid: 'VZILDK44YRK37UJBED2KLZSORDWRKMLDIYIRULY',
-  flags: ['favorite', 'offline'],
+  flags: ['favorite', 'offline'] as API.HubUserFlag[],
   hub_names: 'Offline',
   hub_url: HubADC2.hub_url,
   hub_urls: [],
   nicks: '[VIP]user',
 };
+
+export const SearchHintedUser1Response = {
+  user: MockHintedUser1Response,
+};
+
+export const SearchNicksHubUser1Response = [Hub1User1Response];

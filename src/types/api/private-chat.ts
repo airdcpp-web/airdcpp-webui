@@ -9,7 +9,7 @@ export const enum CCPMStateEnum {
 export interface CCPMState {
   id: CCPMStateEnum;
   str: string;
-  encryption?: EncryptionInfo;
+  encryption: EncryptionInfo | null;
 }
 
 export interface PrivateChat {

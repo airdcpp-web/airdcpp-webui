@@ -8,7 +8,7 @@ import { useFormatter } from '@/context/FormatterContext';
 import LayoutHeader from '@/components/semantic/LayoutHeader';
 import { ListItem } from '@/components/semantic/List';
 
-import HistoryConstants from '@/constants/HistoryConstants';
+import HistoryConstants, { HistoryEntryEnum } from '@/constants/HistoryConstants';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -20,7 +20,7 @@ interface RecentLayoutProps {
   entryIcon: string;
 
   // URL for fetching the recent entries
-  entryType: string;
+  entryType: HistoryEntryEnum;
 
   // Renders the recent entry title
   entryTitleRenderer: (entry: API.HistoryItem) => React.ReactNode;
@@ -72,13 +72,16 @@ const RecentLayout: React.FC<Props> = ({
   );
 };
 
+export const getHistoryUrl = (entryType: HistoryEntryEnum) => {
+  return `${HistoryConstants.SESSIONS_URL}/${entryType}/0`;
+};
+
 export default DataProviderDecorator<RecentLayoutProps, DataProps>(
   //RedrawDecorator<Props>(RecentLayout),
   RecentLayout,
   {
     urls: {
-      entries: ({ entryType }, socket) =>
-        socket.get(`${HistoryConstants.SESSIONS_URL}/${entryType}/0`),
+      entries: ({ entryType }, socket) => socket.get(getHistoryUrl(entryType)),
     },
   },
 );

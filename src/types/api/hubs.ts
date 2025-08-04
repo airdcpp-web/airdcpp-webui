@@ -36,7 +36,7 @@ export interface Hub {
   share_profile?: ShareProfileBasic;
   favorite_hub?: number | null;
   message_counts: ChatMessageCounts;
-  encryption?: EncryptionInfo;
+  encryption: EncryptionInfo | null;
   settings: HubSettings;
 }
 

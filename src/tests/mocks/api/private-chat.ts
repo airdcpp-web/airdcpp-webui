@@ -15,7 +15,7 @@ export const PrivateChat1 = {
       str: 'TLSv1.3 / TLS_AES_256_GCM_SHA384',
       trusted: true,
     },
-    id: 'connected',
+    id: 'connected' as API.CCPMStateEnum,
     str: 'Connected',
   },
   id: MockHintedUser1Response.cid,
@@ -35,7 +35,7 @@ export const PrivateChat1 = {
 export const PrivateChat2 = {
   ccpm_state: {
     encryption: null,
-    id: 'disconnected',
+    id: 'disconnected' as API.CCPMStateEnum,
     str: 'Disconnected',
   },
   id: MockHintedUserNMDCResponse.cid,
@@ -55,7 +55,7 @@ export const PrivateChat2 = {
 export const PrivateChat3 = {
   ccpm_state: {
     encryption: null,
-    id: 'disconnected',
+    id: 'disconnected' as API.CCPMStateEnum,
     str: 'Disconnected',
   },
   id: MockHintedUserOfflineResponse.cid,

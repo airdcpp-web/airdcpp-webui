@@ -12,6 +12,7 @@ import {
   PrivateChat2,
   PrivateChat2MessageOther,
   PrivateChat2MessagesResponse,
+  PrivateChat3,
 } from '@/tests/mocks/api/private-chat';
 import { useStoreDataFetch } from '@/components/main/effects/StoreDataFetchEffect';
 import PrivateChatConstants from '@/constants/PrivateChatConstants';
@@ -27,12 +28,28 @@ import {
 } from '@/components/main/notifications/effects/NotificationManager';
 import { LocalSettings } from '@/constants/LocalSettingConstants';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
-import { waitForData } from '@/tests/helpers/test-helpers';
+import { waitForData, waitForUrl } from '@/tests/helpers/test-helpers';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
+import { getHistoryUrl } from '@/routes/Sidebar/components/RecentLayout';
+import { HistoryEntryEnum } from '@/constants/HistoryConstants';
+import { HistoryPrivateChatResponse } from '@/tests/mocks/api/history';
+import UserConstants from '@/constants/UserConstants';
+import {
+  SearchHintedUser1Response,
+  SearchNicksHubUser1Response,
+} from '@/tests/mocks/api/user';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
   let server: MockServer;
+
+  beforeEach(() => {
+    server = getMockServer();
+  });
+
+  afterEach(() => {
+    server.stop();
+  });
 
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server, {
@@ -72,10 +89,40 @@ describe('Private messages', () => {
       PrivateChat2MessagesResponse,
     );
 
+    // New layout
+    server.addRequestHandler(
+      'GET',
+      getHistoryUrl(HistoryEntryEnum.PRIVATE_CHAT),
+      HistoryPrivateChatResponse,
+    );
+
+    server.addRequestHandler(
+      'POST',
+      UserConstants.SEARCH_HINTED_USER_URL,
+      SearchHintedUser1Response,
+    );
+
+    server.addRequestHandler(
+      'POST',
+      UserConstants.SEARCH_NICKS_URL,
+      SearchNicksHubUser1Response,
+    );
+
+    const onSessionCreated = vi.fn(() => {
+      commonData.mockStoreListeners.privateChat.created.fire(PrivateChat1);
+    });
+    server.addRequestHandler(
+      'POST',
+      PrivateChatConstants.SESSIONS_URL,
+      PrivateChat1,
+      onSessionCreated,
+    );
+
     return {
       commonData,
       onSession1Read,
       onSession2Read,
+      onSessionCreated,
     };
   };
 
@@ -107,15 +154,7 @@ describe('Private messages', () => {
     return { ...commonData, ...renderData, ...other };
   };
 
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    server.stop();
-  });
-
-  const waitLoaded = async (queryByText: RenderResult['queryByText']) => {
+  const waitSessionsLoaded = async (queryByText: RenderResult['queryByText']) => {
     await waitForData(/Loading sessions/i, queryByText);
     await waitForData(/Loading messages/i, queryByText);
   };
@@ -123,7 +162,7 @@ describe('Private messages', () => {
   test('should load messages', async () => {
     const { getByText, queryByText } = await renderLayout();
 
-    await waitLoaded(queryByText);
+    await waitSessionsLoaded(queryByText);
 
     // Check content
     await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
@@ -145,7 +184,7 @@ describe('Private messages', () => {
     const onNotification = vi.fn();
     NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
 
-    await waitLoaded(queryByText);
+    await waitSessionsLoaded(queryByText);
 
     await waitFor(() =>
       expect(sessionStore.getState().privateChats.activeSessionId).toEqual(
@@ -188,5 +227,41 @@ describe('Private messages', () => {
     expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
 
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
+  });
+
+  test('open new session', async () => {
+    const { queryByText, sessionStore, router, getByRole, findByText, getByText } =
+      await renderLayout();
+
+    await waitSessionsLoaded(queryByText);
+
+    // Remove existing sessions
+    sessionStore.getState().privateChats.removeSession(PrivateChat1);
+    sessionStore.getState().privateChats.removeSession(PrivateChat2);
+    sessionStore.getState().privateChats.removeSession(PrivateChat3);
+
+    // We should be redirected to the new session layout
+    await waitForUrl('/messages/new', router);
+    await waitForData('Loading data...', queryByText);
+
+    // Type the user nick
+    const input = getByRole('combobox');
+    const userEvent = setupUserEvent();
+    await userEvent.type(input, PrivateChat1.user.nicks);
+
+    await waitFor(() => expect(findByText(PrivateChat1.user.nicks)).toBeTruthy());
+
+    // Click the user
+    const user1Item = getByText(PrivateChat1.user.nicks);
+    await userEvent.click(user1Item!);
+
+    // We should be redirected to the new session
+    await waitFor(() =>
+      expect(sessionStore.getState().privateChats.activeSessionId).toEqual(
+        PrivateChat1.id,
+      ),
+    );
+
+    await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
   });
 });
