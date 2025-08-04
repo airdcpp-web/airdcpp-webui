@@ -162,10 +162,10 @@ describe('Login', () => {
 
     const renderData = await renderPage();
 
-    const { router, findAllByText } = renderData;
+    const { router, queryByText } = renderData;
     const userEvent = await fillAndSubmitLogin(renderData);
     await waitForUrl('/', router);
-    await waitFor(() => expect(findAllByText(LoggedInPageTitle)).toBeTruthy());
+    await waitFor(() => expect(queryByText(LoggedInPageTitle)).toBeTruthy());
 
     return { ...renderData, ...authHandlerData, userEvent };
   };
