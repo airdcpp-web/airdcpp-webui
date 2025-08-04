@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/dom';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { getMockServer, getSocket } from 'airdcpp-apisocket/tests';
+import { getSocket } from 'airdcpp-apisocket/tests';
 
 import { renderBasicRoutes } from '@/tests/render/test-renderers';
 
@@ -28,6 +28,7 @@ import { TestRouteNavigateButton } from '@/tests/helpers/test-route-helpers';
 import { LOGIN_PROPS_KEY, REFRESH_TOKEN_KEY } from '@/stores/app/loginSlice';
 import { saveLocalProperty, saveSessionProperty } from '@/utils/BrowserUtils';
 import { getMockSession } from '@/tests/mocks/mock-session';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 const AuthResponse = getMockSession([]);
 const { refresh_token, ...ConnectResponse } = AuthResponse;
@@ -37,7 +38,15 @@ const ChildRouteCaption = 'Go to child';
 
 // tslint:disable:no-empty
 describe('Login', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
+
+  beforeEach(() => {
+    server = getMockServer();
+  });
+
+  afterEach(() => {
+    server.stop();
+  });
 
   const addSuccessCredentialAuthHandlers = () => {
     const onLogin = vi.fn();
@@ -54,6 +63,7 @@ describe('Login', () => {
     const { socket } = getSocket({
       reconnectInterval: 0.1,
       logLevel: 'none',
+      // logLevel: 'verbose',
       autoReconnect: false,
     });
 
@@ -116,26 +126,13 @@ describe('Login', () => {
     return { socket, onSocketConnected, ...renderData };
   };
 
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    localStorage.clear();
-    sessionStorage.clear();
-
-    server.stop();
-  });
-
   const fillAndSubmitLogin = async ({
     getByRole,
     getByPlaceholderText,
     appStore,
   }: Awaited<ReturnType<typeof renderPage>>) => {
     // Check content
-    await waitFor(() => expect(getByRole('form')).toBeTruthy(), {
-      timeout: 10000,
-    });
+    await waitFor(() => expect(getByRole('form')).toBeTruthy());
 
     // Edit
     const userEvent = setupUserEvent();
@@ -154,6 +151,8 @@ describe('Login', () => {
     await waitFor(() =>
       expect(appStore.getState().login.socketAuthenticated).toBeTruthy(),
     );
+
+    return userEvent;
   };
 
   const doInitialLogin = async () => {
@@ -162,19 +161,24 @@ describe('Login', () => {
     const renderData = await renderPage();
 
     const { router, findAllByText } = renderData;
-    await fillAndSubmitLogin(renderData);
+    const userEvent = await fillAndSubmitLogin(renderData);
     await waitForUrl('/', router);
     await waitFor(() => expect(findAllByText('Logged in')).toBeTruthy());
 
-    return { ...renderData, ...authHandlerData };
+    return { ...renderData, ...authHandlerData, userEvent };
   };
 
   describe('credentials', () => {
     test('should handle login', async () => {
-      const userEvent = setupUserEvent();
-
-      const { getByText, socket, onLogin, onLogout, onSocketConnected, appStore } =
-        await doInitialLogin();
+      const {
+        getByText,
+        socket,
+        onLogin,
+        onLogout,
+        onSocketConnected,
+        appStore,
+        userEvent,
+      } = await doInitialLogin();
 
       await waitFor(() => expect(onSocketConnected).toHaveBeenCalledWith(AuthResponse));
       await waitFor(() => {
@@ -186,7 +190,7 @@ describe('Login', () => {
         expectResponseToMatchSnapshot(onLogout);
       });
 
-      expect(socket.isConnected()).toBe(false);
+      await socket.waitDisconnected();
       expect(appStore.getState().login.getSession()).toBeNull();
     }, 100000);
 
@@ -314,6 +318,7 @@ describe('Login', () => {
 
       // Refresh token should now be removed
       await waitFor(() => expect(appStore.getState().login.getRefreshToken()).toBeNull());
+      await socket.waitDisconnected();
 
       // Re-login
       addSuccessCredentialAuthHandlers();
@@ -336,9 +341,10 @@ describe('Login', () => {
 
       const { appStore, router } = await renderPage(ChildRouteUrl);
 
-      await waitFor(() =>
-        expect(appStore.getState().login.socketAuthenticated).toBeTruthy(),
-      );
+      await waitFor(() => {
+        const { login } = appStore.getState();
+        expect(login.socketAuthenticated).toBeTruthy();
+      });
 
       expectResponseToMatchSnapshot(onReconnectSocket);
 

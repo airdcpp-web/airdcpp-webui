@@ -1,15 +1,10 @@
+/* eslint-disable max-len */
 // react-select-event from https://github.com/romgain/react-select-event/pull/175
 // The official package seems to be poorly maintained and spams "act" warnings when using clearAll
 
 /** Simulate user events on react-select dropdowns */
 
-import {
-  Matcher,
-  findAllByText,
-  findByRole,
-  findByText,
-  waitFor,
-} from '@testing-library/dom';
+import { Matcher, findAllByText, findByText, waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 
 // find the react-select container from its input field 🤷
@@ -31,9 +26,9 @@ export const openMenu = async (
   input: HTMLElement,
   { user = userEvent }: UserEventOptions = {},
 ) => {
+  input.focus();
   await user.click(input);
-  await user.type(input, '{ArrowDown}');
-  await findByRole(getReactSelectContainerFromInput(input), 'listbox');
+  await user.keyboard('{ArrowDown}');
 };
 
 // type text in the input field
@@ -100,6 +95,12 @@ export const select = async (
     // positioned last in the DOM tree.
     const optionElement = matchingElements[matchingElements.length - 1];
     await user.click(optionElement);
+    /*await waitFor(() => {
+      const list = queryByRole(getReactSelectContainerFromInput(input), 'listbox');
+      if (list) {
+        throw new Error(`The dropdown menu for ${input} is still open`);
+      }
+    });*/
   }
 };
 

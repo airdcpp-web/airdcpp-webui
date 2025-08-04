@@ -9,8 +9,6 @@ import { messageSessionMapper } from '@/utils/UrgencyUtils';
 import { PrivateMessageUrgencies } from '@/constants/UrgencyConstants';
 import { getMockSession } from '@/tests/mocks/mock-session';
 
-import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
-
 import { initMockSessionStore } from '@/tests/mocks/mock-store';
 import {
   PrivateChat1,
@@ -21,6 +19,7 @@ import {
 } from '@/tests/mocks/api/private-chat';
 import { createSessionStore } from '@/stores/session';
 import { waitFor } from '@testing-library/dom';
+import { getConnectedSocket, getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 const SESSION_ID = PrivateChat1.id;
 const SESSION_BASE = {
@@ -54,7 +53,7 @@ const emptyCounts: UI.MessageCounts = {
 };
 
 describe('message store', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
   beforeEach(() => {
     server = getMockServer();
   });

@@ -1,5 +1,3 @@
-import { getMockServer } from 'airdcpp-apisocket/tests';
-
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { renderDataNode } from '@/tests/render/test-renderers';
 
@@ -16,10 +14,20 @@ import {
 import { clickButton, waitForData } from '@/tests/helpers/test-helpers';
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 // tslint:disable:no-empty
 describe('FileBrowserDialog', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
+
+  beforeEach(() => {
+    server = getMockServer();
+  });
+
+  afterEach(() => {
+    server.stop();
+  });
+
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
 
@@ -79,15 +87,6 @@ describe('FileBrowserDialog', () => {
     const modalController = createTestModalController(renderData);
     return { modalController, onSave, caption, ...renderData, ...other };
   };
-
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    server.stop();
-    localStorage.clear();
-  });
 
   describe('directory selection', () => {
     test('should select initial', async () => {

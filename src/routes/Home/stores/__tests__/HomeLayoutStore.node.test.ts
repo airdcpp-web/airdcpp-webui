@@ -6,7 +6,7 @@ import {
   EmptyWidgetSettings,
   loadWidgetSettings,
 } from '@/routes/Home/widgets/WidgetUtils';
-import { afterEach, describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { HomeLayoutColumns } from '../../constants/HomeLayoutConstants';
 import { createHomeLayoutStore } from '../homeLayoutSlice';
 
@@ -25,10 +25,6 @@ const hasLayoutItems = (id: string, layouts: Layouts) => {
 };
 
 describe('widget store', () => {
-  afterEach(() => {
-    localStorage.clear();
-  });
-
   test('should initialize default widgets', () => {
     const layoutStore = createHomeLayoutStore();
     layoutStore.getState().init();

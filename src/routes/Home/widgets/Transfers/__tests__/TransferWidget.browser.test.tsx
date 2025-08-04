@@ -1,8 +1,6 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { waitFor } from '@testing-library/dom';
 
-import { getMockServer } from 'airdcpp-apisocket/tests';
-
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import { TransferWidgetInfo } from '../';
@@ -10,9 +8,10 @@ import { installSvgMocks } from '@/tests/mocks/mock-svg';
 import { getWidgetRenderRouteContainer } from '@/tests/layouts/test-widget';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { installTransferWidgetMocks } from '@/tests/mocks/mock-widget';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 describe('Transfer widget', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
 

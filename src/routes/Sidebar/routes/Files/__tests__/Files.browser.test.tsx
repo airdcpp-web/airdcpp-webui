@@ -1,12 +1,14 @@
-import { afterEach, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
 import {
-  fireEvent,
-  RenderResult,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
-
-import { getMockServer } from 'airdcpp-apisocket/tests';
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  Mock,
+  test,
+  vi,
+} from 'vitest';
+import { fireEvent, RenderResult, waitFor } from '@testing-library/react';
 
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
@@ -32,18 +34,18 @@ import createFetchMock from 'vitest-fetch-mock';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { sleep } from '@/utils/Promise';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 const fetchMocker = createFetchMock(vi);
 
 // tslint:disable:no-empty
 describe('Viewed files', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
 
   const getSocket = async () => {
-    const commonData = await initCommonDataMocks(server, [
-      API.AccessEnum.VIEW_FILE_VIEW,
-      API.AccessEnum.VIEW_FILE_EDIT,
-    ]);
+    const commonData = await initCommonDataMocks(server, {
+      permissions: [API.AccessEnum.VIEW_FILE_VIEW, API.AccessEnum.VIEW_FILE_EDIT],
+    });
 
     // Messages
     const onSession1Read = vi.fn();
@@ -129,7 +131,6 @@ describe('Viewed files', () => {
 
   afterEach(() => {
     server.stop();
-    localStorage.clear();
   });
 
   const selectSession = async (
@@ -139,6 +140,7 @@ describe('Viewed files', () => {
       getByText,
       getByRole,
     }: Pick<RenderResult, 'getByLabelText' | 'getByText' | 'getByRole'>,
+    onRead: Mock,
   ) => {
     const userEvent = setupUserEvent();
     const menuTrigger = getByLabelText('Session menu');
@@ -149,7 +151,7 @@ describe('Viewed files', () => {
     expect(sessionMenuItem).toBeTruthy();
     await userEvent.click(sessionMenuItem!);
 
-    await waitForElementToBeRemoved(() => getByRole('menu'));
+    await waitFor(() => expect(onRead).toHaveBeenCalled());
   };
 
   const waitText = async (text: string, getByText: RenderResult['getByText']) => {
@@ -157,27 +159,35 @@ describe('Viewed files', () => {
   };
 
   test('should load file content', async () => {
-    const { getByText, getByLabelText, getByRole, socket } = await renderLayout();
+    const { getByText, getByLabelText, getByRole, onSession1Read } = await renderLayout();
 
     // Check content
     await waitText('This is long text file', getByText);
 
     // Open a different session
-    await selectSession(ViewedFileNfoResponse.name, {
-      getByLabelText,
-      getByText,
-      getByRole,
-    });
+    await selectSession(
+      ViewedFileNfoResponse.name,
+      {
+        getByLabelText,
+        getByText,
+        getByRole,
+      },
+      onSession1Read,
+    );
 
     // Check content
     await waitText('This is NFO', getByText);
-
-    socket.disconnect();
   });
 
   test('should remember scroll position', async () => {
-    const { getByText, getByLabelText, getByRole, socket, sessionStore } =
-      await renderLayout();
+    const {
+      getByText,
+      getByLabelText,
+      getByRole,
+      sessionStore,
+      onSession1Read,
+      onSession2Read,
+    } = await renderLayout();
 
     await waitText('This is long text file', getByText);
 
@@ -197,23 +207,29 @@ describe('Viewed files', () => {
     );
 
     // Switch to another session
-    await selectSession(ViewedFileNfoResponse.name, {
-      getByLabelText,
-      getByText,
-      getByRole,
-    });
+    await selectSession(
+      ViewedFileNfoResponse.name,
+      {
+        getByLabelText,
+        getByText,
+        getByRole,
+      },
+      onSession1Read,
+    );
     await waitText('This is NFO', getByText);
     expect(scrollContainer.scrollTop).toBe(0);
 
     // Switch back to the original one, the scroll position should remain
-    await selectSession(ViewedFileTextLongResponse.name, {
-      getByLabelText,
-      getByText,
-      getByRole,
-    });
+    await selectSession(
+      ViewedFileTextLongResponse.name,
+      {
+        getByLabelText,
+        getByText,
+        getByRole,
+      },
+      onSession2Read,
+    );
     await waitText('This is long text file', getByText);
     await waitFor(() => expect(scrollContainer.scrollTop).toBe(200));
-
-    socket.disconnect();
   });
 });

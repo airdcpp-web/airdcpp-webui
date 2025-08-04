@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Home layout > should handle new user intro 1`] = `
+{
+  "data": {
+    "wizard_pending": false,
+  },
+  "method": "POST",
+  "path": "settings/set",
+}
+`;

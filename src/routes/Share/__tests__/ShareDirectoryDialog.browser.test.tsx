@@ -1,5 +1,3 @@
-import { getMockServer } from 'airdcpp-apisocket/tests';
-
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { renderDataRoutes } from '@/tests/render/test-renderers';
@@ -43,10 +41,11 @@ import {
   waitForData,
 } from '@/tests/helpers/test-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 // tslint:disable:no-empty
 describe('ShareDirectoryDialog', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
 
@@ -148,7 +147,6 @@ describe('ShareDirectoryDialog', () => {
 
   afterEach(() => {
     server.stop();
-    localStorage.clear();
   });
 
   test('should update existing', async () => {

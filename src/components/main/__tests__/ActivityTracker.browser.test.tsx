@@ -1,8 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { renderDataNode } from '@/tests/render/test-renderers';
 
-import { getMockServer } from 'airdcpp-apisocket/tests';
-
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { ActivityTimeouts, useActivityTracker } from '../effects/ActivityTrackerEffect';
 import { useSocket } from '@/context/SocketContext';
@@ -12,10 +10,21 @@ import userEvent from '@testing-library/user-event';
 import Input from '@/components/semantic/Input';
 
 import * as API from '@/types/api';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 // tslint:disable:no-empty
 describe('ActivityTracker', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
+  beforeEach(() => {
+    server = getMockServer();
+  });
+
+  afterEach(() => {
+    server.stop();
+
+    vi.useRealTimers();
+  });
+
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
 
@@ -55,17 +64,6 @@ describe('ActivityTracker', () => {
     return { ...renderData, ...commonData, ...other };
   };
 
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    server.stop();
-    localStorage.clear();
-
-    vi.useRealTimers();
-  });
-
   test('should detect user activity', async () => {
     const timeouts = {
       user: 10000,
@@ -82,7 +80,7 @@ describe('ActivityTracker', () => {
     user.click(getByRole('textbox'));
 
     await waitFor(() => expect(sessionStore.getState().activity.userActive).toBeTruthy());
-    expect(onActivity).toBeCalledTimes(1);
+    await waitFor(() => expect(onActivity).toBeCalledTimes(1));
   });
 
   test('should enable auto away', async () => {

@@ -1,8 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { RenderResult, waitFor } from '@testing-library/react';
 
-import { getMockServer } from 'airdcpp-apisocket/tests';
-
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import Messages from '../components/Messages';
@@ -30,17 +28,20 @@ import {
 import { LocalSettings } from '@/constants/LocalSettingConstants';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { waitForData } from '@/tests/helpers/test-helpers';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
 
   const getSocket = async () => {
-    const commonData = await initCommonDataMocks(server, [
-      API.AccessEnum.PRIVATE_CHAT_VIEW,
-      API.AccessEnum.PRIVATE_CHAT_EDIT,
-      API.AccessEnum.PRIVATE_CHAT_SEND,
-    ]);
+    const commonData = await initCommonDataMocks(server, {
+      permissions: [
+        API.AccessEnum.PRIVATE_CHAT_VIEW,
+        API.AccessEnum.PRIVATE_CHAT_EDIT,
+        API.AccessEnum.PRIVATE_CHAT_SEND,
+      ],
+    });
 
     // Messages
     const onSession1Read = vi.fn();
@@ -112,7 +113,6 @@ describe('Private messages', () => {
 
   afterEach(() => {
     server.stop();
-    localStorage.clear();
   });
 
   const waitLoaded = async (queryByText: RenderResult['queryByText']) => {
@@ -121,21 +121,18 @@ describe('Private messages', () => {
   };
 
   test('should load messages', async () => {
-    const { getByText, queryByText, socket } = await renderLayout();
+    const { getByText, queryByText } = await renderLayout();
 
     await waitLoaded(queryByText);
 
     // Check content
     await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
-
-    socket.disconnect();
   });
 
   test('should handle read messages', async () => {
     const {
       getByText,
       queryByText,
-      socket,
       mockStoreListeners,
       onSession1Read,
       onSession2Read,
@@ -191,7 +188,5 @@ describe('Private messages', () => {
     expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
 
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
-
-    socket.disconnect();
   });
 });

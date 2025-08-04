@@ -16,19 +16,16 @@ import { EventCountsResponse } from './api/events';
 import SystemConstants from '@/constants/SystemConstants';
 import { SystemAwayStateResponse } from './api/system';
 
-import { getMockServer } from 'airdcpp-apisocket/tests';
-
 import * as UI from '@/types/ui';
 
 import { enableMapSet } from 'immer';
 import { StoreApi } from 'zustand';
 import { initSessionStore } from '@/stores/session';
+import { MockServer } from './mock-server';
 
 enableMapSet();
 
-export const addMockSessionStoreSocketListeners = (
-  server: ReturnType<typeof getMockServer>,
-) => {
+export const addMockSessionStoreSocketListeners = (server: MockServer) => {
   const addSessionSubscriptionHandlers = (moduleName: string, listenerPrefix: string) => {
     const chatMessage = server.addSubscriptionHandler(
       moduleName,
@@ -151,9 +148,7 @@ export const addMockSessionStoreSocketListeners = (
   };
 };
 
-export const addMockSessionStoreInitDataHandlers = (
-  server: ReturnType<typeof getMockServer>,
-) => {
+export const addMockSessionStoreInitDataHandlers = (server: MockServer) => {
   const hubs = server.addRequestHandler(
     'GET',
     HubConstants.SESSIONS_URL,
@@ -204,7 +199,7 @@ export const addMockSessionStoreInitDataHandlers = (
 export const initMockSessionStore = async (
   sessionStoreApi: StoreApi<UI.SessionStore>,
   initProps: UI.SessionStoreInitData,
-  server: ReturnType<typeof getMockServer>,
+  server: MockServer,
 ) => {
   addMockSessionStoreInitDataHandlers(server);
   const listeners = addMockSessionStoreSocketListeners(server);

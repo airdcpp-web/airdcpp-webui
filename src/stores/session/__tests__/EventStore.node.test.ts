@@ -5,8 +5,6 @@ import * as UI from '@/types/ui';
 
 import { getMockSession } from '@/tests/mocks/mock-session';
 
-import { getConnectedSocket, getMockServer } from 'airdcpp-apisocket/tests';
-
 import { initMockSessionStore } from '@/tests/mocks/mock-store';
 import {
   EventMessageError,
@@ -15,9 +13,10 @@ import {
 } from '@/tests/mocks/api/events';
 import { createSessionStore } from '@/stores/session';
 import { toEventCacheMessage } from '@/stores/session/eventSlice';
+import { getConnectedSocket, getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 describe('event store', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
   beforeEach(() => {
     server = getMockServer();
   });

@@ -17,18 +17,13 @@ import { vi } from 'vitest';
 
 vi.mock('../src/constants/UIConstants', { spy: true });
 
-/*exports.AnimationConstants = {
-  modal: 10,
-  dropdown: 10,
-  popup: 10,
-};*/
+vi.mocked(exports.AnimationConstants).dropdown = 0;
+vi.mocked(exports.AnimationConstants).modal = 0;
+vi.mocked(exports.AnimationConstants).popup = 0;
 
-vi.mocked(exports.AnimationConstants).dropdown = 10;
-vi.mocked(exports.AnimationConstants).modal = 10;
-vi.mocked(exports.AnimationConstants).popup = 10;
+import { afterEach } from 'vitest';
 
-/*vi.spyOn(exports, 'AnimationConstants', 'get').mockReturnValue({
-  modal: 10,
-  dropdown: 10,
-  popup: 10,
-});*/
+afterEach(() => {
+  localStorage.clear();
+  sessionStorage.clear();
+});

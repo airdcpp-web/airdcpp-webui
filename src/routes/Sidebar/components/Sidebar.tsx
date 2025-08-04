@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useContext, useEffect, useRef, useState } from 'react';
 
 import {
   loadLocalProperty,
@@ -13,6 +13,8 @@ import { Location, Routes, useNavigate } from 'react-router';
 
 import '../style.css';
 import { LayoutWidthContext, useLayoutWidth } from '@/context/LayoutWidthContext';
+import { MODAL_PAGE_DIMMER_ID } from '@/components/semantic/effects/useModal';
+import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
 
 const MIN_WIDTH = 500;
 
@@ -50,6 +52,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   const previousLocation = useRef<Location<any> | undefined>(undefined);
   previousLocation.current = props.previousLocation;
 
+  const instanceId = useContext(UIInstanceContext);
+
   useEffect(() => {
     const onHide = () => {
       setVisibility(Visibility.LOADING);
@@ -76,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 
     if (resizable.current?.resizable) {
       $(resizable.current.resizable).sidebar({
-        context: '.sidebar-context',
+        context: `#${appendInstanceId(MODAL_PAGE_DIMMER_ID, instanceId)} .sidebar-context`,
         transition: 'overlay',
         mobileTransition: 'overlay',
         closable: !usingMobileLayout(),

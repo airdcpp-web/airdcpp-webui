@@ -16,7 +16,6 @@ import {
   TestRouteNavigateButton,
 } from '@/tests/helpers/test-route-helpers';
 import { RouteItem } from '@/routes/Routes';
-import { getMockServer } from 'airdcpp-apisocket/tests';
 import TransferConstants from '@/constants/TransferConstants';
 import ShareConstants from '@/constants/ShareConstants';
 import HashConstants from '@/constants/HashConstants';
@@ -25,8 +24,10 @@ import { HashStatsResponse } from '@/tests/mocks/api/hash';
 import { ShareGetRefreshTasksResponse } from '@/tests/mocks/api/share';
 import { clickButton, clickMenuItem } from '@/tests/helpers/test-helpers';
 
-import '@/style.css';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
+
+import '@/style.css';
 
 const MainDialogOpenCaption = 'Open main test dialog';
 const SidebarDialogOpenCaption = 'Open sidebar test dialog';
@@ -68,7 +69,16 @@ const TestRouteModal = ModalRouteDecorator(TestRouteModalContent, 'modal');
 
 // tslint:disable:no-empty
 describe('MainLayout', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
+
+  beforeEach(() => {
+    server = getMockServer();
+  });
+
+  afterEach(() => {
+    server.stop();
+  });
+
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
 
@@ -194,21 +204,10 @@ describe('MainLayout', () => {
     return { modalController, ...renderData };
   };
 
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    server.stop();
-    localStorage.clear();
-  });
-
   describe('normal layout', () => {
     test('should close modals when opening sidebar', async () => {
       const { getByText, modalController, queryByText, getByRole } =
         await renderNormalLayout();
-
-      await waitFor(() => expect(queryByText('Loading data...')).not.toBeInTheDocument());
 
       // Open dialog in the main layout
       await modalController.openDialog(MainDialogOpenCaption);
@@ -232,10 +231,7 @@ describe('MainLayout', () => {
     });
 
     test('should open modals in sidebar', async () => {
-      const { getByText, modalController, queryByText, getByRole } =
-        await renderNormalLayout();
-
-      await waitFor(() => expect(queryByText('Loading data...')).not.toBeInTheDocument());
+      const { getByText, modalController, getByRole } = await renderNormalLayout();
 
       // Open sidebar
       clickMenuItem(SidebarRouteMenuCaption, getByRole);

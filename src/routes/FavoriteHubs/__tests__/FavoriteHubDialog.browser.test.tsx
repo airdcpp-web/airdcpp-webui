@@ -2,8 +2,6 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { useTranslation } from 'react-i18next';
 import { waitFor } from '@testing-library/dom';
 
-import { getMockServer } from 'airdcpp-apisocket/tests';
-
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import * as UI from '@/types/ui';
@@ -24,10 +22,20 @@ import {
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { expectResponseToMatchSnapshot } from '@/tests/helpers/test-helpers';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 // tslint:disable:no-empty
 describe('FavoriteHubDialog', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
+
+  beforeEach(() => {
+    server = getMockServer();
+  });
+
+  afterEach(() => {
+    server.stop();
+  });
+
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
 
@@ -105,14 +113,6 @@ describe('FavoriteHubDialog', () => {
     const modalController = createTestRouteModalController(renderData);
     return { modalController, ...commonData, ...renderData, ...other };
   };
-
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    server.stop();
-  });
 
   test('should update existing', async () => {
     const userEvent = setupUserEvent();

@@ -1,7 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { waitFor, fireEvent } from '@testing-library/react';
-
-import { getMockServer } from 'airdcpp-apisocket/tests';
+import { waitFor, fireEvent, RenderResult } from '@testing-library/react';
 
 import ShareConstants from '@/constants/ShareConstants';
 import { ShareGetGroupedRootsResponse } from '@/tests/mocks/api/share';
@@ -33,12 +31,23 @@ import {
 } from '@/tests/helpers/test-dialog-helpers';
 import { waitForData } from '@/tests/helpers/test-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 // tslint:disable:no-empty
 describe('DownloadDialog', () => {
-  let server: ReturnType<typeof getMockServer>;
+  let server: MockServer;
+  beforeEach(() => {
+    server = getMockServer();
+  });
+
+  afterEach(() => {
+    server.stop();
+  });
+
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
+
+    const onSaveHistory = vi.fn();
 
     // Target paths fetch
     server.addRequestHandler(
@@ -62,6 +71,7 @@ describe('DownloadDialog', () => {
       'POST',
       `${HistoryConstants.STRINGS_URL}/${HistoryStringEnum.DOWNLOAD_DIR}`,
       undefined,
+      onSaveHistory,
     );
 
     // File browser
@@ -76,7 +86,7 @@ describe('DownloadDialog', () => {
       FilesystemListContentResponse,
     );
 
-    return commonData;
+    return { ...commonData, onSaveHistory };
   };
 
   const renderDialog = async () => {
@@ -124,47 +134,50 @@ describe('DownloadDialog', () => {
     expect(handleDownload.mock.calls[0][1]).toMatchSnapshot();
   };
 
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    server.stop();
-    localStorage.clear();
-  });
+  const waitDialogLoaded = async (getByRole: RenderResult['getByRole']) => {
+    await waitFor(() => expect(getByRole('button', { name: 'Browse' })).toBeTruthy());
+  };
 
   test('should load and close', async () => {
-    const { getByText, socket, modalController } = await renderDialog();
+    const { getByText, getByRole, modalController } = await renderDialog();
 
     await modalController.openDialog();
+
+    await waitDialogLoaded(getByRole);
 
     // Check content
     await waitFor(() => expect(getByText('Download')).toBeTruthy());
 
     await modalController.closeDialogButton('Close');
-
-    socket.disconnect();
   });
 
   test('should handle download', async () => {
-    const { socket, modalController, handleDownload } = await renderDialog();
+    const { onSaveHistory, modalController, handleDownload, getByRole, queryByText } =
+      await renderDialog();
+
+    const downloadPath = HistoryStringPathResponse[0];
 
     await modalController.openDialog();
 
+    await waitFor(() => expect(queryByText(downloadPath)).toBeInTheDocument());
+    await waitDialogLoaded(getByRole);
+
     // Download
-    await modalController.closeDialogText(HistoryStringPathResponse[0]);
+    await modalController.closeDialogText(downloadPath);
+
+    await waitFor(() => expect(onSaveHistory).toHaveBeenCalled());
 
     // Check
     expectDownloadHandlerToMatchSnapshot(handleDownload);
-
-    socket.disconnect();
   });
 
   test('should open and close download dialog', async () => {
-    const { socket, modalController, getByText, queryByText } = await renderDialog();
+    const { modalController, getByText, queryByText, getByRole } = await renderDialog();
 
     // Open download file browser
     await modalController.openDialog();
+    await waitDialogLoaded(getByRole);
+
     expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
 
     // Open browse dialog
@@ -172,16 +185,22 @@ describe('DownloadDialog', () => {
 
     // Close it
     await modalController.closeDialogButton('Cancel');
-
-    socket.disconnect();
   });
 
   test('should handle browse dialog download', async () => {
-    const { socket, modalController, handleDownload, getByText, queryByText } =
-      await renderDialog();
+    const {
+      onSaveHistory,
+      modalController,
+      handleDownload,
+      getByText,
+      queryByText,
+      getByRole,
+    } = await renderDialog();
 
     // Open download file browser
     await modalController.openDialog();
+    await waitDialogLoaded(getByRole);
+
     expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
 
     // Open browse dialog
@@ -192,6 +211,6 @@ describe('DownloadDialog', () => {
 
     expectDownloadHandlerToMatchSnapshot(handleDownload);
 
-    socket.disconnect();
+    await waitFor(() => expect(onSaveHistory).toHaveBeenCalled());
   });
 });
