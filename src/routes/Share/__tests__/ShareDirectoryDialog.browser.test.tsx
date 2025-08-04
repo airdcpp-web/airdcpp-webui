@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { renderDataRoutes } from '@/tests/render/test-renderers';
+import { BaseRenderResult, renderDataRoutes } from '@/tests/render/test-renderers';
 
 import * as UI from '@/types/ui';
 
@@ -20,7 +20,6 @@ import {
 import {
   expectFieldValue,
   setInputFieldValues,
-  addSelectFieldValues,
   setupUserEvent,
   setSelectFieldValues,
 } from '@/tests/helpers/test-form-helpers';
@@ -42,10 +41,28 @@ import {
 } from '@/tests/helpers/test-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
+import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
+
+import * as API from '@/types/api';
 
 // tslint:disable:no-empty
 describe('ShareDirectoryDialog', () => {
   let server: MockServer;
+
+  beforeEach(() => {
+    server =
+      getMockServer(/*{
+      delayMs: 0,
+      loggerOptions: {
+        logLevel: 'verbose',
+      },
+    }*/);
+  });
+
+  afterEach(() => {
+    server.stop();
+  });
+
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server);
 
@@ -130,10 +147,48 @@ describe('ShareDirectoryDialog', () => {
 
     const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/home'] },
+      viewType: VIEW_FIXED_HEIGHT,
     });
 
     const modalController = createTestRouteModalController(renderData);
     return { modalController, ...commonData, ...renderData, ...other };
+  };
+
+  const setProfiles = async (
+    {
+      getByLabelText,
+      getByRole,
+      formatter,
+    }: Pick<BaseRenderResult, 'getByLabelText' | 'getByRole' | 'formatter'>,
+    profiles: API.ShareProfile[],
+  ) => {
+    await setSelectFieldValues(
+      { getByLabelText, getByRole },
+      {
+        field: ShareProfileField,
+        options: profiles.map((p) => ({
+          id: p.id.toString(),
+          label: formatProfileNameWithSize(p, formatter),
+        })),
+      },
+    );
+  };
+
+  const setPath = async (
+    { getByText, getByLabelText, getByRole, queryByText }: BaseRenderResult,
+    path: string,
+  ) => {
+    saveLocalProperty(getBrowseStorageKey(FilesystemConstants.LOCATION_DOWNLOAD), path);
+
+    // Open dialog and select the initial path
+    expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
+    await waitForData('Loading items', queryByText);
+
+    clickButton('Select', getByRole);
+
+    await waitFor(() => {
+      expectFieldValue({ getByLabelText }, 'Path', path);
+    });
   };
 
   const ShareProfileField = {
@@ -141,24 +196,10 @@ describe('ShareDirectoryDialog', () => {
     label: 'Share profiles',
   };
 
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    server.stop();
-  });
-
   test('should update existing', async () => {
     const userEvent = setupUserEvent();
-    const {
-      getByText,
-      getByLabelText,
-      getByRole,
-      modalController,
-      onUpdated,
-      formatter,
-    } = await renderDialog(MOCK_SHARE_ROOT_ID);
+    const renderResult = await renderDialog(MOCK_SHARE_ROOT_ID);
+    const { getByText, getByLabelText, modalController, onUpdated } = renderResult;
 
     await modalController.openDialog();
 
@@ -173,18 +214,7 @@ describe('ShareDirectoryDialog', () => {
       },
     );
 
-    await setSelectFieldValues(
-      { getByLabelText, getByRole },
-      {
-        field: ShareProfileField,
-        options: [
-          {
-            id: ShareProfileEmpty.id.toString(),
-            label: formatProfileNameWithSize(ShareProfileEmpty, formatter),
-          },
-        ],
-      },
-    );
+    await setProfiles(renderResult, [ShareProfileEmpty]);
 
     await modalController.closeDialogButton('Save');
 
@@ -192,15 +222,8 @@ describe('ShareDirectoryDialog', () => {
   }, 100000);
 
   test('should create new', async () => {
-    const {
-      getByText,
-      getByLabelText,
-      modalController,
-      getByRole,
-      onCreated,
-      formatter,
-      queryByText,
-    } = await renderDialog(null);
+    const renderResult = await renderDialog(null);
+    const { getByText, getByLabelText, modalController, onCreated } = renderResult;
 
     await modalController.openDialog();
 
@@ -209,44 +232,16 @@ describe('ShareDirectoryDialog', () => {
 
     // Edit
 
+    // Profiles
+    await setProfiles(renderResult, [ShareProfileDefault, ShareProfileEmpty]);
+
     // Path
-
-    // Set the initial browse dialog path
-    const path = '/home/airdcpp/Downloads/';
-    saveLocalProperty(getBrowseStorageKey(FilesystemConstants.LOCATION_DOWNLOAD), path);
-
-    // Open dialog and select the initial path
-    expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
-    await waitForData('Loading items', queryByText);
-
-    clickButton('Select', getByRole);
-
-    await waitFor(() => {
-      expectFieldValue({ getByLabelText }, 'Path', path);
-    });
+    await setPath(renderResult, '/home/airdcpp/Downloads/');
 
     // Virtual name should be set based on the path
     await waitFor(() => {
       expectFieldValue({ getByLabelText }, 'Virtual name', 'Downloads');
     });
-
-    // Profiles
-    await addSelectFieldValues(
-      { getByLabelText, getByRole },
-      {
-        field: ShareProfileField,
-        options: [
-          {
-            id: ShareProfileEmpty.id.toString(),
-            label: formatProfileNameWithSize(ShareProfileEmpty, formatter),
-          },
-          {
-            id: ShareProfileDefault.id.toString(),
-            label: formatProfileNameWithSize(ShareProfileDefault, formatter),
-          },
-        ],
-      },
-    );
 
     await modalController.closeDialogButton('Save');
 

@@ -32,6 +32,7 @@ import {
 import { waitForData } from '@/tests/helpers/test-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
+import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 
 // tslint:disable:no-empty
 describe('DownloadDialog', () => {
@@ -120,6 +121,7 @@ describe('DownloadDialog', () => {
 
     const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/home'] },
+      viewType: VIEW_FIXED_HEIGHT,
     });
 
     const modalController = createTestRouteModalController(renderData);

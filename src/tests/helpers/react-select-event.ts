@@ -26,7 +26,6 @@ export const openMenu = async (
   input: HTMLElement,
   { user = userEvent }: UserEventOptions = {},
 ) => {
-  input.focus();
   await user.click(input);
   await user.keyboard('{ArrowDown}');
 };

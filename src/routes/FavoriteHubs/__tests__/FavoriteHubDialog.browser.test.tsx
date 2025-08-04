@@ -23,6 +23,7 @@ import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-h
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { expectResponseToMatchSnapshot } from '@/tests/helpers/test-helpers';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
+import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 
 // tslint:disable:no-empty
 describe('FavoriteHubDialog', () => {
@@ -108,6 +109,7 @@ describe('FavoriteHubDialog', () => {
 
     const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/home'] },
+      viewType: VIEW_FIXED_HEIGHT,
     });
 
     const modalController = createTestRouteModalController(renderData);
