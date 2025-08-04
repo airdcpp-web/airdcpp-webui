@@ -36,6 +36,8 @@ const { refresh_token, ...ConnectResponse } = AuthResponse;
 const ChildRouteUrl = '/child';
 const ChildRouteCaption = 'Go to child';
 
+const LoggedInPageTitle = 'Successfully logged in';
+
 // tslint:disable:no-empty
 describe('Login', () => {
   let server: MockServer;
@@ -79,7 +81,7 @@ describe('Login', () => {
       const appStore = useAppStore();
       return (
         <div>
-          <div>Logged in</div>
+          <div>{LoggedInPageTitle}</div>
           {parseMenuItem(getLogoutItem(socket, appStore))}
           <TestRouteNavigateButton route={ChildRouteUrl} caption={ChildRouteCaption} />
         </div>
@@ -163,7 +165,7 @@ describe('Login', () => {
     const { router, findAllByText } = renderData;
     const userEvent = await fillAndSubmitLogin(renderData);
     await waitForUrl('/', router);
-    await waitFor(() => expect(findAllByText('Logged in')).toBeTruthy());
+    await waitFor(() => expect(findAllByText(LoggedInPageTitle)).toBeTruthy());
 
     return { ...renderData, ...authHandlerData, userEvent };
   };
