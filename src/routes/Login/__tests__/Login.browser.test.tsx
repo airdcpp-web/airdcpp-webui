@@ -243,6 +243,15 @@ describe('Login', () => {
       clickButton(ChildRouteCaption, getByRole);
       await waitForUrl(ChildRouteUrl, router);
 
+      socket.onConnect = () => {
+        server.addRequestHandler(
+          'POST',
+          'sessions/socket',
+          ConnectResponse,
+          onReconnectSocket,
+        );
+      };
+
       // Disconnect socket
       socket.disconnect();
 
@@ -251,13 +260,6 @@ describe('Login', () => {
       );
 
       // Let it reconnect
-      server.addRequestHandler(
-        'POST',
-        'sessions/socket',
-        ConnectResponse,
-        onReconnectSocket,
-      );
-
       await waitFor(() => expect(getByRole('progressbar')).toBeTruthy());
 
       await waitFor(() => {
