@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Settings layout > should save values 1`] = `
+exports[`Settings layout > should save remote settings 1`] = `
 {
   "data": {
     "email": "email@test.com",

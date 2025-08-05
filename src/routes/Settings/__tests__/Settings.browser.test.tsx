@@ -21,6 +21,8 @@ import {
 } from '@/tests/mocks/api/settings';
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
+import { LocalSettings } from '@/constants/LocalSettingConstants';
+
 describe('Settings layout', () => {
   let server: MockServer;
   const getSocket = async () => {
@@ -75,10 +77,11 @@ describe('Settings layout', () => {
     server.stop();
   });
 
-  test('should save values', async () => {
+  test('should save remote settings', async () => {
     const renderData = await renderLayout();
     const { getByRole, router, queryByText, onSave, onGetValues } = renderData;
 
+    // Load settings page
     await waitForUrl(
       sectionToUrl(RootSettingSections[0].menuItems[0], RootSettingSections[0]),
       router,
@@ -87,6 +90,7 @@ describe('Settings layout', () => {
     await waitForData('Loading data...', queryByText);
     expect(onGetValues).toBeCalledTimes(1);
 
+    // Edit a few values
     const userEvent = setupUserEvent();
     await setInputFieldValues(
       { ...renderData, userEvent },
@@ -96,11 +100,41 @@ describe('Settings layout', () => {
       },
     );
 
+    // Save
     await clickButton('Save changes', getByRole);
 
+    // Check that the values were saved
     await waitFor(() => expect(onSave).toBeCalled());
     expectRequestToMatchSnapshot(onSave);
 
     await waitFor(() => expect(onGetValues).toBeCalledTimes(2));
+  });
+
+  test('should save local settings', async () => {
+    const renderData = await renderLayout();
+    const { getByRole, router, getByLabelText, appStore } = renderData;
+
+    expect(
+      appStore.getState().settings.getValue(LocalSettings.NOTIFY_PM_BOT),
+    ).toBeFalsy();
+
+    // Go to notifications page
+    await router.navigate('/settings/view');
+    await waitForUrl('/settings/view/notifications', router);
+
+    // Toggle a setting
+    const userEvent = setupUserEvent();
+    const setting = getByLabelText('Private messages (bots)');
+    await userEvent.click(setting);
+
+    // Save
+    await clickButton('Save changes', getByRole);
+
+    // Check that the setting was saved
+    await waitFor(() =>
+      expect(
+        appStore.getState().settings.getValue(LocalSettings.NOTIFY_PM_BOT),
+      ).toBeTruthy(),
+    );
   });
 });
