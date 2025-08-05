@@ -20,7 +20,7 @@ const handleRemove: Handler = ({ itemData: root, socket }) => {
 export const ShareRootCreateAction = {
   id: 'create',
   displayName: 'Add directory',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.CREATE,
   handler: handleCreate,
 };
@@ -28,7 +28,7 @@ export const ShareRootCreateAction = {
 export const ShareRootEditAction = {
   id: 'edit',
   displayName: 'Edit directory',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.EDIT,
   handler: handleEdit,
 };
@@ -36,7 +36,7 @@ export const ShareRootEditAction = {
 export const ShareRootRemoveAction = {
   id: 'remove',
   displayName: 'Remove directory',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.REMOVE,
   confirmation: {
     content:

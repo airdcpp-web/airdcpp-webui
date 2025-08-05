@@ -17,6 +17,9 @@ export const enum AccessEnum {
   SETTINGS_VIEW = 'settings_view',
   SETTINGS_EDIT = 'settings_edit',
 
+  SHARE_VIEW = 'share_view',
+  SHARE_EDIT = 'share_edit',
+
   FILESYSTEM_VIEW = 'filesystem_view',
   FILESYSTEM_EDIT = 'filesystem_edit',
 

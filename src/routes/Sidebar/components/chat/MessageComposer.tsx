@@ -112,7 +112,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
 
   const hasFileUploadAccess =
     hasAccess(session, API.AccessEnum.FILESYSTEM_EDIT) &&
-    hasAccess(session, API.AccessEnum.SETTINGS_EDIT);
+    hasAccess(session, API.AccessEnum.SHARE_EDIT);
 
   const sendButton = (
     <Button

@@ -24,6 +24,7 @@ const About: RootSectionType = {
       title: 'Share statistics',
       noSave: true,
       url: 'share',
+      access: API.AccessEnum.SHARE_VIEW,
       component: require('./components/ShareStatisticsPage').default,
     },
     {

@@ -15,7 +15,7 @@ const handleRemove: UI.ActionHandler<string> = ({ itemData: path, socket }) => {
 export const ShareExcludeAddAction = {
   id: 'add',
   displayName: 'Add path',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.CREATE,
   handler: handleAdd,
 };
@@ -23,7 +23,7 @@ export const ShareExcludeAddAction = {
 export const ShareExcludeRemoveAction = {
   id: 'remove',
   displayName: 'Remove path',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.REMOVE,
   confirmation: {
     content: 'Are you sure that you want to remove the excluded path {{item}}?',

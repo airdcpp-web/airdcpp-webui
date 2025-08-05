@@ -46,7 +46,7 @@ const Share: React.FC = () => {
   const shareT = getModuleT(t, UI.Modules.SHARE);
 
   const { translate } = shareT;
-  const editAccess = hasAccess(session, API.AccessEnum.SETTINGS_EDIT);
+  const editAccess = hasAccess(session, API.AccessEnum.SHARE_EDIT);
   return (
     <>
       <VirtualTable

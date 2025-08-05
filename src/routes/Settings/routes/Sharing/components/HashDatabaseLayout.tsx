@@ -109,7 +109,7 @@ const HashDatabaseLayout: React.FC<
           titleWidth="five"
         />
       </Grid>
-      {hasAccess(session, API.AccessEnum.SETTINGS_EDIT) && (
+      {hasAccess(session, API.AccessEnum.SHARE_EDIT) && (
         <OptimizeLayout
           running={status.maintenance_running}
           startHandler={handleOptimize}

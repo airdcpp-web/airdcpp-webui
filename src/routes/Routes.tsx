@@ -86,7 +86,7 @@ export const SecondaryRoutes = [
     title: 'Share',
     path: '/share',
     icon: IconConstants.FOLDER,
-    access: API.AccessEnum.SETTINGS_VIEW,
+    access: API.AccessEnum.SHARE_VIEW,
     component: lazy(() => import(/* webpackChunkName: "share" */ '@/routes/Share')),
   },
   {

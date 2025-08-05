@@ -1,5 +1,7 @@
 import { RootSectionType } from '@/routes/Settings/types';
 
+import * as API from '@/types/api';
+
 const Sharing: RootSectionType = {
   url: 'sharing',
   title: 'Sharing',
@@ -16,6 +18,7 @@ const Sharing: RootSectionType = {
       url: 'profiles',
       noSave: true,
       component: require('./components/ShareProfilesPage').default,
+      access: API.AccessEnum.SHARE_VIEW,
     },
   ],
   advancedMenuItems: [
@@ -34,6 +37,7 @@ const Sharing: RootSectionType = {
       url: 'excludes',
       noSave: true,
       component: require('./components/ExcludePage').default,
+      access: API.AccessEnum.SHARE_VIEW,
     },
   ],
 };

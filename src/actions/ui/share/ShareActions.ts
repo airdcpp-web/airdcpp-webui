@@ -11,7 +11,7 @@ const handleRefresh: UI.ActionHandler<void> = ({ socket }) => {
 export const ShareRefreshAction = {
   id: 'refreshAll',
   displayName: 'Refresh all',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.REFRESH_COLORED,
   handler: handleRefresh,
 };

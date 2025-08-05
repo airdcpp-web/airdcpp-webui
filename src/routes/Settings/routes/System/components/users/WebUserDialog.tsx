@@ -72,6 +72,15 @@ const AccessCaptions: { [key in string]: CaptionEntry } = {
     action: PermissionAction.EDIT,
   },
 
+  SHARE_VIEW: {
+    title: 'Share',
+    action: PermissionAction.VIEW,
+  },
+  SHARE_EDIT: {
+    title: 'Share',
+    action: PermissionAction.EDIT,
+  },
+
   SETTINGS_VIEW: {
     title: 'Settings',
     action: PermissionAction.VIEW,

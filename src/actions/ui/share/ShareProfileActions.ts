@@ -69,7 +69,7 @@ const handleBrowse: Handler = ({ itemData: profile, ...other }) => {
 export const ShareProfileCreateAction = {
   id: 'create',
   displayName: 'Add profile',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.CREATE,
   input: {
     approveCaption: 'Create',
@@ -85,7 +85,7 @@ export const ShareProfileCreateAction = {
 export const ShareProfileCloneAction = {
   id: 'clone',
   displayName: 'Clone profile',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.COPY,
   input: {
     approveCaption: 'Create',
@@ -109,7 +109,7 @@ export const ShareProfileBrowseAction = {
 export const ShareProfileEditAction = {
   id: 'edit',
   displayName: 'Rename profile',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.EDIT,
   input: (profile: API.ShareProfile) => ({
     approveCaption: 'Rename',
@@ -126,7 +126,7 @@ export const ShareProfileEditAction = {
 export const ShareProfileSetDefaultAction = {
   id: 'default',
   displayName: 'Set as default',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   filter: notDefault,
   icon: IconConstants.DEFAULT,
   handler: handleDefault,
@@ -135,7 +135,7 @@ export const ShareProfileSetDefaultAction = {
 export const ShareProfileRemoveAction = {
   id: 'remove',
   displayName: 'Remove profile',
-  access: API.AccessEnum.SETTINGS_EDIT,
+  access: API.AccessEnum.SHARE_EDIT,
   icon: IconConstants.REMOVE,
   filter: notDefault,
   confirmation: {

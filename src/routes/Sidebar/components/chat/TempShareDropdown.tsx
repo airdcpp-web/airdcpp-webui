@@ -115,7 +115,7 @@ export default DataProviderDecorator<TempShareDropdownProps, DataProps>(
   {
     urls: {
       files: ({ session }, socket) => {
-        if (!hasAccess(session, API.AccessEnum.SETTINGS_VIEW)) {
+        if (!hasAccess(session, API.AccessEnum.SHARE_VIEW)) {
           return Promise.resolve([]);
         }
 
@@ -128,14 +128,14 @@ export default DataProviderDecorator<TempShareDropdownProps, DataProps>(
         ShareConstants.TEMP_ITEM_ADDED,
         () => refetchData(),
         undefined,
-        API.AccessEnum.SETTINGS_VIEW,
+        API.AccessEnum.SHARE_VIEW,
       );
       addSocketListener(
         ShareConstants.MODULE_URL,
         ShareConstants.TEMP_ITEM_REMOVED,
         () => refetchData(),
         undefined,
-        API.AccessEnum.SETTINGS_VIEW,
+        API.AccessEnum.SHARE_VIEW,
       );
     },
     loaderText: null,

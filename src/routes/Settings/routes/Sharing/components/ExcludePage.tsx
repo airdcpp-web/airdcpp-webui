@@ -78,7 +78,7 @@ const ExcludePage: React.FC<ExcludePageProps & ExcludePageDataProps> = ({
         className="add"
       />
 
-      {excludes.length > 0 && (
+      {excludes.length > 0 ? (
         <table className="ui striped table">
           <thead>
             <tr>
@@ -87,6 +87,8 @@ const ExcludePage: React.FC<ExcludePageProps & ExcludePageDataProps> = ({
           </thead>
           <tbody>{excludes.map(getRow)}</tbody>
         </table>
+      ) : (
+        <Message description={translate('No excluded paths')} />
       )}
 
       <FileBrowserRouteDialog

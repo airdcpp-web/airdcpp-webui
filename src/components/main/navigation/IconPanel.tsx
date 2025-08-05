@@ -13,7 +13,7 @@ import { hasAccess } from '@/utils/AuthUtils';
 
 const IconPanel: React.FC = () => {
   const session = useSession();
-  const hasHashAccess = hasAccess(session, API.AccessEnum.SETTINGS_VIEW);
+  const hasHashAccess = hasAccess(session, API.AccessEnum.SHARE_VIEW);
   const hasTransferAccess = hasAccess(session, API.AccessEnum.TRANSFERS);
   return (
     <div className="icon-panel">

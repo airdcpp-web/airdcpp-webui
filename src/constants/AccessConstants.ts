@@ -14,6 +14,9 @@ const AccessConstants = {
   FAVORITE_HUBS_VIEW: 'favorite_hubs_view',
   FAVORITE_HUBS_EDIT: 'favorite_hubs_edit',
 
+  SHARE_VIEW: 'share_view',
+  SHARE_EDIT: 'share_edit',
+
   SETTINGS_VIEW: 'settings_view',
   SETTINGS_EDIT: 'settings_edit',
 
