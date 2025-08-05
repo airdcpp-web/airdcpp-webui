@@ -24,10 +24,10 @@ const onFieldSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) =>
   }
 };
 
-const Encryption: React.FC<SettingPageProps> = () => (
+const ProxiesPage: React.FC<SettingPageProps> = () => (
   <div>
     <RemoteSettingForm keys={Entry} onFieldSetting={onFieldSetting} />
   </div>
 );
 
-export default Encryption;
+export default ProxiesPage;

@@ -1,20 +1,27 @@
 import { RootSectionType } from '@/routes/Settings/types';
 
+import SettingSection from '../../components/SettingSection';
+
+import UserPage from './components/UserPage';
+import AwayPage from './components/AwayPage';
+import IgnorePage from './components/IgnorePage';
+import MiscPage from './components/MiscPage';
+
 const Profile: RootSectionType = {
   url: 'profile',
   title: 'Profile',
   icon: 'user',
-  component: require('../../components/SettingSection').default,
+  component: SettingSection,
   menuItems: [
     {
       title: 'User',
       url: 'user',
-      component: require('./components/UserPage').default,
+      component: UserPage,
     },
     {
       title: 'Away mode',
       url: 'away',
-      component: require('./components/AwayPage').default,
+      component: AwayPage,
     },
   ],
   advancedMenuItems: [
@@ -22,12 +29,12 @@ const Profile: RootSectionType = {
       title: 'Ignored users',
       url: 'ignored-users',
       noSave: true,
-      component: require('./components/IgnorePage').default,
+      component: IgnorePage,
     },
     {
       title: 'Miscellaneous',
       url: 'miscellaneous',
-      component: require('./components/MiscPage').default,
+      component: MiscPage,
     },
   ],
 };

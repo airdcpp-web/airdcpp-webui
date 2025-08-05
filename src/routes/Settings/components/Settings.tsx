@@ -19,7 +19,7 @@ import { getModuleT, getSubModuleT } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
 import { camelCase } from 'lodash';
 
-const SettingsMenu = [
+export const RootSettingSections = [
   Profile,
   Connectivity,
   SpeedLimits,
@@ -51,7 +51,7 @@ const childToRoute = (
         <SettingSection
           settingsT={settingsT}
           selectedRootMenuItem={parent}
-          rootMenuItems={SettingsMenu}
+          rootMenuItems={RootSettingSections}
           selectedChildMenuItem={section}
         >
           <section.component settingsT={settingsT} moduleT={moduleT} />
@@ -81,8 +81,8 @@ const Settings: React.FC<SettingsProps> = (props) => {
   return (
     <div className="ui segment settings-layout">
       <Routes>
-        <Route index element={<Navigate to={SettingsMenu[0].url} replace />} />
-        {SettingsMenu.map((rootMenuItem) => rootToRoute(rootMenuItem, settingsT))}
+        <Route index element={<Navigate to={RootSettingSections[0].url} replace />} />
+        {RootSettingSections.map((rootMenuItem) => rootToRoute(rootMenuItem, settingsT))}
       </Routes>
     </div>
   );

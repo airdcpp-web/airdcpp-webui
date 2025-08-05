@@ -51,7 +51,7 @@ const WebUserRow: React.FC<WebUserRowProps> = ({ user, moduleT, actions }) => {
   );
 };
 
-interface WebUsersPageProps extends SettingPageProps {}
+type WebUsersPageProps = SettingPageProps;
 
 interface WebUsersPageDataProps extends DataProviderDecoratorChildProps {
   users: API.WebUser[];
@@ -95,19 +95,22 @@ const WebUsersPage: React.FC<WebUsersPageProps & WebUsersPageDataProps> = ({
   );
 };
 
-export default DataProviderDecorator(WebUsersPage, {
-  urls: {
-    users: WebUserConstants.USERS_URL,
+export default DataProviderDecorator<WebUsersPageProps, WebUsersPageDataProps>(
+  WebUsersPage,
+  {
+    urls: {
+      users: WebUserConstants.USERS_URL,
+    },
+    onSocketConnected: (addSocketListener, { refetchData }) => {
+      addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.ADDED, () =>
+        refetchData(),
+      );
+      addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.UPDATED, () =>
+        refetchData(),
+      );
+      addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.REMOVED, () =>
+        refetchData(),
+      );
+    },
   },
-  onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.ADDED, () =>
-      refetchData(),
-    );
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.UPDATED, () =>
-      refetchData(),
-    );
-    addSocketListener(WebUserConstants.MODULE_URL, WebUserConstants.REMOVED, () =>
-      refetchData(),
-    );
-  },
-});
+);

@@ -107,16 +107,19 @@ const ExcludePage: React.FC<ExcludePageProps & ExcludePageDataProps> = ({
   );
 };
 
-export default DataProviderDecorator(ExcludePage, {
-  urls: {
-    excludes: ShareConstants.EXCLUDES_URL,
+export default DataProviderDecorator<ExcludePageProps, ExcludePageDataProps>(
+  ExcludePage,
+  {
+    urls: {
+      excludes: ShareConstants.EXCLUDES_URL,
+    },
+    onSocketConnected: (addSocketListener, { refetchData }) => {
+      addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_ADDED, () =>
+        refetchData(),
+      );
+      addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_REMOVED, () =>
+        refetchData(),
+      );
+    },
   },
-  onSocketConnected: (addSocketListener, { refetchData }) => {
-    addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_ADDED, () =>
-      refetchData(),
-    );
-    addSocketListener(ShareConstants.MODULE_URL, ShareConstants.EXCLUDE_REMOVED, () =>
-      refetchData(),
-    );
-  },
-});
+);

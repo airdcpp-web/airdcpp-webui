@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Settings layout > should save values 1`] = `
+{
+  "data": {
+    "email": "email@test.com",
+    "nick": "New user name",
+  },
+  "method": "POST",
+  "path": "settings/set",
+}
+`;

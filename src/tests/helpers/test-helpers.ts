@@ -36,3 +36,5 @@ export const expectResponseToMatchSnapshot = (mock: Mock) => {
 
   expect(other).toMatchSnapshot();
 };
+
+export const expectRequestToMatchSnapshot = expectResponseToMatchSnapshot;

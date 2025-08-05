@@ -21,6 +21,7 @@ import SearchTypeDialog from './SearchTypeDialog';
 import Message from '@/components/semantic/Message';
 import IconConstants from '@/constants/IconConstants';
 import { useFormatter } from '@/context/FormatterContext';
+import { SettingPageProps } from '@/routes/Settings/types';
 
 const Row: React.FC<{ type: API.SearchType; moduleT: UI.ModuleTranslator }> = ({
   type,
@@ -47,15 +48,11 @@ const getRow = (type: API.SearchType, moduleT: UI.ModuleTranslator) => {
   return <Row key={type.id} type={type} moduleT={moduleT} />;
 };
 
-interface SearchTypesPageProps {
-  moduleT: UI.ModuleTranslator;
-}
-
 interface DataProps extends DataProviderDecoratorChildProps {
   searchTypes: API.SearchType[];
 }
 
-type Props = SearchTypesPageProps & DataProps;
+type Props = SettingPageProps & DataProps;
 
 const SearchTypesPage: React.FC<Props> = ({ searchTypes, moduleT }) => (
   <div id="directory-table">
@@ -85,7 +82,7 @@ const SearchTypesPage: React.FC<Props> = ({ searchTypes, moduleT }) => (
   </div>
 );
 
-export default DataProviderDecorator<SearchTypesPageProps, DataProps>(SearchTypesPage, {
+export default DataProviderDecorator<SettingPageProps, DataProps>(SearchTypesPage, {
   urls: {
     searchTypes: SearchConstants.SEARCH_TYPES_URL,
   },

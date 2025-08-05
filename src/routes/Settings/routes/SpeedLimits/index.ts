@@ -1,37 +1,45 @@
 import { RootSectionType } from '@/routes/Settings/types';
 
+import SettingSection from '../../components/SettingSection';
+
+import SpeedPage from './components/SpeedPage';
+import LimiterPage from './components/LimiterPage';
+import DownloadLimitPage from './components/DownloadLimitPage';
+import UploadLimitPage from './components/UploadLimitPage';
+import UserLimitPage from './components/UserLimitPage';
+
 const SpeedLimits: RootSectionType = {
   url: 'speed-limits',
   title: 'Speed and limits',
   icon: 'dashboard',
-  component: require('../../components/SettingSection').default,
+  component: SettingSection,
   menuItems: [
     {
       title: 'Connection speed',
       url: 'speed',
-      component: require('./components/SpeedPage').default,
+      component: SpeedPage,
     },
     {
       title: 'Bandwidth limiting',
       url: 'limiter',
-      component: require('./components/LimiterPage').default,
+      component: LimiterPage,
     },
   ],
   advancedMenuItems: [
     {
       title: 'Download limits',
       url: 'download-limits',
-      component: require('./components/DownloadLimitPage').default,
+      component: DownloadLimitPage,
     },
     {
       title: 'Upload limits',
       url: 'upload-limits',
-      component: require('./components/UploadLimitPage').default,
+      component: UploadLimitPage,
     },
     {
       title: 'Per-user limits',
       url: 'user-limits',
-      component: require('./components/UserLimitPage').default,
+      component: UserLimitPage,
     },
   ],
 };

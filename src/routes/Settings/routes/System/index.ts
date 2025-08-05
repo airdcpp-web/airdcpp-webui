@@ -2,35 +2,42 @@ import { RootSectionType } from '@/routes/Settings/types';
 
 import * as API from '@/types/api';
 
+import SettingSection from '../../components/SettingSection';
+
+import WebUsersPage from './components/WebUsersPage';
+import LoggingPage from './components/LoggingPage';
+import ServerSettingsPage from './components/ServerSettingsPage';
+import AdvancedServerSettingsPage from './components/AdvancedServerSettingsPage';
+
 const System: RootSectionType = {
   url: 'system',
   title: 'System',
   icon: 'settings',
   access: API.AccessEnum.ADMIN,
-  component: require('../../components/SettingSection').default,
+  component: SettingSection,
   menuItems: [
     {
       title: 'Users',
       url: 'users',
       noSave: true,
-      component: require('./components/WebUsersPage').default,
+      component: WebUsersPage,
     },
     {
       title: 'Logging',
       url: 'logging',
-      component: require('./components/LoggingPage').default,
+      component: LoggingPage,
     },
     {
       title: 'Web server',
       url: 'server-settings',
-      component: require('./components/ServerSettingsPage').default,
+      component: ServerSettingsPage,
     },
   ],
   advancedMenuItems: [
     {
       title: 'Advanced server settings',
       url: 'advanced-server-settings',
-      component: require('./components/AdvancedServerSettingsPage').default,
+      component: AdvancedServerSettingsPage,
     },
   ],
 };

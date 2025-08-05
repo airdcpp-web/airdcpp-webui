@@ -2,22 +2,30 @@ import { RootSectionType } from '@/routes/Settings/types';
 
 import * as API from '@/types/api';
 
+import SettingSection from '../../components/SettingSection';
+
+import RefreshOptionsPage from './components/RefreshOptionsPage';
+import ShareProfilesPage from './components/ShareProfilesPage';
+import SharingOptionsPage from './components/SharingOptionsPage';
+import HashingPage from './components/HashingPage';
+import ExcludePage from './components/ExcludePage';
+
 const Sharing: RootSectionType = {
   url: 'sharing',
   title: 'Sharing',
   icon: 'tasks',
-  component: require('../../components/SettingSection').default,
+  component: SettingSection,
   menuItems: [
     {
       title: 'Refresh options',
       url: 'refresh-options',
-      component: require('./components/RefreshOptionsPage').default,
+      component: RefreshOptionsPage,
     },
     {
       title: 'Share profiles',
       url: 'profiles',
       noSave: true,
-      component: require('./components/ShareProfilesPage').default,
+      component: ShareProfilesPage,
       access: API.AccessEnum.SHARE_VIEW,
     },
   ],
@@ -25,18 +33,18 @@ const Sharing: RootSectionType = {
     {
       title: 'Sharing options',
       url: 'sharing-options',
-      component: require('./components/SharingOptionsPage').default,
+      component: SharingOptionsPage,
     },
     {
       title: 'Hashing',
       url: 'hashing',
-      component: require('./components/HashingPage').default,
+      component: HashingPage,
     },
     {
       title: 'Excluded paths',
       url: 'excludes',
       noSave: true,
-      component: require('./components/ExcludePage').default,
+      component: ExcludePage,
       access: API.AccessEnum.SHARE_VIEW,
     },
   ],
