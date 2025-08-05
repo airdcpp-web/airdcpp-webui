@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Message composer > Chat commands > should handle help 1`] = `
+{
+  "owner": "session:4",
+  "severity": "info",
+  "text": "
+	Chat commands
+
+	/clear - Clear message cache
+	/me - Send message in third person
+",
+  "type": "private",
+}
+`;
+
+exports[`Message composer > Chat messages > normal 1`] = `
+{
+  "text": "Test message 1",
+}
+`;
+
+exports[`Message composer > Chat messages > third person 1`] = `
+{
+  "text": "Test message third person",
+  "third_person": true,
+}
+`;
+
+exports[`Message composer > Chat messages > third person 2`] = `
+{
+  "text": "/me Test message third person",
+}
+`;

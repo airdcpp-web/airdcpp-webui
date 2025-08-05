@@ -3,12 +3,13 @@ import * as React from 'react';
 import Message from '@/components/semantic/Message';
 import { ErrorResponse } from 'airdcpp-apisocket';
 
-import { Translation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { translate } from '@/utils/TranslationUtils';
 
 import * as UI from '@/types/ui';
 import { useSocket } from '@/context/SocketContext';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface StatisticsDecoratorProps<DataT> {}
 
 export interface StatisticsDecoratorChildProps<DataT> {
@@ -23,6 +24,7 @@ const StatisticsDecorator = function <DataT extends object, PropsT>(
   fetchIntervalSeconds = 0,
 ) {
   const Decorator: React.FC<StatisticsDecoratorProps<DataT> & PropsT> = (props) => {
+    const { t } = useTranslation();
     const [stats, setStats] = React.useState<DataT | null | undefined>(null);
 
     const socket = useSocket();
@@ -57,14 +59,10 @@ const StatisticsDecorator = function <DataT extends object, PropsT>(
     // (e.g. no hub stats if there are no connected hubs)
     if (stats === undefined) {
       return (
-        <Translation>
-          {(t) => (
-            <Message
-              title={translate('Statistics not available', t, UI.Modules.COMMON)}
-              description={!unavailableMessage ? undefined : unavailableMessage(t, props)}
-            />
-          )}
-        </Translation>
+        <Message
+          title={translate('Statistics not available', t, UI.Modules.COMMON)}
+          description={!unavailableMessage ? undefined : unavailableMessage(t, props)}
+        />
       );
     }
 

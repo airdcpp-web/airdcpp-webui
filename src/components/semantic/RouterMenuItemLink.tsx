@@ -21,7 +21,7 @@ type RouterMenuItemLinkProps = React.PropsWithChildren<{
 }>;
 
 const getUrgencies = (
-  unreadInfoStore: UI.UnreadInfoStore | UI.SessionSlice<UI.SessionType> | null,
+  unreadInfoStore: UI.UnreadInfoStore | UI.SessionSlice<UI.SessionItem> | null,
   sessionItem: UI.SessionItemBase | undefined,
 ): UI.UrgencyCountMap | null => {
   if (!unreadInfoStore) {

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import { OnChangeHandlerFunc } from 'react-mentions';
-import { useLocation, Location, useNavigate } from 'react-router';
 
 import * as UI from '@/types/ui';
 
@@ -14,24 +13,26 @@ import ChatCommandHandler from '../commands/ChatCommandHandler';
 
 import { useSocket } from '@/context/SocketContext';
 import { useSession } from '@/context/AppStoreContext';
-import { useSessionStore } from '@/context/SessionStoreContext';
-import { useAppStore } from '@/context/AppStoreContext';
 
-const getStorageKey = (location: Location) => {
-  return `last_message_${location.pathname}`;
-};
+/*const getStorageKey = (sessionStorageKey: string) => {
+  return `last_message_${sessionStorageKey}`;
+};*/
 
-const loadState = (location: Location) => {
-  const text = loadSessionProperty(getStorageKey(location), '');
+const loadState = (sessionStorageKey: string) => {
+  const text = loadSessionProperty(sessionStorageKey, '');
   return text;
 };
 
-const saveState = (text: string, location: Location) => {
+const saveState = (text: string, sessionStorageKey: string) => {
   if (text) {
-    saveSessionProperty(getStorageKey(location), text);
+    saveSessionProperty(sessionStorageKey, text);
   } else {
-    removeSessionProperty(getStorageKey(location));
+    removeSessionProperty(sessionStorageKey);
   }
+};
+
+const generateSessionStorageKey = (session: UI.SessionItem, sessionType: string) => {
+  return `last_message_${sessionType}_${session.id}`;
 };
 
 interface MessageComposerProps {
@@ -41,12 +42,8 @@ interface MessageComposerProps {
 
 export const useMessageComposer = ({ chatController, t }: MessageComposerProps) => {
   const session = useSession();
-  const location = useLocation();
-  const navigate = useNavigate();
   const [inputText, setInputText] = React.useState('');
   const socket = useSocket();
-  const sessionStore = useSessionStore();
-  const appStore = useAppStore();
 
   const handleCommand = (commandText: string) => {
     let command, params;
@@ -63,18 +60,18 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     }
 
     ChatCommandHandler(chatController).handle(command, params, {
-      location,
-      navigate,
       t,
       socket,
       session,
-      sessionStore,
-      appStore,
     });
   };
 
   const updateText = (newText: string) => {
-    saveState(newText, location);
+    const storageKey = generateSessionStorageKey(
+      chatController.chatSession,
+      chatController.sessionType,
+    );
+    saveState(newText, storageKey);
     setInputText(newText);
   };
 
@@ -88,13 +85,17 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     updateText(newText);
   };
 
-  const handleSend = (textToSend: string) => {
+  const handleSend = (text: string) => {
     const { chatApi, chatSession } = chatController;
-    chatApi.sendChatMessage(socket, chatSession, textToSend);
+    chatApi.sendChatMessage(socket, chatSession, { text });
   };
 
   useEffect(() => {
-    setInputText(loadState(location));
+    const storageKey = generateSessionStorageKey(
+      chatController.chatSession,
+      chatController.sessionType,
+    );
+    setInputText(loadState(storageKey));
   }, [location.pathname]);
 
   const onTextChanged: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
@@ -112,6 +113,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
         handleCommand(textTrimmed);
       }
 
+      // Commands will be sent as well because of API hooks (the API will detect those and handle accordingly)
       handleSend(textTrimmed);
     }
 

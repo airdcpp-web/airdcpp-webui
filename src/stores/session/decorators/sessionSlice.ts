@@ -8,14 +8,14 @@ import { checkUnreadSessionInfo } from '@/utils/MessageUtils';
 import { APISocket } from '@/services/SocketService';
 import { Lens } from '@dhmk/zustand-lens';
 
-export type SessionUrgencyCountMapper<SessionT extends UI.SessionType> = (
+export type SessionUrgencyCountMapper<SessionT extends UI.SessionItem> = (
   sessionItem: SessionT,
 ) => UI.ChatMessageUrcencies | UI.StatusMessageUrcencies;
 interface Readable {
   setRead?: UI.SessionReadHandler;
 }
 
-export const createSessionSlice = <SessionT extends UI.SessionType>(
+export const createSessionSlice = <SessionT extends UI.SessionItem>(
   messageUrgencyMappings: SessionUrgencyCountMapper<SessionT> | undefined = undefined,
 ) => {
   type State = UI.SessionSlice<SessionT> & Readable;
@@ -170,7 +170,7 @@ export const createSessionSlice = <SessionT extends UI.SessionType>(
 
 type SetReadAction = (id: UI.SessionItemBase, socket: APISocket) => Promise<any>;
 
-interface SessionActions<SessionT extends UI.SessionType> {
+interface SessionActions<SessionT extends UI.SessionItem> {
   setRead: SetReadAction;
   fetchSessions: (
     sessionSlice: UI.SessionSlice<SessionT>,
@@ -178,7 +178,7 @@ interface SessionActions<SessionT extends UI.SessionType> {
   ) => Promise<void>;
 }
 
-export const initSessionSlice = async <SessionT extends UI.SessionType>(
+export const initSessionSlice = async <SessionT extends UI.SessionItem>(
   sessionSlice: UI.SessionSlice<SessionT>,
   sessionActions: SessionActions<SessionT>,
   { addSocketListener, socket }: UI.SessionInitData,

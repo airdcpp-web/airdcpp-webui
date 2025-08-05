@@ -77,6 +77,7 @@ const SessionLayout = <
       sessionApi,
       uiActions,
       sessionT,
+      baseUrl,
     } = props;
 
     if (!activeItem) {
@@ -114,6 +115,7 @@ const SessionLayout = <
         location={location}
         navigate={navigate}
         sessionT={sessionT}
+        baseUrl={baseUrl}
       />
     );
   };

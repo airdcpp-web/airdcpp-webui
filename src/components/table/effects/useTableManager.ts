@@ -15,7 +15,7 @@ export interface TableManagerProps {
   store: any;
 
   // Store containing sessions (must be provided together with entityId)
-  sessionStore?: UI.SessionSlice<UI.SessionType>;
+  sessionStore?: UI.SessionSlice<UI.SessionItem>;
 
   entityId?: API.IdType | undefined;
 

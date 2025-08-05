@@ -41,9 +41,12 @@ const checkList = (sessionId: number) => {
 
 type HubSessionProps = SessionChildProps<API.Hub, UI.EmptyObject>;
 
-const HubChatCommands = buildChatCommands(API.AccessEnum.HUBS_EDIT, clearHubChatMessages);
+export const HubChatCommands = buildChatCommands(
+  API.AccessEnum.HUBS_EDIT,
+  clearHubChatMessages,
+);
 
-const HubSession: React.FC<HubSessionProps> = ({ sessionItem, sessionT }) => {
+const HubSession: React.FC<HubSessionProps> = ({ sessionItem, sessionT, baseUrl }) => {
   const [showList, setShowList] = useState(checkList(sessionItem.id));
   const login = useSession();
   const socket = useSocket();
@@ -119,6 +122,7 @@ const HubSession: React.FC<HubSessionProps> = ({ sessionItem, sessionT }) => {
           chatCommands={HubChatCommands}
           chatAccess={API.AccessEnum.HUBS_SEND}
           chatSession={sessionItem}
+          sessionType={baseUrl}
           handleFileUpload={handleFileUpload}
           highlightRemoteMenuId={MenuConstants.HUB_MESSAGE_HIGHLIGHT}
           hubUrl={sessionItem.hub_url}

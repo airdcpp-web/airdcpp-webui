@@ -28,7 +28,7 @@ export type VirtualTableProps = Omit<TableFooterProps, 't'> &
     // store: any;
 
     // Store containing sessions (must be provided together with entityId)
-    // sessionStore?: UI.SessionSlice<UI.SessionType>;
+    // sessionStore?: UI.SessionSlice<UI.SessionItem>;
 
     // Filter that is always applied for source items (those will never be displayed or included in the total count)
     // sourceFilter?: API.TableFilter;

@@ -11,13 +11,13 @@ import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 export interface SessionProviderDecoratorProps {}
 
-export interface SessionProviderDecoratorChildProps<SessionT extends UI.SessionType> {
+export interface SessionProviderDecoratorChildProps<SessionT extends UI.SessionItem> {
   items: SessionT[];
   sessionT: UI.ModuleTranslator;
   params: UI.RouteParams;
 }
 
-const SessionProviderDecorator = <SessionT extends UI.SessionType>(
+const SessionProviderDecorator = <SessionT extends UI.SessionItem>(
   Component: React.ComponentType<SessionProviderDecoratorChildProps<SessionT>>,
   sessionStoreSelector: UI.SessionStoreSelector<SessionT>,
   moduleId: UI.Modules,

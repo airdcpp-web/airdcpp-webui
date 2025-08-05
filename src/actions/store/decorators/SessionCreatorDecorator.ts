@@ -12,7 +12,7 @@ export type CreateSessionProps = Pick<
 >;
 
 interface SessionActionCreatorProps<
-  SessionT extends UI.SessionType,
+  SessionT extends UI.SessionItem,
   ItemDataT extends object,
 > {
   onExists?: (
@@ -29,7 +29,7 @@ interface SessionActionCreatorProps<
 }
 
 export const SessionCreatorDecorator = <
-  SessionT extends UI.SessionType,
+  SessionT extends UI.SessionItem,
   ItemDataT extends object,
 >({
   onExists,

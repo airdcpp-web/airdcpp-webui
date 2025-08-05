@@ -121,6 +121,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
       caption={<Icon icon={IconConstants.SEND} />}
       loading={uploading}
       color="blue"
+      aria-label="Send message"
     />
   );
 

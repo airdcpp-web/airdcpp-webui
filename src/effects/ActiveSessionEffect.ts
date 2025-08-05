@@ -7,7 +7,7 @@ import { useSocket } from '@/context/SocketContext';
 import { useAppStore } from '@/context/AppStoreContext';
 import { LocalSettings } from '@/constants/LocalSettingConstants';
 
-export const useActiveSession = <SessionT extends UI.SessionType>(
+export const useActiveSession = <SessionT extends UI.SessionItem>(
   sessionItem: SessionT,
   actions: UI.SessionAPIActions<SessionT>,
   sessionStoreSelector: UI.SessionStoreSelector,

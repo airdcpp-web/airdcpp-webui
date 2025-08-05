@@ -9,11 +9,11 @@ type SessionType = UI.SessionItemBase;
 
 export default function (sessionsUrl: string) {
   const fetchSessions = async (
-    sessionStore: UI.SessionSlice<UI.SessionType>,
+    sessionStore: UI.SessionSlice<UI.SessionItem>,
     socket: APISocket,
   ) => {
     try {
-      const sessions: UI.SessionType[] = await socket.get(sessionsUrl);
+      const sessions: UI.SessionItem[] = await socket.get(sessionsUrl);
       sessionStore.init(sessions);
     } catch (e) {
       const error = e as ErrorResponse;

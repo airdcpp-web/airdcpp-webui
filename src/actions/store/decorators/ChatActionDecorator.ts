@@ -36,22 +36,12 @@ export default function (sessionUrl: string) {
   const sendChatMessage = (
     socket: APISocket,
     chatSession: SessionType,
-    text: string,
-    thirdPerson = false,
+    message: API.OutgoingChatMessage,
   ) => {
-    socket
-      .post(`${sessionUrl}/${chatSession.id}/chat_message`, {
-        text,
-        third_person: thirdPerson,
-      })
-      .catch((e) => {
-        const error = e as ErrorResponse;
-        NotificationActions.apiError(
-          'Failed to send chat message',
-          error,
-          chatSession.id,
-        );
-      });
+    socket.post(`${sessionUrl}/${chatSession.id}/chat_message`, message).catch((e) => {
+      const error = e as ErrorResponse;
+      NotificationActions.apiError('Failed to send chat message', error, chatSession.id);
+    });
   };
 
   const sendStatusMessage = (

@@ -16,7 +16,7 @@ export const buildChatCommands = (
     { socket },
   ) => {
     if (params) {
-      chatApi.sendChatMessage(socket, chatSession, params, true);
+      chatApi.sendChatMessage(socket, chatSession, { text: params, third_person: true });
     }
   };
 

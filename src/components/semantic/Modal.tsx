@@ -10,7 +10,7 @@ import 'fomantic-ui-css/components/modal';
 import 'fomantic-ui-css/components/modal.min.css';
 
 import { IconType } from '@/components/semantic/Icon';
-import { Translation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import * as UI from '@/types/ui';
 import { translate } from '@/utils/TranslationUtils';
@@ -70,41 +70,38 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
 
   const mainClass = classNames('ui modal', { full: fullHeight }, className);
   const node = document.getElementById(modalNodeId)!;
+  const { t } = useTranslation();
   return ReactDOM.createPortal(
     <div role="dialog" ref={ref} className={mainClass} id={id}>
       <LayoutHeader title={title} icon={icon} subHeader={subHeader} size="" />
       <div className="content">{children}</div>
 
-      <Translation>
-        {(t) =>
-          props.onApprove ? (
-            <div className="actions">
-              <Button
-                caption={approveCaption || translate('Save', t, UI.Modules.COMMON)}
-                icon={IconConstants.SAVE_COLORED}
-                disabled={approveDisabled}
-                loading={saving}
-                color="green"
-                className="ok basic submit"
-              />
-              <Button
-                caption={translate('Cancel', t, UI.Modules.COMMON)}
-                icon={IconConstants.CANCEL}
-                color="red basic"
-                className="cancel"
-              />
-            </div>
-          ) : (
-            <div className="actions">
-              <Button
-                caption={translate('Close', t, UI.Modules.COMMON)}
-                icon={IconConstants.CLOSE}
-                className="cancel"
-              />
-            </div>
-          )
-        }
-      </Translation>
+      {props.onApprove ? (
+        <div className="actions">
+          <Button
+            caption={approveCaption || translate('Save', t, UI.Modules.COMMON)}
+            icon={IconConstants.SAVE_COLORED}
+            disabled={approveDisabled}
+            loading={saving}
+            color="green"
+            className="ok basic submit"
+          />
+          <Button
+            caption={translate('Cancel', t, UI.Modules.COMMON)}
+            icon={IconConstants.CANCEL}
+            color="red basic"
+            className="cancel"
+          />
+        </div>
+      ) : (
+        <div className="actions">
+          <Button
+            caption={translate('Close', t, UI.Modules.COMMON)}
+            icon={IconConstants.CLOSE}
+            className="cancel"
+          />
+        </div>
+      )}
     </div>,
     node,
   );

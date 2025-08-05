@@ -9,7 +9,7 @@ import {
 import DropdownCaption from '@/components/semantic/DropdownCaption';
 
 import IconPanel from '@/components/main/navigation/IconPanel';
-import { Translation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { translate } from '@/utils/TranslationUtils';
 
 import * as UI from '@/types/ui';
@@ -38,6 +38,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
   const ref = useRef<HTMLDivElement>(null);
   const socket = useSocket();
   const appStore = useAppStore();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const settings = {
@@ -77,49 +78,41 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
   };
 
   return (
-    <Translation>
-      {(t) => (
-        <div
-          ref={ref}
-          id="mobile-menu"
-          className="ui right vertical inverted sidebar menu"
-        >
-          {parseMenuItems(primaryRoutes, login, onClick)}
-          <Popup
-            // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
-            // https://github.com/Semantic-Org/Semantic-UI/issues/1410
-            trigger={
-              <DropdownCaption icon="ellipsis horizontal caption">
-                {translate('More...', t, UI.SubNamespaces.NAVIGATION)}
-              </DropdownCaption>
-            }
-            triggerClassName="item"
-            className="inverted basic"
-            position="bottom left"
-            settings={{
-              distanceAway: -20,
-            }}
-          >
-            {(hide) => (
-              <div className="ui dropdown item right fluid active visible">
-                <div className="ui menu transition visible">
-                  {parseMenuItems(secondaryRoutes, login, (path, event) => {
-                    hide();
-                    onClick(path, event);
-                  })}
-                  <div className="ui divider" />
-                  {parseMenuItem(getLogoutItem(socket, appStore))}
-                </div>
-              </div>
-            )}
-          </Popup>
-          <div className="separator" />
+    <div ref={ref} id="mobile-menu" className="ui right vertical inverted sidebar menu">
+      {parseMenuItems(primaryRoutes, login, onClick)}
+      <Popup
+        // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
+        // https://github.com/Semantic-Org/Semantic-UI/issues/1410
+        trigger={
+          <DropdownCaption icon="ellipsis horizontal caption">
+            {translate('More...', t, UI.SubNamespaces.NAVIGATION)}
+          </DropdownCaption>
+        }
+        triggerClassName="item"
+        className="inverted basic"
+        position="bottom left"
+        settings={{
+          distanceAway: -20,
+        }}
+      >
+        {(hide) => (
+          <div className="ui dropdown item right fluid active visible">
+            <div className="ui menu transition visible">
+              {parseMenuItems(secondaryRoutes, login, (path, event) => {
+                hide();
+                onClick(path, event);
+              })}
+              <div className="ui divider" />
+              {parseMenuItem(getLogoutItem(socket, appStore))}
+            </div>
+          </div>
+        )}
+      </Popup>
+      <div className="separator" />
 
-          {parseMenuItems(sidebarRoutes, login, onClickSecondary)}
-          <IconPanel />
-        </div>
-      )}
-    </Translation>
+      {parseMenuItems(sidebarRoutes, login, onClickSecondary)}
+      <IconPanel />
+    </div>
   );
 };
 

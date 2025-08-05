@@ -144,6 +144,11 @@ export interface StatusMessage extends MessageBase {
   type: StatusMessageTypeEnum;
 }
 
+export interface OutgoingChatMessage {
+  text: string;
+  third_person?: boolean;
+}
+
 export interface OutgoingChatStatusMessage {
   text: string;
   severity: SeverityEnum;

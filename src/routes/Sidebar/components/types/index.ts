@@ -76,7 +76,7 @@ export type SessionChildProps<
   UIActionsT extends UI.ActionListType<UI.SessionItemBase> = UI.EmptyObject,
 > = Pick<
   SessionLayoutManageProps<SessionT, SessionApiT, UIActionsT>,
-  'sessionApi' | 'uiActions'
+  'sessionApi' | 'uiActions' | 'baseUrl'
 > &
   UI.RouteComponentProps & {
     sessionItem: SessionT;

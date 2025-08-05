@@ -20,7 +20,7 @@ type PrivateChatSessionProps = SessionChildProps<
   // UI.ChatActionList
 >;
 
-const PrivateChatCommands = buildChatCommands(
+export const PrivateChatCommands = buildChatCommands(
   API.AccessEnum.PRIVATE_CHAT_EDIT,
   clearPrivateChatMessages,
 );
@@ -28,6 +28,7 @@ const PrivateChatCommands = buildChatCommands(
 const PrivateChatSession: React.FC<PrivateChatSessionProps> = ({
   sessionItem,
   sessionT,
+  baseUrl,
 }) => {
   const login = useSession();
   const socket = useSocket();
@@ -50,6 +51,7 @@ const PrivateChatSession: React.FC<PrivateChatSessionProps> = ({
         chatCommands={PrivateChatCommands}
         storeSelector={PrivateChatStoreSelector}
         chatSession={sessionItem}
+        sessionType={baseUrl}
         handleFileUpload={handleFileUpload}
         highlightRemoteMenuId={MenuConstants.PRIVATE_CHAT_MESSAGE_HIGHLIGHT}
       />

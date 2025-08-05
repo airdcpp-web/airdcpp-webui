@@ -74,7 +74,7 @@ const simpleSessionMapper = (item: UI.ReadStatus): UI.UrgencyCountMap | null => 
 
 export const getItemUrgencies = (
   item: UI.SessionItem,
-  messageUrgencyMappings: UI.SessionUrgencyCountMapper<UI.SessionType> | undefined,
+  messageUrgencyMappings: UI.SessionUrgencyCountMapper<UI.SessionItem> | undefined,
 ) => {
   if (messageUrgencyMappings) {
     return messageSessionMapper(item as UI.MessageCounts, messageUrgencyMappings(item));

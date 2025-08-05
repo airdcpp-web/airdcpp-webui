@@ -1,5 +1,5 @@
 import { AddTempShareResponse } from '@/services/api/ShareApi';
-import { SessionItemBase, SessionType } from './sessions';
+import { SessionItemBase, SessionItem } from './sessions';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -13,8 +13,7 @@ export interface ChatAPIActions {
   sendChatMessage: (
     socket: APISocket,
     chatSession: SessionItemBase,
-    text: string,
-    thirdPerson?: boolean,
+    text: API.OutgoingChatMessage,
   ) => void;
   sendStatusMessage: (
     socket: APISocket,
@@ -31,7 +30,7 @@ export interface ChatAPIActions {
 export type ChatFileUploadHandler = (file: File) => Promise<AddTempShareResponse>;
 
 // Chat commands
-export interface ChatCommandProps extends ActionHandlerProps {
+export interface ChatCommandProps extends Pick<ActionHandlerProps, 't' | 'socket'> {
   session: UI.AuthenticatedSession;
 }
 
@@ -54,6 +53,7 @@ export interface ChatController {
   chatApi: ChatAPIActions & SessionAPIActions<SessionItemBase>;
   chatCommands: ChatCommandList;
   handleFileUpload: ChatFileUploadHandler;
-  chatSession: SessionType;
+  chatSession: SessionItem;
+  sessionType: string;
   hubUrl?: string;
 }

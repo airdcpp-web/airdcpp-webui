@@ -152,7 +152,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
 
   const skipSessionNotification = (
     sessionId: API.IdType,
-    sessionSlice: UI.SessionSlice<UI.SessionType>,
+    sessionSlice: UI.SessionSlice<UI.SessionItem>,
   ) => {
     const isActiveSession = sessionSlice.activeSessionId === sessionId;
     const hasFocus = document.hasFocus();
