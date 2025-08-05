@@ -20,7 +20,7 @@ import '../style.css';
 
 import { useSocket } from '@/context/SocketContext';
 
-const SystemLog: React.FC = memo(
+const Events: React.FC = memo(
   function SystemLog() {
     const sessionStore = useSessionStore();
     const setViewActive = useSessionStoreProperty((state) => state.events.setViewActive);
@@ -63,4 +63,4 @@ const SystemLog: React.FC = memo(
   () => true,
 );
 
-export default SystemLog;
+export default Events;

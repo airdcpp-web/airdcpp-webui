@@ -103,7 +103,16 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     return translate(text, t, moduleIds);
   };
 
-  const onLogMessage = (message: API.StatusMessage) => {
+  const skipEventNotification = () => {
+    const viewActive = sessionStoreApi.getState().events.viewActive;
+    return viewActive;
+  };
+
+  const onEventMessage = (message: API.StatusMessage) => {
+    if (message.is_read || skipEventNotification()) {
+      return;
+    }
+
     const { text, severity } = message;
 
     const notification: UI.Notification = {
@@ -348,7 +357,7 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     addSocketListener(
       EventConstants.MODULE_URL,
       EventConstants.MESSAGE,
-      onLogMessage,
+      onEventMessage,
       undefined,
       API.AccessEnum.EVENTS_VIEW,
     );
