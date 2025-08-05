@@ -1,6 +1,6 @@
 import * as API from '@/types/api';
 
-import { MessageCounts, SessionItemBase, SessionType } from './sessions';
+import { MessageCounts, SessionItemBase } from './sessions';
 import { UrgencyCountMap } from './urgencies';
 import { MessageListItem } from './messages';
 import { APISocket } from '@/services/SocketService';
@@ -22,7 +22,7 @@ export interface SessionInitData extends SessionStoreInitData {
 
 export type SessionReadHandler = (sessionItem: SessionItemBase) => void;
 
-export interface SessionSlice<SessionT extends SessionType> extends UnreadInfoStore {
+export interface SessionSlice<SessionT extends SessionItemBase> extends UnreadInfoStore {
   readonly sessions: Array<SessionT> | null;
   readonly activeSessionId: API.IdType | null;
 
@@ -78,11 +78,12 @@ export interface ActivitySlice {
   setAway: (away: API.AwayState) => void;
 }
 
-export type MessageSessionSlice<SessionT extends SessionType> = SessionSlice<SessionT> & {
-  messages: MessageSlice;
-};
+export type MessageSessionSlice<SessionT extends SessionItemBase> =
+  SessionSlice<SessionT> & {
+    messages: MessageSlice;
+  };
 
-export type ScrollableSessionSlice<SessionT extends SessionType> =
+export type ScrollableSessionSlice<SessionT extends SessionItemBase> =
   SessionSlice<SessionT> & {
     scroll: SessionScrollHandler;
   };
@@ -122,11 +123,11 @@ export interface SessionStore {
   isInitialized: boolean;
 }
 
-export type SessionStoreSelector<SessionT extends SessionType = SessionType> = (
+export type SessionStoreSelector<SessionT extends SessionItemBase = SessionItemBase> = (
   state: SessionStore,
 ) => SessionSlice<SessionT>;
 
-export type MessageStoreSelector<SessionT extends SessionType = SessionType> = (
+export type MessageStoreSelector<SessionT extends SessionItemBase = SessionItemBase> = (
   state: SessionStore,
 ) => MessageSessionSlice<SessionT>;
 

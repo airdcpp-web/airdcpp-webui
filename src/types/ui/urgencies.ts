@@ -1,5 +1,5 @@
 import * as API from '@/types/api';
-import { SessionType } from './sessions';
+import { SessionItemBase } from './sessions';
 
 export const enum UrgencyEnum {
   HIGHEST = 6,
@@ -24,6 +24,6 @@ export type StatusMessageUrcencies = Record<
   UrgencyEnum
 >;
 
-export type SessionUrgencyCountMapper<SessionT extends SessionType> = (
+export type SessionUrgencyCountMapper<SessionT extends SessionItemBase> = (
   session: SessionT,
 ) => ChatMessageUrcencies | StatusMessageUrcencies;
