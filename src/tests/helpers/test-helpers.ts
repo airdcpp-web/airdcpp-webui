@@ -19,6 +19,11 @@ export const waitForData = async (
   await waitFor(() => expect(queryByText(text)).not.toBeInTheDocument());
 };
 
+export const waitForLoader = async (queryByRole: RenderResult['queryByRole']) => {
+  await waitFor(() => expect(queryByRole('progressbar')).toBeInTheDocument());
+  await waitFor(() => expect(queryByRole('progressbar')).not.toBeInTheDocument());
+};
+
 export const clickButton = (caption: string, getByRole: RenderResult['getByRole']) => {
   return expect(fireEvent.click(getByRole('button', { name: caption }))).toBeTruthy();
 };

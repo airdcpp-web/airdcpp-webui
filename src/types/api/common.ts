@@ -2,6 +2,7 @@ export type IdType = number | string;
 
 // FILES
 export type FileContentType =
+  | ''
   | 'audio'
   | 'compressed'
   | 'document'

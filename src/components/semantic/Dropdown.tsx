@@ -38,6 +38,7 @@ export type DropdownProps = React.PropsWithChildren<{
   dropDownElementProps?: React.HTMLAttributes<HTMLDivElement>;
   size?: string;
   menuElementClassName?: string;
+  label?: string;
 }>;
 
 interface State {
@@ -123,6 +124,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       size,
       menuElementClassName,
       children,
+      label,
     } = this.props;
 
     const className = classNames(
@@ -146,6 +148,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
         }}
         {...dropDownElementProps}
         className={className}
+        aria-label={label}
       >
         {leftIcon && !!caption && icon}
         <DropdownCaption icon={captionIcon}>{!!caption ? caption : icon}</DropdownCaption>

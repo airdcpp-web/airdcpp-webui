@@ -50,7 +50,7 @@ export type ShareRootEntry = ShareRootEntryBase & {
 };
 
 export interface TempShareItem {
-  id: string;
+  id: number;
   name: string;
   path: string;
   size: number;

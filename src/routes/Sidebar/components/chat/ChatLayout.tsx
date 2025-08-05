@@ -70,6 +70,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({
           chatApi={chatApi}
           chatCommands={chatCommands}
           t={t}
+          dropdownContext=".message-view"
           {...other}
         />
       )}

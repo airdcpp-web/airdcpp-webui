@@ -13,7 +13,7 @@ import * as UI from '@/types/ui';
 
 import { ErrorResponse } from 'airdcpp-apisocket';
 import FilePreviewDialog from './FilePreviewDialog';
-import TempShareDropdown from './TempShareDropdown';
+import TempShareDropdown, { TempShareDropdownProps } from './TempShareDropdown';
 import { translate } from '@/utils/TranslationUtils';
 import Icon from '@/components/semantic/Icon';
 import Button from '@/components/semantic/Button';
@@ -67,7 +67,9 @@ const getMentionFieldStyle = (mobileLayout: boolean) => {
   };
 };
 
-export interface MessageComposerProps extends UI.ChatController {
+export interface MessageComposerProps
+  extends UI.ChatController,
+    Pick<TempShareDropdownProps, 'dropdownContext'> {
   t: UI.TranslateF;
 }
 
@@ -83,7 +85,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
   const dropzoneRef = React.useRef<DropzoneRef>(null);
   const socket = useSocket();
 
-  const { t, handleFileUpload } = props;
+  const { t, handleFileUpload, dropdownContext } = props;
 
   const { appendText, sendText, text, onTextChanged, onKeyDown } = useMessageComposer({
     chatController: props,
@@ -146,7 +148,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
       >
         {({ getRootProps, getInputProps, open }) => (
           <div className={className} {...getRootProps()}>
-            <input {...getInputProps()} />
+            <input data-testid="dropzone" {...getInputProps()} />
             <MentionsInput
               className="input"
               value={text}
@@ -165,6 +167,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
                 className="blue large"
                 handleUpload={open}
                 overrideContent={!text ? null : sendButton}
+                dropdownContext={dropdownContext}
               />
             )}
           </div>

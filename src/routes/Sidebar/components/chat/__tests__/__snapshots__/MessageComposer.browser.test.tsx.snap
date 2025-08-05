@@ -32,3 +32,10 @@ exports[`Message composer > Chat messages > third person 2`] = `
   "text": "/me Test message third person",
 }
 `;
+
+exports[`Message composer > Temp share > should remove shared files 1`] = `
+{
+  "method": "DELETE",
+  "path": "share/temp_shares/1878753295",
+}
+`;

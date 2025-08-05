@@ -28,6 +28,8 @@ export interface TempShareDropdownProps {
   // Allows temporarily replacing the content without
   // the need to refetch all temp share data
   overrideContent?: React.ReactElement | null;
+
+  dropdownContext?: string;
 }
 
 interface DataProps {
@@ -36,33 +38,35 @@ interface DataProps {
 
 type Props = TempShareDropdownProps & DataProps & DataProviderDecoratorChildProps;
 
-const getDropdownItem = (
-  file: API.TempShareItem,
-  onClick: (p: API.TempShareItem) => void,
-) => {
+export const formatTempShareDropdownItem = (file: API.TempShareItem) => {
   let title = file.name;
   if (file.user) {
     title += ` (${file.user.nicks})`;
   }
 
-  return (
-    <MenuItemLink
-      key={file.id}
-      onClick={() => onClick(file)}
-      icon={<FileIcon typeInfo={file.type} />}
-    >
-      {title}
-    </MenuItemLink>
-  );
+  return title;
 };
+
+const getDropdownItem = (
+  file: API.TempShareItem,
+  onClick: (p: API.TempShareItem) => void,
+) => (
+  <MenuItemLink
+    key={file.id}
+    onClick={() => onClick(file)}
+    icon={<FileIcon typeInfo={file.type} />}
+  >
+    {formatTempShareDropdownItem(file)}
+  </MenuItemLink>
+);
 
 const TempShareDropdown = React.memo<Props>(function TempShareDropdown({
   files,
   handleUpload,
-  style,
   className,
   overrideContent,
   socket,
+  dropdownContext,
 }) {
   const { t } = useTranslation();
 
@@ -88,14 +92,15 @@ const TempShareDropdown = React.memo<Props>(function TempShareDropdown({
       });
   };
 
-  const classNames = cx('top left pointing actions', className);
+  const classNames = cx('top right pointing actions', className);
 
   return (
     <SectionedDropdown
       className={classNames}
       triggerIcon="plus"
       button={true}
-      contextElement=".message-view"
+      contextElement={dropdownContext}
+      label="Temp share"
     >
       <MenuItemLink onClick={handleUpload} icon={IconConstants.UPLOAD}>
         {translate('Send files', t, UI.Modules.COMMON)}
@@ -138,6 +143,6 @@ export default DataProviderDecorator<TempShareDropdownProps, DataProps>(
         API.AccessEnum.SHARE_VIEW,
       );
     },
-    loaderText: null,
+    loaderText: <div className="loading" style={{ display: 'none' }} />,
   },
 );

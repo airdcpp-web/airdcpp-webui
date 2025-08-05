@@ -14,6 +14,15 @@ import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { waitFor } from '@testing-library/dom';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { installTempShareMocks } from '@/tests/mocks/mock-share';
+import {
+  clickButton,
+  clickMenuItem,
+  expectRequestToMatchSnapshot,
+  waitForLoader,
+} from '@/tests/helpers/test-helpers';
+import { TempShareItem1 } from '@/tests/mocks/api/share';
+import { formatTempShareDropdownItem } from '../TempShareDropdown';
+import ShareConstants from '@/constants/ShareConstants';
 
 describe('Message composer', () => {
   let server: MockServer;
@@ -75,6 +84,7 @@ describe('Message composer', () => {
       mockChatSession,
       mockChatCommands,
       onClear,
+      onUpload,
     };
   };
 
@@ -164,6 +174,57 @@ describe('Message composer', () => {
       await userEvent.keyboard('{Enter}');
 
       expect(onClear).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Temp share', () => {
+    test('should add shared files', async () => {
+      const { getByTestId, getByRole, findByText, onUpload } = await renderLayout();
+
+      await waitFor(() => expect(getByRole('textbox')).toBeInTheDocument());
+
+      const file = new File(['test'], 'test.txt', { type: 'text/plain' });
+      const input = getByTestId('dropzone');
+
+      const userEvent = setupUserEvent();
+      await userEvent.upload(input, file);
+
+      await waitFor(() => expect(findByText('test.txt')).toBeTruthy());
+
+      clickButton('Upload', getByRole);
+
+      await waitFor(() => expect(onUpload).toHaveBeenCalledTimes(1));
+      expect(onUpload.mock.calls[0]).toMatchInlineSnapshot(`
+        [
+          File {
+            "path": "./test.txt",
+            "relativePath": "./test.txt",
+          },
+        ]
+      `);
+    });
+
+    test('should remove shared files', async () => {
+      const { getByLabelText, queryByRole, getByRole } = await renderLayout();
+
+      await waitForLoader(queryByRole);
+
+      const userEvent = setupUserEvent();
+      const dropdown = getByLabelText('Temp share');
+      await userEvent.click(dropdown);
+
+      const onItemRemoved = vi.fn();
+      server.addRequestHandler(
+        'DELETE',
+        `${ShareConstants.TEMP_SHARES_URL}/${TempShareItem1.id}`,
+        undefined,
+        onItemRemoved,
+      );
+
+      await clickMenuItem(formatTempShareDropdownItem(TempShareItem1), getByRole);
+
+      await waitFor(() => expect(onItemRemoved).toHaveBeenCalledTimes(1));
+      expectRequestToMatchSnapshot(onItemRemoved);
     });
   });
 });

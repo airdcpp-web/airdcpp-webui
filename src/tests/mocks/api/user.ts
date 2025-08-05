@@ -1,4 +1,4 @@
-import { toMockHintedUser } from '../helpers/mock-user-helpers';
+import { toMockHintedUser, toMockUser } from '../helpers/mock-user-helpers';
 import { HubADC1, HubADC2, HubADC3, HubNMDC1 } from './hubs';
 
 import * as API from '@/types/api';
@@ -205,6 +205,8 @@ export const MockHintedUserOfflineResponse = {
   hub_urls: [],
   nicks: '[VIP]user',
 };
+
+export const MockUser1Response = toMockUser([Hub1User1Response]);
 
 export const SearchHintedUser1Response = {
   user: MockHintedUser1Response,

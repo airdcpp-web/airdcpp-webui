@@ -1,5 +1,21 @@
 import * as API from '@/types/api';
 
+export const toMockUser = (users: API.HubUser[]): API.User => {
+  const nicks = users.map((user) => user.nick).join(', ');
+  const hubNames = users.map((user) => user.hub_name).join(', ');
+  const hubUrls = users.map((user) => user.hub_url);
+
+  const mainUser = users[0];
+  return {
+    id: mainUser.cid,
+    cid: mainUser.cid,
+    nicks,
+    hub_names: hubNames,
+    hub_urls: hubUrls,
+    flags: mainUser.flags as API.UserFlag[],
+  };
+};
+
 export const toMockHintedUser = (
   mainUser: API.HubUser,
   otherUsers: API.HubUser[] = [],
