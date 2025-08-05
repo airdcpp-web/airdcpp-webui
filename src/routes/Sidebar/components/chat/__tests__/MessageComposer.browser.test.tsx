@@ -34,7 +34,7 @@ describe('Message composer', () => {
     return { commonData, server };
   };
 
-  const renderLayout = async (settings: object = {}) => {
+  const renderLayout = async () => {
     const onUpload = vi.fn();
 
     const mockChatApi = {
@@ -183,16 +183,18 @@ describe('Message composer', () => {
 
       await waitFor(() => expect(getByRole('textbox')).toBeInTheDocument());
 
+      // Drop file
       const file = new File(['test'], 'test.txt', { type: 'text/plain' });
       const input = getByTestId('dropzone');
 
       const userEvent = setupUserEvent();
       await userEvent.upload(input, file);
 
+      // Preview modal should now be open
       await waitFor(() => expect(findByText('test.txt')).toBeTruthy());
-
       clickButton('Upload', getByRole);
 
+      // Check request
       await waitFor(() => expect(onUpload).toHaveBeenCalledTimes(1));
       expect(onUpload.mock.calls[0]).toMatchInlineSnapshot(`
         [
@@ -209,10 +211,6 @@ describe('Message composer', () => {
 
       await waitForLoader(queryByRole);
 
-      const userEvent = setupUserEvent();
-      const dropdown = getByLabelText('Temp share');
-      await userEvent.click(dropdown);
-
       const onItemRemoved = vi.fn();
       server.addRequestHandler(
         'DELETE',
@@ -221,8 +219,15 @@ describe('Message composer', () => {
         onItemRemoved,
       );
 
+      // Open temp share dropdown
+      const userEvent = setupUserEvent();
+      const dropdown = getByLabelText('Temp share');
+      await userEvent.click(dropdown);
+
+      // Remove the item
       await clickMenuItem(formatTempShareDropdownItem(TempShareItem1), getByRole);
 
+      // Validate request
       await waitFor(() => expect(onItemRemoved).toHaveBeenCalledTimes(1));
       expectRequestToMatchSnapshot(onItemRemoved);
     });
