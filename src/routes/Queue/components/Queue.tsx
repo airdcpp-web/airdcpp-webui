@@ -7,8 +7,8 @@ import PriorityMenu from '@/routes/Queue/components/PriorityMenu';
 import StatusCell from '@/routes/Queue/components/StatusCell';
 import QueueBundleViewStore from '@/stores/views/QueueBundleViewStore';
 
-import BundleFileDialog from '@/routes/Queue/components/BundleFileDialog';
-import SourceDialog from '@/routes/Queue/components/BundleSourceDialog';
+import BundleFileDialog from '@/routes/Queue/components/file-dialog/BundleFileDialog';
+import SourceDialog from '@/routes/Queue/components/source-dialog/BundleSourceDialog';
 
 import { ActionMenu } from '@/components/action-menu';
 import Message from '@/components/semantic/Message';

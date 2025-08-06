@@ -43,6 +43,8 @@ describe('Queue layout', () => {
       },
     }*/,
     );
+
+    // Tables
     const bundleTableMocks = installTableMocks(QueueBundlesListResponse, {
       server,
       moduleUrl: QueueConstants.MODULE_URL,
@@ -55,12 +57,14 @@ describe('Queue layout', () => {
       viewName: QueueConstants.FILE_VIEW_ID,
     });
 
+    // Bundle dialog
     server.addRequestHandler(
       'GET',
       `queue/bundles/${QueueBundleRunningResponse.id}`,
       QueueBundleRunningResponse,
     );
 
+    // Sources
     server.addRequestHandler(
       'GET',
       `queue/bundles/${QueueBundleRunningResponse.id}/sources`,

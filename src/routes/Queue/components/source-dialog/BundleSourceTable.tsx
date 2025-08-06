@@ -11,10 +11,10 @@ import { useFormatter } from '@/context/FormatterContext';
 
 import { ActionMenu, UserMenu } from '@/components/action-menu';
 import { UserFileActions } from '@/actions/ui/user/UserActions';
+import MenuConstants from '@/constants/MenuConstants';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
-import MenuConstants from '@/constants/MenuConstants';
 
 interface SourceProps {
   bundle: API.QueueBundle;

@@ -11,10 +11,11 @@ interface TableMockProps {
   viewName: string;
 }
 
-const addFilterMocks = (id: number, baseUrl: string, server: MockServer) => {
+const installFilterMocks = (id: number, baseUrl: string, server: MockServer) => {
   const onCreateFilter = vi.fn();
   const onUpdateFilter = vi.fn();
   const onRemoveFilter = vi.fn();
+
   server.addRequestHandler('POST', `${baseUrl}/filter`, { id }, onCreateFilter);
   server.addRequestHandler('PUT', `${baseUrl}/filter/${id}`, undefined, onUpdateFilter);
   server.addRequestHandler(
@@ -23,6 +24,8 @@ const addFilterMocks = (id: number, baseUrl: string, server: MockServer) => {
     undefined,
     onRemoveFilter,
   );
+
+  return { onCreateFilter, onUpdateFilter, onRemoveFilter };
 };
 
 export const installTableMocks = (
@@ -67,7 +70,7 @@ export const installTableMocks = (
   server.addRequestHandler('DELETE', `${baseUrl}`, undefined, onClose);
 
   // Filter
-  const filter = addFilterMocks(0, baseUrl, server);
+  const filter = installFilterMocks(0, baseUrl, server);
 
   return { mockTableManager, onSettings, onClose, filter };
 };

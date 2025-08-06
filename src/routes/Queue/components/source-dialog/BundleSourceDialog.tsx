@@ -7,7 +7,7 @@ import ModalRouteDecorator, {
 
 import FileIcon from '@/components/icon/FileIcon';
 
-import SourceTable from '@/routes/Queue/components/BundleSourceTable';
+import SourceTable from '@/routes/Queue/components/source-dialog/BundleSourceTable';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from '@/decorators/DataProviderDecorator';

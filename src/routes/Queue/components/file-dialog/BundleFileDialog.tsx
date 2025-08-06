@@ -6,7 +6,7 @@ import ModalRouteDecorator, {
 } from '@/decorators/ModalRouteDecorator';
 
 import FileIcon from '@/components/icon/FileIcon';
-import BundleFileTable from '@/routes/Queue/components/BundleFileTable';
+import BundleFileTable from '@/routes/Queue/components/file-dialog/BundleFileTable';
 import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from '@/decorators/DataProviderDecorator';

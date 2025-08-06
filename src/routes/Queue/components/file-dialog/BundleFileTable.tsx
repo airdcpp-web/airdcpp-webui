@@ -16,13 +16,14 @@ import {
   AbbreviatedDurationCell,
 } from '@/components/table/Cell';
 
-import '../style.css';
 import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
 import * as API from '@/types/api';
 import { setFilePriority } from '@/services/api/QueueApi';
 import MenuConstants from '@/constants/MenuConstants';
 import { QueueFileActionMenu } from '@/actions/ui/queue';
+
+import '../../style.css';
 
 const PriorityCell: React.FC<
   RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>
