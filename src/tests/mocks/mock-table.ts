@@ -41,17 +41,19 @@ export const installTableMocks = (
 
   // Getters
   const addGetItemsMock = (start: number, count: number) => {
-    const onGetItems = vi.fn(() => mockTableManager.getItems(start, count));
+    const onGetItems = vi.fn();
     server.addRequestHandler(
       'GET',
       `${baseUrl}/items/${start}/${count}`,
-      undefined,
+      mockTableManager.getItems(start, count),
       onGetItems,
     );
     return onGetItems;
   };
 
   addGetItemsMock(0, 5);
+  addGetItemsMock(0, 7);
+  addGetItemsMock(0, 10);
   addGetItemsMock(5, 10);
   addGetItemsMock(10, 15);
   addGetItemsMock(15, 20);

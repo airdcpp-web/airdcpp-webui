@@ -1,3 +1,56 @@
+import { MockHintedUser1Response, MockHintedUser2Response } from './user';
+
+export const QueueBundleSourceListResponse = [
+  {
+    files: 7,
+    last_speed: 289717,
+    size: 56706841,
+    user: MockHintedUser1Response,
+  },
+  {
+    files: 7,
+    last_speed: 0,
+    size: 56706841,
+    user: MockHintedUser2Response,
+  },
+];
+
+export const QueueBundleRunningResponse = {
+  downloaded_bytes: 17041136,
+  id: 3048967561,
+  name: '1 Running',
+  priority: {
+    auto: true,
+    id: 4,
+    str: 'Normal',
+  },
+  seconds_left: 156,
+  size: 78804169,
+  sources: {
+    online: 2,
+    str: '2/2 online',
+    total: 2,
+  },
+  speed: 394350,
+  status: {
+    completed: false,
+    downloaded: false,
+    failed: false,
+    hook_error: null,
+    id: 'queued',
+    str: 'Running (21.6%)',
+  },
+  target: '/home/airdcpp/Downloads/1 Running/',
+  time_added: 1614161559,
+  time_finished: 0,
+  type: {
+    directories: 3,
+    files: 8,
+    id: 'directory',
+    str: '3 folders, 8 files',
+  },
+};
+
 export const QueueBundlesListResponse = [
   {
     downloaded_bytes: 0,
@@ -309,41 +362,7 @@ export const QueueBundlesListResponse = [
       str: '1 folder, 20 files',
     },
   },
-  {
-    downloaded_bytes: 17041136,
-    id: 3048967561,
-    name: 'misc',
-    priority: {
-      auto: true,
-      id: 4,
-      str: 'Normal',
-    },
-    seconds_left: 156,
-    size: 78804169,
-    sources: {
-      online: 2,
-      str: '2/2 online',
-      total: 2,
-    },
-    speed: 394350,
-    status: {
-      completed: false,
-      downloaded: false,
-      failed: false,
-      hook_error: null,
-      id: 'queued',
-      str: 'Running (21.6%)',
-    },
-    target: '/home/airdcpp/Downloads/misc/',
-    time_added: 1614161559,
-    time_finished: 0,
-    type: {
-      directories: 3,
-      files: 8,
-      id: 'directory',
-      str: '3 folders, 8 files',
-    },
-  },
+  QueueBundleRunningResponse,
   {
     downloaded_bytes: 1661601969,
     id: 2230392179,
