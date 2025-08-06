@@ -21,7 +21,7 @@ export interface TableManagerProps {
   sourceFilter?: API.TableFilter;
 }
 
-export const useTableManager = ({
+export const useTableDataManager = ({
   store,
   sessionStore,
   entityId,

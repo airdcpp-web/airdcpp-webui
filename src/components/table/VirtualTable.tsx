@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import TableFooter, { TableFooterProps } from './TableFooter';
 import TableContainer, { TableContainerProps } from './TableContainer';
@@ -7,11 +6,10 @@ import TableContainer, { TableContainerProps } from './TableContainer';
 import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
-// import * as API from '@/types/api';
+import * as API from '@/types/api';
 // import * as UI from '@/types/ui';
 
-import { TableManagerProps, useTableManager } from './effects/useTableManager';
-import { useSocket } from '@/context/SocketContext';
+import { TableManagerProps, useTableDataManager } from './effects/useTableDataManager';
 
 declare module 'fixed-data-table-2' {
   export interface ColumnProps {
@@ -22,7 +20,7 @@ declare module 'fixed-data-table-2' {
 }
 
 export type VirtualTableProps = Omit<TableFooterProps, 't'> &
-  Omit<TableContainerProps, 'store' | 'dataLoader' | 't' | 'socket'> &
+  Pick<TableContainerProps, 'rowClassNameGetter' | 'moduleId'> &
   TableManagerProps &
   React.PropsWithChildren<{
     // store: any;
@@ -35,6 +33,12 @@ export type VirtualTableProps = Omit<TableFooterProps, 't'> &
 
     // Returns a node to render if there are no rows to display
     emptyRowsNodeGetter?: () => React.ReactNode;
+
+    entityId?: API.IdType;
+
+    viewId?: number | string;
+
+    // moduleId: string | string[];
   }>;
 
 const VirtualTable = React.memo<VirtualTableProps>(
@@ -47,11 +51,15 @@ const VirtualTable = React.memo<VirtualTableProps>(
     textFilterProps,
     sourceFilter,
     sessionStore,
-    ...other
+    moduleId,
+    children,
   }) => {
-    const dataLoader = useTableManager({ sessionStore, store, entityId, sourceFilter });
-    const { t } = useTranslation();
-    const socket = useSocket();
+    const dataLoader = useTableDataManager({
+      sessionStore,
+      store,
+      entityId,
+      sourceFilter,
+    });
 
     if (emptyRowsNodeGetter && store.totalCount === -1) {
       // Row count is unknown, don't flash the table
@@ -65,12 +73,15 @@ const VirtualTable = React.memo<VirtualTableProps>(
     return (
       <div className="virtual-table">
         <TableContainer
-          {...other}
-          socket={socket}
+          // {...other}
           dataLoader={dataLoader}
           store={store}
-          t={t}
-        />
+          moduleId={moduleId}
+          viewId={store.viewId}
+          entityId={entityId}
+        >
+          {children}
+        </TableContainer>
 
         <TableFooter
           store={store}
