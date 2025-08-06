@@ -13,4 +13,6 @@ export default {
 
   HUB_MESSAGE: 'hub_message',
   HUB_STATUS_MESSAGE: 'hub_status',
+
+  USER_VIEW_ID: 'hub_user',
 };

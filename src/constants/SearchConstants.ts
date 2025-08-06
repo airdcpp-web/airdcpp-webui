@@ -8,4 +8,6 @@ export default {
   SEARCH_TYPES_UPDATED: 'search_types_updated',
 
   DEFAULT_SEARCH_TYPE: 'any',
+
+  VIEW_ID: 'search',
 };

@@ -14,7 +14,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
   let scrollPosition = 0;
   // let socket = null;
 
-  const DEBUG = true;
+  const DEBUG = false;
 
   let sortProperty = defaultSortProperty;
   let sortAscending = defaultSortAscending;

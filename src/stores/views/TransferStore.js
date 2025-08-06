@@ -4,7 +4,7 @@ import TransferConstants from '@/constants/TransferConstants';
 import ViewStoreMixin from '@/mixins/ViewStoreMixin';
 
 export default Reflux.createStore({
-  _viewName: 'transfer_view',
+  _viewName: `${TransferConstants.VIEW_ID}_view`,
   _apiUrl: TransferConstants.MODULE_URL,
   mixins: [ViewStoreMixin('user')],
 });

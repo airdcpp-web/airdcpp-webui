@@ -15,4 +15,6 @@ export default {
   STATISTICS_URL: MODULE_URL + '/stats',
 
   STATISTICS: 'transfer_statistics',
+
+  VIEW_ID: 'transfer',
 };

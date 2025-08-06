@@ -31,3 +31,12 @@ export type TableUpdateData<DataT> = {
   total_items: number;
   matching_items: number;
 };
+
+export interface TableSettingRequest {
+  range_start: number;
+  max_count: number;
+  sort_property: string;
+  sort_ascending: boolean;
+  paused: boolean;
+  source_filter: TableFilter;
+}

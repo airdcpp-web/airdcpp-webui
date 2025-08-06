@@ -16,4 +16,7 @@ export default {
   BUNDLE_UPDATED: 'queue_bundle_updated',
   BUNDLE_STATUS: 'queue_bundle_status',
   BUNDLE_SOURCES: 'queue_bundle_sources',
+
+  BUNDLE_VIEW_ID: 'queue_bundle',
+  FILE_VIEW_ID: 'queue_file',
 };

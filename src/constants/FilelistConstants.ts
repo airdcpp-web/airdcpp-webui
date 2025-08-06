@@ -11,4 +11,6 @@ export default {
 
   FIND_NFO_URL: MODULE_URL + '/find_nfo',
   MATCH_QUEUE_URL: MODULE_URL + '/match_queue',
+
+  VIEW_ID: 'filelist',
 };
