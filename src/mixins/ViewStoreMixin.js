@@ -85,7 +85,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       this.trigger();
     },
 
-    onClear(viewUrl) {
+    onClear(socket, viewUrl) {
       if (viewUrl !== this.viewUrl) {
         return;
       }
@@ -94,7 +94,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       this.trigger();
     },
 
-    onPause(viewUrl, enabled) {
+    onPause(socket, viewUrl, enabled) {
       if (viewUrl !== this.viewUrl) {
         return;
       }
@@ -120,7 +120,7 @@ export default (defaultSortProperty, defaultSortAscending = true) => {
       active = true;
     },
 
-    onSetSort(viewUrl, property, ascending) {
+    onSetSort(socket, viewUrl, property, ascending) {
       if (viewUrl !== this.viewUrl) {
         return;
       }

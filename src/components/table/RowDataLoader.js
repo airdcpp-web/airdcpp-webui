@@ -30,6 +30,7 @@ class RowDataLoader {
       return updated;
     }
 
+    // console.log(`Updating row data at index ${index}`, item);
     if (old) {
       this._data[index] = update(old, { $merge: item });
     } else {

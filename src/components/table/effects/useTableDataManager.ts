@@ -18,6 +18,7 @@ export interface TableManagerProps {
 
   entityId?: API.IdType | undefined;
 
+  // Filter that is always applied for source items (those will never be displayed or included in the total count)
   sourceFilter?: API.TableFilter;
 }
 

@@ -7,7 +7,6 @@ import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 import * as API from '@/types/api';
-// import * as UI from '@/types/ui';
 
 import { TableManagerProps, useTableDataManager } from './effects/useTableDataManager';
 
@@ -23,22 +22,12 @@ export type VirtualTableProps = Omit<TableFooterProps, 't'> &
   Pick<TableContainerProps, 'rowClassNameGetter' | 'moduleId'> &
   TableManagerProps &
   React.PropsWithChildren<{
-    // store: any;
-
-    // Store containing sessions (must be provided together with entityId)
-    // sessionStore?: UI.SessionSlice<UI.SessionItem>;
-
-    // Filter that is always applied for source items (those will never be displayed or included in the total count)
-    // sourceFilter?: API.TableFilter;
-
     // Returns a node to render if there are no rows to display
     emptyRowsNodeGetter?: () => React.ReactNode;
 
     entityId?: API.IdType;
 
     viewId?: number | string;
-
-    // moduleId: string | string[];
   }>;
 
 const VirtualTable = React.memo<VirtualTableProps>(
@@ -73,7 +62,6 @@ const VirtualTable = React.memo<VirtualTableProps>(
     return (
       <div className="virtual-table">
         <TableContainer
-          // {...other}
           dataLoader={dataLoader}
           store={store}
           moduleId={moduleId}
