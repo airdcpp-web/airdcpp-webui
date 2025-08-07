@@ -87,11 +87,19 @@ export const useActivityTracker = (
     }
   };
 
+  const onVisibilityChange = () => {
+    if (document.visibilityState === 'visible') {
+      setActive();
+    } else {
+      setUserInactive();
+    }
+  };
+
   useEffect(() => {
     window.addEventListener('mousemove', setActive);
     window.addEventListener('keypress', setActive);
-    window.addEventListener('focus', setActive);
-    window.addEventListener('blur', setUserInactive);
+
+    window.addEventListener('visibilitychange', onVisibilityChange);
 
     // Notify the API regurarly if the user is active due to idle away tracking
     const userActivityInteval = window.setInterval(checkActivity, 60 * 1000);
@@ -104,8 +112,8 @@ export const useActivityTracker = (
     return () => {
       window.removeEventListener('mousemove', setActive);
       window.removeEventListener('keypress', setActive);
-      window.removeEventListener('focus', setActive);
-      window.removeEventListener('blur', setUserInactive);
+
+      window.removeEventListener('visibilitychange', onVisibilityChange);
 
       clearInterval(userActivityInteval);
       clearInterval(systemAliveInterval);

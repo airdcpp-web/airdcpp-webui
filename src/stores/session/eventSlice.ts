@@ -6,7 +6,7 @@ import { toUrgencyMap } from '@/utils/UrgencyUtils';
 import {
   mergeCacheMessages,
   pushMessage,
-  checkUnreadCacheInfo,
+  checkUnreadMessageCacheInfo,
   checkSplice,
 } from '@/utils/MessageUtils';
 
@@ -36,7 +36,7 @@ const createEventSlice = () => {
   ) => {
     const checkReadState = (cacheInfoNew: API.StatusMessageCounts) => {
       if (get().viewActive && api.getState().activity.userActive) {
-        cacheInfoNew = checkUnreadCacheInfo(cacheInfoNew, () => {
+        cacheInfoNew = checkUnreadMessageCacheInfo(cacheInfoNew, () => {
           const readCallback = get().setRead;
           if (readCallback) {
             readCallback();

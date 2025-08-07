@@ -4,9 +4,9 @@ import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 import { getItemUrgencies, getSessionUrgencies } from '@/utils/UrgencyUtils';
-import { checkUnreadSessionInfo } from '@/utils/MessageUtils';
 import { APISocket } from '@/services/SocketService';
 import { Lens } from '@dhmk/zustand-lens';
+import { checkUnreadSessionInfo } from '@/utils/SessionUtils';
 
 export type SessionUrgencyCountMapper<SessionT extends UI.SessionItem> = (
   sessionItem: SessionT,

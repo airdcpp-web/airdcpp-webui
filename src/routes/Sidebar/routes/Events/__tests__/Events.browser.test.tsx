@@ -61,8 +61,12 @@ describe('Events', () => {
     };
   };
 
-  const renderLayout = async () => {
+  const renderLayout = async (userActive = true) => {
     const { commonData, ...other } = await getSocket();
+
+    if (userActive) {
+      commonData.sessionStore.getState().activity.setUserActive(true);
+    }
 
     const EventLayoutTest = () => {
       useStoreDataFetch(true);
@@ -107,12 +111,13 @@ describe('Events', () => {
   };
 
   test('should load messages', async () => {
-    const { getByText, queryByText } = await renderLayout();
+    const { getByText, queryByText, onRead } = await renderLayout();
 
     await waitLoaded(queryByText);
 
     // Check content
     await waitFor(() => expect(getByText(EventMessageInfo.text)).toBeTruthy());
+    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(1));
   });
 
   test('should handle read messages', async () => {
@@ -125,6 +130,7 @@ describe('Events', () => {
     await waitLoaded(queryByText);
 
     await waitFor(() => expect(sessionStore.getState().events.viewActive).toBeTruthy());
+    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(1));
 
     // Send message for an active view
     mockStoreListeners.events.message.fire({
@@ -133,7 +139,7 @@ describe('Events', () => {
       id: EventMessageInfo.id + 1,
       is_read: false,
     });
-    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(2));
     expect(onNotification).toHaveBeenCalledTimes(0);
 
     // Send message while the events view is not active
@@ -148,14 +154,43 @@ describe('Events', () => {
       id: EventMessageError.id + 1,
       is_read: false,
     });
-    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(2));
     await waitFor(() => expect(onNotification).toHaveBeenCalledTimes(1));
 
     // Go back to events
     clickButton(GoToEventsCaption, getByRole);
     await waitForUrl('/events', router);
 
-    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(2));
+    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(3));
     expect(sessionStore.getState().events.viewActive).toBeTruthy();
+  });
+
+  test('should handle user inactivity', async () => {
+    const { getByText, queryByText, onRead, mockStoreListeners, sessionStore } =
+      await renderLayout(false);
+
+    const onNotification = vi.fn();
+    NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
+
+    await waitLoaded(queryByText);
+
+    // Check content
+    await waitFor(() => expect(getByText(EventMessageInfo.text)).toBeTruthy());
+    expect(onRead).toHaveBeenCalledTimes(0);
+
+    // Send message while the user is inactive
+    mockStoreListeners.events.message.fire({
+      ...EventMessageError,
+      text: 'Event message error new',
+      id: EventMessageError.id + 1,
+      is_read: false,
+    });
+
+    await waitFor(() => expect(onNotification).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(0));
+
+    // Activate the user
+    sessionStore.getState().activity.setUserActive(true);
+    await waitFor(() => expect(onRead).toHaveBeenCalledTimes(1));
   });
 });

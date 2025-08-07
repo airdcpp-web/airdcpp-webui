@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { checkUnreadSessionInfo, listMessageSort } from '@/utils/MessageUtils';
+import { checkUnreadMessageCacheInfo, listMessageSort } from '@/utils/MessageUtils';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -129,19 +129,17 @@ describe('message store', () => {
   test('should reset unread counts for active sessions', () => {
     const setRead = vi.fn();
 
-    const data = checkUnreadSessionInfo(chatSessionUnread, setRead);
+    const data = checkUnreadMessageCacheInfo(chatSessionUnread.message_counts, setRead);
 
     expect(setRead).toHaveBeenCalled();
     expect(data).toEqual({
-      message_counts: {
-        total: 5,
-        unread: {
-          user: 0,
-          bot: 0,
-          status: 0,
-          mention: 0,
-          verbose: 0,
-        },
+      total: 5,
+      unread: {
+        user: 0,
+        bot: 0,
+        status: 0,
+        mention: 0,
+        verbose: 0,
       },
     });
   });

@@ -104,8 +104,9 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
   };
 
   const skipEventNotification = () => {
+    const userActive = sessionStoreApi.getState().activity.userActive;
     const viewActive = sessionStoreApi.getState().events.viewActive;
-    return viewActive;
+    return viewActive && userActive;
   };
 
   const onEventMessage = (message: API.StatusMessage) => {
@@ -155,8 +156,8 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     sessionSlice: UI.SessionSlice<UI.SessionItem>,
   ) => {
     const isActiveSession = sessionSlice.activeSessionId === sessionId;
-    const hasFocus = document.hasFocus();
-    return isActiveSession && hasFocus;
+    const userActive = sessionStoreApi.getState().activity.userActive;
+    return isActiveSession && userActive;
   };
 
   const onViewFileDownloaded = (file: API.ViewFile) => {

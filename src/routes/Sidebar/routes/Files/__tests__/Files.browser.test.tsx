@@ -79,6 +79,8 @@ describe('Viewed files', () => {
 
   const renderLayout = async () => {
     const { commonData, ...other } = await getSocket();
+    const { sessionStore } = commonData;
+    sessionStore.getState().activity.setUserActive(true);
 
     const FileLayoutTest = () => {
       useStoreDataFetch(true);

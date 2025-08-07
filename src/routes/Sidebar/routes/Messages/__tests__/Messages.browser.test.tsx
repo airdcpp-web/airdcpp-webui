@@ -126,8 +126,12 @@ describe('Private messages', () => {
     };
   };
 
-  const renderLayout = async () => {
+  const renderLayout = async (userActive = true) => {
     const { commonData, ...other } = await getSocket();
+
+    if (userActive) {
+      commonData.sessionStore.getState().activity.setUserActive(true);
+    }
 
     const MessageLayoutTest = () => {
       useStoreDataFetch(true);
@@ -227,6 +231,40 @@ describe('Private messages', () => {
     expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
 
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
+  });
+
+  test('should handle user inactivity', async () => {
+    const { queryByText, mockStoreListeners, onSession1Read, sessionStore } =
+      await renderLayout(false);
+
+    const onNotification = vi.fn();
+    NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
+
+    await waitSessionsLoaded(queryByText);
+
+    await waitFor(() =>
+      expect(sessionStore.getState().privateChats.activeSessionId).toEqual(
+        PrivateChat1.id,
+      ),
+    );
+
+    // Send message while the user is inactive
+    mockStoreListeners.privateChat.chatMessage.fire(
+      {
+        ...PrivateChat1MessageOther,
+        text: 'Chat 1 new message',
+        id: PrivateChat1MessageOther.id + 1,
+        is_read: false,
+      },
+      PrivateChat1.id,
+    );
+
+    await waitFor(() => expect(onNotification).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(0));
+
+    // Activate the user
+    sessionStore.getState().activity.setUserActive(true);
+    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(1));
   });
 
   test('open new session', async () => {

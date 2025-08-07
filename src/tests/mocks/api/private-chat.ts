@@ -42,7 +42,7 @@ export const PrivateChat2 = {
   message_counts: {
     total: 0,
     unread: {
-      bot: 0,
+      bot: 1,
       mention: 0,
       status: 0,
       user: 0,

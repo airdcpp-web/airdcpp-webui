@@ -13,7 +13,10 @@ import * as UI from '@/types/ui';
 import { translate } from '@/utils/TranslationUtils';
 import IconConstants from '@/constants/IconConstants';
 import { ActionMenu } from '@/components/action-menu';
-import { useSessionStore, useSessionStoreProperty } from '@/context/SessionStoreContext';
+import {
+  useSessionStoreApi,
+  useSessionStoreProperty,
+} from '@/context/SessionStoreContext';
 import { EventAPIActions } from '@/actions/store/EventActions';
 
 import '../style.css';
@@ -22,20 +25,30 @@ import { useSocket } from '@/context/SocketContext';
 
 const Events: React.FC = memo(
   function SystemLog() {
-    const sessionStore = useSessionStore();
+    const sessionStoreApi = useSessionStoreApi();
     const setViewActive = useSessionStoreProperty((state) => state.events.setViewActive);
     const socket = useSocket();
+    const userActive = useSessionStoreProperty((state) => state.activity.userActive);
+
+    const setRead = () => {
+      EventAPIActions.setRead(socket);
+    };
 
     useEffect(() => {
       setViewActive(true);
-      EventAPIActions.setRead(socket);
 
-      if (!sessionStore.events.isInitialized) {
-        EventAPIActions.fetchMessages(sessionStore, socket);
+      if (!sessionStoreApi.getState().events.isInitialized) {
+        EventAPIActions.fetchMessages(sessionStoreApi.getState(), socket);
       }
 
       return () => setViewActive(false);
     }, []);
+
+    React.useEffect(() => {
+      if (userActive) {
+        setRead();
+      }
+    }, [userActive]);
 
     const { t } = useTranslation();
     const messages = useSessionStoreProperty((state) => state.events.logMessages);

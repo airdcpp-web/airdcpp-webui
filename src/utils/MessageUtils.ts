@@ -41,9 +41,11 @@ type MessageCounts = API.ChatMessageCounts | API.StatusMessageCounts;
 type UnreadMessageCounts = API.UnreadChatMessageCounts | API.UnreadStatusMessageCounts;
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 
-const checkUnreadCacheInfo = (
+type SetReadF = () => void;
+
+const checkUnreadMessageCacheInfo = (
   counts: MessageCounts,
-  setRead: () => void,
+  setRead: SetReadF,
 ): MessageCounts => {
   // Any unread messages?
   if (!Object.values(counts.unread).every((value) => value === 0)) {
@@ -68,37 +70,6 @@ const checkUnreadCacheInfo = (
   }
 
   return counts;
-};
-
-// Update the data with unread info that is marked as read
-// Marks the session as read also in the backend
-const checkUnreadSessionInfo = <SessionT extends UI.UnreadInfo>(
-  unreadInfoItem: SessionT,
-  setRead: () => void,
-): SessionT => {
-  if (!unreadInfoItem.message_counts && unreadInfoItem.hasOwnProperty('read')) {
-    // Non-message item
-
-    if (unreadInfoItem.read === false) {
-      setRead();
-      return {
-        ...unreadInfoItem,
-        read: true,
-      };
-    }
-  } else if (!!unreadInfoItem.message_counts) {
-    // Message cache
-    const newCacheInfo = checkUnreadCacheInfo(unreadInfoItem.message_counts, setRead);
-    return {
-      ...unreadInfoItem,
-      message_counts: newCacheInfo,
-    };
-  } else {
-    console.error('Invalid object supplied to checkUnread', unreadInfoItem);
-  }
-
-  // Nothing to update, return as it is
-  return unreadInfoItem;
 };
 
 const listMessageSort = (a: UI.MessageListItem, b: UI.MessageListItem) => {
@@ -136,8 +107,7 @@ const pushMessage = (
 };
 
 export {
-  checkUnreadCacheInfo,
-  checkUnreadSessionInfo,
+  checkUnreadMessageCacheInfo,
   mergeCacheMessages,
   pushMessage,
   getListMessageId,
