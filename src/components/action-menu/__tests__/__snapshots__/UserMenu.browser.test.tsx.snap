@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`User menu > Nested > should merge duplicate menus 1`] = `
+{
+  "data": {
+    "entity_id": "test-entity",
+    "form_definitions": null,
+    "hook_id": "airdcpp-release-validator",
+    "menuitem_id": "scan_missing_extra",
+    "selected_ids": [
+      "test",
+    ],
+    "supports": [
+      "urls",
+      "form",
+    ],
+  },
+  "method": "POST",
+  "path": "menus/test-remote-menu-id-2/select",
+}
+`;
+
+exports[`User menu > Nested > should select menu item 1`] = `
+{
+  "data": {
+    "entity_id": "test-entity",
+    "form_definitions": null,
+    "hook_id": "airdcpp-release-validator",
+    "menuitem_id": "scan_missing_extra",
+    "selected_ids": [
+      "test",
+    ],
+    "supports": [
+      "urls",
+      "form",
+    ],
+  },
+  "method": "POST",
+  "path": "menus/test-remote-menu-id-2/select",
+}
+`;

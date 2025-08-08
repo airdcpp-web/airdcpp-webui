@@ -16,8 +16,8 @@ export interface RemoteMenuData {
 }
 
 export interface RemoteMenu {
-  menuData: RemoteMenuData;
-  items: API.GroupedContextMenuItem[];
+  typeData: RemoteMenuData;
+  menus: API.GroupedContextMenu[];
 }
 
 interface ParsedDefinitionArray {
@@ -64,7 +64,7 @@ export const useRemoteMenuFetcher = (
         const selectedIds = selectedIdsByMenu[menuIndex];
         const entityId = entityIds[menuIndex];
 
-        const menu = await socket.post<API.GroupedContextMenuItem[]>(
+        const menus = await socket.post<API.GroupedContextMenu[]>(
           `${MenuConstants.MODULE_URL}/${remoteMenuId}/list_grouped`,
           {
             selected_ids: selectedIds,
@@ -74,8 +74,8 @@ export const useRemoteMenuFetcher = (
         );
 
         return {
-          items: menu,
-          menuData: {
+          menus,
+          typeData: {
             remoteMenuId,
             selectedIds,
             entityId,

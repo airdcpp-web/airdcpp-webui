@@ -1,4 +1,4 @@
-export const RemoteMenuItemNormal = {
+export const RemoteMenu1ItemNormal = {
   form_definitions: null,
   hook_id: 'airdcpp-test',
   icon: {
@@ -9,7 +9,7 @@ export const RemoteMenuItemNormal = {
   urls: [],
 };
 
-export const RemoteMenuItemForm = {
+export const RemoteMenu1ItemForm = {
   form_definitions: [
     {
       default_value: false,
@@ -117,8 +117,8 @@ export const RemoteMenuGrouped1 = {
   icon: {},
   id: 'airdcpp-test',
   items: [
-    RemoteMenuItemNormal,
-    RemoteMenuItemForm,
+    RemoteMenu1ItemNormal,
+    RemoteMenu1ItemForm,
     {
       form_definitions: null,
       hook_id: 'airdcpp-test',
@@ -133,4 +133,22 @@ export const RemoteMenuGrouped1 = {
   title: 'Testing extension',
 };
 
-export const GroupedRemoteMenuListResponse = [RemoteMenuGrouped1];
+export const RemoteMenu2Item = {
+  form_definitions: null,
+  hook_id: 'airdcpp-release-validator',
+  icon: {
+    semantic: 'yellow broom',
+  },
+  id: 'scan_missing_extra',
+  title: 'Scan for missing/extra files',
+  urls: [],
+};
+
+export const RemoteMenuGrouped2 = {
+  icon: {},
+  id: 'airdcpp-release-validator',
+  items: [RemoteMenu2Item],
+  title: 'Release validator',
+};
+
+// export const GroupedRemoteMenuListResponse = [RemoteMenuGrouped1, RemoteMenuGrouped2];

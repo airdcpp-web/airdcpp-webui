@@ -6,7 +6,11 @@ import { FormSaveHandler } from '@/components/form';
 import { MenuFormDialogProps } from '@/components/action-menu/MenuFormDialog';
 import { ActionMenuDefinition } from './useActionMenuItems';
 import { RemoteMenuData, useRemoteMenuFetcher } from './helpers/remoteMenuFetcher';
-import { remoteMenuToActionMenuItems } from './helpers/remoteMenuBuilder';
+import {
+  CombinedContextMenu,
+  createRemoteMenuCombineReducer,
+  remoteMenuToActionMenuItems,
+} from './helpers/remoteMenuBuilder';
 import { useSocket } from '@/context/SocketContext';
 
 export type OnShowRemoteMenuForm = (data: MenuFormDialogProps) => void;
@@ -80,7 +84,7 @@ export const useRemoteMenuItems = ({
     }
   };
 
-  const getRemoteItems = (): UI.ActionMenuItem[][] | null => {
+  const getRemoteItems = (): UI.ActionMenuItem[] | null => {
     if (!menusByType) {
       // Render the normal menu items for menu height estimation even when the remote items aren't available yet
       return null;
@@ -91,23 +95,18 @@ export const useRemoteMenuItems = ({
       nestingThreshold,
     };
 
-    return menusByType.map((menu) => {
-      if (!menu) {
-        return [];
-      }
+    // Combine menus by their subscriber ID and remove duplicate items
+    const combinedMenus = menusByType.reduce(
+      createRemoteMenuCombineReducer(socket.logger),
+      [] as CombinedContextMenu[],
+    );
 
-      const items = menu.items.reduce((reduced, groupedMenu) => {
-        const menuItems = remoteMenuToActionMenuItems(
-          groupedMenu,
-          menu.menuData,
-          commonOptions,
-        );
-
-        return [...reduced, ...menuItems];
-      }, [] as UI.ActionMenuItem[]);
-
-      return items;
-    });
+    // Convert the combined remote menus to action menu items
+    return combinedMenus.reduce((reduced, combinedMenu) => {
+      const menuItems = remoteMenuToActionMenuItems(combinedMenu, commonOptions);
+      reduced.push(...menuItems);
+      return reduced;
+    }, [] as UI.ActionMenuItem[]);
   };
 
   return { getRemoteItems };

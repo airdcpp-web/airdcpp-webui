@@ -62,24 +62,22 @@ export const useActionMenuItems = <
 
   const reduceRemoteMenuItems = (
     reduced: UI.ActionMenuItem[],
-    remoteMenuItems: UI.ActionMenuItem[],
+    remoteMenuItem: UI.ActionMenuItem,
   ) => {
-    if (!!remoteMenuItems.length) {
-      if (!!reduced.length) {
-        reduced.push({
-          id: 'remote_divider',
-        });
-      }
-
-      reduced.push(...remoteMenuItems);
+    if (!!reduced.length) {
+      reduced.push({
+        id: 'remote_divider',
+      });
     }
+
+    reduced.push(remoteMenuItem);
 
     return reduced;
   };
 
   const getMenuItems = (
     onClickAction: ActionClickHandler<ItemDataT, EntityT>,
-    remoteMenus: Array<UI.ActionMenuItem[]> | null,
+    remoteMenus: UI.ActionMenuItem[] | null,
     onClickMenuItem: UI.MenuItemClickHandler | undefined,
   ): UI.ActionMenuItem[] => {
     const menus = getMenus();

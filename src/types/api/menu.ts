@@ -11,7 +11,7 @@ export interface ContextMenuItem {
   form_definitions?: FormFieldDefinition[];
 }
 
-export interface GroupedContextMenuItem {
+export interface GroupedContextMenu {
   id: string;
   title: string;
   icon: ContextMenuItemIconInfo;
