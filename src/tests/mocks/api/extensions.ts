@@ -1,3 +1,38 @@
+export const ExtensionShareMonitoring = {
+  author: 'maksis',
+  description: 'Real time share monitoring',
+  disabled: false,
+  engines: ['node'],
+  has_settings: false,
+  homepage: '',
+  id: 'airdcpp-share-monitor',
+  logs: [
+    {
+      name: 'error.log',
+      size: 1884,
+      type: {
+        content_type: '',
+        id: 'file',
+        str: 'log',
+      },
+    },
+    {
+      name: 'output.log',
+      size: 28027,
+      type: {
+        content_type: '',
+        id: 'file',
+        str: 'log',
+      },
+    },
+  ],
+  managed: true,
+  name: 'airdcpp-share-monitor',
+  private: false,
+  running: false,
+  version: '1.2.0',
+};
+
 export const ExtensionsListResponse = [
   {
     author: 'pepsi',
@@ -205,40 +240,7 @@ export const ExtensionsListResponse = [
     running: false,
     version: '1.2.0',
   },
-  {
-    author: 'maksis',
-    description: 'Real time share monitoring',
-    disabled: false,
-    engines: ['node'],
-    has_settings: false,
-    homepage: '',
-    id: 'airdcpp-share-monitor',
-    logs: [
-      {
-        name: 'error.log',
-        size: 1884,
-        type: {
-          content_type: '',
-          id: 'file',
-          str: 'log',
-        },
-      },
-      {
-        name: 'output.log',
-        size: 28027,
-        type: {
-          content_type: '',
-          id: 'file',
-          str: 'log',
-        },
-      },
-    ],
-    managed: true,
-    name: 'airdcpp-share-monitor',
-    private: false,
-    running: false,
-    version: '1.2.0',
-  },
+  ExtensionShareMonitoring,
   {
     author: 'pepsi',
     description:

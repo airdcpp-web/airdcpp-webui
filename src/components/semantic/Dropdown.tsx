@@ -141,6 +141,7 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
 
     const icon = <Icon icon={this.getIcon()} className="trigger" />;
 
+    const { visible } = this.state;
     return (
       <div
         ref={(c) => {
@@ -154,8 +155,11 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
         <DropdownCaption icon={captionIcon}>{!!caption ? caption : icon}</DropdownCaption>
         {leftIcon || !caption ? null : icon}
 
-        <div className={classNames('menu', menuElementClassName)} role="menu">
-          {this.state.visible ? children : <div className="item" />}
+        <div
+          className={classNames('menu', menuElementClassName)}
+          role={visible ? 'menu' : undefined}
+        >
+          {visible ? children : <div className="item" />}
         </div>
       </div>
     );

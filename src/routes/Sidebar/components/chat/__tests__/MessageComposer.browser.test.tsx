@@ -76,7 +76,9 @@ describe('Message composer', () => {
       VIEW_FIXED_HEIGHT,
     );
 
+    const userEvent = setupUserEvent();
     return {
+      userEvent,
       ...renderData,
       ...other,
       ...commonData,
@@ -98,12 +100,11 @@ describe('Message composer', () => {
 
   describe('Chat messages', () => {
     test('normal', async () => {
-      const { getByRole, mockChatApi } = await renderLayout();
+      const { getByRole, mockChatApi, userEvent } = await renderLayout();
 
       await waitFor(() => expect(getByRole('textbox')).toBeInTheDocument());
 
       // Use the send button
-      const userEvent = setupUserEvent();
       const messageInput = getByRole('textbox');
       await userEvent.type(messageInput, 'Test message 1');
       await waitFor(() => getByRole('button', { name: 'Send message' }));
@@ -125,11 +126,10 @@ describe('Message composer', () => {
     });
 
     test('third person', async () => {
-      const { getByRole, mockChatApi } = await renderLayout();
+      const { getByRole, mockChatApi, userEvent } = await renderLayout();
 
       await waitFor(() => expect(getByRole('textbox')).toBeInTheDocument());
 
-      const userEvent = setupUserEvent();
       const messageInput = getByRole('textbox');
       await userEvent.type(messageInput, '/me Test message third person');
       await userEvent.keyboard('{Enter}');
@@ -147,12 +147,11 @@ describe('Message composer', () => {
 
   describe('Chat commands', () => {
     test('should handle help', async () => {
-      const { getByRole, mockChatApi } = await renderLayout();
+      const { getByRole, mockChatApi, userEvent } = await renderLayout();
 
       await waitFor(() => expect(getByRole('textbox')).toBeInTheDocument());
 
       // Use the send button
-      const userEvent = setupUserEvent();
       const messageInput = getByRole('textbox');
       await userEvent.type(messageInput, '/help');
       await userEvent.keyboard('{Enter}');
@@ -179,7 +178,8 @@ describe('Message composer', () => {
 
   describe('Temp share', () => {
     test('should add shared files', async () => {
-      const { getByTestId, getByRole, findByText, onUpload } = await renderLayout();
+      const { getByTestId, getByRole, findByText, onUpload, userEvent } =
+        await renderLayout();
 
       await waitFor(() => expect(getByRole('textbox')).toBeInTheDocument());
 
@@ -187,7 +187,6 @@ describe('Message composer', () => {
       const file = new File(['test'], 'test.txt', { type: 'text/plain' });
       const input = getByTestId('dropzone');
 
-      const userEvent = setupUserEvent();
       await userEvent.upload(input, file);
 
       // Preview modal should now be open
@@ -207,7 +206,8 @@ describe('Message composer', () => {
     });
 
     test('should remove shared files', async () => {
-      const { getByLabelText, queryByRole, getByRole } = await renderLayout();
+      const renderData = await renderLayout();
+      const { queryByRole, getByLabelText, userEvent } = renderData;
 
       await waitForLoader(queryByRole);
 
@@ -220,12 +220,11 @@ describe('Message composer', () => {
       );
 
       // Open temp share dropdown
-      const userEvent = setupUserEvent();
       const dropdown = getByLabelText('Temp share');
       await userEvent.click(dropdown);
 
       // Remove the item
-      await clickMenuItem(formatTempShareDropdownItem(TempShareItem1), getByRole);
+      await clickMenuItem(formatTempShareDropdownItem(TempShareItem1), renderData);
 
       // Validate request
       await waitFor(() => expect(onItemRemoved).toHaveBeenCalledTimes(1));

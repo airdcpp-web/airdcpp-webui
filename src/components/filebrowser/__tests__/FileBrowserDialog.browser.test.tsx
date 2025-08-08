@@ -99,7 +99,7 @@ describe('FileBrowserDialog', () => {
       await waitFor(() => expect(getByText(caption)).toBeTruthy());
 
       // Open dialog
-      expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
+      clickButton('Browse', getByRole);
       await waitForData('Loading items', queryByText);
 
       clickButton('Select', getByRole);
@@ -121,7 +121,7 @@ describe('FileBrowserDialog', () => {
       await waitFor(() => expect(getByText(caption)).toBeTruthy());
 
       // Open dialog
-      expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
+      clickButton('Browse', getByRole);
       await waitForData('Loading items', queryByText);
 
       expect(fireEvent.click(getByText('2 folders'))).toBeTruthy();
@@ -155,7 +155,7 @@ describe('FileBrowserDialog', () => {
       await waitFor(() => expect(getByText(caption)).toBeTruthy());
 
       // Open dialog
-      expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
+      clickButton('Browse', getByRole);
       await waitForData('Loading items', queryByText);
 
       // Create new directory
@@ -201,7 +201,7 @@ describe('FileBrowserDialog', () => {
       await waitFor(() => expect(getByText(caption)).toBeTruthy());
 
       // Open dialog
-      expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
+      clickButton('Browse', getByRole);
       await waitForData('Loading items', queryByText);
 
       // Go to child directory
@@ -220,8 +220,15 @@ describe('FileBrowserDialog', () => {
 
     test('should select new', async () => {
       const userEvent = setupUserEvent();
-      const { getByText, modalController, queryByText, getByLabelText, onSave, caption } =
-        await renderDialog(API.SettingTypeEnum.FILE_PATH);
+      const {
+        getByText,
+        getByRole,
+        modalController,
+        queryByText,
+        getByLabelText,
+        onSave,
+        caption,
+      } = await renderDialog(API.SettingTypeEnum.FILE_PATH);
 
       await modalController.openDialog();
 
@@ -229,7 +236,7 @@ describe('FileBrowserDialog', () => {
       await waitFor(() => expect(getByText(caption)).toBeTruthy());
 
       // Open dialog
-      expect(fireEvent.click(getByText('Browse'))).toBeTruthy();
+      clickButton('Browse', getByRole);
       await waitForData('Loading items', queryByText);
 
       // Go to child directory

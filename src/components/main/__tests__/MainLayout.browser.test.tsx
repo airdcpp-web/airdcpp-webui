@@ -28,6 +28,7 @@ import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 import '@/style.css';
+import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
 const MainDialogOpenCaption = 'Open main test dialog';
 const SidebarDialogOpenCaption = 'Open sidebar test dialog';
@@ -200,8 +201,9 @@ describe('MainLayout', () => {
       routerProps: { initialEntries: [TestRoutes.main] },
     });
 
+    const userEvent = setupUserEvent();
     const modalController = createTestModalController(renderData);
-    return { modalController, ...renderData };
+    return { modalController, ...renderData, userEvent };
   };
 
   describe('normal layout', () => {
@@ -231,10 +233,11 @@ describe('MainLayout', () => {
     });
 
     test('should open modals in sidebar', async () => {
-      const { getByText, modalController, getByRole } = await renderNormalLayout();
+      const renderData = await renderNormalLayout();
+      const { getByText, modalController, getByRole } = renderData;
 
       // Open sidebar
-      clickMenuItem(SidebarRouteMenuCaption, getByRole);
+      clickMenuItem(SidebarRouteMenuCaption, renderData);
       await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
 
       // Open sidebar dialog

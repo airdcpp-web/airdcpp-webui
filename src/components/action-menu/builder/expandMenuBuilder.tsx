@@ -7,7 +7,7 @@ import MenuItemLink from '@/components/semantic/MenuItemLink';
 
 const buildChildMenu = (items: UI.ActionMenuItem[], className?: string) => {
   return (
-    <div className={classNames('menu', 'upward', className)}>
+    <div className={classNames('menu', 'upward', className)} role="menu">
       {items.map(buildMenuItem)}
     </div>
   );
