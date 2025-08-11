@@ -41,7 +41,6 @@ export const renderBaseNode = (
   // Initializers
   const i18n = getMockI18n();
   const formatter = createFormatter(i18n);
-  // const appStore = createAppStore();
 
   const testHelpers = render(node, {
     container: document.body.appendChild(container),
@@ -63,6 +62,7 @@ export const renderBaseNode = (
     screen,
     formatter,
     appStore,
+    i18n,
   };
 };
 

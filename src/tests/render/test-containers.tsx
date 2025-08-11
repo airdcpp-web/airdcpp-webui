@@ -17,6 +17,7 @@ import { StoreApi } from 'zustand';
 import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
 import { SessionStoreContext } from '@/context/SessionStoreContext';
 import { AppStoreContext } from '@/context/AppStoreContext';
+import { POPUP_NODE_ID } from '@/components/semantic/Popup';
 
 export const VIEW_SCROLLABLE = '100%';
 export const VIEW_FIXED_HEIGHT = '600px';
@@ -32,6 +33,7 @@ const BaseComponent: React.FC<PropsWithChildren<BaseComponentProps>> = ({
   children,
 }) => {
   const modalNodeId = appendInstanceId(MODAL_NODE_ID, instanceId);
+  const popupNodeId = appendInstanceId(POPUP_NODE_ID, instanceId);
   return (
     <>
       <section
@@ -42,6 +44,7 @@ const BaseComponent: React.FC<PropsWithChildren<BaseComponentProps>> = ({
         {children}
       </section>
       <div id={modalNodeId} className={`ui dimmer ${modalNodeId}`} />
+      <div id={popupNodeId} />
     </>
   );
 };
@@ -63,6 +66,7 @@ export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
   appStore,
   wrapper: Wrapper = SimpleWrapper,
   viewType,
+  i18n,
   children,
 }) => {
   return (

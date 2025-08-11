@@ -1,37 +1,44 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useRef, useState, useCallback, forwardRef } from 'react';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
 import classNames from 'classnames';
 
+import * as UI from '@/types/ui';
+
 import 'fomantic-ui-css/components/popup';
 import 'fomantic-ui-css/components/popup.min.css';
+
 import { AnimationConstants } from '@/constants/UIConstants';
+import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
 
 type ChildType = React.ReactElement<any>;
+
+export const POPUP_NODE_ID = 'popup-node';
 
 export interface PopupProps {
   // Additional settings for the Semantic UI popup
   settings?: SemanticUI.PopupSettings;
 
-  // Element that will trigger the popup when clicking on it
   trigger: React.ReactNode;
 
   // Show the popup on hover instead of when clicking the element
   onHover?: boolean;
+
   position?: string;
+
   triggerClassName?: string;
   className?: string;
-  children: ChildType | ((hide: () => void) => ChildType);
+  children: ChildType | ((hide: UI.Callback) => ChildType);
   contentUpdateTrigger?: any; // Changes to this value will trigger re-render for the popup content
   triggerProps?: React.HTMLAttributes<HTMLSpanElement>;
 }
 
 interface PopupContentProps extends Pick<PopupProps, 'children'> {
   node: Element;
-  onHide: () => void;
-  onShow: () => void;
-  hide: () => void;
+  onHide: UI.Callback;
+  onShow: UI.Callback;
+  hide: UI.Callback;
   contentUpdateTrigger?: any;
 }
 
@@ -51,113 +58,135 @@ const PopupContent: React.FC<PopupContentProps> = (props) => {
   return ReactDOM.createPortal(content, props.node);
 };
 
-interface State {
-  visible: boolean;
+export interface PopupHandle {
+  hide: UI.Callback;
 }
-class Popup extends React.PureComponent<PopupProps, State> {
-  static readonly defaultProps: Pick<PopupProps, 'position' | 'triggerClassName'> = {
-    position: 'bottom left',
-    triggerClassName: '',
-  };
 
-  state: State = {
-    visible: false,
-  };
+const Popup = forwardRef<PopupHandle, PopupProps>(
+  (
+    {
+      position = 'bottom left',
+      triggerClassName = '',
+      trigger,
+      children,
+      contentUpdateTrigger,
+      onHover,
+      className,
+      settings,
+      triggerProps: customTriggerProps,
+    },
+    handle,
+  ) => {
+    const instanceId = React.useContext(UIInstanceContext);
+    const popupNodeId = appendInstanceId(POPUP_NODE_ID, instanceId);
 
-  node: Element | null;
-  triggerNode: Element;
-  componentWillUnmount() {
-    if (this.node) {
-      this.hide();
-    }
-  }
+    const [visible, setVisible] = useState(false);
+    const nodeRef = useRef<Element | null>(null);
+    const triggerNodeRef = useRef<Element | null>(null);
 
-  createPortalNode = () => {
-    // Create portal
-    this.node = document.createElement('div');
-    this.node.className = classNames('ui flowing popup', this.props.className);
-    document.body.appendChild(this.node);
+    // Create portal node
+    const createPortalNode = useCallback(() => {
+      if (!nodeRef.current) {
+        const node = document.getElementById(popupNodeId)!;
+        nodeRef.current = document.createElement('div');
+        nodeRef.current.className = classNames('ui flowing popup', className);
+        node.appendChild(nodeRef.current);
+        setVisible(true);
+      }
+    }, [className]);
 
-    this.setState({
-      visible: true,
-    });
-  };
+    // Destroy portal node
+    const destroyPortal = useCallback(() => {
+      if (!nodeRef.current) {
+        return;
+      }
+      if (triggerNodeRef.current) {
+        $(triggerNodeRef.current).popup('destroy');
+      }
 
-  destroyPortal = () => {
-    if (!this.node) {
-      // onHidden called when the popup was removed manually
-      return;
-    }
+      nodeRef.current.parentElement?.removeChild(nodeRef.current);
+      nodeRef.current = null;
+      setVisible(false);
+    }, []);
 
-    $(this.triggerNode).popup('destroy');
+    // Hide popup
+    const hide = useCallback(() => {
+      if (triggerNodeRef.current) {
+        $(triggerNodeRef.current).popup('hide');
+      }
+    }, []);
 
-    document.body.removeChild(this.node);
-    this.node = null;
-  };
+    // Show popup
+    const show = useCallback(() => {
+      if (!triggerNodeRef.current || !nodeRef.current) return;
+      const popupSettings: SemanticUI.PopupSettings = {
+        on: onHover ? 'hover' : 'click',
+        movePopup: false,
+        popup: nodeRef.current as any as JQuery<HTMLElement>,
+        onHidden: () => setVisible(false),
+        position,
+        duration: AnimationConstants.popup,
 
-  hide = () => {
-    $(this.triggerNode).popup('hide');
-  };
+        // debug: true,
+        // verbose: true,
 
-  onHidden = () => {
-    this.setState({
-      visible: false,
-    });
-  };
+        ...settings,
+      };
+      $(triggerNodeRef.current).popup(popupSettings).popup('show');
+    }, [onHover, position, settings]);
 
-  show = () => {
-    const settings: SemanticUI.PopupSettings = {
-      on: this.props.onHover ? 'hover' : 'click',
-      movePopup: false,
-      popup: this.node as any as JQuery<HTMLElement>,
-      onHidden: () => this.onHidden(),
-      position: this.props.position,
-      duration: AnimationConstants.popup,
-      ...this.props.settings,
+    // Handle click or hover to show popup
+    const handleClick = useCallback(() => {
+      if (!nodeRef.current) {
+        createPortalNode();
+      }
+    }, [createPortalNode]);
+
+    // Get trigger props
+    const getTriggerProps = () => {
+      const triggerProps: any = {
+        ...customTriggerProps,
+        ref: (c: any) => {
+          if (c) {
+            triggerNodeRef.current = c;
+          }
+        },
+        className: classNames(triggerClassName, 'popup trigger'),
+      };
+      if (onHover) {
+        triggerProps['onMouseEnter'] = handleClick;
+      } else {
+        triggerProps['onClick'] = handleClick;
+      }
+      return triggerProps;
     };
 
-    $(this.triggerNode).popup(settings).popup('show');
-  };
+    // Cleanup on unmount
+    useEffect(() => {
+      return () => {
+        destroyPortal();
+      };
+    }, [destroyPortal]);
 
-  handleClick = () => {
-    if (this.node) {
-      return;
-    }
+    React.useImperativeHandle(
+      handle,
+      () => ({
+        hide,
+      }),
+      [triggerNodeRef.current],
+    );
 
-    this.createPortalNode();
-  };
-
-  getTriggerProps = () => {
-    const { triggerClassName, onHover, triggerProps: customTriggerProps } = this.props;
-
-    const triggerProps = {
-      ...customTriggerProps,
-      ref: (c: any) => (this.triggerNode = c),
-      className: classNames(triggerClassName, 'popup trigger'),
-    };
-
-    if (onHover) {
-      triggerProps['onMouseEnter'] = this.handleClick;
-    } else {
-      triggerProps['onClick'] = this.handleClick;
-    }
-
-    return triggerProps;
-  };
-
-  render() {
-    const { trigger, children, contentUpdateTrigger } = this.props;
-
-    const { visible } = this.state;
     return (
       <>
-        <span {...this.getTriggerProps()}>{trigger}</span>
-        {visible && !!this.node && (
+        <span role="button" {...getTriggerProps()}>
+          {trigger}
+        </span>
+        {visible && nodeRef.current && (
           <PopupContent
-            node={this.node}
-            onShow={this.show}
-            onHide={this.destroyPortal}
-            hide={this.hide}
+            node={nodeRef.current}
+            onShow={show}
+            onHide={destroyPortal}
+            hide={hide}
             contentUpdateTrigger={contentUpdateTrigger}
           >
             {children}
@@ -165,7 +194,7 @@ class Popup extends React.PureComponent<PopupProps, State> {
         )}
       </>
     );
-  }
-}
+  },
+);
 
 export default Popup;

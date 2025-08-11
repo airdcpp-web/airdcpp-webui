@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import Popup from './Popup';
+import Popup, { PopupHandle } from './Popup';
 import DropdownCaption from './DropdownCaption';
 import Icon, { IconType } from './Icon';
 import IconConstants from '@/constants/IconConstants';
@@ -36,7 +36,7 @@ class TableDropdown extends React.Component<TableDropdownProps> {
     position: 'bottom left',
   };
 
-  popupNode: Popup;
+  popupNode: PopupHandle;
   shouldComponentUpdate(nextProps: TableDropdownProps) {
     return nextProps.caption !== this.props.caption;
   }
