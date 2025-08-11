@@ -29,9 +29,10 @@ const Button: React.FC<ButtonProps> = ({
   inverted,
   ...other
 }) => {
+  const isDisabled = disabled || loading;
   const buttonStyle = classNames(
     'ui button',
-    { disabled: !!disabled || !!loading },
+    { disabled: isDisabled },
     { loading: !!loading },
     { inverted: !!inverted },
     color,
@@ -39,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
   );
 
   return (
-    <button className={buttonStyle} {...other}>
+    <button className={buttonStyle} {...other} disabled={isDisabled}>
       <Icon icon={icon} />
       {caption}
     </button>

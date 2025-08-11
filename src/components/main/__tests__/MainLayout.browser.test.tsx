@@ -22,13 +22,14 @@ import HashConstants from '@/constants/HashConstants';
 import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
 import { HashStatsResponse } from '@/tests/mocks/api/hash';
 import { ShareGetRefreshTasksResponse } from '@/tests/mocks/api/share';
-import { clickButton, clickMenuItem } from '@/tests/helpers/test-helpers';
+import { clickButton } from '@/tests/helpers/test-helpers';
 
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 import '@/style.css';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
+import { clickMenuItem } from '@/tests/helpers/test-menu-helpers';
 
 const MainDialogOpenCaption = 'Open main test dialog';
 const SidebarDialogOpenCaption = 'Open sidebar test dialog';

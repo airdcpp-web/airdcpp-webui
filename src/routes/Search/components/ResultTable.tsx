@@ -33,7 +33,10 @@ import MenuConstants from '@/constants/MenuConstants';
 import SearchConstants from '@/constants/SearchConstants';
 import { GroupedSearchResultActionMenu, SearchActionMenu } from '@/actions/ui/search';
 
-const getUserCaption = ({ count, user }: API.SearchResultUserInfo, t: UI.TranslateF) => {
+export const getGroupedResultUserCaption = (
+  { count, user }: API.SearchResultUserInfo,
+  t: UI.TranslateF,
+) => {
   if (count > 1) {
     return t(toI18nKey('xUsersNicks', UI.Modules.SEARCH), {
       defaultValue: `{{count}} user ({{user.nicks}})`,
@@ -53,7 +56,7 @@ const UserCell: React.FC<
   RowWrapperCellChildProps<API.SearchResultUserInfo, API.GroupedSearchResult>
 > = ({ cellData, rowDataGetter, t }) => (
   <TableUserMenu
-    text={getUserCaption(cellData!, t!)}
+    text={getGroupedResultUserCaption(cellData!, t!)}
     user={cellData!.user}
     directory={rowDataGetter!().path}
     userIcon="simple"

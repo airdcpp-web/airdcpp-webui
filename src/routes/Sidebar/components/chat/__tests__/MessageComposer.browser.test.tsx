@@ -16,13 +16,13 @@ import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { installTempShareMocks } from '@/tests/mocks/mock-share';
 import {
   clickButton,
-  clickMenuItem,
   expectRequestToMatchSnapshot,
   waitForLoader,
 } from '@/tests/helpers/test-helpers';
 import { TempShareItem1 } from '@/tests/mocks/api/share';
 import { formatTempShareDropdownItem } from '../TempShareDropdown';
 import ShareConstants from '@/constants/ShareConstants';
+import { clickMenuItem } from '@/tests/helpers/test-menu-helpers';
 
 describe('Message composer', () => {
   let server: MockServer;

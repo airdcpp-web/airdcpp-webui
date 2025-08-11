@@ -247,7 +247,9 @@ export const FileDownloadCell = <
     caption={
       <FormattedFile
         typeInfo={rowDataGetter!().type}
-        onClick={clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter!) : null}
+        onClick={
+          clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter!) : undefined
+        }
         caption={cellData}
         className="icon-caption"
       />

@@ -7,11 +7,12 @@ import * as API from '@/types/api';
 import LinkButton from '@/components/semantic/LinkButton';
 
 interface FormattedFileProps {
-  onClick?: (() => void) | null;
+  onClick?: () => void;
   typeInfo: API.FilesystemItemType;
   caption: React.ReactNode;
   selected?: boolean;
   className?: string;
+  link?: boolean;
 }
 
 const FormattedFile: React.FC<FormattedFileProps> = ({
@@ -20,13 +21,14 @@ const FormattedFile: React.FC<FormattedFileProps> = ({
   caption,
   selected,
   className,
+  link,
 }) => {
-  if (onClick) {
+  if (link && onClick) {
     caption = <LinkButton onClick={onClick} caption={caption} />;
   }
 
   return (
-    <div className={cx('file-name', className, { selected: selected })}>
+    <div className={cx('file-name', className, { selected: selected })} onClick={onClick}>
       <FileIcon typeInfo={typeInfo} />
       {caption}
     </div>

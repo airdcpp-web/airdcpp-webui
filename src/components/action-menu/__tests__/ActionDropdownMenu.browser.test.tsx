@@ -3,11 +3,7 @@ import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import { waitFor } from '@testing-library/dom';
 
-import {
-  clickButton,
-  clickMenuItem,
-  expectRequestToMatchSnapshot,
-} from '@/tests/helpers/test-helpers';
+import { clickButton, expectRequestToMatchSnapshot } from '@/tests/helpers/test-helpers';
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
@@ -26,6 +22,11 @@ import {
   TestItemRemoveApproveCaption,
   TestItemRemoveCaption,
 } from './test-action-menu-helpers';
+import {
+  clickMenuItem,
+  openMenu,
+  waitMenuClosed,
+} from '@/tests/helpers/test-menu-helpers';
 
 const RemoteMenuId = 'test-remote-menu-id';
 
@@ -95,41 +96,13 @@ describe('Action dropdown menu', () => {
     return { onSave, ...renderData, ...other, ...actionHandlers };
   };
 
-  const clickItem = async (
-    menuItemLabel: string,
-    renderResult: Awaited<ReturnType<typeof renderMenu>>,
-  ) => {
-    const { getByRole } = renderResult;
-    await waitFor(() =>
-      expect(getByRole('menuitem', { name: menuItemLabel })).toBeTruthy(),
-    );
-
-    // Click
-    await clickMenuItem(menuItemLabel, renderResult);
-  };
-
-  const openMenu = async (renderResult: Awaited<ReturnType<typeof renderMenu>>) => {
-    const { getByLabelText, getByRole, userEvent } = renderResult;
-    await waitFor(() => expect(getByLabelText(TriggerCaption)).toBeTruthy());
-
-    await userEvent.click(getByLabelText(TriggerCaption));
-
-    await waitFor(() => expect(getByRole('menu')).toBeTruthy());
-  };
-
-  const waitMenuClosed = async ({
-    queryByRole,
-  }: Awaited<ReturnType<typeof renderMenu>>) => {
-    await waitFor(() => expect(queryByRole('menu')).not.toBeInTheDocument());
-  };
-
   describe('Local actions', () => {
     test('should select menu item', async () => {
       const renderResult = await renderMenu();
       const { onEnable } = renderResult;
 
-      await openMenu(renderResult);
-      await clickItem(TestItemEnableCaption, renderResult);
+      await openMenu(TriggerCaption, renderResult);
+      await clickMenuItem(TestItemEnableCaption, renderResult);
 
       await waitFor(() => expect(onEnable).toHaveBeenCalledTimes(1));
       await waitMenuClosed(renderResult);
@@ -139,8 +112,8 @@ describe('Action dropdown menu', () => {
       const renderResult = await renderMenu();
       const { onRemove, getByText, getByRole } = renderResult;
 
-      await openMenu(renderResult);
-      await clickItem(TestItemRemoveCaption, renderResult);
+      await openMenu(TriggerCaption, renderResult);
+      await clickMenuItem(TestItemRemoveCaption, renderResult);
 
       await waitFor(() => expect(getByText(TestItemRemoveApproveCaption)).toBeTruthy());
       expect(onRemove).toHaveBeenCalledTimes(0);
@@ -156,13 +129,13 @@ describe('Action dropdown menu', () => {
       const renderResult = await renderMenu(true);
       const { menuMocks } = renderResult;
 
-      await openMenu(renderResult);
+      await openMenu(TriggerCaption, renderResult);
 
       await waitFor(() => expect(menuMocks.onListGrouped).toHaveBeenCalledTimes(1));
 
-      await clickItem(RemoteMenuGrouped1.title, renderResult);
+      await clickMenuItem(RemoteMenuGrouped1.title, renderResult);
 
-      await clickItem(RemoteMenu1ItemNormal.title, renderResult);
+      await clickMenuItem(RemoteMenu1ItemNormal.title, renderResult);
       await waitFor(() => expect(menuMocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
 
       expectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
@@ -173,13 +146,13 @@ describe('Action dropdown menu', () => {
       const renderResult = await renderMenu(true);
       const { menuMocks, getByRole } = renderResult;
 
-      await openMenu(renderResult);
+      await openMenu(TriggerCaption, renderResult);
 
       await waitFor(() => expect(menuMocks.onListGrouped).toHaveBeenCalledTimes(1));
 
-      await clickItem(RemoteMenuGrouped1.title, renderResult);
+      await clickMenuItem(RemoteMenuGrouped1.title, renderResult);
 
-      await clickItem(RemoteMenu1ItemForm.title, renderResult);
+      await clickMenuItem(RemoteMenu1ItemForm.title, renderResult);
 
       await waitFor(() => expect(getByRole('dialog')).toBeTruthy());
 

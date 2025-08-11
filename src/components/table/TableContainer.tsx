@@ -13,12 +13,14 @@ import { textToI18nKey, toArray } from '@/utils/TranslationUtils';
 import { useTableViewManager } from './effects/useTableViewManager';
 import { useTranslation } from 'react-i18next';
 
+export type RowClassNameGetter = (rowData: any) => string;
+
 export interface TableContainerProps {
   // ID of the current entity for non-singleton sources
   entityId: API.IdType | undefined;
 
   // Append class names to row (takes row data as param)
-  rowClassNameGetter?: (rowData: any) => string;
+  rowClassNameGetter: RowClassNameGetter | undefined;
 
   // Store implementing ViewStoreMixin that contains the items
   store: any;

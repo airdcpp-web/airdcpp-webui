@@ -1,5 +1,6 @@
 import { MockServer } from '../mocks/mock-server';
 
+import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 import { vi } from 'vitest';
@@ -9,6 +10,7 @@ interface TableMockProps {
   server: MockServer;
   moduleUrl: string;
   viewName: string;
+  entityId?: API.IdType;
 }
 
 const installFilterMocks = (id: number, baseUrl: string, server: MockServer) => {
@@ -30,17 +32,24 @@ const installFilterMocks = (id: number, baseUrl: string, server: MockServer) => 
 
 export const installTableMocks = (
   items: UI.IdItemType[],
-  { server, moduleUrl, viewName }: TableMockProps,
+  { server, moduleUrl, viewName, entityId }: TableMockProps,
 ) => {
   const updateListener = server.addSubscriptionHandler(
     moduleUrl,
     `${viewName}_view_updated`,
+    entityId,
   );
 
-  const mockTableManager = createMockTableManager(updateListener.fire);
+  const mockTableManager = createMockTableManager((data) =>
+    updateListener.fire(data, entityId),
+  );
   mockTableManager.setItems(items);
 
-  const baseUrl = `${moduleUrl}/${viewName}_view`;
+  let baseUrl = moduleUrl;
+  if (entityId) {
+    baseUrl += `/${entityId}`;
+  }
+  baseUrl += `/${viewName}_view`;
 
   // Getters
   const addGetItemsMock = (start: number, count: number) => {

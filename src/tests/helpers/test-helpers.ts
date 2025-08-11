@@ -1,7 +1,6 @@
 import { fireEvent, Matcher, RenderResult, waitFor } from '@testing-library/react';
 import { expect, Mock } from 'vitest';
 import { BasicRouteRenderResult } from '../render/test-renderers';
-import { UserEvent } from '@testing-library/user-event';
 
 export const waitForUrl = async (
   pathName: string,
@@ -26,14 +25,8 @@ export const waitForLoader = async (queryByRole: RenderResult['queryByRole']) =>
 };
 
 export const clickButton = (caption: string, getByRole: RenderResult['getByRole']) => {
-  return expect(fireEvent.click(getByRole('button', { name: caption }))).toBeTruthy();
-};
-
-export const clickMenuItem = (
-  caption: string,
-  { getByRole, userEvent }: Pick<RenderResult, 'getByRole'> & { userEvent: UserEvent },
-) => {
-  return userEvent.click(getByRole('menuitem', { name: caption }));
+  const button = getByRole('button', { name: caption });
+  return expect(fireEvent.click(button)).toBeTruthy();
 };
 
 export const expectResponseToMatchSnapshot = (mock: Mock) => {

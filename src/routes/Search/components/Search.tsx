@@ -11,6 +11,7 @@ import OfflineHubMessageDecorator from '@/decorators/OfflineHubMessageDecorator'
 
 import { search as doSearch } from '@/services/api/SearchApi';
 import { getModuleT } from '@/utils/TranslationUtils';
+import { useSocket } from '@/context/SocketContext';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -26,7 +27,6 @@ import {
 } from '@/utils/BrowserUtils';
 
 import '../style.css';
-import { useSocket } from '@/context/SocketContext';
 
 const RESULT_WAIT_PERIOD = 4000;
 
@@ -80,7 +80,7 @@ const Search: React.FC<SearchDataProps> = ({ instance, t }) => {
   };
 
   const search = async (pattern: string, options?: SearchOptions) => {
-    console.log('Searching');
+    socket.logger.info(`Searching for ${pattern}`);
     saveHubOptions(options?.hub_urls || null);
 
     const { hub_urls, size_limits, ...queryOptions } = options || {};

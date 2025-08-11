@@ -45,9 +45,10 @@ const FileItem: React.FC<FileItemProps> = ({
           typeInfo={item.type}
           onClick={
             isFile && selectMode === UI.FileSelectModeEnum.DIRECTORY
-              ? null
+              ? undefined
               : () => itemClickHandler(item)
           }
+          link={true}
           caption={item.name}
           selected={selected}
         />

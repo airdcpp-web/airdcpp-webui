@@ -1,3 +1,5 @@
+import * as API from '@/types/api';
+
 import {
   ShareProfile2Base,
   ShareProfileDefaultBase,
@@ -6,7 +8,7 @@ import {
 
 export const HubNMDC1 = {
   connect_state: {
-    id: 'connected',
+    id: 'connected' as API.HubConnectStateEnum,
     str: 'Connected',
   },
   encryption: null,
@@ -39,7 +41,7 @@ export const HubNMDC1 = {
 
 export const HubADC1 = {
   connect_state: {
-    id: 'connected',
+    id: 'connected' as API.HubConnectStateEnum,
     str: 'Connected',
   },
   encryption: {
@@ -76,7 +78,7 @@ export const HubADC1 = {
 
 export const HubADC2 = {
   connect_state: {
-    id: 'disconnected',
+    id: 'disconnected' as API.HubConnectStateEnum,
     str: 'Disconnected',
   },
   encryption: null,
@@ -109,7 +111,7 @@ export const HubADC2 = {
 
 export const HubADC3 = {
   connect_state: {
-    id: 'connected',
+    id: 'connected' as API.HubConnectStateEnum,
     str: 'Connected',
   },
   encryption: {

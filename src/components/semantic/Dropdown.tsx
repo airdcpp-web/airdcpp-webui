@@ -152,7 +152,9 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
         aria-label={label}
       >
         {leftIcon && !!caption && icon}
-        <DropdownCaption icon={captionIcon}>{!!caption ? caption : icon}</DropdownCaption>
+        <DropdownCaption icon={captionIcon} role="button">
+          {!!caption ? caption : icon}
+        </DropdownCaption>
         {leftIcon || !caption ? null : icon}
 
         <div

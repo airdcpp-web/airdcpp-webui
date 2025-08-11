@@ -75,6 +75,7 @@ export const createMockTableManager = (sendUpdate: FireUpdate) => {
 
   const setItems = (newItems: UI.IdItemType[]) => {
     items = newItems;
+    sendItems();
   };
 
   return {

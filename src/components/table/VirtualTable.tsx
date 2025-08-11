@@ -1,7 +1,10 @@
 import * as React from 'react';
 
 import TableFooter, { TableFooterProps } from './TableFooter';
-import TableContainer, { TableContainerProps } from './TableContainer';
+import TableContainer, {
+  RowClassNameGetter,
+  TableContainerProps,
+} from './TableContainer';
 
 import './style.css';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
@@ -18,16 +21,20 @@ declare module 'fixed-data-table-2' {
   }
 }
 
+type EmptyRowsNodeGetter = () => React.ReactNode;
+
 export type VirtualTableProps = Omit<TableFooterProps, 't'> &
-  Pick<TableContainerProps, 'rowClassNameGetter' | 'moduleId'> &
+  Pick<TableContainerProps, 'moduleId'> &
   TableManagerProps &
   React.PropsWithChildren<{
     // Returns a node to render if there are no rows to display
-    emptyRowsNodeGetter?: () => React.ReactNode;
+    emptyRowsNodeGetter?: EmptyRowsNodeGetter;
 
     entityId?: API.IdType;
 
     viewId?: number | string;
+
+    rowClassNameGetter?: RowClassNameGetter;
   }>;
 
 const VirtualTable = React.memo<VirtualTableProps>(
@@ -41,6 +48,7 @@ const VirtualTable = React.memo<VirtualTableProps>(
     sourceFilter,
     sessionStore,
     moduleId,
+    rowClassNameGetter,
     children,
   }) => {
     const dataLoader = useTableDataManager({
@@ -62,6 +70,7 @@ const VirtualTable = React.memo<VirtualTableProps>(
     return (
       <div className="virtual-table">
         <TableContainer
+          rowClassNameGetter={rowClassNameGetter}
           dataLoader={dataLoader}
           store={store}
           moduleId={moduleId}
