@@ -10,7 +10,7 @@ import {
   SizeCell,
   DurationCell,
   FileDownloadCell,
-  FileDownloadCellClickHandler,
+  FileDownloadCellCaptionGetter,
 } from '@/components/table/Cell';
 import { Column } from 'fixed-data-table-2';
 
@@ -27,26 +27,27 @@ import { filelistDownloadHandler } from '@/services/api/FilelistApi';
 import MenuConstants from '@/constants/MenuConstants';
 import { FilelistItemActionMenu } from '@/actions/ui/filelist';
 import { useSessionStore } from '@/context/SessionStoreContext';
+import LinkButton from '@/components/semantic/LinkButton';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   filelist: API.FilelistSession;
-  onClickDirectory: FileDownloadCellClickHandler;
+  captionGetter: FileDownloadCellCaptionGetter;
 }
 
 const NameCell: React.FC<NameCellProps> = ({
   rowDataGetter,
-  onClickDirectory,
+  captionGetter,
   filelist,
   ...other
 }) => {
   return (
     <FileDownloadCell
-      clickHandlerGetter={onClickDirectory}
       userGetter={() => filelist.user}
       downloadHandler={filelistDownloadHandler}
       rowDataGetter={rowDataGetter}
       entity={filelist}
       remoteMenuId={MenuConstants.FILELIST_ITEM}
+      captionGetter={captionGetter}
       {...other}
     >
       <TableActionMenu
@@ -110,15 +111,13 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
     );
   };
 
-  const handleClickDirectory: FileDownloadCellClickHandler = (
-    cellData,
-    rowDataGetter,
-  ) => {
+  const getCellCaption: FileDownloadCellCaptionGetter = (cellData, rowDataGetter) => {
     if (rowDataGetter().type.id === 'directory') {
-      return () => onClickDirectory(filelist.location!.path + cellData + '/');
+      const onClick = () => onClickDirectory(filelist.location!.path + cellData + '/');
+      return <LinkButton caption={cellData} onClick={onClick} />;
     }
 
-    return undefined;
+    return cellData;
   };
 
   // const { session } = this.props;
@@ -141,7 +140,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
           name="Name"
           width={200}
           columnKey="name"
-          cell={<NameCell onClickDirectory={handleClickDirectory} filelist={filelist} />}
+          cell={<NameCell captionGetter={getCellCaption} filelist={filelist} />}
           flexGrow={8}
         />
         <Column

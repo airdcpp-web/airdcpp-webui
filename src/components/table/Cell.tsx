@@ -213,10 +213,10 @@ export const DecimalCell: React.FC<NumberCellProps> = ({ cellData }) => (
   <span className="plain decimal cell">{formatDecimal(cellData!)}</span>
 );
 
-export type FileDownloadCellClickHandler = (
+export type FileDownloadCellCaptionGetter = (
   cellData: any,
   rowDataGetter: () => any,
-) => (() => void) | undefined;
+) => React.ReactNode;
 
 export interface FileDownloadCellProps<
   CellDataT,
@@ -228,7 +228,7 @@ export interface FileDownloadCellProps<
       'user' | 'itemInfoGetter' | 'caption'
     > {
   userGetter: (rowData: ItemDataT) => UI.DownloadSource;
-  clickHandlerGetter?: FileDownloadCellClickHandler;
+  captionGetter?: FileDownloadCellCaptionGetter;
 }
 
 export const FileDownloadCell = <
@@ -238,7 +238,7 @@ export const FileDownloadCell = <
 >({
   cellData,
   rowDataGetter,
-  clickHandlerGetter,
+  captionGetter,
   userGetter,
   downloadHandler,
   ...props
@@ -247,15 +247,12 @@ export const FileDownloadCell = <
     caption={
       <FormattedFile
         typeInfo={rowDataGetter!().type}
-        onClick={
-          clickHandlerGetter ? clickHandlerGetter(cellData, rowDataGetter!) : undefined
-        }
-        caption={cellData}
+        caption={captionGetter ? captionGetter(cellData, rowDataGetter!) : cellData}
         className="icon-caption"
       />
     }
     user={userGetter(rowDataGetter!())}
-    linkCaption={!clickHandlerGetter}
+    linkCaption={!captionGetter}
     itemInfoGetter={rowDataGetter!}
     downloadHandler={downloadHandler}
     {...props}

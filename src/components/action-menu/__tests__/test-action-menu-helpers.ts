@@ -6,7 +6,7 @@ import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 import { vi } from 'vitest';
 
-interface TestItemType {
+export interface TestActionItemType {
   id: string;
   name: string;
 }
@@ -44,7 +44,7 @@ export const getTestActionMenu = () => {
     handler: onRemove,
   };
 
-  const TestActions: UI.ActionListType<TestItemType> = {
+  const TestActions: UI.ActionListType<TestActionItemType, TestActionItemType> = {
     enable: TestEnableAction,
     divider: MENU_DIVIDER,
     remove: TestRemoveAction,

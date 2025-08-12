@@ -10,6 +10,7 @@ import { useFormatter } from '@/context/FormatterContext';
 import { useTranslation } from 'react-i18next';
 import Loader from '@/components/semantic/Loader';
 import Message from '@/components/semantic/Message';
+import LinkButton from '@/components/semantic/LinkButton';
 
 export type FileItemIconGetter = (item: API.FilesystemItem) => React.ReactNode | null;
 export type FileItemClickHandler = (item: API.FilesystemItem) => void;
@@ -38,18 +39,19 @@ const FileItem: React.FC<FileItemProps> = ({
 }) => {
   const isFile = item.type.id === 'file';
   const { formatSize } = useFormatter();
+
+  const getClickHandler = () => {
+    return isFile && selectMode === UI.FileSelectModeEnum.DIRECTORY
+      ? undefined
+      : () => itemClickHandler(item);
+  };
+
   return (
     <tr>
       <td>
         <FormattedFile
           typeInfo={item.type}
-          onClick={
-            isFile && selectMode === UI.FileSelectModeEnum.DIRECTORY
-              ? undefined
-              : () => itemClickHandler(item)
-          }
-          link={true}
-          caption={item.name}
+          caption={<LinkButton onClick={getClickHandler()} caption={item.name} />}
           selected={selected}
         />
         {!!itemIconGetter && itemIconGetter(item)}
