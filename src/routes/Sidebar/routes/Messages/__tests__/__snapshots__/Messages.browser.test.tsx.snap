@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Private messages > highlights > should render magnet 1`] = `
+{
+  "data": {
+    "dupe": {
+      "id": "share_full",
+      "paths": [
+        "/tmp/3825835894",
+      ],
+    },
+    "id": 805,
+    "name": "putty test.log",
+    "size": 42128,
+    "target_name": "putty test.log",
+    "tth": "S7WYZE2NGBFNTZQ4J65ZOTSIQJ2GLPJJRVC3IZQ",
+    "type": {
+      "content_type": "",
+      "id": "file",
+      "str": "",
+    },
+    "user": {
+      "cid": "HNLUODI2YZ2U7FDWMHFNJU65ERGKUN4MH7GW5LY",
+      "description": "[ REG ] ",
+      "download_speed": 118750000,
+      "email": "",
+      "file_count": 55228,
+      "flags": [
+        "asch",
+        "ccpm",
+      ],
+      "hub_name": "ADC hub 1",
+      "hub_session_id": 1,
+      "hub_url": "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
+      "id": 1213154642,
+      "ip4": {
+        "country": "",
+        "ip": "192.168.50.200",
+        "str": "192.168.50.200",
+      },
+      "ip6": {
+        "country": "",
+        "ip": "",
+        "str": "",
+      },
+      "nick": "[Hub1]User1",
+      "share_size": 7379226364015,
+      "supports": [
+        "SEGA",
+        "ADC0",
+        "CCPM",
+        "SUD1",
+        "TCP4",
+        "UDP4",
+        "ASCH",
+      ],
+      "tag": "<AirDC++w 2.13.3,M:A-,H:0/6/1,S:20>",
+      "upload_slots": 20,
+      "upload_speed": 62500000,
+    },
+  },
+  "method": "POST",
+  "path": "queue/bundles/file",
+}
+`;
+
+exports[`Private messages > highlights > should render releases 1`] = `
+{
+  "data": {
+    "entity_id": "HNLUODI2YZ2U7FDWMHFNJU65ERGKUN4MH7GW5LY",
+    "selected_ids": [
+      814,
+    ],
+    "supports": [
+      "urls",
+      "form",
+    ],
+  },
+  "method": "POST",
+  "path": "menus/private_chat_message_highlight/list_grouped",
+}
+`;

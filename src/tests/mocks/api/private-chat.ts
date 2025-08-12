@@ -5,6 +5,7 @@ import {
   MockHintedUserOfflineResponse,
   MockHintedUser1Response,
   HubNMDC1UserMeResponse,
+  HubNMDC1UserResponse,
 } from './user';
 
 import * as API from '@/types/api';
@@ -112,16 +113,110 @@ export const PrivateChat1MessageOther = {
 };
 
 export const PrivateChat2MessageOther = {
-  from: MockHintedUserNMDCResponse,
+  from: HubNMDC1UserResponse,
   has_mention: false,
   highlights: [],
   id: 20,
   is_read: true,
-  reply_to: MockHintedUserNMDCResponse,
+  reply_to: HubNMDC1UserResponse,
   text: 'received NMDC message',
   third_person: false,
   time: 1739705342,
   to: HubNMDC1UserMeResponse,
+};
+
+export const PrivateChat1MessageMagnet = {
+  from: Hub1User1Response,
+  has_mention: false,
+  highlights: [
+    {
+      content_type: '' as API.FileContentType,
+      dupe: {
+        id: 'share_full' as API.DupeEnum,
+        paths: ['/tmp/3825835894'],
+      },
+      id: 805,
+      position: {
+        end: 94,
+        start: 0,
+      },
+      tag: 'temp_share',
+      text: 'magnet:?xt=urn:tree:tiger:S7WYZE2NGBFNTZQ4J65ZOTSIQJ2GLPJJRVC3IZQ&xl=42128&dn=putty+test.log',
+      type: 'link_url' as API.MessageHighlightTypeEnum,
+    },
+  ],
+  id: 100,
+  is_read: true,
+  reply_to: Hub1User1Response,
+  text: 'magnet:?xt=urn:tree:tiger:S7WYZE2NGBFNTZQ4J65ZOTSIQJ2GLPJJRVC3IZQ&xl=4215028&dn=putty+test.log',
+  third_person: false,
+  time: 1739964582,
+  to: Hub1UserMeResponse,
+};
+
+export const PrivateChat1MessageMention = {
+  from: Hub1User1Response,
+  has_mention: true,
+  highlights: [
+    {
+      content_type: null,
+      dupe: null,
+      id: 3816,
+      position: {
+        end: 12,
+        start: 6,
+      },
+      tag: 'me',
+      text: 'maksis',
+      type: 'user' as API.MessageHighlightTypeEnum,
+    },
+  ],
+  id: 101,
+  is_read: false,
+  reply_to: Hub1User1Response,
+  text: 'hello maksis',
+  third_person: false,
+  time: 1740310182,
+  to: Hub1UserMeResponse,
+};
+
+export const PrivateChat1MessageRelease = {
+  from: Hub1User1Response,
+  has_mention: false,
+  highlights: [
+    {
+      content_type: null,
+      dupe: null,
+      id: 814,
+      position: {
+        end: 26,
+        start: 9,
+      },
+      tag: 'release',
+      text: 'Test.Release-TEST',
+      type: 'link_text' as API.MessageHighlightTypeEnum,
+    },
+  ],
+  id: 102,
+  is_read: false,
+  reply_to: Hub1User1Response,
+  text: 'download Test.Release-TEST from me',
+  third_person: false,
+  time: 1741346982,
+  to: Hub1UserMeResponse,
+};
+
+export const PrivateChat1MessageThirdParty = {
+  from: Hub1User1Response,
+  has_mention: false,
+  highlights: [],
+  id: 103,
+  is_read: false,
+  reply_to: Hub1User1Response,
+  text: 'is here',
+  third_person: true,
+  time: 1741346992,
+  to: Hub1UserMeResponse,
 };
 
 export const PrivateChat1MessagesResponse = [
@@ -133,6 +228,18 @@ export const PrivateChat1MessagesResponse = [
   },
   {
     chat_message: PrivateChat1MessageOther,
+  },
+  {
+    chat_message: PrivateChat1MessageMagnet,
+  },
+  {
+    chat_message: PrivateChat1MessageMention,
+  },
+  {
+    chat_message: PrivateChat1MessageRelease,
+  },
+  {
+    chat_message: PrivateChat1MessageThirdParty,
   },
 ];
 

@@ -4,6 +4,8 @@ import {
   MockHintedUserNMDCResponse,
 } from './user';
 
+import * as API from '@/types/api';
+
 // Instances
 export const SearchInstance1Response = {
   current_search_id: '856675959',
@@ -114,7 +116,7 @@ export const GroupedSearchResultDirectoryResponse = {
 export const GroupedSearchResultFileResponse = {
   connection: 16905216,
   dupe: {
-    id: 'share_full',
+    id: 'share_full' as API.DupeEnum,
     paths: ['/home/airdcpp/Downloads/ubuntu_20.04.iso'],
   },
   hits: 2,
@@ -145,7 +147,7 @@ export const GroupedSearchResultsListResponse = [
   {
     connection: 128000,
     dupe: {
-      id: 'queue_partial',
+      id: 'queue_partial' as API.DupeEnum,
       paths: ['/home/airdcpp/Downloads/Ubuntu/'],
     },
     hits: 1,
@@ -175,7 +177,7 @@ export const GroupedSearchResultsListResponse = [
   {
     connection: 16777216,
     dupe: {
-      id: 'queue_partial',
+      id: 'queue_partial' as API.DupeEnum,
       paths: ['/home/airdcpp/Downloads/Ubuntu/'],
     },
     hits: 1,

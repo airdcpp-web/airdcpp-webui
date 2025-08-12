@@ -35,9 +35,10 @@ import { installActionMenuMocks } from '@/components/action-menu/__tests__/test-
 import MenuConstants from '@/constants/MenuConstants';
 import {
   expectScrolledToBottom,
-  scrollMessageView,
+  expectScrollTop,
 } from '@/tests/helpers/test-message-helpers';
 import { StoreApi } from 'zustand';
+import { scrollToMessage } from '@/utils/MessageUtils';
 
 const GoToEventsCaption = 'Go to events';
 
@@ -278,20 +279,18 @@ describe('Events', () => {
     const scrollContainer1 = getByRole('article');
     expectScrolledToBottom(scrollContainer1);
 
-    // Scroll to a specific position (can't scroll directly to the message as it wouldn't trigger the scroll event)
+    // Scroll to a message
     const scrollMessage = newMessages[5];
-    const newScrollPosition = 415;
 
-    await scrollMessageView(newScrollPosition, scrollContainer1);
+    scrollToMessage(scrollMessage.id);
 
-    await waitFor(() =>
-      expect(Math.round(scrollContainer1.scrollTop)).toBe(newScrollPosition),
-    );
     await waitFor(() =>
       expect(sessionStore.getState().events.scroll.getScrollData()).toBe(
         scrollMessage.id,
       ),
     );
+
+    const newScrollPosition = scrollContainer1.scrollTop;
 
     // Close the view
     router.navigate('/');
@@ -304,11 +303,9 @@ describe('Events', () => {
     await waitForUrl('/events', router);
     await waitFor(() => expect(getByText(newMessages[0].text)).toBeTruthy());
 
-    // Check scroll position
+    // Check that the scroll position was restored
     const scrollContainer2 = getByRole('article');
-    await waitFor(() =>
-      expect(Math.round(scrollContainer2.scrollTop)).toBe(newScrollPosition),
-    );
+    await expectScrollTop(scrollContainer2, newScrollPosition);
   });
 
   test('should clear messages', async () => {

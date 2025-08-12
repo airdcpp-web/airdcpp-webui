@@ -24,16 +24,31 @@ interface MessageViewProps {
 }
 
 const MessageView: React.FC<MessageViewProps> = React.memo(
-  function MessageView({ className, t, ...other }) {
+  function MessageView({
+    className,
+    t,
+    messages,
+    chatSession,
+    highlightRemoteMenuId,
+    scrollPositionHandler,
+  }) {
     const scrollableRef = React.useRef<HTMLDivElement | null>(null);
-    const downloadManager = useItemDownloadManager(other.chatSession);
+    const downloadManager = useItemDownloadManager(chatSession);
     const { messageNodes, visibleItems } = useMessagesNode(
-      other,
+      {
+        highlightRemoteMenuId,
+        messages,
+        chatSession,
+      },
       downloadManager,
       scrollableRef.current,
     );
 
-    useMessageViewScrollEffect(other, visibleItems, scrollableRef.current);
+    useMessageViewScrollEffect(
+      { messages, scrollPositionHandler, chatSession },
+      visibleItems,
+      scrollableRef.current,
+    );
 
     return (
       <div

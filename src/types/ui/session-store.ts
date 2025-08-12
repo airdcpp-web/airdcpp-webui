@@ -51,7 +51,7 @@ export interface MessageSlice {
   messages: Map<API.IdType, MessageListItem[]>;
   initializedSession: Set<API.IdType>;
 
-  onFetchMessages: (sessionItem: SessionItemBase) => void;
+  // onFetchMessages: (sessionItem: SessionItemBase) => void;
   onMessagesFetched: (
     sessionItem: SessionItemBase,
     cacheMessages: MessageListItem[],

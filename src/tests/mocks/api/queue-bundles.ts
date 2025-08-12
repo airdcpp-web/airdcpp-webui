@@ -1,5 +1,10 @@
 import { MockHintedUser1Response, MockHintedUser2Response } from './user';
 
+export const QueueBundleCreateFileResponse = {
+  id: 2114769353,
+  merged: false,
+};
+
 export const QueueBundleSourceListResponse = [
   {
     files: 7,

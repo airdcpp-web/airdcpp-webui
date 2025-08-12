@@ -125,7 +125,7 @@ const isScrolledToBottom = (
 ) => {
   const { scrollHeight, scrollTop, offsetHeight } = element;
   const offSetFromBottom = scrollHeight - (scrollTop + offsetHeight);
-  return Math.abs(offSetFromBottom) < bottomOffset;
+  return Math.abs(offSetFromBottom) <= bottomOffset;
 };
 
 export {

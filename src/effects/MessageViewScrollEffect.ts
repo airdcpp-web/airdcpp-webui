@@ -7,15 +7,15 @@ const DEBUG = false;
 
 interface Props {
   scrollPositionHandler: UI.ScrollHandler;
-  session?: UI.SessionItemBase;
+  chatSession: UI.SessionItemBase | undefined;
   messages: UI.MessageListItem[] | null;
 }
 
-const dbgMessage = (msg: string, session: UI.SessionItemBase | undefined) => {
+const dbgMessage = (msg: string, chatSession: UI.SessionItemBase | undefined) => {
   if (DEBUG) {
     let message = msg;
-    if (session) {
-      message += ` (session ${session.id})`;
+    if (chatSession) {
+      message += ` (session ${chatSession.id})`;
     } else {
       message += ` (no session)`;
     }
@@ -25,22 +25,22 @@ const dbgMessage = (msg: string, session: UI.SessionItemBase | undefined) => {
 };
 
 export const useMessageViewScrollEffect = (
-  { messages, scrollPositionHandler, session }: Props,
+  { messages, scrollPositionHandler, chatSession }: Props,
   visibleItems: number[],
   scrollable: HTMLDivElement | null,
 ) => {
-  const sessionId = !!session ? session.id : undefined;
+  const sessionId = !!chatSession ? chatSession.id : undefined;
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const hasMessages = !!messages && !!messages.length;
 
   const setScrollData = () => {
     if (!scrollable) {
-      dbgMessage('Scrollable element not found', session);
+      dbgMessage('Scrollable element not found', chatSession);
       return;
     }
 
     if (!visibleItems.length) {
-      dbgMessage('No visible items to save scroll position', session);
+      dbgMessage('No visible items to save scroll position', chatSession);
       return;
     }
 
@@ -52,7 +52,7 @@ export const useMessageViewScrollEffect = (
     dbgMessage(
       // eslint-disable-next-line max-len
       `Save scroll position, visible items ${Array.from(visibleItems).join(', ')}, messageId: ${messageId}, shouldScrollToBottom: ${shouldScrollToBottomNew}`,
-      session,
+      chatSession,
     );
 
     scrollPositionHandler.setScrollData(messageId, sessionId);
@@ -79,20 +79,20 @@ export const useMessageViewScrollEffect = (
       if (scrollItemId) {
         dbgMessage(
           `Session changed, restoring scroll position to message ${scrollItemId}`,
-          session,
+          chatSession,
         );
 
         if (!scrollToMessage(scrollItemId)) {
-          dbgMessage('Failed to restore scroll position', session);
+          dbgMessage('Failed to restore scroll position', chatSession);
 
           scrollToBottom();
         }
       } else {
-        dbgMessage('Session changed, scroll to bottom', session);
+        dbgMessage('Session changed, scroll to bottom', chatSession);
         scrollToBottom();
       }
     } else {
-      dbgMessage('Session changed, no messages to restore scroll position', session);
+      dbgMessage('Session changed, no messages to restore scroll position', chatSession);
     }
   }, [sessionId, hasMessages]);
 

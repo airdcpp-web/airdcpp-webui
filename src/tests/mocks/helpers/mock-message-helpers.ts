@@ -7,6 +7,7 @@ export const generateChatMessages = (count: number): API.ChatMessage[] => {
     ...PrivateChat1MessageOther,
     id: 1000 + i,
     text: `Chat message ID ${1000 + i}`,
+    time: 1754956800 + i,
   }));
 };
 
@@ -15,5 +16,6 @@ export const generateStatusMessages = (count: number): API.StatusMessage[] => {
     ...EventMessageInfo,
     id: 2000 + i,
     text: `Status message ID ${2000 + i}`,
+    time: 1754956800 + i,
   }));
 };

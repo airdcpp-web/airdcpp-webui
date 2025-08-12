@@ -75,12 +75,12 @@ const reduceMessageListItem = (
 
 interface Props {
   messages: UI.MessageListItem[] | null;
-  session?: UI.SessionItemBase;
-  highlightRemoteMenuId?: string;
+  chatSession: UI.SessionItemBase | undefined;
+  highlightRemoteMenuId: string | undefined;
 }
 
 export const useMessagesNode = (
-  { highlightRemoteMenuId, messages, session }: Props,
+  { highlightRemoteMenuId, messages, chatSession }: Props,
   downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>,
   scrollable: HTMLDivElement | null,
 ) => {
@@ -116,7 +116,7 @@ export const useMessagesNode = (
     return messages.reduce(
       reduceMessageListItem.bind(null, {
         highlightRemoteMenuId,
-        entity: session,
+        entity: chatSession,
         onMessageVisibilityChanged,
         addDownload: downloadManager.addDownloadItem,
         scrollable,

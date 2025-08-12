@@ -12,7 +12,6 @@ import { getMockSession } from '@/tests/mocks/mock-session';
 import { initMockSessionStore } from '@/tests/mocks/mock-store';
 import {
   PrivateChat1,
-  PrivateChat1MessageMe,
   PrivateChat1MessageOther,
   PrivateChat1MessagesResponse,
   PrivateChat1MessageStatus,
@@ -88,21 +87,19 @@ describe('message store', () => {
     return { sessionStore, mocks };
   };
 
-  const addMessages = (
-    privateChat: Awaited<ReturnType<typeof initMockSessionStore>>['privateChat'],
-  ) => {
-    privateChat.statusMessage.fire(PrivateChat1MessageStatus, SESSION_ID);
-    privateChat.chatMessage.fire(PrivateChat1MessageMe, SESSION_ID);
-    privateChat.chatMessage.fire(PrivateChat1MessageOther, SESSION_ID);
-  };
-
   test('should add individual messages', async () => {
     const {
       sessionStore,
       mocks: { privateChat },
     } = await initStore();
 
-    addMessages(privateChat);
+    for (const message of PrivateChat1MessagesResponse) {
+      if (message.chat_message) {
+        privateChat.chatMessage.fire(message.chat_message, SESSION_ID);
+      } else {
+        privateChat.statusMessage.fire(message.log_message, SESSION_ID);
+      }
+    }
 
     expect(
       sessionStore.getState().privateChats.messages.messages.get(SESSION_ID),

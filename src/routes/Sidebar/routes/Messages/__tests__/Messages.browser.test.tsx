@@ -6,8 +6,11 @@ import { renderDataRoutes } from '@/tests/render/test-renderers';
 import Messages from '../components/Messages';
 import {
   PrivateChat1,
+  PrivateChat1MessageMagnet,
   PrivateChat1MessageMe,
+  PrivateChat1MessageMention,
   PrivateChat1MessageOther,
+  PrivateChat1MessageRelease,
   PrivateChat1MessagesResponse,
   PrivateChat2,
   PrivateChat2MessageOther,
@@ -28,7 +31,11 @@ import {
 } from '@/components/main/notifications/effects/NotificationManager';
 import { LocalSettings } from '@/constants/LocalSettingConstants';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
-import { waitForData, waitForUrl } from '@/tests/helpers/test-helpers';
+import {
+  expectRequestToMatchSnapshot,
+  waitForData,
+  waitForUrl,
+} from '@/tests/helpers/test-helpers';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { getHistoryUrl } from '@/routes/Sidebar/components/RecentLayout';
 import { HistoryEntryEnum } from '@/constants/HistoryConstants';
@@ -38,7 +45,23 @@ import {
   SearchHintedUser1Response,
   SearchNicksHubUser1Response,
 } from '@/tests/mocks/api/user';
-import { incrementChatSessionUserMessageCounts } from '@/tests/helpers/test-message-helpers';
+import {
+  expectScrolledToBottom,
+  expectScrollTop,
+  incrementChatSessionUserMessageCounts,
+} from '@/tests/helpers/test-message-helpers';
+import { generateChatMessages } from '@/tests/mocks/helpers/mock-message-helpers';
+import { scrollToMessage } from '@/utils/MessageUtils';
+
+import '@/style.css';
+import { openMenu } from '@/tests/helpers/react-select-event';
+import { installActionMenuMocks } from '@/components/action-menu/__tests__/test-action-menu-helpers';
+import MenuConstants from '@/constants/MenuConstants';
+import { RemoteMenuGrouped1 } from '@/tests/mocks/api/menu';
+import { clickMenuItem } from '@/tests/helpers/test-menu-helpers';
+import { formatMagnetCaption, parseMagnetLink } from '@/utils/MagnetUtils';
+import QueueConstants from '@/constants/QueueConstants';
+import { QueueBundleCreateFileResponse } from '@/tests/mocks/api/queue-bundles';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
@@ -58,6 +81,10 @@ describe('Private messages', () => {
         API.AccessEnum.PRIVATE_CHAT_VIEW,
         API.AccessEnum.PRIVATE_CHAT_EDIT,
         API.AccessEnum.PRIVATE_CHAT_SEND,
+
+        // For the highlights
+        API.AccessEnum.SEARCH,
+        API.AccessEnum.DOWNLOAD,
       ],
     });
 
@@ -119,12 +146,21 @@ describe('Private messages', () => {
       onSessionCreated,
     );
 
+    // Menus
+    const menuMocks = installActionMenuMocks(
+      MenuConstants.PRIVATE_CHAT_MESSAGE_HIGHLIGHT,
+      [RemoteMenuGrouped1],
+      server,
+    );
+
     return {
       commonData,
 
       onSession1Read,
       onSession2Read,
       onSessionCreated,
+
+      menuMocks,
     };
   };
 
@@ -157,7 +193,8 @@ describe('Private messages', () => {
       viewType: VIEW_FIXED_HEIGHT,
     });
 
-    return { ...commonData, ...renderData, ...other };
+    const userEvent = setupUserEvent();
+    return { ...commonData, ...renderData, ...other, userEvent };
   };
 
   const waitSessionsLoaded = async (queryByText: RenderResult['queryByText']) => {
@@ -183,6 +220,7 @@ describe('Private messages', () => {
       onSession2Read,
       sessionStore,
       appStore,
+      userEvent,
     } = await renderLayout();
 
     appStore.getState().settings.setValue(LocalSettings.NOTIFY_PM_BOT, true); // The second session is for a bot
@@ -242,7 +280,6 @@ describe('Private messages', () => {
     expect(onNotification).toHaveBeenCalledTimes(1);
 
     // Activate the background session
-    const userEvent = setupUserEvent();
     const session2MenuItem = queryByText(PrivateChat2.user.nicks);
     await userEvent.click(session2MenuItem!);
 
@@ -250,6 +287,67 @@ describe('Private messages', () => {
     expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
 
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
+  });
+
+  test('should handle scroll', async () => {
+    const {
+      getByText,
+      getByRole,
+      mockStoreListeners,
+      sessionStore,
+      queryByText,
+      userEvent,
+    } = await renderLayout();
+
+    await waitSessionsLoaded(queryByText);
+
+    // Generate messages
+    const newMessages = generateChatMessages(20);
+    newMessages.forEach((message) => {
+      mockStoreListeners.privateChat.chatMessage.fire(message, PrivateChat1.id);
+    });
+
+    await waitFor(() => expect(getByText(newMessages[19].text)).toBeTruthy());
+
+    expect(
+      sessionStore.getState().privateChats.messages.isSessionInitialized(PrivateChat1.id),
+    ).toBeTruthy();
+
+    // Check that we are scrolled to the bottom
+    const scrollContainer1 = getByRole('article');
+    await waitFor(() => expectScrolledToBottom(scrollContainer1));
+
+    // Scroll to a message
+    const scrollMessage = newMessages[5];
+
+    scrollToMessage(scrollMessage.id);
+
+    await waitFor(() =>
+      expect(
+        sessionStore
+          .getState()
+          .privateChats.messages.scroll.getScrollData(PrivateChat1.id),
+      ).toBe(scrollMessage.id),
+    );
+
+    const newScrollPosition = Math.round(scrollContainer1.scrollTop);
+
+    // Go to another session
+    const session2MenuItem = queryByText(PrivateChat2.user.nicks);
+    await userEvent.click(session2MenuItem!);
+
+    await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
+    expectScrolledToBottom(scrollContainer1);
+
+    // Go back
+    const session1MenuItem = queryByText(PrivateChat1.user.nicks);
+    await userEvent.click(session1MenuItem!);
+
+    await waitFor(() => expect(getByText(newMessages[0].text)).toBeTruthy());
+
+    // Check that the scroll position was restored
+    const scrollContainer2 = getByRole('article');
+    await expectScrollTop(scrollContainer2, newScrollPosition);
   });
 
   test('should handle user inactivity', async () => {
@@ -295,8 +393,15 @@ describe('Private messages', () => {
   });
 
   test('open new session', async () => {
-    const { queryByText, sessionStore, router, getByRole, findByText, getByText } =
-      await renderLayout();
+    const {
+      queryByText,
+      sessionStore,
+      router,
+      getByRole,
+      findByText,
+      getByText,
+      userEvent,
+    } = await renderLayout();
 
     await waitSessionsLoaded(queryByText);
 
@@ -311,7 +416,6 @@ describe('Private messages', () => {
 
     // Type the user nick
     const input = getByRole('combobox');
-    const userEvent = setupUserEvent();
     await userEvent.type(input, PrivateChat1.user.nicks);
 
     await waitFor(() => expect(findByText(PrivateChat1.user.nicks)).toBeTruthy());
@@ -328,5 +432,60 @@ describe('Private messages', () => {
     );
 
     await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
+  });
+
+  describe('highlights', () => {
+    test('should render mentions', async () => {
+      const { queryByText, getByText } = await renderLayout();
+
+      await waitSessionsLoaded(queryByText);
+      await waitFor(() =>
+        expect(getByText(PrivateChat1MessageMention.highlights[0].text)).toBeTruthy(),
+      );
+
+      const highlight = getByText(PrivateChat1MessageMention.highlights[0].text);
+      expect(highlight.className).toBe('highlight bold');
+    });
+
+    test('should render releases', async () => {
+      const renderData = await renderLayout();
+      const { queryByText, getByText, menuMocks } = renderData;
+
+      await waitSessionsLoaded(queryByText);
+      await waitFor(() =>
+        expect(getByText(PrivateChat1MessageRelease.highlights[0].text)).toBeTruthy(),
+      );
+
+      await openMenu(getByText(PrivateChat1MessageRelease.highlights[0].text));
+      await clickMenuItem(RemoteMenuGrouped1.title, renderData);
+      await clickMenuItem(RemoteMenuGrouped1.items[0].title, renderData);
+
+      expectRequestToMatchSnapshot(menuMocks.onListGrouped);
+    });
+
+    test('should render magnet', async () => {
+      const renderData = await renderLayout();
+      const { queryByText, getByText, formatter } = renderData;
+
+      const onDownloadFile = vi.fn();
+      server.addRequestHandler(
+        'POST',
+        `${QueueConstants.BUNDLES_URL}/file`,
+        QueueBundleCreateFileResponse,
+        onDownloadFile,
+      );
+
+      await waitSessionsLoaded(queryByText);
+
+      const magnet = parseMagnetLink(PrivateChat1MessageMagnet.highlights[0].text)!;
+      const caption = formatMagnetCaption(magnet, formatter);
+      await waitFor(() => expect(getByText(caption)).toBeTruthy());
+
+      await openMenu(getByText(caption));
+      await clickMenuItem('Download', renderData);
+
+      await waitFor(() => expect(onDownloadFile).toHaveBeenCalledTimes(1));
+      expectRequestToMatchSnapshot(onDownloadFile);
+    });
   });
 });

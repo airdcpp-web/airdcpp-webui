@@ -43,12 +43,12 @@ export const createMessageSlice = () => {
 
       scroll: createSessionScrollSlice(),
 
-      onFetchMessages: (chatSession: UI.SessionItemBase) =>
+      /*onFetchMessages: (chatSession: UI.SessionItemBase) =>
         set(
           produce<State>((state) => {
             state.initializedSession.add(chatSession.id);
           }),
-        ),
+        ),*/
 
       onMessagesFetched: (chatSession: UI.SessionItemBase, cacheMessages: MessageCache) =>
         set(
@@ -58,6 +58,7 @@ export const createMessageSlice = () => {
               get().messages.get(chatSession.id),
             );
             state.messages.set(chatSession.id, mergedMessages);
+            state.initializedSession.add(chatSession.id);
           }),
         ),
 
