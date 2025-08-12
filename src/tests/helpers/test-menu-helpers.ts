@@ -30,6 +30,18 @@ export const clickMenuItem = async (
   await userEvent.click(getByRole('menuitem', { name: menuItemLabel }));
 };
 
+export const openIconMenu = async (
+  menuLabel: string,
+  renderResult: BaseRenderResult & { userEvent: UserEvent },
+) => {
+  const { userEvent, findByRole, getByLabelText } = renderResult;
+
+  await waitFor(() => expect(getByLabelText(menuLabel)).toBeTruthy());
+  await userEvent.click(getByLabelText(menuLabel));
+
+  await waitFor(() => expect(findByRole('menu')).toBeTruthy());
+};
+
 export const openMenu = async (
   triggerCaption: string,
   renderResult: BaseRenderResult & { userEvent: UserEvent },

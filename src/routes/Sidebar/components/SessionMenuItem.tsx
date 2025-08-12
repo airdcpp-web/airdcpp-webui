@@ -26,7 +26,7 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
     sessionItem={sessionItem}
     unreadInfoStoreSelector={unreadInfoStoreSelector}
   >
-    <span className="session-name">{name}</span>
+    {name}
   </RouterMenuItemLink>
 );
 

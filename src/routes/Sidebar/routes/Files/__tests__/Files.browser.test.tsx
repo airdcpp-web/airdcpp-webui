@@ -10,7 +10,7 @@ import {
 } from 'vitest';
 import { fireEvent, RenderResult, waitFor } from '@testing-library/react';
 
-import { renderDataRoutes } from '@/tests/render/test-renderers';
+import { BaseRenderResult, renderDataRoutes } from '@/tests/render/test-renderers';
 
 import Files from '../components/Files';
 
@@ -35,6 +35,8 @@ import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { sleep } from '@/utils/Promise';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
+import { UserEvent } from '@testing-library/user-event';
+import { clickMenuItem, openIconMenu } from '@/tests/helpers/test-menu-helpers';
 
 const fetchMocker = createFetchMock(vi);
 
@@ -104,7 +106,8 @@ describe('Viewed files', () => {
       routerProps: { initialEntries: ['/files'] },
     });
 
-    return { ...commonData, ...renderData, ...other };
+    const userEvent = setupUserEvent();
+    return { ...commonData, ...renderData, ...other, userEvent };
   };
 
   beforeAll(() => {
@@ -137,21 +140,11 @@ describe('Viewed files', () => {
 
   const selectSession = async (
     sessionLabel: string,
-    {
-      getByLabelText,
-      getByText,
-      getByRole,
-    }: Pick<RenderResult, 'getByLabelText' | 'getByText' | 'getByRole'>,
+    renderResult: BaseRenderResult & { userEvent: UserEvent },
     onRead: Mock,
   ) => {
-    const userEvent = setupUserEvent();
-    const menuTrigger = getByLabelText('Session menu');
-    expect(menuTrigger).toBeTruthy();
-    await userEvent.click(menuTrigger!);
-
-    const sessionMenuItem = getByText(sessionLabel);
-    expect(sessionMenuItem).toBeTruthy();
-    await userEvent.click(sessionMenuItem!);
+    await openIconMenu('Session menu', renderResult);
+    await clickMenuItem(sessionLabel, renderResult);
 
     await waitFor(() => expect(onRead).toHaveBeenCalled());
   };
@@ -161,35 +154,23 @@ describe('Viewed files', () => {
   };
 
   test('should load file content', async () => {
-    const { getByText, getByLabelText, getByRole, onSession1Read } = await renderLayout();
+    const renderResult = await renderLayout();
+    const { getByText, onSession1Read } = renderResult;
 
     // Check content
     await waitText('This is long text file', getByText);
 
     // Open a different session
-    await selectSession(
-      ViewedFileNfoResponse.name,
-      {
-        getByLabelText,
-        getByText,
-        getByRole,
-      },
-      onSession1Read,
-    );
+    await selectSession(ViewedFileNfoResponse.name, renderResult, onSession1Read);
 
     // Check content
     await waitText('This is NFO', getByText);
   });
 
   test('should remember scroll position', async () => {
-    const {
-      getByText,
-      getByLabelText,
-      getByRole,
-      sessionStore,
-      onSession1Read,
-      onSession2Read,
-    } = await renderLayout();
+    const renderResult = await renderLayout();
+    const { getByText, getByRole, sessionStore, onSession1Read, onSession2Read } =
+      renderResult;
 
     await waitText('This is long text file', getByText);
 
@@ -209,28 +190,12 @@ describe('Viewed files', () => {
     );
 
     // Switch to another session
-    await selectSession(
-      ViewedFileNfoResponse.name,
-      {
-        getByLabelText,
-        getByText,
-        getByRole,
-      },
-      onSession1Read,
-    );
+    await selectSession(ViewedFileNfoResponse.name, renderResult, onSession1Read);
     await waitText('This is NFO', getByText);
     expect(scrollContainer.scrollTop).toBe(0);
 
     // Switch back to the original one, the scroll position should remain
-    await selectSession(
-      ViewedFileTextLongResponse.name,
-      {
-        getByLabelText,
-        getByText,
-        getByRole,
-      },
-      onSession2Read,
-    );
+    await selectSession(ViewedFileTextLongResponse.name, renderResult, onSession2Read);
     await waitText('This is long text file', getByText);
     await waitFor(() => expect(scrollContainer.scrollTop).toBe(200));
   });

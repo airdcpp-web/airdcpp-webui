@@ -390,8 +390,23 @@ describe('Login', () => {
       // Refresh token should be used for authorization and we are now back on the page that we originally wanted
       await waitForUrl(ChildRouteUrl, router);
       expectResponseToMatchSnapshot(onLogin);
+    }, 100000);
+
+    test('should use refresh token directly', async () => {
+      saveLocalProperty(REFRESH_TOKEN_KEY, AuthResponse.refresh_token);
+
+      const onLogin = vi.fn();
+      server.addRequestHandler('POST', 'sessions/authorize', ConnectResponse, onLogin);
+
+      const { appStore, router } = await renderPage(ChildRouteUrl);
+
+      // Refresh token should be used for authorization and we are now on the wanted page
+      await waitFor(() =>
+        expect(appStore.getState().login.socketAuthenticated).toBeTruthy(),
+      );
 
       await waitForUrl(ChildRouteUrl, router);
+      expectResponseToMatchSnapshot(onLogin);
     }, 100000);
   });
 });

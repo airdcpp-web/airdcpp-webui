@@ -238,7 +238,7 @@ describe('MainLayout', () => {
       const { getByText, modalController, getByRole } = renderData;
 
       // Open sidebar
-      clickMenuItem(SidebarRouteMenuCaption, renderData);
+      await clickMenuItem(SidebarRouteMenuCaption, renderData);
       await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
 
       // Open sidebar dialog

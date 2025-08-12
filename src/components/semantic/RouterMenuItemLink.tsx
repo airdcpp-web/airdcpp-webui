@@ -60,10 +60,12 @@ const RouterMenuItemLink = memo<RouterMenuItemLinkProps>(
         to={url}
         className={({ isActive }) => classNames('item', className, { active: isActive })}
         onClick={onClick}
-        role="menuitem"
       >
         <Icon icon={icon} />
-        {children}
+
+        <span className="name" role="menuitem">
+          {children}
+        </span>
         {!!unreadInfoStore && <CountLabel urgencies={urgencies} />}
       </NavLink>
     );

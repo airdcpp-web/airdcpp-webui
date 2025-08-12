@@ -22,7 +22,7 @@ import {
 import { TempShareItem1 } from '@/tests/mocks/api/share';
 import { formatTempShareDropdownItem } from '../TempShareDropdown';
 import ShareConstants from '@/constants/ShareConstants';
-import { clickMenuItem } from '@/tests/helpers/test-menu-helpers';
+import { clickMenuItem, openIconMenu } from '@/tests/helpers/test-menu-helpers';
 
 describe('Message composer', () => {
   let server: MockServer;
@@ -207,7 +207,7 @@ describe('Message composer', () => {
 
     test('should remove shared files', async () => {
       const renderData = await renderLayout();
-      const { queryByRole, getByLabelText, userEvent } = renderData;
+      const { queryByRole } = renderData;
 
       await waitForLoader(queryByRole);
 
@@ -219,11 +219,8 @@ describe('Message composer', () => {
         onItemRemoved,
       );
 
-      // Open temp share dropdown
-      const dropdown = getByLabelText('Temp share');
-      await userEvent.click(dropdown);
-
       // Remove the item
+      await openIconMenu('Temp share', renderData);
       await clickMenuItem(formatTempShareDropdownItem(TempShareItem1), renderData);
 
       // Validate request
