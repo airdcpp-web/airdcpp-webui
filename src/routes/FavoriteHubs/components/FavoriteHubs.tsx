@@ -97,7 +97,7 @@ const FavoriteHubs: React.FC = () => {
             header={translate('Favorite hub actions')}
             triggerIcon="chevron up"
             button={true}
-            remoteMenuId="favorite_hubs"
+            remoteMenuId={MenuConstants.FAVORITE_HUBS}
             direction="upward"
           />
         }

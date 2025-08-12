@@ -23,6 +23,7 @@ import IconConstants from '@/constants/IconConstants';
 import { HubActionMenu } from '@/actions/ui/hub';
 import { HubAPIActions } from '@/actions/store/HubActions';
 import { HubStoreSelector } from '@/stores/session/hubSessionSlice';
+import MenuConstants from '@/constants/MenuConstants';
 
 const ItemHandler: UI.SessionInfoGetter<API.Hub> = {
   itemNameGetter(session) {
@@ -68,7 +69,7 @@ const Hubs: React.FC<SessionProviderDecoratorChildProps<API.Hub>> = (props) => {
       newLayout={HubNew}
       sessionT={sessionT}
       sessionStoreSelector={HubStoreSelector}
-      remoteMenuId="hub"
+      remoteMenuId={MenuConstants.HUB}
       {...ItemHandler}
       {...other}
     />

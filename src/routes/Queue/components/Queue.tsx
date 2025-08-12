@@ -97,7 +97,7 @@ class Queue extends React.Component<WithTranslation> {
               header={translate('Queue actions')}
               triggerIcon="chevron up"
               button={true}
-              remoteMenuId="queue"
+              remoteMenuId={MenuConstants.QUEUE}
             />
           }
           moduleId={UI.Modules.QUEUE}

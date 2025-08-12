@@ -7,6 +7,7 @@ import { useStoreDataFetch } from '@/components/main/effects/StoreDataFetchEffec
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 import * as API from '@/types/api';
+import * as UI from '@/types/ui';
 
 import SocketNotificationListener from '@/components/main/notifications/SocketNotificationListener';
 import {
@@ -19,12 +20,24 @@ import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 import EventConstants from '@/constants/EventConstants';
 import {
+  EventCountsResponse,
   EventMessageError,
   EventMessageInfo,
   EventMessagesResponse,
 } from '@/tests/mocks/api/events';
 import Events from '../components/EventsLayout';
 import { TestRouteNavigateButton } from '@/tests/helpers/test-route-helpers';
+import { generateStatusMessages } from '@/tests/mocks/helpers/mock-message-helpers';
+import { clickMenuItem, openMenu } from '@/tests/helpers/test-menu-helpers';
+import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
+
+import { installActionMenuMocks } from '@/components/action-menu/__tests__/test-action-menu-helpers';
+import MenuConstants from '@/constants/MenuConstants';
+import {
+  expectScrolledToBottom,
+  scrollMessageView,
+} from '@/tests/helpers/test-message-helpers';
+import { StoreApi } from 'zustand';
 
 const GoToEventsCaption = 'Go to events';
 
@@ -45,28 +58,38 @@ describe('Events', () => {
       permissions: [API.AccessEnum.EVENTS_EDIT, API.AccessEnum.EVENTS_VIEW],
     });
 
+    // Context menu
+    installActionMenuMocks(MenuConstants.EVENTS, [], server);
+
     // Messages
     const onRead = vi.fn();
     server.addRequestHandler('POST', EventConstants.READ_URL, undefined, onRead);
 
+    const onGetMessages = vi.fn();
     server.addRequestHandler(
       'GET',
       `${EventConstants.MESSAGES_URL}/0`,
       EventMessagesResponse,
+      onGetMessages,
     );
 
     return {
       commonData,
       onRead,
+      onGetMessages,
     };
   };
 
-  const renderLayout = async (userActive = true) => {
-    const { commonData, ...other } = await getSocket();
+  interface RenderLayoutProps {
+    userActive?: boolean;
+    initEvents: boolean;
+  }
 
-    if (userActive) {
-      commonData.sessionStore.getState().activity.setUserActive(true);
-    }
+  const renderLayout = async ({
+    userActive = true,
+    initEvents = true,
+  }: RenderLayoutProps) => {
+    const { commonData, ...other } = await getSocket();
 
     const EventLayoutTest = () => {
       useStoreDataFetch(true);
@@ -103,15 +126,43 @@ describe('Events', () => {
       viewType: VIEW_FIXED_HEIGHT,
     });
 
-    return { ...commonData, ...renderData, ...other };
+    if (initEvents) {
+      await waitFor(() =>
+        expect(commonData.sessionStore.getState().initialDataFetched).toBeTruthy(),
+      );
+
+      commonData.sessionStore.getState().events.onMessagesFetched(EventMessagesResponse);
+    }
+
+    if (userActive) {
+      commonData.sessionStore.getState().activity.setUserActive(true);
+    }
+
+    const userEvent = setupUserEvent();
+    return { ...commonData, ...renderData, ...other, userEvent };
   };
 
   const waitLoaded = async (queryByText: RenderResult['queryByText']) => {
     await waitForData(/Loading messages/i, queryByText);
   };
 
+  const incrementEventMessageCounts = (
+    severity: API.SeverityEnum,
+    sessionStore: StoreApi<UI.SessionStore>,
+  ) => ({
+    total: sessionStore.getState().events.logMessages!.length + 1,
+    unread: {
+      ...EventCountsResponse.unread,
+      [severity]:
+        EventCountsResponse.unread[severity as keyof typeof EventCountsResponse.unread] +
+        1,
+    },
+  });
+
   test('should load messages', async () => {
-    const { getByText, queryByText, onRead } = await renderLayout();
+    const { getByText, queryByText, onRead } = await renderLayout({
+      initEvents: false,
+    });
 
     await waitLoaded(queryByText);
 
@@ -121,24 +172,28 @@ describe('Events', () => {
   });
 
   test('should handle read messages', async () => {
-    const { getByRole, queryByText, mockStoreListeners, onRead, sessionStore, router } =
-      await renderLayout();
+    const { getByRole, mockStoreListeners, onRead, sessionStore, router } =
+      await renderLayout({
+        initEvents: true,
+      });
 
     const onNotification = vi.fn();
     NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
-
-    await waitLoaded(queryByText);
 
     await waitFor(() => expect(sessionStore.getState().events.viewActive).toBeTruthy());
     await waitFor(() => expect(onRead).toHaveBeenCalledTimes(1));
 
     // Send message for an active view
+    mockStoreListeners.events.counts.fire(
+      incrementEventMessageCounts(API.SeverityEnum.INFO, sessionStore),
+    );
     mockStoreListeners.events.message.fire({
       ...EventMessageInfo,
       text: 'Event message info new',
       id: EventMessageInfo.id + 1,
       is_read: false,
     });
+
     await waitFor(() => expect(onRead).toHaveBeenCalledTimes(2));
     expect(onNotification).toHaveBeenCalledTimes(0);
 
@@ -148,6 +203,9 @@ describe('Events', () => {
     await waitForUrl('/', router);
     await waitFor(() => expect(sessionStore.getState().events.viewActive).toBeFalsy());
 
+    mockStoreListeners.events.counts.fire(
+      incrementEventMessageCounts(API.SeverityEnum.ERROR, sessionStore),
+    );
     mockStoreListeners.events.message.fire({
       ...EventMessageError,
       text: 'Event message error new',
@@ -166,19 +224,22 @@ describe('Events', () => {
   });
 
   test('should handle user inactivity', async () => {
-    const { getByText, queryByText, onRead, mockStoreListeners, sessionStore } =
-      await renderLayout(false);
+    const { getByText, onRead, mockStoreListeners, sessionStore } = await renderLayout({
+      initEvents: true,
+      userActive: false,
+    });
 
     const onNotification = vi.fn();
     NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
-
-    await waitLoaded(queryByText);
 
     // Check content
     await waitFor(() => expect(getByText(EventMessageInfo.text)).toBeTruthy());
     expect(onRead).toHaveBeenCalledTimes(0);
 
     // Send message while the user is inactive
+    mockStoreListeners.events.counts.fire(
+      incrementEventMessageCounts(API.SeverityEnum.ERROR, sessionStore),
+    );
     mockStoreListeners.events.message.fire({
       ...EventMessageError,
       text: 'Event message error new',
@@ -192,5 +253,86 @@ describe('Events', () => {
     // Activate the user
     sessionStore.getState().activity.setUserActive(true);
     await waitFor(() => expect(onRead).toHaveBeenCalledTimes(1));
+  });
+
+  test('should handle scroll', async () => {
+    const { getByText, getByRole, mockStoreListeners, sessionStore, router } =
+      await renderLayout({
+        initEvents: true,
+      });
+
+    expect(sessionStore.getState().events.isInitialized).toBeTruthy();
+
+    // Check content
+    await waitFor(() => expect(getByText(EventMessageInfo.text)).toBeTruthy());
+
+    // Generate messages
+    const newMessages = generateStatusMessages(20);
+    newMessages.forEach((message) => {
+      mockStoreListeners.events.message.fire(message);
+    });
+
+    await waitFor(() => expect(getByText(newMessages[19].text)).toBeTruthy());
+
+    // Check that we are scrolled to the bottom
+    const scrollContainer1 = getByRole('article');
+    expectScrolledToBottom(scrollContainer1);
+
+    // Scroll to a specific position (can't scroll directly to the message as it wouldn't trigger the scroll event)
+    const scrollMessage = newMessages[5];
+    const newScrollPosition = 415;
+
+    await scrollMessageView(newScrollPosition, scrollContainer1);
+
+    await waitFor(() =>
+      expect(Math.round(scrollContainer1.scrollTop)).toBe(newScrollPosition),
+    );
+    await waitFor(() =>
+      expect(sessionStore.getState().events.scroll.getScrollData()).toBe(
+        scrollMessage.id,
+      ),
+    );
+
+    // Close the view
+    router.navigate('/');
+    await waitForUrl('/', router);
+
+    expect(sessionStore.getState().events.scroll.getScrollData()).toBe(scrollMessage.id);
+
+    // Go back
+    router.navigate('/events');
+    await waitForUrl('/events', router);
+    await waitFor(() => expect(getByText(newMessages[0].text)).toBeTruthy());
+
+    // Check scroll position
+    const scrollContainer2 = getByRole('article');
+    await waitFor(() =>
+      expect(Math.round(scrollContainer2.scrollTop)).toBe(newScrollPosition),
+    );
+  });
+
+  test('should clear messages', async () => {
+    const renderResult = await renderLayout({
+      initEvents: true,
+    });
+    const { getByText, queryByText, mockStoreListeners } = renderResult;
+
+    // Check content
+    await waitFor(() => expect(getByText(EventMessageInfo.text)).toBeTruthy());
+
+    const onClear = vi.fn(() => {
+      mockStoreListeners.events.counts.fire({
+        total: 0,
+        unread: 0,
+      });
+    });
+    server.addRequestHandler('DELETE', EventConstants.MESSAGES_URL, undefined, onClear);
+
+    // Clear
+    await openMenu('Events', renderResult);
+    await clickMenuItem('Clear', renderResult);
+
+    await waitFor(() => expect(onClear).toHaveBeenCalledTimes(1));
+    expect(queryByText('No messages to show')).toBeTruthy();
   });
 });

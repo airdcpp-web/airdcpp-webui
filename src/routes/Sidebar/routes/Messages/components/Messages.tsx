@@ -9,6 +9,7 @@ import PrivateChatSession from '@/routes/Sidebar/routes/Messages/components/Priv
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
+import MenuConstants from '@/constants/MenuConstants';
 import {
   SessionProviderDecoratorChildProps,
   SessionProviderDecorator,
@@ -42,7 +43,7 @@ const Messages: React.FC<SessionProviderDecoratorChildProps<API.PrivateChat>> = 
       sessionItemLayout={PrivateChatSession}
       newLayout={MessageNew}
       sessionT={sessionT}
-      remoteMenuId="private_chat"
+      remoteMenuId={MenuConstants.PRIVATE_CHAT}
       {...UserItemHandlerDecorator(['browse', 'ignore', 'unignore', 'grant'])}
       {...other}
     />

@@ -3,7 +3,7 @@ import { useState, useLayoutEffect, useEffect } from 'react';
 import * as UI from '@/types/ui';
 import { isScrolledToBottom, scrollToMessage } from '@/utils/MessageUtils';
 
-const DEBUG = true;
+const DEBUG = false;
 
 interface Props {
   scrollPositionHandler: UI.ScrollHandler;

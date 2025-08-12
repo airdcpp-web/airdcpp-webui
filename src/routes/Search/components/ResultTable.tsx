@@ -196,7 +196,7 @@ class ResultTable extends React.Component<ResultTableProps> {
               triggerIcon="chevron up"
               button={true}
               itemData={instance}
-              remoteMenuId="search_instance"
+              remoteMenuId={MenuConstants.SEARCH_INSTANCE}
             />
           }
         >

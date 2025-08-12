@@ -19,6 +19,18 @@ export default {
 
   HUB_MESSAGE_HIGHLIGHT: 'hub_message_highlight',
   PRIVATE_CHAT_MESSAGE_HIGHLIGHT: 'private_chat_message_highlight',
+
+  QUEUE: 'queue',
+  SEARCH_INSTANCE: 'search_instance',
+  TRANSFERS: 'transfers',
+  SHARE_ROOTS: 'share_roots',
+  FAVORITE_HUBS: 'favorite_hubs',
+  EVENTS: 'events',
+
+  HUB: 'hub',
+  PRIVATE_CHAT: 'private_chat',
+  FILELIST: 'filelist',
+  VIEW_FILE: 'view_file',
 };
 
 export const MENU_SUPPORTS = ['urls', 'form'];

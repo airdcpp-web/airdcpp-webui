@@ -12,7 +12,7 @@ import { translate } from '@/utils/TranslationUtils';
 import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 interface EventMessagesProps {
-  messages: UI.MessageListItem[] | null;
+  messages: UI.MessageListItem[] | undefined;
   t: UI.TranslateF;
 }
 

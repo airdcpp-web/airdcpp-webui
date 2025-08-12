@@ -27,6 +27,7 @@ import { getModuleT } from '@/utils/TranslationUtils';
 import IconConstants from '@/constants/IconConstants';
 import { ActionMenu } from '@/components/action-menu';
 import { TransferActionMenu } from '@/actions/ui/transfer';
+import MenuConstants from '@/constants/MenuConstants';
 
 const FlagsCell: React.FC<RowWrapperCellChildProps<string[], API.Transfer>> = ({
   cellData,
@@ -71,7 +72,7 @@ class Transfers extends React.Component<TransfersProps> {
             header={translate('Transfer actions')}
             triggerIcon="chevron up"
             button={true}
-            remoteMenuId="transfers"
+            remoteMenuId={MenuConstants.TRANSFERS}
           />
         }
       >

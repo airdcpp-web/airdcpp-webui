@@ -19,6 +19,7 @@ import { ViewFileAPIActions } from '@/actions/store/ViewFileActions';
 import { ViewFileStoreSelector } from '@/stores/session/viewFileSlice';
 
 import '../style.css';
+import MenuConstants from '@/constants/MenuConstants';
 
 const ItemHandler: UI.SessionInfoGetter<API.ViewFile> = {
   itemNameGetter(session) {
@@ -63,7 +64,7 @@ const Files: React.FC<SessionProviderDecoratorChildProps<API.ViewFile>> = (props
       sessionStoreSelector={ViewFileStoreSelector}
       sessionItemLayout={FileSession}
       sessionT={sessionT}
-      remoteMenuId="view_file"
+      remoteMenuId={MenuConstants.VIEW_FILE}
       {...ItemHandler}
       {...other}
     />

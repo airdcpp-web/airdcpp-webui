@@ -7,7 +7,7 @@ import * as API from '@/types/api';
 
 import { useNavigate } from 'react-router';
 import { HubAPIActions } from '@/actions/store/HubActions';
-import { useSessionStore } from '@/context/SessionStoreContext';
+import { useSessionStoreApi } from '@/context/SessionStoreContext';
 import { useSocket } from '@/context/SocketContext';
 import { useTranslation } from 'react-i18next';
 
@@ -36,7 +36,7 @@ const ConnectStateCell: React.FC<ConnectStateCellProps> = ({
   rowDataGetter,
 }) => {
   const navigate = useNavigate();
-  const sessionStore = useSessionStore();
+  const sessionStoreApi = useSessionStoreApi();
   const socket = useSocket();
   const { t } = useTranslation();
 
@@ -47,7 +47,7 @@ const ConnectStateCell: React.FC<ConnectStateCellProps> = ({
 
     HubAPIActions.createSession(data, {
       navigate,
-      sessionStore,
+      sessionStore: sessionStoreApi.getState(),
       socket,
       t,
     });

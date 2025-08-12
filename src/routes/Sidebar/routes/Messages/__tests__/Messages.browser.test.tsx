@@ -38,6 +38,7 @@ import {
   SearchHintedUser1Response,
   SearchNicksHubUser1Response,
 } from '@/tests/mocks/api/user';
+import { incrementChatSessionUserMessageCounts } from '@/tests/helpers/test-message-helpers';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
@@ -120,6 +121,7 @@ describe('Private messages', () => {
 
     return {
       commonData,
+
       onSession1Read,
       onSession2Read,
       onSessionCreated,
@@ -195,8 +197,17 @@ describe('Private messages', () => {
         PrivateChat1.id,
       ),
     );
+    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(1));
 
     // Send message for the active session
+    mockStoreListeners.privateChat.updated.fire(
+      incrementChatSessionUserMessageCounts(
+        PrivateChat1.message_counts,
+        PrivateChat1.id,
+        sessionStore.getState().privateChats,
+      ),
+      PrivateChat1.id,
+    );
     mockStoreListeners.privateChat.chatMessage.fire(
       {
         ...PrivateChat1MessageOther,
@@ -206,10 +217,18 @@ describe('Private messages', () => {
       },
       PrivateChat1.id,
     );
-    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(2));
     expect(onNotification).toHaveBeenCalledTimes(0);
 
     // Send message for the background session
+    mockStoreListeners.privateChat.updated.fire(
+      incrementChatSessionUserMessageCounts(
+        PrivateChat2.message_counts,
+        PrivateChat2.id,
+        sessionStore.getState().privateChats,
+      ),
+      PrivateChat2.id,
+    );
     mockStoreListeners.privateChat.chatMessage.fire(
       {
         ...PrivateChat2MessageOther,
@@ -249,6 +268,14 @@ describe('Private messages', () => {
     );
 
     // Send message while the user is inactive
+    mockStoreListeners.privateChat.updated.fire(
+      incrementChatSessionUserMessageCounts(
+        PrivateChat1.message_counts,
+        PrivateChat1.id,
+        sessionStore.getState().privateChats,
+      ),
+      PrivateChat1.id,
+    );
     mockStoreListeners.privateChat.chatMessage.fire(
       {
         ...PrivateChat1MessageOther,

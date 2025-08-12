@@ -97,7 +97,7 @@ export type BasicReadHandler = () => void;
 
 export interface EventSlice extends UnreadInfoStore {
   isInitialized: boolean;
-  logMessages: MessageListItem[] | null;
+  logMessages: MessageListItem[] | undefined;
   messageCacheInfo: API.StatusMessageCounts | undefined;
   viewActive: boolean;
   scroll: ScrollHandler;
@@ -121,6 +121,7 @@ export interface SessionStore {
   events: EventSlice;
 
   isInitialized: boolean;
+  initialDataFetched: boolean;
 }
 
 export type SessionStoreSelector<SessionT extends SessionItemBase = SessionItemBase> = (

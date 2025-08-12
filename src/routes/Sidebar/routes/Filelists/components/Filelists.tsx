@@ -18,6 +18,7 @@ import IconConstants from '@/constants/IconConstants';
 import { FilelistSessionActionMenu } from '@/actions/ui/filelist';
 import { FilelistAPIActions } from '@/actions/store/FilelistActions';
 import { FilelistStoreSelector } from '@/stores/session/filelistSlice';
+import MenuConstants from '@/constants/MenuConstants';
 
 const UserItemHandler = UserItemHandlerDecorator(['message']);
 const ItemHandler: UI.SessionInfoGetter<API.FilelistSession> = {
@@ -73,7 +74,7 @@ const Filelists: React.FC<SessionProviderDecoratorChildProps<API.FilelistSession
       sessionItemLayout={FilelistSession}
       newLayout={FilelistNew}
       sessionT={sessionT}
-      remoteMenuId="filelist"
+      remoteMenuId={MenuConstants.FILELIST}
       {...ItemHandler}
       {...other}
     />

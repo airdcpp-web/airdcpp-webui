@@ -27,6 +27,7 @@ export const createSessionStore = () => {
       activity: createActivityStore(),
 
       isInitialized: false,
+      initialDataFetched: false,
     })),
   );
 

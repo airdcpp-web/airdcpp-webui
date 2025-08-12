@@ -50,7 +50,7 @@ const createEventSlice = () => {
     };
 
     const slice = {
-      logMessages: null,
+      logMessages: undefined,
       messageCacheInfo: undefined,
       viewActive: false,
       isInitialized: false,
@@ -92,7 +92,7 @@ const createEventSlice = () => {
         cacheInfoNew = checkReadState(cacheInfoNew);
 
         set({
-          logMessages: checkSplice(get().logMessages || undefined, cacheInfoNew.total),
+          logMessages: checkSplice(get().logMessages, cacheInfoNew.total),
           messageCacheInfo: cacheInfoNew,
         });
       },
@@ -134,7 +134,8 @@ export const initEventStore = async (
     await socket.addListener(
       url,
       EventConstants.COUNTS,
-      sessionStore.events.onMessageCountsReceived,
+      (counts: API.StatusMessageCounts) =>
+        sessionStore.events.onMessageCountsReceived(counts),
     );
 
     const { events } = sessionStore;

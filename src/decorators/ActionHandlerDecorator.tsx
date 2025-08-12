@@ -11,9 +11,9 @@ import { translate } from '@/utils/TranslationUtils';
 import NotificationActions from '@/actions/NotificationActions';
 import { ActionData, ActionDialog, suffixActionI18nKey } from './components/ActionDialog';
 import { useSocket } from '@/context/SocketContext';
-import { useSessionStore } from '@/context/SessionStoreContext';
+import { useSessionStoreApi } from '@/context/SessionStoreContext';
 import { ModalCloseContext, useModalCloseContext } from '@/context/ModalCloseContext';
-import { useAppStore } from '@/context/AppStoreContext';
+import { useAppStoreApi } from '@/context/AppStoreContext';
 
 interface ActionHandlerDecoratorProps<
   ItemDataT extends UI.ActionDataValueType,
@@ -131,18 +131,18 @@ const ActionHandlerDecorator = <
   const closeModal = useModalCloseContext();
   const location = useLocation();
   const navigate = useNavigate();
-  const sessionStore = useSessionStore();
-  const appStore = useAppStore();
+  const sessionStoreApi = useSessionStoreApi();
+  const appStoreApi = useAppStoreApi();
 
-  const commonActionHandlerData = {
+  const getCommonActionHandlerData = () => ({
     location,
     navigate,
     t,
     closeModal,
     socket,
-    sessionStore,
-    appStore,
-  };
+    sessionStore: sessionStoreApi.getState(),
+    appStore: appStoreApi.getState(),
+  });
 
   const closeConfirmation = () => {
     setTimeout(() => setConfirmActionData(null));
@@ -156,7 +156,7 @@ const ActionHandlerDecorator = <
     await handleAction({
       actionData: confirmActionData,
       confirmData,
-      ...commonActionHandlerData,
+      ...getCommonActionHandlerData(),
     });
     closeConfirmation();
   };
@@ -170,7 +170,7 @@ const ActionHandlerDecorator = <
       handleAction({
         actionData,
         confirmData: undefined,
-        ...commonActionHandlerData,
+        ...getCommonActionHandlerData(),
       });
     }
   };

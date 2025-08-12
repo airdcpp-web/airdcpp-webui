@@ -62,7 +62,7 @@ const Share: React.FC = () => {
             triggerIcon="chevron up"
             ids={['create']}
             button={true}
-            remoteMenuId="share_roots"
+            remoteMenuId={MenuConstants.SHARE_ROOTS}
           >
             <ActionMenu actions={ShareActionMenu} ids={['refresh']} />
           </ActionMenu>

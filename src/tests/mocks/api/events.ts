@@ -18,7 +18,7 @@ export const EventMessageInfo = {
   severity: API.SeverityEnum.INFO,
   text: '8 extensions were loaded (debug mode)',
   time: 1739606514,
-  type: 'system',
+  type: 'system' as API.StatusMessageTypeEnum,
 };
 
 export const EventMessageError = {
@@ -29,7 +29,7 @@ export const EventMessageError = {
   severity: API.SeverityEnum.ERROR,
   text: "Failed to add path E:\\🌍\\ for monitoring: ENOENT: no such file or directory, watch 'E:\\🌍\\'",
   time: 1739606515,
-  type: 'system',
+  type: 'system' as API.StatusMessageTypeEnum,
 };
 
 export const EventMessagesResponse = [EventMessageInfo, EventMessageError];

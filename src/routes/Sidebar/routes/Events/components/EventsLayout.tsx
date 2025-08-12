@@ -22,6 +22,7 @@ import { EventAPIActions } from '@/actions/store/EventActions';
 import '../style.css';
 
 import { useSocket } from '@/context/SocketContext';
+import MenuConstants from '@/constants/MenuConstants';
 
 const Events: React.FC = memo(
   function SystemLog() {
@@ -61,7 +62,7 @@ const Events: React.FC = memo(
               <ActionMenu
                 caption={translate('Events', t, UI.Modules.EVENTS)}
                 actions={EventActionMenu}
-                remoteMenuId="events"
+                remoteMenuId={MenuConstants.EVENTS}
               />
             }
           />

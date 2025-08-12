@@ -18,3 +18,7 @@ export interface ReadStatus extends SessionItemBase {
 export interface MessageCounts {
   message_counts: API.ChatMessageCounts | API.StatusMessageCounts;
 }
+
+export type ChatSessionItem = SessionItemBase & {
+  message_counts: API.ChatMessageCounts;
+};

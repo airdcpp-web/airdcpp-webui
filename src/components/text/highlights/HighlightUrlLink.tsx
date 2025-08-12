@@ -5,7 +5,7 @@ import * as UI from '@/types/ui';
 
 import { useNavigate } from 'react-router';
 import ExternalLink from '@/components/ExternalLink';
-import { useSessionStore } from '@/context/SessionStoreContext';
+import { useSessionStoreApi } from '@/context/SessionStoreContext';
 import { HubAPIActions } from '@/actions/store/HubActions';
 import { useSocket } from '@/context/SocketContext';
 import { useSession } from '@/context/AppStoreContext';
@@ -53,11 +53,18 @@ export interface HighlightUrlLinkProps
 export const HighlightUrlLink: React.FC<HighlightUrlLinkProps> = ({ text, ...other }) => {
   const session = useSession();
   const navigate = useNavigate();
-  const sessionStore = useSessionStore();
+  const sessionStoreApi = useSessionStoreApi();
   const socket = useSocket();
   return (
     <ExternalLink
-      onClick={(evt) => onClickLink(evt, { navigate, session, sessionStore, socket })}
+      onClick={(evt) =>
+        onClickLink(evt, {
+          navigate,
+          session,
+          sessionStore: sessionStoreApi.getState(),
+          socket,
+        })
+      }
       url={text}
     >
       {text}
