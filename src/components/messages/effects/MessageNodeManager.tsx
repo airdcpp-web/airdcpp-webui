@@ -9,12 +9,14 @@ import { MessageListItem } from '../list/MessageListItem';
 import { MessageListDateDivider, showDateDivider } from '../list/MessageListDateDivider';
 
 import { ItemDownloadManager } from '../../../effects/ItemDownloadManager';
+import { debounce } from 'lodash';
 
 interface MessageItemData {
   entity: UI.SessionItemBase | undefined;
   onMessageVisibilityChanged: (id: number, inView: boolean) => void;
   addDownload: UI.AddItemDownload;
   highlightRemoteMenuId: string | undefined;
+  scrollable: HTMLDivElement | null;
 }
 
 const reduceMessageListItem = (
@@ -23,6 +25,7 @@ const reduceMessageListItem = (
     onMessageVisibilityChanged,
     addDownload,
     highlightRemoteMenuId,
+    scrollable,
   }: MessageItemData,
   reduced: React.ReactNode[],
   message: UI.MessageListItem,
@@ -51,6 +54,7 @@ const reduceMessageListItem = (
         onMessageVisibilityChanged(id, inView);
       }}
       threshold={0.4}
+      root={scrollable}
       message={message}
       // Highlight menus must use table action menu because the text element has overflow: hidden
       // to allow long words to be cut (author action menu can still use the regular dropdown)
@@ -78,19 +82,30 @@ interface Props {
 export const useMessagesNode = (
   { highlightRemoteMenuId, messages, session }: Props,
   downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>,
+  scrollable: HTMLDivElement | null,
 ) => {
-  const visibleItems = useMemo(() => new Set<number>(), [session]);
+  const visibleItemSet = React.useRef<Set<number>>(new Set());
+  const [visibleItems, setVisibleItems] = React.useState<number[]>([]);
+
+  const debouncedUpdateVisibleItems = React.useMemo(
+    () =>
+      debounce(() => {
+        // console.log(`Visible items ${Array.from(visibleItemSet.current)}`);
+        setVisibleItems(Array.from(visibleItemSet.current));
+      }, 20),
+    [],
+  );
 
   const onMessageVisibilityChanged = (id: number, inView: boolean) => {
     if (!inView) {
       // console.log(`Remove view item ${id}`);
-      visibleItems.delete(id);
+      visibleItemSet.current.delete(id);
     } else {
-      // console.log(`Add view item ${id}`);
-      visibleItems.add(id);
+      //console.log(`Add view item ${id}`);
+      visibleItemSet.current.add(id);
     }
 
-    // console.log(`Visible items ${Array.from(visibleItems)}`);
+    debouncedUpdateVisibleItems();
   };
 
   const messageNodes = useMemo(() => {
@@ -104,6 +119,7 @@ export const useMessagesNode = (
         entity: session,
         onMessageVisibilityChanged,
         addDownload: downloadManager.addDownloadItem,
+        scrollable,
       }),
       [],
     );

@@ -60,12 +60,14 @@ export const createBasicScrollSlice = () => {
       scrollPosition: undefined,
 
       getScrollData: () => {
-        // console.log(`Getting scroll position ${this.scrollPosition} for events`);
+        //console.log(
+        //  `[SCROLL] Getting scroll position ${get().scrollPosition} for events`,
+        //);
         return get().scrollPosition;
       },
 
       setScrollData: (data: number) => {
-        // console.log(`Setting scroll position ${data} for events`);
+        //console.log(`[SCROLL] Setting scroll position ${data} for events`);
         set({
           scrollPosition: data,
         });

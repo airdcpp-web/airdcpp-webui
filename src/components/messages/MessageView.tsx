@@ -25,13 +25,22 @@ interface MessageViewProps {
 
 const MessageView: React.FC<MessageViewProps> = React.memo(
   function MessageView({ className, t, ...other }) {
+    const scrollableRef = React.useRef<HTMLDivElement | null>(null);
     const downloadManager = useItemDownloadManager(other.chatSession);
-    const { messageNodes, visibleItems } = useMessagesNode(other, downloadManager);
+    const { messageNodes, visibleItems } = useMessagesNode(
+      other,
+      downloadManager,
+      scrollableRef.current,
+    );
 
-    const scrollableRef = useMessageViewScrollEffect(other, visibleItems);
+    useMessageViewScrollEffect(other, visibleItems, scrollableRef.current);
 
     return (
-      <div ref={scrollableRef} className={classNames('message-section', className)}>
+      <div
+        ref={scrollableRef}
+        className={classNames('message-section', className)}
+        role="article"
+      >
         {!!messageNodes ? (
           <>
             <div className="ui list message-list">{messageNodes}</div>

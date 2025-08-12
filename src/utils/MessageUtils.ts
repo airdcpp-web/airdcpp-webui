@@ -106,6 +106,28 @@ const pushMessage = (
   return [...messages, message];
 };
 
+const scrollToMessage = (scrollItemId: number) => {
+  const id = getListMessageIdString(scrollItemId);
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView();
+    return true;
+  }
+
+  return false;
+};
+
+const MAX_IS_BOTTOM_OFFSET_PX = 30;
+
+const isScrolledToBottom = (
+  element: HTMLElement,
+  bottomOffset = MAX_IS_BOTTOM_OFFSET_PX,
+) => {
+  const { scrollHeight, scrollTop, offsetHeight } = element;
+  const offSetFromBottom = scrollHeight - (scrollTop + offsetHeight);
+  return Math.abs(offSetFromBottom) < bottomOffset;
+};
+
 export {
   checkUnreadMessageCacheInfo,
   mergeCacheMessages,
@@ -115,4 +137,6 @@ export {
   listMessageSort,
   checkSplice,
   getListMessageIdString,
+  isScrolledToBottom,
+  scrollToMessage,
 };

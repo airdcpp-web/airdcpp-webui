@@ -1,17 +1,9 @@
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
 
 import * as UI from '@/types/ui';
-import { getListMessageIdString } from '@/utils/MessageUtils';
+import { isScrolledToBottom, scrollToMessage } from '@/utils/MessageUtils';
 
-const MAX_IS_BOTTOM_OFFSET_PX = 30;
-
-const isScrolledToBottom = (element: HTMLElement) => {
-  const { scrollHeight, scrollTop, offsetHeight } = element;
-  const offSetFromBottom = scrollHeight - (scrollTop + offsetHeight);
-  return Math.abs(offSetFromBottom) < MAX_IS_BOTTOM_OFFSET_PX;
-};
-
-const DEBUG = false;
+const DEBUG = true;
 
 interface Props {
   scrollPositionHandler: UI.ScrollHandler;
@@ -19,60 +11,61 @@ interface Props {
   messages: UI.MessageListItem[] | null;
 }
 
+const dbgMessage = (msg: string, session: UI.SessionItemBase | undefined) => {
+  if (DEBUG) {
+    let message = msg;
+    if (session) {
+      message += ` (session ${session.id})`;
+    } else {
+      message += ` (no session)`;
+    }
+
+    console.log(message);
+  }
+};
+
 export const useMessageViewScrollEffect = (
   { messages, scrollPositionHandler, session }: Props,
-  visibleItems: Set<number>,
+  visibleItems: number[],
+  scrollable: HTMLDivElement | null,
 ) => {
-  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
-  const scrollable = useRef<HTMLDivElement | null>(null);
   const sessionId = !!session ? session.id : undefined;
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const hasMessages = !!messages && !!messages.length;
 
-  const onScroll = (evt: UIEvent) => {
-    if (!hasMessages) {
+  const setScrollData = () => {
+    if (!scrollable) {
+      dbgMessage('Scrollable element not found', session);
       return;
     }
 
-    const shouldScrollToBottomNew = isScrolledToBottom(evt.target as HTMLElement);
-
-    if (!!visibleItems.size) {
-      // Wait for the message visibilities to update before saving
-      setTimeout(() => {
-        const messageId = shouldScrollToBottomNew
-          ? undefined
-          : Math.min.apply(null, Array.from(visibleItems));
-        if (DEBUG) {
-          console.log(
-            `Save scroll position, visible items ${Array.from(visibleItems).join(', ')}`,
-          );
-        }
-
-        scrollPositionHandler.setScrollData(messageId, sessionId);
-      });
+    if (!visibleItems.length) {
+      dbgMessage('No visible items to save scroll position', session);
+      return;
     }
 
+    const shouldScrollToBottomNew = isScrolledToBottom(scrollable);
+    const messageId = shouldScrollToBottomNew
+      ? undefined
+      : Math.min.apply(null, Array.from(visibleItems));
+
+    dbgMessage(
+      // eslint-disable-next-line max-len
+      `Save scroll position, visible items ${Array.from(visibleItems).join(', ')}, messageId: ${messageId}, shouldScrollToBottom: ${shouldScrollToBottomNew}`,
+      session,
+    );
+
+    scrollPositionHandler.setScrollData(messageId, sessionId);
     setShouldScrollToBottom(shouldScrollToBottomNew);
   };
 
+  useEffect(() => setScrollData(), [visibleItems]);
+
   const scrollToBottom = () => {
-    if (scrollable.current) {
-      scrollable.current.scrollTop = scrollable.current.scrollHeight;
+    if (scrollable) {
+      scrollable.scrollTop = scrollable.scrollHeight;
     }
   };
-
-  useLayoutEffect(() => {
-    // Scroll listener for the element
-    if (scrollable.current && hasMessages) {
-      scrollable.current.addEventListener('scroll', onScroll);
-
-      return () => {
-        scrollable.current!.removeEventListener('scroll', onScroll);
-      };
-    } else {
-      // Shouldn't happen
-      return;
-    }
-  }, [scrollable.current, hasMessages, sessionId]);
 
   useLayoutEffect(() => {
     if (hasMessages && shouldScrollToBottom) {
@@ -84,25 +77,22 @@ export const useMessageViewScrollEffect = (
     if (hasMessages) {
       const scrollItemId = scrollPositionHandler.getScrollData(sessionId);
       if (scrollItemId) {
-        const id = getListMessageIdString(scrollItemId);
+        dbgMessage(
+          `Session changed, restoring scroll position to message ${scrollItemId}`,
+          session,
+        );
 
-        if (DEBUG) {
-          console.log(`Session changed, restoring scroll position to message ${id}`);
-        }
+        if (!scrollToMessage(scrollItemId)) {
+          dbgMessage('Failed to restore scroll position', session);
 
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView();
-        } else if (DEBUG) {
-          console.log('Restore failed');
+          scrollToBottom();
         }
       } else {
-        if (DEBUG) {
-          console.log('Session changed, scroll to bottom');
-        }
-
+        dbgMessage('Session changed, scroll to bottom', session);
         scrollToBottom();
       }
+    } else {
+      dbgMessage('Session changed, no messages to restore scroll position', session);
     }
   }, [sessionId, hasMessages]);
 
