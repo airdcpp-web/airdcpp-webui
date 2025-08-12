@@ -1,6 +1,6 @@
 {
   "name": "airdcpp-webui",
-  "version": "2.14.0-beta.8",
+  "version": "2.14.0-beta.9",
   "description": "AirDC++ Web UI",
   "license": "MIT",
   "authors": [
@@ -12,7 +12,7 @@
     "react"
   ],
   "engines": {
-    "node": ">=4"
+    "node": ">=20"
   },
   "bugs": {
     "url": "https://github.com/airdcpp-web/airdcpp-webui/issues"
@@ -81,7 +81,7 @@
     "@types/react-transition-group": "^4.4.5",
     "@types/semantic-ui": "^2.2.7",
     "@types/webpack": "^5.28.0",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^5.0.0",
     "@vitest/browser": "^3.0.6",
     "@vitest/ui": "^3.0.6",
     "airdcpp-apisocket": "^3.0.0-beta.7",

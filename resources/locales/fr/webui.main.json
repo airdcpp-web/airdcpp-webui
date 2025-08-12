@@ -292,7 +292,7 @@
         "copyTTHSuccess": "Le TTH a été copié dans le presse-papiers",
         "copyMagnetSuccess": "Le lien magnet a été copié dans le presse-papiers",
         "copySuccess": "Le texte a été copié dans le presse-papier",
-        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
+        "grantHourUserSuccess": "Slot attribué à l'utilisateur {{item. Nicks}}"
       },
       "grantExtraSlot10Min": "Accorder extra slot (10 minutes)",
       "grantExtraSlotHour": "Accorder extra slot (Heure)",
