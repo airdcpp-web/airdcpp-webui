@@ -67,6 +67,12 @@ export const createTestRouteModalController = ({
   return { closeDialogButton, closeDialogText, openDialog };
 };
 
+export const waitDialogClosed = async ({ queryByRole }: BaseRenderResult) => {
+  await waitFor(() => {
+    expect(queryByRole('dialog')).toBeFalsy();
+  });
+};
+
 export const createTestModalController = ({
   getByRole,
   getByText,

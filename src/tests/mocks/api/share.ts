@@ -34,4 +34,10 @@ export const TempShareItem1 = {
   user: MockUser1Response,
 };
 
+export const TempShareCreateResponse = {
+  item: TempShareItem1,
+  magnet:
+    'magnet:?xt=urn:tree:tiger:NE4VKQAOJDMJRXH253CNLRJQ746OREIHWPL4VBQ&xl=1054&dn=tsconfig.json',
+};
+
 export const ShareTempItemListResponse = [TempShareItem1];

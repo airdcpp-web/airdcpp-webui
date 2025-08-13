@@ -34,12 +34,12 @@ export const openIconMenu = async (
   menuLabel: string,
   renderResult: BaseRenderResult & { userEvent: UserEvent },
 ) => {
-  const { userEvent, findByRole, getByLabelText } = renderResult;
+  const { userEvent, queryByRole, getByLabelText } = renderResult;
 
   await waitFor(() => expect(getByLabelText(menuLabel)).toBeTruthy());
   await userEvent.click(getByLabelText(menuLabel));
 
-  await waitFor(() => expect(findByRole('menu')).toBeTruthy());
+  await waitFor(() => expect(queryByRole('menu')).toBeTruthy());
 };
 
 export const openMenu = async (
@@ -52,12 +52,7 @@ export const openMenu = async (
   await waitFor(() => expect(getByRole('button', { name: triggerCaption })).toBeTruthy());
   await userEvent.click(getByRole('button', { name: triggerCaption }));
 
-  // Wait for the menu to be fully visible
-  await waitFor(() => {
-    const menu = queryByRole('menu');
-    expect(menu).toBeTruthy();
-    expect(menu).not.toHaveClass('hidden'); // wait for the transition to complete
-  });
+  await waitFor(() => expect(queryByRole('menu')).toBeTruthy());
 };
 
 export const waitMenuClosed = async ({ queryByRole }: BaseRenderResult) => {

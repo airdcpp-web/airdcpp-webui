@@ -19,10 +19,11 @@ import {
   expectRequestToMatchSnapshot,
   waitForLoader,
 } from '@/tests/helpers/test-helpers';
-import { TempShareItem1 } from '@/tests/mocks/api/share';
+import { TempShareCreateResponse, TempShareItem1 } from '@/tests/mocks/api/share';
 import { formatTempShareDropdownItem } from '../TempShareDropdown';
 import ShareConstants from '@/constants/ShareConstants';
 import { clickMenuItem, openIconMenu } from '@/tests/helpers/test-menu-helpers';
+import { waitDialogClosed } from '@/tests/helpers/test-dialog-helpers';
 
 describe('Message composer', () => {
   let server: MockServer;
@@ -35,7 +36,7 @@ describe('Message composer', () => {
   };
 
   const renderLayout = async () => {
-    const onUpload = vi.fn();
+    const onUpload = vi.fn(() => Promise.resolve(TempShareCreateResponse));
 
     const mockChatApi = {
       sendChatMessage: vi.fn(),
@@ -178,8 +179,9 @@ describe('Message composer', () => {
 
   describe('Temp share', () => {
     test('should add shared files', async () => {
-      const { getByTestId, getByRole, findByText, onUpload, userEvent } =
-        await renderLayout();
+      const renderResult = await renderLayout();
+
+      const { getByTestId, getByRole, findByText, onUpload, userEvent } = renderResult;
 
       await waitFor(() => expect(getByRole('textbox')).toBeInTheDocument());
 
@@ -203,6 +205,11 @@ describe('Message composer', () => {
           },
         ]
       `);
+
+      await waitDialogClosed(renderResult);
+
+      const messageInput = getByRole('textbox');
+      expect(messageInput).toHaveValue(TempShareCreateResponse.magnet);
     });
 
     test('should remove shared files', async () => {
