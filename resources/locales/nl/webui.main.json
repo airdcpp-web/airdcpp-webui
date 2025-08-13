@@ -336,6 +336,7 @@
     "networkClientError": "Netwerk/client fout",
     "failedToFetchData": "Ophalen van data mislukt",
     "failedToLoadContent": "Inhoud laden mislukt",
+    "failedToCreateDirectory": "Failed to create directory",
     "loadingItems": "Laad items",
     "root": "Root",
     "name": "Naam",
@@ -615,7 +616,10 @@
         "removeFavoriteDirectoryContent": "Weet je zeker dat je de volgende favoriete map wilt verwijderen {{item.name}}?",
         "removeSearchTypeApprove": "Verwijder type",
         "removeSearchTypeReject": "Niet verwijderen",
-        "removeSearchTypeContent": "Weet je zeker dat je het volgende zoektype wilt verwijderen {{item.name}}?"
+        "removeSearchTypeContent": "Weet je zeker dat je het volgende zoektype wilt verwijderen {{item.name}}?",
+        "removeProfileApprove": "Verwijder profiel",
+        "removeProfileReject": "Niet verwijderen",
+        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
       }
     },
     "navigation": {

@@ -336,6 +336,7 @@
     "networkClientError": "Sarea/bezeroaren errorea",
     "failedToFetchData": "Failed to fetch data",
     "failedToLoadContent": "Failed to load content",
+    "failedToCreateDirectory": "Failed to create directory",
     "loadingItems": "Elementuak kargatzen",
     "root": "Erroa",
     "name": "Izena",
@@ -615,7 +616,10 @@
         "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
         "removeSearchTypeApprove": "Remove type",
         "removeSearchTypeReject": "Ez ezabatu",
-        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?",
+        "removeProfileApprove": "Profila ezabatu",
+        "removeProfileReject": "Ez ezabatu",
+        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
       }
     },
     "navigation": {

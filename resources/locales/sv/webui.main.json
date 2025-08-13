@@ -336,6 +336,7 @@
     "networkClientError": "Nätverk-/klientfel",
     "failedToFetchData": "Misslyckades med att hämta data",
     "failedToLoadContent": "Misslyckades med att hämta innehållet",
+    "failedToCreateDirectory": "Failed to create directory",
     "loadingItems": "Laddar objekt",
     "root": "Root",
     "name": "Namn",
@@ -615,7 +616,10 @@
         "removeFavoriteDirectoryContent": "Är du säker på att du vill ta bort favoritkatalogen {{item.name}}?",
         "removeSearchTypeApprove": "Ta bort typ",
         "removeSearchTypeReject": "Ta inte bort",
-        "removeSearchTypeContent": "Är det säkert att du vill ta bort söktyp {{item.name}}?"
+        "removeSearchTypeContent": "Är det säkert att du vill ta bort söktyp {{item.name}}?",
+        "removeProfileApprove": "Ta bort profil",
+        "removeProfileReject": "Ta inte bort",
+        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
       }
     },
     "navigation": {

@@ -336,6 +336,7 @@
     "networkClientError": "Verkko-/selainvirhe",
     "failedToFetchData": "Tiedon hakeminen epäonnistui",
     "failedToLoadContent": "Sisällön lataaminen epäonnistui",
+    "failedToCreateDirectory": "Failed to create directory",
     "loadingItems": "Ladataan kohteita",
     "root": "Juuri",
     "name": "Nimi",
@@ -615,7 +616,10 @@
         "removeFavoriteDirectoryContent": "Haluatko varmasti poistaa suosikkikansion {{item.name}}?",
         "removeSearchTypeApprove": "Poista tyyppi",
         "removeSearchTypeReject": "Älä poista",
-        "removeSearchTypeContent": "Haluatko varmasti poistaa hakutyypin {{item.name}}?"
+        "removeSearchTypeContent": "Haluatko varmasti poistaa hakutyypin {{item.name}}?",
+        "removeProfileApprove": "Poista profiili",
+        "removeProfileReject": "Älä poista",
+        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
       }
     },
     "navigation": {

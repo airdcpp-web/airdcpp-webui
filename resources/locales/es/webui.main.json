@@ -336,6 +336,7 @@
     "networkClientError": "Error de red/cliente",
     "failedToFetchData": "Error al buscar los datos",
     "failedToLoadContent": "Fallo al cargar el contenido",
+    "failedToCreateDirectory": "Failed to create directory",
     "loadingItems": "Cargando elementos",
     "root": "Raíz",
     "name": "Nombre",
@@ -615,7 +616,10 @@
         "removeFavoriteDirectoryContent": "¿Estás seguro de querer eliminar la carpeta favorita {{item.name}}?",
         "removeSearchTypeApprove": "Eliminar tipo",
         "removeSearchTypeReject": "No eliminar",
-        "removeSearchTypeContent": "¿Estás seguro de querer eliminar el tipo de búsqueda {{item.name}}?"
+        "removeSearchTypeContent": "¿Estás seguro de querer eliminar el tipo de búsqueda {{item.name}}?",
+        "removeProfileApprove": "Eliminar perfil",
+        "removeProfileReject": "No eliminar",
+        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
       }
     },
     "navigation": {

@@ -336,6 +336,7 @@
     "networkClientError": "Eroare retea/client",
     "failedToFetchData": "Eroare de memorare data",
     "failedToLoadContent": "Failed to load content",
+    "failedToCreateDirectory": "Failed to create directory",
     "loadingItems": "Incarcare obiect",
     "root": "Radacina",
     "name": "Nume",
@@ -615,7 +616,10 @@
         "removeFavoriteDirectoryContent": "Esti sigur/a ca doresti sa elimini directorul favorit  {{item.name}}?",
         "removeSearchTypeApprove": "Remove type",
         "removeSearchTypeReject": "Nu sterge",
-        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?",
+        "removeProfileApprove": "Elimina profilul",
+        "removeProfileReject": "Nu sterge",
+        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
       }
     },
     "navigation": {

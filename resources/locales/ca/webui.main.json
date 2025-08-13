@@ -336,6 +336,7 @@
     "networkClientError": "Network/client error",
     "failedToFetchData": "Failed to fetch data",
     "failedToLoadContent": "No s'ha pogut carregar el contingut",
+    "failedToCreateDirectory": "Failed to create directory",
     "loadingItems": "Loading items",
     "root": "Root",
     "name": "Nom",
@@ -615,7 +616,10 @@
         "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
         "removeSearchTypeApprove": "Remove type",
         "removeSearchTypeReject": "No ho suprimeixis",
-        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?"
+        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?",
+        "removeProfileApprove": "Remove profile",
+        "removeProfileReject": "No el suprimeixis",
+        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
       }
     },
     "navigation": {

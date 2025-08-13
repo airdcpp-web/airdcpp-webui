@@ -336,6 +336,7 @@
     "networkClientError": "Netzwerk/Client Fehler",
     "failedToFetchData": "Datenempfang fehlgeschlagen",
     "failedToLoadContent": "Laden der Inhalte fehlgeschlagen",
+    "failedToCreateDirectory": "Failed to create directory",
     "loadingItems": "Elemente werden geladen",
     "root": "Hauptverzeichnis",
     "name": "Name",
@@ -615,7 +616,10 @@
         "removeFavoriteDirectoryContent": "Sind Sie sicher, dass Sie das favorisierte Verzeichnis {{item.name}} entfernen möchten?",
         "removeSearchTypeApprove": "Typ entfernen",
         "removeSearchTypeReject": "Nicht entfernen",
-        "removeSearchTypeContent": "Sind Sie sicher, dass Sie den Suchtypen {{item.name}} entfernen möchten?"
+        "removeSearchTypeContent": "Sind Sie sicher, dass Sie den Suchtypen {{item.name}} entfernen möchten?",
+        "removeProfileApprove": "Profil entfernen",
+        "removeProfileReject": "Nicht entfernen",
+        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
       }
     },
     "navigation": {
