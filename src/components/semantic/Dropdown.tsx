@@ -69,8 +69,9 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
   };
 
   init = () => {
+    const { contextElement, direction } = this.props;
     const settings: SemanticUI.DropdownSettings = {
-      direction: this.props.direction,
+      direction,
       action: 'hide',
       showOnFocus: false, // It can become focused when opening a modal
       onShow: () => {
@@ -95,8 +96,8 @@ class Dropdown extends React.PureComponent<DropdownProps, State> {
       //verbose: true,
     };
 
-    if (this.props.contextElement) {
-      settings['context'] = this.props.contextElement;
+    if (contextElement) {
+      settings['context'] = contextElement;
       invariant(settings['context'], 'Context missing from dropdown');
     }
 

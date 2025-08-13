@@ -46,14 +46,18 @@ export const openMenu = async (
   triggerCaption: string,
   renderResult: BaseRenderResult & { userEvent: UserEvent },
 ) => {
-  const { userEvent, getByRole, findByRole } = renderResult;
+  const { userEvent, getByRole, queryByRole } = renderResult;
 
-  // getByRole('button', { name: caption });
+  // Open
   await waitFor(() => expect(getByRole('button', { name: triggerCaption })).toBeTruthy());
-
   await userEvent.click(getByRole('button', { name: triggerCaption }));
 
-  await waitFor(() => expect(findByRole('menu')).toBeTruthy());
+  // Wait for the menu to be fully visible
+  await waitFor(() => {
+    const menu = queryByRole('menu');
+    expect(menu).toBeTruthy();
+    expect(menu).not.toHaveClass('hidden'); // wait for the transition to complete
+  });
 };
 
 export const waitMenuClosed = async ({ queryByRole }: BaseRenderResult) => {
