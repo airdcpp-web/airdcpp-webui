@@ -282,13 +282,9 @@ describe('Events', () => {
     // Scroll to a message
     const scrollMessage = newMessages[5];
 
-    scrollMessageView(scrollMessage.id, scrollContainer1);
-
-    await waitFor(() =>
-      expect(sessionStore.getState().events.scroll.getScrollData()).toBe(
-        scrollMessage.id,
-      ),
-    );
+    const eventScrollDataGetter = () =>
+      sessionStore.getState().events.scroll.getScrollData();
+    await scrollMessageView(scrollMessage.id, scrollContainer1, eventScrollDataGetter);
 
     const newScrollPosition = scrollContainer1.scrollTop;
 

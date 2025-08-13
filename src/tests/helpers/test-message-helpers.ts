@@ -36,6 +36,7 @@ export const expectScrollTop = async (
 export const scrollMessageView = async (
   messageId: number,
   scrollContainer: HTMLElement,
+  scrollDataGetter: () => number | undefined,
 ) => {
   // Scroll to message (this won't fire the scroll listener)
   scrollToMessage(messageId);
@@ -44,5 +45,11 @@ export const scrollMessageView = async (
   await sleep(10);
 
   // Just fire the scroll event with the new scroll position
-  fireEvent.scroll(scrollContainer, { target: { scrollTop: scrollContainer.scrollTop } });
+  await waitFor(() => {
+    fireEvent.scroll(scrollContainer, {
+      target: { scrollTop: scrollContainer.scrollTop },
+    });
+
+    expect(scrollDataGetter()).toBe(messageId);
+  });
 };

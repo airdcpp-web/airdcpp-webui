@@ -340,14 +340,8 @@ describe('Private messages', () => {
     // Scroll to a message
     const scrollMessage1 = newMessages1[5];
 
-    await scrollMessageView(scrollMessage1.id, scrollContainer);
-
-    await waitFor(() =>
-      expect(
-        sessionStore
-          .getState()
-          .privateChats.messages.scroll.getScrollData(PrivateChat1.id),
-      ).toBe(scrollMessage1.id),
+    await scrollMessageView(scrollMessage1.id, scrollContainer, () =>
+      sessionStore.getState().privateChats.messages.scroll.getScrollData(PrivateChat1.id),
     );
 
     const newScrollPosition = Math.round(scrollContainer.scrollTop);
@@ -361,13 +355,8 @@ describe('Private messages', () => {
 
     // Scroll the other session
     const scrollMessage2 = newMessages2[5];
-    await scrollMessageView(scrollMessage2.id, scrollContainer);
-    await waitFor(() =>
-      expect(
-        sessionStore
-          .getState()
-          .privateChats.messages.scroll.getScrollData(PrivateChat2.id),
-      ).toBe(scrollMessage2.id),
+    await scrollMessageView(scrollMessage2.id, scrollContainer, () =>
+      sessionStore.getState().privateChats.messages.scroll.getScrollData(PrivateChat2.id),
     );
 
     // Go back
