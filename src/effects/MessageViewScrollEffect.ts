@@ -1,6 +1,7 @@
-import { useState, useLayoutEffect, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 import * as UI from '@/types/ui';
+
 import { isScrolledToBottom, scrollToMessage } from '@/utils/MessageUtils';
 
 const DEBUG = false;
@@ -26,46 +27,60 @@ const dbgMessage = (msg: string, chatSession: UI.SessionItemBase | undefined) =>
 
 export const useMessageViewScrollEffect = (
   { messages, scrollPositionHandler, chatSession }: Props,
-  visibleItems: number[],
+  visibleItems: Set<number>,
   scrollable: HTMLDivElement | null,
 ) => {
-  const sessionId = !!chatSession ? chatSession.id : undefined;
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
+  const sessionId = !!chatSession ? chatSession.id : undefined;
   const hasMessages = !!messages && !!messages.length;
 
-  const setScrollData = () => {
-    if (!scrollable) {
-      dbgMessage('Scrollable element not found', chatSession);
+  const onScroll = (evt: UIEvent) => {
+    if (!hasMessages) {
       return;
     }
 
-    if (!visibleItems.length) {
-      dbgMessage('No visible items to save scroll position', chatSession);
-      return;
-    }
+    const shouldScrollToBottomNew = isScrolledToBottom(evt.target as HTMLElement);
 
-    const shouldScrollToBottomNew = isScrolledToBottom(scrollable);
-    const messageId = shouldScrollToBottomNew
-      ? undefined
-      : Math.min.apply(null, Array.from(visibleItems));
+    // Wait for the message visibilities to update before saving
+    setTimeout(() => {
+      if (!visibleItems.size) {
+        dbgMessage('No visible items to save scroll position', chatSession);
+        return;
+      }
 
-    dbgMessage(
-      // eslint-disable-next-line max-len
-      `Save scroll position, visible items ${Array.from(visibleItems).join(', ')}, messageId: ${messageId}, shouldScrollToBottom: ${shouldScrollToBottomNew}`,
-      chatSession,
-    );
+      const messageId = shouldScrollToBottomNew
+        ? undefined
+        : Math.min.apply(null, Array.from(visibleItems));
+      dbgMessage(
+        `Save scroll position, visible items ${Array.from(visibleItems).join(', ')}`,
+        chatSession,
+      );
 
-    scrollPositionHandler.setScrollData(messageId, sessionId);
+      scrollPositionHandler.setScrollData(messageId, sessionId);
+    });
+
     setShouldScrollToBottom(shouldScrollToBottomNew);
   };
-
-  useEffect(() => setScrollData(), [visibleItems]);
 
   const scrollToBottom = () => {
     if (scrollable) {
       scrollable.scrollTop = scrollable.scrollHeight;
     }
   };
+
+  useLayoutEffect(() => {
+    // Scroll listener for the element
+    if (scrollable && hasMessages) {
+      scrollable.addEventListener('scroll', onScroll);
+
+      return () => {
+        scrollable!.removeEventListener('scroll', onScroll);
+      };
+    } else {
+      // Shouldn't happen
+      return;
+    }
+  }, [scrollable, hasMessages, sessionId]);
 
   useLayoutEffect(() => {
     if (hasMessages && shouldScrollToBottom) {
@@ -95,6 +110,4 @@ export const useMessageViewScrollEffect = (
       dbgMessage('Session changed, no messages to restore scroll position', chatSession);
     }
   }, [sessionId, hasMessages]);
-
-  return scrollable;
 };

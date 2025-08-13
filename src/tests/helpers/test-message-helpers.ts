@@ -1,8 +1,9 @@
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-import { isScrolledToBottom } from '@/utils/MessageUtils';
-import { waitFor } from '@testing-library/dom';
+import { isScrolledToBottom, scrollToMessage } from '@/utils/MessageUtils';
+import { sleep } from '@/utils/Promise';
+import { fireEvent, waitFor } from '@testing-library/dom';
 import { expect } from 'vitest';
 
 export const incrementChatSessionUserMessageCounts = (
@@ -30,4 +31,18 @@ export const expectScrollTop = async (
   await waitFor(() =>
     expect(Math.round(scrollContainer.scrollTop)).toBe(Math.round(scrollTop)),
   );
+};
+
+export const scrollMessageView = async (
+  messageId: number,
+  scrollContainer: HTMLElement,
+) => {
+  // Scroll to message (this won't fire the scroll listener)
+  scrollToMessage(messageId);
+
+  // Wait for the scroll event to be processed
+  await sleep(10);
+
+  // Just fire the scroll event with the new scroll position
+  fireEvent.scroll(scrollContainer, { target: { scrollTop: scrollContainer.scrollTop } });
 };

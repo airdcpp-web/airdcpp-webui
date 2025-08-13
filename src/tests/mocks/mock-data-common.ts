@@ -50,3 +50,5 @@ export const initCommonDataMocks = async (
 
   return { socket, appStore, sessionStore, session, mockStoreListeners };
 };
+
+export type CommonDataMocks = Awaited<ReturnType<typeof initCommonDataMocks>>;

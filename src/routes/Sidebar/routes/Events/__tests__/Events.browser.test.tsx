@@ -36,9 +36,9 @@ import MenuConstants from '@/constants/MenuConstants';
 import {
   expectScrolledToBottom,
   expectScrollTop,
+  scrollMessageView,
 } from '@/tests/helpers/test-message-helpers';
 import { StoreApi } from 'zustand';
-import { scrollToMessage } from '@/utils/MessageUtils';
 
 const GoToEventsCaption = 'Go to events';
 
@@ -282,7 +282,7 @@ describe('Events', () => {
     // Scroll to a message
     const scrollMessage = newMessages[5];
 
-    scrollToMessage(scrollMessage.id);
+    scrollMessageView(scrollMessage.id, scrollContainer1);
 
     await waitFor(() =>
       expect(sessionStore.getState().events.scroll.getScrollData()).toBe(

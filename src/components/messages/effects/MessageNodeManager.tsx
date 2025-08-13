@@ -9,7 +9,6 @@ import { MessageListItem } from '../list/MessageListItem';
 import { MessageListDateDivider, showDateDivider } from '../list/MessageListDateDivider';
 
 import { ItemDownloadManager } from '../../../effects/ItemDownloadManager';
-import { debounce } from 'lodash';
 
 interface MessageItemData {
   entity: UI.SessionItemBase | undefined;
@@ -84,28 +83,16 @@ export const useMessagesNode = (
   downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>,
   scrollable: HTMLDivElement | null,
 ) => {
-  const visibleItemSet = React.useRef<Set<number>>(new Set());
-  const [visibleItems, setVisibleItems] = React.useState<number[]>([]);
-
-  const debouncedUpdateVisibleItems = React.useMemo(
-    () =>
-      debounce(() => {
-        // console.log(`Visible items ${Array.from(visibleItemSet.current)}`);
-        setVisibleItems(Array.from(visibleItemSet.current));
-      }, 20),
-    [],
-  );
+  const visibleItems = useMemo(() => new Set<number>(), [chatSession]);
 
   const onMessageVisibilityChanged = (id: number, inView: boolean) => {
     if (!inView) {
       // console.log(`Remove view item ${id}`);
-      visibleItemSet.current.delete(id);
+      visibleItems.delete(id);
     } else {
-      //console.log(`Add view item ${id}`);
-      visibleItemSet.current.add(id);
+      // console.log(`Add view item ${id}`);
+      visibleItems.add(id);
     }
-
-    debouncedUpdateVisibleItems();
   };
 
   const messageNodes = useMemo(() => {

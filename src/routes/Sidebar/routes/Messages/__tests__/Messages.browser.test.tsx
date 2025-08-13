@@ -19,7 +19,7 @@ import {
 } from '@/tests/mocks/api/private-chat';
 import { useStoreDataFetch } from '@/components/main/effects/StoreDataFetchEffect';
 import PrivateChatConstants from '@/constants/PrivateChatConstants';
-import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import { CommonDataMocks, initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
 import * as API from '@/types/api';
@@ -49,9 +49,9 @@ import {
   expectScrolledToBottom,
   expectScrollTop,
   incrementChatSessionUserMessageCounts,
+  scrollMessageView,
 } from '@/tests/helpers/test-message-helpers';
 import { generateChatMessages } from '@/tests/mocks/helpers/mock-message-helpers';
-import { scrollToMessage } from '@/utils/MessageUtils';
 
 import '@/style.css';
 import { openMenu } from '@/tests/helpers/react-select-event';
@@ -289,7 +289,21 @@ describe('Private messages', () => {
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
   });
 
+  const generateSessionMessages = (
+    sessionId: string,
+    mockStoreListeners: CommonDataMocks['mockStoreListeners'],
+    startId?: number,
+  ) => {
+    const newMessages = generateChatMessages(20, startId);
+    newMessages.forEach((message) => {
+      mockStoreListeners.privateChat.chatMessage.fire(message, sessionId);
+    });
+
+    return newMessages;
+  };
+
   test('should handle scroll', async () => {
+    const renderResult = await renderLayout();
     const {
       getByText,
       getByRole,
@@ -297,57 +311,73 @@ describe('Private messages', () => {
       sessionStore,
       queryByText,
       userEvent,
-    } = await renderLayout();
+    } = renderResult;
 
     await waitSessionsLoaded(queryByText);
 
     // Generate messages
-    const newMessages = generateChatMessages(20);
-    newMessages.forEach((message) => {
-      mockStoreListeners.privateChat.chatMessage.fire(message, PrivateChat1.id);
-    });
+    const newMessages1 = generateSessionMessages(
+      PrivateChat1.id,
+      mockStoreListeners,
+      1000,
+    );
+    const newMessages2 = generateSessionMessages(
+      PrivateChat2.id,
+      mockStoreListeners,
+      2000,
+    );
 
-    await waitFor(() => expect(getByText(newMessages[19].text)).toBeTruthy());
+    await waitFor(() => expect(getByText(newMessages1[19].text)).toBeTruthy());
 
     expect(
       sessionStore.getState().privateChats.messages.isSessionInitialized(PrivateChat1.id),
     ).toBeTruthy();
 
     // Check that we are scrolled to the bottom
-    const scrollContainer1 = getByRole('article');
-    await waitFor(() => expectScrolledToBottom(scrollContainer1));
+    const scrollContainer = getByRole('article');
+    await waitFor(() => expectScrolledToBottom(scrollContainer));
 
     // Scroll to a message
-    const scrollMessage = newMessages[5];
+    const scrollMessage1 = newMessages1[5];
 
-    scrollToMessage(scrollMessage.id);
+    await scrollMessageView(scrollMessage1.id, scrollContainer);
 
     await waitFor(() =>
       expect(
         sessionStore
           .getState()
           .privateChats.messages.scroll.getScrollData(PrivateChat1.id),
-      ).toBe(scrollMessage.id),
+      ).toBe(scrollMessage1.id),
     );
 
-    const newScrollPosition = Math.round(scrollContainer1.scrollTop);
+    const newScrollPosition = Math.round(scrollContainer.scrollTop);
 
     // Go to another session
     const session2MenuItem = queryByText(PrivateChat2.user.nicks);
     await userEvent.click(session2MenuItem!);
 
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
-    expectScrolledToBottom(scrollContainer1);
+    expectScrolledToBottom(scrollContainer);
+
+    // Scroll the other session
+    const scrollMessage2 = newMessages2[5];
+    await scrollMessageView(scrollMessage2.id, scrollContainer);
+    await waitFor(() =>
+      expect(
+        sessionStore
+          .getState()
+          .privateChats.messages.scroll.getScrollData(PrivateChat2.id),
+      ).toBe(scrollMessage2.id),
+    );
 
     // Go back
     const session1MenuItem = queryByText(PrivateChat1.user.nicks);
     await userEvent.click(session1MenuItem!);
 
-    await waitFor(() => expect(getByText(newMessages[0].text)).toBeTruthy());
+    await waitFor(() => expect(getByText(newMessages1[0].text)).toBeTruthy());
 
     // Check that the scroll position was restored
-    const scrollContainer2 = getByRole('article');
-    await expectScrollTop(scrollContainer2, newScrollPosition);
+    await expectScrollTop(scrollContainer, newScrollPosition);
   });
 
   test('should handle user inactivity', async () => {

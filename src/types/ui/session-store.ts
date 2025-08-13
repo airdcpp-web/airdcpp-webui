@@ -40,7 +40,7 @@ export interface SessionSlice<SessionT extends SessionItemBase> extends UnreadIn
 
 export interface ScrollHandler {
   getScrollData: (id?: API.IdType) => number | undefined;
-  setScrollData: (data: number | undefined, id?: API.IdType) => void;
+  setScrollData: (scrollData: number | undefined, chatSessionId?: API.IdType) => void;
 }
 
 export interface SessionScrollHandler extends ScrollHandler {
