@@ -9,6 +9,7 @@ import { MessageListItem } from '../list/MessageListItem';
 import { MessageListDateDivider, showDateDivider } from '../list/MessageListDateDivider';
 
 import { ItemDownloadManager } from '../../../effects/ItemDownloadManager';
+import { UIInstanceId, useUIInstance } from '@/context/InstanceContext';
 
 interface MessageItemData {
   entity: UI.SessionItemBase | undefined;
@@ -16,6 +17,7 @@ interface MessageItemData {
   addDownload: UI.AddItemDownload;
   highlightRemoteMenuId: string | undefined;
   scrollable: HTMLDivElement | null;
+  instanceId: UIInstanceId;
 }
 
 const reduceMessageListItem = (
@@ -25,6 +27,7 @@ const reduceMessageListItem = (
     addDownload,
     highlightRemoteMenuId,
     scrollable,
+    instanceId,
   }: MessageItemData,
   reduced: React.ReactNode[],
   message: UI.MessageListItem,
@@ -48,7 +51,7 @@ const reduceMessageListItem = (
   reduced.push(
     <MessageListItem
       key={id}
-      id={getListMessageIdString(id)}
+      id={getListMessageIdString(id, instanceId)}
       onChange={(inView) => {
         onMessageVisibilityChanged(id, inView);
       }}
@@ -83,6 +86,7 @@ export const useMessagesNode = (
   downloadManager: ItemDownloadManager<UI.DownloadableItemInfo, Props>,
   scrollable: HTMLDivElement | null,
 ) => {
+  const instanceId = useUIInstance();
   const visibleItems = useMemo(() => new Set<number>(), [chatSession]);
 
   const onMessageVisibilityChanged = (id: number, inView: boolean) => {
@@ -107,6 +111,7 @@ export const useMessagesNode = (
         onMessageVisibilityChanged,
         addDownload: downloadManager.addDownloadItem,
         scrollable,
+        instanceId,
       }),
       [],
     );

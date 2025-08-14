@@ -2,6 +2,7 @@ import update from 'immutability-helper';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
+import { appendInstanceId, UIInstanceId } from '@/context/InstanceContext';
 
 // Remove the oldest messages to match the maximum cache count
 const checkSplice = (
@@ -28,8 +29,8 @@ const getListMessageId = (listItem: UI.MessageListItem) => {
   return !!message ? message.id : undefined;
 };
 
-const getListMessageIdString = (id: number) => {
-  return `message-list-item-${id}`;
+const getListMessageIdString = (id: number, instanceId: UIInstanceId) => {
+  return appendInstanceId(`message-list-item-${id}`, instanceId);
 };
 
 const getListMessageTime = (listItem: UI.MessageListItem) => {
@@ -106,8 +107,8 @@ const pushMessage = (
   return [...messages, message];
 };
 
-const scrollToMessage = (scrollItemId: number) => {
-  const id = getListMessageIdString(scrollItemId);
+const scrollToMessage = (scrollItemId: number, instanceId: UIInstanceId) => {
+  const id = getListMessageIdString(scrollItemId, instanceId);
   const element = document.getElementById(id);
   if (element) {
     element.scrollIntoView();

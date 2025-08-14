@@ -11,6 +11,14 @@ export const waitForUrl = async (
   });
 };
 
+export const navigateToUrl = async (
+  pathName: string,
+  router: BasicRouteRenderResult['router'],
+) => {
+  router.navigate(pathName);
+  await waitForUrl(pathName, router);
+};
+
 export const waitForData = async (
   text: Matcher,
   queryByText: RenderResult['queryByText'],

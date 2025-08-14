@@ -33,6 +33,7 @@ import { LocalSettings } from '@/constants/LocalSettingConstants';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import {
   expectRequestToMatchSnapshot,
+  navigateToUrl,
   waitForData,
   waitForUrl,
 } from '@/tests/helpers/test-helpers';
@@ -183,6 +184,10 @@ describe('Private messages', () => {
 
     const routes = [
       {
+        index: true,
+        Component: () => <div>Index page</div>,
+      },
+      {
         path: '/messages/:session?/:id?/*',
         Component: MessageLayoutTest,
       },
@@ -289,86 +294,6 @@ describe('Private messages', () => {
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
   });
 
-  const generateSessionMessages = (
-    sessionId: string,
-    mockStoreListeners: CommonDataMocks['mockStoreListeners'],
-    startId?: number,
-  ) => {
-    const newMessages = generateChatMessages(20, startId);
-    newMessages.forEach((message) => {
-      mockStoreListeners.privateChat.chatMessage.fire(message, sessionId);
-    });
-
-    return newMessages;
-  };
-
-  test('should handle scroll', async () => {
-    const renderResult = await renderLayout();
-    const {
-      getByText,
-      getByRole,
-      mockStoreListeners,
-      sessionStore,
-      queryByText,
-      userEvent,
-    } = renderResult;
-
-    await waitSessionsLoaded(queryByText);
-
-    // Generate messages
-    const newMessages1 = generateSessionMessages(
-      PrivateChat1.id,
-      mockStoreListeners,
-      1000,
-    );
-    const newMessages2 = generateSessionMessages(
-      PrivateChat2.id,
-      mockStoreListeners,
-      2000,
-    );
-
-    await waitFor(() => expect(getByText(newMessages1[19].text)).toBeTruthy());
-
-    expect(
-      sessionStore.getState().privateChats.messages.isSessionInitialized(PrivateChat1.id),
-    ).toBeTruthy();
-
-    // Check that we are scrolled to the bottom
-    const scrollContainer = getByRole('article');
-    await waitFor(() => expectScrolledToBottom(scrollContainer));
-
-    // Scroll to a message
-    const scrollMessage1 = newMessages1[5];
-
-    await scrollMessageView(scrollMessage1.id, scrollContainer, () =>
-      sessionStore.getState().privateChats.messages.scroll.getScrollData(PrivateChat1.id),
-    );
-
-    const newScrollPosition = Math.round(scrollContainer.scrollTop);
-
-    // Go to another session
-    const session2MenuItem = queryByText(PrivateChat2.user.nicks);
-    await userEvent.click(session2MenuItem!);
-
-    await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
-    expectScrolledToBottom(scrollContainer);
-
-    // Scroll the other session
-    const scrollMessage2 = newMessages2[5];
-    await scrollMessageView(scrollMessage2.id, scrollContainer, () =>
-      sessionStore.getState().privateChats.messages.scroll.getScrollData(PrivateChat2.id),
-    );
-
-    // Go back
-    const session1MenuItem = queryByText(PrivateChat1.user.nicks);
-    await userEvent.click(session1MenuItem!);
-
-    await waitFor(() => expect(getByText(newMessages1[0].text)).toBeTruthy());
-
-    // Check that the scroll position was restored
-    await expectScrollTop(scrollContainer, newScrollPosition);
-  });
-
   test('should handle user inactivity', async () => {
     const { queryByText, mockStoreListeners, onSession1Read, sessionStore } =
       await renderLayout(false);
@@ -451,6 +376,255 @@ describe('Private messages', () => {
     );
 
     await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
+  });
+
+  const generateSessionMessages = (
+    sessionId: string,
+    mockStoreListeners: CommonDataMocks['mockStoreListeners'],
+    startId?: number,
+  ) => {
+    const newMessages = generateChatMessages(20, startId);
+    newMessages.forEach((message) => {
+      mockStoreListeners.privateChat.chatMessage.fire(message, sessionId);
+    });
+
+    return newMessages;
+  };
+
+  describe('scroll', () => {
+    test('should handle scroll between the sessions', async () => {
+      const renderResult = await renderLayout();
+      const {
+        getByText,
+        getByRole,
+        mockStoreListeners,
+        sessionStore,
+        queryByText,
+        userEvent,
+        instanceId,
+      } = renderResult;
+
+      await waitSessionsLoaded(queryByText);
+
+      // Generate messages
+      const newMessages1 = generateSessionMessages(
+        PrivateChat1.id,
+        mockStoreListeners,
+        1000,
+      );
+      const newMessages2 = generateSessionMessages(
+        PrivateChat2.id,
+        mockStoreListeners,
+        2000,
+      );
+
+      await waitFor(() => expect(getByText(newMessages1[19].text)).toBeTruthy());
+
+      expect(
+        sessionStore
+          .getState()
+          .privateChats.messages.isSessionInitialized(PrivateChat1.id),
+      ).toBeTruthy();
+
+      // Check that we are scrolled to the bottom
+      const scrollContainer = getByRole('article');
+      await waitFor(() => expectScrolledToBottom(scrollContainer));
+
+      // Scroll to a message
+      const scrollMessage1 = newMessages1[5];
+
+      await scrollMessageView(scrollMessage1.id, instanceId, scrollContainer, () =>
+        sessionStore
+          .getState()
+          .privateChats.messages.scroll.getScrollData(PrivateChat1.id),
+      );
+
+      const newScrollPosition = Math.round(scrollContainer.scrollTop);
+
+      // Go to another session
+      const session2MenuItem = queryByText(PrivateChat2.user.nicks);
+      await userEvent.click(session2MenuItem!);
+
+      await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
+      expectScrolledToBottom(scrollContainer);
+
+      // Scroll the other session
+      const scrollMessage2 = newMessages2[5];
+      await scrollMessageView(scrollMessage2.id, instanceId, scrollContainer, () =>
+        sessionStore
+          .getState()
+          .privateChats.messages.scroll.getScrollData(PrivateChat2.id),
+      );
+
+      // Go back
+      const session1MenuItem = queryByText(PrivateChat1.user.nicks);
+      await userEvent.click(session1MenuItem!);
+
+      await waitFor(() => expect(getByText(newMessages1[0].text)).toBeTruthy());
+
+      // Check that the scroll position was restored
+      await expectScrollTop(scrollContainer, newScrollPosition);
+    });
+
+    test('should restore scroll when opening the layout', async () => {
+      const renderResult = await renderLayout();
+      const {
+        getByText,
+        getByRole,
+        mockStoreListeners,
+        sessionStore,
+        queryByText,
+        router,
+        instanceId,
+      } = renderResult;
+
+      await waitSessionsLoaded(queryByText);
+
+      // Generate messages
+      const newMessages1 = generateSessionMessages(
+        PrivateChat1.id,
+        mockStoreListeners,
+        1000,
+      );
+
+      await waitFor(() => expect(getByText(newMessages1[19].text)).toBeTruthy());
+
+      expect(
+        sessionStore
+          .getState()
+          .privateChats.messages.isSessionInitialized(PrivateChat1.id),
+      ).toBeTruthy();
+
+      // Scroll to a message
+      const scrollMessage1 = newMessages1[5];
+
+      let scrollContainer = getByRole('article');
+      await scrollMessageView(scrollMessage1.id, instanceId, scrollContainer, () =>
+        sessionStore
+          .getState()
+          .privateChats.messages.scroll.getScrollData(PrivateChat1.id),
+      );
+
+      const newScrollPosition = Math.round(scrollContainer.scrollTop);
+
+      // Close the view
+      await navigateToUrl('/', router);
+
+      // Go back
+      await navigateToUrl(`/messages/session/${PrivateChat1.id}`, router);
+
+      await waitFor(() => expect(getByText(newMessages1[0].text)).toBeTruthy());
+
+      // Check that the scroll position was restored
+      scrollContainer = getByRole('article');
+      await expectScrollTop(scrollContainer, newScrollPosition);
+    });
+
+    test('should scroll to bottom when opening the layout', async () => {
+      const renderResult = await renderLayout();
+      const {
+        getByText,
+        getByRole,
+        mockStoreListeners,
+        sessionStore,
+        queryByText,
+        router,
+      } = renderResult;
+
+      await waitSessionsLoaded(queryByText);
+
+      // Generate messages
+      const newMessages1 = generateSessionMessages(
+        PrivateChat1.id,
+        mockStoreListeners,
+        1000,
+      );
+
+      await waitFor(() => expect(getByText(newMessages1[19].text)).toBeTruthy());
+
+      expect(
+        sessionStore
+          .getState()
+          .privateChats.messages.isSessionInitialized(PrivateChat1.id),
+      ).toBeTruthy();
+
+      // Close the view
+      await navigateToUrl('/', router);
+
+      // Go back
+      await navigateToUrl(`/messages/session/${PrivateChat1.id}`, router);
+
+      await waitFor(() => expect(getByText(newMessages1[0].text)).toBeTruthy());
+
+      // Check scroll position
+      const scrollContainer = getByRole('article');
+      await waitFor(() => expectScrolledToBottom(scrollContainer));
+    });
+
+    test('should scroll to bottom if the saved message is not found', async () => {
+      const renderResult = await renderLayout();
+      const {
+        getByText,
+        getByRole,
+        mockStoreListeners,
+        sessionStore,
+        queryByText,
+        router,
+        instanceId,
+      } = renderResult;
+
+      await waitSessionsLoaded(queryByText);
+
+      // Generate messages
+      const newMessages1 = generateSessionMessages(
+        PrivateChat1.id,
+        mockStoreListeners,
+        1000,
+      );
+
+      await waitFor(() => expect(getByText(newMessages1[19].text)).toBeTruthy());
+
+      expect(
+        sessionStore
+          .getState()
+          .privateChats.messages.isSessionInitialized(PrivateChat1.id),
+      ).toBeTruthy();
+
+      // Scroll to top
+      const scrollMessage1 = PrivateChat1MessagesResponse[0].log_message!;
+
+      let scrollContainer = getByRole('article');
+      await scrollMessageView(scrollMessage1.id, instanceId, scrollContainer, () =>
+        sessionStore
+          .getState()
+          .privateChats.messages.scroll.getScrollData(PrivateChat1.id),
+      );
+
+      // Close the view
+      await navigateToUrl('/', router);
+
+      // Remove the first message
+      sessionStore.getState().privateChats.messages.updateSession(
+        {
+          message_counts: {
+            total:
+              sessionStore.getState().privateChats.messages.messages.get(PrivateChat1.id)!
+                .length - 1,
+            unread: PrivateChat1.message_counts.unread,
+          },
+        },
+        PrivateChat1.id,
+      );
+
+      // Go back
+      await navigateToUrl(`/messages/session/${PrivateChat1.id}`, router);
+
+      await waitFor(() => expect(getByText(newMessages1[0].text)).toBeTruthy());
+
+      // Check scroll position
+      scrollContainer = getByRole('article');
+      await waitFor(() => expectScrolledToBottom(scrollContainer));
+    });
   });
 
   describe('highlights', () => {

@@ -32,7 +32,8 @@ const MessageView: React.FC<MessageViewProps> = React.memo(
     highlightRemoteMenuId,
     scrollPositionHandler,
   }) {
-    const scrollableRef = React.useRef<HTMLDivElement | null>(null);
+    // Can't use ref because we need to re-run the scroll hooks when the element is available
+    const [scrollable, setScrollable] = React.useState<HTMLDivElement | null>(null);
     const downloadManager = useItemDownloadManager(chatSession);
     const { messageNodes, visibleItems } = useMessagesNode(
       {
@@ -41,18 +42,18 @@ const MessageView: React.FC<MessageViewProps> = React.memo(
         chatSession,
       },
       downloadManager,
-      scrollableRef.current,
+      scrollable,
     );
 
     useMessageViewScrollEffect(
       { messages, scrollPositionHandler, chatSession },
       visibleItems,
-      scrollableRef.current,
+      scrollable,
     );
 
     return (
       <div
-        ref={scrollableRef}
+        ref={setScrollable}
         className={classNames('message-section', className)}
         role="article"
       >

@@ -15,7 +15,12 @@ import {
   NotificationEventEmitter,
 } from '@/components/main/notifications/effects/NotificationManager';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
-import { clickButton, waitForData, waitForUrl } from '@/tests/helpers/test-helpers';
+import {
+  clickButton,
+  navigateToUrl,
+  waitForData,
+  waitForUrl,
+} from '@/tests/helpers/test-helpers';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 import EventConstants from '@/constants/EventConstants';
@@ -199,9 +204,7 @@ describe('Events', () => {
     expect(onNotification).toHaveBeenCalledTimes(0);
 
     // Send message while the events view is not active
-    router.navigate('/');
-
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
     await waitFor(() => expect(sessionStore.getState().events.viewActive).toBeFalsy());
 
     mockStoreListeners.events.counts.fire(
@@ -257,7 +260,7 @@ describe('Events', () => {
   });
 
   test('should handle scroll', async () => {
-    const { getByText, getByRole, mockStoreListeners, sessionStore, router } =
+    const { getByText, getByRole, mockStoreListeners, sessionStore, router, instanceId } =
       await renderLayout({
         initEvents: true,
       });
@@ -284,19 +287,22 @@ describe('Events', () => {
 
     const eventScrollDataGetter = () =>
       sessionStore.getState().events.scroll.getScrollData();
-    await scrollMessageView(scrollMessage.id, scrollContainer1, eventScrollDataGetter);
+    await scrollMessageView(
+      scrollMessage.id,
+      instanceId,
+      scrollContainer1,
+      eventScrollDataGetter,
+    );
 
     const newScrollPosition = scrollContainer1.scrollTop;
 
     // Close the view
-    router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
 
     expect(sessionStore.getState().events.scroll.getScrollData()).toBe(scrollMessage.id);
 
     // Go back
-    router.navigate('/events');
-    await waitForUrl('/events', router);
+    await navigateToUrl('/events', router);
     await waitFor(() => expect(getByText(newMessages[0].text)).toBeTruthy());
 
     // Check that the scroll position was restored

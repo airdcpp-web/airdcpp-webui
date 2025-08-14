@@ -1,8 +1,8 @@
+import { UIInstanceId } from '@/context/InstanceContext';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 import { isScrolledToBottom, scrollToMessage } from '@/utils/MessageUtils';
-import { sleep } from '@/utils/Promise';
 import { fireEvent, waitFor } from '@testing-library/dom';
 import { expect } from 'vitest';
 
@@ -35,16 +35,16 @@ export const expectScrollTop = async (
 
 export const scrollMessageView = async (
   messageId: number,
+  instanceId: UIInstanceId,
   scrollContainer: HTMLElement,
   scrollDataGetter: () => number | undefined,
 ) => {
   // Scroll to message (this won't fire the scroll listener)
-  scrollToMessage(messageId);
+  scrollToMessage(messageId, instanceId);
 
-  // Wait for the scroll event to be processed
-  await sleep(10);
-
-  // Just fire the scroll event with the new scroll position
+  // Fire the scroll event with the new scroll position
+  // May require multiple calls as the visible message list may not be updated immediately
+  // by react-intersection-observer
   await waitFor(() => {
     fireEvent.scroll(scrollContainer, {
       target: { scrollTop: scrollContainer.scrollTop },

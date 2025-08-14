@@ -63,6 +63,7 @@ export const renderBaseNode = (
     formatter,
     appStore,
     i18n,
+    instanceId,
   };
 };
 

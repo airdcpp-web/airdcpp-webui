@@ -3,6 +3,7 @@ import { useState, useLayoutEffect } from 'react';
 import * as UI from '@/types/ui';
 
 import { isScrolledToBottom, scrollToMessage } from '@/utils/MessageUtils';
+import { useUIInstance } from '@/context/InstanceContext';
 
 const DEBUG = false;
 
@@ -33,6 +34,7 @@ export const useMessageViewScrollEffect = (
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const sessionId = !!chatSession ? chatSession.id : undefined;
   const hasMessages = !!messages && !!messages.length;
+  const instanceId = useUIInstance();
 
   const onScroll = (evt: UIEvent) => {
     if (!hasMessages) {
@@ -52,7 +54,7 @@ export const useMessageViewScrollEffect = (
         ? undefined
         : Math.min.apply(null, Array.from(visibleItems));
       dbgMessage(
-        `Save scroll position, visible items ${Array.from(visibleItems).join(', ')}`,
+        `Save scroll position ${messageId}, visible items ${Array.from(visibleItems).join(', ')}`,
         chatSession,
       );
 
@@ -65,6 +67,8 @@ export const useMessageViewScrollEffect = (
   const scrollToBottom = () => {
     if (scrollable) {
       scrollable.scrollTop = scrollable.scrollHeight;
+    } else {
+      dbgMessage('No scrollable element to scroll to bottom', chatSession);
     }
   };
 
@@ -83,12 +87,17 @@ export const useMessageViewScrollEffect = (
   }, [scrollable, hasMessages, sessionId]);
 
   useLayoutEffect(() => {
-    if (hasMessages && shouldScrollToBottom) {
+    if (scrollable && hasMessages && shouldScrollToBottom) {
+      dbgMessage('Scroll to bottom', chatSession);
       scrollToBottom();
     }
-  }, [hasMessages, messages]);
+  }, [scrollable, hasMessages, messages]);
 
   useLayoutEffect(() => {
+    if (!scrollable) {
+      return;
+    }
+
     if (hasMessages) {
       const scrollItemId = scrollPositionHandler.getScrollData(sessionId);
       if (scrollItemId) {
@@ -97,17 +106,18 @@ export const useMessageViewScrollEffect = (
           chatSession,
         );
 
-        if (!scrollToMessage(scrollItemId)) {
+        if (!scrollToMessage(scrollItemId, instanceId)) {
           dbgMessage('Failed to restore scroll position', chatSession);
 
-          scrollToBottom();
+          // scrollToBottom();
         }
       } else {
-        dbgMessage('Session changed, scroll to bottom', chatSession);
-        scrollToBottom();
+        dbgMessage('Session changed, no scroll position to restore', chatSession);
+        // dbgMessage('Session changed, scroll to bottom', chatSession);
+        // scrollToBottom();
       }
     } else {
       dbgMessage('Session changed, no messages to restore scroll position', chatSession);
     }
-  }, [sessionId, hasMessages]);
+  }, [scrollable, sessionId, hasMessages]);
 };
