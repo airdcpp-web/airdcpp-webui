@@ -19,6 +19,7 @@ import UserConstants from '@/constants/UserConstants';
 import { getTestActionMenu, installActionMenuMocks } from './test-action-menu-helpers';
 import {
   clickMenuItem,
+  clickSubMenu,
   openMenu,
   waitMenuClosed,
 } from '@/tests/helpers/test-menu-helpers';
@@ -140,9 +141,9 @@ describe('User menu', () => {
 
       await waitFor(() => expect(menu2Mocks.onListGrouped).toHaveBeenCalledTimes(1));
 
-      await clickMenuItem(RemoteMenuGrouped1.title, renderResult);
+      const clickSubMenuItem = await clickSubMenu(RemoteMenuGrouped1.title, renderResult);
+      await clickSubMenuItem(RemoteMenu2Item.title);
 
-      await clickMenuItem(RemoteMenu2Item.title, renderResult);
       await waitFor(() => expect(menu2Mocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
 
       expectRequestToMatchSnapshot(menu2Mocks.onSelectMenuItem);
@@ -171,9 +172,8 @@ describe('User menu', () => {
       const menu2Items = await findAllByText(RemoteMenu2Item.title);
       expect(menu2Items).toHaveLength(1);
 
-      await clickMenuItem(RemoteMenuGrouped1.title, renderResult);
-
-      await clickMenuItem(RemoteMenu2Item.title, renderResult);
+      const clickSubMenuItem = await clickSubMenu(RemoteMenuGrouped1.title, renderResult);
+      await clickSubMenuItem(RemoteMenu2Item.title);
       await waitFor(() => expect(menu2Mocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
 
       expectRequestToMatchSnapshot(menu2Mocks.onSelectMenuItem);

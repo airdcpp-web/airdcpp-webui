@@ -28,6 +28,7 @@ import {
 } from './test-action-menu-helpers';
 import {
   clickMenuItem,
+  clickSubMenu,
   openMenu,
   waitMenuClosed,
 } from '@/tests/helpers/test-menu-helpers';
@@ -147,9 +148,11 @@ describe('Action menu', () => {
 
         await waitFor(() => expect(menuMocks.onListGrouped).toHaveBeenCalledTimes(1));
 
-        await clickMenuItem(RemoteMenuGrouped1.title, renderResult);
-
-        await clickMenuItem(RemoteMenu1ItemNormal.title, renderResult);
+        const clickSubMenuItem = await clickSubMenu(
+          RemoteMenuGrouped1.title,
+          renderResult,
+        );
+        await clickSubMenuItem(RemoteMenu1ItemNormal.title);
         await waitFor(() => expect(menuMocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
 
         expectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
@@ -164,9 +167,11 @@ describe('Action menu', () => {
 
         await waitFor(() => expect(menuMocks.onListGrouped).toHaveBeenCalledTimes(1));
 
-        await clickMenuItem(RemoteMenuGrouped1.title, renderResult);
-
-        await clickMenuItem(RemoteMenu1ItemForm.title, renderResult);
+        const clickSubMenuItem = await clickSubMenu(
+          RemoteMenuGrouped1.title,
+          renderResult,
+        );
+        await clickSubMenuItem(RemoteMenu1ItemForm.title);
 
         await waitFor(() => expect(getByRole('dialog')).toBeTruthy());
 

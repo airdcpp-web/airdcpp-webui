@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { renderDataNode } from '@/tests/render/test-renderers';
+import { getTestPageId, renderDataNode } from '@/tests/render/test-renderers';
 
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
@@ -24,6 +24,7 @@ import { formatTempShareDropdownItem } from '../TempShareDropdown';
 import ShareConstants from '@/constants/ShareConstants';
 import { clickMenuItem, openIconMenu } from '@/tests/helpers/test-menu-helpers';
 import { waitDialogClosed } from '@/tests/helpers/test-dialog-helpers';
+import { useUIInstance } from '@/context/InstanceContext';
 
 describe('Message composer', () => {
   let server: MockServer;
@@ -59,6 +60,9 @@ describe('Message composer', () => {
 
     const MessageComposerLayoutTest = () => {
       const { t } = useTranslation();
+
+      const instanceId = useUIInstance();
+      const dropdownContext = getTestPageId(instanceId);
       return (
         <MessageComposer
           t={t}
@@ -67,6 +71,7 @@ describe('Message composer', () => {
           chatSession={mockChatSession}
           chatCommands={mockChatCommands}
           sessionType="mock_session_type"
+          dropdownContext={dropdownContext}
         />
       );
     };
@@ -227,7 +232,10 @@ describe('Message composer', () => {
       );
 
       // Remove the item
+      // console.log('Open');
       await openIconMenu('Temp share', renderData);
+
+      // console.log('Click');
       await clickMenuItem(formatTempShareDropdownItem(TempShareItem1), renderData);
 
       // Validate request

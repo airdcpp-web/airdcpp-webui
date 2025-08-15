@@ -1,5 +1,5 @@
 import { AnimationConstants } from '@/constants/UIConstants';
-import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
+import { appendInstanceId, useUIInstance } from '@/context/InstanceContext';
 import { useSidebarContext } from '@/context/SidebarContext';
 import * as React from 'react';
 
@@ -79,7 +79,7 @@ export const useModal = (props: CommonModalProps, customSettings: ModalSettings)
     }
   };
 
-  const instanceId = React.useContext(UIInstanceContext);
+  const instanceId = useUIInstance();
   const modalNodeId = appendInstanceId(MODAL_NODE_ID, instanceId);
 
   React.useLayoutEffect(() => {

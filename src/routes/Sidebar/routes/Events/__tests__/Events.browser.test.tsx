@@ -3,7 +3,6 @@ import { RenderResult, waitFor } from '@testing-library/react';
 
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
-import { useStoreDataFetch } from '@/components/main/effects/StoreDataFetchEffect';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 import * as API from '@/types/api';
@@ -15,12 +14,7 @@ import {
   NotificationEventEmitter,
 } from '@/components/main/notifications/effects/NotificationManager';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
-import {
-  clickButton,
-  navigateToUrl,
-  waitForData,
-  waitForUrl,
-} from '@/tests/helpers/test-helpers';
+import { navigateToUrl, waitForData } from '@/tests/helpers/test-helpers';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 import EventConstants from '@/constants/EventConstants';
@@ -31,7 +25,7 @@ import {
   EventMessagesResponse,
 } from '@/tests/mocks/api/events';
 import Events from '../components/EventsLayout';
-import { TestRouteNavigateButton } from '@/tests/helpers/test-route-helpers';
+
 import { generateStatusMessages } from '@/tests/mocks/helpers/mock-message-helpers';
 import { clickMenuItem, openMenu } from '@/tests/helpers/test-menu-helpers';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
@@ -44,8 +38,7 @@ import {
   scrollMessageView,
 } from '@/tests/helpers/test-message-helpers';
 import { StoreApi } from 'zustand';
-
-const GoToEventsCaption = 'Go to events';
+import { createDataFetchRoutes } from '@/tests/helpers/test-route-helpers';
 
 // tslint:disable:no-empty
 describe('Events', () => {
@@ -98,7 +91,6 @@ describe('Events', () => {
     const { commonData, ...other } = await getSocket();
 
     const EventLayoutTest = () => {
-      useStoreDataFetch(true);
       return (
         <>
           <Events />
@@ -107,25 +99,15 @@ describe('Events', () => {
       );
     };
 
-    const IndexPage = () => {
-      return (
-        <>
-          <TestRouteNavigateButton route={'/events'} caption={GoToEventsCaption} />
-          <SocketNotificationListener />
-        </>
-      );
-    };
-
-    const routes = [
-      {
-        index: true,
-        Component: IndexPage,
-      },
-      {
-        path: '/events/*',
-        Component: EventLayoutTest,
-      },
-    ];
+    const routes = createDataFetchRoutes(
+      [
+        {
+          path: 'events/*',
+          Component: EventLayoutTest,
+        },
+      ],
+      <SocketNotificationListener />,
+    );
 
     const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/events'] },
@@ -178,10 +160,9 @@ describe('Events', () => {
   });
 
   test('should handle read messages', async () => {
-    const { getByRole, mockStoreListeners, onRead, sessionStore, router } =
-      await renderLayout({
-        initEvents: true,
-      });
+    const { mockStoreListeners, onRead, sessionStore, router } = await renderLayout({
+      initEvents: true,
+    });
 
     const onNotification = vi.fn();
     NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
@@ -220,8 +201,7 @@ describe('Events', () => {
     await waitFor(() => expect(onNotification).toHaveBeenCalledTimes(1));
 
     // Go back to events
-    clickButton(GoToEventsCaption, getByRole);
-    await waitForUrl('/events', router);
+    await navigateToUrl('/events', router);
 
     await waitFor(() => expect(onRead).toHaveBeenCalledTimes(3));
     expect(sessionStore.getState().events.viewActive).toBeTruthy();
@@ -265,7 +245,9 @@ describe('Events', () => {
         initEvents: true,
       });
 
-    expect(sessionStore.getState().events.isInitialized).toBeTruthy();
+    await waitFor(() =>
+      expect(sessionStore.getState().events.isInitialized).toBeTruthy(),
+    );
 
     // Check content
     await waitFor(() => expect(getByText(EventMessageInfo.text)).toBeTruthy());
@@ -279,8 +261,8 @@ describe('Events', () => {
     await waitFor(() => expect(getByText(newMessages[19].text)).toBeTruthy());
 
     // Check that we are scrolled to the bottom
-    const scrollContainer1 = getByRole('article');
-    expectScrolledToBottom(scrollContainer1);
+    let scrollContainer = getByRole('article');
+    expectScrolledToBottom(scrollContainer);
 
     // Scroll to a message
     const scrollMessage = newMessages[5];
@@ -290,11 +272,11 @@ describe('Events', () => {
     await scrollMessageView(
       scrollMessage.id,
       instanceId,
-      scrollContainer1,
+      scrollContainer,
       eventScrollDataGetter,
     );
 
-    const newScrollPosition = scrollContainer1.scrollTop;
+    const newScrollPosition = scrollContainer.scrollTop;
 
     // Close the view
     await navigateToUrl('/', router);
@@ -306,8 +288,8 @@ describe('Events', () => {
     await waitFor(() => expect(getByText(newMessages[0].text)).toBeTruthy());
 
     // Check that the scroll position was restored
-    const scrollContainer2 = getByRole('article');
-    await expectScrollTop(scrollContainer2, newScrollPosition);
+    scrollContainer = getByRole('article');
+    await expectScrollTop(scrollContainer, newScrollPosition);
   });
 
   test('should clear messages', async () => {

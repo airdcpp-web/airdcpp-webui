@@ -24,6 +24,8 @@ import { useSocket } from '@/context/SocketContext';
 import { useSession } from '@/context/AppStoreContext';
 import { hasAccess } from '@/utils/AuthUtils';
 
+import './message-composer.css';
+
 const getMentionFieldStyle = (mobileLayout: boolean) => {
   return {
     suggestions: {
@@ -110,7 +112,11 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
   };
 
   const mobile = usingMobileLayout();
-  const className = classNames('ui form composer', { small: mobile }, { large: !mobile });
+  const className = classNames(
+    'ui form message-composer',
+    { small: mobile },
+    { large: !mobile },
+  );
 
   const hasFileUploadAccess =
     hasAccess(session, API.AccessEnum.FILESYSTEM_EDIT) &&

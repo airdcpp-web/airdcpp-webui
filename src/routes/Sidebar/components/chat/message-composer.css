@@ -1,0 +1,37 @@
+
+/* Composer */
+.message-composer {
+  display: flex;
+}
+
+.message-composer:focus {
+  outline: none;
+}
+
+.message-composer textarea,
+.message-composer textarea:focus {
+  resize: none;
+  border-radius: 0.28571429rem 0 0 0.28571429rem;
+  margin-left: 1px;
+}
+
+.message-composer .button {
+  border-radius: 0 0.28571429rem 0.28571429rem 0;
+  width: 45px;
+  margin: 0px;
+}
+
+.message-composer.large .actions.button .caption {
+  display: flex !important;
+  align-items: center !important;
+  opacity: 0.9;
+}
+
+.message-composer > .input {
+  width: 100%;
+}
+
+#normal-layout .message-composer > .input {
+  /* Leave some empty space to the right for better styling with ugly native scrollbars (especially with Firefox) */
+  width: calc(100% - 60px);
+}

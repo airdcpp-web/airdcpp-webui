@@ -13,7 +13,11 @@ import '@/utils/semantic';
 import { MODAL_PAGE_DIMMER_ID } from '@/components/semantic/effects/useModal';
 import { createFormatter } from '@/utils/Formatter';
 import { getMockI18n } from '../mocks/mock-i18n';
-import { appendInstanceId, generateInstanceId } from '@/context/InstanceContext';
+import {
+  appendInstanceId,
+  generateInstanceId,
+  UIInstanceId,
+} from '@/context/InstanceContext';
 import { BaseTestWrapper, SessionTestWrapper, VIEW_SCROLLABLE } from './test-containers';
 
 import * as UI from '@/types/ui';
@@ -23,6 +27,10 @@ import { createAppStore } from '@/stores/app';
 export interface BaseRenderProps {
   appStore: StoreApi<UI.AppStore>;
 }
+
+export const getTestPageId = (instanceId: UIInstanceId) => {
+  return `#${appendInstanceId(MODAL_PAGE_DIMMER_ID, instanceId)}`;
+};
 
 export const renderBaseNode = (
   node: React.ReactNode,

@@ -7,6 +7,7 @@ import { parseActionMenu } from '@/utils/MenuUtils';
 import { localMenuToActionMenuItems } from './helpers/localMenuBuilder';
 import { ActionData } from '@/decorators/components/ActionDialog';
 import { useSession } from '@/context/AppStoreContext';
+import { useTranslation } from 'react-i18next';
 
 // This should be used only for constructed menus, not for id arrays
 const hasLocalItems = <
@@ -35,6 +36,7 @@ export const useActionMenuItems = <
   props: ActionMenuDefinition<ItemDataT, EntityT>,
 ) => {
   const login = useSession();
+  const { t } = useTranslation();
 
   // Get nested menus
   const getMenuDefinitionArray = (): ActionMenuDefinition<ItemDataT, EntityT>[] => {
@@ -96,6 +98,7 @@ export const useActionMenuItems = <
         onClickHandler,
         menu as UI.ActionMenuType<ItemDataT, EntityT>,
         menuIndex,
+        t,
       );
 
       return [...reduced, ...menuItems];

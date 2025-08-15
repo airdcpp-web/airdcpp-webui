@@ -14,7 +14,6 @@ import { BaseRenderResult, renderDataRoutes } from '@/tests/render/test-renderer
 
 import Files from '../components/Files';
 
-import { useStoreDataFetch } from '@/components/main/effects/StoreDataFetchEffect';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 import * as API from '@/types/api';
@@ -37,6 +36,7 @@ import { sleep } from '@/utils/Promise';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { UserEvent } from '@testing-library/user-event';
 import { clickMenuItem, openIconMenu } from '@/tests/helpers/test-menu-helpers';
+import { createDataFetchRoutes } from '@/tests/helpers/test-route-helpers';
 
 const fetchMocker = createFetchMock(vi);
 
@@ -85,7 +85,6 @@ describe('Viewed files', () => {
     sessionStore.getState().activity.setUserActive(true);
 
     const FileLayoutTest = () => {
-      useStoreDataFetch(true);
       return (
         <>
           <Files />
@@ -94,12 +93,12 @@ describe('Viewed files', () => {
       );
     };
 
-    const routes = [
+    const routes = createDataFetchRoutes([
       {
         path: '/files/:session?/:id?/*',
         Component: FileLayoutTest,
       },
-    ];
+    ]);
 
     const renderData = renderDataRoutes(routes, commonData, {
       viewType: VIEW_FIXED_HEIGHT,

@@ -65,7 +65,7 @@ export const remoteMenuToActionMenuItems = (
         onClick: () => {
           // ..
         },
-        children: <>{menu.title}</>,
+        children: menu.title,
       },
       children: items,
     },

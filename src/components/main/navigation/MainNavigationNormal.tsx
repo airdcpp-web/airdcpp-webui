@@ -20,7 +20,7 @@ const MainNavigationNormal: React.FC<MainNavigationNormalProps> = ({
   const appStore = useAppStore();
   const session = useSession();
   return (
-    <div className="item right" role="menu">
+    <div className="item right" role="menubar">
       {parseMenuItems(primaryRoutes, session, undefined, false)}
 
       <SectionedDropdown className="top right">

@@ -16,43 +16,6 @@
   margin: 10px 0px 0px 0px;
 }
 
-/* Composer */
-.chat.session .composer {
-  display: flex;
-}
-
-.chat.session .composer:focus {
-  outline: none;
-}
-
-.chat.session .composer textarea,
-.chat.session .composer textarea:focus {
-  resize: none;
-  border-radius: 0.28571429rem 0 0 0.28571429rem;
-  margin-left: 1px;
-}
-
-.chat.session .composer .button {
-  border-radius: 0 0.28571429rem 0.28571429rem 0;
-  width: 45px;
-  margin: 0px;
-}
-
-.chat.session .composer.large .actions.button .caption {
-  display: flex !important;
-  align-items: center !important;
-  opacity: 0.9;
-}
-
-#mobile-layout .chat.session .composer > .input {
-  width: 100%;
-}
-
-#normal-layout .chat.session .composer > .input {
-  /* Leave some empty space to the right for better styling with ugly native scrollbars (especially with Firefox) */
-  width: calc(100% - 60px);
-}
-
 /* Messages common */
 .chat.session .item .time {
   float: right;

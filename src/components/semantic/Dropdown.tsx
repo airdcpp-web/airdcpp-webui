@@ -1,12 +1,11 @@
 import * as React from 'react';
-import invariant from 'invariant';
-
+import { useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import DropdownCaption from './DropdownCaption';
 import Icon, { IconType } from './Icon';
 
-import 'fomantic-ui-css/components/button.min.css'; // for button style
+import 'fomantic-ui-css/components/button.min.css';
 import 'fomantic-ui-css/components/dropdown';
 import 'fomantic-ui-css/components/dropdown.min.css';
 import IconConstants from '@/constants/IconConstants';
@@ -28,8 +27,6 @@ export type DropdownProps = React.PropsWithChildren<{
 
   // Show trigger icon on the left side of the caption instead of after it
   leftIcon?: boolean;
-
-  // Node to render as caption
   caption?: React.ReactNode;
 
   className?: string;
@@ -41,132 +38,112 @@ export type DropdownProps = React.PropsWithChildren<{
   label?: string;
 }>;
 
-interface State {
-  visible: boolean;
-}
+const Dropdown: React.FC<DropdownProps> = ({
+  triggerIcon,
+  direction = 'auto',
+  settings,
+  contextElement,
+  button,
+  leftIcon,
+  caption,
+  className,
+  captionIcon,
+  selection,
+  dropDownElementProps,
+  size,
+  menuElementClassName,
+  label,
+  children,
+}) => {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
 
-class Dropdown extends React.PureComponent<DropdownProps, State> {
-  static readonly defaultProps: Pick<DropdownProps, 'direction' | 'leftIcon'> = {
-    direction: 'auto',
-    leftIcon: false,
-  };
-
-  c: HTMLDivElement;
-
-  componentDidMount() {
-    // Use timeout to allow all parents finish mounting (otherwise we get no context)
-    setTimeout(this.init);
-  }
-
-  componentWillUnmount() {
-    if (this.c) {
-      $(this.c).dropdown('destroy');
-    }
-  }
-
-  state: State = {
-    visible: false,
-  };
-
-  init = () => {
-    const { contextElement, direction } = this.props;
-    const settings: SemanticUI.DropdownSettings = {
-      direction,
-      action: 'hide',
-      showOnFocus: false, // It can become focused when opening a modal
-      onShow: () => {
-        this.setState({
-          visible: true,
-        });
-      },
-      onHide: () => {
-        setTimeout(
-          // Handle possible item click events before removing the items...
-          () => {
-            this.setState({
-              visible: false,
-            });
-          },
-          AnimationConstants.dropdown,
-        );
-      },
-      duration: AnimationConstants.dropdown,
-      ...this.props.settings,
-      //debug: true,
-      //verbose: true,
-    };
-
-    if (contextElement) {
-      settings['context'] = contextElement;
-      invariant(settings['context'], 'Context missing from dropdown');
-    }
-
-    $(this.c).dropdown(settings);
-  };
-
-  getIcon = () => {
-    const { triggerIcon, selection } = this.props;
-
+  const computedIcon = useMemo<IconType>(() => {
     if (triggerIcon !== undefined) {
       return triggerIcon;
     }
-
     return selection ? 'dropdown' : IconConstants.EXPAND;
-  };
+  }, [triggerIcon, selection]);
 
-  render() {
-    const {
-      leftIcon,
-      caption,
-      button,
-      captionIcon,
-      dropDownElementProps,
-      selection,
-      size,
-      menuElementClassName,
-      children,
-      label,
-    } = this.props;
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) {
+      return;
+    }
 
-    const className = classNames(
-      'ui',
-      'dropdown',
-      'item',
-      size,
-      this.props.className,
-      { 'icon button': button },
-      { labeled: !!button && !!caption },
-      { 'left-icon': leftIcon },
-      { 'selection fluid': selection },
-    );
+    const dropdownSettings: SemanticUI.DropdownSettings = {
+      direction,
+      action: 'hide',
+      showOnFocus: false,
+      duration: AnimationConstants.dropdown,
+      onShow: () => {
+        // console.log('Dropdown onShow');
+        setVisible(true);
+      },
+      onHide: () => {
+        // console.log('Dropdown onHide');
+        // Wait for hide animation before unmounting menu content
+        setTimeout(() => setVisible(false), AnimationConstants.dropdown);
+      },
 
-    const icon = <Icon icon={this.getIcon()} className="trigger" />;
+      // debug: true,
+      // verbose: true,
 
-    const { visible } = this.state;
-    return (
+      ...settings,
+    };
+
+    if (contextElement) {
+      dropdownSettings.context = contextElement;
+    }
+
+    $(el).dropdown(dropdownSettings);
+
+    return () => {
+      try {
+        $(el).dropdown('destroy');
+      } catch {
+        // ignore
+      }
+    };
+  }, [direction, settings, contextElement]);
+
+  const dropdownClassName = classNames(
+    'ui',
+    'dropdown',
+    'item',
+    size,
+    className,
+    { 'icon button': button },
+    { labeled: !!button && !!caption },
+    { 'left-icon': leftIcon },
+    { 'selection fluid': selection },
+  );
+
+  const trigger = <Icon icon={computedIcon} className="trigger" />;
+
+  return (
+    <div
+      ref={rootRef}
+      {...dropDownElementProps}
+      className={dropdownClassName}
+      aria-label={label}
+    >
+      {leftIcon && !!caption && trigger}
+
+      <DropdownCaption icon={captionIcon} role="button">
+        {!!caption ? caption : trigger}
+      </DropdownCaption>
+
+      {!leftIcon && !!caption ? trigger : null}
+
       <div
-        ref={(c) => {
-          this.c = c!;
-        }}
-        {...dropDownElementProps}
-        className={className}
-        aria-label={label}
+        className={classNames('menu', menuElementClassName)}
+        role={visible ? 'menu' : undefined}
       >
-        {leftIcon && !!caption && icon}
-        <DropdownCaption icon={captionIcon} role="button">
-          {!!caption ? caption : icon}
-        </DropdownCaption>
-        {leftIcon || !caption ? null : icon}
-
-        <div
-          className={classNames('menu', menuElementClassName)}
-          role={visible ? 'menu' : undefined}
-        >
-          {visible ? children : <div className="item" />}
-        </div>
+        {visible ? children : <div className="item" />}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Dropdown;

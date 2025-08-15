@@ -17,7 +17,6 @@ import {
   PrivateChat2MessagesResponse,
   PrivateChat3,
 } from '@/tests/mocks/api/private-chat';
-import { useStoreDataFetch } from '@/components/main/effects/StoreDataFetchEffect';
 import PrivateChatConstants from '@/constants/PrivateChatConstants';
 import { CommonDataMocks, initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
@@ -55,14 +54,14 @@ import {
 import { generateChatMessages } from '@/tests/mocks/helpers/mock-message-helpers';
 
 import '@/style.css';
-import { openMenu } from '@/tests/helpers/react-select-event';
 import { installActionMenuMocks } from '@/components/action-menu/__tests__/test-action-menu-helpers';
 import MenuConstants from '@/constants/MenuConstants';
 import { RemoteMenuGrouped1 } from '@/tests/mocks/api/menu';
-import { clickMenuItem } from '@/tests/helpers/test-menu-helpers';
+import { clickMenuItem, clickSubMenu, openMenu } from '@/tests/helpers/test-menu-helpers';
 import { formatMagnetCaption, parseMagnetLink } from '@/utils/MagnetUtils';
 import QueueConstants from '@/constants/QueueConstants';
 import { QueueBundleCreateFileResponse } from '@/tests/mocks/api/queue-bundles';
+import { createDataFetchRoutes } from '@/tests/helpers/test-route-helpers';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
@@ -173,7 +172,6 @@ describe('Private messages', () => {
     }
 
     const MessageLayoutTest = () => {
-      useStoreDataFetch(true);
       return (
         <>
           <Messages />
@@ -182,16 +180,12 @@ describe('Private messages', () => {
       );
     };
 
-    const routes = [
-      {
-        index: true,
-        Component: () => <div>Index page</div>,
-      },
+    const routes = createDataFetchRoutes([
       {
         path: '/messages/:session?/:id?/*',
         Component: MessageLayoutTest,
       },
-    ];
+    ]);
 
     const renderData = renderDataRoutes(routes, commonData, {
       routerProps: { initialEntries: ['/messages'] },
@@ -649,9 +643,9 @@ describe('Private messages', () => {
         expect(getByText(PrivateChat1MessageRelease.highlights[0].text)).toBeTruthy(),
       );
 
-      await openMenu(getByText(PrivateChat1MessageRelease.highlights[0].text));
-      await clickMenuItem(RemoteMenuGrouped1.title, renderData);
-      await clickMenuItem(RemoteMenuGrouped1.items[0].title, renderData);
+      await openMenu(PrivateChat1MessageRelease.highlights[0].text, renderData);
+      const clickSubMenuItem = await clickSubMenu(RemoteMenuGrouped1.title, renderData);
+      await clickSubMenuItem(RemoteMenuGrouped1.items[0].title);
 
       expectRequestToMatchSnapshot(menuMocks.onListGrouped);
     });
@@ -674,7 +668,7 @@ describe('Private messages', () => {
       const caption = formatMagnetCaption(magnet, formatter);
       await waitFor(() => expect(getByText(caption)).toBeTruthy());
 
-      await openMenu(getByText(caption));
+      await openMenu(caption, renderData);
       await clickMenuItem('Download', renderData);
 
       await waitFor(() => expect(onDownloadFile).toHaveBeenCalledTimes(1));

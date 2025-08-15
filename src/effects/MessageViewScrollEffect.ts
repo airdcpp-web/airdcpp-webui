@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 import * as UI from '@/types/ui';
 
@@ -31,7 +31,7 @@ export const useMessageViewScrollEffect = (
   visibleItems: Set<number>,
   scrollable: HTMLDivElement | null,
 ) => {
-  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
+  const shouldScrollToBottom = useRef(true);
   const sessionId = !!chatSession ? chatSession.id : undefined;
   const hasMessages = !!messages && !!messages.length;
   const instanceId = useUIInstance();
@@ -61,7 +61,7 @@ export const useMessageViewScrollEffect = (
       scrollPositionHandler.setScrollData(messageId, sessionId);
     });
 
-    setShouldScrollToBottom(shouldScrollToBottomNew);
+    shouldScrollToBottom.current = shouldScrollToBottomNew;
   };
 
   const scrollToBottom = () => {
@@ -87,7 +87,7 @@ export const useMessageViewScrollEffect = (
   }, [scrollable, hasMessages, sessionId]);
 
   useLayoutEffect(() => {
-    if (scrollable && hasMessages && shouldScrollToBottom) {
+    if (scrollable && hasMessages && shouldScrollToBottom.current) {
       dbgMessage('Scroll to bottom', chatSession);
       scrollToBottom();
     }

@@ -29,7 +29,7 @@ import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
 import '@/style.css';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
-import { clickMenuItem } from '@/tests/helpers/test-menu-helpers';
+import { clickNavigationMenuItem } from '@/tests/helpers/test-menu-helpers';
 
 const MainDialogOpenCaption = 'Open main test dialog';
 const SidebarDialogOpenCaption = 'Open sidebar test dialog';
@@ -238,7 +238,7 @@ describe('MainLayout', () => {
       const { getByText, modalController, getByRole } = renderData;
 
       // Open sidebar
-      await clickMenuItem(SidebarRouteMenuCaption, renderData);
+      await clickNavigationMenuItem(SidebarRouteMenuCaption, renderData);
       await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
 
       // Open sidebar dialog

@@ -11,7 +11,7 @@ type SideMenuProps = Pick<SettingSectionLayoutProps, 'menu' | 'settingsT'>;
 const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menu, settingsT }) => {
   return (
     <div className="three wide column menu-column">
-      <div className="ui vertical secondary menu" role="menu">
+      <div className="ui vertical secondary menu" role="menubar">
         {menu.childMenuItems}
         {!!menu.childAdvancedMenuItems && (
           <div>

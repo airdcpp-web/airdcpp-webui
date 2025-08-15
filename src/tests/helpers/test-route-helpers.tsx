@@ -1,5 +1,6 @@
+import { useStoreDataFetch } from '@/components/main/effects/StoreDataFetchEffect';
 import Button from '@/components/semantic/Button';
-import { useNavigate } from 'react-router';
+import { Outlet, RouteObject, useNavigate } from 'react-router';
 
 interface TestRouteNavigateButtonProps {
   caption: string;
@@ -59,4 +60,39 @@ export const TestNavigateForwardButton = ({
       }}
     />
   );
+};
+
+export const createDataFetchRoutes = (
+  children: RouteObject[],
+  indexChildren: React.ReactNode = null,
+) => {
+  const DataFetchWrapper: React.FC = () => {
+    useStoreDataFetch(true);
+    return <Outlet />;
+  };
+
+  const IndexPage = () => {
+    return (
+      <>
+        <div>Index page</div>
+        {indexChildren}
+      </>
+    );
+  };
+
+  const routes: RouteObject[] = [
+    {
+      path: '/',
+      Component: DataFetchWrapper,
+      children: [
+        {
+          index: true,
+          Component: IndexPage,
+        },
+        ...children,
+      ],
+    },
+  ];
+
+  return routes;
 };

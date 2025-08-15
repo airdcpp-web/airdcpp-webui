@@ -61,7 +61,7 @@ export interface SessionLayoutManageProps<
 
 export interface SessionInfoGetter<SessionT> {
   itemLabelGetter?: (sessionItem: SessionT) => React.ReactNode;
-  itemNameGetter: (sessionItem: SessionT) => React.ReactNode;
+  itemNameGetter: (sessionItem: SessionT) => string;
   itemStatusGetter?: (sessionItem: SessionT) => string;
   itemHeaderTitleGetter?: (
     sessionItem: SessionT,

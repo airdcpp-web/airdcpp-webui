@@ -3,56 +3,96 @@ import { BaseRenderResult } from '../render/test-renderers';
 import { waitFor } from '@testing-library/dom';
 import { expect } from 'vitest';
 
-/*export const clickItem = async (
-  menuItemLabel: string,
-  renderResult: BaseRenderResult & { user: UserEvent },
-) => {
-  const { getByRole } = renderResult;
-  await waitFor(() =>
-    expect(getByRole('menuitem', { name: menuItemLabel })).toBeTruthy(),
-  );
+export const waitMenuOpen = async ({ queryByRole }: BaseRenderResult, label?: string) => {
+  await waitFor(() => {
+    const menu = queryByRole('menu', { name: label });
+    expect(menu).toBeVisible();
+    expect(menu).not.toHaveClass('hidden');
+  });
+};
 
-  // Click
-  await clickMenuItem(menuItemLabel, renderResult);
-};*/
+export const clickNavigationMenuItem = async (
+  menuItemLabel: string,
+  renderResult: BaseRenderResult & { userEvent: UserEvent },
+) => {
+  const { getByRole, userEvent } = renderResult;
+  await userEvent.click(getByRole('menuitem', { name: menuItemLabel }));
+};
 
 export const clickMenuItem = async (
   menuItemLabel: string,
-  {
-    getByRole,
-    userEvent,
-  }: Pick<BaseRenderResult, 'getByRole'> & { userEvent: UserEvent },
+  renderResult: BaseRenderResult & { userEvent: UserEvent },
 ) => {
+  const { getByRole, userEvent } = renderResult;
+  await waitMenuOpen(renderResult);
+
   await waitFor(() =>
     expect(getByRole('menuitem', { name: menuItemLabel })).toBeTruthy(),
   );
 
   await userEvent.click(getByRole('menuitem', { name: menuItemLabel }));
+  await waitMenuClosed(renderResult);
+};
+
+export const clickSubMenuItem = async (
+  menuItemLabel: string,
+  submenuLabel: string,
+  renderResult: BaseRenderResult & { userEvent: UserEvent },
+) => {
+  const { getByRole, userEvent } = renderResult;
+  await waitMenuOpen(renderResult, submenuLabel);
+
+  await waitFor(() =>
+    expect(getByRole('menuitem', { name: menuItemLabel })).toBeTruthy(),
+  );
+
+  await userEvent.click(getByRole('menuitem', { name: menuItemLabel }));
+  await waitMenuClosed(renderResult);
+};
+
+export const clickSubMenu = async (
+  submenuLabel: string,
+  renderResult: BaseRenderResult & { userEvent: UserEvent },
+) => {
+  const { getByRole, userEvent } = renderResult;
+  await waitMenuOpen(renderResult);
+
+  await waitFor(() => expect(getByRole('menuitem', { name: submenuLabel })).toBeTruthy());
+
+  await userEvent.click(getByRole('menuitem', { name: submenuLabel }));
+
+  return (subMenuItemLabel: string) => {
+    return clickSubMenuItem(subMenuItemLabel, submenuLabel, renderResult);
+  };
 };
 
 export const openIconMenu = async (
   menuLabel: string,
   renderResult: BaseRenderResult & { userEvent: UserEvent },
 ) => {
-  const { userEvent, queryByRole, getByLabelText } = renderResult;
+  const { userEvent, getByLabelText } = renderResult;
 
   await waitFor(() => expect(getByLabelText(menuLabel)).toBeTruthy());
-  await userEvent.click(getByLabelText(menuLabel));
 
-  await waitFor(() => expect(queryByRole('menu')).toBeTruthy());
+  const button = getByLabelText(menuLabel);
+  await userEvent.click(button);
+
+  await waitMenuOpen(renderResult);
 };
 
 export const openMenu = async (
   triggerCaption: string,
   renderResult: BaseRenderResult & { userEvent: UserEvent },
 ) => {
-  const { userEvent, getByRole, queryByRole } = renderResult;
+  const { userEvent, getByRole } = renderResult;
 
   // Open
   await waitFor(() => expect(getByRole('button', { name: triggerCaption })).toBeTruthy());
-  await userEvent.click(getByRole('button', { name: triggerCaption }));
 
-  await waitFor(() => expect(queryByRole('menu')).toBeTruthy());
+  const button = getByRole('button', { name: triggerCaption });
+  await userEvent.click(button);
+
+  await waitMenuOpen(renderResult);
 };
 
 export const waitMenuClosed = async ({ queryByRole }: BaseRenderResult) => {

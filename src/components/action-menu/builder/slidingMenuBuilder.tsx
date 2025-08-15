@@ -101,7 +101,12 @@ const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
             exit: AnimationConstants.dropdown,
           }}
         >
-          <div ref={ref} className="ui text menu vertical table-items" role="menu">
+          <div
+            ref={ref}
+            className="ui text menu vertical table-items"
+            role="menu"
+            aria-label={activeSubmenu ? activeSubmenu.item!.children : undefined}
+          >
             {activeSubmenu ? (
               <>
                 <div

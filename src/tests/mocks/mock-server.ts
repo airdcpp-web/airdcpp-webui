@@ -9,7 +9,7 @@ export type MockServer = ReturnType<typeof getMockServer>;
 
 export const getMockServer = (options: Partial<MockServerOptions> = {}) => {
   const server = getMockServerOriginal({
-    delayMs: 5,
+    delayMs: 0,
     ...options,
   });
   return server;
