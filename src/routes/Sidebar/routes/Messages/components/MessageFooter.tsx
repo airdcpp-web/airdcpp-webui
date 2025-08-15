@@ -36,12 +36,14 @@ interface CCPMStateProps {
 }
 
 const CCPMState: React.FC<CCPMStateProps> = ({ privateChat, sessionT }) => {
+  const state = privateChat.ccpm_state.id;
   const { flags } = privateChat.user;
-  if (!flags.includes('ccpm')) {
+
+  // It's possible that the other user has been able to initiate the connection
+  if (!flags.includes('ccpm') && state === API.CCPMStateEnum.DISCONNECTED) {
     return null;
   }
 
-  const state = privateChat.ccpm_state.id;
   if (state === API.CCPMStateEnum.DISCONNECTED && flags.includes('offline')) {
     return null;
   }
