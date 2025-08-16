@@ -83,7 +83,7 @@ export const useTableDataManager = ({
     }
 
     TableActions.clear(socket, store.viewUrl);
-  }, [store.paused, store.viewUrl]);
+  }, [store.viewUrl]);
 
   return dataLoader;
 };

@@ -71,9 +71,7 @@ class RowDataLoader {
       if (updatedCount > 0 || rangeOffset !== 0) {
         if (this.DEBUG) {
           console.log(
-            'onItemsUpdated, changed (updatedCount, rangeOffset)',
-            updatedCount,
-            rangeOffset,
+            `onItemsUpdated changed: updated ${updatedCount} items, range offset ${rangeOffset}`,
           );
         }
 
