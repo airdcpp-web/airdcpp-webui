@@ -288,6 +288,38 @@ describe('Private messages', () => {
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
   });
 
+  test('should remember input text when switching between sessions', async () => {
+    const { getByText, getByRole, queryByText, userEvent } = await renderLayout();
+
+    await waitSessionsLoaded(queryByText);
+
+    // Check content
+    await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
+    await waitFor(() => expect(getByRole('textbox')).toBeInTheDocument());
+
+    const session1Message = 'Message session 1';
+
+    const messageInput = getByRole('textbox');
+    await userEvent.type(messageInput, session1Message);
+    await waitFor(() => expect(messageInput).toHaveValue(session1Message));
+
+    // Switch to the second session
+    const session2MenuItem = queryByText(PrivateChat2.user.nicks);
+    await userEvent.click(session2MenuItem!);
+
+    await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
+
+    // Check that the value was cleared
+    await waitFor(() => expect(messageInput).toHaveValue(''));
+
+    // Go back to first session
+    const session1MenuItem = queryByText(PrivateChat1.user.nicks);
+    await userEvent.click(session1MenuItem!);
+
+    await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
+    await waitFor(() => expect(messageInput).toHaveValue(session1Message));
+  });
+
   test('should handle user inactivity', async () => {
     const { queryByText, mockStoreListeners, onSession1Read, sessionStore } =
       await renderLayout(false);

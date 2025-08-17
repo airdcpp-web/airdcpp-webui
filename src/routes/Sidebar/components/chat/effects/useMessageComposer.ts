@@ -14,19 +14,18 @@ import ChatCommandHandler from '../commands/ChatCommandHandler';
 import { useSocket } from '@/context/SocketContext';
 import { useSession } from '@/context/AppStoreContext';
 
-/*const getStorageKey = (sessionStorageKey: string) => {
-  return `last_message_${sessionStorageKey}`;
-};*/
-
 const loadState = (sessionStorageKey: string) => {
   const text = loadSessionProperty(sessionStorageKey, '');
+  // console.log('Loading state for key:', sessionStorageKey, text);
   return text;
 };
 
 const saveState = (text: string, sessionStorageKey: string) => {
   if (text) {
+    // console.log('Saving state for key:', sessionStorageKey, text);
     saveSessionProperty(sessionStorageKey, text);
   } else {
+    // console.log('Removing state for key:', sessionStorageKey);
     removeSessionProperty(sessionStorageKey);
   }
 };
@@ -96,7 +95,7 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
       chatController.sessionType,
     );
     setInputText(loadState(storageKey));
-  }, [location.pathname]);
+  }, [chatController.chatSession.id]);
 
   const onTextChanged: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
     updateText(plainValue);
