@@ -28,13 +28,13 @@ const buildMenuItem = (
   hideMenu: DropdownCloseHandler | undefined,
   showSubmenu: SubmenuSelectHandler,
 ) => {
-  const { id, item, children: subMenu } = menuItem;
+  const { id, item } = menuItem;
   if (!item) {
     return <div key={`divider-${index}`} className="ui divider" />;
   }
 
-  if (subMenu) {
-    const { children, ...other } = item;
+  if (item.children) {
+    const { caption, ...other } = item;
     return (
       <MenuItemLink
         {...other}
@@ -43,7 +43,7 @@ const buildMenuItem = (
           showSubmenu(menuItem);
         }}
       >
-        {children}
+        {caption}
         <Icon icon="right chevron" />
       </MenuItemLink>
     );
@@ -60,7 +60,9 @@ const buildMenuItem = (
         onClick(evt);
       }}
       {...other}
-    />
+    >
+      {item.caption}
+    </MenuItemLink>
   );
 };
 
@@ -72,6 +74,24 @@ const buildMenuList = (
   return (
     <>{items.map((item, index) => buildMenuItem(item, index, hideMenu, showSubmenu))}</>
   );
+};
+
+const findParent = (
+  child: UI.ActionMenuItem,
+  items: UI.ActionMenuItem[],
+): UI.ActionMenuItem | null => {
+  for (const item of items) {
+    const children = item.item?.children;
+    if (children && children.includes(child)) {
+      return item;
+    }
+
+    const parent = findParent(child, children || []);
+    if (parent) {
+      return parent;
+    }
+  }
+  return null;
 };
 
 interface NestedMenuProps {
@@ -105,21 +125,21 @@ const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
             ref={ref}
             className="ui text menu vertical table-items"
             role="menu"
-            aria-label={activeSubmenu ? activeSubmenu.item!.children : undefined}
+            aria-label={activeSubmenu ? activeSubmenu.item!.caption : undefined}
           >
             {activeSubmenu ? (
               <>
                 <div
                   className="header item"
                   onClick={() => {
-                    setActiveSubmenu(null);
+                    setActiveSubmenu(findParent(activeSubmenu, items));
                   }}
                   role="button"
                 >
                   <Icon icon="chevron left" />
-                  {activeSubmenu.item!.children}
+                  {activeSubmenu.item!.caption}
                 </div>
-                {buildMenuList(activeSubmenu.children!, hideMenu, setActiveSubmenu)}
+                {buildMenuList(activeSubmenu.item!.children!, hideMenu, setActiveSubmenu)}
               </>
             ) : (
               <>{buildMenuList(items, hideMenu, setActiveSubmenu)}</>

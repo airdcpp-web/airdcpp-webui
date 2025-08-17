@@ -39,7 +39,7 @@ const actionToActionMenuItem = <
       },
       active,
       icon,
-      children: t(i18nKey, action.displayName),
+      caption: t(i18nKey, action.displayName),
     },
   };
 };
@@ -80,9 +80,9 @@ const getMenuItem = <
         onClick: () => {
           // ..
         },
-        children: action.displayName,
+        caption: action.displayName,
+        children,
       },
-      children,
     };
   }
 

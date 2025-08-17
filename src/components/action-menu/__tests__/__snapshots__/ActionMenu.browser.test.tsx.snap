@@ -1,5 +1,25 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Action menu > ActionDropdownMenu > Remote actions > should handle deep nesting 1`] = `
+{
+  "data": {
+    "entity_id": "test-entity",
+    "form_definitions": null,
+    "hook_id": "airdcpp-test",
+    "menuitem_id": "deeply_nested_level3",
+    "selected_ids": [
+      "test",
+    ],
+    "supports": [
+      "urls",
+      "form",
+    ],
+  },
+  "method": "POST",
+  "path": "menus/test-remote-menu-id/select",
+}
+`;
+
 exports[`Action menu > ActionDropdownMenu > Remote actions > should handle forms 1`] = `
 {
   "data": {
@@ -133,6 +153,26 @@ exports[`Action menu > ActionDropdownMenu > Remote actions > should select menu 
     "form_definitions": null,
     "hook_id": "airdcpp-test",
     "menuitem_id": "test_item_id",
+    "selected_ids": [
+      "test",
+    ],
+    "supports": [
+      "urls",
+      "form",
+    ],
+  },
+  "method": "POST",
+  "path": "menus/test-remote-menu-id/select",
+}
+`;
+
+exports[`Action menu > TableActionMenu > Remote actions > should handle deep nesting 1`] = `
+{
+  "data": {
+    "entity_id": "test-entity",
+    "form_definitions": null,
+    "hook_id": "airdcpp-test",
+    "menuitem_id": "deeply_nested_level3",
     "selected_ids": [
       "test",
     ],

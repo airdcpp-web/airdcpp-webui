@@ -644,7 +644,10 @@ describe('Private messages', () => {
       );
 
       await openMenu(PrivateChat1MessageRelease.highlights[0].text, renderData);
-      const clickSubMenuItem = await clickSubMenu(RemoteMenuGrouped1.title, renderData);
+      const { clickSubMenuItem } = await clickSubMenu(
+        RemoteMenuGrouped1.title,
+        renderData,
+      );
       await clickSubMenuItem(RemoteMenuGrouped1.items[0].title);
 
       expectRequestToMatchSnapshot(menuMocks.onListGrouped);

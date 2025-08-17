@@ -12,6 +12,7 @@ import {
   RemoteMenu1ItemForm,
   RemoteMenu1ItemNormal,
   RemoteMenuGrouped2,
+  RemoteMenu1ItemWithChildren,
 } from '@/tests/mocks/api/menu';
 import {
   ActionMenu as ActionDropdownMenu,
@@ -148,7 +149,7 @@ describe('Action menu', () => {
 
         await waitFor(() => expect(menuMocks.onListGrouped).toHaveBeenCalledTimes(1));
 
-        const clickSubMenuItem = await clickSubMenu(
+        const { clickSubMenuItem } = await clickSubMenu(
           RemoteMenuGrouped1.title,
           renderResult,
         );
@@ -167,7 +168,7 @@ describe('Action menu', () => {
 
         await waitFor(() => expect(menuMocks.onListGrouped).toHaveBeenCalledTimes(1));
 
-        const clickSubMenuItem = await clickSubMenu(
+        const { clickSubMenuItem } = await clickSubMenu(
           RemoteMenuGrouped1.title,
           renderResult,
         );
@@ -185,6 +186,45 @@ describe('Action menu', () => {
 
         expectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
         await waitMenuClosed(renderResult);
+      }, 100000);
+
+      test('should handle deep nesting', async () => {
+        const renderResult = await renderMenu(Component, true);
+        const { menuMocks } = renderResult;
+
+        await openMenu(TriggerCaption, renderResult);
+
+        await waitFor(() => expect(menuMocks.onListGrouped).toHaveBeenCalledTimes(1));
+
+        // Go to first level
+        const { clickSubMenu: clickSubMenuLevel1 } = await clickSubMenu(
+          RemoteMenuGrouped1.title,
+          renderResult,
+        );
+
+        // Go to second level
+        const level1Item = RemoteMenu1ItemWithChildren;
+        const { clickSubMenu: clickSubMenuLevel2 } = await clickSubMenuLevel1(
+          level1Item.title,
+        );
+
+        // Go to third level
+        const level2Item = level1Item.children[0];
+        const { clickSubMenuItem } = await clickSubMenuLevel2(level2Item.title);
+
+        // TODO: menus use different role for the return button
+        // Test return to parent
+        //await returnToParent();
+
+        // Go back to third level
+        //const level3Item = level2Item.children![0];
+        //const { clickSubMenuItem } = await clickSubMenuLevel2(level2Item.title);
+
+        // Click an item
+        const level3Item = level2Item.children![0];
+        await clickSubMenuItem(level3Item.title);
+
+        expectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
       }, 100000);
     });
   };

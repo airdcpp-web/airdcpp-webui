@@ -52,7 +52,7 @@ const PriorityMenu: React.FC<PriorityMenuProps> = ({ item, itemPrio, prioAction,
         onClick: () => {
           setPriority(priority.id);
         },
-        children: translate(priority.str, t, UI.Modules.QUEUE),
+        caption: translate(priority.str, t, UI.Modules.QUEUE),
       },
     };
   };
@@ -72,7 +72,7 @@ const PriorityMenu: React.FC<PriorityMenuProps> = ({ item, itemPrio, prioAction,
         onClick: () => {
           setPriority(API.QueuePriorityEnum.DEFAULT);
         },
-        children: translate('Auto', t, UI.Modules.QUEUE),
+        caption: translate('Auto', t, UI.Modules.QUEUE),
       },
     });
 

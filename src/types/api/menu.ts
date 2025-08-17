@@ -9,6 +9,7 @@ export interface ContextMenuItem {
   hook_id: string;
   urls: string[];
   form_definitions?: FormFieldDefinition[];
+  children?: ContextMenuItem[];
 }
 
 export interface GroupedContextMenu {

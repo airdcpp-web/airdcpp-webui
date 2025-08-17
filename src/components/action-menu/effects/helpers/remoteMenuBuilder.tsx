@@ -31,6 +31,10 @@ const toMenuItem = (
   handleSelect: SelectHandler,
 ): UI.ActionMenuItem => {
   const onClick = () => {
+    if (menuItem.children) {
+      return;
+    }
+
     handleSelect(menuItem, remoteMenuData);
   };
 
@@ -40,7 +44,11 @@ const toMenuItem = (
     item: {
       onClick,
       icon: icon[MenuConstants.ICON_TYPE_ID],
-      children: title,
+      caption: title,
+
+      children: menuItem.children?.map((child) => {
+        return toMenuItem(child, remoteMenuData, handleSelect);
+      }),
     },
   };
 };
@@ -65,9 +73,9 @@ export const remoteMenuToActionMenuItems = (
         onClick: () => {
           // ..
         },
-        children: menu.title,
+        caption: menu.title,
+        children: items,
       },
-      children: items,
     },
   ];
 };

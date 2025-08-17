@@ -22,22 +22,26 @@ const buildChildMenu = (
 };
 
 const buildMenuItem = (menuItem: UI.ActionMenuItem, index: number) => {
-  const { item, id, children: childMenu } = menuItem;
+  const { item, id } = menuItem;
   if (!item) {
     return <div key={`divider-${index}`} className="ui divider" />;
   }
 
-  if (childMenu) {
-    const { children, ...other } = item;
+  if (item.children) {
+    const { caption, children, ...other } = item;
     return (
       <MenuItemLink key={id} submenuIcon="dropdown" {...other}>
-        <span className="text">{children}</span>
-        {buildChildMenu(children, childMenu)}
+        <span className="text">{caption}</span>
+        {buildChildMenu(caption, children)}
       </MenuItemLink>
     );
   }
 
-  return <MenuItemLink key={id} {...item} />;
+  return (
+    <MenuItemLink key={id} {...item}>
+      {item.caption}
+    </MenuItemLink>
+  );
 };
 
 export const buildMenu: UI.ActionMenuComponentBuilder = (items) =>

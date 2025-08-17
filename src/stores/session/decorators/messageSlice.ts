@@ -43,13 +43,6 @@ export const createMessageSlice = () => {
 
       scroll: createSessionScrollSlice(),
 
-      /*onFetchMessages: (chatSession: UI.SessionItemBase) =>
-        set(
-          produce<State>((state) => {
-            state.initializedSession.add(chatSession.id);
-          }),
-        ),*/
-
       onMessagesFetched: (chatSession: UI.SessionItemBase, cacheMessages: MessageCache) =>
         set(
           produce<State>((state) => {

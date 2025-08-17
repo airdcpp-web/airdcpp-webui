@@ -141,7 +141,10 @@ describe('User menu', () => {
 
       await waitFor(() => expect(menu2Mocks.onListGrouped).toHaveBeenCalledTimes(1));
 
-      const clickSubMenuItem = await clickSubMenu(RemoteMenuGrouped1.title, renderResult);
+      const { clickSubMenuItem } = await clickSubMenu(
+        RemoteMenuGrouped1.title,
+        renderResult,
+      );
       await clickSubMenuItem(RemoteMenu2Item.title);
 
       await waitFor(() => expect(menu2Mocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
@@ -172,7 +175,10 @@ describe('User menu', () => {
       const menu2Items = await findAllByText(RemoteMenu2Item.title);
       expect(menu2Items).toHaveLength(1);
 
-      const clickSubMenuItem = await clickSubMenu(RemoteMenuGrouped1.title, renderResult);
+      const { clickSubMenuItem } = await clickSubMenu(
+        RemoteMenuGrouped1.title,
+        renderResult,
+      );
       await clickSubMenuItem(RemoteMenu2Item.title);
       await waitFor(() => expect(menu2Mocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
 

@@ -113,12 +113,49 @@ export const RemoteMenu1ItemForm = {
   urls: [],
 };
 
+export const RemoteMenu1ItemWithChildren = {
+  children: [
+    {
+      children: [
+        {
+          children: null,
+          form_definitions: null,
+          hook_id: 'airdcpp-test',
+          icon: {
+            semantic: 'red child',
+          },
+          id: 'deeply_nested_level3',
+          title: 'Deeply nested 3',
+          urls: [],
+        },
+      ],
+      form_definitions: null,
+      hook_id: 'airdcpp-test',
+      icon: {
+        semantic: 'yellow child',
+      },
+      id: 'deeply_nested_level2',
+      title: 'Deeply nested 2',
+      urls: [],
+    },
+  ],
+  form_definitions: null,
+  hook_id: 'airdcpp-test',
+  icon: {
+    semantic: 'green child',
+  },
+  id: 'deeply_nested_level1',
+  title: 'Deeply nested 1',
+  urls: [],
+};
+
 export const RemoteMenuGrouped1 = {
   icon: {},
   id: 'airdcpp-test',
   items: [
     RemoteMenu1ItemNormal,
     RemoteMenu1ItemForm,
+    RemoteMenu1ItemWithChildren,
     {
       form_definitions: null,
       hook_id: 'airdcpp-test',

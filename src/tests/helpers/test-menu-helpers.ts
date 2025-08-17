@@ -34,7 +34,7 @@ export const clickMenuItem = async (
   await waitMenuClosed(renderResult);
 };
 
-export const clickSubMenuItem = async (
+const clickSubMenuItemImpl = async (
   menuItemLabel: string,
   submenuLabel: string,
   renderResult: BaseRenderResult & { userEvent: UserEvent },
@@ -51,18 +51,30 @@ export const clickSubMenuItem = async (
 };
 
 export const clickSubMenu = async (
-  submenuLabel: string,
+  subMenuLabel: string,
   renderResult: BaseRenderResult & { userEvent: UserEvent },
+  parentMenuLabel?: string,
 ) => {
   const { getByRole, userEvent } = renderResult;
-  await waitMenuOpen(renderResult);
+  await waitMenuOpen(renderResult, parentMenuLabel);
 
-  await waitFor(() => expect(getByRole('menuitem', { name: submenuLabel })).toBeTruthy());
+  await waitFor(() => expect(getByRole('menuitem', { name: subMenuLabel })).toBeTruthy());
 
-  await userEvent.click(getByRole('menuitem', { name: submenuLabel }));
+  await userEvent.click(getByRole('menuitem', { name: subMenuLabel }));
 
-  return (subMenuItemLabel: string) => {
-    return clickSubMenuItem(subMenuItemLabel, submenuLabel, renderResult);
+  const clickSubMenuItem = (subMenuItemLabel: string) =>
+    clickSubMenuItemImpl(subMenuItemLabel, subMenuLabel, renderResult);
+  const clickSubMenuNested = (nestedSubMenuLabel: string) =>
+    clickSubMenu(nestedSubMenuLabel, renderResult, subMenuLabel);
+  const returnToParent = async () => {
+    await waitFor(() => getByRole('button', { name: parentMenuLabel }));
+    await userEvent.click(getByRole('button', { name: parentMenuLabel }));
+  };
+
+  return {
+    clickSubMenuItem,
+    clickSubMenu: clickSubMenuNested,
+    returnToParent,
   };
 };
 

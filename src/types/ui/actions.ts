@@ -157,13 +157,13 @@ interface MenuItemBase {
 export interface ActionMenuItemType extends MenuItemBase {
   onClick: (evt: React.SyntheticEvent<any>) => void;
   active?: boolean;
-  children: string;
+  caption: string;
+  children?: ActionMenuItem[];
 }
 
 export interface ActionMenuItem {
   id: string;
   item?: ActionMenuItemType;
-  children?: ActionMenuItem[];
 }
 
 export type ActionMenuComponentBuilder = (
