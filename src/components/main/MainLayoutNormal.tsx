@@ -26,7 +26,14 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
   return (
     <div className={classNames(className, 'pushable sidebar-context')} id="normal-layout">
       <SidebarContext.Provider value={false}>
+        {/* All components that can be operated normally when the sidebar is open 
+        (and may open modals) should be wrapped under this provider */}
         <Sidebar routes={sidebarRoutes} previousLocation={previousLocation} />
+        <SideMenu
+          location={location}
+          sidebarRoutes={sidebarRoutes}
+          previousLocation={previousLocation}
+        />
       </SidebarContext.Provider>
       <SidebarContext.Provider value={!!previousLocation}>
         <div className="pusher">
@@ -42,11 +49,6 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
             </Routes>
           </div>
         </div>
-        <SideMenu
-          location={location}
-          sidebarRoutes={sidebarRoutes}
-          previousLocation={previousLocation}
-        />
       </SidebarContext.Provider>
     </div>
   );
