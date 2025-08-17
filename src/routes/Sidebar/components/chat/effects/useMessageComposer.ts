@@ -97,8 +97,18 @@ export const useMessageComposer = ({ chatController, t }: MessageComposerProps) 
     setInputText(loadState(storageKey));
   }, [chatController.chatSession.id]);
 
-  const onTextChanged: OnChangeHandlerFunc = (event, markupValue, plainValue) => {
-    updateText(plainValue);
+  const onTextChanged: OnChangeHandlerFunc = (
+    event,
+    markupValue,
+    plainValue,
+    mentions,
+  ) => {
+    // Workaround for spellcheck replacement truncation: when there are no mentions,
+    // the markup value equals the plain value from the underlying textarea.
+    // Prefer it to avoid react-mentions plain text mapping edge cases.
+    // https://github.com/airdcpp-web/airdcpp-webclient/issues/501
+    const hasMentions = Array.isArray(mentions) && mentions.length > 0;
+    updateText(hasMentions ? plainValue : markupValue);
   };
 
   const sendText = () => {
