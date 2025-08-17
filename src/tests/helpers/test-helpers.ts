@@ -37,8 +37,8 @@ export const clickButton = (caption: string, getByRole: RenderResult['getByRole'
   return expect(fireEvent.click(button)).toBeTruthy();
 };
 
-export const expectResponseToMatchSnapshot = (mock: Mock) => {
-  expect(mock).toHaveBeenCalledTimes(1);
+export const waitExpectRequestToMatchSnapshot = async (mock: Mock) => {
+  await waitFor(() => expect(mock).toHaveBeenCalledTimes(1));
 
   const response = mock.mock.calls[0][0];
 
@@ -46,5 +46,3 @@ export const expectResponseToMatchSnapshot = (mock: Mock) => {
 
   expect(other).toMatchSnapshot();
 };
-
-export const expectRequestToMatchSnapshot = expectResponseToMatchSnapshot;

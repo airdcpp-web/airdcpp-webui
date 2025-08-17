@@ -12,7 +12,7 @@ import {
 import Login from '../components/Login';
 import {
   clickButton,
-  expectResponseToMatchSnapshot,
+  waitExpectRequestToMatchSnapshot,
   waitForUrl,
 } from '@/tests/helpers/test-helpers';
 import { getLogoutItem, parseMenuItem } from '@/routes/Routes';
@@ -183,14 +183,10 @@ describe('Login', () => {
       } = await doInitialLogin();
 
       await waitFor(() => expect(onSocketConnected).toHaveBeenCalledWith(AuthResponse));
-      await waitFor(() => {
-        expectResponseToMatchSnapshot(onLogin);
-      });
+      await waitFor(() => waitExpectRequestToMatchSnapshot(onLogin));
 
       userEvent.click(getByText('Logout'));
-      await waitFor(() => {
-        expectResponseToMatchSnapshot(onLogout);
-      });
+      await waitFor(() => waitExpectRequestToMatchSnapshot(onLogout));
 
       await socket.waitDisconnected();
       expect(appStore.getState().login.getSession()).toBeNull();
@@ -266,7 +262,7 @@ describe('Login', () => {
         expect(appStore.getState().login.socketAuthenticated).toBeTruthy();
       });
 
-      expectResponseToMatchSnapshot(onReconnectSocket);
+      await waitExpectRequestToMatchSnapshot(onReconnectSocket);
 
       await waitForUrl(ChildRouteUrl, router);
     }, 100000);
@@ -350,7 +346,7 @@ describe('Login', () => {
         expect(login.socketAuthenticated).toBeTruthy();
       });
 
-      expectResponseToMatchSnapshot(onReconnectSocket);
+      await waitExpectRequestToMatchSnapshot(onReconnectSocket);
 
       await waitForUrl(ChildRouteUrl, router);
     }, 100000);
@@ -389,7 +385,7 @@ describe('Login', () => {
 
       // Refresh token should be used for authorization and we are now back on the page that we originally wanted
       await waitForUrl(ChildRouteUrl, router);
-      expectResponseToMatchSnapshot(onLogin);
+      waitExpectRequestToMatchSnapshot(onLogin);
     }, 100000);
 
     test('should use refresh token directly', async () => {
@@ -406,7 +402,7 @@ describe('Login', () => {
       );
 
       await waitForUrl(ChildRouteUrl, router);
-      expectResponseToMatchSnapshot(onLogin);
+      await waitExpectRequestToMatchSnapshot(onLogin);
     }, 100000);
   });
 });

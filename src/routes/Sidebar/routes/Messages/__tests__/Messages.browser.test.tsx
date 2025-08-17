@@ -31,7 +31,7 @@ import {
 import { LocalSettings } from '@/constants/LocalSettingConstants';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import {
-  expectRequestToMatchSnapshot,
+  waitExpectRequestToMatchSnapshot,
   navigateToUrl,
   waitForData,
   waitForUrl,
@@ -682,7 +682,7 @@ describe('Private messages', () => {
       );
       await clickSubMenuItem(RemoteMenuGrouped1.items[0].title);
 
-      expectRequestToMatchSnapshot(menuMocks.onListGrouped);
+      await waitExpectRequestToMatchSnapshot(menuMocks.onListGrouped);
     });
 
     test('should render magnet', async () => {
@@ -706,8 +706,7 @@ describe('Private messages', () => {
       await openMenu(caption, renderData);
       await clickMenuItem('Download', renderData);
 
-      await waitFor(() => expect(onDownloadFile).toHaveBeenCalledTimes(1));
-      expectRequestToMatchSnapshot(onDownloadFile);
+      await waitExpectRequestToMatchSnapshot(onDownloadFile);
     });
   });
 });

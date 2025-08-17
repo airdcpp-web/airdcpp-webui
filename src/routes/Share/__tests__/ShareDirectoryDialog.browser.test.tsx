@@ -36,7 +36,7 @@ import { saveLocalProperty } from '@/utils/BrowserUtils';
 import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
 import {
   clickButton,
-  expectResponseToMatchSnapshot,
+  waitExpectRequestToMatchSnapshot,
   waitForData,
 } from '@/tests/helpers/test-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
@@ -218,7 +218,7 @@ describe('ShareDirectoryDialog', () => {
 
     await modalController.closeDialogButton('Save');
 
-    expectResponseToMatchSnapshot(onUpdated);
+    await waitExpectRequestToMatchSnapshot(onUpdated);
   }, 100000);
 
   test('should create new', async () => {
@@ -245,6 +245,6 @@ describe('ShareDirectoryDialog', () => {
 
     await modalController.closeDialogButton('Save');
 
-    expectResponseToMatchSnapshot(onCreated);
+    await waitExpectRequestToMatchSnapshot(onCreated);
   }, 100000);
 });

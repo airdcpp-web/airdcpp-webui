@@ -3,7 +3,10 @@ import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import { waitFor } from '@testing-library/dom';
 
-import { clickButton, expectRequestToMatchSnapshot } from '@/tests/helpers/test-helpers';
+import {
+  clickButton,
+  waitExpectRequestToMatchSnapshot,
+} from '@/tests/helpers/test-helpers';
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
@@ -154,9 +157,8 @@ describe('Action menu', () => {
           renderResult,
         );
         await clickSubMenuItem(RemoteMenu1ItemNormal.title);
-        await waitFor(() => expect(menuMocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
 
-        expectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
+        await waitExpectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
         await waitMenuClosed(renderResult);
       }, 100000);
 
@@ -182,9 +184,7 @@ describe('Action menu', () => {
 
         await clickButton('Continue', getByRole);
 
-        await waitFor(() => expect(menuMocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
-
-        expectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
+        await waitExpectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
         await waitMenuClosed(renderResult);
       }, 100000);
 
@@ -224,7 +224,7 @@ describe('Action menu', () => {
         const level3Item = level2Item.children![0];
         await clickSubMenuItem(level3Item.title);
 
-        expectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
+        await waitExpectRequestToMatchSnapshot(menuMocks.onSelectMenuItem);
       }, 100000);
     });
   };

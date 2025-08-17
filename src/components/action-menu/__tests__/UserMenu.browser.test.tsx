@@ -3,7 +3,7 @@ import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import { waitFor } from '@testing-library/dom';
 
-import { expectRequestToMatchSnapshot } from '@/tests/helpers/test-helpers';
+import { waitExpectRequestToMatchSnapshot } from '@/tests/helpers/test-helpers';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
@@ -147,9 +147,7 @@ describe('User menu', () => {
       );
       await clickSubMenuItem(RemoteMenu2Item.title);
 
-      await waitFor(() => expect(menu2Mocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
-
-      expectRequestToMatchSnapshot(menu2Mocks.onSelectMenuItem);
+      await waitExpectRequestToMatchSnapshot(menu2Mocks.onSelectMenuItem);
       await waitMenuClosed(renderResult);
     }, 100000);
 
@@ -180,9 +178,8 @@ describe('User menu', () => {
         renderResult,
       );
       await clickSubMenuItem(RemoteMenu2Item.title);
-      await waitFor(() => expect(menu2Mocks.onSelectMenuItem).toHaveBeenCalledTimes(1));
 
-      expectRequestToMatchSnapshot(menu2Mocks.onSelectMenuItem);
+      await waitExpectRequestToMatchSnapshot(menu2Mocks.onSelectMenuItem);
       await waitMenuClosed(renderResult);
     }, 100000);
   });

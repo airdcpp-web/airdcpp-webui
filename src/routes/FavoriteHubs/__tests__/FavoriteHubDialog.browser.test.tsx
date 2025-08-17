@@ -21,7 +21,7 @@ import {
 } from '@/tests/mocks/api/favorite-hubs';
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
-import { expectResponseToMatchSnapshot } from '@/tests/helpers/test-helpers';
+import { waitExpectRequestToMatchSnapshot } from '@/tests/helpers/test-helpers';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 
@@ -136,7 +136,7 @@ describe('FavoriteHubDialog', () => {
 
     await modalController.closeDialogButton('Save');
 
-    expectResponseToMatchSnapshot(onUpdated);
+    await waitExpectRequestToMatchSnapshot(onUpdated);
   });
 
   test('should create new', async () => {
@@ -160,6 +160,6 @@ describe('FavoriteHubDialog', () => {
 
     await modalController.closeDialogButton('Save');
 
-    expectResponseToMatchSnapshot(onCreated);
+    await waitExpectRequestToMatchSnapshot(onCreated);
   });
 });

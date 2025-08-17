@@ -6,7 +6,10 @@ import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import Home from '../components/Home';
 import { getMockSession } from '@/tests/mocks/mock-session';
 import SettingConstants from '@/constants/SettingConstants';
-import { clickButton, expectResponseToMatchSnapshot } from '@/tests/helpers/test-helpers';
+import {
+  clickButton,
+  waitExpectRequestToMatchSnapshot,
+} from '@/tests/helpers/test-helpers';
 
 import createFetchMock from 'vitest-fetch-mock';
 import { ReleaseFeedRSSContent } from '@/tests/mocks/http/rss-feed-content';
@@ -103,7 +106,7 @@ describe('Home layout', () => {
       expect(onIntroSeen).toHaveBeenCalledTimes(1);
     });
 
-    expectResponseToMatchSnapshot(onIntroSeen);
+    await waitExpectRequestToMatchSnapshot(onIntroSeen);
 
     await waitFor(() =>
       expect(

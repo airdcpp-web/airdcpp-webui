@@ -6,7 +6,7 @@ import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import SettingConstants from '@/constants/SettingConstants';
 import {
   clickButton,
-  expectRequestToMatchSnapshot,
+  waitExpectRequestToMatchSnapshot,
   waitForData,
   waitForUrl,
 } from '@/tests/helpers/test-helpers';
@@ -104,8 +104,7 @@ describe('Settings layout', () => {
     await clickButton('Save changes', getByRole);
 
     // Check that the values were saved
-    await waitFor(() => expect(onSave).toBeCalled());
-    expectRequestToMatchSnapshot(onSave);
+    await waitExpectRequestToMatchSnapshot(onSave);
 
     await waitFor(() => expect(onGetValues).toBeCalledTimes(2));
   });

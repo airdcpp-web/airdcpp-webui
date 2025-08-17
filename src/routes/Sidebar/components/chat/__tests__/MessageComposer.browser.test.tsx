@@ -16,7 +16,7 @@ import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { installTempShareMocks } from '@/tests/mocks/mock-share';
 import {
   clickButton,
-  expectRequestToMatchSnapshot,
+  waitExpectRequestToMatchSnapshot,
   waitForLoader,
 } from '@/tests/helpers/test-helpers';
 import { TempShareCreateResponse, TempShareItem1 } from '@/tests/mocks/api/share';
@@ -239,8 +239,7 @@ describe('Message composer', () => {
       await clickMenuItem(formatTempShareDropdownItem(TempShareItem1), renderData);
 
       // Validate request
-      await waitFor(() => expect(onItemRemoved).toHaveBeenCalledTimes(1));
-      expectRequestToMatchSnapshot(onItemRemoved);
+      await waitExpectRequestToMatchSnapshot(onItemRemoved);
     });
   });
 });
