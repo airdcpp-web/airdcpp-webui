@@ -1,6 +1,66 @@
 export const MOCK_FAVORITE_HUB_ID = 703302715;
 
-export const FavoriteHubGetResponse = {
+export const FavoriteHubAdcConnectedResponse = {
+  auto_connect: true,
+  away_message: '',
+  connect_state: {
+    current_hub_id: 1,
+    id: 2,
+    str: 'Connected',
+  },
+  connection_ip_v4: '',
+  connection_ip_v6: '',
+  connection_mode_v4: null,
+  connection_mode_v6: null,
+  fav_show_joins: null,
+  has_password: true,
+  hub_description: 'Demo hub for AirDC++ Web Client',
+  hub_url: 'adcs://webdemo.net:2784',
+  id: 145689513,
+  log_main: null,
+  name: 'Demo hub',
+  nick: '',
+  nmdc_encoding: '',
+  share_profile: {
+    id: null,
+    str: '',
+  },
+  show_joins: null,
+  use_main_chat_notify: null,
+  user_description: '',
+};
+
+export const FavoriteHubAdcConnectingResponse = {
+  auto_connect: false,
+  away_message: '',
+  connect_state: {
+    current_hub_id: 5,
+    id: 1,
+    str: 'Connecting...',
+  },
+  connection_ip_v4: '',
+  connection_ip_v6: '',
+  connection_mode_v4: null,
+  connection_mode_v6: null,
+  fav_show_joins: null,
+  has_password: false,
+  hub_description: '"Welcome to test hub."',
+  hub_url: 'adc://hub-connecting.com:4111',
+  id: 1240814733,
+  log_main: null,
+  name: 'Favorite hub that is connecting',
+  nick: '',
+  nmdc_encoding: 'utf-8',
+  share_profile: {
+    id: null,
+    str: '',
+  },
+  show_joins: null,
+  use_main_chat_notify: null,
+  user_description: '',
+};
+
+export const FavoriteHubAdcDisconnectedResponse = {
   auto_connect: false,
   away_message: '',
   connect_state: {
@@ -29,3 +89,40 @@ export const FavoriteHubGetResponse = {
   use_main_chat_notify: null,
   user_description: '',
 };
+
+export const HubNMDCConnected = {
+  auto_connect: true,
+  away_message: '',
+  connect_state: {
+    current_hub_id: 1,
+    id: 2,
+    str: 'Connected',
+  },
+  connection_ip_v4: '127.0.0.1',
+  connection_ip_v6: '',
+  connection_mode_v4: 0,
+  connection_mode_v6: null,
+  fav_show_joins: null,
+  has_password: true,
+  hub_description: 'test',
+  hub_url: 'localhost',
+  id: 665850748,
+  log_main: null,
+  name: 'NMDC',
+  nick: 'testuser',
+  nmdc_encoding: 'English_United Kingdom.1252',
+  share_profile: {
+    id: null,
+    str: '',
+  },
+  show_joins: true,
+  use_main_chat_notify: false,
+  user_description: '',
+};
+
+export const FavoriteHubListResponse = [
+  FavoriteHubAdcConnectedResponse,
+  FavoriteHubAdcConnectingResponse,
+  FavoriteHubAdcDisconnectedResponse,
+  HubNMDCConnected,
+];

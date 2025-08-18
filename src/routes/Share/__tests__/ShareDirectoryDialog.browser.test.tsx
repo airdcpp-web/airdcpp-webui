@@ -24,7 +24,7 @@ import {
   setSelectFieldValues,
 } from '@/tests/helpers/test-form-helpers';
 import ShareRootConstants from '@/constants/ShareRootConstants';
-import { MOCK_SHARE_ROOT_ID, ShareRootGetResponse } from '@/tests/mocks/api/share-roots';
+import { MOCK_SHARE_ROOT_ID, ShareRootNormal } from '@/tests/mocks/api/share-roots';
 import ShareDirectoryDialog from '../components/ShareDirectoryDialog';
 import ShareConstants from '@/constants/ShareConstants';
 import { ShareGetGroupedRootsResponse } from '@/tests/mocks/api/share';
@@ -75,7 +75,7 @@ describe('ShareDirectoryDialog', () => {
     server.addRequestHandler(
       'GET',
       `${ShareRootConstants.ROOTS_URL}/${MOCK_SHARE_ROOT_ID}`,
-      ShareRootGetResponse,
+      ShareRootNormal,
     );
     server.addRequestHandler(
       'GET',

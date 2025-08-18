@@ -17,7 +17,7 @@ import { ShareProfilesListResponse } from '@/tests/mocks/api/share-profiles';
 import FavoriteHubConstants from '@/constants/FavoriteHubConstants';
 import {
   MOCK_FAVORITE_HUB_ID,
-  FavoriteHubGetResponse,
+  FavoriteHubAdcDisconnectedResponse,
 } from '@/tests/mocks/api/favorite-hubs';
 import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
@@ -49,7 +49,7 @@ describe('FavoriteHubDialog', () => {
     server.addRequestHandler(
       'GET',
       `${FavoriteHubConstants.HUBS_URL}/${MOCK_FAVORITE_HUB_ID}`,
-      FavoriteHubGetResponse,
+      FavoriteHubAdcDisconnectedResponse,
     );
 
     // Listeners
