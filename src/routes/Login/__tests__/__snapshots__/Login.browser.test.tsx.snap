@@ -50,17 +50,6 @@ exports[`Login > refresh token > should use refresh token directly 1`] = `
 }
 `;
 
-exports[`Login > refresh token > should use refresh token directly 2`] = `
-{
-  "data": {
-    "grant_type": "refresh_token",
-    "refresh_token": "dc66f47d-d060-4c50-aa3b-4a4741938a04",
-  },
-  "method": "POST",
-  "path": "sessions/authorize",
-}
-`;
-
 exports[`Login > refresh token > should use refresh token with an expired session 1`] = `
 {
   "data": {

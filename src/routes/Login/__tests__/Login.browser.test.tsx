@@ -183,10 +183,10 @@ describe('Login', () => {
       } = await doInitialLogin();
 
       await waitFor(() => expect(onSocketConnected).toHaveBeenCalledWith(AuthResponse));
-      await waitFor(() => waitExpectRequestToMatchSnapshot(onLogin));
+      await waitExpectRequestToMatchSnapshot(onLogin);
 
       userEvent.click(getByText('Logout'));
-      await waitFor(() => waitExpectRequestToMatchSnapshot(onLogout));
+      await waitExpectRequestToMatchSnapshot(onLogout);
 
       await socket.waitDisconnected();
       expect(appStore.getState().login.getSession()).toBeNull();
@@ -385,7 +385,7 @@ describe('Login', () => {
 
       // Refresh token should be used for authorization and we are now back on the page that we originally wanted
       await waitForUrl(ChildRouteUrl, router);
-      waitExpectRequestToMatchSnapshot(onLogin);
+      await waitExpectRequestToMatchSnapshot(onLogin);
     }, 100000);
 
     test('should use refresh token directly', async () => {
