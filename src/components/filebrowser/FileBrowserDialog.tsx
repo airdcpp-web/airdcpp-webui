@@ -63,6 +63,7 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
       approveDisabled={approveDisabled()}
       approveCaption={approveCaption || translate('Select', t, UI.Modules.COMMON)}
       icon={icon || (selectDirectory ? IconConstants.BROWSE : IconConstants.FILE)}
+      autoFocus={false}
     >
       <FileBrowserLayout
         currentDirectory={currentDirectory}

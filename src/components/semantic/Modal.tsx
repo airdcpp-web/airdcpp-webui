@@ -34,6 +34,8 @@ export type ModalProps = React.PropsWithChildren<
     icon?: IconType;
     title: React.ReactNode;
     subHeader?: React.ReactNode;
+
+    autoFocus?: boolean;
   } & CommonModalProps
 >;
 
@@ -54,6 +56,7 @@ const Modal = React.forwardRef<ModalHandle, ModalProps>(function Modal(props, ha
 
     closable: props.closable,
     observeChanges: props.dynamicHeight,
+    autofocus: props.autoFocus,
   });
 
   React.useImperativeHandle(
