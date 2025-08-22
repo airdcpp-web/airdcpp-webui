@@ -4,8 +4,8 @@ exports[`Search layout > should handle custom search options 1`] = `
 {
   "data": {
     "hub_urls": [
-      "localhost.nmdc",
       "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
+      "localhost.nmdc",
     ],
     "priority": 5,
     "query": {
