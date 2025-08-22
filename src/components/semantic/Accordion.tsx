@@ -4,6 +4,7 @@ import 'fomantic-ui-css/components/accordion';
 import 'fomantic-ui-css/components/accordion.min.css';
 
 import cx from 'classnames';
+import { AnimationConstants } from '@/constants/UIConstants';
 
 type AccordionItemId = number;
 
@@ -37,6 +38,7 @@ const Accordion: React.FC<AccordionProps> = ({
 
     const settings: SemanticUI.AccordionSettings | undefined = {
       on: 'disabled', // We control the open state logic in React
+      duration: AnimationConstants.accordion,
     };
 
     $(el).accordion(settings);

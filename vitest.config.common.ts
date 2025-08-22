@@ -1,12 +1,12 @@
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vitest/config';
 
-export default {
+export default defineConfig({
   plugins: [react()],
-  test: {
+  resolve: {
     alias: {
-      '*': resolve(__dirname, './src'),
       '@': resolve(__dirname, './src'),
     },
   },
-};
+});

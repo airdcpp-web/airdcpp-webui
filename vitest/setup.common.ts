@@ -20,6 +20,7 @@ vi.mock('../src/constants/UIConstants', { spy: true });
 vi.mocked(exports.AnimationConstants).dropdown = 0;
 vi.mocked(exports.AnimationConstants).modal = 0;
 vi.mocked(exports.AnimationConstants).popup = 0;
+vi.mocked(exports.AnimationConstants).accordion = 0;
 
 import { afterEach } from 'vitest';
 

@@ -6,6 +6,7 @@ export default mergeConfig(
   CommonConfig,
   defineConfig({
     test: {
+      include: ['**/*.node.{test,spec}.?(c|m)[jt]s?(x)'],
       setupFiles: ['./vitest/setup.node.ts'],
       environment: 'jsdom',
     },
