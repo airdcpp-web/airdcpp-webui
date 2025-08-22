@@ -23,7 +23,6 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = ({
   active = false,
   disabled = false,
   submenuIcon,
-  // style,
   role = 'menuitem',
   ...other
 }) => {
@@ -36,24 +35,12 @@ const MenuItemLink: React.FC<MenuItemLinkProps> = ({
     { disabled: disabled },
   );
 
-  /*const onKeyDown = (e: React.KeyboardEvent) => {
-    if (disabled) return;
-    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar' && e.key !== 'Space') {
-      return;
-    }
-
-    e.preventDefault();
-    onClick(e);
-  };*/
-
   const tabIndex = disabled ? -1 : active ? 0 : -1;
   return (
     <div
       className={itemClass}
       onClick={disabled ? undefined : onClick}
       role={role}
-      // onKeyDown={onKeyDown}
-      // onKeyDownCapture={() => console.log('Key event captured by MenuItemLink')}
       tabIndex={tabIndex}
       aria-selected={active}
       aria-disabled={disabled}

@@ -15,18 +15,18 @@ const SideMenuLayout = <
   UIActionsT extends UI.ActionListType<UI.SessionItemBase>,
 >({
   sessionMenuItemsGetter,
-  newButton,
+  newButtonGetter,
   itemHeaderIcon,
   itemHeaderTitle,
   children,
   itemHeaderDescription,
   onKeyDown,
 }: SessionMainLayoutProps<SessionT, SessionApiT, UIActionsT>) => {
-  if (newButton) {
-    newButton = React.cloneElement(newButton, {
-      className: newButton.props.className + ' ui fluid button',
-    });
-  }
+  const newButton = newButtonGetter({
+    role: 'tab',
+    'aria-controls': CONTENT_PANEL_ID,
+    className: 'ui fluid button',
+  });
 
   // Find the active menu item to link the panel to its controlling tab
   // const activeItem = sessionMenuItems.find((item) => item.props.active);

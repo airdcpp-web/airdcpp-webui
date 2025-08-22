@@ -8,7 +8,7 @@ import * as UI from '@/types/ui';
 
 export interface SessionMenuItemProps extends Partial<RouterMenuItemLinkProps> {
   url: string;
-  name: React.ReactNode;
+  name: string;
   unreadInfoStoreSelector: UI.SessionStoreSelector;
   status: React.ReactElement<any>;
   sessionItem: UI.SessionItemBase;
@@ -28,8 +28,7 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
     icon={status}
     sessionItem={sessionItem}
     unreadInfoStoreSelector={unreadInfoStoreSelector}
-    // aria-controls={CONTENT_PANEL_ID}
-    // role="tab"
+    aria-label={name}
     {...other}
   >
     {name}

@@ -2,25 +2,28 @@ import * as React from 'react';
 import classNames from 'classnames';
 
 import IconConstants from '@/constants/IconConstants';
-import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
+import RouterMenuItemLink, {
+  RouterMenuItemLinkProps,
+} from '@/components/semantic/RouterMenuItemLink';
 
-interface SessionNewButtonProps {
+interface SessionNewButtonProps extends Omit<RouterMenuItemLinkProps, 'url' | 'title'> {
   url: string;
-  title: React.ReactNode;
+  title: string;
   className?: string;
 }
 
 const SessionNewButton: React.FC<SessionNewButtonProps> = ({
   url,
   title,
-  // pushNew,
   className,
+  ...other
 }) => (
   <RouterMenuItemLink
     key="button-new"
     className={classNames('new', className)}
     icon={IconConstants.CREATE}
     url={url}
+    {...other}
   >
     {title}
   </RouterMenuItemLink>

@@ -8,10 +8,10 @@ import * as UI from '@/types/ui';
 
 export interface SessionLayoutLabels {
   // Label for button that opens a new session
-  newCaption?: React.ReactNode;
+  newCaption?: string;
 
-  // Label for button that opens a new session
-  newDescription?: React.ReactNode;
+  // Subheader for the layout component that opens a new session
+  newDescription?: string;
 
   // Label for button that opens a new session
   newIcon?: IconType;
@@ -50,8 +50,12 @@ export type SessionMenuItemsGetter = (
   menuItemProps?: Partial<RouterMenuItemLinkProps>,
 ) => React.ReactNode[];
 
+export type NewButtonGetter = (
+  menuItemProps?: Partial<RouterMenuItemLinkProps>,
+) => React.ReactElement | null;
+
 interface SessionMainLayoutComponents {
-  newButton: React.ReactElement<any> | null;
+  newButtonGetter: NewButtonGetter;
   listActionMenuGetter: () => React.ReactNode;
   itemHeaderTitle: React.ReactNode;
   itemHeaderDescription: React.ReactNode;

@@ -15,12 +15,15 @@ import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
 type SessionDropdownProps<SessionT extends UI.SessionItemBase> = Pick<
   SessionMainLayoutProps<SessionT>,
-  'sessionMenuItemsGetter' | 'newButton' | 'sessionStoreSelector' | 'listActionMenuGetter'
+  | 'sessionMenuItemsGetter'
+  | 'newButtonGetter'
+  | 'sessionStoreSelector'
+  | 'listActionMenuGetter'
 >;
 
 const SessionDropdown = <SessionT extends UI.SessionItemBase>({
   sessionMenuItemsGetter,
-  newButton,
+  newButtonGetter,
   sessionStoreSelector,
   listActionMenuGetter,
 }: SessionDropdownProps<SessionT>) => {
@@ -32,6 +35,10 @@ const SessionDropdown = <SessionT extends UI.SessionItemBase>({
   const sessionMenuItems = sessionMenuItemsGetter({
     role: 'menuitem',
   });
+  const newButton = newButtonGetter({
+    role: 'menuitem',
+  });
+
   return (
     <SectionedDropdown
       triggerIcon={<MenuIcon label="Session menu" urgencies={getTotalUrgencies()} />}

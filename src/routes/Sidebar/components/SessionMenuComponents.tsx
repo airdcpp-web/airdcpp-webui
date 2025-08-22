@@ -132,13 +132,20 @@ export const useComponents = <
         </MenuItemLink>
       );
     },
-    getNewButton: () => {
+    getNewButton: (menuItemProps?: Partial<RouterMenuItemLinkProps>) => {
       const { newCaption, hasEditAccess } = props;
       if (!hasEditAccess || !newCaption) {
         return null;
       }
 
-      return <SessionNewButton key="new-button" title={newCaption} url={newUrl} />;
+      return (
+        <SessionNewButton
+          key="new-button"
+          title={newCaption}
+          url={newUrl}
+          {...menuItemProps}
+        />
+      );
     },
     getSessionMenuItems: (menuItemProps?: Partial<RouterMenuItemLinkProps>) => {
       const getSessionMenuItem = (sessionItem: SessionT) => {
