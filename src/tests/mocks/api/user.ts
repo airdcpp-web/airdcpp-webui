@@ -3,15 +3,15 @@ import { HubADC1, HubADC2, HubADC3, HubNMDC1 } from './hubs';
 
 import * as API from '@/types/api';
 
-const User1Base = {
+export const User1Base = {
   cid: 'HNLUODI2YZ2U7FDWMHFNJU65ERGKUN4MH7GW5LY',
 };
 
-const User2Base = {
+export const User2Base = {
   cid: 'NJSHVYR4ZHCZFUEZNGA7M2D72S5AB4WQAMPBKFA',
 };
 
-const UserMeBase = {
+export const UserMeBase = {
   cid: 'G6SHNIXXWL4JV5OSM3GLMYK7UHOVFKF7GSUIGAY',
 };
 
@@ -188,6 +188,66 @@ export const HubNMDC1UserResponse = {
   upload_slots: 0,
   upload_speed: 0,
 };
+
+export const Hub1Identity = {
+  cid: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+  description: 'Private testing',
+  download_speed: 0,
+  email: '',
+  file_count: 0,
+  flags: ['offline', 'hidden', 'passive'] as API.HubUserFlag[],
+  hub_name: HubADC1.identity.name,
+  hub_session_id: HubADC1.id,
+  hub_url: HubADC1.hub_url,
+  id: 4294967295,
+  ip4: {
+    country: '',
+    ip: '',
+    str: '',
+  },
+  ip6: {
+    country: '',
+    ip: '',
+    str: '',
+  },
+  nick: HubADC1.identity.name,
+  share_size: 0,
+  supports: [],
+  tag: '',
+  upload_slots: 0,
+  upload_speed: 0,
+};
+
+export const Hub1Bot = {
+  cid: 'ED6HAL2DQXL7DGDMSCLAMCW2DZHNREKVKWVSQNY',
+  description: '',
+  download_speed: 0,
+  email: '',
+  file_count: 0,
+  flags: ['passive', 'bot', 'op'] as API.HubUserFlag[],
+  hub_name: HubADC1.identity.name,
+  hub_session_id: HubADC1.id,
+  hub_url: HubADC1.hub_url,
+  id: 1413566041,
+  ip4: {
+    country: '',
+    ip: '',
+    str: '',
+  },
+  ip6: {
+    country: '',
+    ip: '',
+    str: '',
+  },
+  nick: 'Bot',
+  share_size: 0,
+  supports: [],
+  tag: '',
+  upload_slots: 0,
+  upload_speed: 0,
+};
+
+export const Hub1UserListResponse = [Hub1User1Response, Hub1UserMeResponse, Hub1Bot];
 
 export const MockHintedUser1Response = toMockHintedUser(Hub1User1Response, [
   Hub3User1Response,

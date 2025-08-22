@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { RenderResult, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
@@ -62,6 +62,10 @@ import { formatMagnetCaption, parseMagnetLink } from '@/utils/MagnetUtils';
 import QueueConstants from '@/constants/QueueConstants';
 import { QueueBundleCreateFileResponse } from '@/tests/mocks/api/queue-bundles';
 import { createDataFetchRoutes } from '@/tests/helpers/test-route-helpers';
+import {
+  installSessionMessageMocks,
+  waitSessionsLoaded,
+} from '@/tests/mocks/mock-session';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
@@ -89,32 +93,18 @@ describe('Private messages', () => {
     });
 
     // Messages
-    const onSession1Read = vi.fn();
-    server.addRequestHandler(
-      'POST',
-      `${PrivateChatConstants.SESSIONS_URL}/${PrivateChat1.id}/messages/read`,
-      undefined,
-      onSession1Read,
-    );
-
-    const onSession2Read = vi.fn();
-    server.addRequestHandler(
-      'POST',
-      `${PrivateChatConstants.SESSIONS_URL}/${PrivateChat2.id}/messages/read`,
-      undefined,
-      onSession2Read,
-    );
-
-    server.addRequestHandler(
-      'GET',
-      `${PrivateChatConstants.SESSIONS_URL}/${PrivateChat1.id}/messages/0`,
+    const session1Mocks = installSessionMessageMocks(
+      PrivateChatConstants.SESSIONS_URL,
+      PrivateChat1.id,
       PrivateChat1MessagesResponse,
+      server,
     );
 
-    server.addRequestHandler(
-      'GET',
-      `${PrivateChatConstants.SESSIONS_URL}/${PrivateChat2.id}/messages/0`,
+    const session2Mocks = installSessionMessageMocks(
+      PrivateChatConstants.SESSIONS_URL,
+      PrivateChat2.id,
       PrivateChat2MessagesResponse,
+      server,
     );
 
     // New layout
@@ -156,8 +146,9 @@ describe('Private messages', () => {
     return {
       commonData,
 
-      onSession1Read,
-      onSession2Read,
+      session1Mocks,
+      session2Mocks,
+
       onSessionCreated,
 
       menuMocks,
@@ -196,11 +187,6 @@ describe('Private messages', () => {
     return { ...commonData, ...renderData, ...other, userEvent };
   };
 
-  const waitSessionsLoaded = async (queryByText: RenderResult['queryByText']) => {
-    await waitForData(/Loading sessions/i, queryByText);
-    await waitForData(/Loading messages/i, queryByText);
-  };
-
   test('should load messages', async () => {
     const { getByText, queryByText } = await renderLayout();
 
@@ -215,8 +201,8 @@ describe('Private messages', () => {
       getByText,
       queryByText,
       mockStoreListeners,
-      onSession1Read,
-      onSession2Read,
+      session1Mocks,
+      session2Mocks,
       sessionStore,
       appStore,
       userEvent,
@@ -234,7 +220,7 @@ describe('Private messages', () => {
         PrivateChat1.id,
       ),
     );
-    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(session1Mocks.onMessagesRead).toHaveBeenCalledTimes(1));
 
     // Send message for the active session
     mockStoreListeners.privateChat.updated.fire(
@@ -254,7 +240,7 @@ describe('Private messages', () => {
       },
       PrivateChat1.id,
     );
-    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(2));
+    await waitFor(() => expect(session1Mocks.onMessagesRead).toHaveBeenCalledTimes(2));
     expect(onNotification).toHaveBeenCalledTimes(0);
 
     // Send message for the background session
@@ -275,14 +261,14 @@ describe('Private messages', () => {
       },
       PrivateChat2.id,
     );
-    await waitFor(() => expect(onSession2Read).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(session2Mocks.onMessagesRead).toHaveBeenCalledTimes(0));
     expect(onNotification).toHaveBeenCalledTimes(1);
 
     // Activate the background session
     const session2MenuItem = queryByText(PrivateChat2.user.nicks);
     await userEvent.click(session2MenuItem!);
 
-    await waitFor(() => expect(onSession2Read).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(session2Mocks.onMessagesRead).toHaveBeenCalledTimes(1));
     expect(sessionStore.getState().privateChats.activeSessionId).toEqual(PrivateChat2.id);
 
     await waitFor(() => expect(getByText(PrivateChat2MessageOther.text)).toBeTruthy());
@@ -321,7 +307,7 @@ describe('Private messages', () => {
   });
 
   test('should handle user inactivity', async () => {
-    const { queryByText, mockStoreListeners, onSession1Read, sessionStore } =
+    const { queryByText, mockStoreListeners, session1Mocks, sessionStore } =
       await renderLayout(false);
 
     const onNotification = vi.fn();
@@ -355,11 +341,11 @@ describe('Private messages', () => {
     );
 
     await waitFor(() => expect(onNotification).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(session1Mocks.onMessagesRead).toHaveBeenCalledTimes(0));
 
     // Activate the user
     sessionStore.getState().activity.setUserActive(true);
-    await waitFor(() => expect(onSession1Read).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(session1Mocks.onMessagesRead).toHaveBeenCalledTimes(1));
   });
 
   test('open new session', async () => {

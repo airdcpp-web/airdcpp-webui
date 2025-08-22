@@ -6,37 +6,9 @@ import {
   ShareProfileHiddenBase,
 } from './share-profiles';
 
-export const HubNMDC1 = {
-  connect_state: {
-    id: 'connected' as API.HubConnectStateEnum,
-    str: 'Connected',
-  },
-  encryption: null,
-  favorite_hub: 547596534,
-  hub_url: 'localhost.nmdc',
-  id: 1,
-  identity: {
-    description: 'NMDC mock hub',
-    name: 'NMDC',
-    supports: [],
-  },
-  message_counts: {
-    total: 9,
-    unread: {
-      bot: 2,
-      mention: 0,
-      status: 5,
-      user: 0,
-      verbose: 2,
-    },
-  },
-  settings: {
-    fav_show_joins: false,
-    nick: 'user_nmdc',
-    show_joins: true,
-    use_main_chat_notify: false,
-  },
-  share_profile: ShareProfileDefaultBase,
+export const HubCountsResponse = {
+  share_size: 7436554727825,
+  user_count: 5,
 };
 
 export const HubADC1 = {
@@ -51,7 +23,7 @@ export const HubADC1 = {
   favorite_hub: 1586142342,
   hub_url:
     'adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA',
-  id: 2,
+  id: 1,
   identity: {
     description: 'Mock ADC hub 1',
     name: 'ADC hub 1',
@@ -84,7 +56,7 @@ export const HubADC2 = {
   encryption: null,
   favorite_hub: 0,
   hub_url: 'adcs://hub2.adc:2781',
-  id: 3,
+  id: 2,
   identity: {
     description: '',
     name: 'adcs://hub2.adc:2781',
@@ -120,7 +92,7 @@ export const HubADC3 = {
   },
   favorite_hub: 1838189668,
   hub_url: 'adcs://hub3.adc:2482',
-  id: 4,
+  id: 3,
   identity: {
     description: 'Mock ADC hub 3',
     name: 'ADC hub 3',
@@ -145,4 +117,37 @@ export const HubADC3 = {
   share_profile: ShareProfileHiddenBase,
 };
 
-export const HubsListResponse = [HubNMDC1, HubADC1, HubADC2, HubADC3];
+export const HubNMDC1 = {
+  connect_state: {
+    id: 'connected' as API.HubConnectStateEnum,
+    str: 'Connected',
+  },
+  encryption: null,
+  favorite_hub: 547596534,
+  hub_url: 'localhost.nmdc',
+  id: 4,
+  identity: {
+    description: 'NMDC mock hub',
+    name: 'NMDC',
+    supports: [],
+  },
+  message_counts: {
+    total: 9,
+    unread: {
+      bot: 2,
+      mention: 0,
+      status: 5,
+      user: 0,
+      verbose: 2,
+    },
+  },
+  settings: {
+    fav_show_joins: false,
+    nick: 'user_nmdc',
+    show_joins: true,
+    use_main_chat_notify: false,
+  },
+  share_profile: ShareProfileDefaultBase,
+};
+
+export const HubsListResponse = [HubADC1, HubADC2, HubADC3, HubNMDC1];
