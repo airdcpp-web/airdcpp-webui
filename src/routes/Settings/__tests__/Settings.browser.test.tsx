@@ -123,6 +123,7 @@ describe('Settings layout', () => {
 
     // Toggle a setting
     const userEvent = setupUserEvent();
+    await waitFor(() => expect(getByLabelText('Private messages (bots)')).toBeTruthy());
     const setting = getByLabelText('Private messages (bots)');
     await userEvent.click(setting);
 

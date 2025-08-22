@@ -96,8 +96,8 @@ const Dropdown: React.FC<DropdownProps> = ({
         setTimeout(() => setVisible(false), AnimationConstants.dropdown);
       },
 
-      debug: true,
-      verbose: true,
+      // debug: true,
+      // verbose: true,
 
       ...settings,
     };
@@ -107,14 +107,6 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
 
     $(el).dropdown(dropdownSettings);
-
-    return () => {
-      try {
-        $(el).dropdown('destroy');
-      } catch {
-        // ignore
-      }
-    };
   }, [direction, settings, contextElement]);
 
   const dropdownClassName = classNames(
