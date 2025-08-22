@@ -1,6 +1,7 @@
 //import * as React from 'react';
 
 import { IconType } from '@/components/semantic/Icon';
+import { RouterMenuItemLinkProps } from '@/components/semantic/RouterMenuItemLink';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -45,13 +46,17 @@ export interface SessionLayoutManageProps<
   remoteMenuId: string;
 }
 
+export type SessionMenuItemsGetter = (
+  menuItemProps?: Partial<RouterMenuItemLinkProps>,
+) => React.ReactNode[];
+
 interface SessionMainLayoutComponents {
   newButton: React.ReactElement<any> | null;
   listActionMenuGetter: () => React.ReactNode;
   itemHeaderTitle: React.ReactNode;
   itemHeaderDescription: React.ReactNode;
   itemHeaderIcon: IconType;
-  sessionMenuItems: React.ReactNode[];
+  sessionMenuItemsGetter: SessionMenuItemsGetter;
 }
 
 export interface SessionMainLayoutProps<

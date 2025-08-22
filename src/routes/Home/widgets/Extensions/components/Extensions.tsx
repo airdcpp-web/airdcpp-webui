@@ -57,7 +57,7 @@ const NpmPackageLayout: React.FC<NpmPackageLayoutProps & NpmPackageLayoutDataPro
 }) => (
   <div className="extension-layout">
     {packageCatalog.length > 0 && (
-      <div className="ui divided list">
+      <div className="ui divided list" role="list">
         {packageCatalog
           .slice()
           .sort(packageDateSort)

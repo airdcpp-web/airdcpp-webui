@@ -178,7 +178,7 @@ const Popup = forwardRef<PopupHandle, PopupProps>(
 
     return (
       <>
-        <span role="button" {...getTriggerProps()}>
+        <span role="button" tabIndex={0} {...getTriggerProps()}>
           {trigger}
         </span>
         {visible && nodeRef.current && (

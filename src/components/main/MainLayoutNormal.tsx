@@ -21,6 +21,8 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const { className, sidebarRoutes, primaryRoutes, secondaryRoutes } = props;
   const location = useLocation();
   const previousLocation = useSidebarEffect(sidebarRoutes, location);
+
+  const sidebarOpen = !!previousLocation;
   const mainLocation = !!previousLocation ? previousLocation : location;
 
   return (
@@ -35,8 +37,8 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
           previousLocation={previousLocation}
         />
       </SidebarContext.Provider>
-      <SidebarContext.Provider value={!!previousLocation}>
-        <div className="pusher">
+      <SidebarContext.Provider value={sidebarOpen}>
+        <div className="pusher" aria-hidden={sidebarOpen} inert={sidebarOpen}>
           <SiteHeader>
             <MainNavigation
               primaryRoutes={primaryRoutes}

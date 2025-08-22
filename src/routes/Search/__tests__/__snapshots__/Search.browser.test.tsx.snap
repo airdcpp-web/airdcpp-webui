@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Search layout > should handle custom search options 1`] = `
+{
+  "data": {
+    "hub_urls": [
+      "localhost.nmdc",
+      "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
+    ],
+    "priority": 5,
+    "query": {
+      "file_type": "file",
+      "max_size": 5242880000,
+      "min_size": 1048576000,
+      "pattern": "ubuntu",
+    },
+  },
+  "method": "POST",
+  "path": "search/3/hub_search",
+}
+`;
+
+exports[`Search layout > should render 1`] = `
+{
+  "data": {
+    "priority": 5,
+    "query": {
+      "pattern": "ubuntu",
+    },
+  },
+  "method": "POST",
+  "path": "search/3/hub_search",
+}
+`;

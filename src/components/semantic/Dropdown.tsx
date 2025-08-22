@@ -36,6 +36,8 @@ export type DropdownProps = React.PropsWithChildren<{
   size?: string;
   menuElementClassName?: string;
   label?: string;
+
+  id?: string;
 }>;
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -54,6 +56,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   menuElementClassName,
   label,
   children,
+  id,
 }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
@@ -73,7 +76,14 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     const dropdownSettings: SemanticUI.DropdownSettings = {
       direction,
-      action: 'hide',
+      // action: 'select',
+      action: (text, value, element) => {
+        // Handle keyboard selections
+        if (element[0]) {
+          element[0].click();
+        }
+        $(el).dropdown('hide');
+      },
       showOnFocus: false,
       duration: AnimationConstants.dropdown,
       onShow: () => {
@@ -86,8 +96,8 @@ const Dropdown: React.FC<DropdownProps> = ({
         setTimeout(() => setVisible(false), AnimationConstants.dropdown);
       },
 
-      // debug: true,
-      // verbose: true,
+      debug: true,
+      verbose: true,
 
       ...settings,
     };
@@ -120,17 +130,19 @@ const Dropdown: React.FC<DropdownProps> = ({
   );
 
   const trigger = <Icon icon={computedIcon} className="trigger" />;
-
+  const menuId = id ? `${id}-menu` : undefined;
   return (
     <div
       ref={rootRef}
       {...dropDownElementProps}
       className={dropdownClassName}
       aria-label={label}
+      aria-haspopup="menu"
+      aria-controls={menuId}
     >
       {leftIcon && !!caption && trigger}
 
-      <DropdownCaption icon={captionIcon} role="button">
+      <DropdownCaption id={id} icon={captionIcon} role="button">
         {!!caption ? caption : trigger}
       </DropdownCaption>
 
@@ -139,6 +151,9 @@ const Dropdown: React.FC<DropdownProps> = ({
       <div
         className={classNames('menu', menuElementClassName)}
         role={visible ? 'menu' : undefined}
+        aria-hidden={!visible}
+        inert={!visible}
+        id={menuId}
       >
         {visible ? children : <div className="item" />}
       </div>

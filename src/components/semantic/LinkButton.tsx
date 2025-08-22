@@ -12,8 +12,22 @@ export interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorEl
 // https://github.com/Semantic-Org/Semantic-UI/issues/4805
 const LinkButton: React.FC<LinkButtonProps> = ({ className, caption, ...other }) => {
   const buttonStyle = classNames('button link', className);
+  const onKeyDown = (evt: React.KeyboardEvent<HTMLAnchorElement>) => {
+    if (evt.key === 'Enter' || evt.key === ' ') {
+      evt.preventDefault();
+      // Trigger the click event
+      evt.currentTarget.click();
+    }
+  };
+
   return (
-    <a className={buttonStyle} role="button" {...other}>
+    <a
+      className={buttonStyle}
+      tabIndex={0}
+      role="button"
+      onKeyDown={onKeyDown}
+      {...other}
+    >
       {caption}
     </a>
   );

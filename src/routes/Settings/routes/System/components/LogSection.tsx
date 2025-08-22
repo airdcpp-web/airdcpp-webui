@@ -1,74 +1,62 @@
-import { Component } from 'react';
+import { useCallback, useState } from 'react';
 import RemoteSettingForm from '@/routes/Settings/components/RemoteSettingForm';
 
-import '../style.css';
+import { AccordionContent, AccordionTitle } from '@/components/semantic/Accordion';
 import { FormFieldChangeHandler, FormFieldSettingHandler } from '@/components/form/Form';
 
 import * as API from '@/types/api';
 
+import '../style.css';
+
 export interface LogSectionProps {
   section: string;
+  index: number;
   simple?: boolean;
 }
 
-class LogSection extends Component<LogSectionProps> {
-  state = {
-    enabled: false,
+function LogSection({ section, simple, index }: LogSectionProps) {
+  const [active, setActive] = useState(false);
+
+  const convertKey = useCallback(
+    (optionalSuffix?: string) => {
+      const suffix = optionalSuffix ? `_${optionalSuffix}` : '';
+      return `log_${section}${suffix}`;
+    },
+    [section],
+  );
+
+  const onSettingsReceived = (settings: API.SettingValueMap) => {
+    setActive(!!settings[convertKey()]);
   };
 
-  convertKey = (optionalSuffix?: string) => {
-    const suffix = optionalSuffix ? `_${optionalSuffix}` : '';
-    return `log_${this.props.section}${suffix}`;
+  const onEnableStateChanged: FormFieldChangeHandler = (id, formValue) => {
+    setActive(!!formValue[id]);
   };
 
-  onSettingsReceived = (settings: API.SettingValueMap) => {
-    this.setState({
-      enabled: settings[this.convertKey()],
-    });
+  const onContentSetting: FormFieldSettingHandler = (id, fieldOptions) => {
+    fieldOptions.disabled = !active;
   };
 
-  onEnableStateChanged: FormFieldChangeHandler = (id, formValue, hasChanges) => {
-    this.setState({
-      enabled: formValue[id],
-    });
-  };
+  const TitleFieldKeys = [convertKey()];
+  const ContentFieldKeys = [convertKey('file'), convertKey('format')];
 
-  onContentSetting: FormFieldSettingHandler = (id, fieldOptions, formValue) => {
-    fieldOptions.disabled = !this.state.enabled;
-  };
+  return (
+    <div className="log-section">
+      <AccordionTitle active={active} id={section} index={index}>
+        <RemoteSettingForm
+          keys={TitleFieldKeys}
+          onFieldChanged={onEnableStateChanged}
+          onSettingValuesReceived={onSettingsReceived}
+        />
+      </AccordionTitle>
 
-  getChildClass = (className: string) => {
-    if (this.state.enabled) {
-      return className + ' active';
-    }
-
-    return className;
-  };
-
-  render() {
-    const Title = [this.convertKey()];
-
-    const Content = [this.convertKey('file'), this.convertKey('format')];
-
-    const { simple } = this.props;
-    return (
-      <div className={this.getChildClass('log-section')}>
-        <div className={this.getChildClass('title')}>
-          <RemoteSettingForm
-            keys={Title}
-            onFieldChanged={this.onEnableStateChanged}
-            onSettingValuesReceived={this.onSettingsReceived}
-          />
-        </div>
-
-        {!simple && (
-          <div className={this.getChildClass('content')}>
-            <RemoteSettingForm keys={Content} onFieldSetting={this.onContentSetting} />
-          </div>
-        )}
-      </div>
-    );
-  }
+      {!simple && (
+        <AccordionContent active={active} id={section} index={index}>
+          <RemoteSettingForm keys={ContentFieldKeys} onFieldSetting={onContentSetting} />
+        </AccordionContent>
+      )}
+    </div>
+  );
 }
 
 export default LogSection;

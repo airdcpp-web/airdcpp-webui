@@ -8,7 +8,13 @@ import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { installTableMocks } from '@/tests/mocks/mock-table';
 
 import { waitFor } from '@testing-library/dom';
-import { clickButton, waitForUrl } from '@/tests/helpers/test-helpers';
+import {
+  clickButton,
+  clickIconButton,
+  waitExpectRequestToMatchSnapshot,
+  waitForLoader,
+  waitForUrl,
+} from '@/tests/helpers/test-helpers';
 
 import '@/style.css';
 
@@ -22,13 +28,16 @@ import {
   SearchInstanceHubSearchPostResponse,
   SearchInstanceListResponse,
   SearchInstanceNewResponse,
+  SearchTypesListResponse,
 } from '@/tests/mocks/api/search';
 import HistoryConstants, { HistoryStringEnum } from '@/constants/HistoryConstants';
 import {
+  setInputFieldValuesByName,
   setInputFieldValuesByPlaceholder,
   setupUserEvent,
+  toggleCheckboxValue,
 } from '@/tests/helpers/test-form-helpers';
-import { HubADC1 } from '@/tests/mocks/api/hubs';
+import { HubADC1, HubADC2, HubADC3, HubNMDC1 } from '@/tests/mocks/api/hubs';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { clickMenuItem, openMenu } from '@/tests/helpers/test-menu-helpers';
 import { installActionMenuMocks } from '@/components/action-menu/__tests__/test-action-menu-helpers';
@@ -130,6 +139,13 @@ describe('Search layout', () => {
       ['search string old', 'C5HMPSV2L7EW4GZBTG6H4MUPKGQLAZUAGZNACHY'],
     );
 
+    // Options
+    server.addRequestHandler(
+      'GET',
+      SearchConstants.SEARCH_TYPES_URL,
+      SearchTypesListResponse,
+    );
+
     return {
       commonData,
       server,
@@ -203,7 +219,7 @@ describe('Search layout', () => {
 
     clickButton('Search', getByRole);
 
-    await waitFor(() => expect(onPostHubSearch).toHaveBeenCalled());
+    await waitExpectRequestToMatchSnapshot(onPostHubSearch);
     await waitFor(() => expect(onAddHistory).toHaveBeenCalled());
 
     // Wait for the search results to be displayed
@@ -243,7 +259,7 @@ describe('Search layout', () => {
       resultTableMocks,
     } = renderData;
 
-    sessionStore.getState().hubs.init([HubADC1]);
+    sessionStore.getState().hubs.init([HubADC1, HubADC2, HubADC3]);
     resultTableMocks.mockTableManager.setItems(GroupedSearchResultsListResponse);
 
     await waitFor(() => expect(getByRole('grid')).toBeTruthy());
@@ -261,6 +277,65 @@ describe('Search layout', () => {
     // Close it
     clickButton('Close', getByRole);
     await waitForUrl('/search', router);
+
+    await router.navigate('/');
+    await waitForUrl('/', router);
+  });
+
+  test('should handle custom search options', async () => {
+    const renderData = await renderLayout();
+    const {
+      getByRole,
+      getByPlaceholderText,
+      getByLabelText,
+      queryByRole,
+
+      sessionStore,
+      router,
+
+      onPostHubSearch,
+      userEvent,
+    } = renderData;
+
+    // Create a session, the search input should appear
+    sessionStore.getState().hubs.init([HubADC1, HubADC2, HubADC3, HubNMDC1]);
+
+    await waitFor(() =>
+      expect(getByPlaceholderText('Enter search string...')).toBeTruthy(),
+    );
+
+    // Open search options
+    await waitFor(() =>
+      expect(getByRole('button', { name: 'Search options' })).toBeTruthy(),
+    );
+    await clickIconButton('Search options', getByLabelText);
+
+    await waitFor(() => expect(getByRole('form')).toBeTruthy());
+    await waitForLoader(queryByRole);
+
+    // Select type
+    await openMenu('Any', renderData);
+    await clickMenuItem('File', renderData);
+
+    // Unselect a hub
+    await userEvent.click(getByRole('button', { name: 'Hubs' }));
+    await toggleCheckboxValue(HubADC3.identity.name, renderData);
+
+    // Set size
+    await userEvent.click(getByRole('button', { name: 'Size limits' }));
+    await setInputFieldValuesByName(renderData, {
+      'Minimum size': '1000',
+      'Maximum size': '5000',
+    });
+
+    // Perform our search
+    await setInputFieldValuesByPlaceholder(renderData, {
+      'Enter search string...': 'ubuntu',
+    });
+
+    clickButton('Search', getByRole);
+
+    await waitExpectRequestToMatchSnapshot(onPostHubSearch);
 
     await router.navigate('/');
     await waitForUrl('/', router);

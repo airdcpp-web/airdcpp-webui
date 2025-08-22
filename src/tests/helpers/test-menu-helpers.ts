@@ -16,7 +16,7 @@ export const clickNavigationMenuItem = async (
   renderResult: BaseRenderResult & { userEvent: UserEvent },
 ) => {
   const { getByRole, userEvent } = renderResult;
-  await userEvent.click(getByRole('menuitem', { name: menuItemLabel }));
+  await userEvent.click(getByRole('link', { name: menuItemLabel }));
 };
 
 export const clickMenuItem = async (
@@ -32,6 +32,17 @@ export const clickMenuItem = async (
 
   await userEvent.click(getByRole('menuitem', { name: menuItemLabel }));
   await waitMenuClosed(renderResult);
+};
+
+export const activateTab = async (
+  tabLabel: string,
+  renderResult: BaseRenderResult & { userEvent: UserEvent },
+) => {
+  const { getByRole, userEvent } = renderResult;
+
+  await waitFor(() => expect(getByRole('tab', { name: tabLabel })).toBeTruthy());
+
+  await userEvent.click(getByRole('tab', { name: tabLabel }));
 };
 
 const clickSubMenuItemImpl = async (

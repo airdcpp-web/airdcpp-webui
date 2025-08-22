@@ -1,6 +1,6 @@
 export const FavoriteDirectoriesGroupedPathsResponse = [
   {
-    name: 'Downloads',
+    name: 'Downloads favorite',
     paths: ['/home/airdcpp/Downloads/', '/mnt/disk2/Downloads2/'],
   },
   {

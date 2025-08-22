@@ -47,6 +47,7 @@ export const PathListItem: React.FC<PathItemProps> = ({
       <div className="content">
         <LinkButton
           onClick={() => downloadHandler(pathInfo.path)}
+          aria-label={pathInfo.path}
           caption={
             <>
               {pathInfo.path}

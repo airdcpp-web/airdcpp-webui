@@ -9,13 +9,13 @@ import DataProviderDecorator, {
   DataProviderDecoratorChildProps,
 } from '@/decorators/DataProviderDecorator';
 import SearchConstants from '@/constants/SearchConstants';
-import Dropdown from '@/components/semantic/Dropdown';
+import Dropdown, { DropdownProps } from '@/components/semantic/Dropdown';
 import MenuItemLink from '@/components/semantic/MenuItemLink';
 import { SearchTypeIcon } from '@/components/icon/SearchTypeIcon';
 
 type OnChangeHandler = (value: string | null) => void;
 
-interface SearchTypeDropdownProps {
+interface SearchTypeDropdownProps extends DropdownProps {
   onChange: OnChangeHandler;
   value: string | null;
   moduleT: UI.ModuleTranslator;
@@ -62,6 +62,7 @@ const SearchTypeDropdown: React.FC<Props> = ({
   value,
   onChange,
   moduleT,
+  id,
 }) => {
   const commonItems = getCommonItems(moduleT);
   const selectedItem =
@@ -71,12 +72,9 @@ const SearchTypeDropdown: React.FC<Props> = ({
   return (
     <Dropdown
       selection={true}
-      caption={
-        <>
-          <SearchTypeIcon type={selectedItem} size="" />
-          {selectedItem.str}
-        </>
-      }
+      captionIcon={<SearchTypeIcon type={selectedItem} />}
+      caption={selectedItem.str}
+      id={id}
     >
       {commonItems.map((type) => typeToMenuItem(type, onChange, selectedItem))}
       <div key="divider" className="ui divider" />
@@ -105,6 +103,7 @@ const FileTypeField: TCombTemplate = {
         onChange={locals.onChange}
         value={locals.value || null}
         moduleT={locals.context.formT}
+        id={locals.attrs.id}
       />
     );
   },

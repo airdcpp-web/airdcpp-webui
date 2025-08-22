@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 
-import { NavLink } from 'react-router';
+import { NavLink, NavLinkProps } from 'react-router';
 import CountLabel from '@/components/CountLabel';
 import Icon, { IconType } from '@/components/semantic/Icon';
 
@@ -11,14 +11,14 @@ import * as UI from '@/types/ui';
 
 import { useSessionStoreProperty } from '@/context/SessionStoreContext';
 
-type RouterMenuItemLinkProps = React.PropsWithChildren<{
+export type RouterMenuItemLinkProps = React.PropsWithChildren<{
   url: string;
   icon?: IconType;
   className?: string;
-  onClick?: (evt: React.SyntheticEvent<any>) => void;
   unreadInfoStoreSelector?: UI.UnreadInfoStoreSelector;
   sessionItem?: UI.SessionItemBase;
-}>;
+}> &
+  Omit<NavLinkProps, 'to' | 'className'>;
 
 const getUrgencies = (
   unreadInfoStore: UI.UnreadInfoStore | UI.SessionSlice<UI.SessionItem> | null,
@@ -41,13 +41,13 @@ const getUrgencies = (
 // Route link with support for urgencies
 const RouterMenuItemLink = memo<RouterMenuItemLinkProps>(
   function RouterMenuItemLink({
-    onClick,
     className,
     icon,
     url,
     children,
     unreadInfoStoreSelector,
     sessionItem,
+    ...other
   }) {
     const unreadInfoStore = useSessionStoreProperty((state) =>
       unreadInfoStoreSelector ? unreadInfoStoreSelector(state) : null,
@@ -59,13 +59,11 @@ const RouterMenuItemLink = memo<RouterMenuItemLinkProps>(
         end={url === '/'}
         to={url}
         className={({ isActive }) => classNames('item', className, { active: isActive })}
-        onClick={onClick}
+        {...other}
       >
         <Icon icon={icon} />
 
-        <span className="name" role="menuitem">
-          {children}
-        </span>
+        <span className="name">{children}</span>
         {!!unreadInfoStore && <CountLabel urgencies={urgencies} />}
       </NavLink>
     );

@@ -19,7 +19,13 @@ export const NormalDownloadLayout: React.FC<DownloadLayoutProps> = ({
 }) => (
   <Grid className="normal layout">
     <div className="four wide column">
-      <div className="ui vertical fluid tabular menu">{menuItems}</div>
+      <div
+        className="ui vertical fluid tabular menu"
+        role="navigation"
+        aria-label="Download sections"
+      >
+        <div role="tablist">{menuItems}</div>
+      </div>
       {!!handleBrowse && (
         <Button
           className="fluid basic"

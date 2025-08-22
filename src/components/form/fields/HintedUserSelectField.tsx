@@ -45,6 +45,7 @@ const HintedUserTemplate: TCombTemplate = {
         styles={getErrorStyles(locals.hasError)}
         value={locals.value}
         isClearable={locals.typeInfo.isMaybe}
+        {...locals.attrs}
       />
     );
   },

@@ -18,16 +18,32 @@ const Icon: React.FC<IconProps> = ({
   color,
   className,
   cornerIcon,
+  onClick,
   ...other
 }) => {
   if (typeof icon !== 'string') {
     return !!icon ? icon : null;
   }
 
+  const onKeyDown = (evt: React.KeyboardEvent<HTMLAnchorElement>) => {
+    if (evt.key === 'Enter' || evt.key === ' ') {
+      evt.preventDefault();
+      // Trigger the click event
+      evt.currentTarget.click();
+    }
+  };
+  const commonProps = {
+    role: onClick ? 'button' : undefined,
+    tabIndex: onClick ? 0 : undefined,
+    onKeyDown: onClick ? onKeyDown : undefined,
+    onClick,
+  };
+
   if (cornerIcon) {
     return (
       <i
-        className={classNames(size, className, { link: !!other.onClick }, 'icons')}
+        className={classNames(size, className, { link: !!onClick }, 'icons')}
+        {...commonProps}
         {...other}
       >
         <i className={classNames(color, icon, 'icon')} />
@@ -38,14 +54,8 @@ const Icon: React.FC<IconProps> = ({
 
   return (
     <i
-      className={classNames(
-        color,
-        size,
-        icon,
-        className,
-        { link: !!other.onClick },
-        'icon',
-      )}
+      className={classNames(color, size, icon, className, { link: !!onClick }, 'icon')}
+      {...commonProps}
       {...other}
     />
   );

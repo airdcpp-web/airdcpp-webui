@@ -8,7 +8,7 @@
   font-weight: bold;
 }
 
-.settings-layout .system.logging .log-section.active {
+.settings-layout .system.logging .log-section > .active {
   background-color: whitesmoke;
 }
 

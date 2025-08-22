@@ -72,6 +72,7 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
     }
   };
 
+  const fieldId = inputProps?.id;
   return (
     <div style={{ display: 'flex' }}>
       <Input
@@ -85,6 +86,9 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
         className="ui select"
         style={{ maxWidth: '100px' }}
         value={ByteUnits[unitIndex]}
+        id={fieldId ? `${fieldId}-unit` : undefined}
+        aria-labelledby={fieldId} // tie select to the same label
+        aria-label={!fieldId ? 'Unit' : undefined}
         onChange={(evt) => {
           setUnitIndex(evt.target.selectedIndex);
         }}
@@ -110,6 +114,7 @@ const FileTypeField: TCombTemplate = {
         onChange={locals.onChange}
         value={!!locals.value ? parseInt(locals.value as any) : 0}
         moduleT={locals.context.formT}
+        inputProps={locals.attrs}
       />
     );
   },

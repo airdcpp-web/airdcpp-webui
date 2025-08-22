@@ -1,10 +1,12 @@
 import * as React from 'react';
 
-import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
+import RouterMenuItemLink, {
+  RouterMenuItemLinkProps,
+} from '@/components/semantic/RouterMenuItemLink';
 
 import * as UI from '@/types/ui';
 
-interface SessionMenuItemProps {
+export interface SessionMenuItemProps extends Partial<RouterMenuItemLinkProps> {
   url: string;
   name: React.ReactNode;
   unreadInfoStoreSelector: UI.SessionStoreSelector;
@@ -18,6 +20,7 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
   name,
   unreadInfoStoreSelector,
   url,
+  ...other
 }) => (
   <RouterMenuItemLink
     url={url}
@@ -25,6 +28,9 @@ const SessionMenuItem: React.FC<SessionMenuItemProps> = ({
     icon={status}
     sessionItem={sessionItem}
     unreadInfoStoreSelector={unreadInfoStoreSelector}
+    // aria-controls={CONTENT_PANEL_ID}
+    // role="tab"
+    {...other}
   >
     {name}
   </RouterMenuItemLink>

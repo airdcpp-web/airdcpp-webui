@@ -214,3 +214,21 @@ export const setSelectFieldValues = async (
   await clearSelectFieldValue({ getByLabelText, getByRole }, selectData.field);
   await addSelectFieldValues({ getByLabelText, getByRole }, selectData);
 };
+
+export const toggleCheckboxValue = async (
+  label: string,
+  { getByRole, userEvent }: RenderResult & { userEvent: UserEvent },
+) => {
+  const input = getByRole('checkbox', { name: label });
+  const initialInputValue = (input as HTMLInputElement).checked;
+
+  // Click the label instead of the input to trigger Fomantic's plugin callback
+  const labelEl = (input as HTMLInputElement).labels?.[0];
+  if (!labelEl) throw new Error('Checkbox label not found');
+  await userEvent.click(labelEl);
+
+  // Wait for the checkbox to change its value
+  await waitFor(() =>
+    expect((input as HTMLInputElement).checked).not.toBe(initialInputValue),
+  );
+};

@@ -15,6 +15,7 @@ import { useLocation } from 'react-router';
 import { useSessionRouteHelpers } from './effects/useSessionHelpers';
 import { useTranslation } from 'react-i18next';
 import { useSocket } from '@/context/SocketContext';
+import { RouterMenuItemLinkProps } from '@/components/semantic/RouterMenuItemLink';
 
 export const useComponents = <
   SessionT extends UI.SessionItemBase,
@@ -139,11 +140,12 @@ export const useComponents = <
 
       return <SessionNewButton key="new-button" title={newCaption} url={newUrl} />;
     },
-    getSessionMenuItems: () => {
+    getSessionMenuItems: (menuItemProps?: Partial<RouterMenuItemLinkProps>) => {
       const getSessionMenuItem = (sessionItem: SessionT) => {
         const { itemNameGetter, sessionStoreSelector } = props;
         return (
           <SessionMenuItem
+            {...menuItemProps}
             key={sessionItem.id}
             url={getSessionUrl(sessionItem.id)}
             name={itemNameGetter(sessionItem)}

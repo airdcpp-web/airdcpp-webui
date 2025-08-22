@@ -17,7 +17,20 @@ export const ShareGetGroupedRootsResponse = [
   },
 ];
 
-export const ShareGetRefreshTasksResponse = [];
+export const ShareGetRefreshTasksResponse = [
+  {
+    canceled: false,
+    id: 529412995,
+    priority_type: 'manual',
+    real_paths: [
+      '/home/airdcpp/Downloads/',
+      '/home/share/100k items/',
+      '/home/www/builds/develop/',
+    ],
+    running: true,
+    type: 'refresh_all',
+  },
+];
 
 export const TempShareItem1 = {
   id: 1878753295,

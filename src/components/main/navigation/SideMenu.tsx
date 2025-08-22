@@ -45,7 +45,11 @@ const SideMenu: React.FC<SideMenuProps> = ({
   return (
     <div id="side-menu">
       {menuItems.length > 0 && (
-        <div className="content navigation">
+        <div
+          className="content navigation"
+          role="navigation"
+          aria-label="Sidebar navigation"
+        >
           <div className="ui labeled icon vertical small inverted menu">{menuItems}</div>
         </div>
       )}

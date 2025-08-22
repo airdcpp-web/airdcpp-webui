@@ -17,12 +17,13 @@ const LogSectionGroup: React.FC<LogSectionGroupProps> = (props) => {
       <div className="sections">
         <div className="ui header">{title}</div>
         <Accordion className="styled" controlled={true}>
-          {sectionKeys.map((sectionKey) => (
+          {sectionKeys.map((sectionKey, index) => (
             <LogSection
               {...other}
               key={sectionKey}
               section={sectionKey}
               simple={!!simpleKeys && simpleKeys.includes(sectionKey)}
+              index={index}
             />
           ))}
         </Accordion>

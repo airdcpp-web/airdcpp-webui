@@ -29,7 +29,7 @@ const RSS: React.FC<RSSProps> = (props) => {
   const { entries, date } = feedInfo;
   return (
     <div className="rss-container">
-      <div className="ui divided list rss">
+      <div className="ui divided list rss" role="list">
         {entries.map((entry) => (
           <Entry
             key={getUniqueEntryKey(entry)}

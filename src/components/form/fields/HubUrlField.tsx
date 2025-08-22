@@ -20,6 +20,7 @@ const HubUrlTemplate: TCombTemplate = {
           locals.onChange(hubUrl);
         }}
         defaultValue={locals.value || undefined}
+        {...locals.attrs}
       />
     );
   },

@@ -1,6 +1,9 @@
 import * as React from 'react';
 
-import Accordion from '@/components/semantic/Accordion';
+import Accordion, {
+  AccordionContent,
+  AccordionTitle,
+} from '@/components/semantic/Accordion';
 import ActionInput, { ActionInputProps } from '@/components/semantic/ActionInput';
 
 import * as UI from '@/types/ui';
@@ -18,13 +21,13 @@ export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({
   handleAction,
   t,
 }) => (
-  <Accordion>
-    <label htmlFor="create_directory" className="title create-section">
+  <Accordion className="create-section">
+    <AccordionTitle id="create_directory">
       <Icon icon={IconConstants.DROPDOWN} />
       {translate('Create directory', t, UI.Modules.COMMON)}
-    </label>
+    </AccordionTitle>
 
-    <div className="content create-section">
+    <AccordionContent id="create_directory">
       <ActionInput
         caption={translate('Create', t, UI.Modules.COMMON)}
         icon={IconConstants.CREATE}
@@ -32,6 +35,6 @@ export const CreateDirectorySection: React.FC<CreateDirectorySectionProps> = ({
         placeholder={translate('Directory name', t, UI.Modules.COMMON)}
         id="create_directory"
       />
-    </div>
+    </AccordionContent>
   </Accordion>
 );

@@ -35,6 +35,8 @@ const menuItemToLinkComponent = (
       key={url}
       url={url}
       icon={'icon' in menuItemInfo ? `green ${menuItemInfo.icon}` : null}
+      role="tab"
+      aria-controls="settings-content-panel"
     >
       {translateSettingSectionTitle(menuItemInfo.title, settingsT)}
     </RouterMenuItemLink>

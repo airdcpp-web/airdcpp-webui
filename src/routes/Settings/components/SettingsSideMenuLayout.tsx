@@ -6,12 +6,29 @@ import { SettingSectionLayoutProps } from '@/routes/Settings/types';
 import { translateSettingSectionTitle } from './MenuItems';
 import Icon from '@/components/semantic/Icon';
 
-type SideMenuProps = Pick<SettingSectionLayoutProps, 'menu' | 'settingsT'>;
+// Define a static ID for the content panel so tabs can control it.
+const CONTENT_PANEL_ID = 'settings-content-panel';
 
-const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menu, settingsT }) => {
+type SideMenuProps = Pick<
+  SettingSectionLayoutProps,
+  'menu' | 'settingsT' | 'selectedRootMenuItem'
+>;
+
+const SideChildSectionMenu: React.FC<SideMenuProps> = ({
+  menu,
+  settingsT,
+  selectedRootMenuItem,
+}) => {
+  // The label should reflect the currently selected top-level tab for context.
+  const sideMenuLabel = `${translateSettingSectionTitle(selectedRootMenuItem.title, settingsT)} sections`;
   return (
     <div className="three wide column menu-column">
-      <div className="ui vertical secondary menu" role="menubar">
+      <div
+        className="ui vertical secondary menu"
+        role="tablist"
+        aria-label={sideMenuLabel}
+      >
+        {/* The items passed in menu.childMenuItems should have role="tab" */}
         {menu.childMenuItems}
         {!!menu.childAdvancedMenuItems && (
           <div>
@@ -27,7 +44,13 @@ const SideChildSectionMenu: React.FC<SideMenuProps> = ({ menu, settingsT }) => {
 type TopMenuProps = Pick<SettingSectionLayoutProps, 'menu'>;
 
 const TopRootSectionMenu: React.FC<TopMenuProps> = ({ menu }) => (
-  <div className="ui secondary pointing menu settings top-menu" role="menu">
+  // This is the primary tab list.
+  <div
+    className="ui secondary pointing menu settings top-menu"
+    role="tablist"
+    aria-label="Setting categories"
+  >
+    {/* The items passed in menu.rootMenuItems should have role="tab" */}
     {menu.rootMenuItems}
   </div>
 );
@@ -53,7 +76,11 @@ const Content: React.FC<ContentProps> = ({
   message,
   settingsT,
 }) => (
-  <div className={classNames('thirteen wide column', contentClassname)}>
+  <div
+    id={CONTENT_PANEL_ID}
+    className={classNames('thirteen wide column', contentClassname)}
+    role="tabpanel"
+  >
     <div className="ui segment">
       <LayoutHeader
         title={translateSettingSectionTitle(selectedChildMenuItem.title, settingsT)}

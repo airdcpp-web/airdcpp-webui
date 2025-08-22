@@ -12,7 +12,11 @@ import {
   useModalButton,
 } from '@/tests/helpers/test-dialog-helpers';
 import { clickButton, waitForData } from '@/tests/helpers/test-helpers';
-import { setInputFieldValues, setupUserEvent } from '@/tests/helpers/test-form-helpers';
+import {
+  setInputFieldValues,
+  setInputFieldValuesByPlaceholder,
+  setupUserEvent,
+} from '@/tests/helpers/test-form-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
@@ -84,8 +88,9 @@ describe('FileBrowserDialog', () => {
 
     const renderData = renderDataNode(<FileBrowserDialogTest />, commonData);
 
+    const userEvent = setupUserEvent();
     const modalController = createTestModalController(renderData);
-    return { modalController, onSave, caption, ...renderData, ...other };
+    return { modalController, onSave, caption, userEvent, ...renderData, ...other };
   };
 
   describe('directory selection', () => {
@@ -136,18 +141,18 @@ describe('FileBrowserDialog', () => {
     }, 100000);
 
     test('should create new directory', async () => {
-      const userEvent = setupUserEvent();
+      const renderResult = await renderDialog(API.SettingTypeEnum.DIRECTORY_PATH);
       const {
         getByText,
         modalController,
         queryByText,
         getByRole,
-        getByLabelText,
         onSave,
         caption,
         container,
         onDirectoryCreated,
-      } = await renderDialog(API.SettingTypeEnum.DIRECTORY_PATH);
+        userEvent,
+      } = renderResult;
 
       await modalController.openDialog();
 
@@ -165,10 +170,12 @@ describe('FileBrowserDialog', () => {
         expect(container.querySelector('.ui.action.input.visible')).toBeTruthy(),
       );
 
-      await setInputFieldValues(
-        { userEvent, getByLabelText },
-        { 'Create directory': 'New directory' },
-      );
+      userEvent.click(getByText('Create directory'));
+      // await setInputFieldValues(renderResult, { 'Create directory': 'New directory' });
+
+      await setInputFieldValuesByPlaceholder(renderResult, {
+        'Directory name': 'New directory',
+      });
 
       clickButton('Create', getByRole);
       await waitFor(() => {

@@ -1,6 +1,6 @@
 import { act, fireEvent, waitFor } from '@testing-library/react';
 import Button from '@/components/semantic/Button';
-import { clickButton, waitForUrl } from './test-helpers';
+import { clickButton, clickIconButton, waitForUrl } from './test-helpers';
 import { useState } from 'react';
 import { expect } from 'vitest';
 import { TestRouteNavigateButton } from './test-route-helpers';
@@ -76,6 +76,7 @@ export const waitDialogClosed = async ({ queryByRole }: BaseRenderResult) => {
 export const createTestModalController = ({
   getByRole,
   getByText,
+  getByLabelText,
   container,
 }: BaseRenderResult) => {
   const expectDialogOpen = () => {
@@ -91,10 +92,21 @@ export const createTestModalController = ({
     expect(container.querySelector('.ui.modal.active.visible')).toBeFalsy();
   };
 
-  const openDialog = async (caption = DefaultOpenModalButtonCaption) => {
-    await act(async () => {
+  interface DialogOpenProps {
+    iconButton: boolean;
+  }
+
+  const openDialog = async (
+    caption = DefaultOpenModalButtonCaption,
+    { iconButton = false }: Partial<DialogOpenProps> = {},
+  ) => {
+    // await act(async () => {
+    if (iconButton) {
+      clickIconButton(caption, getByLabelText);
+    } else {
       clickButton(caption, getByRole);
-    });
+    }
+    //});
 
     await waitFor(() => expectDialogOpen());
   };

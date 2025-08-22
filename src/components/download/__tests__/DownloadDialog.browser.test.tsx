@@ -29,10 +29,12 @@ import {
   createTestRouteModalController,
   TestRouteModalNavigateButton,
 } from '@/tests/helpers/test-dialog-helpers';
-import { waitForData } from '@/tests/helpers/test-helpers';
+import { clickButton, waitForData } from '@/tests/helpers/test-helpers';
 import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
+import { activateTab } from '@/tests/helpers/test-menu-helpers';
+import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
 // tslint:disable:no-empty
 describe('DownloadDialog', () => {
@@ -49,6 +51,7 @@ describe('DownloadDialog', () => {
     const commonData = await initCommonDataMocks(server);
 
     const onSaveHistory = vi.fn();
+    const onGetDiskInfo = vi.fn();
 
     // Target paths fetch
     server.addRequestHandler(
@@ -79,7 +82,17 @@ describe('DownloadDialog', () => {
     server.addRequestHandler(
       'POST',
       FilesystemConstants.DISK_INFO_URL,
-      FilesystemDiskInfoResponse,
+      (request, socket) => {
+        const requestData = request.data as { paths: string[] };
+        const responseData = FilesystemDiskInfoResponse.filter((item) =>
+          requestData.paths.includes(item.path),
+        );
+        return {
+          code: 200,
+          data: responseData,
+        };
+      },
+      onGetDiskInfo,
     );
     server.addRequestHandler(
       'POST',
@@ -87,7 +100,8 @@ describe('DownloadDialog', () => {
       FilesystemListContentResponse,
     );
 
-    return { ...commonData, onSaveHistory };
+    const userEvent = setupUserEvent();
+    return { ...commonData, onSaveHistory, onGetDiskInfo, userEvent };
   };
 
   const renderDialog = async () => {
@@ -153,7 +167,7 @@ describe('DownloadDialog', () => {
     await modalController.closeDialogButton('Close');
   });
 
-  test('should handle download', async () => {
+  test('should handle history download', async () => {
     const { onSaveHistory, modalController, handleDownload, getByRole, queryByText } =
       await renderDialog();
 
@@ -165,6 +179,37 @@ describe('DownloadDialog', () => {
     await waitDialogLoaded(getByRole);
 
     // Download
+    await modalController.closeDialogText(downloadPath);
+
+    await waitFor(() => expect(onSaveHistory).toHaveBeenCalled());
+
+    // Check
+    expectDownloadHandlerToMatchSnapshot(handleDownload);
+  });
+
+  test('should accordion path download', async () => {
+    const renderResult = await renderDialog();
+
+    const { onSaveHistory, modalController, handleDownload, getByRole, queryByText } =
+      renderResult;
+
+    const pathGroup = FavoriteDirectoriesGroupedPathsResponse[0];
+
+    // Open dialog
+    await modalController.openDialog();
+    await waitDialogLoaded(getByRole);
+
+    // Go to favorites
+    await activateTab('Favorites', renderResult);
+    await waitFor(() => expect(queryByText(pathGroup.name)).toBeInTheDocument());
+
+    // Open the group
+    clickButton(pathGroup.name, getByRole);
+
+    // Download path
+    const downloadPath = pathGroup.paths[0];
+    await waitFor(() => expect(getByRole('button', { name: downloadPath })).toBeTruthy());
+
     await modalController.closeDialogText(downloadPath);
 
     await waitFor(() => expect(onSaveHistory).toHaveBeenCalled());

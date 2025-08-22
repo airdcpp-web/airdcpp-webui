@@ -37,6 +37,14 @@ export const clickButton = (caption: string, getByRole: RenderResult['getByRole'
   return expect(fireEvent.click(button)).toBeTruthy();
 };
 
+export const clickIconButton = (
+  caption: string,
+  getByLabelText: RenderResult['getByLabelText'],
+) => {
+  const button = getByLabelText(caption);
+  return expect(fireEvent.click(button)).toBeTruthy();
+};
+
 export const waitExpectRequestToMatchSnapshot = async (mock: Mock) => {
   await waitFor(() => expect(mock).toHaveBeenCalledTimes(1));
 

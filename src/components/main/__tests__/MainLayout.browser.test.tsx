@@ -20,7 +20,7 @@ import TransferConstants from '@/constants/TransferConstants';
 import ShareConstants from '@/constants/ShareConstants';
 import HashConstants from '@/constants/HashConstants';
 import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
-import { HashStatsResponse } from '@/tests/mocks/api/hash';
+import { HashStatsRunning } from '@/tests/mocks/api/hash';
 import { ShareGetRefreshTasksResponse } from '@/tests/mocks/api/share';
 import { clickButton } from '@/tests/helpers/test-helpers';
 
@@ -40,6 +40,8 @@ const SidebarRouteMenuCaption = 'Sidebar route menu item';
 const SidebarRouteContentCaption = 'Sidebar route content';
 
 const MainDialogSidebarOpenCaption = 'Main dialog sidebar open caption';
+
+const HashDialogOpenCaption = 'Hash progress';
 
 const TestRoutes = {
   main: '/main',
@@ -119,7 +121,7 @@ describe('MainLayout', () => {
       HashConstants.STATISTICS,
     );
 
-    server.addRequestHandler('GET', HashConstants.STATS_URL, HashStatsResponse);
+    server.addRequestHandler('GET', HashConstants.STATS_URL, HashStatsRunning);
 
     return {
       commonData,
@@ -247,6 +249,29 @@ describe('MainLayout', () => {
 
       // Navigate back to the modal
       clickButton(NavigateBackCaption, getByRole);
+      await waitFor(() => modalController.expectDialogClosed());
+
+      // Sidebar should still be open
+      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+    });
+
+    test('should open hashing dialog', async () => {
+      const renderData = await renderNormalLayout();
+      const { getByText, modalController, getByRole } = renderData;
+
+      // Open sidebar
+      await clickNavigationMenuItem(SidebarRouteMenuCaption, renderData);
+      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+
+      // Open hashing dialog
+      await modalController.openDialog(HashDialogOpenCaption, { iconButton: true });
+      await waitFor(() => modalController.expectDialogOpen());
+
+      expect(getByRole('button', { name: 'Stop' })).toBeInTheDocument();
+      expect(getByRole('button', { name: 'Pause' })).toBeInTheDocument();
+
+      // Close the dialog
+      clickButton('Close', getByRole);
       await waitFor(() => modalController.expectDialogClosed());
 
       // Sidebar should still be open

@@ -1,9 +1,20 @@
-import { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import 'fomantic-ui-css/components/accordion';
 import 'fomantic-ui-css/components/accordion.min.css';
 
 import cx from 'classnames';
+
+type AccordionItemId = number;
+
+interface AccordionContextValue {
+  toggle: (id: AccordionItemId) => void;
+  isActive: (id: AccordionItemId, active: boolean | undefined) => boolean;
+}
+
+const AccordionContext = React.createContext<AccordionContextValue | undefined>(
+  undefined,
+);
 
 type AccordionProps = React.PropsWithChildren<{
   controlled?: boolean;
@@ -11,86 +22,142 @@ type AccordionProps = React.PropsWithChildren<{
   defaultActiveIndexes?: number[];
 }>;
 
-class Accordion extends Component<AccordionProps> {
-  static readonly defaultProps: Pick<AccordionProps, 'className'> = {
-    className: '',
-  };
+const Accordion: React.FC<AccordionProps> = ({
+  controlled,
+  className,
+  defaultActiveIndexes = [],
+  children,
+}) => {
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
-  c: HTMLDivElement;
-  componentDidMount() {
-    let settings: SemanticUI.AccordionSettings | undefined;
+  // Init/destroy Fomantic accordion
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
 
-    if (this.props.controlled) {
-      settings = {
-        on: 'disabled',
-      };
-    }
+    const settings: SemanticUI.AccordionSettings | undefined = {
+      on: 'disabled', // We control the open state logic in React
+    };
 
-    $(this.c).accordion(settings);
+    $(el).accordion(settings);
 
-    if (this.props.defaultActiveIndexes) {
-      for (const index of this.props.defaultActiveIndexes) {
-        $(this.c).accordion('open', index);
+    if (defaultActiveIndexes?.length) {
+      for (const index of defaultActiveIndexes) {
+        $(el).accordion('open', index);
       }
     }
-  }
 
-  componentDidUpdate(prevProps: AccordionProps) {
-    if (!prevProps.defaultActiveIndexes && !!this.props.defaultActiveIndexes) {
-      for (const index of this.props.defaultActiveIndexes) {
-        $(this.c).accordion('open', index);
+    return () => {
+      try {
+        $(el).accordion('destroy');
+      } catch {
+        // ignore
       }
-    }
-  }
+    };
+  }, []);
 
-  render() {
-    const classNames = cx('ui accordion', this.props.className);
+  const [activeChildren, setActiveChildren] =
+    React.useState<AccordionItemId[]>(defaultActiveIndexes);
+  const classNames = cx('ui accordion', className);
 
-    const { children } = this.props;
-    return (
-      <div
-        ref={(c) => {
-          this.c = c!;
+  return (
+    <div ref={rootRef} className={classNames}>
+      <AccordionContext.Provider
+        value={{
+          toggle: (id) => {
+            if (controlled) return;
+
+            if (!rootRef.current) return;
+            $(rootRef.current).accordion('toggle', id);
+
+            setActiveChildren((prev) =>
+              prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+            );
+          },
+          isActive: (id, active) => {
+            if (controlled) return active!;
+            return activeChildren.includes(id);
+          },
         }}
-        className={classNames}
       >
         {children}
-      </div>
-    );
-  }
-}
+      </AccordionContext.Provider>
+    </div>
+  );
+};
+
+const toAccordionTitleId = (id: string | undefined) => (id ? `${id}` : undefined);
+const toAccordionContentId = (id: string | undefined) =>
+  id ? `${id}_content` : undefined;
 
 type AccordionTitleProps = React.PropsWithChildren<{
-  className?: string;
   active?: boolean;
-  style?: React.CSSProperties;
-}>;
+  index?: number;
+}> &
+  React.HTMLProps<HTMLDivElement>;
 
 export const AccordionTitle: React.FC<AccordionTitleProps> = ({
   active,
   className,
   children,
-  style,
+  id,
+  index = 0,
+  ...other
 }) => {
   const classNames = cx('title', { active }, className);
+  const { isActive, toggle } = React.useContext(AccordionContext)!;
+  const contentActive = isActive(index, active);
+
+  const onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
+    // Toggle on Space, prevent page scroll
+    if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Space') {
+      e.preventDefault();
+      toggle(index);
+    }
+  };
 
   return (
-    <div className={classNames} style={style}>
+    <div
+      role="button"
+      tabIndex={0}
+      id={toAccordionTitleId(id)}
+      aria-expanded={contentActive}
+      className={classNames}
+      onClick={() => toggle(index)}
+      onKeyDown={onKeyDown}
+      {...other}
+    >
       {children}
     </div>
   );
 };
 
-export const AccordionContent: React.FC<AccordionTitleProps> = ({
+export type AccordionContentProps = React.PropsWithChildren<{
+  active?: boolean;
+  index?: number;
+}> &
+  React.HTMLProps<HTMLDivElement>;
+
+export const AccordionContent: React.FC<AccordionContentProps> = ({
   active,
   className,
   children,
-  style,
+  id,
+  index = 0,
+  ...other
 }) => {
   const classNames = cx('content', { active }, className);
-
+  const { isActive } = React.useContext(AccordionContext)!;
+  const contentActive = isActive(index, active);
   return (
-    <div className={classNames} style={style}>
+    <div
+      className={classNames}
+      id={toAccordionContentId(id)}
+      aria-labelledby={toAccordionTitleId(id)}
+      role="region"
+      aria-hidden={!contentActive}
+      {...other}
+    >
       {children}
     </div>
   );

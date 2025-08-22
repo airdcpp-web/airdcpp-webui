@@ -135,6 +135,7 @@ const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
                     setActiveSubmenu(findParent(activeSubmenu, items));
                   }}
                   role="button"
+                  tabIndex={0}
                 >
                   <Icon icon="chevron left" />
                   {activeSubmenu.item!.caption}

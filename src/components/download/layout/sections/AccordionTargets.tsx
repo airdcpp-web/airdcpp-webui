@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 
 import IconConstants from '@/constants/IconConstants';
 
-import Accordion from '@/components/semantic/Accordion';
+import Accordion, {
+  AccordionContent,
+  AccordionTitle,
+} from '@/components/semantic/Accordion';
 import Icon from '@/components/semantic/Icon';
 import Message from '@/components/semantic/Message';
 
@@ -25,18 +28,18 @@ interface AccordionTargetsProps {
 }
 
 class AccordionTargets extends Component<AccordionTargetsProps> {
-  formatParent = (parent: API.GroupedPath) => {
+  formatParent = (parent: API.GroupedPath, index: number) => {
     const { downloadHandler, t } = this.props;
     return (
       <React.Fragment key={parent.name}>
-        <div className="title">
+        <AccordionTitle id={parent.name} index={index}>
           <Icon icon={IconConstants.DROPDOWN} />
           {parent.name}
-        </div>
+        </AccordionTitle>
 
-        <div className="content">
+        <AccordionContent id={parent.name} index={index}>
           <PathList paths={parent.paths} downloadHandler={downloadHandler} t={t} />
-        </div>
+        </AccordionContent>
       </React.Fragment>
     );
   };

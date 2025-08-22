@@ -46,7 +46,7 @@ export const ExtensionInfoEntry: React.FC<ExtensionProps> = ({
     compareVersions(installedPackage.version, npmPackage.version) < 0;
 
   return (
-    <div className="item extension">
+    <div className="item extension" role="listitem">
       <ExtensionIcon
         installedPackage={installedPackage}
         hasUpdate={hasUpdate}

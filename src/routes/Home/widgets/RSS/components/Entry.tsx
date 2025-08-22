@@ -31,7 +31,7 @@ const Entry: React.FC<EntryProps> = ({ entry, feedUrl, widgetT }) => {
   const { formatRelativeTime } = useFormatter();
   const date = entry.pubDate ? entry.pubDate : entry.updated;
   return (
-    <div className="item">
+    <div className="item" role="listitem">
       <div className="header">
         <ActionMenu
           leftIcon={true}

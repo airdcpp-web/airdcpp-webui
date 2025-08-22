@@ -17,7 +17,8 @@ import { isValueSet, translateForm } from '@/utils/FormUtils';
 import Button from '@/components/semantic/Button';
 import AccordionStructField from './AccordionStructField';
 
-interface Entry extends Pick<API.SearchQuery, 'file_type'>, UI.FormValueMap {
+interface Entry extends UI.FormValueMap {
+  file_type: API.SearchQuery['file_type'];
   hub_urls: string[] | null;
   size_limits: null | {
     min_size: number | null;

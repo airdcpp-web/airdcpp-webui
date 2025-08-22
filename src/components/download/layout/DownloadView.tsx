@@ -21,9 +21,10 @@ import { MobileDownloadLayout } from './MobileDownloadLayout';
 import { NormalDownloadLayout } from './NormalDownloadLayout';
 import DataProviderDecorator from '@/decorators/DataProviderDecorator';
 
-export interface DownloadLayoutDataProps<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
-> {
+const toPanelId = (key: string) => `download-panel-${key}`;
+const toTabId = (key: string) => `download-tab-${key}`;
+
+export interface DownloadLayoutDataProps {
   sharePaths: API.GroupedPath[];
   favoritePaths: API.GroupedPath[];
 }
@@ -43,21 +44,28 @@ const getMenuItem = (
   activeSection: string,
   onClick: (key: string) => void,
   t: UI.TranslateF,
-) => (
-  <MenuItemLink
-    key={section.key}
-    onClick={() => onClick(section.key)}
-    active={activeSection === section.key}
-  >
-    <>
-      {t(toI18nKey(section.key, UI.Modules.COMMON), section.name)}
-      {!!section.list && <div className="ui small label">{section.list.length}</div>}
-    </>
-  </MenuItemLink>
-);
+) => {
+  const label = t(toI18nKey(section.key, UI.Modules.COMMON), section.name);
+  return (
+    <MenuItemLink
+      key={section.key}
+      onClick={() => onClick(section.key)}
+      active={activeSection === section.key}
+      id={toTabId(section.key)}
+      role="tab"
+      aria-controls={toPanelId(section.key)}
+      aria-label={label}
+    >
+      <>
+        {label}
+        {!!section.list && <div className="ui small label">{section.list.length}</div>}
+      </>
+    </MenuItemLink>
+  );
+};
 
 type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
-  DownloadLayoutProps<ItemT> & DownloadLayoutDataProps<ItemT>;
+  DownloadLayoutProps<ItemT> & DownloadLayoutDataProps;
 
 const DownloadLayout: React.FC<Props> = (props) => {
   const { t } = useTranslation();
@@ -87,6 +95,7 @@ const DownloadLayout: React.FC<Props> = (props) => {
   );
 
   const Component = usingMobileLayout() ? MobileDownloadLayout : NormalDownloadLayout;
+
   return (
     <Component
       key={activeSection.key} // Ensure that section-specific data is refetched
@@ -95,7 +104,13 @@ const DownloadLayout: React.FC<Props> = (props) => {
       handleBrowse={props.handleBrowse}
       t={t}
     >
-      <activeSection.component t={t} downloadHandler={props.downloadHandler} />
+      <div
+        role="tabpanel"
+        id={toPanelId(activeSection.key)}
+        aria-labelledby={toTabId(activeSection.key)}
+      >
+        <activeSection.component t={t} downloadHandler={props.downloadHandler} />
+      </div>
     </Component>
   );
 };

@@ -15,15 +15,15 @@ type FormAccordionProps = React.PropsWithChildren<{
 }>;
 
 export const FormAccordion: React.FC<FormAccordionProps> = ({ locals, children }) => {
-  const { label } = locals;
+  const { label, attrs } = locals;
   const active = isValueSet(locals.value);
   return (
     <Accordion className="field" defaultActiveIndexes={active ? [0] : undefined}>
-      <AccordionTitle>
+      <AccordionTitle id={attrs?.id}>
         <Icon icon={IconConstants.DROPDOWN} />
         <span style={active ? { fontWeight: 'bold' } : undefined}>{label}</span>
       </AccordionTitle>
-      <AccordionContent>{children}</AccordionContent>
+      <AccordionContent id={attrs?.id}>{children}</AccordionContent>
     </Accordion>
   );
 };
