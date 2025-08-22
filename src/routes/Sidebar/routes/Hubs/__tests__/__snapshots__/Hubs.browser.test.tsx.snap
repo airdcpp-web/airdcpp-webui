@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Hubs > prompts > should handle password prompt 1`] = `
+{
+  "data": {
+    "password": "testpassword",
+  },
+  "method": "POST",
+  "path": "hubs/2/password",
+}
+`;
+
+exports[`Hubs > prompts > should handle redirect prompt 1`] = `
+{
+  "method": "POST",
+  "path": "hubs/1/redirect",
+}
+`;

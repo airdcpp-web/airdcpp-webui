@@ -48,7 +48,12 @@ import {
   HubDisconnectedMessageListResponse,
 } from '@/tests/mocks/api/hub-messages';
 import { Hub1Bot, Hub1UserListResponse } from '@/tests/mocks/api/user';
-import { navigateToUrl, waitForData, waitForUrl } from '@/tests/helpers/test-helpers';
+import {
+  navigateToUrl,
+  waitExpectRequestToMatchSnapshot,
+  waitForData,
+  waitForUrl,
+} from '@/tests/helpers/test-helpers';
 
 // tslint:disable:no-empty
 describe('Hubs', () => {
@@ -270,5 +275,96 @@ describe('Hubs', () => {
     );
 
     await waitFor(() => expect(getByText(Hub1MessageMe.text)).toBeTruthy());
+  });
+
+  describe('prompts', () => {
+    test('should handle redirect prompt', async () => {
+      const { queryByText, getByText, mockStoreListeners, findByText, userEvent } =
+        await renderLayout(false);
+
+      const onRedirect = vi.fn();
+      server.addRequestHandler(
+        'POST',
+        `${HubConstants.SESSIONS_URL}/${HubADC1.id}/redirect`,
+        HubADC1,
+        onRedirect,
+      );
+
+      await waitSessionsLoaded(queryByText);
+
+      // Fire the redirect prompt event
+      mockStoreListeners.hub.updated.fire(
+        {
+          connect_state: {
+            data: {
+              hub_url: 'adcs://test_redirect.org:12345',
+            },
+            id: 'redirect',
+            str: 'Redirect',
+          },
+          encryption: null,
+        },
+        HubADC1.id,
+      );
+
+      await findByText('Redirect requested');
+
+      // Accept it
+      await userEvent.click(
+        getByText('Accept redirect to adcs://test_redirect.org:12345'),
+      );
+
+      // Check that the request was sent
+      await waitExpectRequestToMatchSnapshot(onRedirect);
+    });
+
+    test('should handle password prompt', async () => {
+      const {
+        findByText,
+        getByText,
+        queryByText,
+        mockStoreListeners,
+        getByPlaceholderText,
+        userEvent,
+      } = await renderLayout();
+
+      const onPassword = vi.fn();
+      server.addRequestHandler(
+        'POST',
+        `${HubConstants.SESSIONS_URL}/${HubADC2.id}/password`,
+        HubADC1,
+        onPassword,
+      );
+
+      await waitSessionsLoaded(queryByText);
+
+      // Switch to the disconnected session
+      const session2MenuItem = queryByText(HubADC2.identity.name);
+      await userEvent.click(session2MenuItem!);
+
+      await findByText('Connection timeout');
+
+      // Fire the password prompt event
+      mockStoreListeners.hub.updated.fire(
+        {
+          connect_state: {
+            id: 'password',
+            str: 'Password requested',
+          },
+        },
+        HubADC2.id,
+      );
+
+      await findByText('Password required');
+
+      // Fill in the password
+      const passwordInput = getByPlaceholderText('Password');
+      await userEvent.type(passwordInput, 'testpassword');
+
+      await userEvent.click(getByText('Submit'));
+
+      // Check that the request was sent
+      await waitExpectRequestToMatchSnapshot(onPassword);
+    });
   });
 });
