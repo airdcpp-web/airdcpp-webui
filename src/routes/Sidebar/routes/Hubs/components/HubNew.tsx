@@ -40,7 +40,7 @@ const HubNew: React.FC<NewSessionLayoutProps> = ({ sessionT, navigate }) => {
 
   const recentHubRender = (entry: API.HistoryItem) => {
     return (
-      <LinkButton onClick={(_) => handleConnect(entry.hub_url)} caption={entry.name} />
+      <LinkButton onClick={(_) => handleConnect(entry.hub_url)}>{entry.name}</LinkButton>
     );
   };
 

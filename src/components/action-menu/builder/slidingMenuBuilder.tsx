@@ -5,6 +5,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Icon, { IconType } from '@/components/semantic/Icon';
 import MenuItemLink from '@/components/semantic/MenuItemLink';
 import { AnimationConstants } from '@/constants/UIConstants';
+import LinkButton from '@/components/semantic/LinkButton';
 
 // Convert action menu items to React components where the submenus will be shown in the original layout with animation
 // Suitable for TableDropdown
@@ -129,17 +130,15 @@ const NestedMenu = ({ items, hideMenu }: NestedMenuProps) => {
           >
             {activeSubmenu ? (
               <>
-                <div
+                <LinkButton
                   className="header item"
                   onClick={() => {
                     setActiveSubmenu(findParent(activeSubmenu, items));
                   }}
-                  role="button"
-                  tabIndex={0}
                 >
                   <Icon icon="chevron left" />
                   {activeSubmenu.item!.caption}
-                </div>
+                </LinkButton>
                 {buildMenuList(activeSubmenu.item!.children!, hideMenu, setActiveSubmenu)}
               </>
             ) : (

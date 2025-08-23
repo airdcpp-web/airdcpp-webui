@@ -49,7 +49,7 @@ interface HeaderCellProps extends CellProps {
 
 export const HeaderCell = ({ onClick, label, columnKey, ...props }: HeaderCellProps) => (
   <Cell {...props}>
-    <LinkButton onClick={onClick} caption={label} />
+    <LinkButton onClick={onClick}>{label}</LinkButton>
   </Cell>
 );
 
@@ -152,8 +152,9 @@ export const ActionLinkCell = <
               entity: entity as EntityT,
             })
           }
-          caption={getCellContent(cellData)}
-        />
+        >
+          {getCellContent(cellData)}
+        </LinkButton>
       )}
     </ActionHandlerDecorator>
   );

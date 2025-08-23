@@ -119,7 +119,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
   const getNameCellCaption: FileDownloadCellCaptionGetter = (cellData, rowDataGetter) => {
     if (rowDataGetter().type.id === 'directory') {
       const onClick = () => onClickDirectory(filelist.location!.path + cellData + '/');
-      return <LinkButton caption={cellData} onClick={onClick} />;
+      return <LinkButton onClick={onClick}>{cellData}</LinkButton>;
     }
 
     return cellData;

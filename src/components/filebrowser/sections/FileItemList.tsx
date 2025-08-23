@@ -51,7 +51,7 @@ const FileItem: React.FC<FileItemProps> = ({
       <td>
         <FormattedFile
           typeInfo={item.type}
-          caption={<LinkButton onClick={getClickHandler()} caption={item.name} />}
+          caption={<LinkButton onClick={getClickHandler()}>{item.name}</LinkButton>}
           selected={selected}
         />
         {!!itemIconGetter && itemIconGetter(item)}

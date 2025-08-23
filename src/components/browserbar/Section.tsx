@@ -18,7 +18,9 @@ interface SectionProps {
 
 export const Section: React.FC<SectionProps> = ({ caption, onClick }) => (
   <div className="path-token">
-    <LinkButton className="section" onClick={onClick} caption={caption} />
+    <LinkButton className="section" onClick={onClick}>
+      {caption}
+    </LinkButton>
     <Icon icon="right chevron divider" />
   </div>
 );

@@ -5,12 +5,12 @@ import classNames from 'classnames';
 import 'fomantic-ui-css/components/button.min.css';
 
 export interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  caption: React.ReactNode;
+  children: React.ReactNode;
 }
 
 // There's no link button style in Semantic UI at the moment
 // https://github.com/Semantic-Org/Semantic-UI/issues/4805
-const LinkButton: React.FC<LinkButtonProps> = ({ className, caption, ...other }) => {
+const LinkButton: React.FC<LinkButtonProps> = ({ className, children, ...other }) => {
   const buttonStyle = classNames('button link', className);
   const onKeyDown = (evt: React.KeyboardEvent<HTMLAnchorElement>) => {
     if (evt.key === 'Enter' || evt.key === ' ') {
@@ -28,7 +28,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ className, caption, ...other })
       onKeyDown={onKeyDown}
       {...other}
     >
-      {caption}
+      {children}
     </a>
   );
 };

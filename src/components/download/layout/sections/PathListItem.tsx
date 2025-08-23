@@ -48,13 +48,10 @@ export const PathListItem: React.FC<PathItemProps> = ({
         <LinkButton
           onClick={() => downloadHandler(pathInfo.path)}
           aria-label={pathInfo.path}
-          caption={
-            <>
-              {pathInfo.path}
-              <span className="disk-info">{formatFreeSpace(pathInfo, t, formatter)}</span>
-            </>
-          }
-        />
+        >
+          {pathInfo.path}
+          <span className="disk-info">{formatFreeSpace(pathInfo, t, formatter)}</span>
+        </LinkButton>
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ const FilelistNew: React.FC<NewSessionLayoutProps> = ({ navigate, sessionT }) =>
   const recentUserRender = (entry: API.HistoryItem) => {
     const caption =
       entry.user!.nicks + (entry.description ? ` (${entry.description})` : '');
-    return <LinkButton onClick={(_) => handleSubmit(entry.user!)} caption={caption} />;
+    return <LinkButton onClick={(_) => handleSubmit(entry.user!)}>{caption}</LinkButton>;
   };
 
   const hasSession = (entry: API.HistoryItem) => {

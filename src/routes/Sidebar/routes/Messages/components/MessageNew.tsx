@@ -34,10 +34,9 @@ const MessageNew: React.FC<NewSessionLayoutProps> = (props) => {
 
   const recentUserRender = (entry: API.HistoryItem) => {
     return (
-      <LinkButton
-        onClick={(_) => handleSubmit(entry.user!)}
-        caption={entry.user!.nicks}
-      />
+      <LinkButton onClick={(_) => handleSubmit(entry.user!)}>
+        {entry.user!.nicks}
+      </LinkButton>
     );
   };
 
