@@ -266,10 +266,10 @@ export const MockHintedUserOfflineResponse = {
   nicks: '[VIP]user',
 };
 
+export const MockHintedUserMeResponse = toMockHintedUser(Hub1UserMeResponse, []);
+
 export const MockUser1Response = toMockUser([Hub1User1Response]);
 
-export const SearchHintedUser1Response = {
-  user: MockHintedUser1Response,
-};
+export const SearchHintedUser1Response = MockHintedUser1Response;
 
 export const SearchNicksHubUser1Response = [Hub1User1Response];

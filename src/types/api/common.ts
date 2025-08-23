@@ -265,5 +265,5 @@ export const enum DownloadableItemStateEnum {
 export interface DownloadableItemState {
   id: DownloadableItemStateEnum;
   str: string;
-  time_finished: number;
+  time_finished?: number;
 }

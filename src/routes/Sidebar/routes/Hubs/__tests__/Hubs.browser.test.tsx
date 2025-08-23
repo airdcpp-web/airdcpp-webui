@@ -36,7 +36,7 @@ import {
 import HubConstants from '@/constants/HubConstants';
 import {
   installSessionMessageMocks,
-  waitSessionsLoaded,
+  waitMessageSessionsLoaded,
 } from '@/tests/mocks/mock-session';
 import { HistoryHubResponse, HistoryHubSearchResponse } from '@/tests/mocks/api/history';
 import Hubs from '../components/Hubs';
@@ -219,7 +219,7 @@ describe('Hubs', () => {
     const renderResult = await renderLayout();
     const { getByText, queryByText, router } = renderResult;
 
-    await waitSessionsLoaded(queryByText);
+    await waitMessageSessionsLoaded(queryByText);
 
     // Check messages
     await waitFor(() => expect(getByText(Hub1MessageMe.text)).toBeTruthy());
@@ -243,7 +243,7 @@ describe('Hubs', () => {
       userEvent,
     } = await renderLayout();
 
-    await waitSessionsLoaded(queryByText);
+    await waitMessageSessionsLoaded(queryByText);
 
     // Remove existing sessions
     sessionStore.getState().hubs.removeSession(HubADC1);
@@ -289,7 +289,7 @@ describe('Hubs', () => {
         onRedirect,
       );
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
 
       // Fire the redirect prompt event
       mockStoreListeners.hub.updated.fire(
@@ -335,7 +335,7 @@ describe('Hubs', () => {
         onPassword,
       );
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
 
       // Switch to the disconnected session
       const session2MenuItem = queryByText(HubADC2.identity.name);

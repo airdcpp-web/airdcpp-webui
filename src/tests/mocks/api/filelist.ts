@@ -1,4 +1,11 @@
-import { MockHintedUser1Response, MockHintedUser2Response } from './user';
+import { ShareProfile2Base } from './share-profiles';
+import {
+  MockHintedUser1Response,
+  MockHintedUser2Response,
+  MockHintedUserMeResponse,
+} from './user';
+
+import * as API from '@/types/api';
 
 export const MOCK_FILELIST_ID = 'filelist1';
 export const MOCK_FILELIST_ITEM_ID = 323;
@@ -196,22 +203,6 @@ export const FilelistRootItemsList = {
   list_path: '/',
 };
 
-export const FilelistPendingResponse = {
-  id: 'HPI67YG335U72FUS626M6WYFGR5EBZTNCEJU3JA',
-  location: null,
-  partial_list: true,
-  read: false,
-  share_profile: null,
-  state: {
-    id: 'download_pending',
-    str: 'Download pending',
-    time_finished: 0,
-  },
-  total_files: 936066,
-  total_size: 133137630299481,
-  user: MockHintedUser1Response,
-};
-
 export const FilelistLoadedResponse = {
   id: MockHintedUser2Response.cid,
   location: {
@@ -228,21 +219,74 @@ export const FilelistLoadedResponse = {
       files: 2414,
       id: 'directory',
       str: '101,4k folders, 2,4k files',
-    },
+    } as API.DirectoryType,
   },
   partial_list: true,
   read: true,
   share_profile: null,
   state: {
-    id: 'loaded',
+    id: 'loaded' as API.DownloadableItemStateEnum,
     str: 'Loaded',
   },
   total_files: 2424,
   total_size: 3965645890,
+  user: MockHintedUser1Response,
+};
+
+export const FilelistPendingResponse = {
+  id: 'HPI67YG335U72FUS626M6WYFGR5EBZTNCEJU3JA',
+  location: null,
+  partial_list: true,
+  read: false,
+  share_profile: null,
+  state: {
+    id: 'download_pending' as API.DownloadableItemStateEnum,
+    str: 'Download pending',
+    time_finished: 0,
+  },
+  total_files: 936066,
+  total_size: 133137630299481,
   user: MockHintedUser2Response,
 };
 
-export const FilelistListResponse = [FilelistLoadedResponse, FilelistPendingResponse];
+export const FilelistMeResponse = {
+  id: MockHintedUserMeResponse.cid,
+  location: {
+    complete: true,
+    dupe: {
+      id: 'share_full' as API.DupeEnum,
+      paths: [],
+    },
+    id: 100145,
+    name: '/',
+    path: '/',
+    size: 63484055205,
+    time: 1755714352,
+    tth: '',
+    type: {
+      directories: 164,
+      files: 1155,
+      id: 'directory',
+      str: '164 folders, 1155 files',
+    } as API.DirectoryType,
+  },
+  partial_list: true,
+  read: true,
+  share_profile: ShareProfile2Base,
+  state: {
+    id: 'loaded' as API.DownloadableItemStateEnum,
+    str: 'Loaded',
+  },
+  total_files: 3217,
+  total_size: 51349548848,
+  user: MockHintedUserMeResponse,
+};
+
+export const FilelistListResponse = [
+  FilelistLoadedResponse,
+  FilelistPendingResponse,
+  FilelistMeResponse,
+];
 
 export const FilelistDirectoryDownloadResponse = {
   error: '',

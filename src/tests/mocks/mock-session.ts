@@ -6,6 +6,8 @@ import { vi } from 'vitest';
 import { MockServer } from './mock-server';
 import { waitForData } from '../helpers/test-helpers';
 import { RenderResult } from '@testing-library/react';
+import { SearchHintedUser1Response, SearchNicksHubUser1Response } from './api/user';
+import UserConstants from '@/constants/UserConstants';
 
 export const DEFAULT_MOCK_PERMISSIONS = [API.AccessEnum.ADMIN];
 
@@ -49,9 +51,15 @@ export const installSessionMessageMocks = (
   return { onMessagesRead };
 };
 
-export const waitSessionsLoaded = async (queryByText: RenderResult['queryByText']) => {
+export const waitMessageSessionsLoaded = async (
+  queryByText: RenderResult['queryByText'],
+) => {
   await waitForData(/Loading sessions/i, queryByText);
   await waitForData(/Loading messages/i, queryByText);
+};
+
+export const waitSessionsLoaded = async (queryByText: RenderResult['queryByText']) => {
+  await waitForData(/Loading sessions/i, queryByText);
 };
 
 export const installBasicSessionHandlers = (
@@ -63,4 +71,18 @@ export const installBasicSessionHandlers = (
   server.addRequestHandler('POST', `${sessionUrl}/${id}/read`, undefined, onSessionRead);
 
   return { onSessionRead };
+};
+
+export const installUserSearchFieldMocks = (server: MockServer) => {
+  server.addRequestHandler(
+    'POST',
+    UserConstants.SEARCH_HINTED_USER_URL,
+    SearchHintedUser1Response,
+  );
+
+  server.addRequestHandler(
+    'POST',
+    UserConstants.SEARCH_NICKS_URL,
+    SearchNicksHubUser1Response,
+  );
 };

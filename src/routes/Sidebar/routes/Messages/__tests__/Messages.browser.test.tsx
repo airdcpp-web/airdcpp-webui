@@ -40,11 +40,7 @@ import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { getHistoryUrl } from '@/routes/Sidebar/components/RecentLayout';
 import { HistoryEntryEnum } from '@/constants/HistoryConstants';
 import { HistoryPrivateChatResponse } from '@/tests/mocks/api/history';
-import UserConstants from '@/constants/UserConstants';
-import {
-  SearchHintedUser1Response,
-  SearchNicksHubUser1Response,
-} from '@/tests/mocks/api/user';
+
 import {
   expectScrolledToBottom,
   expectScrollTop,
@@ -63,8 +59,10 @@ import { QueueBundleCreateFileResponse } from '@/tests/mocks/api/queue-bundles';
 import { createDataFetchRoutes } from '@/tests/helpers/test-route-helpers';
 import {
   installSessionMessageMocks,
-  waitSessionsLoaded,
+  installUserSearchFieldMocks,
+  waitMessageSessionsLoaded,
 } from '@/tests/mocks/mock-session';
+import { select } from '@/tests/helpers/react-select-event';
 
 // tslint:disable:no-empty
 describe('Private messages', () => {
@@ -113,17 +111,7 @@ describe('Private messages', () => {
       HistoryPrivateChatResponse,
     );
 
-    server.addRequestHandler(
-      'POST',
-      UserConstants.SEARCH_HINTED_USER_URL,
-      SearchHintedUser1Response,
-    );
-
-    server.addRequestHandler(
-      'POST',
-      UserConstants.SEARCH_NICKS_URL,
-      SearchNicksHubUser1Response,
-    );
+    installUserSearchFieldMocks(server);
 
     const onSessionCreated = vi.fn(() => {
       commonData.mockStoreListeners.privateChat.created.fire(PrivateChat1);
@@ -189,7 +177,7 @@ describe('Private messages', () => {
   test('should load messages', async () => {
     const { getByText, queryByText } = await renderLayout();
 
-    await waitSessionsLoaded(queryByText);
+    await waitMessageSessionsLoaded(queryByText);
 
     // Check content
     await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
@@ -212,7 +200,7 @@ describe('Private messages', () => {
     const onNotification = vi.fn();
     NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
 
-    await waitSessionsLoaded(queryByText);
+    await waitMessageSessionsLoaded(queryByText);
 
     await waitFor(() =>
       expect(sessionStore.getState().privateChats.activeSessionId).toEqual(
@@ -276,7 +264,7 @@ describe('Private messages', () => {
   test('should remember input text when switching between sessions', async () => {
     const { getByText, getByRole, queryByText, userEvent } = await renderLayout();
 
-    await waitSessionsLoaded(queryByText);
+    await waitMessageSessionsLoaded(queryByText);
 
     // Check content
     await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
@@ -312,7 +300,7 @@ describe('Private messages', () => {
     const onNotification = vi.fn();
     NotificationEventEmitter.addEventListener(NOTIFICATION_EVENT_TYPE, onNotification);
 
-    await waitSessionsLoaded(queryByText);
+    await waitMessageSessionsLoaded(queryByText);
 
     await waitFor(() =>
       expect(sessionStore.getState().privateChats.activeSessionId).toEqual(
@@ -358,7 +346,7 @@ describe('Private messages', () => {
       userEvent,
     } = await renderLayout();
 
-    await waitSessionsLoaded(queryByText);
+    await waitMessageSessionsLoaded(queryByText);
 
     // Remove existing sessions
     sessionStore.getState().privateChats.removeSession(PrivateChat1);
@@ -375,9 +363,11 @@ describe('Private messages', () => {
 
     await waitFor(() => expect(findByText(PrivateChat1.user.nicks)).toBeTruthy());
 
+    await select(input, PrivateChat1.user.nicks);
+
     // Click the user
-    const user1Item = getByText(PrivateChat1.user.nicks);
-    await userEvent.click(user1Item!);
+    // const user1Item = getByText(PrivateChat1.user.nicks);
+    // await userEvent.click(user1Item!);
 
     // We should be redirected to the new session
     await waitFor(() =>
@@ -415,7 +405,7 @@ describe('Private messages', () => {
         instanceId,
       } = renderResult;
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
 
       // Generate messages
       const newMessages1 = generateSessionMessages(
@@ -489,7 +479,7 @@ describe('Private messages', () => {
         instanceId,
       } = renderResult;
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
 
       // Generate messages
       const newMessages1 = generateSessionMessages(
@@ -542,7 +532,7 @@ describe('Private messages', () => {
         router,
       } = renderResult;
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
 
       // Generate messages
       const newMessages1 = generateSessionMessages(
@@ -584,7 +574,7 @@ describe('Private messages', () => {
         instanceId,
       } = renderResult;
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
 
       // Generate messages
       const newMessages1 = generateSessionMessages(
@@ -642,7 +632,7 @@ describe('Private messages', () => {
     test('should render mentions', async () => {
       const { queryByText, getByText } = await renderLayout();
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
       await waitFor(() =>
         expect(getByText(PrivateChat1MessageMention.highlights[0].text)).toBeTruthy(),
       );
@@ -655,7 +645,7 @@ describe('Private messages', () => {
       const renderData = await renderLayout();
       const { queryByText, getByText, menuMocks } = renderData;
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
       await waitFor(() =>
         expect(getByText(PrivateChat1MessageRelease.highlights[0].text)).toBeTruthy(),
       );
@@ -682,7 +672,7 @@ describe('Private messages', () => {
         onDownloadFile,
       );
 
-      await waitSessionsLoaded(queryByText);
+      await waitMessageSessionsLoaded(queryByText);
 
       const magnet = parseMagnetLink(PrivateChat1MessageMagnet.highlights[0].text)!;
       const caption = formatMagnetCaption(magnet, formatter);

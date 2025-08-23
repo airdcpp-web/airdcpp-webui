@@ -3,7 +3,7 @@ import { RenderResult, waitFor, within } from '@testing-library/react';
 
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
-import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import { CommonDataMocks, initCommonDataMocks } from '@/tests/mocks/mock-data-common';
 
 import * as API from '@/types/api';
 
@@ -20,25 +20,35 @@ import {
   FilelistGetFilelistItemDirectoryResponse,
   FilelistGetFilelistItemFileResponse,
   FilelistLoadedResponse,
+  FilelistMeResponse,
   FilelistPendingResponse,
   FilelistRootItemsList,
 } from '@/tests/mocks/api/filelist';
 import Filelists from '../components/Filelists';
 import { installTableMocks } from '@/tests/mocks/mock-table';
 import { selectTopLayoutSession } from '@/tests/helpers/test-session-helpers';
-import { installBasicSessionHandlers } from '@/tests/mocks/mock-session';
-import { clickMenuItem, openIconMenu } from '@/tests/helpers/test-menu-helpers';
+import {
+  installBasicSessionHandlers,
+  installUserSearchFieldMocks,
+  waitSessionsLoaded,
+} from '@/tests/mocks/mock-session';
+import { clickMenuItem, openIconMenu, openMenu } from '@/tests/helpers/test-menu-helpers';
 import { installActionMenuMocks } from '@/components/action-menu/__tests__/test-action-menu-helpers';
 import MenuConstants from '@/constants/MenuConstants';
 import { RemoteMenuGrouped1 } from '@/tests/mocks/api/menu';
 import QueueConstants from '@/constants/QueueConstants';
 import { QueueBundleCreateFileResponse } from '@/tests/mocks/api/queue-bundles';
 import {
-  clickButton,
   navigateToUrl,
   waitExpectRequestToMatchSnapshot,
   waitForUrl,
 } from '@/tests/helpers/test-helpers';
+import { installShareProfileMocks } from '@/tests/mocks/mock-share';
+import { HistoryEntryEnum } from '@/constants/HistoryConstants';
+import { HistoryFilelistResponse } from '@/tests/mocks/api/history';
+import { getHistoryUrl } from '@/routes/Sidebar/components/RecentLayout';
+import { ShareProfile2 } from '@/tests/mocks/api/share-profiles';
+import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
 
 // tslint:disable:no-empty
 describe('Filelists', () => {
@@ -73,6 +83,13 @@ describe('Filelists', () => {
       entityId: FilelistLoadedResponse.id,
     });
 
+    const filelistMeTableMocks = installTableMocks(FilelistRootItemsList.items, {
+      server,
+      moduleUrl: FilelistConstants.MODULE_URL,
+      viewName: FilelistConstants.VIEW_ID,
+      entityId: FilelistMeResponse.id,
+    });
+
     // Menus
     const itemMenuMocks = installActionMenuMocks(
       MenuConstants.FILELIST_ITEM,
@@ -90,6 +107,10 @@ describe('Filelists', () => {
 
       filelist2Mocks: {
         ...session2Mocks,
+      },
+
+      filelistMeMocks: {
+        table: filelistMeTableMocks,
       },
 
       itemMenuMocks,
@@ -239,6 +260,125 @@ describe('Filelists', () => {
       await clickMenuItem('Download', renderResult);
 
       await waitExpectRequestToMatchSnapshot(onDownloadDirectory);
+      await navigateToUrl('/', router);
+    });
+  });
+
+  describe('new session', () => {
+    const installNewLayoutMocks = (
+      newFilelistResponse: API.FilelistSession,
+      { mockStoreListeners }: CommonDataMocks,
+      createUrl: string = FilelistConstants.SESSIONS_URL,
+    ) => {
+      server.addRequestHandler(
+        'GET',
+        getHistoryUrl(HistoryEntryEnum.FILELIST),
+        HistoryFilelistResponse,
+      );
+
+      installShareProfileMocks(server);
+      installUserSearchFieldMocks(server);
+
+      const onSessionCreated = vi.fn(() => {
+        mockStoreListeners.filelist.created.fire(newFilelistResponse);
+      });
+      server.addRequestHandler('POST', createUrl, newFilelistResponse, onSessionCreated);
+
+      return onSessionCreated;
+    };
+
+    test('should open local share profile', async () => {
+      const renderResult = await renderLayout();
+      const { queryByText, sessionStore, router, getByText, formatter } = renderResult;
+
+      const onSessionCreated = installNewLayoutMocks(
+        FilelistMeResponse,
+        renderResult,
+        `${FilelistConstants.SESSIONS_URL}/self`,
+      );
+
+      await waitSessionsLoaded(queryByText);
+
+      // Remove existing sessions
+      sessionStore.getState().filelists.removeSession(FilelistLoadedResponse);
+      sessionStore.getState().filelists.removeSession(FilelistPendingResponse);
+      sessionStore.getState().filelists.removeSession(FilelistMeResponse);
+
+      // We should be redirected to the new session layout
+      await waitForUrl('/filelists/new', router);
+
+      await waitText('Browse own share...', getByText);
+
+      await openMenu('Browse own share...', renderResult);
+      await clickMenuItem(
+        formatProfileNameWithSize(ShareProfile2, formatter),
+        renderResult,
+      );
+
+      // We should be redirected to the new session
+      await waitFor(() =>
+        expect(sessionStore.getState().filelists.activeSessionId).toEqual(
+          FilelistMeResponse.id,
+        ),
+      );
+
+      await waitFor(() =>
+        expect(getByText(FilelistMeResponse.share_profile.str)).toBeTruthy(),
+      );
+
+      await waitExpectRequestToMatchSnapshot(onSessionCreated);
+
+      await navigateToUrl('/', router);
+    });
+
+    test('open remote session', async () => {
+      const renderResult = await renderLayout();
+      const {
+        queryByText,
+        sessionStore,
+        router,
+        findByRole,
+        findByText,
+        getByText,
+        userEvent,
+      } = renderResult;
+
+      const onSessionCreated = installNewLayoutMocks(
+        FilelistLoadedResponse,
+        renderResult,
+      );
+
+      await waitSessionsLoaded(queryByText);
+
+      // Remove existing sessions
+      sessionStore.getState().filelists.removeSession(FilelistLoadedResponse);
+      sessionStore.getState().filelists.removeSession(FilelistPendingResponse);
+      sessionStore.getState().filelists.removeSession(FilelistMeResponse);
+
+      // We should be redirected to the new session layout
+      await waitForUrl('/filelists/new', router);
+
+      // Type the user nick
+      const input = await findByRole('combobox');
+      await userEvent.type(input, FilelistLoadedResponse.user.nicks);
+
+      // Click the user
+      const user1Item = await findByText(FilelistLoadedResponse.user.nicks);
+      await userEvent.click(user1Item!);
+
+      // We should be redirected to the new session
+      await waitFor(() =>
+        expect(sessionStore.getState().filelists.activeSessionId).toEqual(
+          FilelistLoadedResponse.id,
+        ),
+      );
+
+      await waitFor(() =>
+        expect(getByText(FilelistLoadedResponse.user.nicks)).toBeTruthy(),
+      );
+
+      await waitExpectRequestToMatchSnapshot(onSessionCreated);
+
       await navigateToUrl('/', router);
     });
   });

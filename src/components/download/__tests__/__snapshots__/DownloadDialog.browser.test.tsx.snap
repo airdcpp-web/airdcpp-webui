@@ -16,18 +16,19 @@ exports[`DownloadDialog > should accordion path download 1`] = `
     "total_files": 936066,
     "total_size": 133137630299481,
     "user": {
-      "cid": "HNLUODI2YZ2U7FDWMHFNJU65ERGKUN4MH7GW5LY",
+      "cid": "NJSHVYR4ZHCZFUEZNGA7M2D72S5AB4WQAMPBKFA",
       "flags": [
         "asch",
         "ccpm",
+        "away",
+        "op",
       ],
-      "hub_names": "ADC hub 1 (ADC hub 3)",
-      "hub_url": "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
+      "hub_names": "ADC hub 3",
+      "hub_url": "adcs://hub3.adc:2482",
       "hub_urls": [
-        "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
         "adcs://hub3.adc:2482",
       ],
-      "nicks": "[Hub1]User1 ([Hub3]User1)",
+      "nicks": "[Hub3]User2",
     },
   },
   "itemInfo": {
@@ -86,18 +87,19 @@ exports[`DownloadDialog > should handle browse dialog download 1`] = `
     "total_files": 936066,
     "total_size": 133137630299481,
     "user": {
-      "cid": "HNLUODI2YZ2U7FDWMHFNJU65ERGKUN4MH7GW5LY",
+      "cid": "NJSHVYR4ZHCZFUEZNGA7M2D72S5AB4WQAMPBKFA",
       "flags": [
         "asch",
         "ccpm",
+        "away",
+        "op",
       ],
-      "hub_names": "ADC hub 1 (ADC hub 3)",
-      "hub_url": "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
+      "hub_names": "ADC hub 3",
+      "hub_url": "adcs://hub3.adc:2482",
       "hub_urls": [
-        "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
         "adcs://hub3.adc:2482",
       ],
-      "nicks": "[Hub1]User1 ([Hub3]User1)",
+      "nicks": "[Hub3]User2",
     },
   },
   "itemInfo": {
@@ -156,18 +158,19 @@ exports[`DownloadDialog > should handle history download 1`] = `
     "total_files": 936066,
     "total_size": 133137630299481,
     "user": {
-      "cid": "HNLUODI2YZ2U7FDWMHFNJU65ERGKUN4MH7GW5LY",
+      "cid": "NJSHVYR4ZHCZFUEZNGA7M2D72S5AB4WQAMPBKFA",
       "flags": [
         "asch",
         "ccpm",
+        "away",
+        "op",
       ],
-      "hub_names": "ADC hub 1 (ADC hub 3)",
-      "hub_url": "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
+      "hub_names": "ADC hub 3",
+      "hub_url": "adcs://hub3.adc:2482",
       "hub_urls": [
-        "adcs://hub1.adc/?kp=SHA256/H4DUKGI3U3LQHMZXU6SLQA7LF5RVD6HJFGYZBN2R5RRQ5A2RZ4ZA",
         "adcs://hub3.adc:2482",
       ],
-      "nicks": "[Hub1]User1 ([Hub3]User1)",
+      "nicks": "[Hub3]User2",
     },
   },
   "itemInfo": {

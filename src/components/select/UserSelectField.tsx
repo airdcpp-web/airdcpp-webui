@@ -65,7 +65,7 @@ const HintedUserFormatter = DataProviderDecorator<
 
           return hintedUser;
         } catch (e) {
-          // ...
+          socket.logger.warn('Failed to fetch hinted user', e);
         }
 
         // This generally shouldn't happen as the application should keep the user references available
