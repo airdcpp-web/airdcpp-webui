@@ -8,7 +8,7 @@ import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { installTableMocks } from '@/tests/mocks/mock-table';
 
 import { waitFor } from '@testing-library/dom';
-import { waitForUrl } from '@/tests/helpers/test-helpers';
+import { navigateToUrl } from '@/tests/helpers/test-helpers';
 
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import FavoriteHubConstants from '@/constants/FavoriteHubConstants';
@@ -73,7 +73,6 @@ describe('Share layout', () => {
     const favoriteHub = FavoriteHubListResponse[0];
     await waitFor(() => expect(queryByText(favoriteHub.name)).toBeTruthy());
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 });

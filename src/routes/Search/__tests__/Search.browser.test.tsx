@@ -11,6 +11,7 @@ import { waitFor } from '@testing-library/dom';
 import {
   clickButton,
   clickIconButton,
+  navigateToUrl,
   waitExpectRequestToMatchSnapshot,
   waitForLoader,
   waitForUrl,
@@ -242,8 +243,7 @@ describe('Search layout', () => {
     const dupeResult = getByText(GroupedSearchResultFileResponse.name).closest(`.name`);
     expect(dupeResult?.classList.contains('dupe')).toBeTruthy();
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 
   test('should open result details dialog', async () => {
@@ -276,8 +276,7 @@ describe('Search layout', () => {
     clickButton('Close', getByRole);
     await waitForUrl('/search', router);
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 
   test('should handle custom search options', async () => {
@@ -334,7 +333,6 @@ describe('Search layout', () => {
 
     await waitExpectRequestToMatchSnapshot(onPostHubSearch);
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 });

@@ -14,7 +14,7 @@ import {
   QueueBundleSourceListResponse,
 } from '@/tests/mocks/api/queue-bundles';
 import { waitFor } from '@testing-library/dom';
-import { clickButton, waitForUrl } from '@/tests/helpers/test-helpers';
+import { clickButton, navigateToUrl, waitForUrl } from '@/tests/helpers/test-helpers';
 import { QueueFilesListResponse } from '@/tests/mocks/api/queue-files';
 
 describe('Queue layout', () => {
@@ -110,8 +110,7 @@ describe('Queue layout', () => {
     const bundle = QueueBundleRunningResponse;
     await waitFor(() => expect(queryByText(bundle.name)).toBeTruthy());
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 
   test('should open bundle files dialog', async () => {
@@ -133,8 +132,7 @@ describe('Queue layout', () => {
     clickButton('Close', getByRole);
     await waitForUrl('/queue', router);
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 
   test('should open bundle sources dialog', async () => {
@@ -156,7 +154,6 @@ describe('Queue layout', () => {
     clickButton('Close', getByRole);
     await waitForUrl('/queue', router);
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 });

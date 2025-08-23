@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Filelists > downloads > should download directories 1`] = `
+{
+  "data": {
+    "list_path": "/Ubuntu 20.04 Server/",
+    "target_name": "Ubuntu 20.04 Server",
+    "user": {
+      "cid": "NJSHVYR4ZHCZFUEZNGA7M2D72S5AB4WQAMPBKFA",
+      "flags": [
+        "asch",
+        "ccpm",
+        "away",
+        "op",
+      ],
+      "hub_names": "ADC hub 3",
+      "hub_url": "adcs://hub3.adc:2482",
+      "hub_urls": [
+        "adcs://hub3.adc:2482",
+      ],
+      "nicks": "[Hub3]User2",
+    },
+  },
+  "method": "POST",
+  "path": "filelists/directory_downloads",
+}
+`;
+
+exports[`Filelists > downloads > should download files 1`] = `
+{
+  "data": {
+    "size": 2877227008,
+    "target_name": "ubuntu-20.04.2.0-desktop-amd64.iso",
+    "time": 1618062636,
+    "tth": "2E2P2K5JP6KARHNFGUMIFENN4SGBENKLPGQNUAA",
+    "user": {
+      "cid": "NJSHVYR4ZHCZFUEZNGA7M2D72S5AB4WQAMPBKFA",
+      "flags": [
+        "asch",
+        "ccpm",
+        "away",
+        "op",
+      ],
+      "hub_names": "ADC hub 3",
+      "hub_url": "adcs://hub3.adc:2482",
+      "hub_urls": [
+        "adcs://hub3.adc:2482",
+      ],
+      "nicks": "[Hub3]User2",
+    },
+  },
+  "method": "POST",
+  "path": "queue/bundles/file",
+}
+`;

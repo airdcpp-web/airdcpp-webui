@@ -8,7 +8,7 @@ import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { installTableMocks } from '@/tests/mocks/mock-table';
 
 import { waitFor } from '@testing-library/dom';
-import { waitForUrl } from '@/tests/helpers/test-helpers';
+import { navigateToUrl } from '@/tests/helpers/test-helpers';
 
 import { ShareRootListResponse } from '@/tests/mocks/api/share-roots';
 import ShareRootConstants from '@/constants/ShareRootConstants';
@@ -77,7 +77,6 @@ describe('Share layout', () => {
     const root = ShareRootListResponse[0];
     await waitFor(() => expect(queryByText(root.virtual_name)).toBeTruthy());
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 });

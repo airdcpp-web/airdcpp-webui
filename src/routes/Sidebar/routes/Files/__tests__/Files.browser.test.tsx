@@ -1,16 +1,7 @@
-import {
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  Mock,
-  test,
-  vi,
-} from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { fireEvent, RenderResult, waitFor } from '@testing-library/react';
 
-import { BaseRenderResult, renderDataRoutes } from '@/tests/render/test-renderers';
+import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import Files from '../components/Files';
 
@@ -34,9 +25,9 @@ import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { sleep } from '@/utils/Promise';
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
-import { UserEvent } from '@testing-library/user-event';
-import { clickMenuItem, openIconMenu } from '@/tests/helpers/test-menu-helpers';
 import { createDataFetchRoutes } from '@/tests/helpers/test-route-helpers';
+import { selectTopLayoutSession } from '@/tests/helpers/test-session-helpers';
+import { installBasicSessionHandlers } from '@/tests/mocks/mock-session';
 
 const fetchMocker = createFetchMock(vi);
 
@@ -49,21 +40,16 @@ describe('Viewed files', () => {
       permissions: [API.AccessEnum.VIEW_FILE_VIEW, API.AccessEnum.VIEW_FILE_EDIT],
     });
 
-    // Messages
-    const onSession1Read = vi.fn();
-    server.addRequestHandler(
-      'POST',
-      `${ViewFileConstants.SESSIONS_URL}/${ViewedFileTextLongResponse.id}/read`,
-      undefined,
-      onSession1Read,
+    // Read
+    const { onSessionRead: onSession1Read } = installBasicSessionHandlers(
+      ViewFileConstants.SESSIONS_URL,
+      ViewedFileTextLongResponse.id,
+      server,
     );
-
-    const onSession2Read = vi.fn();
-    server.addRequestHandler(
-      'POST',
-      `${ViewFileConstants.SESSIONS_URL}/${ViewedFileNfoResponse.id}/read`,
-      undefined,
-      onSession2Read,
+    const { onSessionRead: onSession2Read } = installBasicSessionHandlers(
+      ViewFileConstants.SESSIONS_URL,
+      ViewedFileNfoResponse.id,
+      server,
     );
 
     const viewFileDownloaded = server.addSubscriptionHandler(
@@ -109,10 +95,6 @@ describe('Viewed files', () => {
     return { ...commonData, ...renderData, ...other, userEvent };
   };
 
-  beforeAll(() => {
-    localStorage.setItem('debug', 'true');
-  });
-
   beforeEach(() => {
     server = getMockServer();
 
@@ -137,17 +119,6 @@ describe('Viewed files', () => {
     server.stop();
   });
 
-  const selectSession = async (
-    sessionLabel: string,
-    renderResult: BaseRenderResult & { userEvent: UserEvent },
-    onRead: Mock,
-  ) => {
-    await openIconMenu('Session menu', renderResult);
-    await clickMenuItem(sessionLabel, renderResult);
-
-    await waitFor(() => expect(onRead).toHaveBeenCalled());
-  };
-
   const waitText = async (text: string, getByText: RenderResult['getByText']) => {
     await waitFor(() => expect(getByText(text, { exact: false })).toBeTruthy());
   };
@@ -160,7 +131,11 @@ describe('Viewed files', () => {
     await waitText('This is long text file', getByText);
 
     // Open a different session
-    await selectSession(ViewedFileNfoResponse.name, renderResult, onSession1Read);
+    await selectTopLayoutSession(
+      ViewedFileNfoResponse.name,
+      renderResult,
+      onSession1Read,
+    );
 
     // Check content
     await waitText('This is NFO', getByText);
@@ -189,12 +164,20 @@ describe('Viewed files', () => {
     );
 
     // Switch to another session
-    await selectSession(ViewedFileNfoResponse.name, renderResult, onSession1Read);
+    await selectTopLayoutSession(
+      ViewedFileNfoResponse.name,
+      renderResult,
+      onSession1Read,
+    );
     await waitText('This is NFO', getByText);
     expect(scrollContainer.scrollTop).toBe(0);
 
     // Switch back to the original one, the scroll position should remain
-    await selectSession(ViewedFileTextLongResponse.name, renderResult, onSession2Read);
+    await selectTopLayoutSession(
+      ViewedFileTextLongResponse.name,
+      renderResult,
+      onSession2Read,
+    );
     await waitText('This is long text file', getByText);
     await waitFor(() => expect(scrollContainer.scrollTop).toBe(200));
   });

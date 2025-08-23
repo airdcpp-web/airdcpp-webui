@@ -8,7 +8,7 @@ import { FavoriteDirectoriesGroupedPathsResponse } from '@/tests/mocks/api/favor
 import HistoryConstants, { HistoryStringEnum } from '@/constants/HistoryConstants';
 import {
   FilelistGetFilelistItemFileResponse,
-  FilelistGetResponse,
+  FilelistPendingResponse,
   MOCK_FILELIST_ITEM_ID,
 } from '@/tests/mocks/api/filelist';
 import FilesystemConstants from '@/constants/FilesystemConstants';
@@ -120,7 +120,7 @@ describe('DownloadDialog', () => {
               Promise.resolve(FilelistGetFilelistItemFileResponse as API.FilelistItem)
             }
             userGetter={() => MockHintedUser1Response as API.HintedUser}
-            sessionItem={FilelistGetResponse}
+            sessionItem={FilelistPendingResponse}
           />
         </>
       );

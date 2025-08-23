@@ -53,3 +53,14 @@ export const waitSessionsLoaded = async (queryByText: RenderResult['queryByText'
   await waitForData(/Loading sessions/i, queryByText);
   await waitForData(/Loading messages/i, queryByText);
 };
+
+export const installBasicSessionHandlers = (
+  sessionUrl: string,
+  id: API.IdType,
+  server: MockServer,
+) => {
+  const onSessionRead = vi.fn();
+  server.addRequestHandler('POST', `${sessionUrl}/${id}/read`, undefined, onSessionRead);
+
+  return { onSessionRead };
+};

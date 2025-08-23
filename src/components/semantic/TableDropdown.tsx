@@ -1,13 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import Popup, { PopupHandle } from './Popup';
+import Popup, { PopupHandle, PopupProps } from './Popup';
 import DropdownCaption from './DropdownCaption';
 import Icon, { IconType } from './Icon';
 import IconConstants from '@/constants/IconConstants';
 
 // A popup-based class for handling dropdowns in Fixed Data Table
-// The normal styled dropdown won"t work there because the table cell won"t allow overflow
+// The normal styled dropdown won't work there because the table cell won't allow overflow
 // https://github.com/facebook/fixed-data-table/issues/180
 
 export type DropdownCloseHandler = () => void;
@@ -21,66 +21,68 @@ export interface TableDropdownProps {
 
   className?: string;
   triggerIcon?: IconType;
+
   children: (onClose: DropdownCloseHandler) => React.ReactNode;
+
   popupSettings?: SemanticUI.PopupSettings;
   position?: string;
+
+  triggerProps?: PopupProps['triggerProps'];
 }
 
-class TableDropdown extends React.Component<TableDropdownProps> {
-  static readonly defaultProps: Pick<
-    TableDropdownProps,
-    'linkCaption' | 'triggerIcon' | 'position'
-  > = {
-    linkCaption: true,
-    triggerIcon: IconConstants.EXPAND,
-    position: 'bottom left',
-  };
+const TableDropdownComponent: React.FC<TableDropdownProps> = ({
+  caption,
+  className,
+  linkCaption = true,
+  triggerIcon = IconConstants.EXPAND,
+  children,
+  popupSettings,
+  triggerProps,
+  position = 'bottom left',
+}) => {
+  const popupRef = React.useRef<PopupHandle | null>(null);
 
-  popupNode: PopupHandle;
-  shouldComponentUpdate(nextProps: TableDropdownProps) {
-    return nextProps.caption !== this.props.caption;
-  }
+  const onClose = React.useCallback<DropdownCloseHandler>(() => {
+    popupRef.current?.hide();
+  }, []);
 
-  getChildren = (hide: () => void) => {
-    return <>{this.props.children(this.popupNode.hide)}</>;
-  };
+  const captionNode = <DropdownCaption>{caption}</DropdownCaption>;
 
-  render() {
-    const { caption, className, linkCaption, triggerIcon, popupSettings, position } =
-      this.props;
-    const captionNode = <DropdownCaption>{caption}</DropdownCaption>;
+  // Caption
+  const trigger = (
+    <>
+      <Icon size="large" icon={triggerIcon} />
+      {!!linkCaption && captionNode}
+    </>
+  );
 
-    // Caption
-    const trigger = (
-      <>
-        <Icon size="large" icon={triggerIcon} />
-        {!!linkCaption && captionNode}
-      </>
-    );
-
-    // Settings
-    const settings: SemanticUI.PopupSettings = {
+  // Settings
+  const settings = React.useMemo<SemanticUI.PopupSettings>(
+    () => ({
       lastResort: true,
       ...popupSettings,
-    };
+    }),
+    [popupSettings],
+  );
 
-    return (
-      <div className={classNames('table', 'dropdown', className)}>
-        <Popup
-          ref={(c) => {
-            this.popupNode = c!;
-          }}
-          className="basic dropdown-content"
-          trigger={trigger}
-          settings={settings}
-          position={position}
-        >
-          {this.getChildren}
-        </Popup>
-        {!linkCaption && captionNode}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classNames('table', 'dropdown', className)}>
+      <Popup
+        ref={popupRef}
+        className="basic dropdown-content"
+        trigger={trigger}
+        triggerProps={triggerProps}
+        settings={settings}
+        position={position}
+      >
+        {() => <>{children(onClose)}</>}
+      </Popup>
+      {!linkCaption && captionNode}
+    </div>
+  );
+};
 
-export default TableDropdown;
+export default React.memo(
+  TableDropdownComponent,
+  (prev, next) => prev.caption === next.caption,
+);

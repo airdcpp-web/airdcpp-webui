@@ -8,7 +8,7 @@ import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { installTableMocks } from '@/tests/mocks/mock-table';
 
 import { waitFor } from '@testing-library/dom';
-import { waitForUrl } from '@/tests/helpers/test-helpers';
+import { navigateToUrl } from '@/tests/helpers/test-helpers';
 
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { TransferListResponse } from '@/tests/mocks/api/transfers';
@@ -73,7 +73,6 @@ describe('Transfer layout', () => {
     const transfer = TransferListResponse[0];
     await waitFor(() => expect(queryByText(transfer.name)).toBeTruthy());
 
-    await router.navigate('/');
-    await waitForUrl('/', router);
+    await navigateToUrl('/', router);
   });
 });

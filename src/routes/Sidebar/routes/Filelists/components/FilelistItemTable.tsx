@@ -38,6 +38,7 @@ const NameCell: React.FC<NameCellProps> = ({
   rowDataGetter,
   captionGetter,
   filelist,
+  cellData,
   ...other
 }) => {
   return (
@@ -48,6 +49,10 @@ const NameCell: React.FC<NameCellProps> = ({
       entity={filelist}
       remoteMenuId={MenuConstants.FILELIST_ITEM}
       captionGetter={captionGetter}
+      triggerProps={{
+        'aria-label': `${cellData} actions`,
+      }}
+      cellData={cellData}
       {...other}
     >
       <TableActionMenu
@@ -111,7 +116,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
     );
   };
 
-  const getCellCaption: FileDownloadCellCaptionGetter = (cellData, rowDataGetter) => {
+  const getNameCellCaption: FileDownloadCellCaptionGetter = (cellData, rowDataGetter) => {
     if (rowDataGetter().type.id === 'directory') {
       const onClick = () => onClickDirectory(filelist.location!.path + cellData + '/');
       return <LinkButton caption={cellData} onClick={onClick} />;
@@ -140,7 +145,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
           name="Name"
           width={200}
           columnKey="name"
-          cell={<NameCell captionGetter={getCellCaption} filelist={filelist} />}
+          cell={<NameCell captionGetter={getNameCellCaption} filelist={filelist} />}
           flexGrow={8}
         />
         <Column
