@@ -41,7 +41,7 @@ const SideMenu: React.FC<SideMenuProps> = ({
     [location],
   );
 
-  const menuItems = parseMenuItems(sidebarRoutes, login, onClick);
+  const menuItems = parseMenuItems(sidebarRoutes, login, { onClick });
   return (
     <div id="side-menu">
       {menuItems.length > 0 && (

@@ -7,7 +7,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       include: ['**/*.browser.{test,spec}.?(c|m)[jt]s?(x)'],
-      setupFiles: ['./vitest/setup.common.ts'],
+      setupFiles: ['./vitest/setup.browser.ts'],
       environment: 'jsdom',
       browser: {
         enabled: true,
@@ -15,6 +15,7 @@ export default mergeConfig(
         instances: [{ browser: 'chromium' }],
         viewport: { width: 1200, height: 600 },
       },
+      name: 'Browser',
     },
   }),
 );

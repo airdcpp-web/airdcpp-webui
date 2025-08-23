@@ -9,6 +9,7 @@ export default mergeConfig(
       include: ['**/*.node.{test,spec}.?(c|m)[jt]s?(x)'],
       setupFiles: ['./vitest/setup.node.ts'],
       environment: 'jsdom',
+      name: 'Node',
     },
   }),
 );

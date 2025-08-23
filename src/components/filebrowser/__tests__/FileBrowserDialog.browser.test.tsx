@@ -89,7 +89,7 @@ describe('FileBrowserDialog', () => {
     const renderData = renderDataNode(<FileBrowserDialogTest />, commonData);
 
     const userEvent = setupUserEvent();
-    const modalController = createTestModalController(renderData);
+    const modalController = createTestModalController({ ...renderData, userEvent });
     return { modalController, onSave, caption, userEvent, ...renderData, ...other };
   };
 

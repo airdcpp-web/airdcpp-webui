@@ -17,8 +17,6 @@ import { waitFor } from '@testing-library/dom';
 import { clickButton, waitForUrl } from '@/tests/helpers/test-helpers';
 import { QueueFilesListResponse } from '@/tests/mocks/api/queue-files';
 
-import '@/style.css';
-
 describe('Queue layout', () => {
   let server: MockServer;
 

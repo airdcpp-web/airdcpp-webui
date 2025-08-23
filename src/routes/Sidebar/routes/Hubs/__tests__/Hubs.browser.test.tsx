@@ -21,7 +21,6 @@ import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 import { getHistoryUrl } from '@/routes/Sidebar/components/RecentLayout';
 import HistoryConstants, { HistoryEntryEnum } from '@/constants/HistoryConstants';
 
-import '@/style.css';
 import { installActionMenuMocks } from '@/components/action-menu/__tests__/test-action-menu-helpers';
 import MenuConstants from '@/constants/MenuConstants';
 import { RemoteMenuGrouped1 } from '@/tests/mocks/api/menu';

@@ -21,7 +21,7 @@ const MainNavigationNormal: React.FC<MainNavigationNormalProps> = ({
   const session = useSession();
   return (
     <div className="item right" role="navigation" aria-label="Main navigation">
-      {parseMenuItems(primaryRoutes, session, undefined, false)}
+      {parseMenuItems(primaryRoutes, session, { showIcon: false })}
 
       <SectionedDropdown className="top right">
         <MenuSection>{parseMenuItems(secondaryRoutes, session)}</MenuSection>

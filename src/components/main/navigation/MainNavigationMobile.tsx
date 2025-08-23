@@ -41,7 +41,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
   const { t } = useTranslation();
 
   useEffect(() => {
-    const settings = {
+    const settings: SemanticUI.SidebarSettings = {
       context: '#mobile-layout',
       transition: 'overlay',
       mobileTransition: 'overlay',
@@ -66,7 +66,7 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
     $(ref.current!).sidebar('hide');
   };
 
-  const onClickSecondary: RouteItemClickHandler = (url, evt) => {
+  const onClickSidebar: RouteItemClickHandler = (url, evt) => {
     evt.preventDefault();
     const isActive = matchPath(url, location.pathname);
 
@@ -77,9 +77,21 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
     onClick(url, evt);
   };
 
+  const menuItemProps = { role: 'menuitem' };
+
   return (
-    <div ref={ref} id="mobile-menu" className="ui right vertical inverted sidebar menu">
-      {parseMenuItems(primaryRoutes, login, onClick)}
+    <nav
+      ref={ref}
+      id="mobile-menu"
+      className="ui right vertical inverted sidebar menu"
+      aria-label={visible ? 'Main navigation' : undefined}
+      aria-hidden={!visible}
+      inert={!visible}
+    >
+      {parseMenuItems(primaryRoutes, login, {
+        onClick,
+        props: menuItemProps,
+      })}
       <Popup
         // Use Popup instead of Dropdown to allow menu to escape the sidebar without disabling vectical scrolling
         // https://github.com/Semantic-Org/Semantic-UI/issues/1410
@@ -94,25 +106,44 @@ const MainNavigationMobile: React.FC<MainNavigationMobileProps> = ({
         settings={{
           distanceAway: -20,
         }}
+        triggerProps={{
+          'aria-haspopup': 'menu',
+        }}
       >
-        {(hide) => (
-          <div className="ui dropdown item right fluid active visible">
-            <div className="ui menu transition visible">
-              {parseMenuItems(secondaryRoutes, login, (path, event) => {
-                hide();
-                onClick(path, event);
-              })}
-              <div className="ui divider" />
-              {parseMenuItem(getLogoutItem(socket, appStore))}
+        {(hide) => {
+          const onClickSecondary: RouteItemClickHandler = (path, event) => {
+            hide();
+            onClick(path, event);
+          };
+
+          return (
+            <div className="ui dropdown item right fluid active visible">
+              <div
+                className="ui menu transition visible"
+                role="menu"
+                aria-label="More options"
+              >
+                {parseMenuItems(secondaryRoutes, login, {
+                  onClick: onClickSecondary,
+                  props: menuItemProps,
+                })}
+                <div className="ui divider" />
+                {parseMenuItem(getLogoutItem(socket, appStore), {
+                  props: menuItemProps,
+                })}
+              </div>
             </div>
-          </div>
-        )}
+          );
+        }}
       </Popup>
       <div className="separator" />
 
-      {parseMenuItems(sidebarRoutes, login, onClickSecondary)}
+      {parseMenuItems(sidebarRoutes, login, {
+        onClick: onClickSidebar,
+        props: menuItemProps,
+      })}
       <IconPanel />
-    </div>
+    </nav>
   );
 };
 

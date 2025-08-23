@@ -8,8 +8,6 @@ import {
 import { APISocket } from '@/services/SocketService';
 import { render, screen } from '@testing-library/react';
 
-import '@/utils/semantic';
-
 import { MODAL_PAGE_DIMMER_ID } from '@/components/semantic/effects/useModal';
 import { createFormatter } from '@/utils/Formatter';
 import { getMockI18n } from '../mocks/mock-i18n';
@@ -18,7 +16,12 @@ import {
   generateInstanceId,
   UIInstanceId,
 } from '@/context/InstanceContext';
-import { BaseTestWrapper, SessionTestWrapper, VIEW_SCROLLABLE } from './test-containers';
+import {
+  BaseTestWrapper,
+  SessionTestWrapper,
+  VIEW_SCROLLABLE,
+  ViewType,
+} from './test-containers';
 
 import * as UI from '@/types/ui';
 import { StoreApi } from 'zustand';
@@ -100,7 +103,7 @@ export const renderDataNode = (
 
 interface RouteRenderOptions {
   routerProps?: MemoryRouterOpts;
-  viewType?: string;
+  viewType?: ViewType;
 }
 
 export const renderBasicRoutes = (

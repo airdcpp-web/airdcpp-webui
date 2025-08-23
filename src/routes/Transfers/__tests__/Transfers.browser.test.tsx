@@ -10,8 +10,6 @@ import { installTableMocks } from '@/tests/mocks/mock-table';
 import { waitFor } from '@testing-library/dom';
 import { waitForUrl } from '@/tests/helpers/test-helpers';
 
-import '@/style.css';
-
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { TransferListResponse } from '@/tests/mocks/api/transfers';
 import TransferConstants from '@/constants/TransferConstants';

@@ -53,7 +53,6 @@ import {
 } from '@/tests/helpers/test-message-helpers';
 import { generateChatMessages } from '@/tests/mocks/helpers/mock-message-helpers';
 
-import '@/style.css';
 import { installActionMenuMocks } from '@/components/action-menu/__tests__/test-action-menu-helpers';
 import MenuConstants from '@/constants/MenuConstants';
 import { RemoteMenuGrouped1 } from '@/tests/mocks/api/menu';

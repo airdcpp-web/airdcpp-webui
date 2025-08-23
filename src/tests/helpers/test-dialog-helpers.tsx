@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { expect } from 'vitest';
 import { TestRouteNavigateButton } from './test-route-helpers';
 import { BaseRenderResult, DataRouteRenderResult } from '../render/test-renderers';
+import { UserEvent } from '@testing-library/user-event';
 
 const DefaultOpenModalButtonCaption = 'Open modal';
 
@@ -73,12 +74,11 @@ export const waitDialogClosed = async ({ queryByRole }: BaseRenderResult) => {
   });
 };
 
-export const createTestModalController = ({
-  getByRole,
-  getByText,
-  getByLabelText,
-  container,
-}: BaseRenderResult) => {
+export const createTestModalController = (
+  renderResult: BaseRenderResult & { userEvent: UserEvent },
+) => {
+  const { getByRole, getByText, container } = renderResult;
+
   const expectDialogOpen = () => {
     //const dialog = queryByRole('dialog');
     //expect(dialog).not.toBeInTheDocument();
@@ -102,7 +102,7 @@ export const createTestModalController = ({
   ) => {
     // await act(async () => {
     if (iconButton) {
-      clickIconButton(caption, getByLabelText);
+      await clickIconButton(caption, renderResult);
     } else {
       clickButton(caption, getByRole);
     }

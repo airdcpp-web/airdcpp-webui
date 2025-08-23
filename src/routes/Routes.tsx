@@ -1,7 +1,9 @@
 import * as React from 'react';
 
 import { default as lazy } from '@/decorators/AsyncComponentDecorator';
-import RouterMenuItemLink from '@/components/semantic/RouterMenuItemLink';
+import RouterMenuItemLink, {
+  RouterMenuItemLinkProps,
+} from '@/components/semantic/RouterMenuItemLink';
 
 import IconConstants from '@/constants/IconConstants';
 
@@ -180,10 +182,15 @@ const menuItemClickHandler = (
   return undefined;
 };
 
+interface MenuItemProps {
+  onClick: RouteItemClickHandler | undefined;
+  props: Partial<RouterMenuItemLinkProps>;
+  showIcon: boolean | undefined;
+}
+
 export const parseMenuItem = (
   route: RouteItem,
-  onClick: RouteItemClickHandler | undefined = undefined,
-  showIcon: boolean | undefined = true,
+  { onClick, props, showIcon = true }: Partial<MenuItemProps> = {},
 ) => {
   const { title, icon, unreadInfoStoreSelector, path, className } = route;
   return (
@@ -194,6 +201,7 @@ export const parseMenuItem = (
       icon={showIcon ? icon + ' navigation' : null}
       onClick={menuItemClickHandler(onClick, route)}
       unreadInfoStoreSelector={unreadInfoStoreSelector}
+      {...props}
     >
       <Trans i18nKey={textToI18nKey(title, UI.SubNamespaces.NAVIGATION)}>{title}</Trans>
     </RouterMenuItemLink>
@@ -220,12 +228,11 @@ export const parseRoutes = (routes: RouteItem[]) => {
 export const parseMenuItems = (
   routes: RouteItem[],
   session: UI.AuthenticatedSession,
-  onClick?: RouteItemClickHandler | undefined,
-  showIcon?: boolean | undefined,
+  menuItemProps: Partial<MenuItemProps> = { showIcon: true },
 ) => {
   return routes
     .filter((route) => filterItem(route, session))
-    .map((route) => parseMenuItem(route, onClick, showIcon));
+    .map((route) => parseMenuItem(route, menuItemProps));
 };
 
 export const isRouteActive = (route: RouteItem, location: Location): boolean => {

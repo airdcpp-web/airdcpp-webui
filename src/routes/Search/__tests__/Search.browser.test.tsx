@@ -16,8 +16,6 @@ import {
   waitForUrl,
 } from '@/tests/helpers/test-helpers';
 
-import '@/style.css';
-
 import Search from '../components/Search';
 import SearchConstants from '@/constants/SearchConstants';
 import {
@@ -287,7 +285,6 @@ describe('Search layout', () => {
     const {
       getByRole,
       getByPlaceholderText,
-      getByLabelText,
       queryByRole,
 
       sessionStore,
@@ -308,7 +305,7 @@ describe('Search layout', () => {
     await waitFor(() =>
       expect(getByRole('button', { name: 'Search options' })).toBeTruthy(),
     );
-    await clickIconButton('Search options', getByLabelText);
+    await clickIconButton('Search options', renderData);
 
     await waitFor(() => expect(getByRole('form')).toBeTruthy());
     await waitForLoader(queryByRole);

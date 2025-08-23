@@ -146,6 +146,7 @@ const Popup = forwardRef<PopupHandle, PopupProps>(
     const getTriggerProps = () => {
       const triggerProps: any = {
         ...customTriggerProps,
+        'aria-expanded': visible,
         ref: (c: any) => {
           if (c) {
             triggerNodeRef.current = c;
@@ -158,6 +159,7 @@ const Popup = forwardRef<PopupHandle, PopupProps>(
       } else {
         triggerProps['onClick'] = handleClick;
       }
+
       return triggerProps;
     };
 

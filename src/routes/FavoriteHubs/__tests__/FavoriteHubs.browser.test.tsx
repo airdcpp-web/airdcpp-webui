@@ -10,8 +10,6 @@ import { installTableMocks } from '@/tests/mocks/mock-table';
 import { waitFor } from '@testing-library/dom';
 import { waitForUrl } from '@/tests/helpers/test-helpers';
 
-import '@/style.css';
-
 import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import FavoriteHubConstants from '@/constants/FavoriteHubConstants';
 import { FavoriteHubListResponse } from '@/tests/mocks/api/favorite-hubs';

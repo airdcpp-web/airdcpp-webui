@@ -1,75 +1,30 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { renderDataRoutes } from '@/tests/render/test-renderers';
 
 import { waitFor } from '@testing-library/dom';
-import {
-  createTestModalController,
-  TestRouteModalNavigateButton,
-} from '@/tests/helpers/test-dialog-helpers';
-import MainLayoutNormal from '../MainLayoutNormal';
-import IconConstants from '@/constants/IconConstants';
-import RouteModal from '@/components/semantic/RouteModal';
-import ModalRouteDecorator from '@/decorators/ModalRouteDecorator';
-import {
-  NavigateBackCaption,
-  TestNavigateBackButton,
-  TestRouteNavigateButton,
-} from '@/tests/helpers/test-route-helpers';
-import { RouteItem } from '@/routes/Routes';
-import TransferConstants from '@/constants/TransferConstants';
-import ShareConstants from '@/constants/ShareConstants';
-import HashConstants from '@/constants/HashConstants';
-import { TransferStatsResponse } from '@/tests/mocks/api/transfers';
-import { HashStatsRunning } from '@/tests/mocks/api/hash';
-import { ShareGetRefreshTasksResponse } from '@/tests/mocks/api/share';
-import { clickButton } from '@/tests/helpers/test-helpers';
 
-import { initCommonDataMocks } from '@/tests/mocks/mock-data-common';
+import MainLayoutNormal from '../MainLayoutNormal';
+import { NavigateBackCaption } from '@/tests/helpers/test-route-helpers';
+
+import { clickButton, clickIconButton, waitForUrl } from '@/tests/helpers/test-helpers';
+
 import { getMockServer, MockServer } from '@/tests/mocks/mock-server';
 
-import '@/style.css';
-import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
-import { clickNavigationMenuItem } from '@/tests/helpers/test-menu-helpers';
+import {
+  clickMenuItem,
+  clickNavigationMenuItem,
+  openMenu,
+} from '@/tests/helpers/test-menu-helpers';
+import {
+  createMainLayout,
+  MainLayoutCaptions,
+  MainLayoutRoutes,
+} from './main-layout-helpers';
+import MainLayoutMobile from '../MainLayoutMobile';
+import { VIEW_SCROLLABLE } from '@/tests/render/test-containers';
 
-const MainDialogOpenCaption = 'Open main test dialog';
-const SidebarDialogOpenCaption = 'Open sidebar test dialog';
-
-const MainDialogCaption = 'Main test dialog';
-
-const SidebarRouteMenuCaption = 'Sidebar route menu item';
-const SidebarRouteContentCaption = 'Sidebar route content';
-
-const MainDialogSidebarOpenCaption = 'Main dialog sidebar open caption';
+import { page } from '@vitest/browser/context';
 
 const HashDialogOpenCaption = 'Hash progress';
-
-const TestRoutes = {
-  main: '/main',
-  mainModal: '/main/modal',
-
-  sidebar: '/sidebar',
-  sidebarModal: '/sidebar/modal',
-};
-
-const TestRouteModalContent = () => {
-  return (
-    <RouteModal
-      id="modal"
-      title={MainDialogCaption}
-      onApprove={() => Promise.resolve()}
-      closable={false}
-      icon={IconConstants.FOLDER}
-    >
-      Main route test modal
-      <TestRouteNavigateButton
-        caption={MainDialogSidebarOpenCaption}
-        route={TestRoutes.sidebar}
-      />
-    </RouteModal>
-  );
-};
-
-const TestRouteModal = ModalRouteDecorator(TestRouteModalContent, 'modal');
 
 // tslint:disable:no-empty
 describe('MainLayout', () => {
@@ -83,144 +38,22 @@ describe('MainLayout', () => {
     server.stop();
   });
 
-  const getSocket = async () => {
-    const commonData = await initCommonDataMocks(server);
-
-    // Transfers
-    const transferStats = server.addSubscriptionHandler(
-      TransferConstants.MODULE_URL,
-      TransferConstants.STATISTICS,
-    );
-
-    server.addRequestHandler(
-      'GET',
-      TransferConstants.STATISTICS_URL,
-      TransferStatsResponse,
-    );
-
-    // Share
-    server.addRequestHandler(
-      'GET',
-      ShareConstants.REFRESH_TASKS_URL,
-      ShareGetRefreshTasksResponse,
-    );
-
-    const shareRefreshStarted = server.addSubscriptionHandler(
-      ShareConstants.MODULE_URL,
-      ShareConstants.REFRESH_STARTED,
-    );
-
-    const shareRefreshCompleted = server.addSubscriptionHandler(
-      ShareConstants.MODULE_URL,
-      ShareConstants.REFRESH_COMPLETED,
-    );
-
-    // Hash
-    const hashStats = server.addSubscriptionHandler(
-      HashConstants.MODULE_URL,
-      HashConstants.STATISTICS,
-    );
-
-    server.addRequestHandler('GET', HashConstants.STATS_URL, HashStatsRunning);
-
-    return {
-      commonData,
-      server,
-      transferStats,
-      shareRefreshStarted,
-      shareRefreshCompleted,
-      hashStats,
-    };
-  };
-
-  const MainComponent = () => {
-    return (
-      <>
-        <div>Main route</div>
-        <TestRouteModalNavigateButton
-          caption={MainDialogOpenCaption}
-          modalRoute={TestRoutes.mainModal}
-        />
-        <TestRouteModal />
-      </>
-    );
-  };
-
-  const SidebarComponent = () => {
-    return (
-      <div>
-        {SidebarRouteContentCaption}
-        <TestRouteModalNavigateButton
-          caption={SidebarDialogOpenCaption}
-          modalRoute={TestRoutes.sidebarModal}
-        />
-        <TestRouteModal />
-        <TestNavigateBackButton />
-      </div>
-    );
-  };
-
-  const PrimaryRoutes = [
-    {
-      title: 'Main route',
-      path: `${TestRoutes.main}`,
-      icon: IconConstants.HOME,
-      component: MainComponent,
-    },
-  ];
-
-  const SecondaryRoutes: RouteItem[] = [];
-
-  const SidebarRoutes = [
-    {
-      title: SidebarRouteMenuCaption,
-      path: TestRoutes.sidebar,
-      icon: IconConstants.EXTERNAL,
-      component: SidebarComponent,
-    },
-  ];
-
-  const renderNormalLayout = async () => {
-    const { commonData } = await getSocket();
-    const MainLayoutNormalTest = () => {
-      return (
-        <MainLayoutNormal
-          primaryRoutes={PrimaryRoutes}
-          secondaryRoutes={SecondaryRoutes}
-          sidebarRoutes={SidebarRoutes}
-          urgencies={{}}
-        />
-      );
-    };
-
-    const routes = [
-      {
-        path: '*',
-        Component: MainLayoutNormalTest,
-      },
-    ];
-
-    const renderData = renderDataRoutes(routes, commonData, {
-      routerProps: { initialEntries: [TestRoutes.main] },
-    });
-
-    const userEvent = setupUserEvent();
-    const modalController = createTestModalController(renderData);
-    return { modalController, ...renderData, userEvent };
-  };
-
   describe('normal layout', () => {
+    const renderNormalLayout = createMainLayout(MainLayoutNormal, VIEW_SCROLLABLE);
+
     test('should close modals when opening sidebar', async () => {
       const { getByText, modalController, queryByText, getByRole } =
-        await renderNormalLayout();
+        await renderNormalLayout(server);
 
       // Open dialog in the main layout
-      await modalController.openDialog(MainDialogOpenCaption);
+      await modalController.openDialog(MainLayoutCaptions.mainDialogOpen);
       await waitFor(() => modalController.expectDialogOpen());
 
       // Open sidebar
-      clickButton(MainDialogSidebarOpenCaption, getByRole);
-      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+      clickButton(MainLayoutCaptions.mainDialogSidebarOpen, getByRole);
+      await waitFor(() =>
+        expect(getByText(MainLayoutCaptions.sidebarRouteContent)).toBeTruthy(),
+      );
 
       // Dialog should now be closed
       await waitFor(() => modalController.expectDialogClosed());
@@ -231,20 +64,24 @@ describe('MainLayout', () => {
 
       // Sidebar should be closed
       await waitFor(() =>
-        expect(queryByText(SidebarRouteContentCaption)).not.toBeInTheDocument(),
+        expect(
+          queryByText(MainLayoutCaptions.sidebarRouteContent),
+        ).not.toBeInTheDocument(),
       );
     });
 
     test('should open modals in sidebar', async () => {
-      const renderData = await renderNormalLayout();
+      const renderData = await renderNormalLayout(server);
       const { getByText, modalController, getByRole } = renderData;
 
       // Open sidebar
-      await clickNavigationMenuItem(SidebarRouteMenuCaption, renderData);
-      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+      await clickNavigationMenuItem(MainLayoutCaptions.sidebarRouteMenu, renderData);
+      await waitFor(() =>
+        expect(getByText(MainLayoutCaptions.sidebarRouteContent)).toBeTruthy(),
+      );
 
       // Open sidebar dialog
-      await modalController.openDialog(SidebarDialogOpenCaption);
+      await modalController.openDialog(MainLayoutCaptions.sidebarDialogOpen);
       await waitFor(() => modalController.expectDialogOpen());
 
       // Navigate back to the modal
@@ -252,16 +89,20 @@ describe('MainLayout', () => {
       await waitFor(() => modalController.expectDialogClosed());
 
       // Sidebar should still be open
-      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+      await waitFor(() =>
+        expect(getByText(MainLayoutCaptions.sidebarRouteContent)).toBeTruthy(),
+      );
     });
 
     test('should open hashing dialog', async () => {
-      const renderData = await renderNormalLayout();
+      const renderData = await renderNormalLayout(server);
       const { getByText, modalController, getByRole } = renderData;
 
       // Open sidebar
-      await clickNavigationMenuItem(SidebarRouteMenuCaption, renderData);
-      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+      await clickNavigationMenuItem(MainLayoutCaptions.sidebarRouteMenu, renderData);
+      await waitFor(() =>
+        expect(getByText(MainLayoutCaptions.sidebarRouteContent)).toBeTruthy(),
+      );
 
       // Open hashing dialog
       await modalController.openDialog(HashDialogOpenCaption, { iconButton: true });
@@ -275,7 +116,50 @@ describe('MainLayout', () => {
       await waitFor(() => modalController.expectDialogClosed());
 
       // Sidebar should still be open
-      await waitFor(() => expect(getByText(SidebarRouteContentCaption)).toBeTruthy());
+      await waitFor(() =>
+        expect(getByText(MainLayoutCaptions.sidebarRouteContent)).toBeTruthy(),
+      );
+    });
+  });
+
+  const runMobileViewport = () => {
+    beforeEach(async () => {
+      await page.viewport(680, 480);
+    });
+
+    afterEach(async () => {
+      // Reset so following tests aren’t affected
+      await page.viewport(1200, 600);
+    });
+  };
+
+  describe('mobile layout', () => {
+    runMobileViewport();
+
+    const renderMobileLayout = createMainLayout(MainLayoutMobile, VIEW_SCROLLABLE);
+
+    test('should handle navigation', async () => {
+      const renderResult = await renderMobileLayout(server);
+
+      const { findByText, findByLabelText, queryByText, router } = renderResult;
+
+      await findByLabelText('Main menu');
+
+      // Open main menu
+      await clickIconButton('Main menu', renderResult);
+      await findByLabelText('Main navigation');
+
+      // Open secondary dropdown menu
+      await openMenu('More...', renderResult);
+
+      // Go to secondary route
+      await clickMenuItem(MainLayoutCaptions.secondaryRouteMenuCaption, renderResult);
+
+      await waitForUrl(MainLayoutRoutes.secondary, router);
+      await findByText(MainLayoutCaptions.secondaryRouteContent);
+
+      // Check that the sidebar is closed
+      expect(queryByText('Main navigation')).not.toBeInTheDocument();
     });
   });
 });

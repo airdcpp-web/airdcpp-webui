@@ -10,8 +10,6 @@ import { installTableMocks } from '@/tests/mocks/mock-table';
 import { waitFor } from '@testing-library/dom';
 import { waitForUrl } from '@/tests/helpers/test-helpers';
 
-import '@/style.css';
-
 import { ShareRootListResponse } from '@/tests/mocks/api/share-roots';
 import ShareRootConstants from '@/constants/ShareRootConstants';
 import Share from '../components/Share';

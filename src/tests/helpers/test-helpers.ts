@@ -1,6 +1,7 @@
 import { fireEvent, Matcher, RenderResult, waitFor } from '@testing-library/react';
 import { expect, Mock } from 'vitest';
 import { BasicRouteRenderResult } from '../render/test-renderers';
+import { UserEvent } from '@testing-library/user-event';
 
 export const waitForUrl = async (
   pathName: string,
@@ -37,12 +38,12 @@ export const clickButton = (caption: string, getByRole: RenderResult['getByRole'
   return expect(fireEvent.click(button)).toBeTruthy();
 };
 
-export const clickIconButton = (
+export const clickIconButton = async (
   caption: string,
-  getByLabelText: RenderResult['getByLabelText'],
+  { getByLabelText, userEvent }: RenderResult & { userEvent: UserEvent },
 ) => {
   const button = getByLabelText(caption);
-  return expect(fireEvent.click(button)).toBeTruthy();
+  await userEvent.click(button);
 };
 
 export const waitExpectRequestToMatchSnapshot = async (mock: Mock) => {

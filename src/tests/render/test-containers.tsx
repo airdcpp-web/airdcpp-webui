@@ -4,8 +4,6 @@ import i18n from 'i18next';
 import { APISocket } from '@/services/SocketService';
 import { PropsWithChildren } from 'react';
 
-import '@/utils/semantic';
-
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 import * as UI from '@/types/ui';
@@ -19,12 +17,27 @@ import { SessionStoreContext } from '@/context/SessionStoreContext';
 import { AppStoreContext } from '@/context/AppStoreContext';
 import { POPUP_NODE_ID } from '@/components/semantic/Popup';
 
-export const VIEW_SCROLLABLE = '100%';
-export const VIEW_FIXED_HEIGHT = '600px';
+import '@/style.css';
+import '@/utils/semantic';
+
+export interface ViewType {
+  width: string;
+  height: string;
+}
+
+export const VIEW_SCROLLABLE = {
+  height: '100%',
+  width: '100%',
+};
+
+export const VIEW_FIXED_HEIGHT = {
+  height: '600px',
+  width: '100%',
+};
 
 interface BaseComponentProps {
   instanceId: number;
-  viewType: string;
+  viewType: ViewType;
 }
 
 const BaseComponent: React.FC<PropsWithChildren<BaseComponentProps>> = ({
@@ -39,7 +52,7 @@ const BaseComponent: React.FC<PropsWithChildren<BaseComponentProps>> = ({
       <section
         className="ui dimmable blurring minimal"
         id="container-main"
-        style={{ height: viewType, width: '100%' }}
+        style={viewType}
       >
         {children}
       </section>
@@ -57,7 +70,7 @@ type UIBaseWrapperProps = PropsWithChildren<{
   instanceId: number;
   appStore: StoreApi<UI.AppStore>;
   wrapper?: React.ComponentType;
-  viewType: string;
+  viewType: ViewType;
 }>;
 
 export const BaseTestWrapper: React.FC<UIBaseWrapperProps> = ({
