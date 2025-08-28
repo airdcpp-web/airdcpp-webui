@@ -40,11 +40,6 @@ section#container-main {
 }
 
 
-.ui.dropdown .menu > .item > .label:not(.submenu):last-child,
-.ui.dropdown .menu > .item > i:not(.submenu):last-child {
-  margin-left: 5px;
-}
-
 /*https://github.com/fomantic/Fomantic-UI/issues/3123*/
 .ui.dropdown.upward.pointing .item.submenu > .menu {
   bottom: 0 !important;

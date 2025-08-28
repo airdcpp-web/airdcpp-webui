@@ -61,6 +61,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
+  // Keep latest visibility for external (jQuery) callbacks
+  const visibleRef = useRef(visible);
+  useEffect(() => {
+    visibleRef.current = visible;
+  }, [visible]);
+
   const computedIcon = useMemo<IconType>(() => {
     if (triggerIcon !== undefined) {
       return triggerIcon;
@@ -76,7 +82,6 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     const dropdownSettings: SemanticUI.DropdownSettings = {
       direction,
-      // action: 'select',
       action: (text, value, element) => {
         // Handle keyboard selections
         if (element[0]) {
@@ -86,19 +91,25 @@ const Dropdown: React.FC<DropdownProps> = ({
       },
       showOnFocus: false,
       duration: AnimationConstants.dropdown,
+
+      // Use latest visibility via ref; cancel first show to mount children
+      // This will allow Fomantic UI to get the correct dimensions and positioning
       onShow: () => {
-        // console.log('Dropdown onShow');
-        setVisible(true);
+        if (!visibleRef.current) {
+          setVisible(true);
+          return false; // prevent FUI from showing before children mount
+        }
+        // allow show normally on subsequent call
+        return;
       },
+
       onHide: () => {
-        // console.log('Dropdown onHide');
         // Wait for hide animation before unmounting menu content
         setTimeout(() => setVisible(false), AnimationConstants.dropdown);
       },
 
-      // debug: true,
-      // verbose: true,
-
+      //debug: true,
+      //verbose: true,
       ...settings,
     };
 
@@ -120,6 +131,12 @@ const Dropdown: React.FC<DropdownProps> = ({
     { 'left-icon': leftIcon },
     { 'selection fluid': selection },
   );
+
+  useEffect(() => {
+    if (visible && rootRef.current) {
+      $(rootRef.current).dropdown('toggle');
+    }
+  }, [visible]);
 
   const trigger = <Icon icon={computedIcon} className="trigger" />;
   const menuId = id ? `${id}-menu` : undefined;

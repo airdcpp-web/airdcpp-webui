@@ -31,7 +31,7 @@ const Source: React.FC<SourceProps> = ({ source, bundle, t }) => {
           userIcon={true}
           user={source.user}
           ids={UserFileActions}
-          contextElement=".source.modal"
+          contextElement=".sources > table"
           remoteMenuId={MenuConstants.HINTED_USER}
         >
           <ActionMenu

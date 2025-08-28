@@ -119,10 +119,6 @@
   margin: 0px;
 }
 
-.table-container-wrapper .dropdown .icon-caption .icon {
-  width: inherit !important;
-}
-
 .table-container-wrapper .empty.dropdown.filtered:not(.no-access) > div {
   padding-left: 22px;
 }
