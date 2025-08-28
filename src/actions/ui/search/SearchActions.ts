@@ -4,7 +4,7 @@ import IconConstants from '@/constants/IconConstants';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-type Handler = UI.ActionHandler<API.GroupedSearchResult>;
+type Handler = UI.ActionHandler<API.GroupedSearchResult, API.SearchInstance>;
 
 const handleBrowseContent: Handler = ({ itemData: groupedResult, ...other }) => {
   const createData = {
@@ -33,7 +33,10 @@ export const SearchBrowseContentAction = {
   handler: handleBrowseContent,
 };
 
-const GroupedSearchResultActions: UI.ActionListType<API.GroupedSearchResult> = {
+const GroupedSearchResultActions: UI.ActionListType<
+  API.GroupedSearchResult,
+  API.SearchInstance
+> = {
   result: SearchResultDetailsAction,
   browseContent: SearchBrowseContentAction,
 };

@@ -7,6 +7,7 @@ import {
 } from './common';
 
 export interface QueueSource {
+  id: string;
   user: HintedUser;
   last_speed: number;
 }

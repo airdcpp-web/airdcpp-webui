@@ -58,7 +58,7 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
   });
 
   const getCurrentDirectory = () => {
-    return filelist.location;
+    return filelist.location!;
   };
 
   const selectedNameFormatter = (caption: React.ReactNode) => {
@@ -73,7 +73,7 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
         remoteMenuId={MenuConstants.FILELIST_ITEM}
       >
         <ActionMenu
-          itemData={filelist.location}
+          itemData={filelist.location!}
           actions={FilelistItemActionMenu}
           entity={filelist}
         />
