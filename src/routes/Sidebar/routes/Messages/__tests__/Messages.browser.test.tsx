@@ -275,6 +275,7 @@ describe('Private messages', () => {
     const messageInput = getByRole('textbox');
     await userEvent.type(messageInput, session1Message);
     await waitFor(() => expect(messageInput).toHaveValue(session1Message));
+    expect(messageInput).toHaveFocus();
 
     // Switch to the second session
     const session2MenuItem = queryByText(PrivateChat2.user.nicks);
@@ -284,6 +285,7 @@ describe('Private messages', () => {
 
     // Check that the value was cleared
     await waitFor(() => expect(messageInput).toHaveValue(''));
+    expect(messageInput).toHaveFocus();
 
     // Go back to first session
     const session1MenuItem = queryByText(PrivateChat1.user.nicks);
@@ -291,6 +293,7 @@ describe('Private messages', () => {
 
     await waitFor(() => expect(getByText(PrivateChat1MessageMe.text)).toBeTruthy());
     await waitFor(() => expect(messageInput).toHaveValue(session1Message));
+    expect(messageInput).toHaveFocus();
   });
 
   test('should handle user inactivity', async () => {

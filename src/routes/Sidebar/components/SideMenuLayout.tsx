@@ -5,6 +5,7 @@ import { Grid } from '@/components/semantic/Grid';
 
 import * as UI from '@/types/ui';
 import { SessionMainLayoutProps } from './types';
+import { noMouseFocusProps } from '@/utils/BrowserUtils';
 
 // Define a static ID for the content panel so the tabs can control it.
 const CONTENT_PANEL_ID = 'session-content-panel';
@@ -34,6 +35,7 @@ const SideMenuLayout = <
   const sessionMenuItems = sessionMenuItemsGetter({
     role: 'tab',
     'aria-controls': CONTENT_PANEL_ID,
+    ...noMouseFocusProps,
   });
 
   return (

@@ -12,6 +12,7 @@ export const createMockTableManager = (sendUpdate: FireUpdate) => {
   let maxCount: number = 0;
   let rangeStart: number = 0;
   let items: UI.IdItemType[];
+  let active = false;
 
   const getUpdateItemCounts = () => ({
     total_items: items.length,
@@ -66,6 +67,7 @@ export const createMockTableManager = (sendUpdate: FireUpdate) => {
       sortAscending = settings.sort_ascending;
     }
 
+    active = true;
     if (!settings.max_count && !settings.range_start) {
       sendUpdate(getUpdateItemCounts());
     } else {
@@ -73,15 +75,25 @@ export const createMockTableManager = (sendUpdate: FireUpdate) => {
     }
   };
 
-  const setItems = (newItems: UI.IdItemType[]) => {
+  const setItems = (newItems: UI.IdItemType[], send = true) => {
     items = newItems;
-    sendItems();
+    if (send) {
+      sendItems();
+    }
+  };
+
+  const stop = () => {
+    items = [];
+    active = false;
   };
 
   return {
     getItems,
     setItems,
     sendItems,
+
+    stop,
+    isActive: () => active,
 
     handleSettings,
   };

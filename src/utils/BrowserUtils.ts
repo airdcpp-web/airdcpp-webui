@@ -109,3 +109,21 @@ export const browserStorageUnavailable = () => {
 
   return null;
 };
+
+export const preventMouseFocus: React.MouseEventHandler = (e) => {
+  // Left click only; let keyboard and other buttons behave normally
+  if (e.button === 0) e.preventDefault();
+};
+
+export const preventPointerFocus: React.PointerEventHandler = (e) => {
+  const anyEvt = e as any;
+  if (anyEvt.pointerType === 'mouse' || anyEvt.pointerType === 'pen') {
+    e.preventDefault();
+  }
+};
+
+// Convenience spread
+export const noMouseFocusProps = {
+  onMouseDown: preventMouseFocus,
+  onPointerDown: preventPointerFocus,
+};
