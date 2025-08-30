@@ -79,6 +79,7 @@ const Widget = React.forwardRef<HTMLDivElement, WidgetProps>(function Widget(
             settings,
             layoutStore,
           }}
+          label="Widget actions"
         >
           {!!widgetInfo.actionMenu && (
             <ActionMenu

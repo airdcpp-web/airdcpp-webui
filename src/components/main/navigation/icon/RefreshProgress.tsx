@@ -30,6 +30,7 @@ const RefreshProgress = memo<RefreshProgressProps & RefreshProgressDataProps>(
         style={{
           margin: '5px 0px',
         }}
+        title="Refresh in progress"
       />
     );
   },

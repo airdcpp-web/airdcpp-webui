@@ -7,6 +7,7 @@ interface StatisticsRowProps {
   cornerIcon?: CornerIconType;
   bytes: number;
   formatter: (bytes: number) => React.ReactNode;
+  label: string;
 }
 
 export const StatisticsRow: React.FC<StatisticsRowProps> = ({
@@ -14,6 +15,7 @@ export const StatisticsRow: React.FC<StatisticsRowProps> = ({
   cornerIcon,
   bytes,
   formatter,
+  label,
 }) => {
   if (bytes === 0) {
     return null;
@@ -28,10 +30,10 @@ export const StatisticsRow: React.FC<StatisticsRowProps> = ({
             paddingLeft: '0.2em',
           }}
         >
-          <Icon icon={icon} cornerIcon={cornerIcon} />
+          <Icon icon={icon} cornerIcon={cornerIcon} title={label} />
         </i>
       ) : (
-        <Icon icon={icon} />
+        <Icon icon={icon} title={label} />
       )}
       <div
         className="content"

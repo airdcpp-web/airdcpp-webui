@@ -26,7 +26,7 @@ const AwayIcon = memo(function AwayIcon() {
       color={iconColor}
       size="large"
       onClick={() => ActivityAPIActions.setAway(!isAway(away), socket, t)}
-      aria-label={isAway(away) ? 'Away mode enabled' : 'Away mode disabled'}
+      title={isAway(away) ? 'Away mode enabled' : 'Away mode disabled'}
     />
   );
 });

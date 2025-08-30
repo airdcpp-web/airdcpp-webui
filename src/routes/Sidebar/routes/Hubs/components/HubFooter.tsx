@@ -105,6 +105,7 @@ const HubFooter: React.FC<HubFooterProps & DataProps> = (props) => {
                 ? 'yellow bell'
                 : 'bell'
             }
+            label="Notification settings"
           />
         </div>
       </div>

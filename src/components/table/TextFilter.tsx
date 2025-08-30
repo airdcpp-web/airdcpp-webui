@@ -122,6 +122,7 @@ class TextFilter extends React.PureComponent<
                 className="filter-method right top pointing"
                 button={true}
                 direction="upward"
+                label="Filter match type"
               >
                 <MenuSection caption={translate('Match type', t, 'table.filter')}>
                   {Object.keys(API.FilterMethod)

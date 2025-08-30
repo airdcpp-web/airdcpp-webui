@@ -67,7 +67,7 @@ const HashProgress = memo<HashProgressProps & HashProgressDataProps>(
                 }}
                 cornerIcon={stats.pause_forced ? IconConstants.PAUSE : IconConstants.PLAY}
                 onClick={() => setDialogOpen(true)}
-                aria-label="Hash progress"
+                title="Hash progress"
               />
             </CircularProgressbarWithChildren>
           </div>

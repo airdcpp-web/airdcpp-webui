@@ -28,6 +28,7 @@ const HashStatistics: React.FC<HashStatisticsProps & HashStatisticsDataProps> = 
       icon={IconConstants.HASH}
       bytes={hashStats.hash_speed}
       formatter={formatSpeed}
+      label="Hash speed"
     />
   );
 };

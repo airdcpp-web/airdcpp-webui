@@ -101,7 +101,7 @@ const SearchOptionsButton: React.FC<Props> = ({ moduleT, onChange, value, hubs }
               <Icon icon={IconConstants.EXPAND} />
             </>
           }
-          aria-label="Search options"
+          title="Search options"
         />
       }
       contentUpdateTrigger={value}

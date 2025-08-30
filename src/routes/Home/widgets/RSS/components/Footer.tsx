@@ -18,7 +18,11 @@ const Footer = RedrawDecorator(({ lastUpdated, handleUpdate, widgetT }: FooterPr
   const { formatRelativeTime } = useFormatter();
   return (
     <div className="extra content">
-      <Icon icon={IconConstants.REFRESH_PLAIN} onClick={handleUpdate} />
+      <Icon
+        icon={IconConstants.REFRESH_PLAIN}
+        onClick={handleUpdate}
+        title="Refresh feed"
+      />
       {!!lastUpdated && (
         <Trans i18nKey={widgetT.toI18nKey('lastUpdated')}>
           Last updated: {{ time: formatRelativeTime(lastUpdated / 1000) }}

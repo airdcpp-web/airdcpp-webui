@@ -26,16 +26,19 @@ const TransferStatistics: React.FC<
         icon={IconConstants.DOWNLOAD}
         bytes={transferStats.speed_down}
         formatter={formatSpeed}
+        label="Download speed"
       />
       <StatisticsRow
         icon={IconConstants.UPLOAD}
         bytes={transferStats.speed_up}
         formatter={formatSpeed}
+        label="Upload speed"
       />
       <StatisticsRow
         icon={IconConstants.QUEUE_COLORED}
         bytes={transferStats.queued_bytes}
         formatter={formatSize}
+        label="Queued bytes"
       />
     </>
   );
