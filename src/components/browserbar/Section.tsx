@@ -4,21 +4,21 @@ import './style.css';
 
 import 'fomantic-ui-css/components/breadcrumb.min.css';
 import Icon from '@/components/semantic/Icon';
-import LinkButton from '@/components/semantic/LinkButton';
+import LinkButton, { LinkButtonProps } from '@/components/semantic/LinkButton';
 
 export type SelectedNameFormatter = (
   caption: React.ReactNode,
   token: string,
 ) => React.ReactNode;
 
-interface SectionProps {
+export interface SectionProps extends Omit<LinkButtonProps, 'children' | 'onClick'> {
   caption: React.ReactNode;
   onClick: () => void;
 }
 
-export const Section: React.FC<SectionProps> = ({ caption, onClick }) => (
+export const Section: React.FC<SectionProps> = ({ caption, onClick, ...other }) => (
   <div className="path-token">
-    <LinkButton className="section" onClick={onClick}>
+    <LinkButton className="section" onClick={onClick} {...other}>
       {caption}
     </LinkButton>
     <Icon icon="right chevron divider" />

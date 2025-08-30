@@ -3,8 +3,9 @@ import { MockServer } from '../mocks/mock-server';
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-import { vi } from 'vitest';
+import { expect, vi } from 'vitest';
 import { createMockTableManager } from '../helpers/test-table-helpers';
+import { waitFor } from '@testing-library/dom';
 
 interface TableMockProps {
   server: MockServer;
@@ -76,11 +77,17 @@ export const installTableMocks = (
   server.addRequestHandler('POST', `${baseUrl}/settings`, undefined, onSettings);
 
   // Closing
-  const onClose = vi.fn();
+  const onClose = vi.fn(mockTableManager.stop);
   server.addRequestHandler('DELETE', `${baseUrl}`, undefined, onClose);
 
   // Filter
   const filter = installFilterMocks(0, baseUrl, server);
 
-  return { mockTableManager, onSettings, onClose, filter };
+  const waitStopped = async () => {
+    await waitFor(() => {
+      expect(mockTableManager.isActive()).toBe(false);
+    });
+  };
+
+  return { mockTableManager, onSettings, onClose, filter, waitStopped };
 };

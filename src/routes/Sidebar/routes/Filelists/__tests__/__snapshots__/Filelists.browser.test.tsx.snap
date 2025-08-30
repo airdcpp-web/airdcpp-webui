@@ -75,3 +75,23 @@ exports[`Filelists > new session > should open local share profile 1`] = `
   "path": "filelists/self",
 }
 `;
+
+exports[`Filelists > should navigate between directories 1`] = `
+{
+  "data": {
+    "list_path": "/Ubuntu 20.04 Server/",
+  },
+  "method": "POST",
+  "path": "filelists/NJSHVYR4ZHCZFUEZNGA7M2D72S5AB4WQAMPBKFA/directory",
+}
+`;
+
+exports[`Filelists > should navigate between directories 2`] = `
+{
+  "data": {
+    "list_path": "/",
+  },
+  "method": "POST",
+  "path": "filelists/NJSHVYR4ZHCZFUEZNGA7M2D72S5AB4WQAMPBKFA/directory",
+}
+`;

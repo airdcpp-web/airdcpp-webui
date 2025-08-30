@@ -28,6 +28,7 @@ import MenuConstants from '@/constants/MenuConstants';
 import { FilelistItemActionMenu } from '@/actions/ui/filelist';
 import { useSessionStore } from '@/context/SessionStoreContext';
 import LinkButton from '@/components/semantic/LinkButton';
+import { noMouseFocusProps } from '@/utils/BrowserUtils';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   filelist: API.FilelistSession;
@@ -119,7 +120,11 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
   const getNameCellCaption: FileDownloadCellCaptionGetter = (cellData, rowDataGetter) => {
     if (rowDataGetter().type.id === 'directory') {
       const onClick = () => onClickDirectory(filelist.location!.path + cellData + '/');
-      return <LinkButton onClick={onClick}>{cellData}</LinkButton>;
+      return (
+        <LinkButton onClick={onClick} {...noMouseFocusProps}>
+          {cellData}
+        </LinkButton>
+      );
     }
 
     return cellData;

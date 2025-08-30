@@ -203,6 +203,17 @@ export const FilelistRootItemsList = {
   list_path: '/',
 };
 
+export const FilelistStateLoaded = {
+  id: 'loaded' as API.DownloadableItemStateEnum,
+  str: 'Loaded',
+};
+
+export const FilelistStatePending = {
+  id: 'download_pending' as API.DownloadableItemStateEnum,
+  str: 'Download pending',
+  time_finished: 0,
+};
+
 export const FilelistLoadedResponse = {
   id: MockHintedUser2Response.cid,
   location: {
@@ -224,10 +235,7 @@ export const FilelistLoadedResponse = {
   partial_list: true,
   read: true,
   share_profile: null,
-  state: {
-    id: 'loaded' as API.DownloadableItemStateEnum,
-    str: 'Loaded',
-  },
+  state: FilelistStateLoaded,
   total_files: 2424,
   total_size: 3965645890,
   user: MockHintedUser1Response,
@@ -239,11 +247,7 @@ export const FilelistPendingResponse = {
   partial_list: true,
   read: false,
   share_profile: null,
-  state: {
-    id: 'download_pending' as API.DownloadableItemStateEnum,
-    str: 'Download pending',
-    time_finished: 0,
-  },
+  state: FilelistStatePending,
   total_files: 936066,
   total_size: 133137630299481,
   user: MockHintedUser2Response,
@@ -273,10 +277,7 @@ export const FilelistMeResponse = {
   partial_list: true,
   read: true,
   share_profile: ShareProfile2Base,
-  state: {
-    id: 'loaded' as API.DownloadableItemStateEnum,
-    str: 'Loaded',
-  },
+  state: FilelistStateLoaded,
   total_files: 3217,
   total_size: 51349548848,
   user: MockHintedUserMeResponse,

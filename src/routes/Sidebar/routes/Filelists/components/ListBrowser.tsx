@@ -16,6 +16,7 @@ import { Location, useBlocker } from 'react-router';
 import { useSyncFilelistLocation } from '../effects/useSyncFilelistLocation';
 import NotificationActions from '@/actions/NotificationActions';
 import { FilelistItemActionMenu } from '@/actions/ui/filelist';
+import { noMouseFocusProps } from '@/utils/BrowserUtils';
 
 interface ListBrowserProps {
   filelist: API.FilelistSession;
@@ -98,6 +99,7 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
         selectedNameFormatter={selectedNameFormatter}
         // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
         entityId={filelist.id}
+        sectionProps={noMouseFocusProps}
       />
       <FilelistItemTable
         filelist={filelist}

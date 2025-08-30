@@ -24,7 +24,7 @@ import { VIEW_SCROLLABLE } from '@/tests/render/test-containers';
 
 import { page } from '@vitest/browser/context';
 
-const HashDialogOpenCaption = 'Hash progress';
+const HashDialogOpenCaption = 'Open hash progress';
 
 // tslint:disable:no-empty
 describe('MainLayout', () => {

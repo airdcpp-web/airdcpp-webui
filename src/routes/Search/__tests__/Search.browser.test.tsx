@@ -302,9 +302,9 @@ describe('Search layout', () => {
 
     // Open search options
     await waitFor(() =>
-      expect(getByRole('button', { name: 'Search options' })).toBeTruthy(),
+      expect(getByRole('button', { name: 'Open search options' })).toBeTruthy(),
     );
-    await clickIconButton('Search options', renderData);
+    await clickIconButton('Open search options', renderData);
 
     await waitFor(() => expect(getByRole('form')).toBeTruthy());
     await waitForLoader(queryByRole);

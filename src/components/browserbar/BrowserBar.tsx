@@ -5,7 +5,7 @@ import './style.css';
 
 import 'fomantic-ui-css/components/breadcrumb.min.css';
 
-import { Section, SelectedSection, SelectedNameFormatter } from './Section';
+import { Section, SelectedSection, SelectedNameFormatter, SectionProps } from './Section';
 
 interface BrowserBarProps {
   // Function handling the path selection. Receives the selected path as argument.
@@ -25,6 +25,8 @@ interface BrowserBarProps {
   // Receives the caption element and path token as parameters
   selectedNameFormatter?: SelectedNameFormatter;
   entityId?: string; // Used just for re-rendering
+
+  sectionProps?: Omit<SectionProps, 'onClick' | 'caption'>;
 }
 
 class BrowserBar extends PureComponent<BrowserBarProps> {
@@ -75,6 +77,7 @@ class BrowserBar extends PureComponent<BrowserBarProps> {
         key={token + index}
         onClick={() => this.onClick(token, index)}
         caption={this.formatName(token)}
+        {...this.props.sectionProps}
       />
     );
   };

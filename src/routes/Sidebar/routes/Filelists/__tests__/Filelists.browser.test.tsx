@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { RenderResult, waitFor, within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 import { renderDataRoutes } from '@/tests/render/test-renderers';
 
@@ -23,6 +23,8 @@ import {
   FilelistMeResponse,
   FilelistPendingResponse,
   FilelistRootItemsList,
+  FilelistStateLoaded,
+  FilelistStatePending,
 } from '@/tests/mocks/api/filelist';
 import Filelists from '../components/Filelists';
 import { installTableMocks } from '@/tests/mocks/mock-table';
@@ -53,6 +55,14 @@ import { formatProfileNameWithSize } from '@/utils/ShareProfileUtils';
 // tslint:disable:no-empty
 describe('Filelists', () => {
   let server: MockServer;
+
+  beforeEach(() => {
+    server = getMockServer();
+  });
+
+  afterEach(() => {
+    server.stop();
+  });
 
   const getSocket = async () => {
     const commonData = await initCommonDataMocks(server, {
@@ -147,24 +157,12 @@ describe('Filelists', () => {
     return { ...commonData, ...renderData, ...other, userEvent };
   };
 
-  beforeEach(() => {
-    server = getMockServer();
-  });
-
-  afterEach(() => {
-    server.stop();
-  });
-
-  const waitText = async (text: string, getByText: RenderResult['getByText']) => {
-    await waitFor(() => expect(getByText(text, { exact: false })).toBeTruthy());
-  };
-
   test('should render', async () => {
     const renderResult = await renderLayout();
-    const { getByText, filelist1Mocks, filelist2Mocks, router } = renderResult;
+    const { findByText, filelist1Mocks, filelist2Mocks, router } = renderResult;
 
     // Check content
-    await waitText(FilelistRootItemsList.items[0].name, getByText);
+    await findByText(FilelistRootItemsList.items[0].name);
     // expect(filelist1Mocks.onSessionRead).toHaveBeenCalled();
 
     // Open a different session
@@ -175,11 +173,129 @@ describe('Filelists', () => {
     );
 
     // Check content
-    await waitText('Download pending', getByText);
+    await findByText('Download pending');
 
     expect(filelist1Mocks.onSessionRead).not.toHaveBeenCalled();
 
     await navigateToUrl('/', router);
+    await filelist1Mocks.table.waitStopped();
+  });
+
+  test('should navigate between directories', async () => {
+    const filelist = FilelistLoadedResponse;
+    const clickedDirectory = FilelistGetFilelistItemDirectoryResponse;
+
+    // Filelist handlers
+    const onChangeDirectoryChild = vi.fn();
+    server.addRequestHandler(
+      'POST',
+      `${FilelistConstants.SESSIONS_URL}/${filelist.id}/directory`,
+      undefined,
+      onChangeDirectoryChild,
+    );
+
+    const renderResult = await renderLayout();
+    const {
+      getByText,
+      findByText,
+      filelist1Mocks,
+      router,
+      userEvent,
+      getByPlaceholderText,
+      mockStoreListeners,
+    } = renderResult;
+
+    const expectFilterInputFocused = () => {
+      expect(getByPlaceholderText('Filter...')).toHaveFocus();
+    };
+
+    // Check content
+    await findByText(clickedDirectory.name);
+    expectFilterInputFocused();
+
+    // Go to a child directory
+    await userEvent.click(getByText(clickedDirectory.name));
+    await waitExpectRequestToMatchSnapshot(onChangeDirectoryChild);
+
+    // Set as loading
+    mockStoreListeners.filelist.updated.fire(
+      {
+        location: {
+          ...FilelistGetFilelistItemDirectoryResponse,
+          complete: false,
+        },
+        read: true,
+      },
+      filelist.id,
+    );
+
+    await waitFor(() => {
+      expect(router.state.location.state.directory).toEqual(clickedDirectory.path);
+    });
+
+    mockStoreListeners.filelist.updated.fire(
+      {
+        state: FilelistStatePending,
+      },
+      filelist.id,
+    );
+
+    await findByText(FilelistStatePending.str);
+    await waitFor(() =>
+      expect(filelist1Mocks.table.mockTableManager.isActive()).toBe(false),
+    );
+
+    // Set as loaded
+    filelist1Mocks.table.mockTableManager.setItems(
+      FilelistDirectoryItemsList.items,
+      false,
+    );
+    mockStoreListeners.filelist.updated.fire(
+      {
+        location: FilelistGetFilelistItemDirectoryResponse,
+        read: true,
+      },
+      filelist.id,
+    );
+
+    mockStoreListeners.filelist.updated.fire(
+      {
+        state: FilelistStateLoaded,
+      },
+      filelist.id,
+    );
+
+    await findByText(FilelistDirectoryItemsList.items[0].name);
+    expectFilterInputFocused();
+
+    // Go back to the root
+    const onChangeDirectoryRoot = vi.fn();
+    server.addRequestHandler(
+      'POST',
+      `${FilelistConstants.SESSIONS_URL}/${FilelistLoadedResponse.id}/directory`,
+      undefined,
+      onChangeDirectoryRoot,
+    );
+
+    await userEvent.click(getByText('Root'));
+    await waitExpectRequestToMatchSnapshot(onChangeDirectoryRoot);
+
+    // Fire the location change event
+    mockStoreListeners.filelist.updated.fire(
+      {
+        location: FilelistGetFilelistItemDirectoryResponse,
+        read: true,
+      },
+      filelist.id,
+    );
+
+    filelist1Mocks.table.mockTableManager.setItems(FilelistRootItemsList.items);
+
+    await findByText(FilelistRootItemsList.items[0].name);
+    expectFilterInputFocused();
+
+    await navigateToUrl('/', router);
+    await filelist1Mocks.table.waitStopped();
   });
 
   test('should open item details dialog', async () => {
@@ -191,10 +307,10 @@ describe('Filelists', () => {
     );
 
     const renderResult = await renderLayout();
-    const { getByText, router, findByRole, userEvent } = renderResult;
+    const { findByText, router, findByRole, userEvent, filelist1Mocks } = renderResult;
 
     const directoryItem = FilelistGetFilelistItemDirectoryResponse;
-    await waitText(directoryItem.name, getByText);
+    await findByText(directoryItem.name);
 
     // Open details dialog
     const contentCaption = `${directoryItem.name} actions`;
@@ -208,6 +324,7 @@ describe('Filelists', () => {
     await waitForUrl(`/filelists/session/${FilelistLoadedResponse.id}`, router);
 
     await navigateToUrl('/', router);
+    await filelist1Mocks.table.waitStopped();
   });
 
   describe('downloads', () => {
@@ -222,12 +339,12 @@ describe('Filelists', () => {
       );
 
       const renderResult = await renderLayout();
-      const { getByText, filelist1Mocks, router } = renderResult;
+      const { findByText, filelist1Mocks, router } = renderResult;
 
       filelist1Mocks.table.mockTableManager.setItems(FilelistDirectoryItemsList.items);
 
       const fileItem = FilelistGetFilelistItemFileResponse;
-      await waitText(fileItem.name, getByText);
+      await findByText(fileItem.name);
 
       // Download a file
       const contentCaption = `${fileItem.name} actions`;
@@ -235,7 +352,9 @@ describe('Filelists', () => {
       await clickMenuItem('Download', renderResult);
 
       await waitExpectRequestToMatchSnapshot(onDownloadFile);
+
       await navigateToUrl('/', router);
+      await filelist1Mocks.table.waitStopped();
     });
 
     test('should download directories', async () => {
@@ -249,10 +368,10 @@ describe('Filelists', () => {
       );
 
       const renderResult = await renderLayout();
-      const { getByText, router } = renderResult;
+      const { findByText, router, filelist1Mocks } = renderResult;
 
       const directoryItem = FilelistGetFilelistItemDirectoryResponse;
-      await waitText(directoryItem.name, getByText);
+      await findByText(directoryItem.name);
 
       // Download a directory
       const contentCaption = `${directoryItem.name} actions`;
@@ -261,6 +380,7 @@ describe('Filelists', () => {
 
       await waitExpectRequestToMatchSnapshot(onDownloadDirectory);
       await navigateToUrl('/', router);
+      await filelist1Mocks.table.waitStopped();
     });
   });
 
@@ -289,7 +409,14 @@ describe('Filelists', () => {
 
     test('should open local share profile', async () => {
       const renderResult = await renderLayout();
-      const { queryByText, sessionStore, router, getByText, formatter } = renderResult;
+      const {
+        queryByText,
+        sessionStore,
+        router,
+        findByText,
+        formatter,
+        filelistMeMocks,
+      } = renderResult;
 
       const onSessionCreated = installNewLayoutMocks(
         FilelistMeResponse,
@@ -307,7 +434,7 @@ describe('Filelists', () => {
       // We should be redirected to the new session layout
       await waitForUrl('/filelists/new', router);
 
-      await waitText('Browse own share...', getByText);
+      await findByText('Browse own share...');
 
       await openMenu('Browse own share...', renderResult);
       await clickMenuItem(
@@ -322,13 +449,12 @@ describe('Filelists', () => {
         ),
       );
 
-      await waitFor(() =>
-        expect(getByText(FilelistMeResponse.share_profile.str)).toBeTruthy(),
-      );
+      await findByText(FilelistMeResponse.share_profile.str);
 
       await waitExpectRequestToMatchSnapshot(onSessionCreated);
 
       await navigateToUrl('/', router);
+      await filelistMeMocks.table.waitStopped();
     });
 
     test('open remote session', async () => {
@@ -341,6 +467,7 @@ describe('Filelists', () => {
         findByText,
         getByText,
         userEvent,
+        filelist1Mocks,
       } = renderResult;
 
       const onSessionCreated = installNewLayoutMocks(
@@ -380,6 +507,7 @@ describe('Filelists', () => {
       await waitExpectRequestToMatchSnapshot(onSessionCreated);
 
       await navigateToUrl('/', router);
+      await filelist1Mocks.table.waitStopped();
     });
   });
 });

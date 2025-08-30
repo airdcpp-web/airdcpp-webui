@@ -102,6 +102,7 @@ const SearchOptionsButton: React.FC<Props> = ({ moduleT, onChange, value, hubs }
             </>
           }
           title="Search options"
+          aria-label="Open search options"
         />
       }
       contentUpdateTrigger={value}
