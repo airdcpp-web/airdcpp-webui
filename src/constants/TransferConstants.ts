@@ -11,7 +11,7 @@ export default {
   MODULE_URL: MODULE_URL,
   TRANSFERS_URL: MODULE_URL,
 
-  TRANSFERRED_BYTES_URL: MODULE_URL + '/tranferred_bytes',
+  TRANSFERRED_BYTES_URL: MODULE_URL + '/transferred_bytes',
   STATISTICS_URL: MODULE_URL + '/stats',
 
   STATISTICS: 'transfer_statistics',
