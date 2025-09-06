@@ -38,6 +38,7 @@ export const useMessageViewScrollEffect = (
 
   const onScroll = (evt: UIEvent) => {
     if (!hasMessages) {
+      dbgMessage('No messages in the scroll handler', chatSession);
       return;
     }
 
@@ -107,14 +108,18 @@ export const useMessageViewScrollEffect = (
         );
 
         if (!scrollToMessage(scrollItemId, instanceId)) {
-          dbgMessage('Failed to restore scroll position', chatSession);
-
-          // scrollToBottom();
+          dbgMessage(
+            'Failed to restore scroll position (message not found, scroll to bottom)',
+            chatSession,
+          );
+          shouldScrollToBottom.current = true;
         }
       } else {
-        dbgMessage('Session changed, no scroll position to restore', chatSession);
-        // dbgMessage('Session changed, scroll to bottom', chatSession);
-        // scrollToBottom();
+        dbgMessage(
+          'Session changed, no scroll position to restore (scroll to bottom)',
+          chatSession,
+        );
+        shouldScrollToBottom.current = true;
       }
     } else {
       dbgMessage('Session changed, no messages to restore scroll position', chatSession);

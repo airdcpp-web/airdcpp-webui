@@ -387,7 +387,7 @@ describe('Private messages', () => {
     mockStoreListeners: CommonDataMocks['mockStoreListeners'],
     startId?: number,
   ) => {
-    const newMessages = generateChatMessages(20, startId);
+    const newMessages = generateChatMessages(100, startId);
     newMessages.forEach((message) => {
       mockStoreListeners.privateChat.chatMessage.fire(message, sessionId);
     });
