@@ -88,13 +88,6 @@ export const useMessageViewScrollEffect = (
   }, [scrollable, hasMessages, sessionId]);
 
   useLayoutEffect(() => {
-    if (scrollable && hasMessages && shouldScrollToBottom.current) {
-      dbgMessage('Scroll to bottom', chatSession);
-      scrollToBottom();
-    }
-  }, [scrollable, hasMessages, messages]);
-
-  useLayoutEffect(() => {
     if (!scrollable) {
       return;
     }
@@ -113,6 +106,8 @@ export const useMessageViewScrollEffect = (
             chatSession,
           );
           shouldScrollToBottom.current = true;
+        } else {
+          shouldScrollToBottom.current = false;
         }
       } else {
         dbgMessage(
@@ -125,4 +120,11 @@ export const useMessageViewScrollEffect = (
       dbgMessage('Session changed, no messages to restore scroll position', chatSession);
     }
   }, [scrollable, sessionId, hasMessages]);
+
+  useLayoutEffect(() => {
+    if (scrollable && hasMessages && shouldScrollToBottom.current) {
+      dbgMessage('Scroll to bottom', chatSession);
+      scrollToBottom();
+    }
+  }, [scrollable, hasMessages, messages]);
 };
