@@ -11,11 +11,21 @@ import {
   NotificationHandler,
   useNotificationHandler,
 } from './effects/NotificationManager';
+import { truncate } from 'lodash';
 
 interface NotificationsProps {}
 
 const showBrowserNotification: NotificationHandler = (level, notification) => {
-  toast(<NotificationMessage notification={notification} level={level} />, {
+  const toastNotification = {
+    ...notification,
+    message: notification.message
+      ? truncate(notification.message, {
+          length: 400,
+        })
+      : undefined,
+  };
+
+  toast(<NotificationMessage notification={toastNotification} level={level} />, {
     // Disable for now as old notifications won't be replaced with newer one
     // toastId: notification.uid,
     type: level,
