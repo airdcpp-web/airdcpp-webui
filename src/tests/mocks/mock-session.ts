@@ -25,6 +25,7 @@ export const getMockSession = (
     ...(DEFAULT_AUTH_RESPONSE.user as API.LoginUser),
     permissions,
   },
+  token_type: 'Bearer',
   auth_token: DEFAULT_AUTH_RESPONSE.auth_token,
   session_id: 4,
   wizard_pending: false,
