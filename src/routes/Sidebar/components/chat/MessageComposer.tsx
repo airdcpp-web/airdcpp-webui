@@ -162,7 +162,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = (props) => {
               onKeyDown={onKeyDown}
               style={getMentionFieldStyle(mobile)}
               autoFocus={!mobile}
-              onPaste={onPaste}
+              onPaste={hasFileUploadAccess ? onPaste : undefined}
             >
               <Mention trigger="@" data={findUsers} appendSpaceOnAdd={false} />
             </MentionsInput>
