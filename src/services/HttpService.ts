@@ -2,17 +2,25 @@ import { fetchData } from '@/utils/HttpUtils';
 
 import * as UI from '@/types/ui';
 
-export const uploadTempFile = async (file: File, authToken: string): Promise<string> => {
+const getAuthHeaders = (session: UI.AuthenticatedSession) => {
+  const token = `${session.token_type} ${session.auth_token}`;
+  return {
+    // https://github.com/airdcpp-web/airdcpp-webclient/issues/330
+    'X-Authorization': token,
+
+    Authorization: token,
+  };
+};
+
+export const uploadTempFile = async (
+  file: File,
+  session: UI.AuthenticatedSession,
+): Promise<string> => {
   // eslint-disable-next-line no-useless-catch
   try {
     const res = await fetchData(`${getBasePath()}temp`, {
       method: 'POST',
-      headers: {
-        // https://github.com/airdcpp-web/airdcpp-webclient/issues/330
-        'X-Authorization': authToken,
-
-        Authorization: authToken,
-      },
+      headers: getAuthHeaders(session),
       body: file,
     });
 
@@ -43,8 +51,7 @@ export const fetchCorsSafeData = async (
 
     const res = await fetchData(toCorsSafeUrl(url), {
       headers: {
-        // https://github.com/airdcpp-web/airdcpp-webclient/issues/330
-        'X-Authorization': session.auth_token,
+        ...getAuthHeaders(session),
 
         // Temp workaround for people upgrading from versions < 2.7.0
         // If the new UI was loaded before restarting the app, a cache expiration time of

@@ -18,12 +18,12 @@ interface TempFileData {
 
 export const shareTempFile = async (
   { file, hubUrl, cid }: TempFileData,
-  { auth_token: authToken }: UI.AuthenticatedSession,
+  session: UI.AuthenticatedSession,
   socket: APISocket,
 ): Promise<AddTempShareResponse> => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const fileId = await uploadTempFile(file, authToken);
+    const fileId = await uploadTempFile(file, session);
     const res = await socket.post<AddTempShareResponse>(ShareConstants.TEMP_SHARES_URL, {
       name: file.name,
       file_id: fileId,

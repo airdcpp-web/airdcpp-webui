@@ -11,6 +11,7 @@ export interface LoginUser {
 export interface LoginInfo {
   session_id: number;
   auth_token: string;
+  token_type: string;
   refresh_token?: string;
   system_info: SystemInfo;
   user: LoginUser;
