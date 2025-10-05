@@ -52,6 +52,17 @@ const PriorityCell: React.FC<
   />
 );
 
+const rowClassNameGetter = (rowData: API.QueueBundle) => {
+  const isPaused =
+    rowData.priority.id === API.QueuePriorityEnum.PAUSED ||
+    rowData.priority.id === API.QueuePriorityEnum.PAUSED_FORCED;
+  if (isPaused) {
+    return 'paused';
+  }
+
+  return rowData.status.downloaded ? 'downloaded' : '';
+};
+
 class Queue extends React.Component<WithTranslation> {
   static readonly displayName = 'Queue';
 
@@ -100,6 +111,7 @@ class Queue extends React.Component<WithTranslation> {
               remoteMenuId={MenuConstants.QUEUE}
             />
           }
+          rowClassNameGetter={rowClassNameGetter}
           moduleId={UI.Modules.QUEUE}
         >
           <Column

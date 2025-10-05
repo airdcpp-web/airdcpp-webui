@@ -1,5 +1,10 @@
-.status .error {
+.virtual-table .cell-wrapper.status .error {
   color: red;
+}
+
+.virtual-table .cell-wrapper.paused span,
+.virtual-table .cell-wrapper.paused .label {
+  color: gray !important;
 }
 
 @media only screen and (min-width: 767px) {

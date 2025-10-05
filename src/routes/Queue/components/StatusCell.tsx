@@ -6,7 +6,10 @@ import { RowWrapperCellChildProps } from '@/components/table/RowWrapperCell';
 
 import * as API from '@/types/api';
 
-const getStatusClass = (cellData: API.QueueBundleStatus, rowData: API.QueueBundle) => {
+const getProgressStatusClass = (
+  cellData: API.QueueBundleStatus,
+  rowData: API.QueueBundle,
+) => {
   if (cellData.completed) {
     return 'success';
   }
@@ -36,7 +39,7 @@ const StatusCell: React.FC<
   const rowData = rowDataGetter!();
   return (
     <Progress
-      className={getStatusClass(cellData!, rowData)}
+      className={getProgressStatusClass(cellData!, rowData)}
       caption={cellData!.str}
       percent={(rowData.downloaded_bytes * 100) / rowData.size}
     />
