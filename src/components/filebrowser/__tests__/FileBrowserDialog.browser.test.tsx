@@ -11,7 +11,11 @@ import {
   createTestModalController,
   useModalButton,
 } from '@/tests/helpers/test-dialog-helpers';
-import { clickButton, waitForData } from '@/tests/helpers/test-helpers';
+import {
+  clickButton,
+  waitExpectRequestToMatchSnapshot,
+  waitForData,
+} from '@/tests/helpers/test-helpers';
 import {
   setInputFieldValues,
   setInputFieldValuesByPlaceholder,
@@ -32,8 +36,11 @@ describe('FileBrowserDialog', () => {
     server.stop();
   });
 
-  const getSocket = async () => {
-    const commonData = await initCommonDataMocks(server);
+  const getSocket = async (platform: API.PlatformEnum, disableLogging = false) => {
+    const commonData = await initCommonDataMocks(server, {
+      platform,
+      socketOptions: { logLevel: disableLogging ? 'none' : 'warn' },
+    });
 
     // Browse dialog
     server.addRequestHandler(
@@ -53,8 +60,20 @@ describe('FileBrowserDialog', () => {
     return { commonData, server, onDirectoryCreated };
   };
 
-  const renderDialog = async (fieldType: API.SettingTypeEnum, defaultValue = '') => {
-    const { commonData, server, ...other } = await getSocket();
+  interface RenderProps {
+    fieldType: API.SettingTypeEnum;
+    initialPath?: string;
+    platform: API.PlatformEnum;
+    disableLogging?: boolean;
+  }
+
+  const renderDialog = async ({
+    fieldType,
+    initialPath = '',
+    platform,
+    disableLogging,
+  }: RenderProps) => {
+    const { commonData, server, ...other } = await getSocket(platform, disableLogging);
 
     const onSave = vi.fn(() => Promise.resolve());
     const caption = 'Test dialog';
@@ -64,7 +83,7 @@ describe('FileBrowserDialog', () => {
         {
           key: fieldType,
           type: fieldType,
-          default_value: defaultValue,
+          default_value: initialPath,
           title: fieldType,
         },
       ];
@@ -94,9 +113,12 @@ describe('FileBrowserDialog', () => {
   };
 
   describe('directory selection', () => {
-    test('should select initial', async () => {
+    test('should select initial directory on linux', async () => {
       const { getByText, modalController, queryByText, getByRole, onSave, caption } =
-        await renderDialog(API.SettingTypeEnum.DIRECTORY_PATH);
+        await renderDialog({
+          fieldType: API.SettingTypeEnum.DIRECTORY_PATH,
+          platform: API.PlatformEnum.LINUX,
+        });
 
       await modalController.openDialog();
 
@@ -116,9 +138,31 @@ describe('FileBrowserDialog', () => {
       expect(onSave.mock.calls[0]).toMatchSnapshot();
     }, 100000);
 
+    test('should not select root on windows', async () => {
+      const { getByText, modalController, queryByText, getByRole, /*onSave,*/ caption } =
+        await renderDialog({
+          fieldType: API.SettingTypeEnum.DIRECTORY_PATH,
+          platform: API.PlatformEnum.WINDOWS,
+        });
+
+      await modalController.openDialog();
+
+      // Check content
+      await waitFor(() => expect(getByText(caption)).toBeTruthy());
+
+      // Open dialog
+      clickButton('Browse', getByRole);
+      await waitForData('Loading items', queryByText);
+
+      expect(getByText('Select').closest('button')).toHaveClass('disabled');
+    }, 100000);
+
     test('should select child', async () => {
       const { getByText, modalController, queryByText, getByRole, onSave, caption } =
-        await renderDialog(API.SettingTypeEnum.DIRECTORY_PATH);
+        await renderDialog({
+          fieldType: API.SettingTypeEnum.DIRECTORY_PATH,
+          platform: API.PlatformEnum.LINUX,
+        });
 
       await modalController.openDialog();
 
@@ -141,7 +185,10 @@ describe('FileBrowserDialog', () => {
     }, 100000);
 
     test('should create new directory', async () => {
-      const renderResult = await renderDialog(API.SettingTypeEnum.DIRECTORY_PATH);
+      const renderResult = await renderDialog({
+        fieldType: API.SettingTypeEnum.DIRECTORY_PATH,
+        platform: API.PlatformEnum.LINUX,
+      });
       const {
         getByText,
         modalController,
@@ -200,7 +247,10 @@ describe('FileBrowserDialog', () => {
   describe('file selection', () => {
     test('should select existing', async () => {
       const { getByText, modalController, queryByText, getByRole, onSave, caption } =
-        await renderDialog(API.SettingTypeEnum.EXISTING_FILE_PATH);
+        await renderDialog({
+          fieldType: API.SettingTypeEnum.EXISTING_FILE_PATH,
+          platform: API.PlatformEnum.LINUX,
+        });
 
       await modalController.openDialog();
 
@@ -235,7 +285,10 @@ describe('FileBrowserDialog', () => {
         getByLabelText,
         onSave,
         caption,
-      } = await renderDialog(API.SettingTypeEnum.FILE_PATH);
+      } = await renderDialog({
+        fieldType: API.SettingTypeEnum.FILE_PATH,
+        platform: API.PlatformEnum.LINUX,
+      });
 
       await modalController.openDialog();
 
@@ -262,6 +315,59 @@ describe('FileBrowserDialog', () => {
 
       expect(onSave).toHaveBeenCalledTimes(1);
       expect(onSave.mock.calls[0]).toMatchSnapshot();
+    }, 100000);
+  });
+
+  describe('errors', () => {
+    const testErrorPlatform = async (errorPath: string, platform: API.PlatformEnum) => {
+      const { getByText, modalController, getByRole, /*, onSave,*/ caption } =
+        await renderDialog({
+          fieldType: API.SettingTypeEnum.DIRECTORY_PATH,
+          platform,
+          initialPath: errorPath,
+          disableLogging: true,
+        });
+
+      const onSuccessListContent = vi.fn();
+      const onFailListContent = vi.fn(() => {
+        // Set up success response for retries
+        server.addRequestHandler(
+          'POST',
+          FilesystemConstants.LIST_URL,
+          FilesystemListContentResponse,
+          onSuccessListContent,
+        );
+      });
+
+      // Set up error response for the initial loading
+      server.addErrorHandler(
+        'POST',
+        FilesystemConstants.LIST_URL,
+        "Directory '/non/existing/path' does not exist",
+        400,
+        onFailListContent,
+      );
+
+      await modalController.openDialog();
+
+      // Check content
+      await waitFor(() => expect(getByText(caption)).toBeTruthy());
+
+      // Open dialog
+      clickButton('Browse', getByRole);
+
+      await waitExpectRequestToMatchSnapshot(onFailListContent);
+      await waitExpectRequestToMatchSnapshot(onSuccessListContent);
+    };
+
+    test('should handle non-existing directories on initial loading on linux', async () => {
+      const errorPath = '/non/existing/path/';
+      await testErrorPlatform(errorPath, API.PlatformEnum.LINUX);
+    }, 100000);
+
+    test('should handle non-existing directories on initial loading on windows', async () => {
+      const errorPath = 'C:\\non\\existing\\path\\';
+      await testErrorPlatform(errorPath, API.PlatformEnum.WINDOWS);
     }, 100000);
   });
 });

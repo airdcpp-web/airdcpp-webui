@@ -34,6 +34,8 @@ export interface FileBrowserLayoutProps
 
   onFileSelected?: (fileName: string) => void;
   selectedNameFormatter?: SelectedNameFormatter;
+
+  rootPath: string;
 }
 
 interface DataLoaderState {
@@ -55,6 +57,7 @@ const FileBrowserLayout: React.FC<Props> = ({
   currentFileName,
   onFileSelected,
   currentDirectory,
+  rootPath,
 }) => {
   const { t } = useTranslation();
 
@@ -65,10 +68,6 @@ const FileBrowserLayout: React.FC<Props> = ({
   const { system_info: systemInfo } = session;
   const pathSeparator = systemInfo.path_separator;
   const isWindows = systemInfo.platform === API.PlatformEnum.WINDOWS;
-
-  const getRootPath = () => {
-    return isWindows ? '' : '/';
-  };
 
   const handleDirectoryChanged = (newPath: string) => {
     onDirectoryChanged(newPath);
@@ -92,7 +91,7 @@ const FileBrowserLayout: React.FC<Props> = ({
   };
 
   const onFetchFailed = (error: Error) => {
-    onDirectoryChanged('');
+    onDirectoryChanged(rootPath);
 
     setDataState({
       ...dataState,
@@ -171,7 +170,7 @@ const FileBrowserLayout: React.FC<Props> = ({
       <BrowserBar
         path={currentDirectory}
         separator={pathSeparator}
-        rootPath={getRootPath()}
+        rootPath={rootPath}
         rootName={rootName}
         itemClickHandler={(path) => {
           handleDirectoryChanged(path);

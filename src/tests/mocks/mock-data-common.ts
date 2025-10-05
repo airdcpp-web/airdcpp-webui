@@ -1,5 +1,9 @@
 import { DEFAULT_AUTH_RESPONSE, MockSocketConnectOptions } from 'airdcpp-apisocket/tests';
-import { DEFAULT_MOCK_PERMISSIONS, getMockSession } from './mock-session';
+import {
+  DEFAULT_MOCK_PERMISSIONS,
+  DEFAULT_PLATFORM,
+  getMockSession,
+} from './mock-session';
 import { initMockSessionStore } from './mock-store';
 import { createSessionStore } from '@/stores/session';
 import { createAppStore } from '@/stores/app';
@@ -9,6 +13,7 @@ import * as API from '@/types/api';
 
 interface MockInitProps {
   permissions?: API.AccessEnum[];
+  platform?: API.PlatformEnum;
   socketOptions?: Partial<MockSocketConnectOptions>;
 }
 
@@ -16,7 +21,11 @@ export const initCommonDataMocks = async (
   server: MockServer,
   props: Partial<MockInitProps> = {},
 ) => {
-  const { permissions = DEFAULT_MOCK_PERMISSIONS, socketOptions } = props;
+  const {
+    permissions = DEFAULT_MOCK_PERMISSIONS,
+    platform = DEFAULT_PLATFORM,
+    socketOptions,
+  } = props;
 
   // Socket
   const { socket } = await getConnectedSocket(server, {
@@ -34,7 +43,7 @@ export const initCommonDataMocks = async (
   });
 
   // Session
-  const session = getMockSession(permissions);
+  const session = getMockSession(permissions, platform);
 
   // Store
   const initProps = {

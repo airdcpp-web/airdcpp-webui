@@ -22,7 +22,7 @@ exports[`FileBrowserDialog > directory selection > should select child 1`] = `
 ]
 `;
 
-exports[`FileBrowserDialog > directory selection > should select initial 1`] = `
+exports[`FileBrowserDialog > directory selection > should select initial directory on linux 1`] = `
 [
   {
     "directory_path": "/",
@@ -31,6 +31,50 @@ exports[`FileBrowserDialog > directory selection > should select initial 1`] = `
     "directory_path": "/",
   },
 ]
+`;
+
+exports[`FileBrowserDialog > errors > should handle non-existing directories on initial loading on linux 1`] = `
+{
+  "data": {
+    "directories_only": false,
+    "path": "/non/existing/path/",
+  },
+  "method": "POST",
+  "path": "filesystem/list_items",
+}
+`;
+
+exports[`FileBrowserDialog > errors > should handle non-existing directories on initial loading on linux 2`] = `
+{
+  "data": {
+    "directories_only": false,
+    "path": "/",
+  },
+  "method": "POST",
+  "path": "filesystem/list_items",
+}
+`;
+
+exports[`FileBrowserDialog > errors > should handle non-existing directories on initial loading on windows 1`] = `
+{
+  "data": {
+    "directories_only": false,
+    "path": "C:\\non\\existing\\path\\",
+  },
+  "method": "POST",
+  "path": "filesystem/list_items",
+}
+`;
+
+exports[`FileBrowserDialog > errors > should handle non-existing directories on initial loading on windows 2`] = `
+{
+  "data": {
+    "directories_only": false,
+    "path": "",
+  },
+  "method": "POST",
+  "path": "filesystem/list_items",
+}
 `;
 
 exports[`FileBrowserDialog > file selection > should select existing 1`] = `

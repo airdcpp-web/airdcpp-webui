@@ -39,9 +39,7 @@ export const useFileItemSelection = ({
   const { system_info: systemInfo } = useSession();
   const isWindows = systemInfo.platform === API.PlatformEnum.WINDOWS;
 
-  const getRootPath = () => {
-    return isWindows ? '' : '/';
-  };
+  const rootPath = isWindows ? '' : '/';
 
   const getInitialDirectory = () => {
     const loadedPath = loadLocalProperty<string | undefined>(
@@ -51,7 +49,7 @@ export const useFileItemSelection = ({
       return loadedPath;
     }
 
-    return initialPath.length === 0 ? getRootPath() : getFilePath(initialPath);
+    return initialPath.length === 0 ? rootPath : getFilePath(initialPath);
   };
 
   const [currentDirectory, setCurrentDirectory] = useState(
@@ -96,5 +94,6 @@ export const useFileItemSelection = ({
     handleConfirm,
     currentFileName,
     currentDirectory,
+    rootPath,
   };
 };

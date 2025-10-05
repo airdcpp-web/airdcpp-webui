@@ -46,12 +46,15 @@ export const clickIconButton = async (
   await userEvent.click(button);
 };
 
+export const parseMockRequest = (request: any) => {
+  const { callback_id, ...other } = request;
+  return other;
+};
+
 export const waitExpectRequestToMatchSnapshot = async (mock: Mock) => {
   await waitFor(() => expect(mock).toHaveBeenCalledTimes(1));
 
   const response = mock.mock.calls[0][0];
 
-  const { callback_id, ...other } = response;
-
-  expect(other).toMatchSnapshot();
+  expect(parseMockRequest(response)).toMatchSnapshot();
 };

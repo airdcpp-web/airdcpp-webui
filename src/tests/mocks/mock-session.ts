@@ -10,13 +10,16 @@ import { SearchHintedUser1Response, SearchNicksHubUser1Response } from './api/us
 import UserConstants from '@/constants/UserConstants';
 
 export const DEFAULT_MOCK_PERMISSIONS = [API.AccessEnum.ADMIN];
+export const DEFAULT_PLATFORM = API.PlatformEnum.LINUX;
 
 export const getMockSession = (
   permissions = DEFAULT_MOCK_PERMISSIONS,
+  platform = DEFAULT_PLATFORM,
 ): UI.AuthenticatedSession => ({
   system_info: {
     ...DEFAULT_AUTH_RESPONSE.system_info,
     api_feature_level: 9,
+    platform,
   } as API.SystemInfo,
   user: {
     ...(DEFAULT_AUTH_RESPONSE.user as API.LoginUser),

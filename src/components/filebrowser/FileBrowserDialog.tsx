@@ -42,6 +42,7 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
     onDirectoryChanged,
     onFileSelected,
     currentDirectory,
+    rootPath,
   } = useFileItemSelection({
     onConfirm,
     initialPath,
@@ -71,6 +72,7 @@ export const FileBrowserDialog: React.FC<FileBrowserDialogProps> = ({
         onFileSelected={onFileSelected}
         selectMode={selectMode}
         currentFileName={currentFileName}
+        rootPath={rootPath}
       />
     </ModalComponent>
   );
