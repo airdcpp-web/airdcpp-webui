@@ -103,14 +103,15 @@ const SocketNotificationListener: React.FC<Props> = ({ addSocketListener }) => {
     return translate(text, t, moduleIds);
   };
 
-  const skipEventNotification = () => {
+  const skipEventNotification = (message: API.StatusMessage) => {
+    const isLoggable = message.severity != Severity.NOTIFY;
     const userActive = sessionStoreApi.getState().activity.userActive;
     const viewActive = sessionStoreApi.getState().events.viewActive;
-    return viewActive && userActive;
+    return isLoggable && viewActive && userActive;
   };
 
   const onEventMessage = (message: API.StatusMessage) => {
-    if (message.is_read || skipEventNotification()) {
+    if (message.is_read || skipEventNotification(message)) {
       return;
     }
 
