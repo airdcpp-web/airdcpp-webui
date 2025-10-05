@@ -5,10 +5,9 @@ import * as UI from '@/types/ui';
 const getAuthHeaders = (session: UI.AuthenticatedSession) => {
   const token = `${session.token_type} ${session.auth_token}`;
   return {
+    // Don't send the standard Authorization header due to proxy compatibility, see
     // https://github.com/airdcpp-web/airdcpp-webclient/issues/330
     'X-Authorization': token,
-
-    Authorization: token,
   };
 };
 
