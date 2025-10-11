@@ -28,15 +28,21 @@ export const userOnlineStatusToColor = (flags: Array<API.UserFlag | API.HubUserF
 };
 
 export const hubOnlineStatusToColor = (connectState: API.HubConnectStateEnum) => {
-  if (connectState === API.HubConnectStateEnum.CONNECTED) {
-    return 'green';
+  switch (connectState) {
+    case API.HubConnectStateEnum.CONNECTED:
+      return 'green';
+    case API.HubConnectStateEnum.CONNECTING:
+      return 'yellow';
+    case API.HubConnectStateEnum.KEYPRINT_ERROR:
+      return 'red';
+    case API.HubConnectStateEnum.REDIRECT:
+      return 'orange';
+    case API.HubConnectStateEnum.PASSWORD:
+      return 'olive';
+    case API.HubConnectStateEnum.DISCONNECTED:
+    default:
+      return 'lightgrey';
   }
-
-  if (connectState === API.HubConnectStateEnum.CONNECTING) {
-    return 'yellow';
-  }
-
-  return 'lightgrey';
 };
 
 export const urgencyToColor = (urgency: number) => {
