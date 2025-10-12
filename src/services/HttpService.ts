@@ -19,7 +19,10 @@ export const uploadTempFile = async (
   try {
     const res = await fetchData(`${getBasePath()}temp`, {
       method: 'POST',
-      headers: getAuthHeaders(session),
+      headers: {
+        ...getAuthHeaders(session),
+        'X-File-Name': file.name,
+      },
       body: file,
     });
 
