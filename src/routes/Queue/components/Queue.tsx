@@ -60,7 +60,15 @@ const rowClassNameGetter = (rowData: API.QueueBundle) => {
     return 'paused';
   }
 
-  return rowData.status.downloaded ? 'downloaded' : '';
+  if (rowData.status.failed) {
+    return 'failed';
+  }
+
+  if (rowData.status.downloaded) {
+    return 'downloaded';
+  }
+
+  return 'pending';
 };
 
 class Queue extends React.Component<WithTranslation> {

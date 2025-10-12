@@ -7,6 +7,19 @@
   color: gray !important;
 }
 
+.virtual-table .cell-wrapper.failed span,
+.virtual-table .cell-wrapper.failed .label,
+.virtual-table .cell-wrapper.failed a {
+  font-weight: bold !important;
+}
+
+.virtual-table .cell-wrapper.downloaded span,
+.virtual-table .cell-wrapper.downloaded .label,
+.virtual-table .cell-wrapper.downloaded a {
+  color: green !important;
+}
+
+
 @media only screen and (min-width: 767px) {
   .source.modal td {
     max-width: 250px;
