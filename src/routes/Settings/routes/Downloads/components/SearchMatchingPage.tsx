@@ -6,6 +6,7 @@ const Entry = [
   'auto_add_sources',
   'alt_search_auto',
   'alt_search_max_sources',
+  'alt_search_min_interval',
   'max_sources_match_queue',
   'allow_match_full_list',
 ];
