@@ -109,7 +109,7 @@
       "sizeLimitsName": "Limites de tamaño"
     },
     "actionsCaption": "Acciones...",
-    "searchActions": "Search actions",
+    "searchActions": "Acciones de búsqueda",
     "resetAll": "Reiniciar todo",
     "user": "Usuario",
     "hubs": "Hubs",
@@ -203,7 +203,7 @@
     "addFavoriteHub": "Añadir hub favorito",
     "editFavoriteHub": "Editar hub favorito",
     "actionsCaption": "Acciones...",
-    "favoriteHubActions": "Favorite hub actions",
+    "favoriteHubActions": "Acciones de hubs favoritos",
     "form": {
       "genericName": "Propiedades del hub",
       "nameName": "Nombre",
@@ -265,9 +265,9 @@
   "common": {
     "actions": {
       "copy": "Copiar",
-      "copyPath": "Copy path",
-      "copySize": "Copy size",
-      "copyTth": "Copy TTH",
+      "copyPath": "Copiar ruta",
+      "copySize": "Copiar tamaño",
+      "copyTth": "Copiar TTH",
       "download": "Descargar",
       "downloadTo": "Descargar a…",
       "findNfo": "Encontrar NFO",
@@ -287,17 +287,17 @@
       "notifications": {
         "ignoreUserSuccess": "Se ha añadido al usuario {{item.nicks}} a la lista de usuarios ignorados",
         "unignoreUserSuccess": "Se ha eliminado al usuario {{item.nicks}} de la lista de usuarios ignorados",
-        "copyPathSuccess": "Path was copied to clipboard",
-        "copySizeSuccess": "Size was copied to clipboard",
-        "copyTTHSuccess": "TTH was copied to clipboard",
+        "copyPathSuccess": "La ruta se ha copiado al portapapeles",
+        "copySizeSuccess": "El tamaño se ha copiado al portapapeles",
+        "copyTTHSuccess": "El TTH se ha copiado al portapapeles",
         "copyMagnetSuccess": "Enlace magnet copiado al portapapeles",
         "copySuccess": "El texto se ha copiado al portapapeles",
-        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
+        "grantHourUserSuccess": "Se ha dado un slot al usuario {{item.nicks}}"
       },
-      "grantExtraSlot10Min": "Garantizar Slot extra (10 min)",
-      "grantExtraSlotHour": "Garantizar Slot extra (1 hora)",
-      "grantExtraSlotDay": "Garantizar Slot extra (1 día)",
-      "grantExtraSlotWeek": "Garantizar Slot extra (1 semana)",
+      "grantExtraSlot10Min": "Dar slot extra (10 min)",
+      "grantExtraSlotHour": "Dar slot extra (1 hora)",
+      "grantExtraSlotDay": "Dar slot extra (1 día)",
+      "grantExtraSlotWeek": "Dar slot extra (1 semana)",
       "prompts": {
         "restartWebSystemApprove": "Continuar y reiniciar",
         "restartWebSystemReject": "No reiniciar",
@@ -336,7 +336,7 @@
     "networkClientError": "Error de red/cliente",
     "failedToFetchData": "Error al buscar los datos",
     "failedToLoadContent": "Fallo al cargar el contenido",
-    "failedToCreateDirectory": "Failed to create directory",
+    "failedToCreateDirectory": "Fallo al crear el directorio",
     "loadingItems": "Cargando elementos",
     "root": "Raíz",
     "name": "Nombre",
@@ -405,9 +405,9 @@
     "finishedFull": "Finalizado (total) ",
     "finishedPartial": "Finalizado (parcial)",
     "shareAndQueue": "Compartir y poner en cola",
-    "shareQueueAndFinished": "Share, queue and finished",
-    "queueAndFinished": "Queue and finished",
-    "shareAndFinished": "Share and finished",
+    "shareQueueAndFinished": "Compartido, en cola y finalizado",
+    "queueAndFinished": "En cola y finalizado",
+    "shareAndFinished": "Compartido y finalizado",
     "dupePaths": "Rutas de duplicados",
     "actionsCaption": "Acciones...",
     "tth": "TTH",
@@ -572,7 +572,7 @@
       }
     },
     "actionsCaption": "Acciones...",
-    "transferActions": "Transfer actions",
+    "transferActions": "Acciones de transferencia",
     "noActiveTransfers": "No hay transferencias activas"
   },
   "settings": {
@@ -583,8 +583,8 @@
       "editUser": "Editar usuario",
       "editDirectory": "Editar directorio",
       "removeDirectory": "Eliminar carpeta",
-      "addProfile": "Create new",
-      "cloneProfile": "Clone profile",
+      "addProfile": "Crear nuevo",
+      "cloneProfile": "Clonar perfil",
       "browseFiles": "Navegar por archivos",
       "renameProfile": "Renombrar perfil",
       "addPath": "Añadir ruta",
@@ -598,7 +598,7 @@
       "prompts": {
         "cloneProfilePlaceholder": "Introducir nombre",
         "cloneProfileApprove": "Crear",
-        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
+        "cloneProfileContent": "Introduce un nombre para el perfil (clonado de {{item.name}})",
         "createProfilePlaceholder": "Introducir nombre",
         "createProfileApprove": "Crear",
         "createProfileContent": "Introducir nombre para el perfil",
@@ -619,7 +619,7 @@
         "removeSearchTypeContent": "¿Estás seguro de querer eliminar el tipo de búsqueda {{item.name}}?",
         "removeProfileApprove": "Eliminar perfil",
         "removeProfileReject": "No eliminar",
-        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
+        "removeProfileContent": "¿Confirmas que quieres eliminar el perfil {{item.name}}?"
       }
     },
     "navigation": {
@@ -691,12 +691,12 @@
         "manualConfiguration": "{{status}} (configuración manual)",
         "autoDetected": "{{status}} (auto detectada)",
         "detecting": "Detectando...",
-        "transferPort": "Transfer port",
-        "encryptedTransferPort": "Encrypted transfer port",
-        "searchUdpPort": "Search/UDP port",
-        "boundInterfaceIPv4": "Bound interface (IPv4)",
-        "boundInterfaceIPv6": "Bound interface (IPv6)",
-        "viewAll": "View all"
+        "transferPort": "Puerto de transferencia",
+        "encryptedTransferPort": "Puerto de transferencia encriptada",
+        "searchUdpPort": "Puerto de búsqueda/UDP",
+        "boundInterfaceIPv4": "Interfaz vinculada (IPv4)",
+        "boundInterfaceIPv6": "Interfaz vinculada (IPv6)",
+        "viewAll": "Ver todo"
       },
       "ports": {
         "portsAutoValuesNote": "Los números de puertos, listados en esta página, se pueden anular por los mapeadores de puertos (si están habilitados)",
@@ -872,7 +872,7 @@
         "shareProfilesPartialNote": "Los archivos en cola se comparten mediante la función de compartir archivos parciales en todos los hubs en los que el compartido no está oculto con independencia del perfil de compartido configurado.",
         "shareProfilesHelp": "Los perfiles de compartido se asignan a directorios individuales desde la página <url>Compartir</url>.",
         "addProfile": "Añadir perfil",
-        "cloneFromAnExistingProfile": "Clone from an existing profile"
+        "cloneFromAnExistingProfile": "Clonar de un perfil existente"
       },
       "sharingOptions": {
         "skiplist": "Archivos a no compartir"
@@ -973,8 +973,8 @@
       "update": "Actualizar",
       "stop": "Parar",
       "configure": "Configurar",
-      "enable": "Enable",
-      "disable": "Disable",
+      "enable": "Activar",
+      "disable": "Desactivar",
       "prompts": {
         "installUrlPlaceholder": "Introducir URL",
         "installUrlApprove": "Instalar",
