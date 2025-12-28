@@ -1,3 +1,9 @@
+/* Semantic UI primary color - used for selection highlighting */
+:root {
+  --selection-primary-color: #2185d0;
+  --selection-highlight-bg: #e8f4fd;
+}
+
 /* Selection footer bar - unified container */
 .selection-footer-bar {
   display: flex;
@@ -10,7 +16,7 @@
 }
 
 .selection-footer-bar.has-selection {
-  background-color: #e8f4fd;
+  background-color: var(--selection-highlight-bg);
   border-radius: 4px;
 }
 
@@ -28,7 +34,7 @@
 
 .selection-footer-bar .selection-count {
   font-weight: 500;
-  color: #2185d0;
+  color: var(--selection-primary-color);
   white-space: nowrap;
 }
 
@@ -55,7 +61,7 @@
   width: 17px;
   height: 17px;
   cursor: pointer;
-  accent-color: #2185d0;
+  accent-color: var(--selection-primary-color);
 }
 
 /* Checkbox cell styling */

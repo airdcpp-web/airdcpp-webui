@@ -42,6 +42,11 @@ interface DownloadResult {
   error?: string;
 }
 
+// Number of concurrent downloads per batch. Balances parallelism with
+// server load and browser connection limits. Higher values may cause
+// rate limiting or connection exhaustion.
+const BATCH_SIZE = 5;
+
 const BulkDownloadDialog = <ItemT extends BulkDownloadItem>({
   items,
   downloadHandler,
@@ -55,17 +60,18 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>({
   const modalRef = useRef<ModalHandle>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  // Use first item for dialog display (all go to same directory)
-  const firstItem = items[0];
+  // Reference item for dialog display (all items go to same directory,
+  // so we use the first item's properties for the UI)
+  const referenceItem = items[0];
 
   // Handle empty items array - close dialog immediately
   useEffect(() => {
-    if (!firstItem) {
+    if (!referenceItem) {
       onClose();
     }
-  }, [firstItem, onClose]);
+  }, [referenceItem, onClose]);
 
-  if (!firstItem) {
+  if (!referenceItem) {
     return null;
   }
 
@@ -73,7 +79,6 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>({
     setIsDownloading(true);
 
     const results: DownloadResult[] = [];
-    const BATCH_SIZE = 5;
 
     // Process downloads in parallel batches for better performance
     for (let i = 0; i < items.length; i += BATCH_SIZE) {
@@ -96,10 +101,12 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>({
             await downloadHandler(itemData, downloadData, socket);
             return { item, success: true };
           } catch (error: any) {
+            const errorMessage = error?.message || 'Unknown error';
+            console.error(`Failed to queue download for "${item.name}":`, errorMessage);
             return {
               item,
               success: false,
-              error: error?.message || 'Unknown error',
+              error: errorMessage,
             };
           }
         })
@@ -157,7 +164,7 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>({
 
   // Create a synthetic item info for the dialog header
   const displayInfo: UI.DownloadableItemInfo = {
-    ...firstItem,
+    ...referenceItem,
     name: t(toI18nKey('bulkDownloadItems', UI.Modules.COMMON), {
       defaultValue: '{{count}} items',
       count: items.length,
