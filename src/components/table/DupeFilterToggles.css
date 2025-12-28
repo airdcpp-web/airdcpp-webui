@@ -1,0 +1,18 @@
+.dupe-filter-toggles {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.dupe-filter-toggles .ui.button {
+  margin: 0;
+}
+
+.dupe-filter-toggles .ui.button.active {
+  background-color: #2185d0;
+  color: white;
+}
+
+.dupe-filter-toggles .ui.button.active:hover {
+  background-color: #1678c2;
+}

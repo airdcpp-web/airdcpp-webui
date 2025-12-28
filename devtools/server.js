@@ -60,6 +60,8 @@ const prefixPath = (path) => {
 const proxyMiddleware = createProxyMiddleware({
   target: targetUrl,
   changeOrigin: true,
+  secure: false, // Disable SSL certificate verification
+  ws: true, // Enable WebSocket proxying
   pathFilter: [
     prefixPath('api'),
     prefixPath('view'),
@@ -72,8 +74,9 @@ const proxyMiddleware = createProxyMiddleware({
   },
   on: {
     error: (err, req, res) => {
+      console.error('[HPM] Proxy error:', err.message);
       try {
-        res.end(err);
+        res.end(err.message || String(err));
       } catch (e) {
         //
       }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 import { dupeToStringType } from '@/utils/TypeConvert';
 import { TableActionMenu } from '@/components/action-menu';
@@ -29,6 +30,16 @@ import { FilelistItemActionMenu } from '@/actions/ui/filelist';
 import { useSessionStore } from '@/context/SessionStoreContext';
 import LinkButton from '@/components/semantic/LinkButton';
 import { noMouseFocusProps } from '@/utils/BrowserUtils';
+import BulkDownloadDialog from '@/components/download/BulkDownloadDialog';
+
+import {
+  useTableSelection,
+  TableSelectionProvider,
+  SelectionCheckboxCell,
+  SelectionHeaderCell,
+  SelectionFooterBar,
+} from '@/components/table/selection';
+import DupeFilterToggles from '@/components/table/DupeFilterToggles';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   filelist: API.FilelistSession;
@@ -78,13 +89,22 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
   onClickDirectory,
   ...other
 }) => {
-  const rowClassNameGetter = (rowData: API.FilelistItem) => {
-    // Don't highlight dupes in own filelist...
-    const isOwnList = filelist.user.flags.includes('self');
-    return isOwnList ? '' : dupeToStringType(rowData.dupe);
-  };
+  const [showBulkDownload, setShowBulkDownload] = useState(false);
+  const selection = useTableSelection({
+    entityId: filelist.id,
+    viewId: filelist.location!.path,
+  });
 
-  const emptyRowsNodeGetter = () => {
+  const rowClassNameGetter = useCallback(
+    (rowData: API.FilelistItem) => {
+      // Don't highlight dupes in own filelist...
+      const isOwnList = filelist.user.flags.includes('self');
+      return isOwnList ? '' : dupeToStringType(rowData.dupe);
+    },
+    [filelist.user.flags]
+  );
+
+  const emptyRowsNodeGetter = useCallback(() => {
     const { location, state } = filelist;
     const { translate } = sessionT;
 
@@ -115,25 +135,63 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
         description={translate('The directory is empty')}
       />
     );
-  };
+  }, [filelist, sessionT]);
 
-  const getNameCellCaption: FileDownloadCellCaptionGetter = (cellData, rowDataGetter) => {
-    if (rowDataGetter().type.id === 'directory') {
-      const onClick = () => onClickDirectory(filelist.location!.path + cellData + '/');
-      return (
-        <LinkButton onClick={onClick} {...noMouseFocusProps}>
-          {cellData}
-        </LinkButton>
+  const getNameCellCaption: FileDownloadCellCaptionGetter = useCallback(
+    (cellData, rowDataGetter) => {
+      if (rowDataGetter().type.id === 'directory') {
+        const onClick = () => onClickDirectory(filelist.location!.path + cellData + '/');
+        return (
+          <LinkButton onClick={onClick} {...noMouseFocusProps}>
+            {cellData}
+          </LinkButton>
+        );
+      }
+
+      return cellData;
+    },
+    [filelist.location, onClickDirectory]
+  );
+
+  // Get total count from store for select-all
+  const getTotalCount = useCallback(() => {
+    return FilelistViewStore.rowCount || 0;
+  }, []);
+
+  // Get selected items for bulk download
+  const getSelectedItems = useCallback((): API.FilelistItem[] => {
+    const items = FilelistViewStore.items || [];
+    if (selection.selectAllMode) {
+      // In select-all mode, return all loaded items except excluded ones
+      return items.filter(
+        (item: API.FilelistItem) => item && !selection.excludedIds.has(item.id)
       );
     }
+    return items.filter(
+      (item: API.FilelistItem) => item && selection.selectedIds.has(item.id)
+    );
+  }, [selection.selectAllMode, selection.excludedIds, selection.selectedIds]);
 
-    return cellData;
-  };
+  const handleBulkDownload = useCallback(() => {
+    setShowBulkDownload(true);
+  }, []);
 
-  // const { session } = this.props;
+  const handleBulkDownloadClose = useCallback(() => {
+    setShowBulkDownload(false);
+    selection.clearSelection();
+  }, [selection]);
+
+  // User getter for filelist items
+  const filelistUserGetter = useCallback(
+    () => filelist.user,
+    [filelist.user]
+  );
+
+  const selectedItems = useMemo(() => getSelectedItems(), [getSelectedItems]);
+
   const sessionStore = useSessionStore();
   return (
-    <>
+    <TableSelectionProvider value={selection}>
       <VirtualTable
         emptyRowsNodeGetter={emptyRowsNodeGetter}
         rowClassNameGetter={rowClassNameGetter}
@@ -145,7 +203,23 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
         textFilterProps={{
           autoFocus: true,
         }}
+        footerData={
+          <SelectionFooterBar
+            onDownload={handleBulkDownload}
+            t={sessionT.t}
+          >
+            <DupeFilterToggles store={FilelistViewStore} />
+          </SelectionFooterBar>
+        }
       >
+        <Column
+          name=""
+          width={40}
+          columnKey="__selection"
+          flexGrow={0}
+          header={<SelectionHeaderCell totalCountGetter={getTotalCount} />}
+          cell={<SelectionCheckboxCell />}
+        />
         <Column
           name="Name"
           width={200}
@@ -170,7 +244,16 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
         />
       </VirtualTable>
       <FilelistItemInfoDialog filelist={filelist} />
-    </>
+      {showBulkDownload && selectedItems.length > 0 && (
+        <BulkDownloadDialog
+          items={selectedItems}
+          downloadHandler={filelistDownloadHandler}
+          sessionItem={filelist}
+          userGetter={filelistUserGetter}
+          onClose={handleBulkDownloadClose}
+        />
+      )}
+    </TableSelectionProvider>
   );
 };
 

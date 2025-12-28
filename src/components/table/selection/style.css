@@ -1,0 +1,80 @@
+/* Selection footer bar - unified container */
+.selection-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-height: 36px;
+}
+
+.selection-footer-bar.has-selection {
+  background-color: #e8f4fd;
+  border-radius: 4px;
+}
+
+.selection-footer-bar .selection-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selection-footer-bar .selection-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.selection-footer-bar .selection-count {
+  font-weight: 500;
+  color: #2185d0;
+  white-space: nowrap;
+}
+
+.selection-footer-bar .selection-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.selection-footer-bar .selection-actions .ui.button {
+  margin: 0;
+}
+
+/* Selection header cell */
+.selection-header-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 4px;
+}
+
+/* Native checkbox styling */
+.selection-checkbox {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: #2185d0;
+}
+
+/* Checkbox cell styling */
+.cell-wrapper.__selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.cell-wrapper.__selection .ui.checkbox {
+  margin: 0;
+}
+
+.cell-wrapper.__selection .ui.checkbox label {
+  padding-left: 0;
+}
+
+.cell-wrapper.__selection .ui.checkbox label::before,
+.cell-wrapper.__selection .ui.checkbox label::after {
+  left: 0;
+}
