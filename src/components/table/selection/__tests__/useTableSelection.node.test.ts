@@ -2,10 +2,13 @@ import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useTableSelection } from '../useTableSelection';
 
+// Helper to reduce boilerplate
+const setup = () => renderHook(() => useTableSelection());
+
 describe('useTableSelection', () => {
   describe('initial state', () => {
     test('should have empty selection initially', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       expect(result.current.selectedIds.size).toBe(0);
       expect(result.current.selectedCount).toBe(0);
@@ -16,7 +19,7 @@ describe('useTableSelection', () => {
 
   describe('toggleItem in normal mode', () => {
     test('should add item to selection when toggled', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.toggleItem(1);
@@ -28,7 +31,7 @@ describe('useTableSelection', () => {
     });
 
     test('should remove item from selection when toggled again', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.toggleItem(1);
@@ -43,7 +46,7 @@ describe('useTableSelection', () => {
     });
 
     test('should handle multiple item selections', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.toggleItem(1);
@@ -62,7 +65,7 @@ describe('useTableSelection', () => {
 
   describe('selectAllMode', () => {
     test('should enter select-all mode with total count', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -74,7 +77,7 @@ describe('useTableSelection', () => {
     });
 
     test('should clear previous selections when entering select-all mode', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       // First select some items manually
       act(() => {
@@ -95,7 +98,7 @@ describe('useTableSelection', () => {
     });
 
     test('should exit select-all mode and clear all', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -113,7 +116,7 @@ describe('useTableSelection', () => {
 
   describe('toggleItem in select-all mode', () => {
     test('should add item to excluded list when toggled in select-all mode', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -130,7 +133,7 @@ describe('useTableSelection', () => {
     });
 
     test('should remove item from excluded list when toggled again', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -150,7 +153,7 @@ describe('useTableSelection', () => {
     });
 
     test('should handle multiple exclusions', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -173,7 +176,7 @@ describe('useTableSelection', () => {
 
   describe('selectItems', () => {
     test('should select specific items', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.selectItems([1, 2, 3]);
@@ -186,7 +189,7 @@ describe('useTableSelection', () => {
     });
 
     test('should exit select-all mode when selecting specific items', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -202,7 +205,7 @@ describe('useTableSelection', () => {
     });
 
     test('should replace previous selection', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.selectItems([1, 2, 3]);
@@ -221,7 +224,7 @@ describe('useTableSelection', () => {
 
   describe('clearSelection', () => {
     test('should clear normal selection', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.toggleItem(1);
@@ -237,7 +240,7 @@ describe('useTableSelection', () => {
     });
 
     test('should clear select-all mode and exclusions', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -256,7 +259,7 @@ describe('useTableSelection', () => {
 
   describe('isSelected', () => {
     test('should return correct state in normal mode', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.toggleItem(1);
@@ -267,7 +270,7 @@ describe('useTableSelection', () => {
     });
 
     test('should return correct state in select-all mode', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -284,7 +287,7 @@ describe('useTableSelection', () => {
 
   describe('selectedCount', () => {
     test('should count selected items in normal mode', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.toggleItem(1);
@@ -296,7 +299,7 @@ describe('useTableSelection', () => {
     });
 
     test('should calculate count correctly in select-all mode', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 100);
@@ -313,7 +316,7 @@ describe('useTableSelection', () => {
     });
 
     test('should not go below zero', () => {
-      const { result } = renderHook(() => useTableSelection());
+      const { result } = setup();
 
       act(() => {
         result.current.setSelectAllMode(true, 2);
