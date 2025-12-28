@@ -23,24 +23,13 @@ describe('DupeFilterToggles regex patterns', () => {
   };
 
   describe('buildFilterPattern', () => {
-    test('should return empty string when no filters are active', () => {
-      const pattern = buildFilterPattern(false, false);
-      expect(pattern).toBe('');
-    });
-
-    test('should return share filter pattern when hideShared is true', () => {
-      const pattern = buildFilterPattern(true, false);
-      expect(pattern).toBe('^(?!.*(share)).*$');
-    });
-
-    test('should return queue filter pattern when hideQueued is true', () => {
-      const pattern = buildFilterPattern(false, true);
-      expect(pattern).toBe('^(?!.*(queue)).*$');
-    });
-
-    test('should return combined filter pattern when both are true', () => {
-      const pattern = buildFilterPattern(true, true);
-      expect(pattern).toBe('^(?!.*(share|queue)).*$');
+    test.each([
+      [false, false, ''],
+      [true, false, '^(?!.*(share)).*$'],
+      [false, true, '^(?!.*(queue)).*$'],
+      [true, true, '^(?!.*(share|queue)).*$'],
+    ])('hideShared=%s, hideQueued=%s returns %s', (hideShared, hideQueued, expected) => {
+      expect(buildFilterPattern(hideShared, hideQueued)).toBe(expected);
     });
   });
 
@@ -50,150 +39,61 @@ describe('DupeFilterToggles regex patterns', () => {
     // share_finished, share_queue_finished
 
     describe('hideShared pattern', () => {
-      const pattern = '^(?!.*(share)).*$';
-      const regex = new RegExp(pattern);
+      const regex = new RegExp('^(?!.*(share)).*$');
 
-      test('should match empty string (no dupe)', () => {
-        expect(regex.test('')).toBe(true);
-      });
-
-      test('should match null/undefined dupe types', () => {
-        // When there's no dupe, the dupe field would be stringified as empty or checked separately
-        expect(regex.test('')).toBe(true);
-      });
-
-      test('should NOT match share_partial', () => {
-        expect(regex.test('share_partial')).toBe(false);
-      });
-
-      test('should NOT match share_full', () => {
-        expect(regex.test('share_full')).toBe(false);
-      });
-
-      test('should NOT match share_queue', () => {
-        expect(regex.test('share_queue')).toBe(false);
-      });
-
-      test('should NOT match share_finished', () => {
-        expect(regex.test('share_finished')).toBe(false);
-      });
-
-      test('should NOT match share_queue_finished', () => {
-        expect(regex.test('share_queue_finished')).toBe(false);
-      });
-
-      test('should match queue_partial (not filtered)', () => {
-        expect(regex.test('queue_partial')).toBe(true);
-      });
-
-      test('should match queue_full (not filtered)', () => {
-        expect(regex.test('queue_full')).toBe(true);
-      });
-
-      test('should match finished_partial (not filtered)', () => {
-        expect(regex.test('finished_partial')).toBe(true);
-      });
-
-      test('should match finished_full (not filtered)', () => {
-        expect(regex.test('finished_full')).toBe(true);
+      test.each([
+        ['', true, 'empty string (no dupe)'],
+        ['queue_partial', true, 'queue_partial (not filtered)'],
+        ['queue_full', true, 'queue_full (not filtered)'],
+        ['finished_partial', true, 'finished_partial (not filtered)'],
+        ['finished_full', true, 'finished_full (not filtered)'],
+        ['share_partial', false, 'share_partial'],
+        ['share_full', false, 'share_full'],
+        ['share_queue', false, 'share_queue'],
+        ['share_finished', false, 'share_finished'],
+        ['share_queue_finished', false, 'share_queue_finished'],
+      ])('%s should %s match (%s)', (input, shouldMatch) => {
+        expect(regex.test(input)).toBe(shouldMatch);
       });
     });
 
     describe('hideQueued pattern', () => {
-      const pattern = '^(?!.*(queue)).*$';
-      const regex = new RegExp(pattern);
+      const regex = new RegExp('^(?!.*(queue)).*$');
 
-      test('should match empty string (no dupe)', () => {
-        expect(regex.test('')).toBe(true);
-      });
-
-      test('should NOT match queue_partial', () => {
-        expect(regex.test('queue_partial')).toBe(false);
-      });
-
-      test('should NOT match queue_full', () => {
-        expect(regex.test('queue_full')).toBe(false);
-      });
-
-      test('should NOT match share_queue', () => {
-        expect(regex.test('share_queue')).toBe(false);
-      });
-
-      test('should NOT match queue_finished', () => {
-        expect(regex.test('queue_finished')).toBe(false);
-      });
-
-      test('should NOT match share_queue_finished', () => {
-        expect(regex.test('share_queue_finished')).toBe(false);
-      });
-
-      test('should match share_partial (not filtered)', () => {
-        expect(regex.test('share_partial')).toBe(true);
-      });
-
-      test('should match share_full (not filtered)', () => {
-        expect(regex.test('share_full')).toBe(true);
-      });
-
-      test('should match finished_partial (not filtered)', () => {
-        expect(regex.test('finished_partial')).toBe(true);
-      });
-
-      test('should match finished_full (not filtered)', () => {
-        expect(regex.test('finished_full')).toBe(true);
+      test.each([
+        ['', true, 'empty string (no dupe)'],
+        ['share_partial', true, 'share_partial (not filtered)'],
+        ['share_full', true, 'share_full (not filtered)'],
+        ['finished_partial', true, 'finished_partial (not filtered)'],
+        ['finished_full', true, 'finished_full (not filtered)'],
+        ['queue_partial', false, 'queue_partial'],
+        ['queue_full', false, 'queue_full'],
+        ['share_queue', false, 'share_queue'],
+        ['queue_finished', false, 'queue_finished'],
+        ['share_queue_finished', false, 'share_queue_finished'],
+      ])('%s should %s match (%s)', (input, shouldMatch) => {
+        expect(regex.test(input)).toBe(shouldMatch);
       });
     });
 
     describe('hideShared AND hideQueued pattern', () => {
-      const pattern = '^(?!.*(share|queue)).*$';
-      const regex = new RegExp(pattern);
+      const regex = new RegExp('^(?!.*(share|queue)).*$');
 
-      test('should match empty string (no dupe)', () => {
-        expect(regex.test('')).toBe(true);
-      });
-
-      test('should NOT match share_partial', () => {
-        expect(regex.test('share_partial')).toBe(false);
-      });
-
-      test('should NOT match share_full', () => {
-        expect(regex.test('share_full')).toBe(false);
-      });
-
-      test('should NOT match queue_partial', () => {
-        expect(regex.test('queue_partial')).toBe(false);
-      });
-
-      test('should NOT match queue_full', () => {
-        expect(regex.test('queue_full')).toBe(false);
-      });
-
-      test('should NOT match share_queue', () => {
-        expect(regex.test('share_queue')).toBe(false);
-      });
-
-      test('should NOT match queue_finished', () => {
-        expect(regex.test('queue_finished')).toBe(false);
-      });
-
-      test('should NOT match share_finished', () => {
-        expect(regex.test('share_finished')).toBe(false);
-      });
-
-      test('should NOT match share_queue_finished', () => {
-        expect(regex.test('share_queue_finished')).toBe(false);
-      });
-
-      test('should match finished_partial (not filtered)', () => {
-        expect(regex.test('finished_partial')).toBe(true);
-      });
-
-      test('should match finished_full (not filtered)', () => {
-        expect(regex.test('finished_full')).toBe(true);
-      });
-
-      test('should match random non-matching string', () => {
-        expect(regex.test('some_other_value')).toBe(true);
+      test.each([
+        ['', true, 'empty string (no dupe)'],
+        ['finished_partial', true, 'finished_partial (not filtered)'],
+        ['finished_full', true, 'finished_full (not filtered)'],
+        ['some_other_value', true, 'random non-matching string'],
+        ['share_partial', false, 'share_partial'],
+        ['share_full', false, 'share_full'],
+        ['queue_partial', false, 'queue_partial'],
+        ['queue_full', false, 'queue_full'],
+        ['share_queue', false, 'share_queue'],
+        ['queue_finished', false, 'queue_finished'],
+        ['share_finished', false, 'share_finished'],
+        ['share_queue_finished', false, 'share_queue_finished'],
+      ])('%s should %s match (%s)', (input, shouldMatch) => {
+        expect(regex.test(input)).toBe(shouldMatch);
       });
     });
   });
