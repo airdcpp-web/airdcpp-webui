@@ -1,26 +1,9 @@
 import { describe, expect, test } from 'vitest';
+import { buildFilterPattern } from '../DupeFilterToggles';
 
 // Test the regex patterns that DupeFilterToggles generates
 // Pattern format: ^(?!.*(share|queue)).*$
 describe('DupeFilterToggles regex patterns', () => {
-  // Helper to build the same pattern the component builds
-  const buildFilterPattern = (hideShared: boolean, hideQueued: boolean): string => {
-    if (!hideShared && !hideQueued) {
-      return '';
-    }
-
-    const excludePatterns: string[] = [];
-
-    if (hideShared) {
-      excludePatterns.push('share');
-    }
-
-    if (hideQueued) {
-      excludePatterns.push('queue');
-    }
-
-    return `^(?!.*(${excludePatterns.join('|')})).*$`;
-  };
 
   describe('buildFilterPattern', () => {
     test.each([

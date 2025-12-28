@@ -17,7 +17,7 @@ import './DupeFilterToggles.css';
 // Dupe IDs: share_partial, share_full, queue_partial, queue_full,
 // finished_partial, finished_full, share_queue, queue_finished,
 // share_finished, share_queue_finished
-const buildFilterPattern = (hideShared: boolean, hideQueued: boolean): string => {
+export const buildFilterPattern = (hideShared: boolean, hideQueued: boolean): string => {
   if (!hideShared && !hideQueued) {
     return ''; // No filter - show all
   }
