@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { ResultDialog } from './result-dialog';
 
@@ -37,6 +37,7 @@ import { GroupedSearchResultActionMenu, SearchActionMenu } from '@/actions/ui/se
 
 import {
   useTableSelection,
+  useSelectionActions,
   TableSelectionProvider,
   SelectionCheckboxCell,
   SelectionHeaderCell,
@@ -125,8 +126,14 @@ const ResultTable: React.FC<ResultTableProps> = ({
   searchT,
   instance,
 }) => {
-  const [showBulkDownload, setShowBulkDownload] = useState(false);
   const selection = useTableSelection({ entityId: instance.id });
+  const {
+    showBulkDownload,
+    selectedItems,
+    getTotalCount,
+    handleBulkDownload,
+    handleBulkDownloadClose,
+  } = useSelectionActions<API.GroupedSearchResult>({ selection, store: SearchViewStore });
   const { translate } = searchT;
 
   const rowClassNameGetter = useCallback((rowData: API.GroupedSearchResult) => {
@@ -188,34 +195,6 @@ const ResultTable: React.FC<ResultTableProps> = ({
     },
     [instance.id]
   );
-
-  // Get total count from store for select-all
-  const getTotalCount = useCallback(() => {
-    return SearchViewStore.rowCount || 0;
-  }, []);
-
-  // Memoize selected items directly to avoid unstable function reference
-  const selectedItems = useMemo(() => {
-    const items = SearchViewStore.items || [];
-    if (selection.selectAllMode) {
-      // In select-all mode, return all loaded items except excluded ones
-      return items.filter(
-        (item: API.GroupedSearchResult) => item && !selection.excludedIds.has(item.id)
-      );
-    }
-    return items.filter(
-      (item: API.GroupedSearchResult) => item && selection.selectedIds.has(item.id)
-    );
-  }, [selection.selectAllMode, selection.excludedIds, selection.selectedIds]);
-
-  const handleBulkDownload = useCallback(() => {
-    setShowBulkDownload(true);
-  }, []);
-
-  const handleBulkDownloadClose = useCallback(() => {
-    setShowBulkDownload(false);
-    selection.clearSelection();
-  }, [selection]);
 
   return (
     <TableSelectionProvider value={selection}>

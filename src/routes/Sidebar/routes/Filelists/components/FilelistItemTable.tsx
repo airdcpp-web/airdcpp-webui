@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { dupeToStringType } from '@/utils/TypeConvert';
 import { TableActionMenu } from '@/components/action-menu';
@@ -34,6 +34,7 @@ import BulkDownloadDialog from '@/components/download/BulkDownloadDialog';
 
 import {
   useTableSelection,
+  useSelectionActions,
   TableSelectionProvider,
   SelectionCheckboxCell,
   SelectionHeaderCell,
@@ -89,11 +90,17 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
   onClickDirectory,
   ...other
 }) => {
-  const [showBulkDownload, setShowBulkDownload] = useState(false);
   const selection = useTableSelection({
     entityId: filelist.id,
     viewId: filelist.location!.path,
   });
+  const {
+    showBulkDownload,
+    selectedItems,
+    getTotalCount,
+    handleBulkDownload,
+    handleBulkDownloadClose,
+  } = useSelectionActions<API.FilelistItem>({ selection, store: FilelistViewStore });
 
   const rowClassNameGetter = useCallback(
     (rowData: API.FilelistItem) => {
@@ -153,41 +160,11 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
     [filelist.location, onClickDirectory]
   );
 
-  // Get total count from store for select-all
-  const getTotalCount = useCallback(() => {
-    return FilelistViewStore.rowCount || 0;
-  }, []);
-
-  // Get selected items for bulk download
-  const getSelectedItems = useCallback((): API.FilelistItem[] => {
-    const items = FilelistViewStore.items || [];
-    if (selection.selectAllMode) {
-      // In select-all mode, return all loaded items except excluded ones
-      return items.filter(
-        (item: API.FilelistItem) => item && !selection.excludedIds.has(item.id)
-      );
-    }
-    return items.filter(
-      (item: API.FilelistItem) => item && selection.selectedIds.has(item.id)
-    );
-  }, [selection.selectAllMode, selection.excludedIds, selection.selectedIds]);
-
-  const handleBulkDownload = useCallback(() => {
-    setShowBulkDownload(true);
-  }, []);
-
-  const handleBulkDownloadClose = useCallback(() => {
-    setShowBulkDownload(false);
-    selection.clearSelection();
-  }, [selection]);
-
   // User getter for filelist items
   const filelistUserGetter = useCallback(
     () => filelist.user,
     [filelist.user]
   );
-
-  const selectedItems = useMemo(() => getSelectedItems(), [getSelectedItems]);
 
   const sessionStore = useSessionStore();
   return (

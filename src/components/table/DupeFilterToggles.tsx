@@ -13,10 +13,6 @@ import { useTranslation } from 'react-i18next';
 
 import './DupeFilterToggles.css';
 
-export interface DupeFilterTogglesProps {}
-
-type Props = DupeFilterTogglesProps & TableFilterDecoratorChildProps;
-
 // Build regex pattern to exclude dupes based on toggles
 // Dupe IDs: share_partial, share_full, queue_partial, queue_full,
 // finished_partial, finished_full, share_queue, queue_finished,
@@ -44,7 +40,9 @@ const buildFilterPattern = (hideShared: boolean, hideQueued: boolean): string =>
   return `^(?!.*(${excludePatterns.join('|')})).*$`;
 };
 
-const DupeFilterToggles = memo<Props>(function DupeFilterToggles({ onFilterUpdated }) {
+const DupeFilterToggles = memo<TableFilterDecoratorChildProps>(function DupeFilterToggles({
+  onFilterUpdated,
+}) {
   const { t } = useTranslation();
   const [hideShared, setHideShared] = useState(false);
   const [hideQueued, setHideQueued] = useState(false);
@@ -81,7 +79,4 @@ const DupeFilterToggles = memo<Props>(function DupeFilterToggles({ onFilterUpdat
   );
 });
 
-export default TableFilterDecorator<DupeFilterTogglesProps & TableFilterDecoratorProps>(
-  DupeFilterToggles,
-  'dupe',
-);
+export default TableFilterDecorator<TableFilterDecoratorProps>(DupeFilterToggles, 'dupe');
