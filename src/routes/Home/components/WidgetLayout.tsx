@@ -1,7 +1,13 @@
 import { memo, useMemo, useState } from 'react';
 import invariant from 'invariant';
 
-import { Responsive, WidthProvider, Layout, Layouts } from 'react-grid-layout';
+import {
+  Layout,
+  LayoutItem,
+  ResponsiveGridLayout,
+  ResponsiveLayouts,
+  useContainerWidth,
+} from 'react-grid-layout';
 import { useTranslation } from 'react-i18next';
 
 import * as UI from '@/types/ui';
@@ -23,11 +29,9 @@ import 'react-resizable/css/styles.css';
 
 import 'fomantic-ui-css/components/card.min.css';
 
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
-
 // Convert a layout entry to a component
 const mapWidget = (
-  layoutItem: Layout,
+  layoutItem: LayoutItem,
   rootWidgetT: UI.ModuleTranslator,
   layoutStore: HomeLayoutStore,
 ): React.ReactNode => {
@@ -70,12 +74,12 @@ const WidgetLayout = memo(function WidgetLayout() {
 
   const widgets = useMemo(() => {
     // console.debug('WidgetLayout: layouts loaded', breakpoint, layouts[breakpoint]);
-    return layouts[breakpoint]
-      .map((w) => mapWidget(w, rootWidgetT, layoutStore.getState()))
-      .filter((widget) => widget);
+    return layouts[breakpoint]!.map((w) =>
+      mapWidget(w, rootWidgetT, layoutStore.getState()),
+    ).filter((widget) => widget);
   }, [layouts, breakpoint]);
 
-  const onLayoutChanged = (layout: Layout[], layouts: Layouts) => {
+  const onLayoutChanged = (layout: Layout, layouts: ResponsiveLayouts) => {
     //console.debug(
     //  'WidgetLayout: saving layout',
     //  layout,
@@ -84,27 +88,34 @@ const WidgetLayout = memo(function WidgetLayout() {
     layoutStore.getState().onLayoutChange(layout, layouts);
   };
 
+  const { width, containerRef, mounted } = useContainerWidth();
   return (
-    <>
-      <ResponsiveReactGridLayout
-        className="ui cards layout"
-        rowHeight={50}
-        onLayoutChange={onLayoutChanged}
-        onBreakpointChange={(bp) => {
-          // console.debug('WidgetLayout: breakpoint changed', bp);
-          setBreakpoint(bp);
-        }}
-        breakpoints={HomeLayoutBreakpoints}
-        cols={HomeLayoutColumns}
-        draggableHandle=".react-grid-item .header-row .header"
-        layouts={layouts}
-        useCSSTransforms={false} // Causes weird bouncing issues (especially on Safari)
-        measureBeforeMount={false}
-      >
-        {widgets}
-      </ResponsiveReactGridLayout>
+    <div ref={containerRef}>
+      {mounted && (
+        <ResponsiveGridLayout
+          className="ui cards layout"
+          width={width}
+          rowHeight={50}
+          onLayoutChange={onLayoutChanged}
+          onBreakpointChange={(bp) => {
+            // console.debug('WidgetLayout: breakpoint changed', bp);
+            setBreakpoint(bp);
+          }}
+          breakpoints={HomeLayoutBreakpoints}
+          cols={HomeLayoutColumns}
+          dragConfig={{
+            enabled: true,
+            handle: '.react-grid-item .header-row .header',
+          }}
+          layouts={layouts}
+          // useCSSTransforms={false} // Causes weird bouncing issues (especially on Safari)
+          // measureBeforeMount={false}
+        >
+          {widgets}
+        </ResponsiveGridLayout>
+      )}
       <WidgetDialog rootWidgetT={rootWidgetT} layoutStore={layoutStore} />
-    </>
+    </div>
   );
 });
 

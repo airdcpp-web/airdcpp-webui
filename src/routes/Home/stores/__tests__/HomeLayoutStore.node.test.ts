@@ -1,6 +1,6 @@
 import { RSSWidgetInfo } from '../../widgets/RSS';
 
-import { Layouts, Layout } from 'react-grid-layout';
+import { ResponsiveLayouts, LayoutItem } from 'react-grid-layout';
 import {
   createWidgetId,
   EmptyWidgetSettings,
@@ -10,9 +10,9 @@ import { describe, expect, test } from 'vitest';
 import { HomeLayoutColumns } from '../../constants/HomeLayoutConstants';
 import { createHomeLayoutStore } from '../homeLayoutSlice';
 
-const countWidgetIds = (id: string, layouts: Layouts) => {
+const countWidgetIds = (id: string, layouts: ResponsiveLayouts) => {
   return Object.keys(layouts).reduce((sum, key) => {
-    if (layouts[key].find((layoutItem: Layout) => layoutItem.i === id)) {
+    if (layouts[key]!.some((layoutItem: LayoutItem) => layoutItem.i === id)) {
       return sum + 1;
     }
 
@@ -20,7 +20,7 @@ const countWidgetIds = (id: string, layouts: Layouts) => {
   }, 0);
 };
 
-const hasLayoutItems = (id: string, layouts: Layouts) => {
+const hasLayoutItems = (id: string, layouts: ResponsiveLayouts) => {
   return countWidgetIds(id, layouts) === Object.keys(HomeLayoutColumns).length;
 };
 

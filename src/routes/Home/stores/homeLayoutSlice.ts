@@ -1,5 +1,5 @@
 import { reject } from 'lodash';
-import { Layout, Layouts } from 'react-grid-layout';
+import { Layout, ResponsiveLayouts } from 'react-grid-layout';
 import { create } from 'zustand';
 
 import * as UI from '@/types/ui';
@@ -26,11 +26,11 @@ const LAYOUT_VERSION = 4;
 
 interface StorageLayouts {
   version: number;
-  items: Layouts;
+  items: ResponsiveLayouts;
 }
 
 interface HomeLayoutStoreState {
-  layouts: Layouts;
+  layouts: ResponsiveLayouts;
 }
 
 interface HomeLayoutStoreActions {
@@ -40,21 +40,21 @@ interface HomeLayoutStoreActions {
   updateWidget: (id: string, settings: UI.WidgetSettings) => void;
   removeWidget: (id: string) => void;
 
-  onLayoutChange: (layout: Layout[], layouts: Layouts) => void;
+  onLayoutChange: (layout: Layout, layouts: ResponsiveLayouts) => void;
 }
 
 export type HomeLayoutStore = HomeLayoutStoreState & HomeLayoutStoreActions;
 
 export const createHomeLayoutStore = () => {
   const store = create<HomeLayoutStore>()((set, get) => ({
-    layouts: {} as Layouts,
+    layouts: {} as ResponsiveLayouts,
 
     init: function () {
-      let initialLayouts = {} as Layouts;
+      let initialLayouts = {} as ResponsiveLayouts;
 
       // Try to load saved ones
       const layoutInfo = loadLocalProperty<StorageLayouts>(LAYOUT_STORAGE_KEY);
-      if (layoutInfo && layoutInfo.items) {
+      if (layoutInfo?.items) {
         if (layoutInfo.version === LAYOUT_VERSION) {
           initialLayouts = layoutInfo.items;
         }
@@ -95,12 +95,12 @@ export const createHomeLayoutStore = () => {
         }
 
         return layouts;
-      }, {} as Layouts);
+      }, {} as ResponsiveLayouts);
 
       set({ layouts: newLayouts });
     },
 
-    onLayoutChange: (layout: Layout[], layouts: Layouts) => {
+    onLayoutChange: (layout: Layout, layouts: ResponsiveLayouts) => {
       saveLocalProperty(LAYOUT_STORAGE_KEY, {
         version: LAYOUT_VERSION,
         items: layouts,

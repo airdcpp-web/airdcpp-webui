@@ -1,4 +1,5 @@
 import { defineConfig, mergeConfig } from 'vitest/config';
+import { playwright } from '@vitest/browser-playwright';
 
 import CommonConfig from './vitest.config.common';
 
@@ -11,7 +12,7 @@ export default mergeConfig(
       environment: 'jsdom',
       browser: {
         enabled: true,
-        provider: 'playwright',
+        provider: playwright(),
         instances: [{ browser: 'chromium' }],
         viewport: { width: 1200, height: 600 },
       },

@@ -1,5 +1,5 @@
 import { saveWidgetSettings } from '@/routes/Home/widgets/WidgetUtils';
-import { Layouts } from 'react-grid-layout';
+import { ResponsiveLayouts } from 'react-grid-layout';
 
 import * as UI from '@/types/ui';
 import {
@@ -12,7 +12,7 @@ import {
 import { HomeLayoutColumns } from '../constants/HomeLayoutConstants';
 
 export const createLayoutWidget = (
-  layouts: Layouts,
+  layouts: ResponsiveLayouts,
   widgetInfo: UI.Widget,
   id: string,
   x?: number,
@@ -29,11 +29,11 @@ export const createLayoutWidget = (
     });
 
     return reducedLayouts;
-  }, {} as Layouts);
+  }, {} as ResponsiveLayouts);
 };
 
 const createDefaultLayoutWidget = <SettingsT>(
-  layouts: Layouts,
+  layouts: ResponsiveLayouts,
   widgetInfo: UI.Widget,
   x: number,
   y: number,
@@ -52,7 +52,7 @@ const createDefaultLayoutWidget = <SettingsT>(
   return newLayout;
 };
 
-const createDefaultLayoutWidgets = (layouts: Layouts) => {
+const createDefaultLayoutWidgets = (layouts: ResponsiveLayouts) => {
   layouts = createDefaultLayoutWidget(layouts, ApplicationWidgetInfo, 0, 0);
   layouts = createDefaultLayoutWidget(
     layouts,
@@ -82,7 +82,7 @@ const createDefaultLayoutWidgets = (layouts: Layouts) => {
   return layouts;
 };
 
-export const ensureDefaultLayoutWidgets = (layouts: Layouts) => {
+export const ensureDefaultLayoutWidgets = (layouts: ResponsiveLayouts) => {
   if (Object.keys(layouts).length !== 0) {
     return layouts;
   }
