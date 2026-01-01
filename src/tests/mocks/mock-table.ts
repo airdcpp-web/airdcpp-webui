@@ -69,7 +69,17 @@ export const installTableMocks = (
   }
 
   addGetItemsMock(5, 10);
+
   addGetItemsMock(10, 15);
+  addGetItemsMock(10, 16);
+  addGetItemsMock(10, 17);
+  addGetItemsMock(10, 18);
+  addGetItemsMock(10, 19);
+
+  addGetItemsMock(15, 16);
+  addGetItemsMock(15, 17);
+  addGetItemsMock(15, 18);
+  addGetItemsMock(15, 19);
   addGetItemsMock(15, 20);
 
   // Settings

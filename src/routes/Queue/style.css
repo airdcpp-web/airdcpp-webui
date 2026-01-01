@@ -11,6 +11,7 @@
 .virtual-table .cell-wrapper.failed span,
 .virtual-table .cell-wrapper.failed .label,
 .virtual-table .cell-wrapper.failed a {
+  color: red;
   font-weight: bold !important;
 }
 

@@ -46,6 +46,7 @@ export const renderBaseNode = (
 
   const instanceId = generateInstanceId();
   container.setAttribute('id', appendInstanceId(MODAL_PAGE_DIMMER_ID, instanceId));
+  container.style.height = '100%';
 
   window.dispatchEvent(new Event('resize'));
 

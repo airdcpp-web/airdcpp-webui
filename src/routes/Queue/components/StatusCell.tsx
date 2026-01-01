@@ -25,13 +25,16 @@ const getProgressStatusClass = (
       blue:
         (!statusId || statusId === API.QueueBundleStatusEnum.QUEUED) && rowData.speed > 0,
     },
+    {
+      red: cellData.failed,
+    },
   );
 };
 
 const StatusCell: React.FC<
   RowWrapperCellChildProps<API.QueueBundleStatus, API.QueueBundle>
 > = ({ cellData, rowDataGetter }) => {
-  if (cellData!.failed) {
+  if (cellData!.failed && cellData?.id !== API.QueueBundleStatusEnum.DOWNLOAD_ERROR) {
     // There isn't much space for other information
     return <span className="error">{cellData!.str}</span>;
   }
