@@ -43,25 +43,21 @@ import {
 
 const PriorityCell: React.FC<
   RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>
-> = ({ cellData, rowDataGetter, t }) => (
-  <PriorityMenu
-    itemPrio={cellData!}
-    item={rowDataGetter!()}
-    prioAction={setBundlePriority}
-    t={t!}
-  />
+> = ({ rowDataGetter, t }) => (
+  <PriorityMenu item={rowDataGetter!()} prioAction={setBundlePriority} t={t!} />
 );
 
 const rowClassNameGetter = (rowData: API.QueueBundle) => {
   const isPaused =
     rowData.priority.id === API.QueuePriorityEnum.PAUSED ||
     rowData.priority.id === API.QueuePriorityEnum.PAUSED_FORCED;
-  if (isPaused) {
-    return 'paused';
-  }
 
   if (rowData.status.failed) {
     return 'failed';
+  }
+
+  if (isPaused) {
+    return 'paused';
   }
 
   if (rowData.status.downloaded) {

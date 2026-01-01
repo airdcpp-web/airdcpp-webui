@@ -4,7 +4,7 @@
 
 .virtual-table .cell-wrapper.paused span,
 .virtual-table .cell-wrapper.paused .label,
-.virtual-table .cell-wrapper.failed a {
+.virtual-table .cell-wrapper.paused a {
   color: gray !important;
 }
 

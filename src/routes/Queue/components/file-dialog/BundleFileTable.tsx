@@ -27,13 +27,8 @@ import '../../style.css';
 
 const PriorityCell: React.FC<
   RowWrapperCellChildProps<API.QueuePriority, API.QueueBundle>
-> = ({ cellData, rowDataGetter, t }) => (
-  <PriorityMenu
-    itemPrio={cellData!}
-    item={rowDataGetter!()}
-    prioAction={setFilePriority}
-    t={t!}
-  />
+> = ({ rowDataGetter, t }) => (
+  <PriorityMenu item={rowDataGetter!()} prioAction={setFilePriority} t={t!} />
 );
 
 interface BundleFileTableProps {

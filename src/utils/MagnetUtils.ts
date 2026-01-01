@@ -46,7 +46,7 @@ export const parseMagnetLink = (text: string): UI.HashMagnet | UI.TextMagnet | n
         } else if (type.length === 2 && type.startsWith('dn')) {
           fname = param;
         } else if (type.length === 2 && type.startsWith('xl')) {
-          fsize = parseInt(param);
+          fsize = Number.parseInt(param);
         } else if (type.length === 2 && type.startsWith('kt')) {
           searchString = param;
         }

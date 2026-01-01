@@ -48,7 +48,7 @@ const parseNumericId = (params: Readonly<Params<string>>) => {
     return undefined;
   }
 
-  return parseInt(params['id']);
+  return Number.parseInt(params['id']);
 };
 const sessionActions = ['reconnect', 'clearChat', 'favorite'];
 

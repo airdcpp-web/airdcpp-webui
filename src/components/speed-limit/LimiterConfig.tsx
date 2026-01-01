@@ -63,7 +63,7 @@ const LimiterConfig: React.FC<LimiterConfigProps> = ({
         type="number"
         caption={translate('Save', t, UI.Modules.COMMON)}
         icon={IconConstants.SAVE_COLORED}
-        handleAction={(text) => save(parseInt(text))}
+        handleAction={(text) => save(Number.parseInt(text))}
       />
       {!!currentLimit && (
         <Button

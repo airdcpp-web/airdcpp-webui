@@ -68,7 +68,7 @@ const typeToComponent = (
     default:
   }
 
-  throw Error(`Field type ${type} is not supported`);
+  throw new Error(`Field type ${type} is not supported`);
 };
 
 const parseDefinitions = (definitions: UI.FormFieldDefinition[]): tcomb.Type<any> => {
@@ -148,7 +148,7 @@ const normalizeListValue = (
         return normalizeSettingValueMap(arrayItem, definitions!);
       }
 
-      throw Error(`Invalid value for a list struct ${arrayItem}`);
+      throw new Error(`Invalid value for a list struct ${arrayItem}`);
     });
   } else if (item_type === API.SettingTypeEnum.HINTED_USER) {
     return value;
@@ -177,7 +177,7 @@ const normalizeSettingValueMap = (
           const { definitions: childDefinitions } = definitions;
           reducedValue[key] = normalizeSettingValueMap(fieldValue, childDefinitions!);
         } else {
-          throw Error(`Invalid value for a struct ${key}`);
+          throw new Error(`Invalid value for a struct ${key}`);
         }
       } else if (type === API.SettingTypeEnum.HINTED_USER) {
         reducedValue[key] = fieldValue as UI.FormValueBase;
@@ -197,7 +197,7 @@ const intTransformer = {
   parse: (v: string | null | undefined) => {
     return v === 'null' || v === 'undefined' || v === undefined || v === null
       ? null
-      : parseInt(v, 10);
+      : Number.parseInt(v, 10);
   },
   format: (v: number | null | undefined) => {
     return String(v);
@@ -334,7 +334,7 @@ const parseFieldOptions = (
     if (definition.type === API.SettingTypeEnum.LIST) {
       options.template = SelectField;
     } else if (
-      definition.options[0].id === parseInt(definition.options[0].id as string, 10)
+      definition.options[0].id === Number.parseInt(definition.options[0].id as string, 10)
     ) {
       // Integer keys won't work with the default template, do string conversion
       options.transformer = intTransformer;

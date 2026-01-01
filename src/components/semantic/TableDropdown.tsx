@@ -16,6 +16,8 @@ export interface TableDropdownProps {
   // Cell content to render
   caption: React.ReactNode;
 
+  id: any;
+
   // Trigger the dropdown when clicking on the caption
   linkCaption?: boolean;
 
@@ -84,5 +86,5 @@ const TableDropdownComponent: React.FC<TableDropdownProps> = ({
 
 export default React.memo(
   TableDropdownComponent,
-  (prev, next) => prev.caption === next.caption,
+  (prev, next) => prev.caption === next.caption && prev.id === next.id,
 );

@@ -64,7 +64,7 @@ const SizeField: React.FC<Props> = ({ inputProps, moduleT, onChange, value }) =>
   }, [value]);
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (evt) => {
-    const newValue = !!evt.target.value ? parseInt(evt.target.value) : null;
+    const newValue = !!evt.target.value ? Number.parseInt(evt.target.value) : null;
     if (!!newValue) {
       setDisplayValue(newValue);
     } else {
@@ -112,7 +112,7 @@ const FileTypeField: TCombTemplate = {
     return (
       <SizeField
         onChange={locals.onChange}
-        value={!!locals.value ? parseInt(locals.value as any) : 0}
+        value={!!locals.value ? Number.parseInt(locals.value as any) : 0}
         moduleT={locals.context.formT}
         inputProps={locals.attrs}
       />

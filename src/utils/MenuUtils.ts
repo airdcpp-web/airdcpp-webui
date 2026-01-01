@@ -5,7 +5,7 @@ import * as UI from '@/types/ui';
 export const parseItemData = <ItemDataT extends UI.ActionMenuItemDataValueType>(
   itemData: UI.ActionMenuItemDataType<ItemDataT> | undefined,
 ): ItemDataT | undefined => {
-  return itemData instanceof Function ? itemData() : itemData;
+  return typeof itemData === 'function' ? itemData() : itemData;
 };
 
 // Returns true if the provided ID matches the specified filter

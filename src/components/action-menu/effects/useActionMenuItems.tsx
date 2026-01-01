@@ -25,10 +25,6 @@ export interface ActionMenuDefinition<
   children?: React.ReactElement<ActionMenuDefinition<ItemDataT, EntityT>> | false;
 }
 
-export interface ActionMenuDecoratorChildProps {
-  items: (onClick?: UI.MenuItemClickHandler) => UI.ActionMenuItem[];
-}
-
 export const useActionMenuItems = <
   ItemDataT extends UI.ActionMenuItemDataValueType,
   EntityT extends UI.ActionMenuItemEntityValueType,

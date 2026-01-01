@@ -43,10 +43,14 @@ interface FetchDataOptions extends RequestInit {
   isJSON?: boolean;
 }
 
+const DefaultFetchOptions: FetchDataOptions = {
+  isJSON: true,
+};
+
 export const fetchCorsSafeData = async (
   url: string,
   session: UI.AuthenticatedSession,
-  options: FetchDataOptions = { isJSON: true },
+  options: FetchDataOptions = DefaultFetchOptions,
 ) => {
   try {
     //console.log(`CORS HTTP request started (${url})`);
@@ -63,7 +67,7 @@ export const fetchCorsSafeData = async (
       ...options,
     });
 
-    const data = (await options.isJSON) ? res.json() : res.text();
+    const data = await (options.isJSON ? res.json() : res.text());
     return data;
   } catch (e) {
     console.error(`CORS HTTP request failed (${url})`, e);

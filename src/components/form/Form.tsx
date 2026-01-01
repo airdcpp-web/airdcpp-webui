@@ -231,7 +231,7 @@ class Form<ValueType extends UI.FormValueMap = UI.FormValueMap> extends Componen
       return;
     }
 
-    const fieldKey = valueKeyPath[valueKeyPath.length - 1];
+    const fieldKey = valueKeyPath.at(-1);
 
     // Check if the current value differs from the original one
     const equal = formValuesEqual(

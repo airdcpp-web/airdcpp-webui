@@ -13,10 +13,14 @@ import UserMenuDecorator, {
 import { DropdownProps } from '@/components/semantic/Dropdown';
 
 import * as UI from '@/types/ui';
+
 import { ActionMenuProps, ActionMenu } from './ActionDropdownMenu';
 import { buildMenu } from './builder/slidingMenuBuilder';
 
-type TableActionMenuDropdownProps = Omit<TableDropdownProps, 'children' | 'caption'>;
+type TableActionMenuDropdownProps = Omit<
+  TableDropdownProps,
+  'children' | 'caption' | 'id'
+>;
 
 export type TableActionMenuProps<
   ItemDataT extends UI.ActionMenuItemDataValueType,

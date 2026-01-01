@@ -16,6 +16,7 @@ import {
 } from '@/components/action-menu/effects/useActionMenuItems';
 import { EmptyDropdownContent } from '@/components/semantic/EmptyDropdown';
 import { OnShowRemoteMenuForm, useRemoteMenuItems } from '../effects/useRemoteMenuItems';
+import { parseActionMenuItemId } from '@/utils/MenuUtils';
 
 export interface ActionMenuDecoratorProps<
   ItemDataT extends UI.ActionMenuItemDataValueType,
@@ -76,6 +77,7 @@ const ActionMenuNested = <
 
 export interface ActionMenuDecoratorChildProps {
   children: (onClick?: UI.MenuItemClickHandler) => React.ReactNode;
+  id: UI.ActionIdType | undefined;
 }
 
 export default function <
@@ -101,7 +103,8 @@ export default function <
 
             return (
               <Component
-                {...(other as ActionMenuDecoratorChildProps & DropdownComponentPropsT)}
+                id={parseActionMenuItemId(itemData)}
+                {...(other as DropdownComponentPropsT)}
               >
                 {(onClickItem) => (
                   <ActionMenuNested
