@@ -33,7 +33,7 @@ export const QueueBundleRunningResponse = {
   size: 78804169,
   sources: {
     online: 2,
-    str: '2/2 online',
+    str: '2/5 online',
     total: 2,
   },
   speed: 394350,
