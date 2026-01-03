@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 import Modal, { ModalHandle } from '@/components/semantic/Modal';
 import { DownloadLayout } from './layout';
@@ -92,21 +93,28 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
   const { sessionItem, onClose, historyPaths: propHistoryPaths, displayName } = props;
   const { t } = useTranslation();
   const socket = useSocket();
+  const navigate = useNavigate();
   const modalRef = useRef<ModalHandle>(null);
   const [isDownloading, setIsDownloading] = useState(false);
   const [fetchedHistoryPaths, setFetchedHistoryPaths] = useState<string[]>([]);
 
-  // Fetch history paths if not provided via props
+  // Fetch history paths on mount (always fetch fresh, ignore props for caching)
   useEffect(() => {
-    if (!propHistoryPaths) {
-      socket
-        .get<string[]>(`${HistoryConstants.STRINGS_URL}/${HistoryStringEnum.DOWNLOAD_DIR}`)
-        .then(setFetchedHistoryPaths)
-        .catch(() => {
-          // Ignore errors - history is optional
-        });
-    }
-  }, [propHistoryPaths, socket]);
+    let cancelled = false;
+    socket
+      .get<string[]>(`${HistoryConstants.STRINGS_URL}/${HistoryStringEnum.DOWNLOAD_DIR}`)
+      .then((paths) => {
+        if (!cancelled) {
+          setFetchedHistoryPaths(paths);
+        }
+      })
+      .catch(() => {
+        // Ignore errors - history is optional
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [socket]);
 
   const historyPaths = propHistoryPaths ?? fetchedHistoryPaths;
 
@@ -140,6 +148,17 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
     return null;
   }
 
+  // Navigate to queue action for notifications
+  const viewQueueAction = useCallback(
+    () => ({
+      label: t(toI18nKey('viewQueue', UI.Modules.QUEUE), {
+        defaultValue: 'View queue',
+      }),
+      callback: () => navigate('/queue'),
+    }),
+    [navigate, t],
+  );
+
   // Show notification based on results
   const showResultNotification = (succeeded: number, failed: number) => {
     if (failed === 0) {
@@ -151,6 +170,7 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
           defaultValue: '{{count}} items added to queue',
           count: succeeded,
         }),
+        action: viewQueueAction(),
       });
     } else if (succeeded === 0) {
       NotificationActions.error({
@@ -172,6 +192,7 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
           succeeded,
           failed,
         }),
+        action: viewQueueAction(),
       });
     }
   };
