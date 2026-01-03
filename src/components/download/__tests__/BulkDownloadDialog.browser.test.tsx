@@ -197,7 +197,7 @@ describe('BulkDownloadDialog', () => {
   });
 
   describe('empty items handling', () => {
-    test('should call onClose immediately when items becomes empty', async () => {
+    test('should not auto-close when items is empty', async () => {
       const handleDownload = vi.fn();
       const handleClose = vi.fn();
       const commonData = await setupMocks();
@@ -211,9 +211,11 @@ describe('BulkDownloadDialog', () => {
         viewType: VIEW_FIXED_HEIGHT,
       });
 
-      await waitFor(() => {
-        expect(handleClose).toHaveBeenCalledTimes(1);
-      });
+      // Wait a bit to ensure any async effects have run
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      // onClose should NOT be called automatically - dialog stays open with warning
+      expect(handleClose).not.toHaveBeenCalled();
     });
   });
 

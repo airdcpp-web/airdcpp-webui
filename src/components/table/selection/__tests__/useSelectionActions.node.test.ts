@@ -168,13 +168,14 @@ describe('useSelectionActions', () => {
       expect(result.current.showBulkDownload).toBe(false);
     });
 
-    test('should call clearSelection', () => {
+    test('should not call clearSelection (selection cleared only after download success)', () => {
       const clearSelection = vi.fn();
       const { result } = setup({ clearSelection });
       act(() => {
         result.current.handleBulkDownloadClose();
       });
-      expect(clearSelection).toHaveBeenCalledTimes(1);
+      // Selection is NOT cleared on close - only after successful download via onDownloadComplete
+      expect(clearSelection).not.toHaveBeenCalled();
     });
   });
 

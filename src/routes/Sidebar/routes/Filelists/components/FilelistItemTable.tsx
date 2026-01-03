@@ -102,6 +102,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
     handleBulkDownloadClose,
     handleBulkActionClick,
   } = useSelectionActions<API.FilelistItem>({ selection, store: FilelistViewStore });
+  const { clearSelection } = selection;
 
   const rowClassNameGetter = useCallback(
     (rowData: API.FilelistItem) => {
@@ -226,6 +227,7 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
           userGetter={() => filelist.user}
           sessionItem={filelist}
           onClose={handleBulkDownloadClose}
+          onDownloadComplete={clearSelection}
         />
       )}
     </TableSelectionProvider>

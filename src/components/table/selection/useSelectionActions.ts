@@ -80,8 +80,9 @@ export const useSelectionActions = <T extends { id: API.IdType }>({
 
   const handleBulkDownloadClose = useCallback(() => {
     setShowBulkDownload(false);
-    selection.clearSelection();
-  }, [selection]);
+    // Note: Selection is cleared inside BulkDownloadDialog after successful download
+    // Don't clear here to avoid issues when dialog is cancelled or closed early
+  }, []);
 
   // Handler for bulk action menu clicks - intercepts download actions to open dialog
   const handleBulkActionClick = useCallback(

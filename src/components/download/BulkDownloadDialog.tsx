@@ -58,6 +58,8 @@ export type BulkDownloadDialogProps<ItemT extends BulkDownloadItem> =
     sessionItem: UI.SessionItemBase | undefined;
     // Called when dialog closes (after downloads complete or cancelled)
     onClose: () => void;
+    // Called after download completes (success or partial) - use to clear selection
+    onDownloadComplete?: () => void;
     // History paths for initial suggestions
     historyPaths?: string[];
     // Display name for the bulk operation (defaults to "X items")
@@ -90,7 +92,7 @@ const isSelectionMode = <ItemT extends BulkDownloadItem>(
 const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
   props: BulkDownloadDialogProps<ItemT>,
 ) => {
-  const { sessionItem, onClose, historyPaths: propHistoryPaths, displayName } = props;
+  const { sessionItem, onClose, onDownloadComplete, historyPaths: propHistoryPaths, displayName } = props;
   const { t } = useTranslation();
   const socket = useSocket();
   const navigate = useNavigate();
@@ -137,17 +139,25 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
       count: itemCount,
     });
 
-  // Handle empty selection - close dialog immediately
-  // Only run on mount to avoid issues with onClose reference changes
-  useEffect(() => {
-    if (itemCount === 0) {
-      onClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  // If no items, show a message instead of auto-closing
+  // Auto-closing can cause issues with selection state
   if (itemCount === 0) {
-    return null;
+    return (
+      <Modal
+        ref={modalRef}
+        className="bulk-download-dialog"
+        closable={true}
+        title={translate('Download', t, UI.Modules.COMMON)}
+        icon={IconConstants.DOWNLOAD}
+        onReject={onClose}
+      >
+        <div className="ui message warning">
+          {t(toI18nKey('noItemsSelected', UI.Modules.COMMON), {
+            defaultValue: 'No items selected for download',
+          })}
+        </div>
+      </Modal>
+    );
   }
 
   // Navigate to queue action for notifications
@@ -302,6 +312,11 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
     const succeeded = results.filter((r) => r.success).length;
     const failed = results.filter((r) => !r.success).length;
     showResultNotification(succeeded, failed);
+
+    // Clear selection after download attempt (success or partial)
+    if (succeeded > 0) {
+      onDownloadComplete?.();
+    }
 
     setIsDownloading(false);
     modalRef.current?.hide();

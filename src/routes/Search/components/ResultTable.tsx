@@ -135,6 +135,7 @@ const ResultTable: React.FC<ResultTableProps> = ({
     handleBulkDownloadClose,
     handleBulkActionClick,
   } = useSelectionActions<API.GroupedSearchResult>({ selection, store: SearchViewStore });
+  const { clearSelection } = selection;
   const { translate } = searchT;
 
   const rowClassNameGetter = useCallback((rowData: API.GroupedSearchResult) => {
@@ -307,6 +308,7 @@ const ResultTable: React.FC<ResultTableProps> = ({
           userGetter={resultUserGetter}
           sessionItem={instance}
           onClose={handleBulkDownloadClose}
+          onDownloadComplete={clearSelection}
         />
       )}
     </TableSelectionProvider>
