@@ -22,7 +22,7 @@ describe('DupeFilterToggles regex patterns', () => {
     // share_finished, share_queue_finished
 
     describe('hideShared pattern', () => {
-      const regex = new RegExp('^(?!.*(share)).*$');
+      const regex = /^(?!.*(share)).*$/;
 
       test.each([
         ['', true, 'empty string (no dupe)'],
@@ -41,7 +41,7 @@ describe('DupeFilterToggles regex patterns', () => {
     });
 
     describe('hideQueued pattern', () => {
-      const regex = new RegExp('^(?!.*(queue)).*$');
+      const regex = /^(?!.*(queue)).*$/;
 
       test.each([
         ['', true, 'empty string (no dupe)'],
@@ -60,7 +60,7 @@ describe('DupeFilterToggles regex patterns', () => {
     });
 
     describe('hideShared AND hideQueued pattern', () => {
-      const regex = new RegExp('^(?!.*(share|queue)).*$');
+      const regex = /^(?!.*(share|queue)).*$/;
 
       test.each([
         ['', true, 'empty string (no dupe)'],

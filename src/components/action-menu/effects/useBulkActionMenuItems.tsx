@@ -2,10 +2,9 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import * as UI from '@/types/ui';
-import { showBulkAction } from '@/utils/ActionUtils';
+import { showBulkAction, toActionI18nKey } from '@/utils/ActionUtils';
 import { useSession } from '@/context/AppStoreContext';
 import { BulkActionClickHandler } from '@/decorators/BulkActionHandlerDecorator';
-import { toActionI18nKey } from '@/utils/ActionUtils';
 
 export interface BulkActionMenuDefinition<
   ItemDataT extends UI.ActionMenuItemDataValueType,
@@ -66,27 +65,25 @@ export const useBulkActionMenuItems = <
           return;
         }
 
-        const actionDef = action as UI.ActionDefinition<ItemDataT, EntityT>;
-
         menuItems.push({
           id: actionId,
           item: {
             onClick: () => {
               // Allow parent to intercept action (e.g., for dialog handling)
-              if (onActionClick && onActionClick(actionId, items)) {
+              if (onActionClick?.(actionId, items)) {
                 return; // Parent handled the action
               }
 
               // Default: execute action via BulkActionHandlerDecorator
               onClickAction({
-                action: actionDef,
+                action,
                 items,
                 entity: entity as EntityT,
                 moduleData: moduleActions.moduleData,
               });
             },
-            caption: t(toActionI18nKey(actionDef, moduleActions.moduleData.moduleId), actionDef.displayName),
-            icon: actionDef.icon,
+            caption: t(toActionI18nKey(action, moduleActions.moduleData.moduleId), action.displayName),
+            icon: action.icon,
           },
         });
       });

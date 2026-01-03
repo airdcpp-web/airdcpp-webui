@@ -27,6 +27,28 @@ import { VIEW_FIXED_HEIGHT } from '@/tests/render/test-containers';
 import { createTestModalController } from '@/tests/helpers/test-dialog-helpers';
 import { setupUserEvent } from '@/tests/helpers/test-form-helpers';
 
+// Test wrapper component for empty items scenario (extracted to avoid nested function)
+const createEmptyItemsTest = (
+  handleDownload: ReturnType<typeof vi.fn>,
+  handleClose: ReturnType<typeof vi.fn>,
+) => {
+  const EmptyItemsTest = () => {
+    const [showDialog, setShowDialog] = useState(true);
+    return showDialog ? (
+      <BulkDownloadDialog
+        items={[]}
+        downloadHandler={handleDownload}
+        sessionItem={SearchInstance1Response as unknown as UI.SessionItemBase}
+        onClose={() => {
+          setShowDialog(false);
+          handleClose();
+        }}
+      />
+    ) : null;
+  };
+  return EmptyItemsTest;
+};
+
 // Create mock items for testing
 const createMockItem = (id: string, name: string): API.GroupedSearchResult => ({
   ...GroupedSearchResultFileResponse,
@@ -96,8 +118,8 @@ describe('BulkDownloadDialog', () => {
       downloadHandler ?? vi.fn<UI.DownloadHandler<API.GroupedSearchResult>>();
     const handleClose = vi.fn();
 
-    const userGetter = (item: API.GroupedSearchResult) =>
-      item.users?.user as API.HintedUser;
+    const userGetter = (item: API.GroupedSearchResult): API.HintedUser | undefined =>
+      item.users?.user;
 
     // Wrapper component that controls when dialog is shown
     const BulkDownloadDialogTest = () => {
@@ -180,20 +202,7 @@ describe('BulkDownloadDialog', () => {
       const handleClose = vi.fn();
       const commonData = await setupMocks();
 
-      const EmptyItemsTest = () => {
-        const [showDialog, setShowDialog] = useState(true);
-        return showDialog ? (
-          <BulkDownloadDialog
-            items={[]}
-            downloadHandler={handleDownload}
-            sessionItem={SearchInstance1Response as unknown as UI.SessionItemBase}
-            onClose={() => {
-              setShowDialog(false);
-              handleClose();
-            }}
-          />
-        ) : null;
-      };
+      const EmptyItemsTest = createEmptyItemsTest(handleDownload, handleClose);
 
       const routes = [{ path: '/home/*', Component: EmptyItemsTest }];
 

@@ -84,9 +84,7 @@ const TableContainer: React.FC<TableContainerProps> = (props) => {
     // Use custom header if provided (e.g., for selection checkbox column)
     // Otherwise use the default sortable header
     const isSelectionColumn = columnKey === '__selection';
-    const header = customHeader ? (
-      customHeader
-    ) : (
+    const header = customHeader ?? (
       <Plugins.ResizeCell onColumnResizeEnd={viewManager.onColumnResizeEndCallback}>
         <HeaderCell
           onClick={viewManager.onColumnClicked.bind(null, columnKey)}

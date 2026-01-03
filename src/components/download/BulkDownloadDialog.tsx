@@ -96,11 +96,16 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
   const [isDownloading, setIsDownloading] = useState(false);
 
   // Determine the count and display name based on mode
-  const itemCount = isSelectionMode(props)
-    ? props.selectionData.mode === 'select_all'
-      ? props.selectionData.totalCount - props.selectionData.excludedIds.length
-      : props.selectionData.selectedIds.length
-    : props.items.length;
+  const getItemCount = (): number => {
+    if (!isSelectionMode(props)) {
+      return props.items.length;
+    }
+    if (props.selectionData.mode === 'select_all') {
+      return props.selectionData.totalCount - props.selectionData.excludedIds.length;
+    }
+    return props.selectionData.selectedIds.length;
+  };
+  const itemCount = getItemCount();
 
   const effectiveDisplayName =
     displayName ||
@@ -175,15 +180,12 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
         // For select-all, send excluded IDs
         requestBody.select_all = true;
         requestBody.excluded_ids = selectionData.excludedIds;
+      } else if (bulkApiUrl.includes('/results/')) {
+        // Search results use TTHs
+        requestBody.tths = selectionData.selectedIds;
       } else {
-        // For explicit selection, determine ID type from URL
-        if (bulkApiUrl.includes('/results/')) {
-          // Search results use TTHs
-          requestBody.tths = selectionData.selectedIds;
-        } else {
-          // Filelist items use item_ids
-          requestBody.item_ids = selectionData.selectedIds;
-        }
+        // Filelist items use item_ids
+        requestBody.item_ids = selectionData.selectedIds;
       }
 
       const result = await socket.post<BulkDownloadResult>(bulkApiUrl, requestBody);

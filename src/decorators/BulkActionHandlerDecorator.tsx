@@ -22,7 +22,7 @@ export interface BulkActionData<
 export type BulkActionClickHandler<
   ItemDataT extends UI.ActionDataValueType,
   EntityT extends UI.ActionEntityValueType = void,
-> = (actionData: BulkActionData<ItemDataT, EntityT>) => void;
+> = (actionData: BulkActionData<ItemDataT, EntityT>) => void | Promise<void>;
 
 export interface BulkActionHandlerDecoratorChildProps<
   ItemDataT extends UI.ActionDataValueType,
