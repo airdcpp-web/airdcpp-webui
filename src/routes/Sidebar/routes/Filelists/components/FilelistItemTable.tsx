@@ -41,7 +41,6 @@ import {
   SelectionFooterBar,
 } from '@/components/table/selection';
 import FilterOptionsButton from '@/components/table/FilterOptionsButton';
-import FilelistConstants from '@/constants/FilelistConstants';
 import { SelectionActionMenu } from '@/actions/ui/selection';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
@@ -99,7 +98,6 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
   const {
     showBulkDownload,
     selectedItems,
-    getSelectionData,
     getTotalCount,
     handleBulkDownloadClose,
     handleBulkActionClick,
@@ -223,8 +221,9 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
       <FilelistItemInfoDialog filelist={filelist} />
       {showBulkDownload && (
         <BulkDownloadDialog
-          selectionData={getSelectionData()}
-          bulkApiUrl={`${FilelistConstants.SESSIONS_URL}/${filelist.user.cid}/items/download`}
+          items={selectedItems}
+          downloadHandler={filelistDownloadHandler}
+          userGetter={() => filelist.user}
           sessionItem={filelist}
           onClose={handleBulkDownloadClose}
         />

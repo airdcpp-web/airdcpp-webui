@@ -131,7 +131,6 @@ const ResultTable: React.FC<ResultTableProps> = ({
   const {
     showBulkDownload,
     selectedItems,
-    getSelectionData,
     getTotalCount,
     handleBulkDownloadClose,
     handleBulkActionClick,
@@ -303,8 +302,9 @@ const ResultTable: React.FC<ResultTableProps> = ({
       <ResultDialog searchT={searchT} instance={instance} />
       {showBulkDownload && (
         <BulkDownloadDialog
-          selectionData={getSelectionData()}
-          bulkApiUrl={`${SearchConstants.INSTANCES_URL}/${instance.id}/results/download`}
+          items={selectedItems}
+          downloadHandler={searchDownloadHandler}
+          userGetter={resultUserGetter}
           sessionItem={instance}
           onClose={handleBulkDownloadClose}
         />

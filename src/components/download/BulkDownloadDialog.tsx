@@ -10,7 +10,7 @@ import IconConstants from '@/constants/IconConstants';
 import { toI18nKey, translate } from '@/utils/TranslationUtils';
 import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import { addHistory } from '@/services/api/HistoryApi';
-import { HistoryStringEnum } from '@/constants/HistoryConstants';
+import HistoryConstants, { HistoryStringEnum } from '@/constants/HistoryConstants';
 
 import { useSocket } from '@/context/SocketContext';
 import { BulkSelectionData, BulkDownloadResult } from '@/components/table/selection/types';
@@ -89,11 +89,26 @@ const isSelectionMode = <ItemT extends BulkDownloadItem>(
 const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
   props: BulkDownloadDialogProps<ItemT>,
 ) => {
-  const { sessionItem, onClose, historyPaths = [], displayName } = props;
+  const { sessionItem, onClose, historyPaths: propHistoryPaths, displayName } = props;
   const { t } = useTranslation();
   const socket = useSocket();
   const modalRef = useRef<ModalHandle>(null);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [fetchedHistoryPaths, setFetchedHistoryPaths] = useState<string[]>([]);
+
+  // Fetch history paths if not provided via props
+  useEffect(() => {
+    if (!propHistoryPaths) {
+      socket
+        .get<string[]>(`${HistoryConstants.STRINGS_URL}/${HistoryStringEnum.DOWNLOAD_DIR}`)
+        .then(setFetchedHistoryPaths)
+        .catch(() => {
+          // Ignore errors - history is optional
+        });
+    }
+  }, [propHistoryPaths, socket]);
+
+  const historyPaths = propHistoryPaths ?? fetchedHistoryPaths;
 
   // Determine the count and display name based on mode
   const getItemCount = (): number => {
