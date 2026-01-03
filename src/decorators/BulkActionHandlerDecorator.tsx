@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import * as React from 'react';
 
-import { useNavigate, useLocation, Location } from 'react-router';
-import { useTranslation } from 'react-i18next';
+import { Location } from 'react-router';
 
 import * as UI from '@/types/ui';
 
 import { translate } from '@/utils/TranslationUtils';
 import NotificationActions from '@/actions/NotificationActions';
-import { useSocket } from '@/context/SocketContext';
-import { useSessionStoreApi } from '@/context/SessionStoreContext';
-import { useAppStoreApi } from '@/context/AppStoreContext';
+import { useActionHandlerContext } from './hooks/useActionHandlerContext';
 
 export interface BulkActionData<
   ItemDataT extends UI.ActionDataValueType,
@@ -50,12 +47,7 @@ const BulkActionHandlerDecorator = <
 >(
   props: BulkActionHandlerDecoratorProps<ItemDataT, EntityT>,
 ) => {
-  const socket = useSocket();
-  const { t } = useTranslation();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const sessionStoreApi = useSessionStoreApi();
-  const appStoreApi = useAppStoreApi();
+  const { t, location, getHandlerProps } = useActionHandlerContext();
   const [isExecuting, setIsExecuting] = useState(false);
 
   const handleClickAction: BulkActionClickHandler<ItemDataT, EntityT> = async (actionData) => {
@@ -65,14 +57,7 @@ const BulkActionHandlerDecorator = <
     setIsExecuting(true);
 
     try {
-      const handlerProps: UI.ActionHandlerProps = {
-        location,
-        navigate,
-        t,
-        socket,
-        sessionStore: sessionStoreApi.getState(),
-        appStore: appStoreApi.getState(),
-      };
+      const handlerProps = getHandlerProps();
 
       // Check if action has a bulk-specific handler
       if (action.bulk?.handler) {
