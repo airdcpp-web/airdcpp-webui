@@ -13,6 +13,7 @@ import { addHistory } from '@/services/api/HistoryApi';
 import { HistoryStringEnum } from '@/constants/HistoryConstants';
 
 import { useSocket } from '@/context/SocketContext';
+import { BulkSelectionData, BulkDownloadResult } from '@/components/table/selection/types';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -21,20 +22,46 @@ export interface BulkDownloadItem extends UI.DownloadableItemInfo {
   // Item must have id, name, type, tth, size, path, dupe, time
 }
 
-export interface BulkDownloadDialogProps<ItemT extends BulkDownloadItem> {
+// Props for item-based bulk download (legacy mode)
+interface ItemBasedProps<ItemT extends BulkDownloadItem> {
   // Items to download
   items: ItemT[];
   // Download handler for individual items
   downloadHandler: UI.DownloadHandler<ItemT>;
-  // Session item (search instance or filelist session)
-  sessionItem: UI.SessionItemBase | undefined;
   // Function to get user for an item (for filelist downloads)
   userGetter?: (item: ItemT) => UI.DownloadSource | undefined;
-  // Called when dialog closes (after downloads complete or cancelled)
-  onClose: () => void;
-  // History paths for initial suggestions
-  historyPaths?: string[];
+  // Bulk API mode props should not be set
+  selectionData?: never;
+  bulkApiUrl?: never;
 }
+
+// Props for selection-based bulk download (new API mode)
+interface SelectionBasedProps {
+  // Selection data with IDs for backend resolution
+  selectionData: BulkSelectionData;
+  // API URL for bulk download (e.g., '/search/1/results/download' or '/filelists/CID/items/download')
+  bulkApiUrl: string;
+  // Item-based props should not be set
+  items?: never;
+  downloadHandler?: never;
+  userGetter?: never;
+}
+
+type BulkDownloadModeProps<ItemT extends BulkDownloadItem> =
+  | ItemBasedProps<ItemT>
+  | SelectionBasedProps;
+
+export type BulkDownloadDialogProps<ItemT extends BulkDownloadItem> =
+  BulkDownloadModeProps<ItemT> & {
+    // Session item (search instance or filelist session)
+    sessionItem: UI.SessionItemBase | undefined;
+    // Called when dialog closes (after downloads complete or cancelled)
+    onClose: () => void;
+    // History paths for initial suggestions
+    historyPaths?: string[];
+    // Display name for the bulk operation (defaults to "X items")
+    displayName?: string;
+  };
 
 interface DownloadResult {
   item: BulkDownloadItem;
@@ -47,35 +74,147 @@ interface DownloadResult {
 // rate limiting or connection exhaustion.
 const BATCH_SIZE = 5;
 
-const BulkDownloadDialog = <ItemT extends BulkDownloadItem>({
-  items,
-  downloadHandler,
-  sessionItem,
-  userGetter,
-  onClose,
-  historyPaths = [],
-}: BulkDownloadDialogProps<ItemT>) => {
+// Helper to check if we're in selection-based mode
+const isSelectionMode = <ItemT extends BulkDownloadItem>(
+  props: BulkDownloadDialogProps<ItemT>,
+): props is SelectionBasedProps & {
+  sessionItem: UI.SessionItemBase | undefined;
+  onClose: () => void;
+  historyPaths?: string[];
+  displayName?: string;
+} => {
+  return 'selectionData' in props && props.selectionData !== undefined;
+};
+
+const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
+  props: BulkDownloadDialogProps<ItemT>,
+) => {
+  const { sessionItem, onClose, historyPaths = [], displayName } = props;
   const { t } = useTranslation();
   const socket = useSocket();
   const modalRef = useRef<ModalHandle>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  // Reference item for dialog display (all items go to same directory,
-  // so we use the first item's properties for the UI)
-  const referenceItem = items[0];
+  // Determine the count and display name based on mode
+  const itemCount = isSelectionMode(props)
+    ? props.selectionData.mode === 'select_all'
+      ? props.selectionData.totalCount - props.selectionData.excludedIds.length
+      : props.selectionData.selectedIds.length
+    : props.items.length;
 
-  // Handle empty items array - close dialog immediately
+  const effectiveDisplayName =
+    displayName ||
+    t(toI18nKey('bulkDownloadItems', UI.Modules.COMMON), {
+      defaultValue: '{{count}} items',
+      count: itemCount,
+    });
+
+  // Handle empty selection - close dialog immediately
   useEffect(() => {
-    if (!referenceItem) {
+    if (itemCount === 0) {
       onClose();
     }
-  }, [referenceItem, onClose]);
+  }, [itemCount, onClose]);
 
-  if (!referenceItem) {
+  if (itemCount === 0) {
     return null;
   }
 
-  const handleDownload = async (targetPath: string) => {
+  // Show notification based on results
+  const showResultNotification = (succeeded: number, failed: number) => {
+    if (failed === 0) {
+      NotificationActions.success({
+        title: t(toI18nKey('bulkDownloadComplete', UI.Modules.COMMON), {
+          defaultValue: 'Download queued',
+        }),
+        message: t(toI18nKey('bulkDownloadSuccessMessage', UI.Modules.COMMON), {
+          defaultValue: '{{count}} items added to queue',
+          count: succeeded,
+        }),
+      });
+    } else if (succeeded === 0) {
+      NotificationActions.error({
+        title: t(toI18nKey('bulkDownloadFailed', UI.Modules.COMMON), {
+          defaultValue: 'Download failed',
+        }),
+        message: t(toI18nKey('bulkDownloadFailMessage', UI.Modules.COMMON), {
+          defaultValue: 'Failed to queue {{count}} items',
+          count: failed,
+        }),
+      });
+    } else {
+      NotificationActions.warning({
+        title: t(toI18nKey('bulkDownloadPartial', UI.Modules.COMMON), {
+          defaultValue: 'Download partially completed',
+        }),
+        message: t(toI18nKey('bulkDownloadPartialMessage', UI.Modules.COMMON), {
+          defaultValue: '{{succeeded}} items queued, {{failed}} failed',
+          succeeded,
+          failed,
+        }),
+      });
+    }
+  };
+
+  // Handle download using new bulk API
+  const handleBulkApiDownload = async (targetPath: string) => {
+    if (!isSelectionMode(props)) return;
+
+    setIsDownloading(true);
+
+    try {
+      const { selectionData, bulkApiUrl } = props;
+
+      // Build request body based on selection mode
+      const requestBody: Record<string, unknown> = {
+        target_directory: targetPath,
+        priority: API.PriorityEnum.NORMAL,
+      };
+
+      if (selectionData.mode === 'select_all') {
+        // For select-all, send excluded IDs
+        requestBody.select_all = true;
+        requestBody.excluded_ids = selectionData.excludedIds;
+      } else {
+        // For explicit selection, determine ID type from URL
+        if (bulkApiUrl.includes('/results/')) {
+          // Search results use TTHs
+          requestBody.tths = selectionData.selectedIds;
+        } else {
+          // Filelist items use item_ids
+          requestBody.item_ids = selectionData.selectedIds;
+        }
+      }
+
+      const result = await socket.post<BulkDownloadResult>(bulkApiUrl, requestBody);
+
+      showResultNotification(result.succeeded.length, result.failed.length);
+    } catch (error: any) {
+      NotificationActions.error({
+        title: t(toI18nKey('bulkDownloadFailed', UI.Modules.COMMON), {
+          defaultValue: 'Download failed',
+        }),
+        message: error?.message || 'Unknown error',
+      });
+    }
+
+    // Save to history
+    runBackgroundSocketAction(
+      () => addHistory(socket, HistoryStringEnum.DOWNLOAD_DIR, targetPath),
+      t,
+    );
+
+    setIsDownloading(false);
+    modalRef.current?.hide();
+    onClose();
+  };
+
+  // Handle download using item-by-item approach (legacy mode)
+  const handleItemBasedDownload = async (targetPath: string) => {
+    if (isSelectionMode(props)) return;
+
+    const { items, downloadHandler, userGetter } = props;
+
     setIsDownloading(true);
 
     const results: DownloadResult[] = [];
@@ -109,7 +248,7 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>({
               error: errorMessage,
             };
           }
-        })
+        }),
       );
       results.push(...batchResults);
     }
@@ -117,59 +256,39 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>({
     // Save to history
     runBackgroundSocketAction(
       () => addHistory(socket, HistoryStringEnum.DOWNLOAD_DIR, targetPath),
-      t
+      t,
     );
 
-    // Show results notification
     const succeeded = results.filter((r) => r.success).length;
     const failed = results.filter((r) => !r.success).length;
-
-    if (failed === 0) {
-      NotificationActions.success({
-        title: t(toI18nKey('bulkDownloadComplete', UI.Modules.COMMON), {
-          defaultValue: 'Download queued',
-        }),
-        message: t(toI18nKey('bulkDownloadSuccessMessage', UI.Modules.COMMON), {
-          defaultValue: '{{count}} items added to queue',
-          count: succeeded,
-        }),
-      });
-    } else if (succeeded === 0) {
-      NotificationActions.error({
-        title: t(toI18nKey('bulkDownloadFailed', UI.Modules.COMMON), {
-          defaultValue: 'Download failed',
-        }),
-        message: t(toI18nKey('bulkDownloadFailMessage', UI.Modules.COMMON), {
-          defaultValue: 'Failed to queue {{count}} items',
-          count: failed,
-        }),
-      });
-    } else {
-      NotificationActions.warning({
-        title: t(toI18nKey('bulkDownloadPartial', UI.Modules.COMMON), {
-          defaultValue: 'Download partially completed',
-        }),
-        message: t(toI18nKey('bulkDownloadPartialMessage', UI.Modules.COMMON), {
-          defaultValue: '{{succeeded}} items queued, {{failed}} failed',
-          succeeded,
-          failed,
-        }),
-      });
-    }
+    showResultNotification(succeeded, failed);
 
     setIsDownloading(false);
     modalRef.current?.hide();
     onClose();
   };
 
+  const handleDownload = isSelectionMode(props)
+    ? handleBulkApiDownload
+    : handleItemBasedDownload;
+
   // Create a synthetic item info for the dialog header
-  const displayInfo: UI.DownloadableItemInfo = {
-    ...referenceItem,
-    name: t(toI18nKey('bulkDownloadItems', UI.Modules.COMMON), {
-      defaultValue: '{{count}} items',
-      count: items.length,
-    }),
-  };
+  // For selection mode, we create a minimal display item
+  const displayInfo: UI.DownloadableItemInfo = isSelectionMode(props)
+    ? {
+        id: 0,
+        name: effectiveDisplayName,
+        type: { id: 'directory', str: 'Directory', files: itemCount, directories: 0 },
+        tth: '',
+        size: -1,
+        path: '',
+        dupe: null,
+        time: 0,
+      }
+    : {
+        ...props.items[0],
+        name: effectiveDisplayName,
+      };
 
   return (
     <Modal

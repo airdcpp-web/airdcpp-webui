@@ -43,7 +43,8 @@ import {
   SelectionHeaderCell,
   SelectionFooterBar,
 } from '@/components/table/selection';
-import DupeFilterToggles from '@/components/table/DupeFilterToggles';
+import FilterOptionsButton from '@/components/table/FilterOptionsButton';
+import { SelectionActionMenu } from '@/actions/ui/selection';
 
 export const getGroupedResultUserCaption = (
   { count, user }: API.SearchResultUserInfo,
@@ -130,11 +131,24 @@ const ResultTable: React.FC<ResultTableProps> = ({
   const {
     showBulkDownload,
     selectedItems,
+    getSelectionData,
     getTotalCount,
     handleBulkDownload,
     handleBulkDownloadClose,
   } = useSelectionActions<API.GroupedSearchResult>({ selection, store: SearchViewStore });
   const { translate } = searchT;
+
+  // Handle bulk action clicks - intercept download to open dialog
+  const handleBulkActionClick = useCallback(
+    (actionId: string) => {
+      if (actionId === 'download' || actionId === 'downloadTo') {
+        handleBulkDownload();
+        return true; // Prevent default handler
+      }
+      return false;
+    },
+    [handleBulkDownload],
+  );
 
   const rowClassNameGetter = useCallback((rowData: API.GroupedSearchResult) => {
     return dupeToStringType(rowData.dupe);
@@ -210,10 +224,13 @@ const ResultTable: React.FC<ResultTableProps> = ({
         footerData={
           <>
             <SelectionFooterBar
-              onDownload={handleBulkDownload}
+              actions={SelectionActionMenu}
+              items={selectedItems}
+              entity={instance}
               t={searchT.t}
+              onActionClick={handleBulkActionClick}
             >
-              <DupeFilterToggles store={SearchViewStore} />
+              <FilterOptionsButton store={SearchViewStore} />
             </SelectionFooterBar>
             <ActionMenu
               className="top left pointing"
@@ -296,12 +313,11 @@ const ResultTable: React.FC<ResultTableProps> = ({
         sessionItem={instance}
       />
       <ResultDialog searchT={searchT} instance={instance} />
-      {showBulkDownload && selectedItems.length > 0 && (
+      {showBulkDownload && (
         <BulkDownloadDialog
-          items={selectedItems}
-          downloadHandler={searchDownloadHandler}
+          selectionData={getSelectionData()}
+          bulkApiUrl={`${SearchConstants.INSTANCES_URL}/${instance.id}/results/download`}
           sessionItem={instance}
-          userGetter={resultUserGetter}
           onClose={handleBulkDownloadClose}
         />
       )}

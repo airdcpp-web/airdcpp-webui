@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { TableSelectionContextValue } from './types';
+import { BulkSelectionData, TableSelectionContextValue } from './types';
 
 import * as API from '@/types/api';
 
@@ -15,7 +15,12 @@ interface UseSelectionActionsOptions<T extends { id: API.IdType }> {
 
 interface UseSelectionActionsResult<T> {
   showBulkDownload: boolean;
+  // Selected items that are currently loaded in the view store
+  // NOTE: In large datasets, this may not include all selected items!
   selectedItems: T[];
+  // Get selection data for passing to backend bulk API
+  // This is the preferred way to handle bulk operations
+  getSelectionData: () => BulkSelectionData;
   getTotalCount: () => number;
   handleBulkDownload: () => void;
   handleBulkDownloadClose: () => void;
@@ -32,7 +37,31 @@ export const useSelectionActions = <T extends { id: API.IdType }>({
     return store.rowCount || 0;
   }, [store]);
 
+  // Get selection data for backend API calls
+  // This returns IDs that can be passed to the backend for entity resolution
+  const getSelectionData = useCallback((): BulkSelectionData => {
+    const totalCount = store.rowCount || 0;
+
+    if (selection.selectAllMode) {
+      return {
+        mode: 'select_all',
+        selectedIds: [],
+        excludedIds: Array.from(selection.excludedIds),
+        totalCount,
+      };
+    }
+
+    return {
+      mode: 'explicit',
+      selectedIds: Array.from(selection.selectedIds),
+      excludedIds: [],
+      totalCount,
+    };
+  }, [selection.selectAllMode, selection.selectedIds, selection.excludedIds, store.rowCount]);
+
   // Memoize selected items directly to avoid unstable function reference
+  // NOTE: This only returns items that are currently loaded in the sparse view store!
+  // For large datasets, use getSelectionData() and let the backend resolve entities
   const selectedItems = useMemo(() => {
     const items = store.items || [];
     if (selection.selectAllMode) {
@@ -54,6 +83,7 @@ export const useSelectionActions = <T extends { id: API.IdType }>({
   return {
     showBulkDownload,
     selectedItems,
+    getSelectionData,
     getTotalCount,
     handleBulkDownload,
     handleBulkDownloadClose,

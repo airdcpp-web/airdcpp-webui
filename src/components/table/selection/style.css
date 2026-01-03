@@ -34,17 +34,21 @@
 
 .selection-footer-bar .selection-count {
   font-weight: 500;
-  color: var(--selection-primary-color);
   white-space: nowrap;
 }
 
-.selection-footer-bar .selection-actions {
-  display: flex;
-  gap: 4px;
+/* Selection dropdown styling */
+.selection-footer-bar .selection-dropdown {
+  margin: 0 !important;
 }
 
-.selection-footer-bar .selection-actions .ui.button {
-  margin: 0;
+.selection-footer-bar .selection-dropdown .selection-count {
+  margin-left: 6px;
+  color: inherit;
+}
+
+.selection-footer-bar .selection-dropdown.ui.dropdown > .menu {
+  min-width: 150px;
 }
 
 /* Selection header cell */

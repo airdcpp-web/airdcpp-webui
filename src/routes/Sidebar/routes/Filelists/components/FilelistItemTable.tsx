@@ -40,7 +40,9 @@ import {
   SelectionHeaderCell,
   SelectionFooterBar,
 } from '@/components/table/selection';
-import DupeFilterToggles from '@/components/table/DupeFilterToggles';
+import FilterOptionsButton from '@/components/table/FilterOptionsButton';
+import FilelistConstants from '@/constants/FilelistConstants';
+import { SelectionActionMenu } from '@/actions/ui/selection';
 
 interface NameCellProps extends RowWrapperCellChildProps<string, API.FilelistItem> {
   filelist: API.FilelistSession;
@@ -97,10 +99,23 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
   const {
     showBulkDownload,
     selectedItems,
+    getSelectionData,
     getTotalCount,
     handleBulkDownload,
     handleBulkDownloadClose,
   } = useSelectionActions<API.FilelistItem>({ selection, store: FilelistViewStore });
+
+  // Handle bulk action clicks - intercept download to open dialog
+  const handleBulkActionClick = useCallback(
+    (actionId: string) => {
+      if (actionId === 'download' || actionId === 'downloadTo') {
+        handleBulkDownload();
+        return true; // Prevent default handler
+      }
+      return false;
+    },
+    [handleBulkDownload],
+  );
 
   const rowClassNameGetter = useCallback(
     (rowData: API.FilelistItem) => {
@@ -160,12 +175,6 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
     [filelist.location, onClickDirectory]
   );
 
-  // User getter for filelist items
-  const filelistUserGetter = useCallback(
-    () => filelist.user,
-    [filelist.user]
-  );
-
   const sessionStore = useSessionStore();
   return (
     <TableSelectionProvider value={selection}>
@@ -182,10 +191,13 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
         }}
         footerData={
           <SelectionFooterBar
-            onDownload={handleBulkDownload}
+            actions={SelectionActionMenu}
+            items={selectedItems}
+            entity={filelist}
             t={sessionT.t}
+            onActionClick={handleBulkActionClick}
           >
-            <DupeFilterToggles store={FilelistViewStore} />
+            <FilterOptionsButton store={FilelistViewStore} />
           </SelectionFooterBar>
         }
       >
@@ -221,12 +233,11 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
         />
       </VirtualTable>
       <FilelistItemInfoDialog filelist={filelist} />
-      {showBulkDownload && selectedItems.length > 0 && (
+      {showBulkDownload && (
         <BulkDownloadDialog
-          items={selectedItems}
-          downloadHandler={filelistDownloadHandler}
+          selectionData={getSelectionData()}
+          bulkApiUrl={`${FilelistConstants.SESSIONS_URL}/${filelist.user.cid}/items/download`}
           sessionItem={filelist}
-          userGetter={filelistUserGetter}
           onClose={handleBulkDownloadClose}
         />
       )}

@@ -24,3 +24,33 @@ export interface SelectableItem {
   id: API.IdType;
   name?: string;
 }
+
+// Data structure for passing selection to bulk operations
+// This allows the backend to resolve entities instead of the frontend
+export interface BulkSelectionData {
+  // Selection mode
+  mode: 'explicit' | 'select_all';
+  // For explicit mode: the selected IDs
+  selectedIds: API.IdType[];
+  // For select_all mode: the excluded IDs
+  excludedIds: API.IdType[];
+  // Total count (for select_all mode calculations)
+  totalCount: number;
+}
+
+// Result from bulk download API
+export interface BulkDownloadResult {
+  succeeded: Array<{
+    id?: API.IdType;
+    tth?: string;
+    name: string;
+    bundle_info?: object;
+    directory_download?: object;
+  }>;
+  failed: Array<{
+    id?: API.IdType;
+    tth?: string;
+    name: string;
+    error: string;
+  }>;
+}
