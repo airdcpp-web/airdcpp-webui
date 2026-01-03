@@ -72,7 +72,7 @@ export const useSelectionActions = <T extends { id: API.IdType }>({
       return items.filter((item: T) => item && !selection.excludedIds.has(item.id));
     }
     return items.filter((item: T) => item && selection.selectedIds.has(item.id));
-  }, [store, selection.selectAllMode, selection.excludedIds, selection.selectedIds]);
+  }, [store.items, selection.selectAllMode, selection.excludedIds, selection.selectedIds]);
 
   const handleBulkDownload = useCallback(() => {
     setShowBulkDownload(true);

@@ -138,11 +138,13 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
     });
 
   // Handle empty selection - close dialog immediately
+  // Only run on mount to avoid issues with onClose reference changes
   useEffect(() => {
     if (itemCount === 0) {
       onClose();
     }
-  }, [itemCount, onClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (itemCount === 0) {
     return null;
