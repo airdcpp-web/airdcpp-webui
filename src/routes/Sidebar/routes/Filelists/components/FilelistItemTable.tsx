@@ -101,21 +101,9 @@ const FilelistItemTable: React.FC<ListBrowserProps> = ({
     selectedItems,
     getSelectionData,
     getTotalCount,
-    handleBulkDownload,
     handleBulkDownloadClose,
+    handleBulkActionClick,
   } = useSelectionActions<API.FilelistItem>({ selection, store: FilelistViewStore });
-
-  // Handle bulk action clicks - intercept download to open dialog
-  const handleBulkActionClick = useCallback(
-    (actionId: string) => {
-      if (actionId === 'download' || actionId === 'downloadTo') {
-        handleBulkDownload();
-        return true; // Prevent default handler
-      }
-      return false;
-    },
-    [handleBulkDownload],
-  );
 
   const rowClassNameGetter = useCallback(
     (rowData: API.FilelistItem) => {

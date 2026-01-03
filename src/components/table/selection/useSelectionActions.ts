@@ -24,6 +24,9 @@ interface UseSelectionActionsResult<T> {
   getTotalCount: () => number;
   handleBulkDownload: () => void;
   handleBulkDownloadClose: () => void;
+  // Handler for bulk action menu clicks - intercepts download actions to open dialog
+  // Returns true to prevent default action execution
+  handleBulkActionClick: (actionId: string) => boolean;
 }
 
 export const useSelectionActions = <T extends { id: API.IdType }>({
@@ -80,6 +83,18 @@ export const useSelectionActions = <T extends { id: API.IdType }>({
     selection.clearSelection();
   }, [selection]);
 
+  // Handler for bulk action menu clicks - intercepts download actions to open dialog
+  const handleBulkActionClick = useCallback(
+    (actionId: string) => {
+      if (actionId === 'download' || actionId === 'downloadTo') {
+        setShowBulkDownload(true);
+        return true; // Prevent default handler
+      }
+      return false;
+    },
+    [],
+  );
+
   return {
     showBulkDownload,
     selectedItems,
@@ -87,5 +102,6 @@ export const useSelectionActions = <T extends { id: API.IdType }>({
     getTotalCount,
     handleBulkDownload,
     handleBulkDownloadClose,
+    handleBulkActionClick,
   };
 };
