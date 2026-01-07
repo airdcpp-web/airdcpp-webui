@@ -240,6 +240,11 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
       const result = await socket.post<BulkDownloadResult>(bulkApiUrl, requestBody);
 
       showResultNotification(result.succeeded.length, result.failed.length);
+
+      // Clear selection after download attempt (success or partial)
+      if (result.succeeded.length > 0) {
+        onDownloadComplete?.();
+      }
     } catch (error: any) {
       NotificationActions.error({
         title: t(toI18nKey('bulkDownloadFailed', UI.Modules.COMMON), {

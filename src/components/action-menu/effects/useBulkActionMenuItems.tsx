@@ -56,7 +56,7 @@ export const useBulkActionMenuItems = <
         const action = moduleActions.actions[actionId];
 
         // Skip dividers and grouped actions for now
-        if (!action || action === null || 'children' in action) {
+        if (!action || 'children' in action) {
           return;
         }
 
