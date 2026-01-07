@@ -37,8 +37,8 @@ const createMockSelection = <T extends { id: number }>(
     setSelectAllMode: vi.fn(),
     clearSelection: vi.fn(),
     isSelected: vi.fn(() => false),
-    getCachedItemData: vi.fn((id: number) => itemCache.get(id)),
-    getItemDataCache: vi.fn(() => itemCache),
+    getCachedItemData: vi.fn((id: number) => itemCache.get(id)) as TableSelectionContextValue['getCachedItemData'],
+    getItemDataCache: vi.fn(() => itemCache) as TableSelectionContextValue['getItemDataCache'],
     ...overrides,
   };
 };
