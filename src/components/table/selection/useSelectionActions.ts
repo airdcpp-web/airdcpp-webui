@@ -36,9 +36,8 @@ export const useSelectionActions = <T extends { id: API.IdType }>({
   const [showBulkDownload, setShowBulkDownload] = useState(false);
 
   // Get total count from store for select-all
-  const getTotalCount = useCallback(() => {
-    return store.rowCount || 0;
-  }, [store]);
+  // Simple getter - no useCallback needed, always reads current store value
+  const getTotalCount = () => store.rowCount || 0;
 
   // Get selection data for backend API calls
   // This returns IDs that can be passed to the backend for entity resolution

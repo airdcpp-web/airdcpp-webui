@@ -1,3 +1,9 @@
+/* Button active state colors */
+:root {
+  --filter-toggle-active-bg: #1565c0;
+  --filter-toggle-active-hover-bg: #0d47a1;
+}
+
 .dupe-filter-toggles {
   display: flex;
   gap: 4px;
@@ -22,10 +28,10 @@
 }
 
 .dupe-filter-toggles .ui.button.active {
-  background-color: #1565c0;
+  background-color: var(--filter-toggle-active-bg);
   color: white;
 }
 
 .dupe-filter-toggles .ui.button.active:hover {
-  background-color: #0d47a1;
+  background-color: var(--filter-toggle-active-hover-bg);
 }
