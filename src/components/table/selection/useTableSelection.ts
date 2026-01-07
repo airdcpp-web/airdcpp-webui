@@ -15,7 +15,7 @@ export const useTableSelection = (
   const { entityId, viewId } = options;
   const [selectedIds, setSelectedIds] = useState<Set<API.IdType>>(new Set());
   // When true, all items are selected except those in excludedIds
-  const [selectAllMode, setSelectAllModeState] = useState(false);
+  const [isSelectAllMode, setIsSelectAllMode] = useState(false);
   // Items explicitly deselected while in select-all mode
   const [excludedIds, setExcludedIds] = useState<Set<API.IdType>>(new Set());
   // Track total count for calculating selected count in select-all mode
@@ -26,14 +26,14 @@ export const useTableSelection = (
   // Clear selection when entity or view changes
   useEffect(() => {
     setSelectedIds(new Set());
-    setSelectAllModeState(false);
+    setIsSelectAllMode(false);
     setExcludedIds(new Set());
     setTotalCount(0);
     itemDataCache.current.clear();
   }, [entityId, viewId]);
 
   const toggleItem = useCallback((id: API.IdType, itemData?: SelectableItem) => {
-    if (selectAllMode) {
+    if (isSelectAllMode) {
       // In select-all mode, toggling an item adds/removes it from excluded list
       setExcludedIds((prev) => {
         const next = new Set(prev);
@@ -68,20 +68,20 @@ export const useTableSelection = (
         return next;
       });
     }
-  }, [selectAllMode]);
+  }, [isSelectAllMode]);
 
   const setSelectAllMode = useCallback((enabled: boolean, newTotalCount: number) => {
     setTotalCount(newTotalCount);
     if (enabled) {
       // Enter select-all mode
-      setSelectAllModeState(true);
+      setIsSelectAllMode(true);
       setExcludedIds(new Set());
       setSelectedIds(new Set());
       // Clear cache - in select-all mode we use store items directly
       itemDataCache.current.clear();
     } else {
       // Exit select-all mode (clear all)
-      setSelectAllModeState(false);
+      setIsSelectAllMode(false);
       setExcludedIds(new Set());
       setSelectedIds(new Set());
       itemDataCache.current.clear();
@@ -89,7 +89,7 @@ export const useTableSelection = (
   }, []);
 
   const selectItems = useCallback((ids: API.IdType[]) => {
-    setSelectAllModeState(false);
+    setIsSelectAllMode(false);
     setExcludedIds(new Set());
     setSelectedIds(new Set(ids));
     // Clear cache - these IDs don't have item data
@@ -98,7 +98,7 @@ export const useTableSelection = (
 
   const clearSelection = useCallback(() => {
     setSelectedIds(new Set());
-    setSelectAllModeState(false);
+    setIsSelectAllMode(false);
     setExcludedIds(new Set());
     itemDataCache.current.clear();
   }, []);
@@ -115,28 +115,28 @@ export const useTableSelection = (
 
   const isSelected = useCallback(
     (id: API.IdType) => {
-      if (selectAllMode) {
+      if (isSelectAllMode) {
         // In select-all mode, item is selected unless explicitly excluded
         return !excludedIds.has(id);
       }
       return selectedIds.has(id);
     },
-    [selectAllMode, excludedIds, selectedIds]
+    [isSelectAllMode, excludedIds, selectedIds]
   );
 
   // Calculate selected count based on mode
   const selectedCount = useMemo(() => {
-    if (selectAllMode) {
+    if (isSelectAllMode) {
       return Math.max(0, totalCount - excludedIds.size);
     }
     return selectedIds.size;
-  }, [selectAllMode, totalCount, excludedIds.size, selectedIds.size]);
+  }, [isSelectAllMode, totalCount, excludedIds.size, selectedIds.size]);
 
   return useMemo(
     () => ({
       selectedIds,
       selectedCount,
-      selectAllMode,
+      selectAllMode: isSelectAllMode,
       excludedIds,
       toggleItem,
       setSelectAllMode,
@@ -149,7 +149,7 @@ export const useTableSelection = (
     [
       selectedIds,
       selectedCount,
-      selectAllMode,
+      isSelectAllMode,
       excludedIds,
       toggleItem,
       setSelectAllMode,

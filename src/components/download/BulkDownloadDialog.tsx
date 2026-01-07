@@ -139,6 +139,18 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
       count: itemCount,
     });
 
+  // Navigate to queue action for notifications
+  // Must be defined before early returns to satisfy React hooks rules
+  const viewQueueAction = useCallback(
+    () => ({
+      label: t(toI18nKey('viewQueue', UI.Modules.QUEUE), {
+        defaultValue: 'View queue',
+      }),
+      callback: () => navigate('/queue'),
+    }),
+    [navigate, t],
+  );
+
   // If no items, show a message instead of auto-closing
   // Auto-closing can cause issues with selection state
   if (itemCount === 0) {
@@ -159,17 +171,6 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
       </Modal>
     );
   }
-
-  // Navigate to queue action for notifications
-  const viewQueueAction = useCallback(
-    () => ({
-      label: t(toI18nKey('viewQueue', UI.Modules.QUEUE), {
-        defaultValue: 'View queue',
-      }),
-      callback: () => navigate('/queue'),
-    }),
-    [navigate, t],
-  );
 
   // Show notification based on results
   const showResultNotification = (succeeded: number, failed: number) => {
