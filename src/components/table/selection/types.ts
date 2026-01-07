@@ -10,12 +10,17 @@ export interface TableSelectionState {
 }
 
 export interface TableSelectionActions {
-  toggleItem: (id: API.IdType) => void;
+  // Toggle item selection; optionally provide item data for caching
+  toggleItem: (id: API.IdType, itemData?: SelectableItem) => void;
   // Toggle select-all mode on/off
   setSelectAllMode: (enabled: boolean, totalCount: number) => void;
   clearSelection: () => void;
   isSelected: (id: API.IdType) => boolean;
   selectItems: (ids: API.IdType[]) => void;
+  // Get cached item data (useful when items leave sparse store)
+  getCachedItemData: <T extends SelectableItem>(id: API.IdType) => T | undefined;
+  // Get all cached item data
+  getItemDataCache: <T extends SelectableItem>() => Map<API.IdType, T>;
 }
 
 export type TableSelectionContextValue = TableSelectionState & TableSelectionActions;

@@ -19,7 +19,9 @@ export const SelectionCheckboxCell: React.FC<SelectionCheckboxCellProps> = ({
   }
 
   const handleChange = (checked: boolean) => {
-    toggleItem(rowData.id);
+    // Pass the full row data for caching - this ensures the item data is
+    // preserved even when it leaves the sparse store
+    toggleItem(rowData.id, rowData);
   };
 
   return (

@@ -14,20 +14,34 @@ const createItems = (count: number): TestItem[] =>
   Array.from({ length: count }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` }));
 
 // Helper to create mock selection context
-const createMockSelection = (
-  overrides: Partial<TableSelectionContextValue> = {}
-): TableSelectionContextValue => ({
-  selectedIds: new Set<number>(),
-  excludedIds: new Set<number>(),
-  selectAllMode: false,
-  selectedCount: 0,
-  toggleItem: vi.fn(),
-  selectItems: vi.fn(),
-  setSelectAllMode: vi.fn(),
-  clearSelection: vi.fn(),
-  isSelected: vi.fn(() => false),
-  ...overrides,
-});
+// When items are provided, they populate the cache for normal mode selections
+const createMockSelection = <T extends { id: number }>(
+  overrides: Partial<TableSelectionContextValue> = {},
+  items: T[] = []
+): TableSelectionContextValue => {
+  // Build cache from items - in real usage, cache is populated when checkboxes are clicked
+  const itemCache = new Map<number, T>();
+  items.forEach((item) => {
+    if (item) {
+      itemCache.set(item.id, item);
+    }
+  });
+
+  return {
+    selectedIds: new Set<number>(),
+    excludedIds: new Set<number>(),
+    selectAllMode: false,
+    selectedCount: 0,
+    toggleItem: vi.fn(),
+    selectItems: vi.fn(),
+    setSelectAllMode: vi.fn(),
+    clearSelection: vi.fn(),
+    isSelected: vi.fn(() => false),
+    getCachedItemData: vi.fn((id: number) => itemCache.get(id)),
+    getItemDataCache: vi.fn(() => itemCache),
+    ...overrides,
+  };
+};
 
 // Helper to create mock store
 const createMockStore = (items: TestItem[] = [], rowCount?: number) => ({
@@ -41,7 +55,8 @@ const setup = (
   items: TestItem[] = [],
   rowCount?: number,
 ) => {
-  const selection = createMockSelection(selectionOverrides);
+  // Pass items to createMockSelection so the cache is populated
+  const selection = createMockSelection(selectionOverrides, items);
   const store = createMockStore(items, rowCount);
   return renderHook(() => useSelectionActions<TestItem>({ selection, store }));
 };
@@ -188,10 +203,11 @@ describe('useSelectionActions', () => {
         ({ selection }) => useSelectionActions<TestItem>({ selection, store }),
         {
           initialProps: {
+            // Pass items to populate the cache
             selection: createMockSelection({
               selectedIds: new Set([1]),
               selectAllMode: false,
-            }),
+            }, items),
           },
         }
       );
@@ -200,20 +216,25 @@ describe('useSelectionActions', () => {
 
       // Update selection by rerendering with new props
       rerender({
+        // Pass items to populate the cache for new selection
         selection: createMockSelection({
           selectedIds: new Set([1, 2, 3]),
           selectAllMode: false,
-        }),
+        }, items),
       });
 
       expect(result.current.selectedItems).toHaveLength(3);
     });
 
     test('should update selectedItems when store items change', () => {
+      // Start with 5 items in cache (simulates user having selected items that may leave sparse store)
+      const allItems = createItems(5);
       const selection = createMockSelection({
         selectedIds: new Set([1, 2, 3]),
         selectAllMode: false,
-      });
+      }, allItems);
+
+      // Store initially only has 2 items loaded (sparse store scenario)
       let items = createItems(2);
       let store = createMockStore(items);
 
@@ -222,9 +243,10 @@ describe('useSelectionActions', () => {
         { initialProps: { store } }
       );
 
-      expect(result.current.selectedItems).toHaveLength(2);
+      // Cache has all 3 items, so we get 3 (cache persists items even when not in store)
+      expect(result.current.selectedItems).toHaveLength(3);
 
-      // Add more items to store
+      // Add more items to store (doesn't affect cache-based lookup in normal mode)
       items = createItems(5);
       store = createMockStore(items);
       rerender({ store });

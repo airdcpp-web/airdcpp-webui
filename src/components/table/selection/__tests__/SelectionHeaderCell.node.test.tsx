@@ -24,6 +24,8 @@ const createMockContext = (
   setSelectAllMode: vi.fn(),
   clearSelection: vi.fn(),
   isSelected: vi.fn(() => false),
+  getCachedItemData: vi.fn(() => undefined),
+  getItemDataCache: vi.fn(() => new Map()),
   ...overrides,
 });
 

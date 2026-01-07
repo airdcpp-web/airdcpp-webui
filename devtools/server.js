@@ -148,14 +148,23 @@ app.use(/(.*)/, (req, res, next) => {
 
 // Listen
 const server = app.listen(argv.port, argv.bindAddress, (err) => {
-  const { address, port } = server.address();
-  const fullAddress = `${address}:${port}`;
-  if (err) {
-    console.error(`Failed to listen on ${fullAddress}: ${err}`);
+  const addr = server.address();
+  if (err || !addr) {
+    console.error(`Failed to listen on ${argv.bindAddress}:${argv.port}: ${err || 'address is null'}`);
     return;
   }
-
+  const { address, port } = addr;
+  const fullAddress = `${address}:${port}`;
   console.log(`Listening ${fullAddress}`);
+});
+
+server.on('error', (err) => {
+  console.error(`Server error: ${err.message}`);
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${argv.port} is already in use. Try a different port with --port=XXXX`);
+  } else if (err.code === 'EADDRNOTAVAIL') {
+    console.error(`Address ${argv.bindAddress} is not available. Try --bindAddress=127.0.0.1`);
+  }
 });
 
 server.on('upgrade', proxyMiddleware.upgrade); // Websockets

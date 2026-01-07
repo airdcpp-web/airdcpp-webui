@@ -15,8 +15,8 @@ interface UseSelectionActionsOptions<T extends { id: API.IdType }> {
 
 interface UseSelectionActionsResult<T> {
   showBulkDownload: boolean;
-  // Selected items that are currently loaded in the view store
-  // NOTE: In large datasets, this may not include all selected items!
+  // Selected items - uses selection context's cache for individual selections
+  // and store items for select-all mode
   selectedItems: T[];
   // Get selection data for passing to backend bulk API
   // This is the preferred way to handle bulk operations
@@ -62,17 +62,31 @@ export const useSelectionActions = <T extends { id: API.IdType }>({
     };
   }, [selection.selectAllMode, selection.selectedIds, selection.excludedIds, store.rowCount]);
 
-  // Memoize selected items directly to avoid unstable function reference
-  // NOTE: This only returns items that are currently loaded in the sparse view store!
-  // For large datasets, use getSelectionData() and let the backend resolve entities
+  // Get selected items using the selection context's cache
+  // The cache is populated when checkboxes are clicked (at selection time),
+  // so it persists even when items leave the sparse store
   const selectedItems = useMemo(() => {
     const items = store.items || [];
+
     if (selection.selectAllMode) {
       // In select-all mode, return all loaded items except excluded ones
+      // (can't use cache here since we don't know which items to include)
       return items.filter((item: T) => item && !selection.excludedIds.has(item.id));
     }
-    return items.filter((item: T) => item && selection.selectedIds.has(item.id));
-  }, [store.items, selection.selectAllMode, selection.excludedIds, selection.selectedIds]);
+
+    // Normal mode: Get items from the selection context's cache
+    // This cache is populated at checkbox click time, so items persist
+    // even when they leave the sparse store
+    const itemDataCache = selection.getItemDataCache<T>();
+    const result: T[] = [];
+    for (const id of selection.selectedIds) {
+      const item = itemDataCache.get(id);
+      if (item) {
+        result.push(item);
+      }
+    }
+    return result;
+  }, [store.items, selection.selectAllMode, selection.excludedIds, selection.selectedIds, selection.getItemDataCache]);
 
   const handleBulkDownload = useCallback(() => {
     setShowBulkDownload(true);
