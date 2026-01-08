@@ -83,7 +83,7 @@ const DownloadLayout: React.FC<Props> = (props) => {
       favoritePaths,
       dupePaths,
     });
-  }, []);
+  }, [props.historyPaths, props.sharePaths, props.favoritePaths, props.itemInfo]);
 
   const activeSection = sections.find((s) => s.key === activeSectionKey);
   if (!activeSection) {

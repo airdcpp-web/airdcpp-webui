@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 
 import Modal, { ModalHandle } from '@/components/semantic/Modal';
 import { DownloadLayout } from './layout';
+import { FileBrowserDialog } from '@/components/filebrowser';
 import NotificationActions from '@/actions/NotificationActions';
 
 import IconConstants from '@/constants/IconConstants';
@@ -12,9 +13,12 @@ import { toI18nKey, translate } from '@/utils/TranslationUtils';
 import { runBackgroundSocketAction } from '@/utils/ActionUtils';
 import { addHistory } from '@/services/api/HistoryApi';
 import HistoryConstants, { HistoryStringEnum } from '@/constants/HistoryConstants';
+import FilesystemConstants from '@/constants/FilesystemConstants';
 
 import { useSocket } from '@/context/SocketContext';
+import { useSession } from '@/context/AppStoreContext';
 import { BulkSelectionData, BulkDownloadResult } from '@/components/table/selection/types';
+import { hasAccess } from '@/utils/AuthUtils';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -95,10 +99,12 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
   const { sessionItem, onClose, onDownloadComplete, historyPaths: propHistoryPaths, displayName } = props;
   const { t } = useTranslation();
   const socket = useSocket();
+  const session = useSession();
   const navigate = useNavigate();
   const modalRef = useRef<ModalHandle>(null);
   const [isDownloading, setIsDownloading] = useState(false);
   const [fetchedHistoryPaths, setFetchedHistoryPaths] = useState<string[]>([]);
+  const [showBrowse, setShowBrowse] = useState(false);
 
   // Fetch history paths on mount (always fetch fresh, ignore props for caching)
   useEffect(() => {
@@ -150,6 +156,16 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
     }),
     [navigate, t],
   );
+
+  // Browse functionality callbacks
+  // Must be defined before early returns to satisfy React hooks rules
+  const handleBrowse = useCallback(() => {
+    setShowBrowse(true);
+  }, []);
+
+  const handleBrowseClose = useCallback(() => {
+    setShowBrowse(false);
+  }, []);
 
   // If no items, show a message instead of auto-closing
   // Auto-closing can cause issues with selection state
@@ -333,6 +349,13 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
     ? handleBulkApiDownload
     : handleItemBasedDownload;
 
+  // Browse functionality
+  const hasFileBrowserAccess = hasAccess(session, API.AccessEnum.FILESYSTEM_VIEW);
+
+  const getInitialBrowsePath = () => {
+    return historyPaths.length > 0 ? historyPaths[historyPaths.length - 1] : '';
+  };
+
   // Create a synthetic item info for the dialog header
   // For selection mode, we create a minimal display item
   const displayInfo: UI.DownloadableItemInfo = isSelectionMode(props)
@@ -351,6 +374,25 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
         name: effectiveDisplayName,
       };
 
+  if (showBrowse) {
+    return (
+      <FileBrowserDialog
+        onConfirm={async (path) => {
+          setShowBrowse(false);
+          await handleDownload(path);
+        }}
+        initialPath={getInitialBrowsePath()}
+        selectMode={UI.FileSelectModeEnum.DIRECTORY}
+        historyId={FilesystemConstants.LOCATION_DOWNLOAD}
+        approveCaption={translate('Download', t, UI.Modules.COMMON)}
+        title={translate('Download', t, UI.Modules.COMMON)}
+        subHeader={displayInfo.name}
+        icon={IconConstants.DOWNLOAD}
+        onReject={handleBrowseClose}
+      />
+    );
+  }
+
   return (
     <Modal
       ref={modalRef}
@@ -364,7 +406,7 @@ const BulkDownloadDialog = <ItemT extends BulkDownloadItem>(
     >
       <DownloadLayout
         downloadHandler={handleDownload}
-        handleBrowse={undefined}
+        handleBrowse={hasFileBrowserAccess ? handleBrowse : undefined}
         historyPaths={historyPaths}
         itemInfo={displayInfo}
       />
