@@ -3,13 +3,13 @@
     "application": {
       "widgetName": "Приложение",
       "addWidget": "Добавить виджет...",
-      "loggedInAs": "Логин как",
+      "loggedInAs": "Вход осуществлён как",
       "clientStarted": "Клиент запущен",
-      "activeSessions": "Активная сессия"
+      "activeSessions": "Активная сеансы"
     },
     "rss": {
       "widgetName": "RSS-лента",
-      "invalidUrl": "Ошибочный URL",
+      "invalidUrl": "Недопустимый адрес",
       "lastUpdated": "Последнее обновление: {{time}}",
       "actions": {
         "openLink": "Открыть ссылку",
@@ -17,36 +17,36 @@
       },
       "loadingFeed": "Лента загружена",
       "form": {
-        "feedUrlName": "URL ленты",
+        "feedUrlName": "Адрес ленты",
         "feedUrlHelp": "Поддерживаются ленты RSS и Atom",
         "feedCacheMinutesName": "Минимальный интервал обновления (минут)"
       },
-      "invalidFeed": "Invalid/unsupported feed: {{error}}"
+      "invalidFeed": "Недопустимая/неподдерживаемая лента: {{error}}"
     },
     "transfers": {
-      "widgetName": "&amp;Передачи",
-      "trafficBps": "Поток (бит/сек)",
-      "downloads": "Скачивание",
-      "uploads": "Отдача",
+      "widgetName": "Передачи",
+      "trafficBps": "Трафик (бит/с)",
+      "downloads": "Скачивания",
+      "uploads": "Отдачи",
       "downloaded": "Скачано",
       "uploaded": "Отдано",
-      "downloadLimit": "Ограничение загрузки",
-      "uploadLimit": "Лимит отдачи"
+      "downloadLimit": "Ограничение скачивания",
+      "uploadLimit": "Ограничение отдачи"
     },
     "notepad": {
-      "widgetName": "Notes"
+      "widgetName": "Заметки"
     },
     "extensions": {
-      "widgetName": "Extension releases",
-      "updatedAgo": "Updated {{date}}"
+      "widgetName": "Выпуски расширений",
+      "updatedAgo": "Обновлено {{date}}"
     },
     "actions": {
-      "editWidget": "Редактировать виджет",
+      "editWidget": "Править виджет",
       "removeWidget": "Удалить виджет",
       "prompts": {
         "removeApprove": "Удалить виджет",
         "removeReject": "Не удалять",
-        "removeContent": "Уверены что хотите удалить виджет  {{item.settings.name}}?"
+        "removeContent": "Уверены, что хотите удалить виджет {{item.settings.name}}?"
       }
     },
     "form": {
@@ -65,10 +65,10 @@
     },
     "notifications": {
       "information": "Информация",
-      "info": "ИНФОРМАЦИЯ",
+      "info": "СВЕДЕНИЯ",
       "warning": "ПРЕДУПРЕЖДЕНИЯ",
       "error": "ОШИБКИ",
-      "verbose": "VERBOSE",
+      "verbose": "ПОДРОБНО",
       "actions": {
         "viewEvents": "Просмотр событий"
       }
@@ -76,11 +76,11 @@
   },
   "table": {
     "filter": {
-      "filter": "Ф&amp;ильтр",
+      "filter": "Фильтр",
       "matchType": "Тип сравнения",
       "partial": "Частичный",
       "regex": "Регуляр. выражение",
-      "wildcard": "Wildcard",
+      "wildcard": "Символ подстановки",
       "exact": "Точное соотв.",
       "filterByProfile": "Фильтры профиля",
       "allProfiles": "Все профили"
@@ -104,28 +104,28 @@
     "form": {
       "fileTypeName": "Тип файла",
       "hubUrlsName": "Хабы",
-      "maxSizeName": "Maximum size",
-      "minSizeName": "Minimum size",
-      "sizeLimitsName": "Size limits"
+      "maxSizeName": "Максимальный размер",
+      "minSizeName": "Минимальный размер",
+      "sizeLimitsName": "Ограничения размера"
     },
-    "actionsCaption": "Действия...",
-    "searchActions": "Search actions",
-    "resetAll": "Reset all",
+    "actionsCaption": "Действия…",
+    "searchActions": "Действия поиска",
+    "resetAll": "Сбросить все",
     "user": "Пользователь",
     "hubs": "Хабы",
     "connection": "Соединение",
     "slots": "Слоты",
     "ip": "IP",
     "path": "Путь",
-    "searchOffline": "Для выполнения поиска необходимо подключение хотя бы к одному хабу",
-    "enterSearchString": "Введите строку поиска...",
+    "searchOffline": "Для выполнения поиска необходимо подключиться хотя бы к одному хабу",
+    "enterSearchString": "Введите строку поиска…",
     "search": "Поиск",
-    "usersCount": "Пользователь  ({{count}})",
+    "usersCount": "Пользователь ({{count}})",
     "usersCount_plural": "Пользователи ({{count}})",
     "xUsersNicks": "{{count}} пользователь ({{user.nicks}})",
     "xUsersNicks_plural": "{{count}} пользователи ({{user.nicks}})",
-    "noResults": "Для \"{{searchString}}\" ничего не найдено",
-    "noResultsHint": "<0><0>Ensure that you spelled the words correctly</0><1>Use different keywords</1><2>You are searching too frequently (hubs often have a minimum search interval)</2><3>If you never receive results for common search terms, make sure that your connectivity settings are configured properly</3></0>"
+    "noResults": "Результаты по запросу «{{searchString}}» не найдены",
+    "noResultsHint": "<0><0>Убедитесь, что вы правильно написали слова</0><1>Используйте разные ключевые слова</1><2>Вы слишком часто выполняете поиск (у хабов часто есть минимальный интервал между поисками)</2><3>Если вы никогда не получаете результаты по распространённым поисковым запросам, убедитесь, что вы настроили ваше соединение правильно</3></0>"
   },
   "share": {
     "table": {
@@ -134,34 +134,34 @@
       "virtual_name": "Виртуальное название",
       "profiles": "Профили",
       "last_refresh_time": "Последнее обновление",
-      "type": "Content",
+      "type": "Содержимое",
       "virtualName": "Виртуальное название",
       "lastRefreshTime": "Последнее обновление"
     },
     "actions": {
-      "editDirectory": "Edit directory",
-      "removeDirectory": "Remove directory",
-      "addDirectory": "Add directory",
-      "refreshAll": "Refresh all",
+      "editDirectory": "Править каталог",
+      "removeDirectory": "Убрать каталог",
+      "addDirectory": "Добавить каталог",
+      "refreshAll": "Обновить все",
       "prompts": {
-        "removeRootApprove": "Remove directory",
+        "removeRootApprove": "Убрать каталог",
         "removeRootReject": "Не удалять",
-        "removeRootContent": "Are you sure that you want to remove the directory {{item.virtual_name}} from share? It will be removed from all share profiles."
+        "removeRootContent": "Вы уверены, что хотите убрать каталог {{item.virtual_name}} из шары? Он будет убран из всех профилей расшаривания."
       }
     },
     "actionsCaption": "Действия...",
-    "shareActions": "Share actions",
-    "hashingInformation": "Hashing information",
-    "hashingInformationDesc": "<0>New files will appear in share only after they have finished hashing (the client has calculated checksums for them). Information about hashing progress will be posted to the event log.</0>",
+    "shareActions": "Действия расшаривания",
+    "hashingInformation": "Хеширование информации",
+    "hashingInformationDesc": "<0>Новые файлы появятся в шаре только после завершения хеширования (клиент рассчитал для них контрольные суммы). Информация о ходе хеширования будет размещена в журнале событий.</0>",
     "addShareDirectory": "Добавить папку шары",
     "editShareDirectory": "Изменить папку шары",
     "unknown": "Неизвестно",
     "form": {
       "pathName": "Путь",
       "virtualNameName": "Виртуальное название",
-      "virtualNameHelp": "Directories with identical virtual names will be merged in filelist",
+      "virtualNameHelp": "Каталоги с одинаковыми виртуальными именами будут объединены в списке файлов",
       "profilesName": "Профили шары",
-      "profilesHelp": "New share profiles can be created from application settings",
+      "profilesHelp": "Новые профили расшаривания можно создавать из настроек приложения",
       "incomingName": "Входящие"
     }
   },
@@ -169,27 +169,27 @@
     "actions": {
       "addNew": "Добавить новый",
       "setPassword": "Установить пароль",
-      "edit": "&amp;Правка",
-      "remove": "&amp;Удалить",
+      "edit": "Правка",
+      "remove": "Удалить",
       "changePassword": "Изменить пароль",
       "removePassword": "Удалить пароль",
       "prompts": {
-        "changePasswordPlaceholder": "Enter password",
-        "changePasswordApprove": "Update password",
-        "changePasswordContent": "Enter new password for the hub {{item.name}}",
+        "changePasswordPlaceholder": "Ввести пароль",
+        "changePasswordApprove": "Обновить пароль",
+        "changePasswordContent": "Введите новый пароль для хаба {{item.name}}",
         "removePasswordApprove": "Удалить пароль",
         "removePasswordReject": "Не удалять",
-        "removePasswordContent": "Are you sure that you want to reset the password of the hub {{item.name}}?",
-        "createPasswordPlaceholder": "Enter password",
+        "removePasswordContent": "Уверены, что хотите сбросить пароль хаба {{item.name}}?",
+        "createPasswordPlaceholder": "Ввести пароль",
         "createPasswordApprove": "Установить пароль",
-        "createPasswordContent": "Set password for the hub {{item.name}}",
-        "removeApprove": "Remove favorite hub",
-        "removeReject": "Не удалять",
-        "removeContent": "Are you sure that you want to remove the favorite hub {{item.name}}?"
+        "createPasswordContent": "Задать пароль для хаба {{item.name}}",
+        "removeApprove": "Убрать избранный хаб",
+        "removeReject": "Не убирать",
+        "removeContent": "Уверены, что хотите убрать избранный хаб {{item.name}}?"
       }
     },
     "table": {
-      "connectState": "State",
+      "connectState": "Состояние",
       "name": "Имя",
       "autoConnect": "Автосоединение",
       "nick": "Ник",
@@ -197,58 +197,58 @@
       "hubUrl": "Адрес",
       "shareProfile": "Профиль шары"
     },
-    "notSet": "Not set",
-    "set": "Set",
-    "globalDefault": "Global default",
-    "addFavoriteHub": "Add favorite hub",
-    "editFavoriteHub": "Edit favorite hub",
-    "actionsCaption": "Действия...",
-    "favoriteHubActions": "Favorite hub actions",
+    "notSet": "Не задано",
+    "set": "Задать",
+    "globalDefault": "Глобальный стандартный",
+    "addFavoriteHub": "Добавить избранный хаб",
+    "editFavoriteHub": "Править избранный хаб",
+    "actionsCaption": "Действия…",
+    "favoriteHubActions": "Действия избранного хаба",
     "form": {
-      "genericName": "Hub properties",
+      "genericName": "Свойства хаба",
       "nameName": "Имя",
-      "hubUrlName": "URL хаба",
-      "hubDescriptionName": "Hub description",
+      "hubUrlName": "Адрес хаба",
+      "hubDescriptionName": "Описание хаба",
       "shareProfileName": "Профиль шары",
-      "shareProfileHelp": "Custom share profiles can be selected only after entering an ADC hub address (starting with adc:// or adcs://)",
+      "shareProfileHelp": "Пользовательские профили расшаривания можно выбирать только после ввода адреса хаба ADC (начинающегося с adc:// или adcs://)",
       "autoConnectName": "Автосоединение",
-      "userName": "User setting overrides",
+      "userName": "Переопределение настроек пользователя",
       "nickName": "Ник",
       "userDescriptionName": "Описание польователья",
-      "connectivityV4Name": "Connectivity setting overrides (IPv4)",
-      "connectionModeV4Name": "Connectivity mode",
-      "connectionModeV4Option-1": "Выключить",
+      "connectivityV4Name": "Переопределение настроек соединения (IPv4)",
+      "connectionModeV4Name": "Режим соединения",
+      "connectionModeV4Option-1": "Отключено",
       "connectionModeV4Option0": "Активный режим",
       "connectionModeV4Option2": "Пассивный режим",
       "connectionIpV4Name": "IP-адрес",
-      "connectivityV6Name": "Connectivity setting overrides (IPv6)",
-      "connectionModeV6Name": "Connectivity mode",
-      "connectionModeV6Option-1": "Выключить",
+      "connectivityV6Name": "Переопределение настроек соединения (IPv6)",
+      "connectionModeV6Name": "Режим соединения",
+      "connectionModeV6Option-1": "Отключено",
       "connectionModeV6Option0": "Активный режим",
       "connectionModeV6Option2": "Пассивный режим",
       "connectionIpV6Name": "IP-адрес",
-      "miscName": "Miscellaneous overrides",
-      "useMainChatNotifyName": "Use chat notification",
-      "awayMessageName": "Away message",
-      "showJoinsName": "Show joins/parts"
+      "miscName": "Прочее переопределение",
+      "useMainChatNotifyName": "Использовать уведомления чата",
+      "awayMessageName": "Сообщение об отсутствии",
+      "showJoinsName": "Показать соединения/уходы"
     }
   },
   "filelists": {
     "new": "Открыть список файлов",
-    "newDesc": "Start browsing a new filelist",
-    "offlineMessage": "You must to be connected to at least one hub in order to download filelists from other users",
-    "directorySize": "Directory size",
-    "totalListSize": "Total list size",
-    "browseOwnShare": "Browse own share...",
+    "newDesc": "Начать просмотр нового списка файлов",
+    "offlineMessage": "Вы должны быть подключены как минимум к одному хабу, чтобы загружать списки файлов от других пользователей",
+    "directorySize": "Размер каталога",
+    "totalListSize": "Общий размер списка",
+    "browseOwnShare": "Просмотр собственной шары…",
     "root": "Root",
-    "userOffline": "Пользователь отключен",
-    "userOfflineDesc": "You will be able to continue browsing when the user comes back online",
-    "noContentToDisplay": "No content to display",
-    "theDirectoryIsEmpty": "Папка пуста",
-    "updatingView": "Updating view",
-    "downloadFailed": "Ошибка загрузки",
-    "confirmLeave": "Confirm action",
-    "confirmLeaveDesc": "Click the back button again to leave this filelist",
+    "userOffline": "Пользователь не в сети",
+    "userOfflineDesc": "Вы сможете продолжить обзор, когда пользователь вернётся в сеть",
+    "noContentToDisplay": "Нет содержимого для показа",
+    "theDirectoryIsEmpty": "Каталог пуст",
+    "updatingView": "Обновление вида",
+    "downloadFailed": "Ошибка скачивания",
+    "confirmLeave": "Подтвердить действие",
+    "confirmLeaveDesc": "Щёлкните кнопку «Назад» ещё раз, чтобы покинуть этот список файлов",
     "table": {
       "name": "Имя",
       "size": "Размер",
@@ -259,52 +259,52 @@
       "reload": "Перезагрузить",
       "refreshInShare": "Обновить в шаре",
       "close": "Закрыть",
-      "details": "Details"
+      "details": "Подробности"
     }
   },
   "common": {
     "actions": {
       "copy": "Копировать",
-      "copyPath": "Copy path",
-      "copySize": "Copy size",
-      "copyTth": "Copy TTH",
+      "copyPath": "Копировать путь",
+      "copySize": "Копировать размер",
+      "copyTth": "Копировать TTH",
       "download": "Скачивание",
-      "downloadTo": "Скачать в...",
-      "findNfo": "Find NFO",
+      "downloadTo": "Скачать в…",
+      "findNfo": "Найти NFO",
       "search": "Поиск",
-      "sendMessage": "Послать сообщение",
-      "browseShare": "Browse share",
+      "sendMessage": "Отправить сообщение",
+      "browseShare": "Просмотр шары",
       "ignoreMessages": "Игнорировать сообщения",
       "viewAsText": "Показать как текст",
-      "playVideo": "Play video",
-      "viewImage": "View image",
-      "playAudio": "Play audio",
-      "copyMagnetLink": "Копировать magnet-ссылку",
-      "shutDownApplication": "Shut down application",
-      "restartWebServer": "Restart web server",
-      "unignoreMessages": "Unignore messages",
-      "closeAndDontShowAgain": "Close and don't show again",
+      "playVideo": "Играть видео",
+      "viewImage": "Просмотр изображения",
+      "playAudio": "Играть аудио",
+      "copyMagnetLink": "Копировать магнит-ссылку",
+      "shutDownApplication": "Завершить приложение",
+      "restartWebServer": "Перезапустить веб-сервер",
+      "unignoreMessages": "Игнорировать сообщения",
+      "closeAndDontShowAgain": "Закрыть и не показывать снова",
       "notifications": {
-        "ignoreUserSuccess": "User {{item.nicks}} was added in ignored users",
-        "unignoreUserSuccess": "User {{item.nicks}} was removed from ignored users",
-        "copyPathSuccess": "Path was copied to clipboard",
-        "copySizeSuccess": "Size was copied to clipboard",
-        "copyTTHSuccess": "TTH was copied to clipboard",
-        "copyMagnetSuccess": "Magnet link was copied to clipboard",
-        "copySuccess": "Text was copied to clipboard",
-        "grantHourUserSuccess": "Granted slot for user {{item.nicks}}"
+        "ignoreUserSuccess": "Пользователь {{item.nicks}} был добавлен в список игнорируемых пользователей",
+        "unignoreUserSuccess": "Пользователь {{item.nicks}} был убран из списка игнорируемых пользователей",
+        "copyPathSuccess": "Путь скопирован в буфер обмена",
+        "copySizeSuccess": "Размер скопирован в буфер обмена",
+        "copyTTHSuccess": "TTH скопирован в буфер обмена",
+        "copyMagnetSuccess": "Магнит-ссылка скопирована в буфер обмена",
+        "copySuccess": "Текст скопирован в буфер обмена",
+        "grantHourUserSuccess": "Выдан слот пользователю {{item.nicks}}"
       },
       "grantExtraSlot10Min": "Дать дополнительный слот (10 мин)",
       "grantExtraSlotHour": "Дать дополнительный слот (час)",
       "grantExtraSlotDay": "Дать дополнительный слот (день)",
       "grantExtraSlotWeek": "Дать дополнительный слот (неделя)",
       "prompts": {
-        "restartWebSystemApprove": "Continue and restart",
-        "restartWebSystemReject": "Don't restart",
-        "restartWebSystemContent": "When changing the binding options, it's recommended to restart the web server only \n                when you are able to access the server for troubleshooting. If                  the web server won't come back online, you should start the application \n                manually to see if there are any error messages. The configuration file is located in your                 user directory by default (inside .airdc++ directory) in case you need to edit it manually.",
-        "shutdownSystemApprove": "Continue and shut down",
+        "restartWebSystemApprove": "Продолжить и перезапустить",
+        "restartWebSystemReject": "Не перезапускать",
+        "restartWebSystemContent": "При изменении параметров привязки рекомендуется перезапускать веб-сервер только \n                в том случае, если у вас есть доступ к серверу для устранения неполадок.                  Если веб-сервер не возвращается в сеть, вам следует запустить приложение \n                вручную, чтобы проверить наличие сообщений об ошибках. Файл конфигурации по умолчанию находится в вашем                 каталоге пользователя (внутри каталога .airdc++), на случай, если вам понадобится изменить его вручную.",
+        "shutdownSystemApprove": "Продолжить и завершить",
         "shutdownSystemReject": "Отмена",
-        "shutdownSystemContent": "Are you sure that you wish to shut down the application?"
+        "shutdownSystemContent": "Уверены, что хотите закрыть приложение?"
       }
     },
     "units": {
@@ -315,175 +315,175 @@
       "tib": "TБ",
       "pib": "ПБ",
       "eib": "ЭБ",
-      "bits": "bit/s",
+      "bits": "бит/с",
       "kbits": "Кбит/с",
       "mbits": "Мбит/с",
       "gbits": "Гбит/с"
     },
     "filename": "Имя файла",
-    "xBytes": "{{bytes}} bytes",
-    "unitsPerSecond": "{{units}}/s",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "tomorrow": "Tomorrow",
-    "lastWeek": "[Last] {{weekDay}}",
-    "awayModeWasEnabled": "Away mode was enabled",
-    "awayModeWasDisabled": "Away mode was disabled",
-    "actionSucceed": "Action succeed",
-    "actionFailed": "Action failed",
-    "queueingFailed": "Failed to queue the item {{item.name}}",
-    "noNfoResultsWereReceived": "No NFO results were received",
-    "networkClientError": "Network/client error",
-    "failedToFetchData": "Failed to fetch data",
-    "failedToLoadContent": "Failed to load content",
-    "failedToCreateDirectory": "Failed to create directory",
-    "loadingItems": "Loading items",
+    "xBytes": "{{bytes}} байт",
+    "unitsPerSecond": "{{units}}/с",
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "tomorrow": "Завтра",
+    "lastWeek": "[Послед.] {{weekDay}}",
+    "awayModeWasEnabled": "Режим «Ушёл» включён",
+    "awayModeWasDisabled": "Режим «Ушёл» отключён",
+    "actionSucceed": "Действие удалось",
+    "actionFailed": "Действие не удалось",
+    "queueingFailed": "Не удалось поместить объект {{item.name}} в очередь",
+    "noNfoResultsWereReceived": "Результаты NFO не получены",
+    "networkClientError": "Ошибка сети/клиента",
+    "failedToFetchData": "Не удалось получить данные",
+    "failedToLoadContent": "Не удалось загрузить содержимое",
+    "failedToCreateDirectory": "Не удалось создать каталог",
+    "loadingItems": "Загружаются объекты",
     "root": "Root",
     "name": "Имя",
     "size": "Размер",
     "path": "Путь",
-    "createDirectory": "Create directory",
-    "create": "Create",
-    "directoryName": "Directory name",
-    "computer": "Computer",
-    "history": "Previous",
-    "shared": "Шара",
+    "createDirectory": "Создать каталог",
+    "create": "Создать",
+    "directoryName": "Имя каталога",
+    "computer": "Компьютер",
+    "history": "Предыдущий",
+    "shared": "Расшарено",
     "favorites": "Избранные",
-    "dupes": "Dupes",
-    "browse": "Browse",
+    "dupes": "Обманки",
+    "browse": "Обзор",
     "download": "Скачивание",
     "close": "Закрыть",
-    "noPathsToDisplay": "No paths to display",
-    "spaceFree": "{{freeSpace}} free",
+    "noPathsToDisplay": "Нет путей для показа",
+    "spaceFree": "{{freeSpace}} свободно",
     "select": "Выбрать",
-    "new": "&amp;Новый...",
-    "currentSessions": "Current sessions",
-    "closeAll": "Close all",
-    "recentSessions": "Recent sessions",
-    "openedAgo": "Opened {{timeAgo}}",
-    "waitingForServerResponse": "Waiting for server response",
+    "new": "Новый",
+    "currentSessions": "Текущие сеансы",
+    "closeAll": "Закрыть все",
+    "recentSessions": "Недавние сеансы",
+    "openedAgo": "Открыт {{timeAgo}}",
+    "waitingForServerResponse": "Ожидание ответа сервера",
     "loadingMessages": "Загрузка сообщений",
-    "loadingSession": "Loading session",
+    "loadingSession": "Загрузка сеанса",
     "yes": "Да",
     "no": "Нет",
     "cancel": "Отмена",
-    "loading": "Loading",
-    "loadingData": "Loading data...",
-    "noOnlineHubs": "No online hubs",
-    "installAsLocalApplication": "Install as local application",
-    "pwaInstallDesc": "This web application can be installed locally, providing a better user experience",
-    "install": "Install",
-    "dontInstall": "Don't install",
-    "statisticsNotAvailable": "Statistics not available",
-    "save": "Save",
-    "enterNick": "Enter nick...",
-    "disabled": "Выключить",
-    "enterLimitUnit": "Enter limit ({{unit}}/s)",
-    "enterLimit": "Enter limit...",
-    "removeLimit": "Remove limit",
-    "tlsOk": "Authenticity of the certificate is validated",
-    "tlsOutdatedWarning": "Outdated cryptographic protocol with known security vulnerabilities",
-    "tlsAuthenticityWarning": "Authenticity of the certificate could not be validated",
+    "loading": "Загружается",
+    "loadingData": "Загружаются данные…",
+    "noOnlineHubs": "Нет хабов в сети",
+    "installAsLocalApplication": "Установить как локальное приложение",
+    "pwaInstallDesc": "Это веб-приложение можно установить локально, что обеспечивает более удобную работу пользователя",
+    "install": "Установить",
+    "dontInstall": "Не устанавливать",
+    "statisticsNotAvailable": "Статистика не доступна",
+    "save": "Сохранить",
+    "enterNick": "Введите ник…",
+    "disabled": "Отключено",
+    "enterLimitUnit": "Введите ограничение ({{unit}}/с)",
+    "enterLimit": "Введите ограничение…",
+    "removeLimit": "Убрать ограничение",
+    "tlsOk": "Подлинность сертификата подтверждена",
+    "tlsOutdatedWarning": "Устаревший криптографический протокол с известными уязвимостями безопасности",
+    "tlsAuthenticityWarning": "Подлинность сертификата не удалось подтвердить",
     "upload": "Отдача",
-    "sendFiles": "Send files",
-    "removeSharedFile": "Remove shared file",
-    "fileNoLongerShared": "File {{file.name}} is no longer shared",
-    "fileTooLarge": "File is too large (maximum size is {{maxSize}})",
-    "previewIsNotAvailable": "Preview is not available",
-    "failedToFetchContent": "Failed to fetch content",
-    "noItemsToShow": "No items to show",
-    "noSessionEditAccess": "You aren't allowed to open new sessions",
-    "noChatAccess": "You aren't allowed to send new messages",
-    "loadingSessions": "Loading sessions",
+    "sendFiles": "Отправить файлы",
+    "removeSharedFile": "Убрать расшаренный файл",
+    "fileNoLongerShared": "Файл {{file.name}} больше не является расшаренным",
+    "fileTooLarge": "Файл слишком большой (максимальный размер: {{maxSize}})",
+    "previewIsNotAvailable": "Предпросмотр не доступен",
+    "failedToFetchContent": "Не удалось получить содержимое",
+    "noItemsToShow": "Нет объектов для показа",
+    "noSessionEditAccess": "Вам не разрешается открывать новые сеансы",
+    "noChatAccess": "Вам запрещено отправлять новые сообщения",
+    "loadingSessions": "Загрузка сеансов",
     "typeContent": "Тип/содержимое",
     "lastModified": "Последняя модификация",
     "dupeType": "Обманные типы",
     "shareFull": "Шара (полностью)",
-    "sharePartial": "Share (partial)",
-    "queueFull": "Queue (full)",
-    "queuePartial": "Queue (partial)",
-    "finishedFull": "Finished (full)",
-    "finishedPartial": "Finished (partial)",
-    "shareAndQueue": "Share and queue",
-    "shareQueueAndFinished": "Share, queue and finished",
-    "queueAndFinished": "Queue and finished",
-    "shareAndFinished": "Share and finished",
+    "sharePartial": "Шара (частично)",
+    "queueFull": "Очередь (полностью)",
+    "queuePartial": "Очередь (частично)",
+    "finishedFull": "Завершено (полностью)",
+    "finishedPartial": "Завершено (частично)",
+    "shareAndQueue": "Шара и очередь",
+    "shareQueueAndFinished": "Шара, очередь и завершено",
+    "queueAndFinished": "Очередь и завершено",
+    "shareAndFinished": "Шара и завершено",
     "dupePaths": "Обманный путь",
     "actionsCaption": "Действия...",
     "tth": "TTH",
-    "na": "N/A",
-    "noActionsAvailable": "No actions available",
-    "continue": "Continue",
+    "na": "Н/Д",
+    "noActionsAvailable": "Нет доступных действий",
+    "continue": "Продолжить",
     "form": {
-      "browse": "Browse",
-      "noOptions": "No options",
-      "fieldOptional": "{{definition.title}} (optional)",
-      "minimumValueError": "Minimum allowed value is {{value}}",
-      "maximumValueError": "Maximum allowed value is {{value}}",
+      "browse": "Обзор",
+      "noOptions": "Нет параметров",
+      "fieldOptional": "{{definition.title}} (необязательно)",
+      "minimumValueError": "Минимально допустимое значение: {{value}}",
+      "maximumValueError": "Максимально допустимое значение: {{value}}",
       "any": "Любой",
       "directory": "Папка",
-      "file": "&amp;Файл",
-      "add": "&amp;Добавить",
+      "file": "Файл",
+      "add": "Добавить",
       "down": "Вниз",
-      "remove": "&amp;Удалить",
-      "up": "Up",
-      "offlineMessage": "No connected hubs",
-      "loading": "Loading"
+      "remove": "Убрать",
+      "up": "Вверх",
+      "offlineMessage": "Нет подключённых хабов",
+      "loading": "Загружается"
     }
   },
   "hubs": {
     "table": {
       "nick": "Ник",
-      "shareSize": "Share size",
+      "shareSize": "Размер шары",
       "description": "Описание",
-      "tag": "Тэг",
-      "uploadSpeed": "Отдача",
-      "downloadSpeed": "Скачка",
+      "tag": "Метка",
+      "uploadSpeed": "Скорость отдачи",
+      "downloadSpeed": "Скорость скачивания",
       "ip4": "IP (v4)",
       "ip6": "IP (v6)",
       "fileCount": "Файлы"
     },
     "actions": {
-      "reconnect": "Reconnect",
+      "reconnect": "Переподключить",
       "clearChat": "Очистить чат",
       "close": "Закрыть",
-      "addToFavorites": "В Избранное",
-      "useChatNotification": "Use chat notification",
-      "showJoinsParts": "Show joins/parts",
+      "addToFavorites": "Добавить в избранное",
+      "useChatNotification": "Использовать уведомления чата",
+      "showJoinsParts": "Показать соединения/уходы",
       "notifications": {
-        "favoriteSuccess": "The hub {{item.identity.name}} was added in favorites"
+        "favoriteSuccess": "Хаб {{item.identity.name}} добавлен в избранное"
       }
     },
     "notifications": {
       "actions": {
-        "viewChat": "View chat"
+        "viewChat": "Показать чат"
       }
     },
-    "notificationSettings": "Notification settings",
-    "enterHubAddress": "Enter hub address...",
-    "connect": "&amp;Соединение",
-    "notConnectedToTheHub": "Not connected to the hub",
-    "connecting": "Connecting",
-    "loadingUserlist": "Loading userlist",
-    "favoriteHubsHint": "Tip: visit the <url>Favorite hubs</url> page to connect using custom settings",
-    "new": "&amp;Соединение",
-    "newDesc": "Connect to a new hub",
+    "notificationSettings": "Настройки уведомлений",
+    "enterHubAddress": "Введите адрес хаба…",
+    "connect": "Соединение",
+    "notConnectedToTheHub": "Нет соединения с хабом",
+    "connecting": "Соединяется",
+    "loadingUserlist": "Загружается список пользователей",
+    "favoriteHubsHint": "Совет: посетите страницу <url>Избранные хабы</url>, чтобы подключиться с использованием собственных настроек.",
+    "new": "Соединение",
+    "newDesc": "Соединиться с новым хабом",
     "userList": "Список пользователей",
-    "sharePerUser": "{{total}} ({{average}}/user)",
-    "xUsers": "{{count}} users",
-    "xUsers_plural": "{{count}} users",
-    "redirectRequested": "Redirect requested",
-    "acceptRedirect": "Accept redirect to {{url}}",
-    "passwordRequired": "Password required",
+    "sharePerUser": "{{total}} ({{average}}/пользователь)",
+    "xUsers": "{{count}} пользователей",
+    "xUsers_plural": "{{count}} пользователей",
+    "redirectRequested": "Запрос на перенаправление",
+    "acceptRedirect": "Принять перенаправление на {{url}}",
+    "passwordRequired": "Требуется пароль",
     "password": "Пароль",
-    "submit": "Submit",
-    "passwordPromptHelp": "This usually means that there's a registered account associated with your nick. If you don't remember having a registered account in this hub, there may be someone else using the same nick."
+    "submit": "Утвердить",
+    "passwordPromptHelp": "Обычно это означает, что с вашим ником связана зарегистрированная учётная запись. Если вы не помните, что у вас была зарегистрированная учётная запись в этом хабе, возможно, кто-то другой использует тот же ник."
   },
   "queue": {
     "table": {
       "name": "Имя",
       "size": "Размер",
-      "status": "Статус",
+      "status": "Состояние",
       "sources": "Источники",
       "secondsLeft": "Осталось",
       "speed": "Скорость",
@@ -493,36 +493,36 @@
       "timeFinished": "Завершено"
     },
     "actionsCaption": "Действия...",
-    "queueActions": "Queue actions",
+    "queueActions": "Действия очереди",
     "pausedForced": "Пауза (принудительно)",
-    "queueEmpty": "The queue is empty",
-    "queueEmptyDesc": "New items can be queued from search or filelists",
+    "queueEmpty": "Очередь пуста",
+    "queueEmptyDesc": "Новые объекты можно добавлять в очередь из поиска или списков файлов.",
     "actions": {
-      "removeCompletedBundles": "Remove completed bundles",
-      "pauseAllBundles": "Pause all bundles",
-      "resumeAllBundles": "Resume all bundles",
-      "manageFiles": "Manage files...",
-      "manageSources": "Manage sources...",
+      "removeCompletedBundles": "Удалить завершённые пакеты",
+      "pauseAllBundles": "Приостановить все пакеты",
+      "resumeAllBundles": "Возобновить все пакеты",
+      "manageFiles": "Управление файлами…",
+      "manageSources": "Управление источниками…",
       "searchForeground": "Поиск (на переднем плане)",
       "searchForAlternates": "Поиск альтернатив",
       "remove": "&amp;Удалить",
       "removeSource": "Удалить источник",
-      "rescanForErrors": "Rescan for errors",
+      "rescanForErrors": "Перепроверить на ошибки",
       "forceInShare": "Форсированно в шару",
       "prompts": {
-        "removeBundleApprove": "Remove bundle",
+        "removeBundleApprove": "Убрать пакет",
         "removeBundleReject": "Не удалять",
-        "removeBundleContent": "Are you sure that you want to remove the bundle {{item.name}}?",
-        "removeBundleCheckbox": "Remove finished files",
-        "removeFileApprove": "Remove file",
+        "removeBundleContent": "Уверены, что хотите убрать пакет {{item.name}}?",
+        "removeBundleCheckbox": "Убрать завершённые файлы",
+        "removeFileApprove": "Убрать файл",
         "removeFileReject": "Не удалять",
-        "removeFileContent": "Are you sure that you want to remove the file {{item.name}}?",
-        "removeFileCheckbox": "Remove on disk"
+        "removeFileContent": "Уверены, что хотите убрать файл {{item.name}}?",
+        "removeFileCheckbox": "Удалить с диска"
       },
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeCompletedSuccess": "{{result.count}} completed bundles were removed",
-        "searchAlternatesBundleSuccess": "The bundle {{item.name}} was searched for alternates"
+        "removeFileSuccess": "Файл {{item.name}} был убран из очереди",
+        "removeCompletedSuccess": "{{result.count}} завершённых пакетов было убрано",
+        "searchAlternatesBundleSuccess": "Был выполнен поиск альтернатив для пакета {{item.name}}"
       }
     },
     "paused": "Пауза",
@@ -535,18 +535,18 @@
     "sources": "Источники",
     "user": "Пользователь",
     "hubs": "Хабы",
-    "lastKnownSpeed": "Last known speed",
+    "lastKnownSpeed": "Последняя известная скорость",
     "files": "Файлы",
     "size": "Размер",
     "notifications": {
-      "bundleWasAddedInQueue": "Bundle was added in queue",
-      "bundleDownloadError": "Download error: {{error}}",
-      "bundleContentValidationError": "Bundle content validation failed: {{error}} ({{hook}})",
-      "validatingDownloadedBundle": "Validating downloaded bundle",
-      "bundleWasCompletedSuccessfully": "Bundle was completed successfully",
-      "bundleWasAddedInShare": "Bundle was added in share",
+      "bundleWasAddedInQueue": "Пакет добавлен в очередь",
+      "bundleDownloadError": "Ошибка загрузки: {{error}}",
+      "bundleContentValidationError": "Проверка содержимого пакета не удалась: {{error}} ({{hook}})",
+      "validatingDownloadedBundle": "Проверяется загруженный пакет",
+      "bundleWasCompletedSuccessfully": "Пакет был успешно завершён",
+      "bundleWasAddedInShare": "Пакет был добавлен в шару",
       "actions": {
-        "viewQueue": "View queue"
+        "viewQueue": "Просмотр очереди"
       }
     }
   },
@@ -558,349 +558,349 @@
       "status": "Статус",
       "secondsLeft": "Осталось",
       "speed": "Скорость",
-      "flags": "Flags",
+      "flags": "Флаги",
       "ip": "IP"
     },
     "actions": {
-      "forceConnect": "Force connect",
-      "disconnect": "Disconnect",
+      "forceConnect": "Принудительное соединение",
+      "disconnect": "Отключить",
       "removeFileFromQueue": "Удалить файл из очереди",
       "removeUserFromQueue": "Удалить пользователя из очереди",
       "notifications": {
-        "removeFileSuccess": "File {{item.name}} was removed from queue",
-        "removeSourceSuccess": "The user {{item.user.nicks}} was removed from {{result.count}} files"
+        "removeFileSuccess": "Файл {{item.name}} был убран из очереди",
+        "removeSourceSuccess": "Пользователь {{item.user.nicks}} был удалён из {{result.count}} файлов."
       }
     },
     "actionsCaption": "Действия...",
-    "transferActions": "Transfer actions",
-    "noActiveTransfers": "No active transfers"
+    "transferActions": "Действия с передачами",
+    "noActiveTransfers": "Нет активных передач"
   },
   "settings": {
     "actions": {
       "detectNow": "Определить сейчас",
-      "addDirectory": "Add directory",
-      "addUser": "Add user",
-      "editUser": "Edit user",
-      "editDirectory": "Edit directory",
-      "removeDirectory": "Remove directory",
-      "addProfile": "Create new",
-      "cloneProfile": "Clone profile",
-      "browseFiles": "Browse files",
-      "renameProfile": "Rename profile",
-      "addPath": "Add path",
-      "removePath": "Remove path",
-      "removeUser": "Remove user",
-      "setAsDefault": "Set as default",
+      "addDirectory": "Добавить каталог",
+      "addUser": "Добавить пользователя",
+      "editUser": "Править пользователя",
+      "editDirectory": "Править каталог",
+      "removeDirectory": "Убрать каталог",
+      "addProfile": "Создать новый",
+      "cloneProfile": "Копировать профиль",
+      "browseFiles": "Обзор файлов",
+      "renameProfile": "Переименовать профиль",
+      "addPath": "Добавить путь",
+      "removePath": "Убрать путь",
+      "removeUser": "Убрать пользователя",
+      "setAsDefault": "Сделать стандартным",
       "removeProfile": "Удалить профиль",
-      "addType": "Add type",
-      "editType": "Edit type",
-      "removeType": "Remove type",
+      "addType": "Добавить тип",
+      "editType": "Править тип",
+      "removeType": "Убрать тип",
       "prompts": {
-        "cloneProfilePlaceholder": "Enter name",
-        "cloneProfileApprove": "Create",
-        "cloneProfileContent": "Enter name for the profile (cloned from {{item.name}})",
-        "createProfilePlaceholder": "Enter name",
-        "createProfileApprove": "Create",
-        "createProfileContent": "Enter name for the profile",
-        "editProfilePlaceholder": "Enter name",
+        "cloneProfilePlaceholder": "Ввод имени",
+        "cloneProfileApprove": "Создать",
+        "cloneProfileContent": "Введите имя профиля (скопирован из {{item.name}})",
+        "createProfilePlaceholder": "Ввод имени",
+        "createProfileApprove": "Создать",
+        "createProfileContent": "Введите имя профиля",
+        "editProfilePlaceholder": "Ввод имени",
         "editProfileApprove": "Изменить",
-        "editProfileContent": "Enter new name for the profile {{item.name}}",
-        "removeShareExcludeApprove": "Remove path",
+        "editProfileContent": "Введите новое имя для профиля {{item.name}}",
+        "removeShareExcludeApprove": "Убрать путь",
         "removeShareExcludeReject": "Не удалять",
-        "removeShareExcludeContent": "Are you sure that you want to remove the excluded path {{item}}?",
-        "removeWebUserApprove": "Remove user",
+        "removeShareExcludeContent": "Уверены, что хотите убрать исключённый путь {{item}}?",
+        "removeWebUserApprove": "Убрать пользователя",
         "removeWebUserReject": "Не удалять",
-        "removeWebUserContent": "Are you sure that you want to remove the user {{item.username}}?",
-        "removeFavoriteDirectoryApprove": "Remove directory",
+        "removeWebUserContent": "Уверены, что хотите убрать пользователя {{item.username}}?",
+        "removeFavoriteDirectoryApprove": "Убрать каталог",
         "removeFavoriteDirectoryReject": "Не удалять",
-        "removeFavoriteDirectoryContent": "Are you sure that you want to remove the favorite directory {{item.name}}?",
-        "removeSearchTypeApprove": "Remove type",
+        "removeFavoriteDirectoryContent": "Уверены, что хотите убрать папку избранного {{item.name}}?",
+        "removeSearchTypeApprove": "Убрать тип",
         "removeSearchTypeReject": "Не удалять",
-        "removeSearchTypeContent": "Are you sure that you want to remove the search type {{item.name}}?",
+        "removeSearchTypeContent": "Уверены, что хотите убрать тип поиска {{item.name}}?",
         "removeProfileApprove": "Удалить профиль",
         "removeProfileReject": "Не удалять",
-        "removeProfileContent": "Are you sure that you want to remove the profile {{item.name}}?"
+        "removeProfileContent": "Уверены, что хотите удалить профиль {{item.name}}?"
       }
     },
     "navigation": {
-      "profile": "Profile",
+      "profile": "Профиль",
       "connectivity": "Связь",
-      "speedAndLimits": "Speed and limits",
+      "speedAndLimits": "Скорость и ограничения",
       "downloads": "Скачивание",
       "sharing": "Совместное использование",
-      "view": "&amp;Вид",
-      "about": "About",
+      "view": "Вид",
+      "about": "О приложении",
       "extensions": "Расширения",
-      "extensionEngines": "Extension engines",
-      "system": "System",
-      "autoDetection": "Auto detection",
-      "iPv4ConnectivityManual": "IPv4 connectivity (manual)",
-      "iPv6ConnectivityManual": "IPv6 connectivity (manual)",
-      "portsManual": "Ports (manual)",
+      "extensionEngines": "Движки расширений",
+      "system": "Система",
+      "autoDetection": "Автоопределение",
+      "iPv4ConnectivityManual": "Подключение IPv4 (вручную)",
+      "iPv6ConnectivityManual": "Подключение IPv6 (вручную)",
+      "portsManual": "Порты (вручную)",
       "proxies": "Прокси",
       "encryption": "Шифрование",
       "user": "Пользователь",
-      "awayMode": "Режим \"Ушёл\"",
+      "awayMode": "Режим «Ушёл»",
       "ignoredUsers": "Игнорируемые пользователи",
       "miscellaneous": "Разное",
-      "manageInstalled": "Manage installed",
-      "extensionCatalog": "Extension catalog",
-      "extensionOptions": "Extension options",
+      "manageInstalled": "Управление установленным",
+      "extensionCatalog": "Каталог расширения",
+      "extensionOptions": "Параметры расширения",
       "application": "Приложение",
-      "transferStatistics": "Transfer statistics",
-      "shareStatistics": "Share statistics",
-      "hubStatistics": "Hub statistics",
+      "transferStatistics": "Статистика передач",
+      "shareStatistics": "Статистика шары",
+      "hubStatistics": "Статистика хаба",
       "users": "Пользователи",
       "logging": "Вести журналы",
       "webServer": "Веб-сервер",
-      "advancedServerSettings": "Advanced server settings",
-      "refreshOptions": "Refresh options",
+      "advancedServerSettings": "Расширенные настройки сервера",
+      "refreshOptions": "Параметры обновления",
       "shareProfiles": "Профили шары",
       "sharingOptions": "Опции шаринга",
       "hashing": "Хеширование",
-      "excludedPaths": "Excluded paths",
+      "excludedPaths": "Исключённые пути",
       "connectionSpeed": "Скорость соединения",
-      "bandwidthLimiting": "Bandwidth limiting",
+      "bandwidthLimiting": "Ограничение трафика",
       "downloadLimits": "Ограничения загрузок",
       "uploadLimits": "Ограничения отдачи",
-      "perUserLimits": "Per-user limits",
+      "perUserLimits": "Ограничения для пользователя",
       "locations": "Месторасположения",
       "skippingOptions": "Опции пропуска",
       "searchMatching": "Совпадения поиска",
       "searchTypes": "Тип поиска",
       "downloadOptions": "Загрузка",
       "priorities": "Приоритеты",
-      "notificationsCaption": "Notifications",
+      "notificationsCaption": "Уведомления",
       "histories": "Истории",
       "events": "События",
       "appearance": "Внешний вид"
     },
     "advanced": "Дополнительно",
-    "noUnsavedChanges": "No unsaved changes",
-    "noSavePermission": "No save permission",
-    "saveChanges": "Save changes",
-    "savingCompleted": "Saving completed",
-    "settingsWereSavedSuccessfully": "Settings were saved successfully",
-    "unsavedChangesPrompt": "You have unsaved changes. Are you sure you want to leave?",
+    "noUnsavedChanges": "Нет несохранённых изменений",
+    "noSavePermission": "Нет разрешения на сохранение",
+    "saveChanges": "Сохранить изменения",
+    "savingCompleted": "Сохранение завершено",
+    "settingsWereSavedSuccessfully": "Настройки успешно сохранены",
+    "unsavedChangesPrompt": "У вас есть несохранённые изменения. Уверены, что хотите выйти?",
     "connectivity": {
       "detection": {
-        "connectivityDetectionNote": "In case of file transfer connectivity issues, please confirm that your TCP ports are really open by using <portChecker>an online port checker</portChecker>. Note that validity of the UDP port (search) can't be checked online. For more information about different connectivity modes, please visit <faq>DC++'s connectivity FAQ</faq>.",
-        "currentAutoDetectionStatus": "Current auto detection status",
-        "iPv4Connectivity": "IPv4 connectivity",
-        "iPv6Connectivity": "IPv6 connectivity",
-        "manualConfiguration": "{{status}} (manual configuration)",
-        "autoDetected": "{{status}} (auto detected)",
-        "detecting": "Detecting...",
-        "transferPort": "Transfer port",
-        "encryptedTransferPort": "Encrypted transfer port",
-        "searchUdpPort": "Search/UDP port",
-        "boundInterfaceIPv4": "Bound interface (IPv4)",
-        "boundInterfaceIPv6": "Bound interface (IPv6)",
-        "viewAll": "View all"
+        "connectivityDetectionNote": "В случае проблем с подключением при передаче файлов убедитесь, что ваши TCP-порты действительно открыты, воспользовавшись <portChecker>проверкой портов через сеть</portChecker>. Обратите внимание, что действительность UDP-порта (поиск) нельзя проверить по сети. Для получения подробностей о различных режимах подключения посетите раздел <faq>Часто задаваемых вопросов о подключении DC++</faq>.",
+        "currentAutoDetectionStatus": "Текущий статус автоматического определения",
+        "iPv4Connectivity": "Подключение IPv4",
+        "iPv6Connectivity": "Подключение IPv6",
+        "manualConfiguration": "{{status}} (ручная настройка)",
+        "autoDetected": "{{status}} (автоопределение)",
+        "detecting": "Определение…",
+        "transferPort": "Порт передачи",
+        "encryptedTransferPort": "Порт зашифрованной передачи",
+        "searchUdpPort": "Порт поиска/UDP",
+        "boundInterfaceIPv4": "Связанный интерфейс (IPv4)",
+        "boundInterfaceIPv6": "Связанный интерфейс (IPv6)",
+        "viewAll": "Просмотреть все"
       },
       "ports": {
-        "portsAutoValuesNote": "Port numbers listed on this page can be overridden by port mappers (if enabled)",
+        "portsAutoValuesNote": "Номера портов, указанные на этой странице, можно переопределить средствами сопоставления портов (если включено)",
         "form": {
-          "tcpPortHelp": "TCP port is used for unencrypted transfers",
-          "udpPortHelp": "UDP port is used for searching",
-          "tlsPortHelp": "TLS port (TCP) is used for encrypted transfers"
+          "tcpPortHelp": "TCP-порт используется для незашифрованных передач",
+          "udpPortHelp": "UDP-порт используется для поиска",
+          "tlsPortHelp": "Порт TLS (TCP) используется для зашифрованных передач"
         }
       },
       "v6": {
-        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
+        "protocolAutoValuesNote": "Автоматическое определение подключения в настоящее время включено; значения, указанные на этой странице, не используются"
       },
       "v4": {
-        "protocolAutoValuesNote": "Connectivity auto detection is currently enabled; setting values listed on this page are not being used"
+        "protocolAutoValuesNote": "Автоматическое определение подключения в настоящее время включено; значения, указанные на этой странице, не используются"
       }
     },
     "profile": {
       "user": {
         "form": {
           "settingProfileHelp0": "Клиент используется в обычных частных/публичных хабах для передачи файлов через интернет. Используйте этот профиль, если не уверены.",
-          "settingProfileHelp1": "The client is used for transferring files that are split in RAR archives (or in other small-sized formats)",
-          "settingProfileHelp2": "The client is used for transferring files in local network (e.g. LAN parties) or in another closed network (e.g. university network)",
-          "languageFileHelpRestart": "The application must be restarted for the new language to take effect.",
-          "languageFileHelpTranslate": "If you want to help with improving the existing translations or translate the application into a new language, please see the <url>instructions for translators</url>."
+          "settingProfileHelp1": "Клиент используется для передачи файлов, разбитых на RAR-архивы (или другие форматы небольшого размера)",
+          "settingProfileHelp2": "Клиент используется для передачи файлов в локальной сети (например, LAN-вечеринки) или в другой закрытой сети (например, университетской)",
+          "languageFileHelpRestart": "Для того чтобы новый язык вступил в силу, необходимо перезапустить приложение.",
+          "languageFileHelpTranslate": "Если вы хотите помочь с улучшением существующих переводов или перевести приложение на новый язык, ознакомьтесь с <url>инструкциями для переводчиков</url>."
         }
       },
       "ignoredUsers": {
         "user": "Пользователь",
-        "messagesIgnored": "Messages ignored",
-        "noIgnoredUsers": "No ignored users"
+        "messagesIgnored": "Игнорируемые сообщения",
+        "noIgnoredUsers": "Нет игнорируемых пользователей"
       },
       "miscellaneous": {
         "form": {
-          "nmdcEncodingHelp": "<0>Encoding setting is only used in NMDC hubs. ADC hubs will always use UTF-8 encoding.<1></1><2></2><3>Commonly used values:<1><0>Central Europe: cp1250</0><1>Cyrillic: cp1251</1><2>Western Europe: cp1252</2><3>Greek: cp1253</3><4>Turkish: cp1254</4><5>Hebrew: cp1256</5></1></3></0>"
+          "nmdcEncodingHelp": "<0>Настройка кодировки используется только в хабах NMDC. Концентраторы Хабы ADC всегда используют кодировку UTF-8.<1></1><2></2><3>Обычно используемые значения:<1><0>Центральная Европа: cp1250</0><1>Кириллица: cp1251</1><2>Западная Европа: cp1252</2><3>Греческая: cp1253</3><4>Турецкая: cp1254</4><5>Иврит: cp1256</5></1></3></0>"
         }
       }
     },
     "extensions": {
       "packages": {
-        "byAuthor": "by {{author}}",
+        "byAuthor": "автор — {{author}}",
         "latestVersion": "Последняя версия",
-        "installedVersion": "Installed version",
-        "datePublished": "{{version}} (published {{date}})",
-        "readMore": "Read more",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
-        "manage": "Manage..."
+        "installedVersion": "Установленная версия",
+        "datePublished": "{{version}} (опубликована {{date}})",
+        "readMore": "Узнать больше",
+        "defaultExtensionEngineMissing": "Стандартный движок расширений <strong>{{engineName}}</strong> не установлен в вашей системе. Пожалуйста, посетите <url>домашнюю страницу движка</url> для инструкций по установке.",
+        "manage": "Управление…"
       },
       "manage": {
-        "byAuthor": "by {{author}}",
+        "byAuthor": "автор — {{author}}",
         "latestVersion": "Последняя версия",
-        "installedVersion": "Installed version",
-        "nonListedExtension": "Non-listed extension",
-        "readMore": "Read more",
-        "noInstalledExtensions": "No installed extensions were found. New extensions can be installed from the <url>Extension catalog</url> page.",
-        "defaultExtensionEngineMissing": "The default extension engine <strong>{{engineName}}</strong> is not installed on your system. Please visit <url>engine's home page</url> for installation instructions.",
-        "extensionDirectoryFetchError": "Failed to fetch information from the extension directory: {{error}}",
-        "unmanagedExtension": "Unmanaged extension",
-        "manage": "Manage..."
+        "installedVersion": "Установленная версия",
+        "nonListedExtension": "Несписочное расширение",
+        "readMore": "Узнать больше",
+        "noInstalledExtensions": "Установленные расширения не найдены. Новые расширения можно установить со страницы <url>Каталога расширений</url>.",
+        "defaultExtensionEngineMissing": "Стандартный движок расширений <strong>{{engineName}}</strong> не установлен в вашей системе. Пожалуйста, посетите <url>домашнюю страницу движка</url> для инструкций по установке.",
+        "extensionDirectoryFetchError": "Не удалось получить информацию из каталога расширений: {{error}}",
+        "unmanagedExtension": "Неуправляемое расширение",
+        "manage": "Управление…"
       }
     },
     "about": {
       "application": {
-        "applicationVersion": "Application version",
-        "webUiVersion": "Web UI version",
-        "webUiBuildDate": "Web UI build date",
-        "apiVersion": "API version",
-        "apiFeatureLevel": "API feature level",
+        "applicationVersion": "Версия приложения",
+        "webUiVersion": "Версия веб-интерфейса",
+        "webUiBuildDate": "Дата сборки веб-интерфейса",
+        "apiVersion": "Версия API",
+        "apiFeatureLevel": "Уровень функций API",
         "started": "Начато",
-        "activeSessions": "Активная сессия",
+        "activeSessions": "Активные сеансы",
         "serverThreads": "Потоки сервера",
-        "resources": "Resources",
-        "homePage": "Home page",
-        "featureRequestBugTracker": "Feature request/bug tracker",
-        "documentation": "Documentation",
-        "thirdPartyCredits": "Third-party credits"
+        "resources": "Ресурсы",
+        "homePage": "Домашняя страница",
+        "featureRequestBugTracker": "Трекер предложений и ошибок",
+        "documentation": "Документация",
+        "thirdPartyCredits": "Титры третьих лиц"
       },
       "transfers": {
-        "totalDownloaded": "Total downloaded",
-        "totalUploaded": "Total uploaded",
-        "session": "Session",
-        "sessionDownloaded": "Session downloaded",
-        "sessionUploaded": "Session uploaded"
+        "totalDownloaded": "Всего скачано",
+        "totalUploaded": "Всего отдано",
+        "session": "Сеанс",
+        "sessionDownloaded": "Скачано за сеанс",
+        "sessionUploaded": "Отдано за сеанс"
       },
       "share": {
-        "noFilesShared": "No files shared",
-        "totalShareSize": "Total share size",
-        "totalFiles": "Total files",
-        "totalFilesValue": "{{totalCount}} ({{uniqueCount}} unique)",
-        "totalDirectories": "Total directories",
-        "averageFileAge": "Average file age",
-        "averageFilesPerDirectory": "Average files per directory",
-        "incomingSearches": "Incoming searches",
-        "totalSearches": "Total searches",
-        "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} per second)",
-        "tthSearches": "TTH searches",
-        "textSearches": "Text searches",
-        "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} matched per second)",
-        "filteredTextSearches": "Filtered text searches",
-        "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} of the matched ones returned results)",
-        "averageTextSearchTokensNonFiltered": "Average text search tokens (non-filtered)",
-        "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} bytes per token)",
-        "averageMatchingTimePerTextSearch": "Average matching time per text search",
-        "searchesAverageMatchTimeValue": "{{matchTime}} ms"
+        "noFilesShared": "Нет расшаренных файлов",
+        "totalShareSize": "Общий размер шары",
+        "totalFiles": "Всего файлов",
+        "totalFilesValue": "{{totalCount}} ({{uniqueCount}} уникальных)",
+        "totalDirectories": "Всего каталогов",
+        "averageFileAge": "Средний возраст файла",
+        "averageFilesPerDirectory": "Среднее число файлов на каталог",
+        "incomingSearches": "Входящие поиски",
+        "totalSearches": "Всего поисков",
+        "searchesTotalValue": "{{totalCount}} ({{perSecondCount}} в секунду)",
+        "tthSearches": "Поиски TTH",
+        "textSearches": "Поиски текста",
+        "searchesPerSecondValue": "{{totalCount}} ({{matchedCount}} совпадений в секунду)",
+        "filteredTextSearches": "Отфильтрованные поиски текста",
+        "searchesFilteredValue": "{{filteredPercentage}} ({{resultPercentage}} из совпадающих возвращённых результатов)",
+        "averageTextSearchTokensNonFiltered": "Среднее количество токенов текстового поиска (без фильтрации)",
+        "searchesAverageTokensValue": "{{tokenCount}} ({{tokenLength}} байт на токен)",
+        "averageMatchingTimePerTextSearch": "Среднее время сопоставления на один текстовый поиск",
+        "searchesAverageMatchTimeValue": "{{matchTime}} мс"
       },
       "hubs": {
-        "noHubsOnline": "No hubs online",
-        "totalUsers": "Total users",
-        "uniqueUsers": "Unique users",
-        "activeUsers": "Active users",
-        "totalShare": "Total share",
-        "averageSharePerUser": "Average share per user",
-        "averageAdcDownloadSpeed": "Average ADC download speed",
-        "clients": "Clients",
-        "averageAdcUploadSpeed": "Average ADC upload speed"
+        "noHubsOnline": "Нет хабов в сети",
+        "totalUsers": "Всего пользователей",
+        "uniqueUsers": "Уникальных пользователей",
+        "activeUsers": "Активных пользователей",
+        "totalShare": "Общая шара",
+        "averageSharePerUser": "Средняя шара на пользователя",
+        "averageAdcDownloadSpeed": "Средняя скорость скачивания ADC",
+        "clients": "Клиенты",
+        "averageAdcUploadSpeed": "Средняя скорость отдачи ADC"
       }
     },
     "system": {
       "logging": {
-        "messages": "Messages",
-        "transfers": "&amp;Передачи",
-        "variableHelp": "Variable information for Filename and Format fields"
+        "messages": "Сообщения",
+        "transfers": "Передачи",
+        "variableHelp": "Переменная информация для полей «Имя файла» и «Формат»"
       },
       "serverSettings": {
-        "defaultCertNote": "The default client certificate is used if the certificate paths are empty"
+        "defaultCertNote": "Если пути к сертификатам пусты, используется сертификат клиента по умолчанию."
       },
       "advancedServerSettings": {
-        "hookTimeouts": "Hook timeouts"
+        "hookTimeouts": "Тайм-ауты хуков"
       },
       "users": {
         "username": "Имя пользователя",
-        "permissions": "Permissions",
-        "activeSessions": "Активная сессия",
-        "lastLoggedIn": "Last logged in",
-        "administrator": "Administrator",
+        "permissions": "Разрешения",
+        "activeSessions": "Активные сеансы",
+        "lastLoggedIn": "Последний вход в систему",
+        "administrator": "Администратор",
         "form": {
-          "usernameName": "User name",
+          "usernameName": "Имя пользователя",
           "passwordName": "Пароль",
-          "permissionsName": "Permissions"
+          "permissionsName": "Разрешения"
         },
         "permissionSelector": {
-          "administrator": "Administrator",
+          "administrator": "Администратор",
           "search": "Поиск",
           "download": "Скачивание",
-          "transfers": "&amp;Передачи",
+          "transfers": "Передачи",
           "events": "События",
-          "view": "&amp;Вид",
-          "edit": "&amp;Правка",
+          "view": "Вид",
+          "edit": "Правка",
           "queue": "Очередь",
           "favoriteHubs": "Избранные хабы",
           "settings": "Настройки",
-          "localFilesystem": "Local filesystem",
+          "localFilesystem": "Локальная файловая система",
           "hubs": "Хабы",
-          "sendMessages": "Send messages",
+          "sendMessages": "Отправить сообщения",
           "privateChat": "Приватный чат",
-          "filelists": "Filelists",
-          "viewedFiles": "Viewed files"
+          "filelists": "Списки файлов",
+          "viewedFiles": "Просмотренные файлы"
         },
-        "addWebUser": "Add web user",
-        "editUser": "Edit user",
-        "adminPermissionNote": "Administrator permission is required in order to access the System section in settings"
+        "addWebUser": "Добавить веб-пользователя",
+        "editUser": "Править пользователя",
+        "adminPermissionNote": "Для доступа к разделу «Система» в настройках требуется разрешение администратора"
       }
     },
     "sharing": {
       "excludes": {
-        "shareRefreshNote": "Share must be refreshed for the changes to take effect",
-        "addExcludedPath": "Add excluded path",
+        "shareRefreshNote": "Для вступления изменений в силу необходимо обновить шару",
+        "addExcludedPath": "Добавить исключённый путь",
         "path": "Путь"
       },
       "profiles": {
         "name": "Имя",
-        "totalSize": "Total size",
-        "totalFiles": "Total files",
-        "shareProfilesPartialNote": "Queued files are shared via the partial file sharing feature in all hubs where the share has not been hidden, regardless of the configured share profiles.",
-        "shareProfilesHelp": "Share profiles are assigned for individual directories from the <url>Share</url> page.",
-        "addProfile": "Add profile",
-        "cloneFromAnExistingProfile": "Clone from an existing profile"
+        "totalSize": "Общий размер",
+        "totalFiles": "Всего файлов",
+        "shareProfilesPartialNote": "Файлы в очереди расшарены с помощью функции частичного расшаривания файлов во всех хабах, где шара не была скрыта, независимо от настроенных профилей расшаривания.",
+        "shareProfilesHelp": "Профили расшаривания назначаются для отдельных каталогов на странице «Шара».",
+        "addProfile": "Добавить профиль",
+        "cloneFromAnExistingProfile": "Клонировать из существующего профиля"
       },
       "sharingOptions": {
-        "skiplist": "Skiplist"
+        "skiplist": "Список пропущенного"
       },
       "hashing": {
         "hashDatabase": "База данных хеша",
-        "fileIndexSize": "File index size",
-        "hashStoreSize": "Hash store size",
+        "fileIndexSize": "Размер индекса файлов",
+        "hashStoreSize": "Размер хранилища хешей",
         "maintenance": "Обслуживание",
-        "verifyIntegrityOfHashData": "Verify integrity of hash data",
-        "optimizeNow": "Optimize now",
-        "hashDBOptimizeNote": "This operation will delete all hash information for files that aren't currently in share. If you are sharing files from network disks or from a removable storage, make sure that the files are currently shown in share (otherwise they have to be rehashed)"
+        "verifyIntegrityOfHashData": "Проверка целостности хеш-данных",
+        "optimizeNow": "Оптимизировать сейчас",
+        "hashDBOptimizeNote": "Эта операция удалит всю хеш-информацию для файлов, которые в данный момент не находятся в шаре. Если вы расшарили файлы с сетевых дисков или съёмных носителей, убедитесь, что эти файлы в данный момент отображаются в шаре (иначе их придётся перехешировать)"
       }
     },
     "speedLimits": {
       "speed": {
-        "connectionSpeedNote": "Please be as accurate as possible and set the ACTUAL speed of your connection. You may use an online tester, such as <speedtest>{{name}}</speedtest>, to test your speed."
+        "connectionSpeedNote": "Пожалуйста, будьте как можно точнее и установите ФАКТИЧЕСКУЮ скорость вашего соединения. Вы можете использовать онлайн-проверку, например, {{name}}, чтобы протестировать свою скорость."
       },
       "uploadLimits": {
-        "manuallySet": "Manually set"
+        "manuallySet": "Задано вручную"
       },
       "downloadLimits": {
-        "manuallySet": "Manually set"
+        "manuallySet": "Задано вручную"
       }
     },
     "downloads": {
       "locations": {
-        "availablePathVariables": "Available path variables",
+        "availablePathVariables": "Доступные переменные пути",
         "favoriteDownloadDirectories": "Избранные папки для скачивания",
         "name": "Имя",
         "path": "Путь",
@@ -908,15 +908,15 @@
           "pathName": "Путь",
           "nameName": "Имя"
         },
-        "addFavoriteDirectory": "Add favorite directory",
-        "editFavoriteDirectory": "Edit favorite directory"
+        "addFavoriteDirectory": "Добавить избранный каталог",
+        "editFavoriteDirectory": "Править избранный каталог"
       },
       "skippingOptions": {
-        "skiplist": "Skiplist"
+        "skiplist": "Список пропущенного"
       },
       "priorities": {
-        "filePriorities": "File priorities",
-        "highPriorityFiles": "High priority files"
+        "filePriorities": "Приоритеты файлов",
+        "highPriorityFiles": "Файлы с высоким приоритетом"
       },
       "searchTypes": {
         "name": "Имя",
@@ -927,39 +927,39 @@
           "nameName": "Имя",
           "extensionsName": "Расширение файла"
         },
-        "addSearchType": "Add search type",
-        "editSearchType": "Edit search type"
+        "addSearchType": "Добавить тип поиска",
+        "editSearchType": "Править тип поиска"
       },
       "downloadOptions": {
         "segments": "Сегменты",
-        "compression": "Compression",
-        "buffers": "Buffers"
+        "compression": "Сжатие",
+        "buffers": "Буферы"
       }
     },
-    "browserSpecificNote": "Settings listed on this page are browser-specific",
+    "browserSpecificNote": "Настройки, представленные на этой странице, зависят от браузера",
     "view": {
       "notifications": {
-        "popupNotifications": "Popup notifications",
+        "popupNotifications": "Всплывающие уведомления",
         "form": {
-          "notifyMentionMyNickName": "Mentions of my nick",
-          "notifyPmUserName": "Private messages (users)",
-          "notifyPmBotName": "Private messages (bots)",
-          "notifyHubMessageName": "Hub chat messages (only in hubs where chat notifications are enabled)",
-          "notifyBundleStatusName": "Bundle status changes",
-          "notifyEventsInfoName": "Info events",
-          "notifyEventsWarningName": "Warning events",
-          "notifyEventsErrorName": "Error events"
+          "notifyMentionMyNickName": "Упоминания моего ника",
+          "notifyPmUserName": "Личные сообщения (пользователи)",
+          "notifyPmBotName": "Личные сообщения (боты)",
+          "notifyHubMessageName": "Сообщения в чате хаба (только в хабах, где включены уведомления чата)",
+          "notifyBundleStatusName": "Изменения статуса пакета",
+          "notifyEventsInfoName": "Информационные события",
+          "notifyEventsWarningName": "Предупреждающие события",
+          "notifyEventsErrorName": "События ошибок"
         }
       },
       "histories": {
-        "maxMessageHistory": "Maximum number of messages to cache",
-        "maxSessionHistory": "Maximum number of previously opened sessions"
+        "maxMessageHistory": "Максимальное число сообщений для кэширования",
+        "maxSessionHistory": "Максимальное число ранее открытых сеансов"
       },
       "miscellaneous": {
         "form": {
-          "unreadLabelDelayName": "Delay for marking chat sessions as read (seconds)",
-          "backgroundImageUrlName": "Custom background image URL",
-          "noInstallPromptName": "Never show the application install prompt in Home view"
+          "unreadLabelDelayName": "Задержка перед пометкой сеансов чата прочитанными (секунды)",
+          "backgroundImageUrlName": "Адрес пользовательского фонового изображения",
+          "noInstallPromptName": "Никогда не показывать запрос на установку приложения в режиме просмотра «Домой»"
         }
       }
     }
@@ -968,68 +968,68 @@
     "actions": {
       "uninstall": "Удалить",
       "start": "Запуск",
-      "installFromUrl": "Install from URL",
-      "install": "Install",
+      "installFromUrl": "Установить с адреса",
+      "install": "Установить",
       "update": "Обновить",
       "stop": "Стоп",
-      "configure": "&amp;Конфигурация",
-      "enable": "Enable",
-      "disable": "Disable",
+      "configure": "Настроить",
+      "enable": "Включить",
+      "disable": "Отключить",
       "prompts": {
-        "installUrlPlaceholder": "Enter URL",
-        "installUrlApprove": "Install",
-        "installUrlContent": "Enter download URL",
-        "removeApprove": "Remove extension",
+        "installUrlPlaceholder": "Введите адрес",
+        "installUrlApprove": "Установить",
+        "installUrlContent": "Введите адрес закачки",
+        "removeApprove": "Убрать расширение",
         "removeReject": "Не удалять",
-        "removeContent": "Are you sure that you want to remove the extension {{item.name}}? This will also remove possible extension-specific settings."
+        "removeContent": "Уверены, что хотите удалить расширение {{item.name}}? При этом также будут удалены возможные настройки, специфичные для этого расширения."
       }
     }
   },
   "navigation": {
-    "home": "Home",
+    "home": "Домой",
     "queue": "Очередь",
     "search": "Поиск",
-    "transfers": "&amp;Передачи",
+    "transfers": "Передачи",
     "hubs": "Хабы",
-    "messages": "Messages",
-    "filelists": "Filelists",
+    "messages": "Сообщения",
+    "filelists": "Списки файлов",
     "files": "Файлы",
     "events": "События",
     "favoriteHubs": "Избранные хабы",
-    "share": "Share",
+    "share": "Расшарить",
     "settings": "Настройки",
-    "logout": "Logout",
-    "more": "More..."
+    "logout": "Выйти",
+    "more": "Больше…"
   },
   "login": {
     "username": "Имя пользователя",
     "password": "Пароль",
-    "keepMeLoggedIn": "Keep me logged in",
+    "keepMeLoggedIn": "Сохранить мой вход в систему",
     "login": "Логин",
-    "authenticationFailed": "Authentication failed: {{lastError}}",
-    "connectingToTheServer": "Connecting to the server...",
-    "reestablishConnection": "Attempting to re-establish connection...",
-    "sessionLost": "Session lost",
+    "authenticationFailed": "Аутентификация не удалась: {{lastError}}",
+    "connectingToTheServer": "Соединение с сервером…",
+    "reestablishConnection": "Попытка восстановить соединение…",
+    "sessionLost": "Сеанс потерян",
     "connectionClosed": "Соединение закрыто",
-    "privateBrowsingNotSupported": "This site can't be used with your browser if private browsing mode is enabled",
-    "dataStorageNotSupported": "This site can't be used with your browser because it doesn't support data storage"
+    "privateBrowsingNotSupported": "Этот сайт нельзя использовать в вашем браузере, если включён режим приватного просмотра",
+    "dataStorageNotSupported": "Этот сайт нельзя использовать в вашем браузере, поскольку он не поддерживает хранение данных"
   },
   "viewedFiles": {
     "actions": {
       "close": "Закрыть"
     },
-    "noFiles": "No files to view",
-    "noFilesDesc": "You may open text or media files to be viewed here from search or filelists",
-    "preparingView": "Preparing view",
-    "opened": "Opened",
+    "noFiles": "Нет файлов для просмотра",
+    "noFilesDesc": "Вы можете открыть текстовые или мультимедийные файлы для просмотра здесь из результатов поиска или списков файлов",
+    "preparingView": "Подготовка просмотра",
+    "opened": "Открыто",
     "downloaded": "Скачано",
-    "unsupportedFormat": "Unsupported format",
+    "unsupportedFormat": "Неподдерживаемый формат",
     "downloadFailed": "Ошибка загрузки",
     "notifications": {
-      "fileHasFinishedDownloading": "File has finished downloading",
-      "fileWasLoaded": "File was loaded",
+      "fileHasFinishedDownloading": "Скачивание файла завершено",
+      "fileWasLoaded": "Файл был загружен",
       "actions": {
-        "viewFile": "View file"
+        "viewFile": "Просмотреть файл"
       }
     }
   },
@@ -1037,39 +1037,39 @@
     "actions": {
       "clearChat": "Очистить чат",
       "close": "Закрыть",
-      "connect": "&amp;Соединение",
-      "disconnect": "Disconnect"
+      "connect": "Соединение",
+      "disconnect": "Отключить"
     },
-    "new": "New session",
-    "newDesc": "Open a new private chat session",
-    "offlineMessage": "You must to be connected to at least one hub in order to send private messages",
-    "directEncryptedChannelAvailable": "Direct encrypted channel available",
-    "establishingConnection": "Establishing connection...",
-    "directEncryptedChannelEstablished": "Direct encrypted channel established",
+    "new": "Новый сеанс",
+    "newDesc": "Открыть новый сеанс личного чата",
+    "offlineMessage": "Вы должны подключиться как минимум к одному хабу, чтобы отправлять личные сообщения",
+    "directEncryptedChannelAvailable": "Доступен прямой зашифрованный канал",
+    "establishingConnection": "Установка соединения…",
+    "directEncryptedChannelEstablished": "Установлен прямой зашифрованный канал",
     "notifications": {
       "actions": {
-        "viewMessage": "View message"
+        "viewMessage": "Просмотреть сообщение"
       }
     }
   },
   "home": {
-    "newUserIntro": "Information for new user",
-    "newUserIntroDesc": "<0><0>Add a few directories that are shared to other users from the <1>Share</1> page.</0><1>You might want to go through at least each main page of <1>the client settings</1> before you start.  <3>It's important that you <1>configure your connection speed</1> correctly because the client won't be able to utilize your bandwidth efficiently otherwise.</3></1><2>There is no listing of public hubs yet so you need to know the hub addresses where you wish to connect to.</2></0><1>Visit the <1>home page</1> for more information about the client and its features.</1><2>If you have questions, you may post them on the <1>GitHub tracker</1> or join the dev/support hub: <3></3></2>"
+    "newUserIntro": "Сведения для новых пользователей",
+    "newUserIntroDesc": "<0><0>Добавьте несколько каталогов, которые доступны другим пользователям, на странице <1>Шары</1>.</0><1>Перед началом работы рекомендуется ознакомиться по крайней мере с каждой основной страницей <1>настроек клиента</1>. <3>Важно правильно <1>настроить вашу скорость соединения</1>, так как в противном случае клиент не сможет эффективно использовать вашу пропускную способность.</3></1><2>Пока нет списка общедоступных хабов, поэтому вам нужно знать адреса хабов, к которым вы хотите подключиться.</2></0><1>Посетите <1>домашнюю страницу</1>, чтобы получить подробности о клиенте и его функциях.</1><2>Если у вас есть вопросы, вы можете разместить их на <1>трекере GitHub</1> или присоединиться к хабу dev/support: <3></3></2>"
   },
   "hash": {
     "actions": {
       "pause": "Пауза",
-      "resume": "Возобновление",
+      "resume": "Возобновить",
       "stop": "Стоп"
     },
-    "status": "Статус",
+    "status": "Состояние",
     "paused": "Пауза",
-    "filesLeft": "Files left",
-    "maximumSpeedPerHasher": "Maximum speed per hasher",
-    "runningThreads": "Running ({{threadCount}} threads)",
+    "filesLeft": "Файлов осталось",
+    "maximumSpeedPerHasher": "Максимальная скорость на хешер",
+    "runningThreads": "Запущено ({{threadCount}} потоков)",
     "speed": "Скорость",
-    "timeLeft": "Осталось",
-    "idle": "Idle",
-    "hashProgress": "Hash progress"
+    "timeLeft": "Осталось времени",
+    "idle": "Бездействие",
+    "hashProgress": "Прогресс хеширования"
   }
 }
