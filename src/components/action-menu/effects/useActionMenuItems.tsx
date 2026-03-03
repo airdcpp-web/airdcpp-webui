@@ -102,7 +102,9 @@ export const useActionMenuItems = <
 
     // Remote items (insert after all local items so that the previous menu item positions won't change)
     if (remoteMenus) {
-      children = remoteMenus.reduce(reduceRemoteMenuItems, children);
+      children = remoteMenus.reduce((reduced, remoteMenuItem) => {
+        return reduceRemoteMenuItems(reduced, remoteMenuItem);
+      }, children);
     }
 
     return children;

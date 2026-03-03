@@ -16,7 +16,7 @@ const buildChildMenu = (
       role="menu"
       aria-label={label}
     >
-      {items.map(buildMenuItem)}
+      {items.map((element, index) => buildMenuItem(element, index))}
     </div>
   );
 };
@@ -45,4 +45,4 @@ const buildMenuItem = (menuItem: UI.ActionMenuItem, index: number) => {
 };
 
 export const buildMenu: UI.ActionMenuComponentBuilder = (items) =>
-  items.map(buildMenuItem);
+  items.map((element, index) => buildMenuItem(element, index));

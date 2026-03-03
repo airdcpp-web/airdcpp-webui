@@ -23,8 +23,8 @@ const formatFreeSpace = (
   t: UI.TranslateF,
   { formatSize }: Formatter,
 ) => {
-  if (pathInfo.free_space <= 0) {
-    return pathInfo.path;
+  if (pathInfo.free_space < 0) {
+    return ''; // Unknown
   }
 
   return ` (${t(toI18nKey('spaceFree', UI.Modules.COMMON), {
