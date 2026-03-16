@@ -69,7 +69,7 @@ const TableContainer: React.FC<TableContainerProps> = (props) => {
     }
 
     let { flexGrow, width } = column.props;
-    const { cell, columnKey, renderCondition } = column.props;
+    const { cell, columnKey, renderCondition, header: customHeader } = column.props;
     const { store, rowClassNameGetter, moduleId, dataLoader } = props;
 
     const mobileView = usingMobileLayout();
@@ -81,18 +81,23 @@ const TableContainer: React.FC<TableContainerProps> = (props) => {
       }
     }
 
+    // Use custom header if provided (e.g., for selection checkbox column)
+    // Otherwise use the default sortable header
+    const isSelectionColumn = columnKey === '__selection';
+    const header = customHeader ?? (
+      <Plugins.ResizeCell onColumnResizeEnd={viewManager.onColumnResizeEndCallback}>
+        <HeaderCell
+          onClick={viewManager.onColumnClicked.bind(null, columnKey)}
+          label={formatColumnName(column, store, moduleId, t)}
+        />
+      </Plugins.ResizeCell>
+    );
+
     return React.cloneElement(column, {
-      header: (
-        <Plugins.ResizeCell onColumnResizeEnd={viewManager.onColumnResizeEndCallback}>
-          <HeaderCell
-            onClick={viewManager.onColumnClicked.bind(null, columnKey)}
-            label={formatColumnName(column, store, moduleId, t)}
-          />
-        </Plugins.ResizeCell>
-      ),
+      header,
       flexGrow,
       width,
-      isResizable: !mobileView,
+      isResizable: !mobileView && !isSelectionColumn,
       allowCellsRecycling: true,
       cell: (
         <RowWrapperCell

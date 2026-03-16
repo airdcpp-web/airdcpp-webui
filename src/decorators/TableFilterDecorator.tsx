@@ -33,27 +33,27 @@ export default function <PropsT>(
     TableFilterDecoratorDataProps;
 
   const TableFilterDecorator = (props: Props) => {
-    const onFilterUpdated = (
-      pattern: string,
-      method: API.FilterMethod = API.FilterMethod.PARTIAL,
-    ) => {
-      const data = {
-        pattern,
-        method,
-        property: propertyName,
-      } as API.TableFilter;
+    const { store, filter, socket } = props;
 
-      const { store, filter, socket } = props;
-      socket
-        .put(`${store.viewUrl}/filter/${filter.id}`, data)
-        .catch((error: ErrorResponse) =>
-          console.error('Failed to add table filter', error),
-        );
-    };
+    const onFilterUpdated = React.useCallback(
+      (pattern: string, method: API.FilterMethod = API.FilterMethod.PARTIAL) => {
+        const data = {
+          pattern,
+          method,
+          property: propertyName,
+        } as API.TableFilter;
+
+        socket
+          .put(`${store.viewUrl}/filter/${filter.id}`, data)
+          .catch((error: ErrorResponse) =>
+            console.error('Failed to add table filter', error),
+          );
+      },
+      [store.viewUrl, filter.id, socket],
+    );
 
     React.useLayoutEffect(() => {
       return () => {
-        const { store, filter, socket } = props;
         if (!store.active) {
           return;
         }
@@ -64,7 +64,7 @@ export default function <PropsT>(
             console.error('Failed to delete table filter', error),
           );
       };
-    }, []);
+    }, [store, filter.id, socket]);
 
     return <Component {...props} onFilterUpdated={onFilterUpdated} />;
   };

@@ -113,10 +113,10 @@ export const GroupedSearchResultDirectoryResponse = {
   },
 };
 
-export const GroupedSearchResultFileResponse = {
+export const GroupedSearchResultFileResponse: API.GroupedSearchResult = {
   connection: 16905216,
   dupe: {
-    id: 'share_full' as API.DupeEnum,
+    id: API.DupeEnum.SHARE_FULL,
     paths: ['/home/airdcpp/Downloads/ubuntu_20.04.iso'],
   },
   hits: 2,

@@ -37,6 +37,45 @@ export const showAction = <
   return actionFilter(action, itemData) && actionAccess(action, login);
 };
 
+// Check if an action should be shown in bulk selection mode
+export const showBulkAction = <
+  ItemDataT extends UI.ActionDataValueType,
+  EntityT extends UI.ActionEntityValueType,
+>(
+  action: UI.ActionDefinition<ItemDataT, EntityT>,
+  items: ItemDataT[],
+  session: UI.AuthenticatedSession,
+): boolean => {
+  // Must have bulk enabled
+  if (!action.bulk?.enabled) {
+    return false;
+  }
+
+  // Check access permissions
+  if (!actionAccess(action, session)) {
+    return false;
+  }
+
+  // Check max items constraint
+  if (action.bulk.maxItems && items.length > action.bulk.maxItems) {
+    return false;
+  }
+
+  // Check bulk filter if present
+  if (action.bulk.filter) {
+    return action.bulk.filter({ itemData: items, entity: undefined as EntityT });
+  }
+
+  // Fallback: all items must pass individual filter
+  if (action.filter) {
+    return items.every((item) =>
+      action.filter!({ itemData: item, entity: undefined as EntityT }),
+    );
+  }
+
+  return true;
+};
+
 export const toActionI18nKey = (
   action: UI.ActionDefinition<any, any>,
   moduleId: string | string[],
