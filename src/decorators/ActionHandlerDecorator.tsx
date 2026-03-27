@@ -1,19 +1,16 @@
 import { useState } from 'react';
 import * as React from 'react';
 
-import { useNavigate, useLocation, Location } from 'react-router';
+import { Location } from 'react-router';
 
 import * as UI from '@/types/ui';
 
-import { useTranslation } from 'react-i18next';
 import { translate } from '@/utils/TranslationUtils';
 
 import NotificationActions from '@/actions/NotificationActions';
 import { ActionData, ActionDialog, suffixActionI18nKey } from './components/ActionDialog';
-import { useSocket } from '@/context/SocketContext';
-import { useSessionStoreApi } from '@/context/SessionStoreContext';
 import { ModalCloseContext, useModalCloseContext } from '@/context/ModalCloseContext';
-import { useAppStoreApi } from '@/context/AppStoreContext';
+import { useActionHandlerContext } from './hooks/useActionHandlerContext';
 
 interface ActionHandlerDecoratorProps<
   ItemDataT extends UI.ActionDataValueType,
@@ -122,26 +119,16 @@ const ActionHandlerDecorator = <
 >(
   props: Props<ItemDataT, EntityT>,
 ) => {
-  const socket = useSocket();
+  const { location, getHandlerProps } = useActionHandlerContext();
   const [confirmActionData, setConfirmActionData] = useState<ActionData<
     ItemDataT,
     EntityT
   > | null>(null);
-  const { t } = useTranslation();
   const closeModal = useModalCloseContext();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const sessionStoreApi = useSessionStoreApi();
-  const appStoreApi = useAppStoreApi();
 
   const getCommonActionHandlerData = () => ({
-    location,
-    navigate,
-    t,
+    ...getHandlerProps(),
     closeModal,
-    socket,
-    sessionStore: sessionStoreApi.getState(),
-    appStore: appStoreApi.getState(),
   });
 
   const closeConfirmation = () => {

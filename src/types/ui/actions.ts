@@ -59,6 +59,21 @@ export type ActionHandler<
   confirmData?: boolean | string,
 ) => Promise<any> | void;
 
+// Bulk action handler - receives array of items
+export type BulkActionHandler<
+  ItemDataT extends ActionDataValueType,
+  EntityType extends ActionDataValueType = void,
+> = (
+  handlerData: ActionHandlerData<ItemDataT[], EntityType>,
+  confirmData?: boolean | string,
+) => Promise<any> | void;
+
+// Bulk action filter - evaluates all items at once
+export type BulkActionFilter<
+  ItemDataT extends ActionDataValueType,
+  EntityType extends ActionDataValueType = void,
+> = (data: FilterData<ItemDataT[], EntityType>) => boolean;
+
 export interface FilterData<
   ItemDataT extends ActionDataValueType,
   EntityType extends ActionDataValueType = void,
@@ -99,6 +114,19 @@ export interface ActionDefinition<
     onSuccess?: string /*| ((data: ItemDataT) => string)*/;
     itemConverter?: (itemData: ItemDataT) => any;
     errorTitleGetter?: (itemData: ItemDataT) => string;
+  };
+
+  // Bulk operation support - when enabled, action can be used with multiple selected items
+  bulk?: {
+    // Whether this action supports bulk selection
+    enabled: boolean;
+    // Optional specialized handler for bulk operations
+    // If not provided, single-item handler is called for each item
+    handler?: BulkActionHandler<ItemDataT, EntityT>;
+    // Optional filter for bulk mode (e.g., "all items must pass")
+    filter?: BulkActionFilter<ItemDataT, EntityT>;
+    // Maximum items allowed (optional, for performance/UX)
+    maxItems?: number;
   };
 }
 

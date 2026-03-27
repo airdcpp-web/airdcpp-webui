@@ -230,6 +230,9 @@ export const DownloadItemAction = {
   icon: IconConstants.DOWNLOAD,
   filter: notSelf,
   handler: handleDownload,
+  bulk: {
+    enabled: true,
+  },
 };
 
 export const DownloadItemToAction = {
@@ -239,6 +242,9 @@ export const DownloadItemToAction = {
   icon: IconConstants.DOWNLOAD_TO,
   filter: notSelf,
   handler: handleDownloadTo,
+  bulk: {
+    enabled: true,
+  },
 };
 
 export const ViewTextAction = {
