@@ -1,6 +1,4 @@
-import update from 'immutability-helper';
-
-import isEqual from 'lodash/isEqual';
+import { shallowEqual } from '@/utils/equality';
 
 const NUMBER_OF_ROWS_PER_REQUEST = 10;
 
@@ -26,15 +24,15 @@ class RowDataLoader {
     let old = this._data[index];
 
     // Objects equal most of the time
-    if (old === item || isEqual(this._data[index], item)) {
+    if (old === item || shallowEqual(this._data[index], item)) {
       return updated;
     }
 
     // console.log(`Updating row data at index ${index}`, item);
     if (old) {
-      this._data[index] = update(old, { $merge: item });
+      this._data[index] = { ...old, ...item };
     } else {
-      this._data[index] = update(old, { $set: item });
+      this._data[index] = item;
     }
 
     return updated + 1;
@@ -153,7 +151,7 @@ class RowDataLoader {
 
     for (let i = 0; i < rows.length; i++) {
       const rowIndex = start + i;
-      if (!isEqual(this._data[rowIndex], rows[i])) {
+      if (!shallowEqual(this._data[rowIndex], rows[i])) {
         this._data[rowIndex] = rows[i];
 
         if (this._pendingRequest[rowIndex]) {
