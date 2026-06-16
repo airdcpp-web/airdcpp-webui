@@ -1,4 +1,4 @@
-import { camelCase } from 'lodash';
+import { camelCase } from '@/utils/StringUtils';
 import invariant from 'invariant';
 import { TOptions } from 'i18next';
 

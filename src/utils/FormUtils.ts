@@ -11,11 +11,14 @@ import {
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-import upperFirst from 'lodash/upperFirst';
+import { upperFirst } from '@/utils/StringUtils';
 
 import { textToI18nKey } from './TranslationUtils';
 
-import { isEqualWith, isObject } from 'lodash';
+import isEqualWith from 'lodash/isEqualWith';
+
+const isObject = (val: unknown): val is Record<string, unknown> =>
+  val !== null && typeof val === 'object' && !Array.isArray(val);
 
 const formValuesEqual = (parent1: any, parent2: any) => {
   return isEqualWith(parent1, parent2, (v1, v2) => {

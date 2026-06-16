@@ -1,4 +1,3 @@
-import { reject } from 'lodash';
 import { Layout, ResponsiveLayouts } from 'react-grid-layout';
 import { create } from 'zustand';
 
@@ -91,7 +90,9 @@ export const createHomeLayoutStore = () => {
 
       const newLayouts = Object.keys(HomeLayoutColumns).reduce((layouts, key) => {
         if (get().layouts[key]) {
-          layouts[key] = reject(get().layouts[key], { i: id });
+          layouts[key] = get().layouts[key].filter(
+            (layoutItem: { i: string }) => layoutItem.i !== id,
+          );
         }
 
         return layouts;

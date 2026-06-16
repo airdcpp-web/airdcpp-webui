@@ -11,7 +11,7 @@ import {
   NotificationHandler,
   useNotificationHandler,
 } from './effects/NotificationManager';
-import { truncate } from 'lodash';
+import { truncate } from '@/utils/StringUtils';
 
 interface NotificationsProps {}
 

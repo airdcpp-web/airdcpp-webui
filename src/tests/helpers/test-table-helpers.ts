@@ -1,7 +1,6 @@
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
-import { orderBy } from 'lodash';
 import { RequestSuccessResponse } from 'node_modules/airdcpp-apisocket/dist-es/types/api_internal';
 
 type FireUpdate = (data: object) => void;
@@ -23,7 +22,13 @@ export const createMockTableManager = (sendUpdate: FireUpdate) => {
   const getItems = (start: number, count: number) => {
     let itemsToSend = items;
     if (sortProperty) {
-      itemsToSend = orderBy(items, sortProperty, sortAscending ? 'asc' : 'desc');
+      itemsToSend = items.slice().sort((a, b) => {
+        const aVal = (a as Record<string, unknown>)[sortProperty];
+        const bVal = (b as Record<string, unknown>)[sortProperty];
+        if (aVal < bVal) return sortAscending ? -1 : 1;
+        if (aVal > bVal) return sortAscending ? 1 : -1;
+        return 0;
+      });
     }
 
     if (maxCount) {

@@ -1,12 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import update from 'immutability-helper';
 
-describe('checkSplice (immutability-helper $splice replacement)', () => {
+describe('checkSplice (slice replacement)', () => {
   const checkSplice = <T>(messages: T[] | undefined, maxCount: number): T[] | undefined => {
     if (messages) {
       const toRemove = messages.length - maxCount;
       if (toRemove > 0) {
-        return update(messages, { $splice: [[0, toRemove]] });
+        return messages.slice(toRemove);
       }
     }
     return messages;
@@ -47,13 +46,13 @@ describe('checkSplice (immutability-helper $splice replacement)', () => {
   });
 });
 
-describe('updateMultiselectValues (immutability-helper $splice replacement)', () => {
+describe('updateMultiselectValues (filter replacement)', () => {
   const updateMultiselectValues = <T>(values: T[], value: T, checked: boolean): T[] => {
     if (checked) {
       values = [...values, value];
     } else {
       const index = values.indexOf(value);
-      values = update(values, { $splice: [[index, 1]] });
+      values = values.filter((_, i) => i !== index);
     }
     return values;
   };

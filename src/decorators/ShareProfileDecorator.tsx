@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { merge } from 'lodash';
+import { merge } from '@/utils/merge';
 
 import ShareProfileConstants from '@/constants/ShareProfileConstants';
 
