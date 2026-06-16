@@ -120,7 +120,6 @@
     "moment": "^2.29.4",
     "playwright": "^1.50.1",
     "prettier": "^3.0.1",
-    "promise": "^8.3.0",
     "re-resizable": "^6.9.9",
     "react": "^19.0.0",
     "react-apexcharts": "^2.0.1",
