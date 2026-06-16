@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Moment from 'moment';
+import dayjs from 'dayjs';
 
 import ExtensionConstants from '@/constants/ExtensionConstants';
 
@@ -42,7 +42,7 @@ const Version: React.FC<VersionProps> = ({ title, packageInfo, className, module
         defaultValue: '{{version}} (published {{date}})',
         replace: {
           version: packageInfo.version,
-          date: Moment(packageInfo.date).from(Moment()),
+          date: dayjs(packageInfo.date).fromNow(),
         },
       });
 
