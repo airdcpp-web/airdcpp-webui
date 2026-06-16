@@ -58,7 +58,7 @@ export default function <DropdownPropsT extends object>(
       Object.defineProperty(this.itemData, 'directory', {
         get: () => {
           const { directory } = this.props;
-          return getFilePath(directory as any as string);
+          return getFilePath(String(directory));
         },
       });
     }

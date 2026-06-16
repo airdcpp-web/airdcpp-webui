@@ -55,9 +55,9 @@ const HubStatisticsPage: React.FC<
       <Row title={translate('Total share')} text={formatSize(stats.total_share)} />
       <Row
         title={translate('Average share per user')}
-        text={formatSize(
-          formatAverage(stats.total_share, stats.unique_users) as any as number,
-        )}
+          text={formatSize(
+            Number(formatAverage(stats.total_share, stats.unique_users)),
+          )}
       />
       <Row
         title={translate('Average ADC download speed')}
