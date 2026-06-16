@@ -107,8 +107,6 @@ class Extension extends React.PureComponent<
   ExtensionProps & SocketSubscriptionDecoratorChildProps,
   State
 > {
-  //displayName: 'Extension',
-
   state: State = {
     installing: false,
   };
