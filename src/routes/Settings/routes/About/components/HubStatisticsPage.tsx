@@ -10,7 +10,6 @@ import StatisticsDecorator, {
 
 import { Grid, Row, Header } from '@/components/semantic/Grid';
 
-//import * as UI from '@/types/ui';
 import { SettingPageProps } from '@/routes/Settings/types';
 import { formatAverage, formatPercentage } from '@/utils/ValueFormat';
 

@@ -1,5 +1,4 @@
 import * as UI from '@/types/ui';
-//import * as API from '@/types/api';
 
 import Notepad from './components/Notepad';
 
