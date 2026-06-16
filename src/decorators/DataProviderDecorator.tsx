@@ -1,6 +1,6 @@
 import * as React from 'react';
 import invariant from 'invariant';
-import { merge } from 'lodash';
+import { merge } from '@/utils/merge';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 import { APISocket, ErrorResponse } from 'airdcpp-apisocket';

@@ -1,28 +1,18 @@
-import Moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import calendar from 'dayjs/plugin/calendar';
+import duration from 'dayjs/plugin/duration';
+import localeData from 'dayjs/plugin/localeData';
+
+dayjs.extend(relativeTime);
+dayjs.extend(calendar);
+dayjs.extend(duration);
+dayjs.extend(localeData);
 
 import { toI18nKey, translate } from './TranslationUtils';
 import * as UI from '@/types/ui';
 import { i18n } from 'i18next';
 import { ByteUnits } from './ValueFormat';
-
-const abbreviatedRelativeUnits = {
-  relativeTime: {
-    future: '%s',
-    past: '%s',
-    s: '%d s',
-    ss: '%d s',
-    m: '%d m',
-    mm: '%d m',
-    h: '%d h',
-    hh: '%d h',
-    d: '%d d',
-    dd: '%d d',
-    M: '%d M',
-    MM: '%d M',
-    y: '%d y',
-    yy: '%d y',
-  },
-};
 
 const formatUnit = (unit: string, t: UI.TranslateF) => {
   return t(
@@ -33,10 +23,6 @@ const formatUnit = (unit: string, t: UI.TranslateF) => {
     unit,
   );
 };
-
-const getNormalRelativeUnits = () => ({
-  relativeTime: (Moment.localeData(Moment.locale()) as any)._relativeTime,
-});
 
 const formatUnitsPerSecond = (units: string, t: UI.TranslateF) => {
   return t(toI18nKey('unitsPerSecond', UI.Modules.COMMON), {
@@ -106,22 +92,20 @@ const formatConnection = (bytes: number, t: UI.TranslateF) => {
   return formatUnits(bytes * 8, bitUnits, 1000, t);
 };
 
-// http://momentjs.com/docs/#/displaying/from/
 const formatRelativeTime = (time: number) => {
   if (time === 0) {
     return '';
   }
 
-  return Moment.unix(time).from(Moment());
+  return dayjs.unix(time).fromNow();
 };
 
-// http://momentjs.com/docs/#/displaying/calendar-time/
 const formatCalendarTime = (time: number, t: UI.TranslateF) => {
   if (time === 0) {
     return '';
   }
 
-  return Moment.unix(time).calendar(undefined, {
+  return dayjs.unix(time).calendar(null, {
     sameDay: `[${translate('Today', t, UI.Modules.COMMON)}]`,
     nextDay: `[${translate('Tomorrow', t, UI.Modules.COMMON)}]`,
     nextWeek: 'dddd',
@@ -132,7 +116,7 @@ const formatCalendarTime = (time: number, t: UI.TranslateF) => {
         weekDay: 'dddd',
       },
     }),
-    sameElse: Moment.locale() === 'en' ? 'DD/MM/YYYY' : 'L',
+    sameElse: dayjs.locale() === 'en' ? 'DD/MM/YYYY' : 'L',
   });
 };
 
@@ -141,7 +125,7 @@ const formatDateTime = (time: number) => {
     return '';
   }
 
-  return Moment.unix(time).format('LLL');
+  return dayjs.unix(time).format('MMMM D, YYYY h:mm A');
 };
 
 const formatShortDate = (time: number) => {
@@ -149,22 +133,20 @@ const formatShortDate = (time: number) => {
     return '';
   }
 
-  return Moment.unix(time).format('YYYY-MM-DD');
+  return dayjs.unix(time).format('YYYY-MM-DD');
 };
 
-// http://momentjs.com/docs/#/displaying/to/
 const formatAbbreviatedDuration = (time: number) => {
-  const now = Moment();
-  const finish = Moment().add(time, 'seconds');
-
-  // Change the relative units temporarily
-  const normalRelativeUnits = getNormalRelativeUnits();
-  Moment.updateLocale(Moment.locale(), abbreviatedRelativeUnits);
-
-  const ret = now.to(finish);
-  Moment.updateLocale(Moment.locale(), normalRelativeUnits);
-
-  return ret;
+  if (time < 60) {
+    return `${Math.floor(time)} s`;
+  }
+  if (time < 3600) {
+    return `${Math.floor(time / 60)} m`;
+  }
+  if (time < 86400) {
+    return `${Math.floor(time / 3600)} h`;
+  }
+  return `${Math.floor(time / 86400)} d`;
 };
 
 const formatTimestamp = (time: number) => {
@@ -172,11 +154,11 @@ const formatTimestamp = (time: number) => {
     return '';
   }
 
-  return Moment.unix(time).format('HH:mm:ss');
+  return dayjs.unix(time).format('HH:mm:ss');
 };
 
 const formatSeconds = (seconds: number) => {
-  return Moment.duration(seconds, 'seconds').humanize();
+  return dayjs.duration(seconds, 'seconds').humanize();
 };
 
 const formatSpeed = (

@@ -47,7 +47,7 @@ const StatisticsDecorator = function <DataT extends object, PropsT>(
 
       const fetchInterval = window.setInterval(fetchStats, fetchIntervalSeconds * 1000);
       return () => {
-        window.clearTimeout(fetchInterval);
+        window.clearInterval(fetchInterval);
       };
     }, []);
 

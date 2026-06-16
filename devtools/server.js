@@ -3,7 +3,7 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const chalk = require('chalk');
-const minimist = require('minimist');
+const { parseArgs } = require('node:util');
 
 const i18next = require('i18next');
 const FsBackend = require('i18next-fs-backend');
@@ -27,13 +27,14 @@ i18next.use(FsBackend).init({
   },
 });
 
-const argv = minimist(process.argv.slice(2), {
-  default: {
-    apiSecure: false,
-    apiHost: 'localhost:5600',
-    bindAddress: '0.0.0.0',
-    port: 3000,
+const { values: argv } = parseArgs({
+  options: {
+    apiSecure: { type: 'boolean', default: false },
+    apiHost: { type: 'string', default: 'localhost:5600' },
+    bindAddress: { type: 'string', default: '0.0.0.0' },
+    port: { type: 'string', default: '3000' },
   },
+  strict: false,
 });
 
 if (process.env.NODE_ENV === 'production') {

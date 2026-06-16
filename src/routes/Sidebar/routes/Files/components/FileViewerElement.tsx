@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { AudioFile, ImageFile, VideoFile, TextFile } from '@/components/file-preview';
 
-import Moment from 'moment';
+import dayjs from 'dayjs';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -19,8 +19,8 @@ interface ViewerElementProps {
 }
 
 const useAutoPlay = (item: API.ViewFile) => {
-  const diff = Moment.duration(Moment().diff(Moment.unix(item.time_opened)));
-  return diff.asMinutes() <= 1;
+  const diff = dayjs().diff(dayjs.unix(item.time_opened), 'minute');
+  return diff <= 1;
 };
 
 const TextViewerElement = (props: ViewerElementProps) => (

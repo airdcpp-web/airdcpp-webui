@@ -1,5 +1,3 @@
-import update from 'immutability-helper';
-
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 import { appendInstanceId, UIInstanceId } from '@/context/InstanceContext';
@@ -12,7 +10,7 @@ const checkSplice = (
   if (messages) {
     const toRemove = messages.length - maxCacheMessageCount;
     if (toRemove > 0) {
-      return update(messages, { $splice: [[0, toRemove]] });
+      return messages.slice(toRemove);
     }
   }
 

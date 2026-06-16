@@ -3,7 +3,7 @@ import XHR, { RequestCallback } from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import Moment from 'moment';
+import dayjs from 'dayjs';
 
 import { fetchData } from '@/utils/HttpUtils';
 
@@ -125,11 +125,9 @@ const initI18n = () => {
       undefined,
     )
     .then(() => {
-      Moment.locale(i18n.language);
-    });
+      dayjs.locale(i18n.language);
 
-  i18n.on('languageChanged', (lng) => {
-    Moment.locale(lng);
+    dayjs.locale(lng);
   });
 
   return i18n;

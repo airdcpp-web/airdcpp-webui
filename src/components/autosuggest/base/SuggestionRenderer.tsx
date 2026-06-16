@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import escapeStringRegexp from 'escape-string-regexp';
+import { escapeStringRegexp } from '@/utils/StringUtils';
 
 import './style.css';
 

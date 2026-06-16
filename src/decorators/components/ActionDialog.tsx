@@ -4,7 +4,7 @@ import { InputDialog } from '@/components/semantic/InputDialog';
 import { useTranslation } from 'react-i18next';
 import { translate, toI18nKey, toArray } from '@/utils/TranslationUtils';
 
-import { upperFirst } from 'lodash';
+import { upperFirst } from '@/utils/StringUtils';
 import { translateActionName } from '@/utils/ActionUtils';
 import {
   CheckboxDialog,

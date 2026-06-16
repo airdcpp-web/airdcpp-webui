@@ -17,7 +17,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import SettingSection from './SettingSection';
 import { getModuleT, getSubModuleT } from '@/utils/TranslationUtils';
 import { useTranslation } from 'react-i18next';
-import { camelCase } from 'lodash';
+import { camelCase } from '@/utils/StringUtils';
 
 export const RootSettingSections = [
   Profile,

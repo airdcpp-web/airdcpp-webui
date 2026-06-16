@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Moment from 'moment';
+import dayjs from 'dayjs';
 
 import ExtensionIcon from '@/routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
 
-import { compareVersions } from 'compare-versions';
+import { compareVersions } from '@/utils/StringUtils';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';
@@ -23,7 +23,7 @@ const Version: React.FC<VersionProps> = ({ packageInfo, moduleT }) => {
     defaultValue: 'Updated {{date}}',
     replace: {
       version: packageInfo.version,
-      date: Moment(packageInfo.date).from(Moment()),
+      date: dayjs(packageInfo.date).fromNow(),
     },
   });
 
