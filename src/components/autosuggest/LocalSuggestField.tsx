@@ -3,7 +3,7 @@ import { Component } from 'react';
 import SuggestionRenderer from './base/SuggestionRenderer';
 import SuggestField, { SuggestFieldProps } from './base/SuggestField';
 
-import escapeStringRegexp from 'escape-string-regexp';
+import { escapeStringRegexp } from '@/utils/StringUtils';
 import { RenderSuggestion, SuggestionsFetchRequested } from 'react-autosuggest';
 
 type ForwardedSuggestFieldProps = Omit<

@@ -3,7 +3,7 @@ import Moment from 'moment';
 
 import ExtensionIcon from '@/routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
 
-import { compareVersions } from 'compare-versions';
+import { compareVersions } from '@/utils/StringUtils';
 
 import * as API from '@/types/api';
 import * as UI from '@/types/ui';

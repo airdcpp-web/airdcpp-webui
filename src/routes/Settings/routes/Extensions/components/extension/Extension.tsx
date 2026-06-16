@@ -6,7 +6,7 @@ import ExtensionConstants from '@/constants/ExtensionConstants';
 import ExtensionIcon from '@/routes/Settings/routes/Extensions/components/extension/ExtensionIcon';
 import ExtensionActionButtons from '@/routes/Settings/routes/Extensions/components/extension/ExtensionActionButtons';
 
-import { compareVersions } from 'compare-versions';
+import { compareVersions } from '@/utils/StringUtils';
 
 import 'fomantic-ui-css/components/item.min.css';
 
