@@ -7,6 +7,8 @@ export default {
   SEARCH_TYPES_URL: MODULE_URL + '/types',
   SEARCH_TYPES_UPDATED: 'search_types_updated',
 
+  INCOMING_SEARCH: 'search_incoming_search',
+
   DEFAULT_SEARCH_TYPE: 'any',
 
   VIEW_ID: 'search',

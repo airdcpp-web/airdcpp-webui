@@ -85,6 +85,15 @@ export const SecondaryRoutes = [
     ),
   },
   {
+    title: 'Search spy',
+    path: '/search-spy',
+    icon: IconConstants.SEARCH_ALTERNATES,
+    access: API.AccessEnum.SEARCH,
+    component: lazy(
+      () => import(/* webpackChunkName: "search-spy" */ '@/routes/SearchSpy'),
+    ),
+  },
+  {
     title: 'Share',
     path: '/share',
     icon: IconConstants.FOLDER,

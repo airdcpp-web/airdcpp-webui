@@ -70,3 +70,22 @@ export interface SearchType {
   extensions: string[];
   default_type: boolean;
 }
+
+export interface IncomingSearchHub {
+  id: number;
+  name: string;
+  hub_url: string;
+}
+
+export interface IncomingSearchUser {
+  nick: string;
+  cid: string;
+  hub_url: string;
+}
+
+export interface IncomingSearch {
+  hub: IncomingSearchHub;
+  user: IncomingSearchUser | null;
+  query: SearchQuery;
+  results: unknown[];
+}
