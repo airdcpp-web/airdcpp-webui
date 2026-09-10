@@ -6,5 +6,8 @@ export default defineConfig({
       { extends: './vitest.config.browser.mts' },
       { extends: './vitest.config.node.mts' },
     ],
+    coverage: {
+      exclude: ['**/resources/locales/**'],
+    },
   },
 });
