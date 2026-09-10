@@ -22,7 +22,7 @@ import {
 import MainLayoutMobile from '../MainLayoutMobile';
 import { VIEW_SCROLLABLE } from '@/tests/render/test-containers';
 
-import { page } from '@vitest/browser/context';
+import { page } from 'vitest/browser';
 
 const HashDialogOpenCaption = 'Open hash progress';
 
