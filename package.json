@@ -12,7 +12,7 @@
     "react"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19.0"
   },
   "bugs": {
     "url": "https://github.com/airdcpp-web/airdcpp-webui/issues"
@@ -36,7 +36,7 @@
   },
   "overrides": {
     "tr46": "^5.0.0",
-    "globals": "^14.0.0",
+    "globals": "^17.12.0",
     "reflux": {
       "react": "$react",
       "react-dom": "$react-dom"
@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@dhmk/zustand-lens": "^5.0.0",
-    "@eslint/js": "^9.20.0",
+    "@eslint/js": "^10.0.1",
     "@gfx/zopfli": "^1.0.15",
     "@juggle/resize-observer": "^3.4.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
@@ -93,13 +93,14 @@
     "cross-env": "^10.0.0",
     "css-loader": "^7.1.2",
     "escape-string-regexp": "^5.0.0",
-    "eslint": "^9.4.0",
-    "eslint-plugin-react": "^7.31.10",
+    "@eslint-react/eslint-plugin": "^5.19.0",
+    "eslint": "^10.10.0",
     "express": "^5.1.0",
     "fast-xml-parser": "^5.2.3",
     "fixed-data-table-2": "^2.0.0",
     "fomantic-ui-css": "^2.9.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
+    "globals": "^17.12.0",
     "he": "^1.2.0",
     "html-webpack-plugin": "^5.5.0",
     "http-proxy-middleware": "^4.0.0",
@@ -148,7 +149,7 @@
     "ts-loader": "^9.4.1",
     "tsconfig-paths-webpack-plugin": "^4.2.0",
     "typescript": "^5.0.4",
-    "typescript-eslint": "^8.24.1",
+    "typescript-eslint": "^8.70.0",
     "vitest": "^5.0.0",
     "vitest-fetch-mock": "^0.4.5",
     "webpack": "^5.74.0",

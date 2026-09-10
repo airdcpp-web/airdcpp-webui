@@ -16,7 +16,7 @@ Happy linting! 💖
 
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import react from 'eslint-plugin-react';
+import eslintReact from '@eslint-react/eslint-plugin';
 import globals from 'globals';
 
 export default tseslint.config(
@@ -25,10 +25,8 @@ export default tseslint.config(
   },
   eslint.configs.recommended,
   tseslint.configs.recommended,
+  eslintReact.configs['recommended-typescript'],
   {
-    plugins: {
-      react,
-    },
     languageOptions: {
       parserOptions: {
         ecmaFeatures: {
@@ -46,17 +44,18 @@ export default tseslint.config(
           code: 120,
         },
       ],
-      'react/no-unescaped-entities': 'off',
-      'react/prop-types': 'off',
       'no-extra-boolean-cast': 'off',
       'no-prototype-builtins': 'off',
+      'no-undef': 'off',
+      'no-useless-assignment': 'off',
+      '@eslint-react/jsx-no-key-after-spread': 'off',
+      '@eslint-react/rules-of-hooks': 'off',
+      '@eslint-react/static-components': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-var-requires': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-this-alias': 'off',
       '@typescript-eslint/no-empty-interface': 'off',
-      'react/jsx-uses-react': 'off',
-      'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-require-imports': 'off',
