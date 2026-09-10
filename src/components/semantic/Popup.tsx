@@ -122,7 +122,7 @@ const Popup = forwardRef<PopupHandle, PopupProps>(
       const popupSettings: SemanticUI.PopupSettings = {
         on: onHover ? 'hover' : 'click',
         movePopup: false,
-        popup: nodeRef.current as any as JQuery<HTMLElement>,
+        popup: nodeRef.current as unknown as JQuery<HTMLElement>,
         onHidden: () => setVisible(false),
         position,
         duration: AnimationConstants.popup,

@@ -11,8 +11,6 @@ import ModalRouteDecorator, {
   ModalRouteDecoratorChildProps,
 } from '@/decorators/ModalRouteDecorator';
 
-// import WidgetActions from '@/actions/reflux/WidgetActions';
-// import WidgetStore from '@/stores/reflux/WidgetStore';
 import {
   getWidgetT,
   createWidgetId,

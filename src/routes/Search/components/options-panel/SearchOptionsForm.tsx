@@ -82,7 +82,7 @@ const removeEmptyProperties = (formValue: Entry) => {
 };
 
 class SearchOptionsForm extends PureComponent<SearchOptionsFormProps> {
-  static readonly displayName = 'SearchOptionForm';
+  static readonly displayName = 'SearchOptionsForm';
 
   constructor(props: SearchOptionsFormProps) {
     super(props);

@@ -1,7 +1,7 @@
 export const ByteUnits = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
 
 export const formatDecimal = (value: number) => {
-  return parseFloat((Math.round(value * 100) / 100) as any).toFixed(2);
+  return (Math.round(value * 100) / 100).toFixed(2);
 };
 
 export const formatAverage = (countFrom: number, total: number) => {

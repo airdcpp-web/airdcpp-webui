@@ -134,7 +134,6 @@ const formatHighlights = (
 
 export const HighlightedText: React.FC<HighlightedTextProps> = memo(
   function HighlightedText(props) {
-    // const { t } = useTranslation();
     const formatter = useFormatter();
     return <>{formatHighlights(props, formatter)}</>;
   },
