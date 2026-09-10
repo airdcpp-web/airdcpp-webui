@@ -1,6 +1,6 @@
 import { defineConfig, mergeConfig } from 'vitest/config';
 
-import CommonConfig from './vitest.config.common';
+import CommonConfig from './vitest.config.common.mts';
 
 export default mergeConfig(
   CommonConfig,

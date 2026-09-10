@@ -2,7 +2,6 @@ import * as API from '@/types/api';
 import * as UI from '@/types/ui';
 
 import { orderBy } from 'lodash';
-import { RequestSuccessResponse } from 'node_modules/airdcpp-apisocket/dist-es/types/api_internal';
 
 type FireUpdate = (data: object) => void;
 
@@ -49,7 +48,10 @@ export const createMockTableManager = (sendUpdate: FireUpdate) => {
     sendUpdate(updateData);
   };
 
-  const handleSettings = ({ data }: RequestSuccessResponse) => {
+  type TableSettingResponse = {
+    data: Partial<API.TableSettingRequest>;
+  };
+  const handleSettings = ({ data }: TableSettingResponse) => {
     const settings = data as Partial<API.TableSettingRequest>;
     if (settings.max_count) {
       maxCount = settings.max_count;

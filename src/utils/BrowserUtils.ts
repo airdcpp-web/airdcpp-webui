@@ -93,7 +93,10 @@ export const browserStorageUnavailable = () => {
     sessionStorage.setItem('storage_test', 'test');
     sessionStorage.removeItem('storage_test');
   } catch (e) {
-    if (e.code === DOMException.QUOTA_EXCEEDED_ERR && sessionStorage.length === 0) {
+    if (
+      (e as DOMException).code === DOMException.QUOTA_EXCEEDED_ERR &&
+      sessionStorage.length === 0
+    ) {
       // Safari and private mode
       return {
         id: 'privateBrowsingNotSupported',

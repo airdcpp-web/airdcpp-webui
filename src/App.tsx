@@ -32,7 +32,7 @@ import '@/utils/semantic';
 import './style.css';
 import { AppStoreProvider } from './context/AppStoreContext';
 
-global.Promise = Promise as any;
+globalThis.Promise = Promise as any;
 
 Reflux.use(RefluxPromise(Promise));
 enableMapSet();
