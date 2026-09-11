@@ -61,6 +61,8 @@
 .table-footer > .filter {
   margin-left: auto;
   display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .table-footer > .filter > .count-info {
@@ -71,9 +73,7 @@
   align-items: center;
 }
 
-.table-footer > .filter > div:last-child {
-  margin-left: 10px;
-}
+/* Spacing between the filter controls comes from the flex gap above */
 
 .table-footer > .filter .filter-method.dropdown.button {
   padding-left: 0px !important;

@@ -12,11 +12,13 @@ const DefaultOpenModalButtonCaption = 'Open modal';
 export const TestRouteModalNavigateButton = ({
   modalRoute,
   caption = DefaultOpenModalButtonCaption,
+  state,
 }: {
   modalRoute: string;
   caption?: string;
+  state?: object;
 }) => {
-  return <TestRouteNavigateButton caption={caption} route={modalRoute} />;
+  return <TestRouteNavigateButton caption={caption} route={modalRoute} state={state} />;
 };
 
 export const useModalButton = (caption = DefaultOpenModalButtonCaption) => {

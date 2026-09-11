@@ -2,7 +2,6 @@ import { useState } from 'react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { getParentPath } from '@/utils/FileUtils';
 import { usingMobileLayout } from '@/utils/BrowserUtils';
 import { toI18nKey } from '@/utils/TranslationUtils';
 
@@ -29,14 +28,13 @@ export interface DownloadLayoutDataProps {
   favoritePaths: API.GroupedPath[];
 }
 
-export interface DownloadLayoutProps<
-  ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo,
-> {
+export interface DownloadLayoutProps {
   downloadHandler: PathDownloadHandler;
   handleBrowse: BrowseHandler;
 
   historyPaths: string[];
-  itemInfo: ItemT;
+  // Directories where the items being downloaded already exist
+  dupePaths: string[];
 }
 
 const getMenuItem = (
@@ -64,18 +62,14 @@ const getMenuItem = (
   );
 };
 
-type Props<ItemT extends UI.DownloadableItemInfo = UI.DownloadableItemInfo> =
-  DownloadLayoutProps<ItemT> & DownloadLayoutDataProps;
+type Props = DownloadLayoutProps & DownloadLayoutDataProps;
 
 const DownloadLayout: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const [activeSectionKey, setActiveSectionKey] = useState('history');
 
   const sections = React.useMemo(() => {
-    const { historyPaths, sharePaths, favoritePaths, itemInfo } = props;
-    const dupePaths = itemInfo.dupe
-      ? itemInfo.dupe.paths.map((path) => getParentPath(path))
-      : [];
+    const { historyPaths, sharePaths, favoritePaths, dupePaths } = props;
 
     return getDownloadSections({
       historyPaths,
@@ -83,7 +77,7 @@ const DownloadLayout: React.FC<Props> = (props) => {
       favoritePaths,
       dupePaths,
     });
-  }, []);
+  }, [props.historyPaths, props.sharePaths, props.favoritePaths, props.dupePaths]);
 
   const activeSection = sections.find((s) => s.key === activeSectionKey);
   if (!activeSection) {

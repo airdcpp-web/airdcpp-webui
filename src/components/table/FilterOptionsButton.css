@@ -1,0 +1,37 @@
+/* Button active state colors */
+:root {
+  --filter-toggle-active-bg: #1565c0;
+  --filter-toggle-active-hover-bg: #0d47a1;
+}
+
+.dupe-filter-toggles {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+/* Popup content layout - stack buttons vertically */
+.dupe-filter-toggles.popup-content {
+  flex-direction: column;
+  padding: 8px;
+  min-width: 140px;
+}
+
+.dupe-filter-toggles.popup-content .ui.button {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.dupe-filter-toggles .ui.button {
+  margin: 0;
+}
+
+.dupe-filter-toggles .ui.button.active {
+  background-color: var(--filter-toggle-active-bg);
+  color: white;
+}
+
+.dupe-filter-toggles .ui.button.active:hover {
+  background-color: var(--filter-toggle-active-hover-bg);
+}

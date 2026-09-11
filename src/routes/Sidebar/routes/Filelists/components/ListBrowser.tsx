@@ -10,6 +10,10 @@ import * as UI from '@/types/ui';
 
 import { FilelistItemGetter } from './item-info-dialog';
 import FilelistItemTable from './FilelistItemTable';
+import {
+  TableSelectionProvider,
+  useTableSelection,
+} from '@/components/table/selection';
 import { filelistDownloadHandler } from '@/services/api/FilelistApi';
 import MenuConstants from '@/constants/MenuConstants';
 import { Location, useBlocker } from 'react-router';
@@ -88,31 +92,40 @@ const ListBrowser: React.FC<ListBrowserProps> = (props) => {
 
   const filelistItemFetcher = FilelistItemGetter(filelist);
 
+  // Owned here rather than in the table so that the download dialog below is
+  // inside the provider and can clear the selection it downloaded
+  const selection = useTableSelection({
+    entityId: filelist.id,
+    viewId: filelist.location!.path,
+  });
+
   return (
-    <div className="browser">
-      <BrowserBar
-        path={filelist.location!.path}
-        separator="/"
-        rootPath="/"
-        rootName={sessionT.translate('Root')}
-        itemClickHandler={handleClickDirectory}
-        selectedNameFormatter={selectedNameFormatter}
-        // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
-        entityId={filelist.id}
-        sectionProps={noMouseFocusProps}
-      />
-      <FilelistItemTable
-        filelist={filelist}
-        sessionT={sessionT}
-        onClickDirectory={handleClickDirectory}
-      />
-      <DownloadDialog
-        downloadHandler={filelistDownloadHandler}
-        itemDataGetter={filelistItemFetcher}
-        userGetter={userGetter}
-        sessionItem={filelist}
-      />
-    </div>
+    <TableSelectionProvider value={selection}>
+      <div className="browser">
+        <BrowserBar
+          path={filelist.location!.path}
+          separator="/"
+          rootPath="/"
+          rootName={sessionT.translate('Root')}
+          itemClickHandler={handleClickDirectory}
+          selectedNameFormatter={selectedNameFormatter}
+          // Just to make sure that the bar gets re-rendered when the switching to a different session (due to dropdown)
+          entityId={filelist.id}
+          sectionProps={noMouseFocusProps}
+        />
+        <FilelistItemTable
+          filelist={filelist}
+          sessionT={sessionT}
+          onClickDirectory={handleClickDirectory}
+        />
+        <DownloadDialog
+          downloadHandler={filelistDownloadHandler}
+          itemDataGetter={filelistItemFetcher}
+          userGetter={userGetter}
+          sessionItem={filelist}
+        />
+      </div>
+    </TableSelectionProvider>
   );
 };
 

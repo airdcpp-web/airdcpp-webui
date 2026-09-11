@@ -17,7 +17,7 @@ import {
   FilesystemListContentResponse,
 } from '@/tests/mocks/api/filesystem';
 import { renderDataRoutes } from '@/tests/render/test-renderers';
-import DownloadDialog from '../DownloadDialog';
+import DownloadDialog, { DOWNLOAD_SELECTION_ID } from '../DownloadDialog';
 
 import * as UI from '@/types/ui';
 import * as API from '@/types/api';
@@ -104,20 +104,31 @@ describe('DownloadDialog', () => {
     return { ...commonData, onSaveHistory, onGetDiskInfo, userEvent };
   };
 
-  const renderDialog = async () => {
+  const renderDialog = async (
+    modalRoute = `/home/download/${MOCK_FILELIST_ITEM_ID}`,
+    routeState?: object,
+  ) => {
     const commonData = await getSocket();
     const handleDownload = vi.fn<UI.DownloadHandler<API.FilelistItem>>();
 
     const DownloadDialogTest = () => {
       return (
         <>
-          <TestRouteModalNavigateButton
-            modalRoute={`/home/download/${MOCK_FILELIST_ITEM_ID}`}
-          />
+          <TestRouteModalNavigateButton modalRoute={modalRoute} state={routeState} />
           <DownloadDialog
             downloadHandler={handleDownload}
-            itemDataGetter={() =>
-              Promise.resolve(FilelistGetFilelistItemFileResponse as API.FilelistItem)
+            itemDataGetter={(itemId) =>
+              Promise.resolve(
+                // Selection ids get a distinct item each, so that a bulk
+                // download can be checked per item
+                String(itemId) === String(MOCK_FILELIST_ITEM_ID)
+                  ? (FilelistGetFilelistItemFileResponse as API.FilelistItem)
+                  : ({
+                      ...FilelistGetFilelistItemFileResponse,
+                      id: itemId,
+                      name: `${FilelistGetFilelistItemFileResponse.name}-${itemId}`,
+                    } as unknown as API.FilelistItem),
+              )
             }
             userGetter={() => MockHintedUser1Response as API.HintedUser}
             sessionItem={FilelistPendingResponse}
@@ -232,6 +243,70 @@ describe('DownloadDialog', () => {
 
     // Close it
     await modalController.closeDialogButton('Cancel');
+  });
+
+  describe('selection download', () => {
+    const SELECTED_IDS = ['101', '102', '103'];
+
+    const renderSelectionDialog = () =>
+      renderDialog(`/home/download/${DOWNLOAD_SELECTION_ID}`, {
+        downloadItemIds: SELECTED_IDS,
+      });
+
+    test('should queue every selected item', async () => {
+      const { onSaveHistory, modalController, handleDownload, getByRole, queryByText } =
+        await renderSelectionDialog();
+
+      const downloadPath = HistoryStringPathResponse[0];
+
+      await modalController.openDialog();
+
+      await waitFor(() => expect(queryByText(downloadPath)).toBeInTheDocument());
+      await waitDialogLoaded(getByRole);
+
+      await modalController.closeDialogText(downloadPath);
+
+      await waitFor(() => expect(onSaveHistory).toHaveBeenCalled());
+
+      // One download per selected item, each keeping its own target name
+      expect(handleDownload).toHaveBeenCalledTimes(SELECTED_IDS.length);
+
+      const queuedNames = handleDownload.mock.calls.map(
+        (call) => call[1].target_name,
+      );
+      expect(queuedNames).toEqual(
+        SELECTED_IDS.map((id) => `${FilelistGetFilelistItemFileResponse.name}-${id}`),
+      );
+
+      // All queued into the chosen directory
+      handleDownload.mock.calls.forEach((call) => {
+        expect(call[1].target_directory).toBe(downloadPath);
+      });
+    });
+
+    test('should show the selected item count as the dialog subtitle', async () => {
+      const { modalController, getByRole, queryByText } = await renderSelectionDialog();
+
+      await modalController.openDialog();
+      await waitDialogLoaded(getByRole);
+
+      await waitFor(() =>
+        expect(queryByText(`${SELECTED_IDS.length} items`)).toBeInTheDocument(),
+      );
+    });
+
+    test('should report when the selection is missing', async () => {
+      // Reached by opening the route directly, with no selection in the state
+      const { modalController, queryByText } = await renderDialog(
+        `/home/download/${DOWNLOAD_SELECTION_ID}`,
+      );
+
+      await modalController.openDialog();
+
+      await waitFor(() =>
+        expect(queryByText('No items were selected for downloading')).toBeInTheDocument(),
+      );
+    });
   });
 
   test('should handle browse dialog download', async () => {

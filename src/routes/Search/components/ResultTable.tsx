@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useCallback } from 'react';
 
 import { ResultDialog } from './result-dialog';
 
@@ -32,6 +33,17 @@ import IconConstants from '@/constants/IconConstants';
 import MenuConstants from '@/constants/MenuConstants';
 import SearchConstants from '@/constants/SearchConstants';
 import { GroupedSearchResultActionMenu, SearchActionMenu } from '@/actions/ui/search';
+
+import {
+  useTableSelection,
+  useSelectionActions,
+  TableSelectionProvider,
+  SelectionCheckboxCell,
+  SelectionHeaderCell,
+  SelectionFooterBar,
+} from '@/components/table/selection';
+import FilterOptionsButton from '@/components/table/FilterOptionsButton';
+import { SelectionActionMenu } from '@/actions/ui/selection';
 
 export const getGroupedResultUserCaption = (
   { count, user }: API.SearchResultUserInfo,
@@ -108,15 +120,26 @@ export interface ResultTableProps {
   instance: API.SearchInstance;
 }
 
-class ResultTable extends React.Component<ResultTableProps> {
-  static readonly displayName = 'ResultTable';
+const ResultTable: React.FC<ResultTableProps> = ({
+  running,
+  searchString,
+  searchT,
+  instance,
+}) => {
+  const selection = useTableSelection({ entityId: instance.id });
+  const { selectedItems, getTotalCount, selectAll, isSelectingAll } =
+    useSelectionActions<API.GroupedSearchResult>({
+      selection,
+      store: SearchViewStore,
+      t: searchT.t,
+    });
+  const { translate } = searchT;
 
-  rowClassNameGetter = (rowData: API.GroupedSearchResult) => {
+  const rowClassNameGetter = useCallback((rowData: API.GroupedSearchResult) => {
     return dupeToStringType(rowData.dupe);
-  };
+  }, []);
 
-  emptyRowsNodeGetter = () => {
-    const { running, searchString, searchT } = this.props;
+  const emptyRowsNodeGetter = useCallback(() => {
     if (running) {
       return null;
     }
@@ -161,33 +184,37 @@ class ResultTable extends React.Component<ResultTableProps> {
         }
       />
     );
-  };
+  }, [running, searchString, searchT]);
 
-  itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = (
-    itemId,
-    socket,
-  ) => {
-    const { instance } = this.props;
-    return socket.get(
-      `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`,
-    );
-  };
+  const itemDataGetter: UI.DownloadItemDataGetter<API.GroupedSearchResult> = useCallback(
+    (itemId, socket) => {
+      return socket.get(
+        `${SearchConstants.INSTANCES_URL}/${instance.id}/results/${itemId}`
+      );
+    },
+    [instance.id]
+  );
 
-  render() {
-    const { searchT, instance } = this.props;
-    const { translate } = searchT;
-    return (
-      <>
-        <VirtualTable
-          emptyRowsNodeGetter={this.emptyRowsNodeGetter}
-          rowClassNameGetter={this.rowClassNameGetter}
-          store={SearchViewStore}
-          textFilterProps={{
-            autoFocus: false,
-          }}
-          entityId={instance.id}
-          moduleId={UI.Modules.SEARCH}
-          footerData={
+  return (
+    <TableSelectionProvider value={selection}>
+      <VirtualTable
+        emptyRowsNodeGetter={emptyRowsNodeGetter}
+        rowClassNameGetter={rowClassNameGetter}
+        store={SearchViewStore}
+        textFilterProps={{
+          autoFocus: false,
+        }}
+        entityId={instance.id}
+        moduleId={UI.Modules.SEARCH}
+        customFilter={FilterOptionsButton}
+        footerData={
+          <>
+            <SelectionFooterBar
+              actions={SelectionActionMenu}
+              items={selectedItems}
+              entity={instance}
+              t={searchT.t}
+            />
             <ActionMenu
               className="top left pointing"
               caption={translate('Actions...')}
@@ -198,71 +225,88 @@ class ResultTable extends React.Component<ResultTableProps> {
               itemData={instance}
               remoteMenuId={MenuConstants.SEARCH_INSTANCE}
             />
+          </>
+        }
+      >
+        <Column
+          name=""
+          width={40}
+          columnKey="__selection"
+          flexGrow={0}
+          header={
+            <SelectionHeaderCell
+              totalCountGetter={getTotalCount}
+              onSelectAll={selectAll}
+              isSelectingAll={isSelectingAll}
+              t={searchT.t}
+            />
           }
-        >
-          <Column
-            name="Name"
-            width={200}
-            columnKey="name"
-            flexGrow={8}
-            cell={<NameCell instance={instance} />}
-          />
-          <Column
-            name="Size"
-            width={60}
-            columnKey="size"
-            cell={<SizeCell />}
-            flexGrow={1}
-          />
-          <Column name="Type" width={80} columnKey="type" flexGrow={1} hideWidth={600} />
-          <Column
-            name="Relevance"
-            width={60}
-            columnKey="relevance"
-            cell={<DecimalCell />}
-            flexGrow={1}
-          />
-          <Column
-            name="Connection"
-            width={60}
-            columnKey="connection"
-            cell={<ConnectionCell />}
-            flexGrow={2}
-            hideWidth={600}
-          />
-          <Column
-            name="Users"
-            width={120}
-            columnKey="users"
-            flexGrow={3}
-            cell={<UserCell />}
-            hideWidth={600}
-          />
-          <Column
-            name="Last modified"
-            width={80}
-            columnKey="time"
-            cell={<DurationCell />}
-            flexGrow={1}
-            hideWidth={800}
-          />
-          <Column
-            name="Slots"
-            width={60}
-            columnKey="slots"
-            flexGrow={1}
-            hideWidth={800}
-          />
-        </VirtualTable>
-        <DownloadDialog
-          downloadHandler={searchDownloadHandler}
-          itemDataGetter={this.itemDataGetter}
-          sessionItem={instance}
+          cell={<SelectionCheckboxCell />}
         />
-        <ResultDialog searchT={searchT} instance={instance} />
-      </>
-    );
-  }
-}
+        <Column
+          name="Name"
+          width={200}
+          columnKey="name"
+          flexGrow={8}
+          cell={<NameCell instance={instance} />}
+        />
+        <Column
+          name="Size"
+          width={60}
+          columnKey="size"
+          cell={<SizeCell />}
+          flexGrow={1}
+        />
+        <Column name="Type" width={80} columnKey="type" flexGrow={1} hideWidth={600} />
+        <Column
+          name="Relevance"
+          width={60}
+          columnKey="relevance"
+          cell={<DecimalCell />}
+          flexGrow={1}
+        />
+        <Column
+          name="Connection"
+          width={60}
+          columnKey="connection"
+          cell={<ConnectionCell />}
+          flexGrow={2}
+          hideWidth={600}
+        />
+        <Column
+          name="Users"
+          width={120}
+          columnKey="users"
+          flexGrow={3}
+          cell={<UserCell />}
+          hideWidth={600}
+        />
+        <Column
+          name="Last modified"
+          width={80}
+          columnKey="time"
+          cell={<DurationCell />}
+          flexGrow={1}
+          hideWidth={800}
+        />
+        <Column
+          name="Slots"
+          width={60}
+          columnKey="slots"
+          flexGrow={1}
+          hideWidth={800}
+        />
+      </VirtualTable>
+      <DownloadDialog
+        downloadHandler={searchDownloadHandler}
+        itemDataGetter={itemDataGetter}
+        sessionItem={instance}
+      />
+      <ResultDialog searchT={searchT} instance={instance} />
+    </TableSelectionProvider>
+  );
+};
+
+ResultTable.displayName = 'ResultTable';
 
 export default ResultTable;

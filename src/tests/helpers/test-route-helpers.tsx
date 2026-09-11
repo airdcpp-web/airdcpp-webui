@@ -5,18 +5,21 @@ import { Outlet, RouteObject, useNavigate } from 'react-router';
 interface TestRouteNavigateButtonProps {
   caption: string;
   route: string;
+  // Optional location state to attach to the navigation
+  state?: object;
 }
 
 export const TestRouteNavigateButton = ({
   caption,
   route,
+  state,
 }: TestRouteNavigateButtonProps) => {
   const navigate = useNavigate();
   return (
     <Button
       caption={caption}
       onClick={() => {
-        navigate(route);
+        navigate(route, { state });
       }}
     />
   );
