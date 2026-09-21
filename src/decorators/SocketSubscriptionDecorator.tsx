@@ -46,7 +46,6 @@ const SocketSubscriptionDecorator = function <PropsT extends object>(
   const Decorator: React.FC<PropsT & SocketSubscriptionDecoratorProps> = (props) => {
     const socketSubscriptions = React.useRef<SubscriptionRemoveHandler[]>([]);
     const socket = useSocket();
-    // const login = useAppStoreProperty((state) => state.login);
     const session = useSession();
 
     const addSocketListener = async <

@@ -21,20 +21,15 @@ export const shareTempFile = async (
   session: UI.AuthenticatedSession,
   socket: APISocket,
 ): Promise<AddTempShareResponse> => {
-  // eslint-disable-next-line no-useless-catch
-  try {
-    const fileId = await uploadTempFile(file, session);
-    const res = await socket.post<AddTempShareResponse>(ShareConstants.TEMP_SHARES_URL, {
-      name: file.name,
-      file_id: fileId,
-      hub_url: hubUrl,
-      cid,
-    });
+  const fileId = await uploadTempFile(file, session);
+  const res = await socket.post<AddTempShareResponse>(ShareConstants.TEMP_SHARES_URL, {
+    name: file.name,
+    file_id: fileId,
+    hub_url: hubUrl,
+    cid,
+  });
 
-    return res;
-  } catch (e) {
-    throw e;
-  }
+  return res;
 };
 
 export const refresh = (incoming: boolean, socket: APISocket) => {

@@ -106,7 +106,6 @@ export default function <PropsT extends object, DataT extends object>(
     DataProviderDecoratorProps & DataProps<PropsT>,
     State<DataT>
   > {
-    //displayName: 'DataProviderDecorator',
     mounted = false;
 
     id = getDebugId();

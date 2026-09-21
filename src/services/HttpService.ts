@@ -15,21 +15,16 @@ export const uploadTempFile = async (
   file: File,
   session: UI.AuthenticatedSession,
 ): Promise<string> => {
-  // eslint-disable-next-line no-useless-catch
-  try {
-    const res = await fetchData(`${getBasePath()}temp`, {
-      method: 'POST',
-      headers: {
-        ...getAuthHeaders(session),
-        'X-File-Name': file.name,
-      },
-      body: file,
-    });
+  const res = await fetchData(`${getBasePath()}temp`, {
+    method: 'POST',
+    headers: {
+      ...getAuthHeaders(session),
+      'X-File-Name': file.name,
+    },
+    body: file,
+  });
 
-    return res.headers.get('Location')!;
-  } catch (e) {
-    throw e;
-  }
+  return res.headers.get('Location')!;
 };
 
 const toCorsSafeUrl = (url: string) => {

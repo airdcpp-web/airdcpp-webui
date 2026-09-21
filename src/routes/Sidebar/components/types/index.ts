@@ -1,5 +1,3 @@
-//import * as React from 'react';
-
 import { IconType } from '@/components/semantic/Icon';
 import { RouterMenuItemLinkProps } from '@/components/semantic/RouterMenuItemLink';
 
