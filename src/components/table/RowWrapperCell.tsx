@@ -39,16 +39,12 @@ class RowWrapperCell extends React.Component<RowWrapperCellProps> {
     this.loadData(this.props.rowIndex!);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: RowWrapperCellProps) {
-    if (nextProps.rowIndex !== this.props.rowIndex) {
-      // Remove pending update callbacks to avoid rendering each of them when the data is received
-      // (there can be lots of pending requests when scrolling for long distances)
-      this.props.dataLoader.removePendingRequests(this.props.rowIndex, this.onDataLoaded);
+  componentDidUpdate(prevProps: RowWrapperCellProps) {
+    if (prevProps.rowIndex !== this.props.rowIndex) {
+      this.props.dataLoader.removePendingRequests(prevProps.rowIndex, this.onDataLoaded);
     }
 
-    // Check if there is new data available (rowIndex may have changed as well)
-    if (!this.loadData(nextProps.rowIndex!)) {
-      // Avoid displaying old data
+    if (!this.loadData(this.props.rowIndex!)) {
       this.setState({ rowData: null });
     }
   }
