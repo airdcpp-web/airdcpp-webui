@@ -18,6 +18,8 @@ export const enum LocalSettings {
 
   NO_INSTALL_PROMPT = 'no_install_prompt',
   DARK_MODE = 'dark_mode',
+  SIDE_MENU_POSITION = 'side_menu_position',
+  CONTENT_MAX_WIDTH = 'content_max_width',
 }
 
 type LocalFormFieldDefinition = UI.FormFieldDefinition & {
@@ -97,5 +99,30 @@ export const LocalSettingDefinitions: LocalFormFieldDefinition[] = [
     type: API.SettingTypeEnum.BOOLEAN,
     default_value: false,
     title: 'Use dark mode',
+  },
+  {
+    key: LocalSettings.SIDE_MENU_POSITION,
+    type: API.SettingTypeEnum.STRING,
+    default_value: 'right',
+    title: 'Side navigation position',
+    options: [
+      { id: 'right', name: 'Right edge' },
+      { id: 'left', name: 'Left edge' },
+      { id: 'top', name: 'Top edge' },
+      { id: 'bottom', name: 'Bottom edge' },
+    ],
+  },
+  {
+    key: LocalSettings.CONTENT_MAX_WIDTH,
+    type: API.SettingTypeEnum.NUMBER,
+    default_value: 1600,
+    title: 'Maximum content width',
+    options: [
+      { id: 1280, name: '1280 px' },
+      { id: 1600, name: '1600 px' },
+      { id: 1920, name: '1920 px' },
+      { id: 2560, name: '2560 px' },
+      { id: 0, name: 'Full available width' },
+    ],
   },
 ];

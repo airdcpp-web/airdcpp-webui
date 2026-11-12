@@ -15,6 +15,8 @@ import '../style.css';
 import { LayoutWidthContext, useLayoutWidth } from '@/context/LayoutWidthContext';
 import { MODAL_PAGE_DIMMER_ID } from '@/components/semantic/effects/useModal';
 import { appendInstanceId, UIInstanceContext } from '@/context/InstanceContext';
+import { useAppStoreProperty } from '@/context/AppStoreContext';
+import { LocalSettings } from '@/constants/LocalSettingConstants';
 
 const MIN_WIDTH = 500;
 
@@ -35,6 +37,10 @@ const enum Visibility {
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
   const navigate = useNavigate();
+  const position = useAppStoreProperty((state) =>
+    state.settings.getValue<string>(LocalSettings.SIDE_MENU_POSITION),
+  );
+  const vertical = position === 'left' || position === 'right';
 
   // Update the minimum width when the window is being resized
   useLayoutWidth();
@@ -46,6 +52,18 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 
   const [width, setWidth] = useState(
     Math.max(MIN_WIDTH, loadLocalProperty<number>('sidebar_width', 1000)),
+  );
+  const [height, setHeight] = useState(
+    Math.min(
+      window.innerHeight,
+      Math.max(
+        300,
+        loadLocalProperty<number>(
+          'sidebar_height',
+          Math.round(window.innerHeight * 0.72),
+        ),
+      ),
+    ),
   );
   const resizable = useRef<Resizable>(null);
 
@@ -108,13 +126,17 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   }, [showSidebar(props)]);
 
   const onResizeStop: ResizeCallback = (event, direction, element, delta) => {
-    if (!delta.width) {
-      return;
+    if (delta.width) {
+      const nextWidth = element.clientWidth;
+      saveLocalProperty('sidebar_width', nextWidth);
+      setWidth(nextWidth);
     }
 
-    const width = element.clientWidth;
-    saveLocalProperty('sidebar_width', width);
-    setWidth(width);
+    if (delta.height) {
+      const nextHeight = element.clientHeight;
+      saveLocalProperty('sidebar_height', nextHeight);
+      setHeight(nextHeight);
+    }
   };
 
   const getChildren = () => {
@@ -143,19 +165,21 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     <Resizable
       ref={resizable}
       size={{
-        width: Math.min(width, window.innerWidth),
-        height: window.innerHeight,
+        width: vertical ? Math.min(width, window.innerWidth) : window.innerWidth,
+        height: vertical ? window.innerHeight : Math.min(height, window.innerHeight),
       }}
-      minWidth={Math.min(MIN_WIDTH, window.innerWidth)}
+      minWidth={vertical ? Math.min(MIN_WIDTH, window.innerWidth) : window.innerWidth}
       maxWidth={window.innerWidth}
-      className="ui right vertical sidebar"
+      minHeight={vertical ? window.innerHeight : Math.min(300, window.innerHeight)}
+      maxHeight={window.innerHeight}
+      className={`ui ${position} ${vertical ? 'vertical' : ''} sidebar`}
       style={{ position: 'absolute' }}
       {...otherProps}
       enable={{
-        top: false,
-        right: false,
-        bottom: false,
-        left: !usingMobileLayout(),
+        top: position === 'bottom' && !usingMobileLayout(),
+        right: position === 'left' && !usingMobileLayout(),
+        bottom: position === 'top' && !usingMobileLayout(),
+        left: position === 'right' && !usingMobileLayout(),
         topRight: false,
         bottomRight: false,
         bottomLeft: false,

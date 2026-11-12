@@ -2,7 +2,7 @@
 #normal-layout .header-content {
   margin-left: auto;
   margin-right: auto;
-  max-width: 1600px;
+  max-width: var(--site-content-max-width, 1600px);
   width: calc(100% - 180px);
 }
 
@@ -24,6 +24,84 @@
   border-bottom-left-radius: 0.28571429rem;
   background-color: #1b1c1d;
   z-index: 1000;
+}
+
+#normal-layout[data-side-menu-position='left'] #side-menu {
+  right: auto;
+  left: 0;
+  border-radius: 0 0.28571429rem 0.28571429rem 0;
+}
+
+#normal-layout[data-side-menu-position='top'] #side-menu,
+#normal-layout[data-side-menu-position='bottom'] #side-menu {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100% !important;
+  height: auto;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+}
+
+#normal-layout[data-side-menu-position='top'] #side-menu {
+  top: 60px;
+  bottom: auto;
+}
+
+#normal-layout[data-side-menu-position='bottom'] #side-menu {
+  top: auto;
+  bottom: 0;
+}
+
+#normal-layout[data-side-menu-position='top'] #side-menu .navigation .menu,
+#normal-layout[data-side-menu-position='bottom'] #side-menu .navigation .menu {
+  width: auto !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+}
+
+#normal-layout[data-side-menu-position='top'] #side-menu .navigation .item,
+#normal-layout[data-side-menu-position='bottom'] #side-menu .navigation .item {
+  padding: 0.5em 0.8em !important;
+}
+
+#normal-layout[data-side-menu-position='top'] #side-menu > .ui.divider,
+#normal-layout[data-side-menu-position='bottom'] #side-menu > .ui.divider {
+  width: 1px;
+  height: 38px;
+  margin: 0 8px;
+}
+
+#normal-layout[data-side-menu-position='top'] #side-menu .icon-panel,
+#normal-layout[data-side-menu-position='bottom'] #side-menu .icon-panel {
+  display: flex;
+  align-items: center;
+}
+
+#normal-layout[data-side-menu-position='top'] #side-menu .icon-panel .touch-icons,
+#normal-layout[data-side-menu-position='bottom'] #side-menu .icon-panel .touch-icons {
+  margin: 0 0 0 8px;
+}
+
+#normal-layout[data-side-menu-position='top'] .site-content,
+#normal-layout[data-side-menu-position='bottom'] .site-content,
+#normal-layout[data-side-menu-position='top'] .header-content,
+#normal-layout[data-side-menu-position='bottom'] .header-content {
+  width: calc(100% - 30px);
+}
+
+#normal-layout[data-side-menu-position='top'] .site-content {
+  padding-top: 135px;
+}
+
+#normal-layout[data-side-menu-position='bottom'] .site-content {
+  padding-bottom: 140px;
 }
 
 #side-menu .navigation .menu {

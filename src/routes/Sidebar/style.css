@@ -6,11 +6,43 @@
   padding: 5px 80px 5px 5px;
 }
 
+#sidebar.ui.left.sidebar {
+  padding: 5px 5px 5px 80px;
+}
+
+#sidebar.ui.top.sidebar {
+  top: 0;
+  bottom: auto;
+  padding: 60px 5px 5px;
+}
+
+#sidebar.ui.bottom.sidebar {
+  top: auto;
+  bottom: 0;
+  padding: 5px 5px 65px;
+}
+
 #sidebar-container {
   height: 100%;
   background-color: white;
   border-top-left-radius: 0.28571429rem;
   border-bottom-left-radius: 0.28571429rem;
+}
+
+#sidebar.ui.right #sidebar-container {
+  border-radius: 0.28571429rem 0 0 0.28571429rem;
+}
+
+#sidebar.ui.left #sidebar-container {
+  border-radius: 0 0.28571429rem 0.28571429rem 0;
+}
+
+#sidebar.ui.top #sidebar-container {
+  border-radius: 0 0 0.28571429rem 0.28571429rem;
+}
+
+#sidebar.ui.bottom #sidebar-container {
+  border-radius: 0.28571429rem 0.28571429rem 0 0;
 }
 
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu {

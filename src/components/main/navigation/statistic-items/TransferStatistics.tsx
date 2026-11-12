@@ -23,16 +23,18 @@ const TransferStatistics: React.FC<
   return (
     <>
       <StatisticsRow
-        icon={IconConstants.DOWNLOAD}
-        bytes={transferStats.speed_down}
-        formatter={formatSpeed}
-        label="Download speed"
-      />
-      <StatisticsRow
         icon={IconConstants.UPLOAD}
         bytes={transferStats.speed_up}
         formatter={formatSpeed}
         label="Upload speed"
+        showZero={true}
+      />
+      <StatisticsRow
+        icon={IconConstants.DOWNLOAD}
+        bytes={transferStats.speed_down}
+        formatter={formatSpeed}
+        label="Download speed"
+        showZero={true}
       />
       <StatisticsRow
         icon={IconConstants.QUEUE_COLORED}
