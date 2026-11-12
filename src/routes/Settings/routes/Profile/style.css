@@ -6,7 +6,7 @@ html[data-theme='dark'] .settings-layout .profile .ui.pointing.label,
 html[data-theme='dark'] .settings-layout .profile .ui.pointing.label:before {
   color: var(--text-color) !important;
   background: var(--raised-background) !important;
-  border-color: var(--border-color) !important;
+  border-color: var(--border-color);
   box-shadow: none !important;
 }
 

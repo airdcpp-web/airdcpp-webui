@@ -17,7 +17,7 @@
   position: fixed;
   top: 120px;
   right: 0px;
-  width: 80px !important;
+  width: 80px;
   height: auto;
   padding-bottom: 10px;
   border-top-left-radius: 0.28571429rem;
@@ -60,7 +60,7 @@
 #normal-layout[data-side-menu-position='top'] #side-menu .navigation .menu,
 #normal-layout[data-side-menu-position='bottom'] #side-menu .navigation .menu {
   width: auto !important;
-  display: flex !important;
+  display: flex;
   flex-direction: row;
   align-items: center;
   margin: 0;

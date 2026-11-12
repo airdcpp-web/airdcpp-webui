@@ -34,5 +34,5 @@ html[data-theme='dark'] .settings-layout .extension-layout .extension.item .vers
 }
 
 html[data-theme='dark'] .settings-layout .extension-layout .ui.divider {
-  border-color: var(--border-color) !important;
+  border-color: var(--border-color);
 }

@@ -79,7 +79,7 @@ html[data-theme='dark'] .ui.list > .item,
 html[data-theme='dark'] .ui.list .list > .item {
   color: var(--text-color) !important;
   background-color: var(--surface-background) !important;
-  border-color: var(--border-color) !important;
+  border-color: var(--border-color);
 }
 
 html[data-theme='dark'] .ui.button,
@@ -113,7 +113,7 @@ html[data-theme='dark'] .table-footer {
   color: var(--text-color) !important;
   background: var(--surface-background) !important;
   background-image: none !important;
-  border-color: var(--border-color) !important;
+  border-color: var(--border-color);
 }
 
 html[data-theme='dark'] .browserbar .path-token.current,
@@ -134,7 +134,7 @@ html[data-theme='dark'] .settings-layout .system.logging .log-section > .active 
 
 html[data-theme='dark'] .session-footer .info-grid,
 html[data-theme='dark'] .hub.session .session-footer #userlist-toggle label {
-  color: var(--muted-text-color) !important;
+  color: var(--muted-text-color);
 }
 
 html[data-theme='dark'] .ui.table tbody tr,
@@ -169,7 +169,7 @@ html[data-theme='dark'] .ui.selection.dropdown,
 html[data-theme='dark'] .ui.dropdown .menu .item,
 html[data-theme='dark'] .ui.search.dropdown > input.search {
   color: var(--text-color) !important;
-  background: var(--raised-background) !important;
+  background: var(--raised-background);
   border-color: var(--border-color) !important;
 }
 
@@ -178,9 +178,9 @@ html[data-theme='dark'] .airdc-user-select__control:hover,
 html[data-theme='dark'] .airdc-user-select__control--is-focused,
 html[data-theme='dark'] .airdc-user-select__control--menu-is-open {
   color: var(--text-color) !important;
-  background: var(--raised-background) !important;
+  background: var(--raised-background);
   border-color: var(--border-color) !important;
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 html[data-theme='dark'] .airdc-user-select__input-container,
@@ -198,14 +198,14 @@ html[data-theme='dark'] .airdc-user-select__placeholder {
 
 html[data-theme='dark'] .airdc-user-select__menu,
 html[data-theme='dark'] .airdc-user-select__menu-list {
-  color: var(--text-color) !important;
-  background: var(--surface-background) !important;
+  color: var(--text-color);
+  background: var(--surface-background);
   border-color: var(--border-color) !important;
 }
 
 html[data-theme='dark'] .airdc-user-select__option {
-  color: var(--text-color) !important;
-  background: var(--surface-background) !important;
+  color: var(--text-color);
+  background: var(--surface-background);
 }
 
 html[data-theme='dark'] .airdc-user-select__option--is-focused {
@@ -229,7 +229,7 @@ html[data-theme='dark'] .airdc-user-select__multi-value__remove:hover {
 }
 
 html[data-theme='dark'] .airdc-user-select__indicator-separator {
-  background: var(--border-color) !important;
+  background: var(--border-color);
 }
 
 html[data-theme='dark'] .settings-layout .form input:not([type='checkbox']):not([type='radio']):not([type='hidden']):focus,
@@ -252,7 +252,7 @@ html[data-theme='dark'] .settings-layout .form input:-webkit-autofill:focus {
 html[data-theme='dark'] .notepad-container textarea {
   color: var(--text-color) !important;
   background: var(--raised-background) !important;
-  border-color: var(--border-color) !important;
+  border-color: var(--border-color);
   caret-color: var(--text-color);
 }
 
@@ -408,14 +408,14 @@ html[data-theme='dark'] .site-header .ui.dropdown .menu > .header {
 html[data-theme='dark'] .site-header .ui.dropdown .menu > .item:hover,
 html[data-theme='dark'] .site-header .ui.dropdown .menu > .item:focus,
 html[data-theme='dark'] .site-header .ui.dropdown .menu > .item.active {
-  color: #fff !important;
+  color: #fff;
   background: var(--raised-background) !important;
 }
 
 html[data-theme='dark'] .site-header .ui.dropdown .menu .item .icon,
 html[data-theme='dark'] .site-header .ui.dropdown > .caption .icon,
 html[data-theme='dark'] .site-header .ui.dropdown > .trigger.icon {
-  color: #fff !important;
+  color: #fff;
 }
 
 html[data-theme='dark'] .site-header .ui.dropdown .menu svg,
@@ -431,25 +431,25 @@ html[data-theme='dark'] .apexcharts-tooltip,
 html[data-theme='dark'] .apexcharts-tooltip-title,
 html[data-theme='dark'] .apexcharts-xaxistooltip {
   color: var(--text-color) !important;
-  background: var(--raised-background) !important;
+  background: var(--raised-background);
   border-color: var(--border-color) !important;
 }
 
 html[data-theme='dark'] #side-menu .navigation .icon.blue,
 html[data-theme='dark'] #side-menu .statistics-icons .icon.blue {
-  color: #2185d0 !important;
+  color: #2185d0;
 }
 
 html[data-theme='dark'] #side-menu .statistics-icons .icon.red {
-  color: #db2828 !important;
+  color: #db2828;
 }
 
 html[data-theme='dark'] #side-menu .statistics-icons .icon.green {
-  color: #21ba45 !important;
+  color: #21ba45;
 }
 
 html[data-theme='dark'] #side-menu .statistics-icons .icon.olive {
-  color: #b5cc18 !important;
+  color: #b5cc18;
 }
 
 section#container-main {
@@ -472,7 +472,7 @@ section#container-main {
 }
 
 .ui.empty.dropdown {
-  cursor: auto !important;
+  cursor: auto;
 }
 
 .ui.dropdown {
@@ -488,7 +488,7 @@ section#container-main {
 
 /*https://github.com/fomantic/Fomantic-UI/issues/3123*/
 .ui.dropdown.upward.pointing .item.submenu > .menu {
-  bottom: 0 !important;
+  bottom: 0;
 }
 
 .ui.dropdown.fluid {
@@ -611,7 +611,7 @@ td .ui.dropdown > .caption > .icon-caption {
 }
 
 .confirm-dialog {
-  z-index: 1004 !important;
+  z-index: 1004;
 }
 
 .confirm-dialog .description,
@@ -685,7 +685,7 @@ td .ui.dropdown > .caption > .icon-caption {
 }
 
 .submenu-transition-exit-active {
-  display: none !important;
+  display: none;
 }
 
 /* Table dropdown transitions end */
@@ -732,7 +732,7 @@ i.icons .icon:first-child {
 .dupe.share.partial,
 .dupe.share.partial span,
 .dupe.share.partial a {
-  color: #ffa2ff !important;
+  color: #ffa2ff;
 }
 
 .dupe.finished.full,
@@ -756,7 +756,7 @@ i.icons .icon:first-child {
 .dupe.finished.queue,
 .dupe.finished.queue span,
 .dupe.finished.queue a {
-  color: color-mix(in lab, green, #ffa500) !important;
+  color: color-mix(in lab, green, #ffa500);
 }
 
 .dupe.share.queue.finished,
@@ -765,5 +765,5 @@ i.icons .icon:first-child {
 .dupe.share.queue,
 .dupe.share.queue span,
 .dupe.share.queue a {
-  color: color-mix(in lab, fuchsia, #ffa500) !important;
+  color: color-mix(in lab, fuchsia, #ffa500);
 }

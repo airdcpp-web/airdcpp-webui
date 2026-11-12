@@ -44,13 +44,13 @@
   border-radius: 50%;
   background: #dedede;
   content: '' !important;
-  opacity: 1 !important;
+  opacity: 1;
   transition: transform 150ms ease;
 }
 
 .appearance-theme-switch .field-dark_mode .ui.checkbox input:checked ~ label::before {
   border-color: #64aaff !important;
-  background: #397dc4 !important;
+  background: #397dc4;
 }
 
 .appearance-theme-switch .field-dark_mode .ui.checkbox input:checked ~ label::after {

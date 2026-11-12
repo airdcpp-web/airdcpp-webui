@@ -54,7 +54,7 @@ html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu {
 
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .header,
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item {
-  color: var(--text-color) !important;
+  color: var(--text-color);
   background: var(--surface-background) !important;
 }
 
@@ -62,7 +62,7 @@ html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item:h
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item:focus,
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item.active {
   color: #fff !important;
-  background: var(--raised-background) !important;
+  background: var(--raised-background);
 }
 
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu .ui.divider {
@@ -76,5 +76,5 @@ html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu .ui.divid
 
 .animating.ui.overlay.sidebar,
 .ui.visible.overlay.sidebar {
-  transition: transform 250ms !important;
+  transition: transform 250ms;
 }

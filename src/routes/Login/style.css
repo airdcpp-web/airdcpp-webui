@@ -23,7 +23,7 @@ html[data-theme='dark'] .login-grid .ui.input input {
 }
 
 html[data-theme='dark'] .login-grid .ui.input input::placeholder {
-  color: #a6a6a6 !important;
+  color: #a6a6a6;
 }
 
 html[data-theme='dark'] .login-grid .ui.input input:-webkit-autofill,
@@ -34,15 +34,15 @@ html[data-theme='dark'] .login-grid .ui.input input:-webkit-autofill:focus {
 }
 
 html[data-theme='dark'] .login-grid .ui.button {
-  color: #f0f0f0 !important;
-  background: #2d2d2d !important;
-  border: 1px solid #4b4b4b !important;
+  color: #f0f0f0;
+  background: #2d2d2d;
+  border: 1px solid #4b4b4b;
   box-shadow: none !important;
 }
 
 html[data-theme='dark'] .login-grid .ui.button:hover,
 html[data-theme='dark'] .login-grid .ui.button:focus {
-  background: #3a3a3a !important;
+  background: #3a3a3a;
 }
 
 html[data-theme='dark'] .login-grid .ui.checkbox label {

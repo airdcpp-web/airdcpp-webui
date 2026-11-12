@@ -44,7 +44,7 @@
 }
 
 html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown {
-  color: var(--text-color) !important;
+  color: var(--text-color);
   background: var(--raised-background) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: 0.28571429rem;
@@ -58,7 +58,7 @@ html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown > .trigger {
 html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown .menu {
   color: var(--text-color) !important;
   background: var(--surface-background) !important;
-  border: 1px solid var(--border-color) !important;
+  border: 1px solid var(--border-color);
 }
 
 html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown .menu > .item {
@@ -67,6 +67,6 @@ html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown .menu > .item
 }
 
 html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown .menu > .item:hover {
-  color: #fff !important;
+  color: #fff;
   background: var(--raised-background) !important;
 }

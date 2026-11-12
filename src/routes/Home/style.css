@@ -15,7 +15,7 @@
 
 #mobile-layout #home > div {
   margin-left: 8px !important;
-  margin-right: 8px !important;
+  margin-right: 8px;
 }
 
 #mobile-layout #home .ui.message {
@@ -48,7 +48,7 @@
 
 .react-grid-layout .widget .header-row {
   display: flex;
-  flex: 0 0 auto !important;
+  flex: 0 0 auto;
 }
 
 .react-grid-layout .widget .header-row .header {
@@ -72,7 +72,7 @@
 }
 
 html[data-theme='dark'] .react-grid-layout .widget.card {
-  color: #f0f0f0 !important;
+  color: #f0f0f0;
   background: #202020 !important;
   border: 1px solid #4b4b4b !important;
   box-shadow: none !important;
@@ -90,7 +90,7 @@ html[data-theme='dark'] .react-grid-item > .react-resizable-handle {
 
 #mobile-layout .react-grid-layout .react-grid-item {
   /* Allow touch scrolling */
-  touch-action: initial !important;
+  touch-action: initial;
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
