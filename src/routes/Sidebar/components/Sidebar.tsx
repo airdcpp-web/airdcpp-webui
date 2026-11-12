@@ -149,6 +149,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
       minWidth={Math.min(MIN_WIDTH, window.innerWidth)}
       maxWidth={window.innerWidth}
       className="ui right vertical sidebar"
+      style={{ position: 'absolute' }}
       {...otherProps}
       enable={{
         top: false,

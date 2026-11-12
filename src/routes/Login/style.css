@@ -1,9 +1,64 @@
 .login-grid {
-  margin: 0px !important;
+  margin: 0px;
   height: 100%;
 }
 
 .login-grid .column {
   max-width: 650px;
-  width: 95% !important;
+  width: 95%;
+}
+
+html[data-theme='dark'] .login-grid .ui.stacked.segment {
+  color: #f0f0f0;
+  background: #202020;
+  border-color: #4b4b4b;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.4), 0 0 0 1px #4b4b4b;
+}
+
+html[data-theme='dark'] .login-grid .ui.input input {
+  color: #f0f0f0;
+  background: #2d2d2d;
+  border-color: #4b4b4b;
+  caret-color: #f0f0f0;
+}
+
+html[data-theme='dark'] .login-grid .ui.input input::placeholder {
+  color: #a6a6a6;
+}
+
+html[data-theme='dark'] .login-grid .ui.input input:-webkit-autofill,
+html[data-theme='dark'] .login-grid .ui.input input:-webkit-autofill:hover,
+html[data-theme='dark'] .login-grid .ui.input input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f0f0f0;
+  box-shadow: 0 0 0 1000px #2d2d2d inset;
+}
+
+html[data-theme='dark'] .login-grid .ui.button {
+  color: #f0f0f0;
+  background: #2d2d2d;
+  border: 1px solid #4b4b4b;
+  box-shadow: none;
+}
+
+html[data-theme='dark'] .login-grid .ui.button:hover,
+html[data-theme='dark'] .login-grid .ui.button:focus {
+  background: #3a3a3a;
+}
+
+html[data-theme='dark'] .login-grid .ui.checkbox label {
+  color: #f0f0f0;
+}
+
+html[data-theme='dark'] .login-grid .ui.checkbox:not(.slider):not(.toggle) label::before {
+  background: #2d2d2d;
+  border-color: #4b4b4b;
+}
+
+html[data-theme='dark'] .login-grid .ui.checkbox input:checked ~ label::before {
+  background: #397dc4;
+  border-color: #64aaff;
+}
+
+html[data-theme='dark'] .login-grid .ui.checkbox input:checked ~ label::after {
+  color: #fff;
 }

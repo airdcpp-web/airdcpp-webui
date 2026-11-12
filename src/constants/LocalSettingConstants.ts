@@ -17,6 +17,7 @@ export const enum LocalSettings {
   BACKGROUND_IMAGE_URL = 'background_image_url',
 
   NO_INSTALL_PROMPT = 'no_install_prompt',
+  DARK_MODE = 'dark_mode',
 }
 
 type LocalFormFieldDefinition = UI.FormFieldDefinition & {
@@ -90,5 +91,11 @@ export const LocalSettingDefinitions: LocalFormFieldDefinition[] = [
     type: API.SettingTypeEnum.BOOLEAN,
     default_value: false,
     title: `Never show the application install prompt in Home view`,
+  },
+  {
+    key: LocalSettings.DARK_MODE,
+    type: API.SettingTypeEnum.BOOLEAN,
+    default_value: false,
+    title: 'Use dark mode',
   },
 ];

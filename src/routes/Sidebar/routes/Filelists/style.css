@@ -42,3 +42,31 @@
   color: gray;
   align-self: flex-end;
 }
+
+html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown {
+  color: var(--text-color);
+  background: var(--raised-background);
+  border: 1px solid var(--border-color);
+  border-radius: 0.28571429rem;
+}
+
+html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown > .caption,
+html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown > .trigger {
+  color: var(--text-color);
+}
+
+html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown .menu {
+  color: var(--text-color);
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+}
+
+html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown .menu > .item {
+  color: var(--text-color);
+  background: var(--surface-background);
+}
+
+html[data-theme='dark'] .filelist.session.new .profile.ui.dropdown .menu > .item:hover {
+  color: #fff;
+  background: var(--raised-background);
+}

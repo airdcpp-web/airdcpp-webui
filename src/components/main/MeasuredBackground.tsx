@@ -26,16 +26,23 @@ export const MeasuredBackground: React.FC<React.PropsWithChildren> = ({ children
   const customImageUrl = useAppStoreProperty((state) =>
     state.settings.getValue<string | null>(LocalSettings.BACKGROUND_IMAGE_URL),
   );
+  const darkMode = useAppStoreProperty(
+    (state) => state.settings.settings.dark_mode === true,
+  );
   const [measureRef, bounds] = useMeasure({
     debounce: 100,
   });
+  const backgroundImage = getBackgroundImageStyle(customImageUrl);
   return (
     <LayoutWidthContext.Provider value={bounds.width}>
       <div
         ref={measureRef}
         id="background-wrapper"
         style={{
-          backgroundImage: getBackgroundImageStyle(customImageUrl),
+          backgroundImage: darkMode && backgroundImage
+            ? `linear-gradient(rgba(24, 24, 24, 0.86), rgba(24, 24, 24, 0.86)), ${backgroundImage}`
+            : backgroundImage,
+          backgroundColor: darkMode ? '#181818' : undefined,
           height: '100%',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
