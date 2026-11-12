@@ -1,3 +1,63 @@
 .settings-layout .view.notifications .field-notify_events_info {
   margin-top: 25px;
 }
+
+.appearance-theme-switch .field-dark_mode .ui.checkbox {
+  display: block;
+  width: 100%;
+  min-height: 36px;
+}
+
+.appearance-theme-switch .field-dark_mode .ui.checkbox input[type='checkbox'] {
+  top: 3px;
+  right: 0;
+  left: auto;
+  width: 44px;
+  height: 26px;
+  z-index: 4;
+}
+
+.appearance-theme-switch .field-dark_mode .ui.checkbox label {
+  min-height: 32px;
+  padding: 5px 58px 5px 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.appearance-theme-switch .field-dark_mode .ui.checkbox label::before {
+  top: 3px;
+  right: 0;
+  left: auto;
+  width: 44px;
+  height: 26px;
+  border: 1px solid #777;
+  border-radius: 999px;
+  background: #4b4b4b;
+}
+
+.appearance-theme-switch .field-dark_mode .ui.checkbox label::after {
+  top: 8px;
+  right: 25px;
+  left: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #dedede;
+  content: '';
+  opacity: 1;
+  transition: transform 150ms ease;
+}
+
+.appearance-theme-switch .field-dark_mode .ui.checkbox input:checked ~ label::before {
+  border-color: #64aaff;
+  background: #397dc4;
+}
+
+.appearance-theme-switch .field-dark_mode .ui.checkbox input:checked ~ label::after {
+  transform: translateX(20px);
+}
+
+.appearance-theme-switch .field-dark_mode .ui.checkbox input:focus-visible ~ label::before {
+  outline: 2px solid #8abaff;
+  outline-offset: 2px;
+}

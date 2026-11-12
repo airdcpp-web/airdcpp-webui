@@ -107,6 +107,10 @@ const WidgetLayout = memo(function WidgetLayout() {
             enabled: true,
             handle: '.react-grid-item .header-row .header',
           }}
+          resizeConfig={{
+            enabled: true,
+            handles: ['se', 'e', 's'] as const,
+          }}
           layouts={layouts}
           // useCSSTransforms={false} // Causes weird bouncing issues (especially on Safari)
           // measureBeforeMount={false}

@@ -1,3 +1,38 @@
 .extension.item .version .outdated span {
   color: red;
 }
+
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item {
+  color: var(--text-color);
+  background: var(--surface-background);
+  border-color: var(--border-color);
+}
+
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .content,
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .header,
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .description,
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .version,
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .meta {
+  color: var(--text-color);
+}
+
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .meta {
+  color: var(--muted-text-color);
+}
+
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .extra,
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .buttons {
+  border-color: var(--border-color);
+}
+
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .version > div:not(.npm):not(.latest):not(.outdated) {
+  color: #ffb4ab;
+}
+
+html[data-theme='dark'] .settings-layout .extension-layout .extension.item .version .outdated span {
+  color: #ff8a80;
+}
+
+html[data-theme='dark'] .settings-layout .extension-layout .ui.divider {
+  border-color: var(--border-color);
+}

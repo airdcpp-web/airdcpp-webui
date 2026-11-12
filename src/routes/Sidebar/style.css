@@ -2,8 +2,24 @@
   z-index: 10;
   width: 100%;
   background-color: #1b1c1d;
-  position: absolute !important; /* https://github.com/bokuweb/react-resizable-box/issues/44 */
+  position: absolute; /* https://github.com/bokuweb/react-resizable-box/issues/44 */
   padding: 5px 80px 5px 5px;
+}
+
+#sidebar.ui.left.sidebar {
+  padding: 5px 5px 5px 80px;
+}
+
+#sidebar.ui.top.sidebar {
+  top: 0;
+  bottom: auto;
+  padding: 60px 5px 5px;
+}
+
+#sidebar.ui.bottom.sidebar {
+  top: auto;
+  bottom: 0;
+  padding: 5px 5px 65px;
 }
 
 #sidebar-container {
@@ -13,6 +29,46 @@
   border-bottom-left-radius: 0.28571429rem;
 }
 
+#sidebar.ui.right #sidebar-container {
+  border-radius: 0.28571429rem 0 0 0.28571429rem;
+}
+
+#sidebar.ui.left #sidebar-container {
+  border-radius: 0 0.28571429rem 0.28571429rem 0;
+}
+
+#sidebar.ui.top #sidebar-container {
+  border-radius: 0 0 0.28571429rem 0.28571429rem;
+}
+
+#sidebar.ui.bottom #sidebar-container {
+  border-radius: 0.28571429rem 0.28571429rem 0 0;
+}
+
+html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu {
+  color: var(--text-color);
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
+}
+
+html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .header,
+html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item {
+  color: var(--text-color);
+  background: var(--surface-background);
+}
+
+html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item:hover,
+html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item:focus,
+html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item.active {
+  color: #fff;
+  background: var(--raised-background);
+}
+
+html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu .ui.divider {
+  border-top-color: var(--border-color);
+}
+
 /* Internal class from re-resizable, causes height issues */
 *[class^='__resizable'] {
   display: none;
@@ -20,5 +76,5 @@
 
 .animating.ui.overlay.sidebar,
 .ui.visible.overlay.sidebar {
-  transition: transform 250ms !important;
+  transition: transform 250ms;
 }

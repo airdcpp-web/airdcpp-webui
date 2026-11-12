@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react';
 
 import * as UI from '@/types/ui';
 import { useFormatter } from '@/context/FormatterContext';
+import { useAppStoreProperty } from '@/context/AppStoreContext';
 
 export type TrafficSeries = Array<number[]>;
 
@@ -21,10 +22,14 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
   maxUpload,
 }) => {
   const { formatSpeed, formatDateTime } = useFormatter();
+  const darkMode = useAppStoreProperty(
+    (state) => state.settings.settings.dark_mode === true,
+  );
   const options = useMemo<ApexOptions>(
     () => ({
       chart: {
         id: 'area-datetime',
+        foreColor: darkMode ? '#f0f0f0' : undefined,
         toolbar: {
           show: false,
         },
@@ -42,6 +47,7 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
       },
       tooltip: {
         enabled: true,
+        theme: darkMode ? 'dark' : 'light',
       },
       xaxis: {
         type: 'datetime',
@@ -60,6 +66,9 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
       },
       yaxis: {
         labels: {
+          style: {
+            colors: darkMode ? '#f0f0f0' : undefined,
+          },
           formatter: (value) => {
             return formatSpeed(Math.abs(value));
           },
@@ -71,7 +80,7 @@ const SpeedChart: React.FC<SpeedChartProps> = ({
         opposite: true,
       },
     }),
-    [maxUpload, maxDownload],
+    [maxUpload, maxDownload, darkMode],
   );
 
   const series: ApexOptions['series'] = [
