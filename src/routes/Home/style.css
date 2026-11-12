@@ -14,7 +14,7 @@
 }
 
 #mobile-layout #home > div {
-  margin-left: 8px !important;
+  margin-left: 8px;
   margin-right: 8px;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .react-grid-layout .widget .header i.large.icon {
-  font-size: 1.3em !important;
+  font-size: 1.3em;
 }
 
 .react-grid-layout .widget .header-row {
@@ -62,20 +62,20 @@
 
 html[data-theme='dark'] .react-grid-layout .widget.card {
   color: #f0f0f0;
-  background: #202020 !important;
-  border: 1px solid #4b4b4b !important;
-  box-shadow: none !important;
+  background: #202020;
+  border: 1px solid #4b4b4b;
+  box-shadow: none;
 }
 
 html[data-theme='dark'] .react-grid-layout .widget.card > .content {
-  color: #f0f0f0 !important;
-  background: transparent !important;
-  border-color: #4b4b4b !important;
+  color: #f0f0f0;
+  background: transparent;
+  border-color: #4b4b4b;
 }
 
 #mobile-layout .react-grid-layout .react-grid-item {
   /* Allow touch scrolling */
   touch-action: initial;
-  margin-left: 0px !important;
-  margin-right: 0px !important;
+  margin-left: 0px;
+  margin-right: 0px;
 }

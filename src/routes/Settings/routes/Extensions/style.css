@@ -3,9 +3,9 @@
 }
 
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item {
-  color: var(--text-color) !important;
-  background: var(--surface-background) !important;
-  border-color: var(--border-color) !important;
+  color: var(--text-color);
+  background: var(--surface-background);
+  border-color: var(--border-color);
 }
 
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .content,
@@ -13,24 +13,24 @@ html[data-theme='dark'] .settings-layout .extension-layout .extension.item .head
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .description,
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .version,
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .meta {
-  color: var(--text-color) !important;
+  color: var(--text-color);
 }
 
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .meta {
-  color: var(--muted-text-color) !important;
+  color: var(--muted-text-color);
 }
 
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .extra,
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .buttons {
-  border-color: var(--border-color) !important;
+  border-color: var(--border-color);
 }
 
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .version > div:not(.npm):not(.latest):not(.outdated) {
-  color: #ffb4ab !important;
+  color: #ffb4ab;
 }
 
 html[data-theme='dark'] .settings-layout .extension-layout .extension.item .version .outdated span {
-  color: #ff8a80 !important;
+  color: #ff8a80;
 }
 
 html[data-theme='dark'] .settings-layout .extension-layout .ui.divider {

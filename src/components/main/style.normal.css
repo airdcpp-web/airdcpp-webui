@@ -27,13 +27,13 @@
 }
 
 #side-menu .navigation .menu {
-  height: auto !important;
-  display: block !important;
+  height: auto;
+  display: block;
   width: inherit;
 }
 
 #side-menu .navigation .item {
-  padding: 0.92857143em 0.34285714em !important;
+  padding: 0.92857143em 0.34285714em;
 }
 
 #side-menu .navigation .item > .label {
@@ -62,17 +62,17 @@
 
 /* Allows up to 3 touch icons to be displayed */
 #side-menu .icon-panel .touch-icons > .icon {
-  margin: 0px 2px !important;
+  margin: 0px 2px;
 }
 
 #side-menu .icon-panel .ui.progress:last-child {
-  margin: 0px !important;
+  margin: 0px;
 }
 
 #side-menu .icon-panel .statistics-icons {
   margin-left: 10px;
   margin-right: auto;
-  font-size: 9.5px !important;
+  font-size: 9.5px;
 }
 
 /* Sidemenu end */

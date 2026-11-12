@@ -4,12 +4,12 @@
 
 html[data-theme='dark'] .settings-layout .profile .ui.pointing.label,
 html[data-theme='dark'] .settings-layout .profile .ui.pointing.label:before {
-  color: var(--text-color) !important;
-  background: var(--raised-background) !important;
+  color: var(--text-color);
+  background: var(--raised-background);
   border-color: var(--border-color);
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 html[data-theme='dark'] .settings-layout .profile .ui.pointing.label a {
-  color: var(--link-color) !important;
+  color: var(--link-color);
 }

@@ -2,7 +2,7 @@
   z-index: 10;
   width: 100%;
   background-color: #1b1c1d;
-  position: absolute !important; /* https://github.com/bokuweb/react-resizable-box/issues/44 */
+  position: absolute; /* https://github.com/bokuweb/react-resizable-box/issues/44 */
   padding: 5px 80px 5px 5px;
 }
 
@@ -14,27 +14,27 @@
 }
 
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu {
-  color: var(--text-color) !important;
-  background: var(--surface-background) !important;
-  border: 1px solid var(--border-color) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55) !important;
+  color: var(--text-color);
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
 }
 
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .header,
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item {
   color: var(--text-color);
-  background: var(--surface-background) !important;
+  background: var(--surface-background);
 }
 
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item:hover,
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item:focus,
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu > .item.active {
-  color: #fff !important;
+  color: #fff;
   background: var(--raised-background);
 }
 
 html[data-theme='dark'] #sidebar .session-container .ui.dropdown .menu .ui.divider {
-  border-top-color: var(--border-color) !important;
+  border-top-color: var(--border-color);
 }
 
 /* Internal class from re-resizable, causes height issues */

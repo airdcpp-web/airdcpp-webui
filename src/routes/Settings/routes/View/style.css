@@ -19,9 +19,9 @@
 
 .appearance-theme-switch .field-dark_mode .ui.checkbox label {
   min-height: 32px;
-  padding: 5px 58px 5px 0 !important;
-  color: inherit !important;
-  cursor: pointer !important;
+  padding: 5px 58px 5px 0;
+  color: inherit;
+  cursor: pointer;
 }
 
 .appearance-theme-switch .field-dark_mode .ui.checkbox label::before {
@@ -30,9 +30,9 @@
   left: auto;
   width: 44px;
   height: 26px;
-  border: 1px solid #777 !important;
+  border: 1px solid #777;
   border-radius: 999px;
-  background: #4b4b4b !important;
+  background: #4b4b4b;
 }
 
 .appearance-theme-switch .field-dark_mode .ui.checkbox label::after {
@@ -43,13 +43,13 @@
   height: 16px;
   border-radius: 50%;
   background: #dedede;
-  content: '' !important;
+  content: '';
   opacity: 1;
   transition: transform 150ms ease;
 }
 
 .appearance-theme-switch .field-dark_mode .ui.checkbox input:checked ~ label::before {
-  border-color: #64aaff !important;
+  border-color: #64aaff;
   background: #397dc4;
 }
 

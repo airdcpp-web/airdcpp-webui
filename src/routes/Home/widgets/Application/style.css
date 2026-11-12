@@ -17,9 +17,9 @@
 html[data-theme='dark'] .application.widget .button.create-widget,
 html[data-theme='dark'] .application.widget .button.create-widget .button,
 html[data-theme='dark'] .application.widget .button.create-widget .text {
-  color: #f0f0f0 !important;
-  background: #2d2d2d !important;
-  border-color: #4b4b4b !important;
+  color: #f0f0f0;
+  background: #2d2d2d;
+  border-color: #4b4b4b;
 }
 
 html[data-theme='dark'] .application.widget .button.create-widget:hover,
@@ -30,16 +30,16 @@ html[data-theme='dark'] .application.widget .button.create-widget .button:focus 
 }
 
 html[data-theme='dark'] .application.widget .button.create-widget .menu {
-  color: #f0f0f0 !important;
-  background: #202020 !important;
+  color: #f0f0f0;
+  background: #202020;
   border-color: #4b4b4b;
 }
 
 html[data-theme='dark'] .application.widget .button.create-widget .menu .item {
   color: #f0f0f0;
-  background: #202020 !important;
+  background: #202020;
 }
 
 html[data-theme='dark'] .application.widget .button.create-widget .menu .item:hover {
-  background: #2d2d2d !important;
+  background: #2d2d2d;
 }
