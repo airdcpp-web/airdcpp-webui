@@ -11,16 +11,7 @@ const Entry = ['use_main_chat_notify', 'show_joins', 'format_release_names'];
 
 const GeneralPage: React.FC<SettingPageProps> = ({ moduleT }) => (
   <div>
-    <div className="appearance-theme-switch">
-      <LocalSettingForm
-        keys={[
-          LocalSettings.DARK_MODE,
-          LocalSettings.SIDE_MENU_POSITION,
-          LocalSettings.CONTENT_MAX_WIDTH,
-        ]}
-        moduleT={moduleT}
-      />
-    </div>
+    <LocalSettingForm keys={[LocalSettings.DARK_MODE]} moduleT={moduleT} />
     <RemoteSettingForm keys={Entry} />
   </div>
 );

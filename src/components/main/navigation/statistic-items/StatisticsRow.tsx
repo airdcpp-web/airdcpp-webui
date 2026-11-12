@@ -8,7 +8,6 @@ interface StatisticsRowProps {
   bytes: number;
   formatter: (bytes: number) => React.ReactNode;
   label: string;
-  showZero?: boolean;
 }
 
 export const StatisticsRow: React.FC<StatisticsRowProps> = ({
@@ -17,9 +16,8 @@ export const StatisticsRow: React.FC<StatisticsRowProps> = ({
   bytes,
   formatter,
   label,
-  showZero = false,
 }) => {
-  if (bytes === 0 && !showZero) {
+  if (bytes === 0) {
     return null;
   }
 

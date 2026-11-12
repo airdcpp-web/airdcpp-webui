@@ -60,17 +60,6 @@
   opacity: 0.4;
 }
 
-.react-grid-item > .react-resizable-handle {
-  z-index: 5;
-  opacity: 0.45;
-  transition: opacity 120ms ease;
-}
-
-.react-grid-item:hover > .react-resizable-handle,
-.react-grid-item > .react-resizable-handle:hover {
-  opacity: 1;
-}
-
 html[data-theme='dark'] .react-grid-layout .widget.card {
   color: #f0f0f0;
   background: #202020 !important;
@@ -82,10 +71,6 @@ html[data-theme='dark'] .react-grid-layout .widget.card > .content {
   color: #f0f0f0 !important;
   background: transparent !important;
   border-color: #4b4b4b !important;
-}
-
-html[data-theme='dark'] .react-grid-item > .react-resizable-handle {
-  filter: invert(1);
 }
 
 #mobile-layout .react-grid-layout .react-grid-item {
