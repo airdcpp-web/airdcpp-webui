@@ -13,3 +13,33 @@
 .application.widget .button.create-widget {
   max-width: 200px;
 }
+
+html[data-theme='dark'] .application.widget .button.create-widget,
+html[data-theme='dark'] .application.widget .button.create-widget .button,
+html[data-theme='dark'] .application.widget .button.create-widget .text {
+  color: #f0f0f0 !important;
+  background: #2d2d2d !important;
+  border-color: #4b4b4b !important;
+}
+
+html[data-theme='dark'] .application.widget .button.create-widget:hover,
+html[data-theme='dark'] .application.widget .button.create-widget:focus,
+html[data-theme='dark'] .application.widget .button.create-widget .button:hover,
+html[data-theme='dark'] .application.widget .button.create-widget .button:focus {
+  background: #3a3a3a !important;
+}
+
+html[data-theme='dark'] .application.widget .button.create-widget .menu {
+  color: #f0f0f0 !important;
+  background: #202020 !important;
+  border-color: #4b4b4b !important;
+}
+
+html[data-theme='dark'] .application.widget .button.create-widget .menu .item {
+  color: #f0f0f0 !important;
+  background: #202020 !important;
+}
+
+html[data-theme='dark'] .application.widget .button.create-widget .menu .item:hover {
+  background: #2d2d2d !important;
+}

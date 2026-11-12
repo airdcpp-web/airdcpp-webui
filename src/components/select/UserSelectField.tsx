@@ -112,6 +112,7 @@ export const UserSelectField: React.FC<UserSelectFieldProps> = ({
   return (
     <OfflineHubMessageDecorator offlineMessage={offlineMessage}>
       <RemoteSelectField<API.OfflineHintedUser>
+        classNamePrefix="airdc-user-select"
         placeholder={translate('Enter nick...', t, UI.Modules.COMMON)}
         loadOptions={loadOptions}
         formatOptionLabel={(option) => <HintedUserFormatter option={option} />}

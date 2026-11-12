@@ -1,3 +1,15 @@
 .settings-layout .profile.miscellaneous .field-nmdc_encoding li {
   margin-bottom: 5px;
 }
+
+html[data-theme='dark'] .settings-layout .profile .ui.pointing.label,
+html[data-theme='dark'] .settings-layout .profile .ui.pointing.label:before {
+  color: var(--text-color) !important;
+  background: var(--raised-background) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme='dark'] .settings-layout .profile .ui.pointing.label a {
+  color: var(--link-color) !important;
+}

@@ -1,4 +1,4 @@
-import { Suspense, useMemo } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router';
 
 import { I18nextProvider } from 'react-i18next';
@@ -30,7 +30,7 @@ import { createFormatter } from '@/utils/Formatter';
 import '@/utils/semantic';
 
 import './style.css';
-import { AppStoreProvider } from './context/AppStoreContext';
+import { AppStoreProvider, useAppStoreProperty } from './context/AppStoreContext';
 
 globalThis.Promise = Promise as any;
 
@@ -60,6 +60,19 @@ const router = createBrowserRouter(
 );
 
 const i18n = initI18n();
+
+const ThemeController: React.FC = () => {
+  const darkMode = useAppStoreProperty(
+    (state) => state.settings.settings.dark_mode === true,
+  );
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
+  }, [darkMode]);
+
+  return null;
+};
+
 const App = () => {
   const prompt = useInstallPrompt();
   const formatter = useMemo(() => createFormatter(i18n), []);
@@ -68,6 +81,7 @@ const App = () => {
       <Suspense fallback={<Loader fullPage={true} text="" />}>
         <FormatterContext.Provider value={formatter}>
           <AppStoreProvider>
+            <ThemeController />
             <SocketContext.Provider value={SocketService}>
               <I18nextProvider i18n={i18n}>
                 <InstallPromptContext.Provider value={prompt}>

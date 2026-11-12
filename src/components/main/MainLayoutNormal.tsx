@@ -16,17 +16,36 @@ import './style.common.css';
 import './style.normal.css';
 
 import { SidebarContext } from '@/context/SidebarContext';
+import { useAppStoreProperty } from '@/context/AppStoreContext';
+import { LocalSettings } from '@/constants/LocalSettingConstants';
 
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
   const { className, sidebarRoutes, primaryRoutes, secondaryRoutes } = props;
   const location = useLocation();
+  const sideMenuPosition = useAppStoreProperty((state) =>
+    state.settings.getValue<string>(LocalSettings.SIDE_MENU_POSITION),
+  );
+  const contentMaxWidth = useAppStoreProperty((state) =>
+    state.settings.getValue<number>(LocalSettings.CONTENT_MAX_WIDTH),
+  );
   const previousLocation = useSidebarEffect(sidebarRoutes, location);
 
   const sidebarOpen = !!previousLocation;
   const mainLocation = !!previousLocation ? previousLocation : location;
 
   return (
-    <div className={classNames(className, 'pushable sidebar-context')} id="normal-layout">
+    <div
+      className={classNames(className, 'pushable sidebar-context')}
+      id="normal-layout"
+      data-side-menu-position={sideMenuPosition}
+      style={
+        {
+          '--site-content-max-width': contentMaxWidth
+            ? `${contentMaxWidth}px`
+            : 'none',
+        } as React.CSSProperties
+      }
+    >
       <SidebarContext.Provider value={false}>
         {/* All components that can be operated normally when the sidebar is open 
         (and may open modals) should be wrapped under this provider */}
